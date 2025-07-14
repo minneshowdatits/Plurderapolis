@@ -2,113 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PLURderapolis</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <header>
-    <h1>PLURderapolis 🍑</h1>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+  <!-- HEADER with skyline background -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>PLURderapolis</h1>
+      <p>Harm Reduction for the Minnesota EDM Scene</p>
+      <div class="cta-buttons">
+        <a href="#" class="cta">Test Your Shit</a>
+        <a href="#" class="cta">Find Narcan</a>
+        <a href="#" class="cta">Get Involved</a>
+      </div>
+    </div>
   </header>
 
-  <nav id="mobile-nav">
-    <ul>
-      <li><a href="index.html">🏠 Home</a></li>
-      <li><a href="drug-info/index.html">💊 Drug Info</a></li>
-      <li><a href="consent-power-accountability/bystander-response.html">🧤 Consent</a></li>
-      <li><a href="emergency.html">🚨 Emergency</a></li>
-      <li><a href="resources.html">📍 Resources</a></li>
-      <li><a href="calendar.html">🎛️ Events</a></li>
-      <li><a href="sober-raver.html">🧃 Sober Space</a></li>
-      <li><a href="extras.html">✨ Extras</a></li>
-    </ul>
+  <!-- Sticky Nav -->
+  <nav class="navbar">
+    <div class="nav-logo">PLUR</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Drug Info</a>
+      <a href="#">Events</a>
+      <a href="#">Resources</a>
+      <a href="#">Contact</a>
+    </div>
   </nav>
 
-  <main>
-    <section class="accordion-section">
-      <div class="accordion-header" tabindex="0">Quick Access <span>▼</span></div>
-      <div class="accordion-content">
-        <a href="calendar.html">🎫 Events & Shows</a>
-        <a href="resources.html">📍 Minnesota Resources</a>
-        <a href="extras.html">✨ Local Spotlights & Tips</a>
-        <a href="panic-button.html">🚨 PANIC BUTTON</a>
-      </div>
-    </section>
+  <!-- Floating Panic Button -->
+  <button id="panicButton" class="panic-button">🚨</button>
 
-    <section class="accordion-section">
-      <div class="accordion-header" tabindex="0">July PSA <span>▼</span></div>
-      <div class="accordion-content">
-        <p>☀️ Stay safe: MDMA + dehydration = danger. Test your shit and rest when you need. Free test strips <a href="https://dancesafe.org/product/fentanyl-test-strips-single-strip-free-shipping/r/Projectpeach/" target="_blank" rel="noopener noreferrer">here</a>.</p>
-      </div>
-    </section>
-  </main>
-
-  <div class="panic-peach" onclick="window.location.href='panic-button.html'" title="Click for help">🍑</div>
-
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const nav = document.getElementById('mobile-nav');
-    hamburger.addEventListener('click', () => {
-      nav.classList.toggle('open');
-    });
-
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const content = header.nextElementSibling;
-        content.classList.toggle('open');
-        const arrow = header.querySelector('span');
-        arrow.textContent = content.classList.contains('open') ? '▲' : '▼';
-      });
-
-      header.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          header.click();
-        }
-      });
-    });
-  </script>
-  <!-- Panic Modal (hidden by default) -->
-<div id="panicModal" class="panic-modal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <h2>Emergency Venue Contacts</h2>
-    <p><strong>The Armory:</strong> Security: (612) 315-3965</p>
-    <p><strong>Skyway Theatre:</strong> Security: (612) 333-6100</p>
-    <p><strong>The Loft / The Exchange:</strong> Ask staff immediately</p>
-    <p><strong>Underground Events:</strong> Ask a vendor or harm reduction booth</p>
-    <p><strong>Festival Grounds:</strong> Look for Med Tent or Rangers</p>
-    <hr>
-    <a href="#top" class="back-to-top">⬆️ Back to Top</a>
-  </div>
-</div>
-
-<!-- Floating Panic Peach Button -->
-<div class="panic-peach" id="panicTrigger" title="Emergency Contacts">🍑</div>
-
-<script>
-  const panicTrigger = document.getElementById("panicTrigger");
-  const panicModal = document.getElementById("panicModal");
-  const closeModal = document.getElementById("closeModal");
-
-  // Open modal
-  panicTrigger.addEventListener("click", () => {
-    panicModal.style.display = "block";
-  });
-
-  // Close modal
-  closeModal.addEventListener("click", () => {
-    panicModal.style.display = "none";
-  });
-
-  // Close when tapping outside
-  window.addEventListener("click", (event) => {
-    if (event.target === panicModal) {
-      panicModal.style.display = "none";
-    }
-  });
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
