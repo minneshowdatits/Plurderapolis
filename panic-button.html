@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PLURderapolis Panic Button</title>
+<style>
+  /* Panic Button Styles */
+  #panic-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #ff9f9f; /* peach */
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    z-index: 10000;
+    user-select: none;
+  }
+  #panic-btn:hover {
+    opacity: 1;
+  }
+  
+  #panic-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 320px;
+    max-width: 90vw;
+    max-height: 400px;
+    background: rgba(20,20,20,0.95);
+    color: #ffdabb;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 9999;
+  }
+  #panic-panel.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  #panic-panel h3 {
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #ff7f50;
+  }
+  #panic-panel button.call-btn {
+    background: #ff7f50;
+    border: none;
+    border-radius: 8px;
+    color: #1a1a1a;
+    padding: 12px 14px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  #panic-panel button.call-btn:hover {
+    background-color: #ffa07a;
+  }
+  #panic-panel button.call-btn svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    fill: #1a1a1a;
+  }
+  #panic-panel .close-btn {
+    align-self: flex-end;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #ff7f50;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    user-select: none;
+  }
+  #panic-panel .section {
+    border-bottom: 1px solid #ff7f50aa;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  #panic-panel .section:last-child {
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  /* For small devices: bigger fonts, wider buttons */
+  @media (max-width: 400px) {
+    #panic-panel {
+      width: 95vw;
+      max-height: 450px;
+      font-size: 18px;
+      padding: 20px;
+    }
+    #panic-panel button.call-btn {
+      padding: 14px 18px;
+      font-size: 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Panic Button -->
+<div id="panic-btn" aria-label="Open emergency panic button" role="button" tabindex="0" title="Emergency Panic Button">🍑</div>
+
+<!-- Panic Panel -->
+<div id="panic-panel" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="panicTitle">
+  <button class="close-btn" aria-label="Close emergency panel">&times;</button>
+  
+  <div class="section">
+    <h3 id="panicTitle">🚨 Emergency Venues & Contacts</h3>
+    <button class="call-btn" onclick="window.location.href='tel:+16126482800'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      The Armory: 612-648-2800
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16124480880'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      First Ave: 612-448-0880
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16126822200'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      The Exchange: 612-682-2200
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16126998840'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      Fillmore: 612-699-8840
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16126980032'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      REV: 612-698-0032
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16126830900'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.2 1.12z"></path></svg>
+      Vault: 612-683-0900
+    </button>
+    <button class="call-btn" onclick="window.location.href='tel:+16125462222'">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.12-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 6a1 1 0 011-1h3.5a
