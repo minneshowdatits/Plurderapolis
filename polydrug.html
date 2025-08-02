@@ -135,6 +135,35 @@
     }
   </style>
 </head>
+  <script>
+  const combos = {
+    "Cannabis+Ketamine": { risk: "🟡 Moderate", note: "May cause light sedation or dizziness." },
+    "Cannabis+MDMA": { risk: "🔴 Caution", note: "May increase anxiety or heart rate unpredictably." },
+    "MDMA+SSRIs": { risk: "🔴 Caution", note: "Dulls roll, risks serotonin syndrome." },
+    "Alcohol+Benzos": { risk: "☠️ Deadly", note: "High risk of overdose and death." },
+    // Add the rest of your 56 combos here
+  };
+
+  document.getElementById("comboForm").addEventListener("change", () => {
+    const drug1 = document.getElementById("drug1").value;
+    const drug2 = document.getElementById("drug2").value;
+    const result = document.getElementById("comboResult");
+
+    if (drug1 && drug2) {
+      const key = `${drug1}+${drug2}`;
+      const reverseKey = `${drug2}+${drug1}`;
+      const combo = combos[key] || combos[reverseKey];
+
+      if (combo) {
+        result.innerHTML = `<strong>Risk:</strong> ${combo.risk}<br><p>${combo.note}</p>`;
+      } else {
+        result.innerHTML = `<p>No specific data—but assume stacking risks unless proven safe. Start low, go slow.</p>`;
+      }
+    } else {
+      result.innerHTML = "";
+    }
+  });
+</script>
 <body>
   <section id="polydrug-risks" class="content-section">
     <h2 class="section-title">🧠 Polydrug Risks</h2>
@@ -257,3 +286,50 @@
           <tr><th>ADHD Meds</th>      
             <td>🟢</td><td>🟡</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td>
             <td>⚠️</td><td>🟢</td><td>🟢</td><td>—</td><td>🟢</td><td>🟢</td
+                                                                     <section id="interaction-tool">
+  <h3 class="subsection-title">🎛️ Interaction Checker</h3>
+  <p>Select two substances to see if the combo is chill or sketch:</p>
+  <form id="comboForm">
+    <label for="drug1">Substance 1:</label>
+    <select id="drug1">
+      <option value="">— Select —</option>
+      <option value="Cannabis">Cannabis</option>
+      <option value="Ketamine">Ketamine</option>
+      <option value="MDMA">MDMA</option>
+      <option value="Cocaine">Cocaine</option>
+      <option value="Alcohol">Alcohol</option>
+      <option value="GHB / Opioids">GHB / Opioids</option>
+      <option value="Benzos">Benzos</option>
+      <option value="SSRIs">SSRIs</option>
+      <option value="SNRIs">SNRIs</option>
+      <option value="ADHD Meds">ADHD Meds</option>
+      <option value="Antipsychotics">Antipsychotics</option>
+      <option value="Mood Stabilizers">Mood Stabilizers</option>
+      <option value="Wellbutrin">Wellbutrin</option>
+      <option value="Trazodone">Trazodone</option>
+      <option value="Gabapentin">Gabapentin</option>
+    </select>
+
+    <label for="drug2">Substance 2:</label>
+    <select id="drug2">
+      <option value="">— Select —</option>
+      <option value="Cannabis">Cannabis</option>
+      <option value="Ketamine">Ketamine</option>
+      <option value="MDMA">MDMA</option>
+      <option value="Cocaine">Cocaine</option>
+      <option value="Alcohol">Alcohol</option>
+      <option value="GHB / Opioids">GHB / Opioids</option>
+      <option value="Benzos">Benzos</option>
+      <option value="SSRIs">SSRIs</option>
+      <option value="SNRIs">SNRIs</option>
+      <option value="ADHD Meds">ADHD Meds</option>
+      <option value="Antipsychotics">Antipsychotics</option>
+      <option value="Mood Stabilizers">Mood Stabilizers</option>
+      <option value="Wellbutrin">Wellbutrin</option>
+      <option value="Trazodone">Trazodone</option>
+      <option value="Gabapentin">Gabapentin</option>
+    </select>
+  </form>
+
+  <div id="comboResult"></div>
+</section>
