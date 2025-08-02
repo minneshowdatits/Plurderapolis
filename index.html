@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@400;700&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: #2e003e;
@@ -14,12 +14,63 @@
       padding: 1.5rem;
       line-height: 1.6;
     }
-
     h1, h2 {
       font-family: 'Montserrat', sans-serif;
       color: #00f7e0;
     }
-
+    nav.main-nav {
+      margin-bottom: 1.5rem;
+      background-color: #1C1C1C;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    nav.main-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav.main-nav ul li {
+      position: relative;
+      margin: 0 10px;
+    }
+    nav.main-nav ul li a {
+      color: #f8f8f8;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      background-color: #5D3A7D;
+      transition: background-color 0.2s ease;
+      display: block;
+    }
+    nav.main-nav ul li a:hover {
+      background-color: #7D52A1;
+    }
+    nav.main-nav ul li ul {
+      display: none;
+      position: absolute;
+      background: #3a0052;
+      border-radius: 8px;
+      padding: 0.5rem;
+      top: 110%;
+      left: 0;
+      z-index: 10;
+    }
+    nav.main-nav ul li:hover ul {
+      display: block;
+    }
+    nav.main-nav ul li ul li a {
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
+    @media(max-width:600px){
+      body{padding:1rem;}
+      nav.main-nav ul{flex-direction:column;align-items:flex-start;}
+      nav.main-nav ul li{width:100%;}
+      nav.main-nav ul li ul{position:static; margin-left:0;}
+    }
     .section {
       margin-bottom: 3rem;
       background-color: #3a0052;
@@ -27,7 +78,6 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,255,255,0.1);
     }
-
     .cta-button {
       display: inline-block;
       margin-top: 1rem;
@@ -38,37 +88,130 @@
       text-decoration: none;
       font-weight: bold;
     }
-
     ul {
       list-style: none;
       padding-left: 0;
     }
-
-    a {
+    a:not(.emoji-panic) {
       color: #ff6ec7;
     }
-
-    a:hover {
+    a:not(.emoji-panic):hover {
       color: #ffffff;
     }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
-
-      .section {
-        padding: 1rem;
-      }
+    /* === Emoji Peach Panic Button + Dismiss === */
+    #peachWrap {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+    #peachWrap a.emoji-panic {
+      font-size: 4rem;
+      background-color: rgba(255, 112, 148, 0.25);
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow:
+        0 0 12px #E040FB,
+        0 0 24px #FF69B4,
+        0 0 36px #00CED1;
+      animation: emojiPulse 2.2s infinite;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      width: 72px;
+      height: 72px;
+      line-height: 1;
+    }
+    #peachWrap a.emoji-panic:hover {
+      transform: scale(1.25);
+    }
+    #peachWrap button.dismiss-btn {
+      background: none;
+      border: none;
+      color: #f8f8f8;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      filter: drop-shadow(0 0 3px #FF69B4);
+      transition: color 0.3s ease;
+    }
+    #peachWrap button.dismiss-btn:hover {
+      color: #FF4444;
+    }
+    @keyframes emojiPulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      text-align: center;
+    }
+    footer hr {
+      border-color: #444;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to PLURderapolis</h1>
-  <p style="font-size:1.1rem;"><em>Harm reduction and mutual aid for Minnesota’s rave, party, and underground scenes.</em><br>No shame. Just survival.</p>
+  <h1>PLURderapolis</h1>
+  <p style="font-size:1.1rem;"><em>Harm reduction and mutual aid for Minnesota’s rave, party, and underground scenes. No shame. Just survival.</em></p>
 
-  <!-- What We Do -->
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">Safety</a>
+        <ul>
+          <li><a href="panic.html">Panic Button</a></li>
+          <li><a href="emergency.html">Emergency Response</a></li>
+          <li><a href="spiking.html">Drink Spiking</a></li>
+          <li><a href="fake.html">Fake Drug Guide</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Drug Info</a>
+        <ul>
+          <li><a href="polydrug.html">Polydrug Tool</a></li>
+          <li><a href="health.html">Raver Health</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Consent</a>
+        <ul>
+          <li><a href="consent.html">Consent Basics</a></li>
+          <li><a href="accountability.html">Accountability</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Local Scene</a>
+        <ul>
+          <li><a href="spotlight.html">Scene Spotlight</a></li>
+          <li><a href="calendar.html">Event Calendar</a></li>
+          <li><a href="spotify.html">Spotify</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Extras</a>
+        <ul>
+          <li><a href="seasonal.html">Seasonal Tips</a></li>
+          <li><a href="sober.html">Sober Ravers</a></li>
+          <li><a href="resources.html">MN Resources</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Section Layout -->
   <div class="section">
     <h2>💡 What We Do</h2>
     <ul>
@@ -79,48 +222,57 @@
     <a class="cta-button" href="/safety/">Learn More</a>
   </div>
 
-  <!-- MN Quick Resources -->
   <div class="section">
     <h2>⚠️ Quick Help (Minnesota)</h2>
     <ul>
-      <li><strong>💊 Harm Reduction:</strong> <a href="https://southsideharmreduction.org">Southside</a>, <a href="https://www.steverummlerhopenetwork.org/">Rummler HOPE</a>, <a href="https://harmreductionsisters.org/">HRS</a></li>
-      <li><strong>💔 Domestic & Sexual Violence:</strong> <a href="https://cornerstonemn.org/">Cornerstone</a>, <a href="https://violencefreemn.org/">Violence Free MN</a>, <a href="https://sexualviolencecenter.org/">SVC</a></li>
-      <li><strong>🌸 Plan B & Repro Care:</strong> <a href="https://justthepill.com/">Just The Pill</a>, <a href="https://ourjustice.net/">Our Justice</a></li>
+      <li><strong>💊 Harm Reduction:</strong> <a href="https://southsideharmreduction.org">Southside</a>, <a href="https://harmreductionsisters.org/">HRS</a></li>
+      <li><strong>💔 Domestic & Sexual Violence:</strong> <a href="https://cornerstonemn.org/">Cornerstone</a>, <a href="https://violencefreemn.org/">Violence Free MN</a></li>
+      <li><strong>🌸 Repro Care & Plan B:</strong> <a href="https://ourjustice.net/">Our Justice</a></li>
       <li><strong>🏳️‍⚧️ Queer Friendly:</strong> <a href="https://reclaim.care/">RECLAIM</a>, <a href="https://familytreeclinic.org/">Family Tree Clinic</a></li>
       <li><strong>🔄 Peer Support:</strong> <a href="https://mnrecovery.org/">MRC</a>, <a href="https://unityrecovery.org/">Unity</a></li>
-      <li><strong>🧠 Mental Health:</strong> Text <code>HOME</code> to <code>741741</code>, Call <code>988</code>, <a href="https://fasttrackermn.org/">Fast Tracker</a></li>
+      <li><strong>🧠 Mental Health:</strong> Text <code>HOME</code> to <code>741741</code>, call <code>988</code>, <a href="https://fasttrackermn.org/">Fast Tracker</a></li>
       <li><strong>📦 Food & Shelter:</strong> <a href="https://www.211unitedway.org/">United Way 211</a></li>
     </ul>
     <a class="cta-button" href="/resources.html">Full Resource List →</a>
   </div>
 
-  <!-- Polydrug Tool -->
   <div class="section">
     <h2>🧪 Polydrug Interaction Tool</h2>
-    <p>Mixing substances? Don’t guess. Use our guide to check for dangerous interactions fast.</p>
+    <p>Mixing substances? Don’t guess. Use our tool to check for dangerous interactions fast.</p>
     <a class="cta-button" href="/polydrug.html">Try the Tool</a>
   </div>
 
-  <!-- Scene Spotlight -->
   <div class="section">
     <h2>🌈 Scene Spotlight</h2>
     <p>Local artists. Party calendars. Zines. Stories from the underground.</p>
     <a class="cta-button" href="/culture/">Explore the Scene</a>
   </div>
 
-  <!-- Get Involved -->
   <div class="section">
     <h2>👋 Get Involved</h2>
     <p>Want to help? Submit art, share your story, donate gear, or join the crew.</p>
     <a class="cta-button" href="/get-involved/">Join Us</a>
   </div>
 
-  <!-- Footer -->
-  <footer style="margin-top:3rem; font-size:0.9rem; color:#aaa;">
-    <hr style="border-color:#444;">
-    <p>Suicide & Crisis Lifeline: <strong>988</strong> • Southside Harm Reduction: <a href="https://southsideharmreduction.org">Website</a></p>
-    <p>&copy; 2025 PLURderapolis • Built with rage and glitter</p>
-  </footer>
+  <!-- 🍑 Panic Button -->
+  <div id="peachWrap" role="region" aria-label="Emergency panic button">
+    <a href="panic.html" class="emoji-panic" title="Panic Button" aria-label="Open panic help page">🍑</a>
+    <button class="dismiss-btn" aria-label="Dismiss panic button" onclick="document.getElementById('peachWrap').style.display='none'">×</button>
+  </div>
 
+  <footer>
+      <!-- ... rest of page ... -->
+
+  <footer>
+    <hr>
+    <p>Suicide & Crisis Lifeline: <strong>988</strong> • Southside Harm Reduction: <a href="https://southsideharmreduction.org">Website</a></p>
+
+    <p style="font-size: 0.8rem; color: #ccc; max-width: 600px; margin: 1rem auto;">
+      PLURderapolis.org is a community-run harm reduction project based in Minnesota. We do not provide medical advice and are not a substitute for professional healthcare, emergency services, or legal counsel. Information provided is for educational purposes only. Use at your own discretion and risk.
+    </p>
+
+    <p>&copy; 2025 PLURderapolis • </p>
+  </footer>
+   
 </body>
 </html>
