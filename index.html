@@ -31,38 +31,149 @@
       margin: 0;
     }
 
-    nav.navbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+    /* === Main Navigation === */
+    nav.main-nav {
       background-color: #1C1C1C;
-      padding: 10px 0;
-      border-bottom: 2px solid #00CED1;
+      font-family: 'Montserrat', sans-serif;
+      border-bottom: 3px solid #00CED1;
+      padding: 10px 20px;
+      z-index: 999;
     }
 
-    nav.navbar ul {
+    nav.main-nav ul {
       list-style: none;
+      margin: 0;
       padding: 0;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
     }
 
-    nav.navbar li a {
+    nav.main-nav ul li {
+      position: relative;
+      margin: 0 10px;
+    }
+
+    nav.main-nav ul li a {
       color: #F5F5F5;
       text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 4px;
+      padding: 10px;
+      display: block;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    nav.main-nav ul li a:hover {
       background-color: #5D3A7D;
-      transition: background-color 0.2s ease;
+      color: #E040FB;
     }
 
-    nav.navbar li a:hover {
-      background-color: #7D52A1;
+    nav.main-nav ul li ul {
+      display: none;
+      position: absolute;
+      background-color: #2A2A2A;
+      border: 1px solid #5D3A7D;
+      border-radius: 10px;
+      z-index: 999;
+      top: 100%;
+      left: 0;
     }
 
+    nav.main-nav ul li:hover ul {
+      display: block;
+    }
+
+    nav.main-nav ul li ul li {
+      width: 180px;
+    }
+
+    @media (max-width: 768px) {
+      nav.main-nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav.main-nav ul li {
+        width: 100%;
+      }
+
+      nav.main-nav ul li ul {
+        position: static;
+        width: 100%;
+        border: none;
+        margin-left: 10px;
+      }
+
+      nav.main-nav ul li ul li a {
+        font-size: 14px;
+        color: #B0F6FF;
+        padding-left: 24px;
+      }
+    }
+
+    /* === Emoji Peach Panic Button + Dismiss === */
+    #peachWrap {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    #peachWrap a.emoji-panic {
+      font-size: 4rem;
+      background-color: rgba(255, 112, 148, 0.25);
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow:
+        0 0 12px #E040FB,
+        0 0 24px #FF69B4,
+        0 0 36px #00CED1;
+      animation: emojiPulse 2.2s infinite;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+      width: 72px;
+      height: 72px;
+      line-height: 1;
+    }
+
+    #peachWrap a.emoji-panic:hover {
+      transform: scale(1.25);
+    }
+
+    #peachWrap button.dismiss-btn {
+      background: none;
+      border: none;
+      color: #F5F5F5;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      filter: drop-shadow(0 0 3px #FF69B4);
+      transition: color 0.3s ease;
+    }
+
+    #peachWrap button.dismiss-btn:hover {
+      color: #FF4444;
+    }
+
+    @keyframes emojiPulse {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    /* === Page Content === */
     .hero, .about {
       padding: 20px;
     }
@@ -72,36 +183,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* === Emoji Panic Button === */
-    .emoji-panic {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      font-size: 5.5rem;
-      z-index: 9999;
-      text-decoration: none;
-      border-radius: 50%;
-      padding: 16px;
-      background-color: rgba(255, 112, 148, 0.25);
-      box-shadow:
-        0 0 12px #E040FB,
-        0 0 24px #FF69B4,
-        0 0 36px #00CED1;
-      animation: emojiPulse 2.2s infinite;
-      transition: transform 0.2s ease;
-      backdrop-filter: blur(6px);
-    }
-
-    .emoji-panic:hover {
-      transform: scale(1.25);
-    }
-
-    @keyframes emojiPulse {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.12); }
-      100% { transform: scale(1); }
-    }
-
+    /* === Footer === */
     footer {
       text-align: center;
       padding: 20px;
@@ -122,22 +204,53 @@
     <h1>PLURderapolis</h1>
   </header>
 
-  <nav class="navbar">
+  <nav class="main-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
-      <li><a href="polydrug.html">Polydrug Tool</a></li>
-      <li><a href="fake.html">Is Your Shit Real?</a></li>
-      <li><a href="health.html">Raver Health</a></li>
-      <li><a href="consent.html">Consent</a></li>
-      <li><a href="emergency.html">Emergency</a></li>
-      <li><a href="spiking.html">Drink Spiking</a></li>
-      <li><a href="accountability.html">Accountability</a></li>
-      <li><a href="resources.html">MN Resources</a></li>
-      <li><a href="spotlight.html">Scene Spotlight</a></li>
-      <li><a href="calendar.html">Calendar</a></li>
-      <li><a href="sober.html">Sober Ravers</a></li>
-      <li><a href="spotify.html">Spotify</a></li>
-      <li><a href="seasonal.html">Seasonal Tips</a></li>
+
+      <li>
+        <a href="#">Safety</a>
+        <ul>
+          <li><a href="panic.html">Panic Button</a></li>
+          <li><a href="emergency.html">Emergency Response</a></li>
+          <li><a href="spiking.html">Drink Spiking</a></li>
+          <li><a href="fake.html">Fake Drug Guide</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#">Drug Info</a>
+        <ul>
+          <li><a href="polydrug.html">Polydrug Tool</a></li>
+          <li><a href="health.html">Raver Health</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#">Consent</a>
+        <ul>
+          <li><a href="consent.html">Consent Basics</a></li>
+          <li><a href="accountability.html">Accountability</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#">Local Scene</a>
+        <ul>
+          <li><a href="spotlight.html">Scene Spotlight</a></li>
+          <li><a href="calendar.html">Event Calendar</a></li>
+          <li><a href="spotify.html">Spotify</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#">Extras</a>
+        <ul>
+          <li><a href="seasonal.html">Seasonal Tips</a></li>
+          <li><a href="sober.html">Sober Ravers</a></li>
+          <li><a href="resources.html">MN Resources</a></li>
+        </ul>
+      </li>
     </ul>
   </nav>
 
@@ -153,8 +266,11 @@
     </section>
   </main>
 
-  <!-- 🍑 EMOJI PANIC BUTTON -->
-  <a href="panic.html" class="emoji-panic" title="Panic Button">🍑</a>
+  <!-- 🍑 Emoji Peach Panic Button with Dismiss -->
+  <div id="peachWrap" role="region" aria-label="Emergency panic button">
+    <a href="panic.html" class="emoji-panic" title="Panic Button" aria-haspopup="true" aria-label="Open panic help page">🍑</a>
+    <button class="dismiss-btn" aria-label="Dismiss panic button" onclick="document.getElementById('peachWrap').style.display='none'">×</button>
+  </div>
 
   <footer>
     PLURderapolis.org is a community-run harm reduction project based in Minnesota.<br>
