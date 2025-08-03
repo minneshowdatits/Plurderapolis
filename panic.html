@@ -24,7 +24,7 @@
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(255, 110, 199, 0.3);
     }
-    .panic-button, .location-button, .im-safe, .decoy-button, .fullscreen-card-button {
+    .panic-button, .location-button, .im-safe, .danger-button, .fullscreen-card-button {
       display: block;
       width: 100%;
       margin: 0.8rem 0;
@@ -36,11 +36,22 @@
       text-decoration: none;
       cursor: pointer;
     }
-    .panic-button { background: #ff4444; color: white; }
-    .location-button { background: #00bcd4; color: white; }
-    .im-safe { background: #4caf50; color: white; }
-    .decoy-button { background: #999; color: #000; }
-    .fullscreen-card-button { background: #ff6ec7; color: #2e003e; }
+    .panic-button { background: #99334e; color: #fff; }
+    .location-button { background: #397f87; color: #fff; }
+    .im-safe { background: #3b8659; color: #fff; }
+    .danger-button { background: #7f2e2e; color: #fff; }
+    .fullscreen-card-button {
+      background: #ff6ec7;
+      color: #2e003e;
+      font-size: 1.2rem;
+      animation: pulseFlash 1.8s infinite;
+      border: 2px solid #fff;
+    }
+    @keyframes pulseFlash {
+      0% { box-shadow: 0 0 0 0 rgba(255,110,199,0.6); }
+      70% { box-shadow: 0 0 0 15px rgba(255,110,199,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,110,199,0); }
+    }
     textarea.journal {
       width: 100%;
       padding: 1rem;
@@ -88,15 +99,12 @@
     function hideHelpCard() {
       document.getElementById('helpCard').style.display = 'none';
     }
-    function openDecoy() {
-      window.location.href = 'https://weather.com';
-    }
     function shareLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
-          const smsLink = `sms:?&body=Here’s my location: https://maps.google.com/?q=${lat},${lon}`;
+          const smsLink = `sms:?&body=I'm in danger. Here's my location: https://maps.google.com/?q=${lat},${lon}`;
           window.location.href = smsLink;
         }, function() {
           alert("Location access denied. Please enable it and try again.");
@@ -111,10 +119,9 @@
   <p><em>You’re not alone. You have options. Use the tools below to act fast and stay safe.</em></p>  <div class="section">
     <h2>Take Action</h2>
     <a class="panic-button" href="sms:?&body=I don't feel safe. Can you help me?">📲 Text a Friend</a>
-    <button class="location-button" onclick="shareLocation()">📍 Share My Location</button>
     <a class="im-safe" href="sms:?&body=Hey, just letting you know I’m safe now. Thanks for looking out 💚">✅ I'm Safe</a>
-    <button class="decoy-button" onclick="openDecoy()">🔇 I'm in Danger – Be Discreet</button>
-    <button class="fullscreen-card-button" onclick="showHelpCard()">🖐 Need Help in Person</button>
+    <button class="danger-button" onclick="shareLocation()">🚨 I’m in Danger – Find Me</button>
+    <button class="fullscreen-card-button" onclick="showHelpCard()">🖐 Need Help In Person</button>
   </div>  <div class="section">
     <h2>What Just Happened?</h2>
     <form>
@@ -134,4 +141,4 @@
       <button onclick="hideHelpCard()">Close</button>
     </div>
   </div></body>
-</html>
+</html>      
