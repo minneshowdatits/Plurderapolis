@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panic Mode | PLURderapolis</title>
+  <title>Panic | PLURderapolis</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
@@ -10,49 +10,38 @@
       color: #f8f8f8;
       font-family: 'Roboto', sans-serif;
       margin: 0;
-      padding: 1.5rem;
+      padding: 1rem;
       line-height: 1.6;
     }
-    h1, h2 {
+    h1, h2, summary {
       font-family: 'Montserrat', sans-serif;
       color: #00f7e0;
     }
-    .section {
-      background-color: #3a0052;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(255, 110, 199, 0.3);
+    details {
+      background: #3a0052;
+      border-radius: 10px;
+      margin: 1rem 0;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,255,255,0.1);
     }
-    .panic-button, .location-button, .im-safe, .danger-button, .fullscreen-card-button {
+    summary {
+      font-size: 1.2rem;
+      cursor: pointer;
+      outline: none;
+    }
+    a.button-link {
       display: block;
-      width: 100%;
-      margin: 0.8rem 0;
-      padding: 0.8rem 1.2rem;
+      margin: 0.5rem 0;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
       font-size: 1rem;
       text-align: center;
-      border-radius: 10px;
-      font-weight: bold;
       text-decoration: none;
-      cursor: pointer;
-    }
-    .panic-button { background: #99334e; color: #fff; }
-    .location-button { background: #397f87; color: #fff; }
-    .im-safe { background: #3b8659; color: #fff; }
-    .danger-button { background: #7f2e2e; color: #fff; }
-    .fullscreen-card-button {
-      background: #ff6ec7;
       color: #2e003e;
-      font-size: 1.2rem;
-      animation: pulseFlash 1.8s infinite;
-      border: 2px solid #fff;
+      background-color: #00f7e0;
     }
-    @keyframes pulseFlash {
-      0% { box-shadow: 0 0 0 0 rgba(255,110,199,0.6); }
-      70% { box-shadow: 0 0 0 15px rgba(255,110,199,0); }
-      100% { box-shadow: 0 0 0 0 rgba(255,110,199,0); }
-    }
-    textarea.journal {
+    textarea {
       width: 100%;
       padding: 1rem;
       background: #1C1C1C;
@@ -63,42 +52,21 @@
       font-size: 1rem;
       min-height: 150px;
     }
-    #helpCard {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #2e003e;
-      color: #f8f8f8;
-      font-size: 1.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      z-index: 10000;
-    }
-    #helpCard button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #5D3A7D;
+    button.action-btn {
+      display: block;
+      width: 100%;
+      margin: 0.75rem 0;
+      padding: 0.75rem 1rem;
+      background-color: #5D3A7D;
       color: white;
+      font-weight: bold;
+      font-size: 1rem;
       border: none;
-      font-size: 1.2rem;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
   <script>
-    function showHelpCard() {
-      document.getElementById('helpCard').style.display = 'flex';
-    }
-    function hideHelpCard() {
-      document.getElementById('helpCard').style.display = 'none';
-    }
     function shareLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -110,35 +78,55 @@
           alert("Location access denied. Please enable it and try again.");
         });
       } else {
-        alert("Geolocation is not supported by your device.");
+        alert("Geolocation not supported on this device.");
       }
     }
   </script>
 </head>
-<body>  <h1>🚨 Panic Mode</h1>
-  <p><em>You’re not alone. You have options. Use the tools below to act fast and stay safe.</em></p>  <div class="section">
-    <h2>Take Action</h2>
-    <a class="panic-button" href="sms:?&body=I don't feel safe. Can you help me?">📲 Text a Friend</a>
-    <a class="im-safe" href="sms:?&body=Hey, just letting you know I’m safe now. Thanks for looking out 💚">✅ I'm Safe</a>
-    <button class="danger-button" onclick="shareLocation()">🚨 I’m in Danger – Find Me</button>
-    <button class="fullscreen-card-button" onclick="showHelpCard()">🖐 Need Help In Person</button>
-  </div>  <div class="section">
-    <h2>What Just Happened?</h2>
+<body>  <h1>🚨 Panic Center</h1>
+  <p><em>If you're feeling unsafe or unsure, this page is built to help you make quick, informed choices. Everything here works on mobile and is designed for speed and clarity.</em></p>  <details>
+    <summary>📲 Text or Call for Help</summary>
+    <p>Reach someone you trust. You’ll be able to choose who to contact.</p>
+    <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">Text a Trusted Contact</a>
+    <a class="button-link" href="tel:">Call Someone</a>
+  </details>  <details>
+    <summary>📍 Share Your Location</summary>
+    <p>This sends your current location via text. Your GPS must be enabled.</p>
+    <button class="action-btn" onclick="shareLocation()">Send My Location</button>
+  </details>  <details>
+    <summary>✅ Let Someone Know You're Safe</summary>
+    <p>Reassure your people once you’re okay.</p>
+    <a class="button-link" href="sms:?&body=I'm safe now. Thank you for checking on me 💚">Send I'm Safe Message</a>
+  </details>  <details>
+    <summary>🖐 Need Help In Person</summary>
+    <p>Open this fullscreen message to silently ask someone nearby for help.</p>
+    <button class="action-btn" onclick="document.getElementById('helpCard').style.display='flex'">Show Help Message</button>
+  </details>  <details>
+    <summary>🧠 What Just Happened?</summary>
+    <p>Tap what feels relevant. This helps ground your thoughts and memory.</p>
     <form>
       <label><input type="checkbox"> I think I was drugged</label><br>
-      <label><input type="checkbox"> Someone touched me without consent</label><br>
-      <label><input type="checkbox"> I lost my friends</label><br>
-      <label><input type="checkbox"> I feel unsafe with someone</label><br>
-      <label><input type="checkbox"> I want to leave but can’t</label>
+      <label><input type="checkbox"> Someone crossed my boundaries</label><br>
+      <label><input type="checkbox"> I lost my group or ride</label><br>
+      <label><input type="checkbox"> I need help getting home</label><br>
+      <label><input type="checkbox"> I'm scared or overwhelmed</label>
     </form>
-  </div>  <div class="section">
-    <h2>Write Down What Happened (Optional)</h2>
-    <p>This stays on your device. It won’t be sent anywhere.</p>
-    <textarea class="journal" placeholder="Who, what, where, when... Write what you remember before you forget."></textarea>
-  </div>  <div id="helpCard">
+  </details>  <details>
+    <summary>📝 Remember Everything</summary>
+    <p>Jot down what happened. This stays only on your device.</p>
+    <textarea placeholder="Who, what, where, when... Type anything important while it’s fresh."></textarea>
+  </details>  <details>
+    <summary>🧭 Quick Resources</summary>
+    <ul>
+      <li><a href="/resources.html">Local Clinics and Crisis Centers</a></li>
+      <li><a href="/emergency.html">Emergency Contacts in MN</a></li>
+      <li><a href="/consent.html">Consent & Boundaries Info</a></li>
+      <li><a href="/spiking.html">Drink Spiking Signs + What To Do</a></li>
+    </ul>
+  </details>  <div id="helpCard" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background-color:#2e003e; color:#f8f8f8; font-size:2rem; display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem; z-index:10000;">
     <div>
-      <p><strong>Hi, I need help.</strong><br>Please stay with me or help me get to safety.</p>
-      <button onclick="hideHelpCard()">Close</button>
+      <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
+      <button style="margin-top:1rem; background:#5D3A7D; color:white; border:none; padding:0.5rem 1rem; border-radius:8px; font-size:1rem;" onclick="document.getElementById('helpCard').style.display='none'">Close</button>
     </div>
   </div></body>
-</html>      
+</html>
