@@ -1,146 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Panic Button - PLURderapolis Emergency Help" />
-  <title>Panic Help 🍑 | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panic Mode | PLURderapolis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
+      background-color: #2e003e;
+      color: #f8f8f8;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      background: #1C1C1C;
-      color: #F5F5F5;
-      padding: 0 16px;
+      padding: 1.5rem;
+      line-height: 1.6;
     }
-    header {
-      text-align: center;
-      padding: 30px 10px;
-    }
-    header h1 {
-      color: #ff6f91;
+    h1, h2 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 10px;
+      color: #00f7e0;
     }
     .section {
-      background: #2A2A2A;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 12px rgba(255, 111, 145, 0.2);
+      background-color: #3a0052;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(255, 110, 199, 0.3);
     }
-    .section h2 {
-      color: #E040FB;
-      margin-bottom: 10px;
-    }
-    .section ul {
-      padding-left: 18px;
-    }
-    .section li {
-      margin-bottom: 10px;
-    }
-    .contact-buttons a {
+    .panic-button, .location-button, .im-safe, .decoy-button, .fullscreen-card-button {
       display: block;
-      background: #00CED1;
-      color: #000;
+      width: 100%;
+      margin: 0.8rem 0;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
       text-align: center;
+      border-radius: 10px;
       font-weight: bold;
       text-decoration: none;
-      padding: 12px;
-      border-radius: 12px;
-      margin: 10px 0;
+      cursor: pointer;
     }
-    footer {
+    .panic-button { background: #ff4444; color: white; }
+    .location-button { background: #00bcd4; color: white; }
+    .im-safe { background: #4caf50; color: white; }
+    .decoy-button { background: #999; color: #000; }
+    .fullscreen-card-button { background: #ff6ec7; color: #2e003e; }
+    textarea.journal {
+      width: 100%;
+      padding: 1rem;
+      background: #1C1C1C;
+      color: #f8f8f8;
+      border: 2px solid #5D3A7D;
+      border-radius: 10px;
+      resize: vertical;
+      font-size: 1rem;
+      min-height: 150px;
+    }
+    #helpCard {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #2e003e;
+      color: #f8f8f8;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      font-size: 0.9rem;
-      margin-top: 40px;
-      color: #888;
+      padding: 2rem;
+      z-index: 10000;
     }
-    .peach-icon {
-      display: block;
-      margin: 0 auto 10px;
-      font-size: 3rem;
+    #helpCard button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #5D3A7D;
+      color: white;
+      border: none;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
     }
   </style>
+  <script>
+    function showHelpCard() {
+      document.getElementById('helpCard').style.display = 'flex';
+    }
+    function hideHelpCard() {
+      document.getElementById('helpCard').style.display = 'none';
+    }
+    function openDecoy() {
+      window.location.href = 'https://weather.com';
+    }
+    function shareLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const smsLink = `sms:?&body=Here’s my location: https://maps.google.com/?q=${lat},${lon}`;
+          window.location.href = smsLink;
+        }, function() {
+          alert("Location access denied. Please enable it and try again.");
+        });
+      } else {
+        alert("Geolocation is not supported by your device.");
+      }
+    }
+  </script>
 </head>
-<body>
-
-  <header>
-    <div class="peach-icon">🍑</div>
-    <h1>Emergency Help</h1>
-    <p>This page is here for when shit gets real. Stay calm. You’ve got this. Let’s get through it together.</p>
-  </header>
-
-  <div class="section">
-    <h2>Overdose Response</h2>
-    <ul>
-      <li>Check if they’re breathing or conscious — shout, shake gently</li>
-      <li>Call 911 — say “My friend isn’t breathing” (not “they’re high”)</li>
-      <li>Use Narcan if available — spray 1 dose in their nose, wait 2-3 mins</li>
-      <li>If no response, give 2nd dose + start rescue breathing</li>
-      <li>Stay until help arrives — Good Samaritan laws protect you in MN</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Mental Health & Support</h2>
-    <div class="contact-buttons">
-      <a href="tel:988">📞 Call 988 - Mental Health Crisis Line</a>
-      <a href="sms:741741">📱 Text HOME to 741741 - Crisis Text Line</a>
+<body>  <h1>🚨 Panic Mode</h1>
+  <p><em>You’re not alone. You have options. Use the tools below to act fast and stay safe.</em></p>  <div class="section">
+    <h2>Take Action</h2>
+    <a class="panic-button" href="sms:?&body=I don't feel safe. Can you help me?">📲 Text a Friend</a>
+    <button class="location-button" onclick="shareLocation()">📍 Share My Location</button>
+    <a class="im-safe" href="sms:?&body=Hey, just letting you know I’m safe now. Thanks for looking out 💚">✅ I'm Safe</a>
+    <button class="decoy-button" onclick="openDecoy()">🔇 I'm in Danger – Be Discreet</button>
+    <button class="fullscreen-card-button" onclick="showHelpCard()">🖐 Need Help in Person</button>
+  </div>  <div class="section">
+    <h2>What Just Happened?</h2>
+    <form>
+      <label><input type="checkbox"> I think I was drugged</label><br>
+      <label><input type="checkbox"> Someone touched me without consent</label><br>
+      <label><input type="checkbox"> I lost my friends</label><br>
+      <label><input type="checkbox"> I feel unsafe with someone</label><br>
+      <label><input type="checkbox"> I want to leave but can’t</label>
+    </form>
+  </div>  <div class="section">
+    <h2>Write Down What Happened (Optional)</h2>
+    <p>This stays on your device. It won’t be sent anywhere.</p>
+    <textarea class="journal" placeholder="Who, what, where, when... Write what you remember before you forget."></textarea>
+  </div>  <div id="helpCard">
+    <div>
+      <p><strong>Hi, I need help.</strong><br>Please stay with me or help me get to safety.</p>
+      <button onclick="hideHelpCard()">Close</button>
     </div>
-  </div>
-
-  <div class="section">
-    <h2>Sexual Assault & Crisis Support</h2>
-    <div class="contact-buttons">
-      <a href="tel:18006564673">📞 Call 1-800-656-HOPE (National Sexual Assault Hotline)</a>
-      <a href="tel:6128254357">📞 Call 612-825-HELP (MN Sexual Violence Crisis Line)</a>
-      <a href="sms:6128254357">📱 Text 612825HELP (MN Crisis Text Line)</a>
-    </div>
-    <p>If you or someone you know has been assaulted, help is here 24/7.</p>
-  </div>
-
-  <div class="section">
-    <h2>Poison Control</h2>
-    <div class="contact-buttons">
-      <a href="tel:18002221222">📞 Call 1-800-222-1222 - Poison Control Hotline</a>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Safe Ride Options</h2>
-    <ul>
-      <li>Use rideshare apps like Uber or Lyft with safety check-ins enabled</li>
-      <li>Look for local sober ride programs if available</li>
-      <li>Don’t hesitate to ask venue staff for help getting safe transportation</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>911 Call Tips</h2>
-    <ul>
-      <li>Be calm and clear</li>
-      <li>Give your location precisely</li>
-      <li>Describe the emergency briefly and factually</li>
-      <li>Say exactly what you see — avoid judgmental language</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Venue Safety & Bystander Moves</h2>
-    <ul>
-      <li>Find staff or security and ask for water or medical help</li>
-      <li>Most venues have chill zones and medical stations</li>
-      <li>If someone is unconscious, place them in the recovery position if safe to do so</li>
-      <li>If harassment happens, calmly interrupt or get someone who can</li>
-    </ul>
-  </div>
-
-  <footer>
-    PLURderapolis x Project Peach MN 🍑 | Community-first care and harm reduction.
-  </footer>
-
-</body>
+  </div></body>
 </html>
