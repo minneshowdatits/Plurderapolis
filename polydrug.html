@@ -291,6 +291,40 @@
         result.innerHTML = "";
       }
     });
-  </script>
+  </script><script>
+  const combos = {
+    "Cannabis+Ketamine": { risk: "🟡 Moderate", note: "May cause light sedation or dizziness." },
+    "Cannabis+MDMA": { risk: "🔴 Caution", note: "May increase anxiety or heart rate unpredictably." },
+    "MDMA+SSRIs": { risk: "🔴 Caution", note: "Dulls roll, risks serotonin syndrome." },
+    "Alcohol+Benzos": { risk: "☠️ Deadly", note: "High risk of overdose and death." },
+    "MDMA+SNRIs": { risk: "❌ Unsafe", note: "SNRIs can block MDMA and increase serotonin syndrome risk." },
+    "GHB / Opioids+Benzos": { risk: "☠️ Deadly", note: "Very high overdose risk from respiratory depression." },
+    "Ketamine+Alcohol": { risk: "❌ Unsafe", note: "May lead to blackouts and unconsciousness." },
+    // Add more combos here…
+  };
+
+  document.getElementById("comboForm").addEventListener("change", () => {
+    const drug1 = document.getElementById("drug1").value;
+    const drug2 = document.getElementById("drug2").value;
+    const result = document.getElementById("comboResult");
+
+    if (drug1 && drug2) {
+      // Build keys as strings properly
+      const key = `${drug1}+${drug2}`;
+      const reverseKey = `${drug2}+${drug1}`;
+
+      // Try both orders because combos might be listed one way
+      const combo = combos[key] || combos[reverseKey];
+
+      if (combo) {
+        result.innerHTML = `<strong>Risk:</strong> ${combo.risk}<br><p>${combo.note}</p>`;
+      } else {
+        result.innerHTML = `<p>No specific data—but assume stacking risks unless proven safe. Start low, go slow.</p>`;
+      }
+    } else {
+      result.innerHTML = "";
+    }
+  });
+</script>
 </body>
 </html>
