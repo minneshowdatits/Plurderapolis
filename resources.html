@@ -1,253 +1,317 @@
-<style>
-  /* Container styling */
-  #mn-resources {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 15px;
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
-    background: #fafafa;
-    border-radius: 12px;
-    box-shadow: 0 0 12px rgba(156, 39, 176, 0.15);
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MN Resources - PLURderapolis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0015;
+      --card: #1c002a;
+      --highlight: #00f7e0;
+      --accent: #ff6ec7;
+      --text: #f8f8f8;
+      --shadow: rgba(0, 255, 255, 0.1);
+      --accordion-bg: #2a0040;
+      --accordion-hover: #440070;
+      --accordion-text: #00f7e0;
+      --link-color: #ff6ec7;
+      --link-hover: #ffffff;
+    }
 
-  #mn-resources h2.section-title {
-    color: #9c27b0; /* plum */
-    font-size: 2rem;
-    margin-bottom: 10px;
-    text-align: center;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  #mn-resources p.intro-text {
-    text-align: center;
-    font-size: 1rem;
-    margin-bottom: 25px;
-    color: #555;
-  }
+    body {
+      margin: 0;
+      padding: 1rem;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
 
-  /* Emergency Box */
-  .emergency-box {
-    background: #e1bee7; /* light plum */
-    border-left: 6px solid #d81b60; /* vibrant pink */
-    padding: 15px 20px;
-    margin-bottom: 30px;
-    font-weight: 600;
-    color: #4a148c; /* dark plum */
-    font-size: 1.1rem;
-    line-height: 1.4;
-  }
+    h1, h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--highlight);
+    }
 
-  /* Accordion styles */
-  .accordion {
-    background-color: #f3e5f5; /* very light plum */
-    color: #4a148c;
-    cursor: pointer;
-    padding: 15px 20px;
-    width: 100%;
-    text-align: left;
-    border: none;
-    outline: none;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    transition: background-color 0.3s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
 
-  .accordion:hover {
-    background-color: #ce93d8; /* medium plum */
-  }
+    p.intro-text {
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-  .accordion:after {
-    content: '+';
-    font-size: 1.5rem;
-    color: #d81b60; /* vibrant pink */
-  }
+    .emergency-box {
+      background: #3a0055;
+      border-left: 6px solid var(--accent);
+      padding: 15px 20px;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 1.1rem;
+      line-height: 1.4;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+    }
 
-  .accordion.active:after {
-    content: '-';
-  }
+    .emergency-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 8px;
+    }
 
-  .panel {
-    padding: 0 20px 20px 20px;
-    background-color: #fff;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    display: none;
-    font-size: 1rem;
-    color: #222;
-  }
-
-  .panel ul {
-    list-style: disc;
-    margin-left: 20px;
-    margin-top: 10px;
-  }
-
-  .panel ul li {
-    margin-bottom: 10px;
-    line-height: 1.4;
-  }
-
-  .panel ul li a {
-    color: #00796b; /* electric teal */
-    text-decoration: none;
-  }
-
-  .panel ul li a:hover {
-    text-decoration: underline;
-  }
-
-  /* Phone links */
-  a[href^="tel:"] {
-    color: #d81b60;
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  a[href^="tel:"]:hover {
-    text-decoration: underline;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    #mn-resources {
-      padding: 10px;
-      margin: 10px 15px;
+    .emergency-box li {
+      margin-bottom: 6px;
+      font-weight: normal;
+      color: var(--text);
     }
 
     .accordion {
-      font-size: 1.1rem;
-      padding: 12px 15px;
+      background-color: var(--accordion-bg);
+      color: var(--accordion-text);
+      cursor: pointer;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      transition: background-color 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
-  }
-</style>
 
-<section id="mn-resources">
-  <div class="container">
-    <h2 class="section-title">🧭 Minnesota Resources</h2>
-    <p class="intro-text">Local orgs, clinics, and community hubs that care. These aren’t just numbers — they’re lifelines. You deserve safety, respect, and privacy every step of the way.</p>
+    .accordion:hover {
+      background-color: var(--accordion-hover);
+    }
 
-    <div class="emergency-box">
-      <strong>🆘 Emergency & Crisis Quick Reference</strong><br>
-      <ul style="list-style:none; padding-left: 0; margin-top: 8px;">
-        <li><strong>911</strong> – For all immediate emergencies</li>
-        <li><strong>Poison Control</strong> – <a href="tel:18002221222">1-800-222-1222</a></li>
-        <li><strong>National Suicide Prevention Lifeline</strong> – 988</li>
-        <li><strong>Crisis Text Line</strong> – Text <strong>MN</strong> to <strong>741741</strong> for 24/7 mental health support</li>
-        <li><strong>Day One Crisis Line</strong> – <a href="tel:18662231111">1-866-223-1111</a> (Domestic violence, sexual assault help)</li>
-      </ul>
-    </div>
+    .accordion:after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
 
-    <button class="accordion">💉 Harm Reduction & Overdose Prevention</button>
-    <div class="panel">
-      <ul>
-        <li><strong>Steve Rummler HOPE Network</strong> – Narcan and fentanyl test strips mailed to your door anywhere in MN. Training and advocacy too. <a href="https://www.steverummlerhopenetwork.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>Southside Harm Reduction</strong> – Free syringes, test strips, gear, and support in South Minneapolis. southsideharmreduction.org</li>
-        <li><strong>Family Tree Clinic</strong> – Low-barrier, queer-inclusive care. Narcan, STI testing, and safer sex kits. <a href="https://www.familytreeclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .accordion.active:after {
+      content: '-';
+    }
 
-    <button class="accordion">🧪 Narcan + Fentanyl Test Strip Access</button>
-    <div class="panel">
-      <ul>
-        <li><strong>Dose of Reality MN</strong> – Find Narcan and test strip access across Minnesota. <a href="https://doseofreality.mn.gov" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>Rural AIDS Action Network (RAAN)</strong> – Free Narcan, test strips, and HIV/STI testing in rural and greater MN. <a href="https://www.raan.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .panel {
+      padding: 0 20px 20px 20px;
+      background-color: var(--card);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      display: none;
+      font-size: 1rem;
+      color: var(--text);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
 
-    <button class="accordion">🏥 Free / Low-Cost Clinics & Testing</button>
-    <div class="panel">
-      <ul>
-        <li><strong>Red Door Clinic</strong> – Free/sliding scale STI and HIV testing, PEP/PrEP, respectful staff. <a href="https://www.reddoorclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>JustUs Health</strong> – HIV/STI testing, gender-affirming care, and PrEP navigation. <a href="https://www.justushealth.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>Neighborhood HealthSource</strong> – Sliding scale primary care and sexual health services. <a href="https://www.neighborhoodhealthsource.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .panel ul {
+      list-style: disc;
+      margin-left: 20px;
+      margin-top: 10px;
+    }
 
-    <button class="accordion">🧠 Mental Health & Crisis</button>
-    <div class="panel">
-      <ul>
-        <li><strong>COPE Mobile Crisis Team (Hennepin County)</strong> – 24/7 crisis response team. Call <a href="tel:6125961223">612-596-1223</a></li>
-        <li><strong>Crisis Text Line</strong> – Text <strong>MN</strong> to <strong>741741</strong></li>
-        <li><strong>Walk-In Counseling Center</strong> – Free, no-appointment counseling. <a href="https://www.walkin.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .panel ul li {
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
 
-    <button class="accordion">🏳️‍⚧️ LGBTQIA+ & BIPOC Resources</button>
-    <div class="panel">
-      <ul>
-        <li><strong>RECLAIM</strong> – Mental health support for queer and trans youth. Sliding scale, affirming care. <a href="https://www.reclaim.care" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>Family Tree Clinic</strong> – Trans health care, queer-safe services. <a href="https://www.familytreeclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>OutFront Minnesota</strong> – LGBTQ+ legal, advocacy, and anti-violence support. <a href="https://www.outfront.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>BEAM</strong> – Black Emotional and Mental Health Collective. <a href="https://www.beam.community" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .panel ul li a {
+      color: var(--link-color);
+      text-decoration: none;
+      word-break: break-word;
+    }
 
-    <button class="accordion">🪛 Syringe Services & Safer Use Supplies</button>
-    <div class="panel">
-      <ul>
-        <li><strong>Southside Harm Reduction</strong> – Syringes, safer smoking supplies, gear, and use education. <a href="https://www.southsideharmreduction.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>RAAN</strong> – Syringe access and HIV outreach in outstate MN. <a href="https://www.raan.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    .panel ul li a:hover {
+      text-decoration: underline;
+      color: var(--link-hover);
+    }
 
-    <button class="accordion">🤝 Peer Support & Recovery</button>
-    <div class="panel">
-      <ul>
-        <li><strong>Minnesota Recovery Connection</strong> – Peer recovery coaching, sober community events, and resource navigation. <a href="https://www.minnesotarecovery.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    /* Phone links */
+    a[href^="tel:"] {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
 
-    <button class="accordion">👶 Youth & Young Adult-Focused</button>
-    <div class="panel">
-      <ul>
-        <li><strong>The Bridge for Youth</strong> – Safe shelter, support, and housing for youth in crisis. <a href="https://www.bridgeforyouth.org" target="_blank" rel="noopener">Visit Site</a></li>
-        <li><strong>YouthLink MN</strong> – Drop-in center and holistic support for youth experiencing homelessness. <a href="https://www.youthlinkmn.org" target="_blank" rel="noopener">Visit Site</a></li>
-      </ul>
-    </div>
+    a[href^="tel:"]:hover {
+      text-decoration: underline;
+    }
 
-    <button class="accordion">🛡️ Domestic Violence & Sexual Assault Help</button>
-    <div class="panel">
-      <p>If you're being hurt, threatened, manipulated, or violated — there are people ready to listen, believe you, and help you get safe. No judgment. No pressure. Just support.</p>
-      <ul>
-        <li><strong>Day One Crisis Line</strong> – Call <a href="tel:18662231111">1-866-223-1111</a> or visit <a href="https://www.dayoneservices.org" target="_blank" rel="noopener">dayoneservices.org</a></li>
-        <li><strong>Sexual Violence Center (SVC)</strong> – Call <a href="tel:6128715111">612-871-5111</a> or visit <a href="https://www.sexualviolencecenter.org" target="_blank" rel="noopener">sexualviolencecenter.org</a></li>
-        <li><strong>Cornerstone MN</strong> – <a href="https://www.cornerstonemn.org" target="_blank" rel="noopener">cornerstonemn.org</a></li>
-        <li><strong>Aurora Center (U of M)</strong> – <a href="https://aurora.umn.edu" target="_blank" rel="noopener">aurora.umn.edu</a></li>
-        <li><strong>MNCASA</strong> – <a href="https://www.mncasa.org" target="_blank" rel="noopener">mncasa.org</a></li>
-        <li><strong>OutFront Minnesota</strong> – <a href="https://www.outfront.org" target="_blank" rel="noopener">outfront.org</a></li>
-      </ul>
-    </div>
+    /* Footer note */
+    .privacy-note {
+      max-width: 900px;
+      margin: 30px auto 10px auto;
+      font-size: 0.9rem;
+      color: #999;
+      text-align: center;
+      line-height: 1.4;
+      font-style: italic;
+    }
 
-    <button class="accordion">💗 Sex Work Safety & Advocacy</button>
-    <div class="panel">
-      <ul>
-        <li><strong>SWOP Minneapolis</strong> – Mutual aid, advocacy, and support. <a href="https://swopusa.org/chapter/minneapolis" target="_blank" rel="noopener">swopusa.org/chapter/minneapolis</a></li>
-        <li><strong>The Cupcake Girls (MN Chapter)</strong> – Harm reduction, therapy, and resources for sex workers. <a href="https://thecupcakegirls.org" target="_blank" rel="noopener">thecupcakegirls.org</a></li>
-      </ul>
-    </div>
-
-    <div style="margin-top:20px; font-size:0.9rem; color:#666;">
-      🔒 <strong>Confidentiality & Privacy:</strong> All services respect your privacy and confidentiality. Especially if you’re youth, queer, or sex working, your safety and anonymity matter. Don’t hesitate to ask about confidentiality when you reach out.
-    </div>
-  </div>
-</section>
-
-<script>
-  // Accordion functionality
-  document.querySelectorAll('#mn-resources .accordion').forEach(button => {
-    button.addEventListener('click', () => {
-      button.classList.toggle('active');
-      const panel = button.nextElementSibling;
-      if(panel.style.display === 'block') {
-        panel.style.display = 'none';
-      } else {
-        panel.style.display = 'block';
+    /* Responsive */
+    @media (max-width: 600px) {
+      body {
+        padding: 0.75rem;
+        font-size: 0.95rem;
       }
-    });
-  });
-</script>
+      h1 {
+        font-size: 1.5rem;
+      }
+      .accordion {
+        font-size: 1.1rem;
+        padding: 12px 15px;
+      }
+      .panel {
+        font-size: 0.95rem;
+        padding: 0 15px 15px 15px;
+      }
+      .emergency-box {
+        padding: 12px 15px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Minnesota Resources</h1>
+  <p class="intro-text">
+    Local orgs, clinics, and community hubs that care. These aren’t just numbers — they’re lifelines.
+    You deserve safety, respect, and privacy every step of the way.
+  </p>
+
+  <div class="emergency-box">
+    <strong>🆘 Emergency & Crisis Quick Reference</strong>
+    <ul>
+      <li><strong>911</strong> – For all immediate emergencies</li>
+      <li><strong>Poison Control</strong> – <a href="tel:18002221222">1-800-222-1222</a></li>
+      <li><strong>National Suicide Prevention Lifeline</strong> – 988</li>
+      <li><strong>Crisis Text Line</strong> – Text <strong>MN</strong> to <strong>741741</strong> for 24/7 mental health support</li>
+      <li><strong>Day One Crisis Line</strong> – <a href="tel:18662231111">1-866-223-1111</a> (Domestic violence, sexual assault help)</li>
+    </ul>
+  </div>
+
+  <button class="accordion">💉 Harm Reduction & Overdose Prevention</button>
+  <div class="panel">
+    <ul>
+      <li><strong>Steve Rummler HOPE Network</strong> – Narcan and fentanyl test strips mailed to your door anywhere in MN. Training and advocacy too. <a href="https://www.steverummlerhopenetwork.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Southside Harm Reduction</strong> – Free syringes, test strips, gear, and support in South Minneapolis. <a href="https://southsideharmreduction.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Harm Reduction Sisters</strong> – Northern MN delivery & drop-in harm reduction. <a href="https://harmreductionsisters.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Aliveness Project</strong> – Mobile syringe exchange van in the Twin Cities. <a href="https://aliveness.org/syringe-service-program/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>NorthPoint Health</strong> – Testing, supplies, overdose education. <a href="https://www.northpointhealth.org/en/helping-our-neighbors/help-with-addiction/harm-reduction-testing" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Family Tree Clinic</strong> – Low-barrier, queer-inclusive care. Narcan, STI testing, and safer sex kits. <a href="https://www.familytreeclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🧪 Narcan + Fentanyl Test Strip Access</button>
+  <div class="panel">
+    <ul>
+      <li><strong>Dose of Reality MN</strong> – Find Narcan and test strip access across Minnesota. <a href="https://doseofreality.mn.gov" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Rural AIDS Action Network (RAAN)</strong> – Free Narcan, test strips, and HIV/STI testing in rural and greater MN. <a href="https://www.raan.org" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🏥 Free / Low-Cost Clinics & Testing</button>
+  <div class="panel">
+    <ul>
+      <li><strong>Red Door Clinic</strong> – Free/sliding scale STI and HIV testing, PEP/PrEP, respectful staff. <a href="https://www.reddoorclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>JustUs Health</strong> – HIV/STI testing, gender-affirming care, and PrEP navigation. <a href="https://www.justushealth.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Neighborhood HealthSource</strong> – Sliding scale primary care and sexual health services. <a href="https://www.neighborhoodhealthsource.org" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🧠 Crisis & Mental Health</button>
+  <div class="panel">
+    <ul>
+      <li><strong>COPE Mobile Crisis Team (Hennepin County)</strong> – 24/7 crisis response team. Call <a href="tel:6125961223">612-596-1223</a></li>
+      <li><strong>Crisis Text Line</strong> – Text <strong>MN</strong> to <strong>741741</strong></li>
+      <li><strong>Walk-In Counseling Center</strong> – Free, no-appointment counseling. <a href="https://www.walkin.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Fast Tracker</strong> – Mental health + substance use provider search tool. <a href="https://fasttrackermn.org/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>NAMI HelpLine</strong> – Peer mental health guidance. <a href="https://www.nami.org/Support-Education/NAMI-HelpLine" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🏳️‍⚧️ LGBTQIA+ & BIPOC Resources</button>
+  <div class="panel">
+    <ul>
+      <li><strong>RECLAIM</strong> – Mental health support for queer and trans youth. Sliding scale, affirming care. <a href="https://www.reclaim.care" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Family Tree Clinic</strong> – Trans health care, queer-safe services. <a href="https://www.familytreeclinic.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>OutFront Minnesota</strong> – LGBTQ+ legal, advocacy, and anti-violence support. <a href="https://www.outfront.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>The Aliveness Project</strong> – LGBTQ+ friendly HIV resources and holistic care. <a href="https://www.thealivenessproject.org/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>BEAM</strong> – Black Emotional and Mental Health Collective. <a href="https://www.beam.community" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🪛 Syringe Services & Safer Use Supplies</button>
+  <div class="panel">
+    <ul>
+      <li><strong>Southside Harm Reduction</strong> – Syringes, safer smoking supplies, gear, and use education. <a href="https://www.southsideharmreduction.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>RAAN</strong> – Syringe access and HIV outreach in outstate MN. <a href="https://www.raan.org" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🤝 Peer Support & Recovery</button>
+  <div class="panel">
+    <ul>
+      <li><strong>Minnesota Recovery Connection</strong> – Peer recovery coaching, sober community events, and resource navigation. <a href="https://www.minnesotarecovery.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Peer Support Alliance</strong> – Advocacy and training for peer recovery specialists in MN. <a href="https://www.peersupportalliance.org/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Families Anonymous</strong> – Peer support for loved ones of people struggling with substance use. <a href="https://www.familiesanonymous.org/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Unity Recovery (Virtual)</strong> – Free, online, peer-led recovery groups multiple times a day. <a href="https://unityrecovery.org/" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Southside Harm Reduction</strong> – Community care, no abstinence required. <a href="https://www.southsideharmreduction.org/" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">👶 Youth & Young Adult-Focused</button>
+  <div class="panel">
+    <ul>
+      <li><strong>The Bridge for Youth</strong> – Safe shelter, support, and housing for youth in crisis. <a href="https://www.bridgeforyouth.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>YouthLink MN</strong> – Drop-in center and holistic support for youth experiencing homelessness. <a href="https://www.youthlinkmn.org" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Aurora Center (U of M)</strong> – Campus-based sexual assault and violence support. <a href="https://aurora.umn.edu" target="_blank" rel="noopener">Visit Site</a></li>
+      <li><strong>Cornerstone MN</strong> – Youth and adult survivor services. <a href="https://www.cornerstonemn.org" target="_blank" rel="noopener">Visit Site</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">🛡️ Domestic Violence & Sexual Assault Help</button>
+  <div class="panel">
+    <p>If you're being hurt, threatened, manipulated, or violated — there are people ready to listen, believe you, and help you get safe. No judgment. No pressure. Just support.</p>
+    <ul>
+      <li><strong>Day One Crisis Line</strong> – Call <a href="tel:18662231111">1-866-223-1111</a> or visit <a href="https://www.dayoneservices.org" target="_blank" rel="noopener">dayoneservices.org</a></li>
+      <li><strong>Sexual Violence Center (SVC)</strong> – Call <a href="tel:6128715111">612-871-5111</a> or visit <a href="https://www.sexualviolencecenter.org" target="_blank" rel="noopener">sexualviolencecenter.org</a></li>
+      <li><strong>Cornerstone MN</strong> – <a href="https://www.cornerstonemn.org" target="_blank" rel="noopener">cornerstonemn.org</a></li>
+      <li><strong>Aurora Center (U of M)</strong> – <a href="https://aurora.umn.edu" target="_blank" rel="noopener">aurora.umn.edu</a></li>
+      <li><strong>MNCASA</strong> – <a href="https://www.mncasa.org" target="_blank" rel="noopener">mncasa.org</a></li>
+      <li><strong>OutFront Minnesota</strong> – <a href="https://www.outfront.org" target="_blank" rel="noopener">outfront.org</a></li>
+    </ul>
+  </div>
+
+  <button class="accordion">💗 Sex Work Safety & Advocacy</button>
+  <div class="panel">
+    <ul>
+      <li><strong>SWOP Minneapolis</strong> – Mutual aid, advocacy, and support. <a href="https://swopusa.org/chapter/minneapolis" target="_blank" rel="noopener">swopusa.org/chapter/minneapolis</a></li>
+      <li><strong>The Cupcake Girls (MN Chapter)</strong> – Harm reduction, therapy, and resources for sex workers. <a href="https://thecupcakegirls.org" target="_blank" rel="noopener">thecupcakegirls.org</a></li>
