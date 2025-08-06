@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bad Trip Mode — PLURderapolis</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&family=Roboto&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Base Dark Mode */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #1c0028;
+      color: #f8f8f8;
+      line-height: 1.6;
+      padding: 1.5rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+
+    h1, h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: #ff6ec7;
+      margin-bottom: 0.4rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+    }
+    h2 {
+      font-size: 1.3rem;
+      cursor: pointer;
+      user-select: none;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      background-color: #2a0040;
+      box-shadow: 0 0 8px #ff6ec7aa;
+      transition: background-color 0.25s ease;
+      margin-bottom: 0.8rem;
+    }
+    h2:hover,
+    h2:focus {
+      background-color: #3b0060;
+      outline: none;
+    }
+
+    /* Collapsible Content */
+    .collapsible-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background-color: #2a0040;
+      padding: 0 1rem;
+      border-radius: 0 0 8px 8px;
+      box-shadow: inset 0 0 10px #ff6ec799;
+      margin-bottom: 1.5rem;
+    }
+    .collapsible-content.open {
+      padding: 1rem;
+      max-height: 500px; /* Enough for content */
+    }
+    p, ul {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      color: #e9d7f0;
+    }
+    ul {
+      padding-left: 1.2rem;
+      list-style: disc;
+    }
+    a {
+      color: #00f7e0;
+      text-decoration: none;
+    }
+    a:hover,
+    a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* Buttons */
+    #toggleSensory {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #ff6ec7;
+      border: none;
+      color: #1c0028;
+      font-weight: 700;
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #ff6ec7cc;
+      user-select: none;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+    }
+    #toggleSensory:hover,
+    #toggleSensory:focus {
+      background-color: #ff49b2;
+      outline: none;
+    }
+
+    /* Links Buttons */
+    .btn-link {
+      display: inline-block;
+      background: #00f7e0;
+      color: #1c0028;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 0.5rem;
+      user-select: none;
+      box-shadow: 0 0 10px #00f7e0bb;
+      transition: background-color 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .btn-link:hover,
+    .btn-link:focus {
+      background-color: #00d6c7;
+      outline: none;
+    }
+
+    /* Iframe Styling */
+    iframe {
+      width: 100%;
+      max-width: 400px;
+      height: 200px;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 0 12px #ff6ec7aa;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* Sensory Safe Mode */
+    body.sensory-safe {
+      background-color: #0d0d0d !important;
+      color: #ddd !important;
+    }
+    body.sensory-safe h1,
+    body.sensory-safe h2 {
+      color: #eee !important;
+      background: none !important;
+      box-shadow: none !important;
+      cursor: default !important;
+    }
+    body.sensory-safe h2:hover {
+      background: none !important;
+      box-shadow: none !important;
+      cursor: default !important;
+    }
+    body.sensory-safe .collapsible-content {
+      background: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      margin-bottom: 1rem !important;
+    }
+    body.sensory-safe iframe,
+    body.sensory-safe .btn-link {
+      display: none !important;
+    }
+    body.sensory-safe a {
+      color: #aaa !important;
+      text-decoration: underline !important;
+    }
+    body.sensory-safe #toggleSensory {
+      background-color: #888 !important;
+      color: #222 !important;
+      box-shadow: none !important;
+    }
+    body.sensory-safe #toggleSensory:hover,
+    body.sensory-safe #toggleSensory:focus {
+      background-color: #666 !important;
+      color: #111 !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+      iframe {
+        height: 150px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1.1rem;
+        padding: 0.5rem 0.8rem;
+      }
+      #toggleSensory {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+      }
+      .btn-link {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="toggleSensory" aria-pressed="false" aria-label="Toggle sensory safe mode">
+    🌙 Calm Mode
+  </button>
+
+  <h1>Bad Trip Mode</h1>
+  <p style="text-align:center; font-weight:700; font-size:1.2rem; margin-bottom: 2rem;">
+    This will pass. You are not dying. You are just high.
+  </p>
+
+  <!-- Collapsible Sections -->
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="grounding">🌬️ Ground Yourself</h2>
+    <div id="grounding" class="collapsible-content" aria-hidden="true">
+      <p>Try this 5-4-3-2-1 grounding technique:</p>
+      <ul>
+        <li><strong>5 things</strong> you can see</li>
+        <li><strong>4 things</strong> you can touch</li>
+        <li><strong>3 things</strong> you can hear</li>
+        <li><strong>2 things</strong> you can smell</li>
+        <li><strong>1 thing</strong> you can taste</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="listenChill">🎧 Listen to Something Chill</h2>
+    <div id="listenChill" class="collapsible-content" aria-hidden="true">
+      <p>When you're ready, press play on this calming playlist:</p>
+      <iframe
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3Ogo9pFvBkY"
+        title="Lo-fi Chill Playlist"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="gentleVisuals">🌌 Gentle Visuals</h2>
+    <div id="gentleVisuals" class="collapsible-content" aria-hidden="true">
+      <p>Soft, flowing visuals can help calm your mind. Press play if it feels okay.</p>
+      <iframe
+        src="https://www.youtube.com/embed/1ZYbU82GVz4?autoplay=0&loop=1&playlist=1ZYbU82GVz4&controls=0&modestbranding=1&disablekb=1"
+        title="Soothing Lava Lamp"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+      <iframe
+        src="https://www.youtube.com/embed/e5ZnH3N3Z2A?autoplay=0&loop=1&playlist=e5ZnH3N3Z2A&controls=0&modestbranding=1&disablekb=1"
+        title="Starfield Ambient"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember</h2>
+    <div id="mantras" class="collapsible-content" aria-hidden="true">
+      <p><em>"I took a substance. It will wear off. I am safe."</em></p>
+      <p><em>"This feeling is temporary. I am in control."</em></p>
+      <p><em>"I can breathe. I can wait."</em></p>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin">🧍 Check-In With Yourself</h2>
+    <div id="checkin" class="collapsible-content" aria-hidden="true">
+      <ul>
+        <li>Am I hydrated? Drink water slowly.</li>
+        <li>Can I talk to a trusted friend or sitter?</li>
+        <li>Can I take slow, deep breaths?</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="wait">⏳ Just Wait</h2>
+    <div id="wait" class="collapsible-content" aria-hidden="true">
+      <p>Give it 15 minutes. Panic will pass.</p>
+      <p>If you want, use this calm timer:</p>
+      <iframe
+        src="https://www.youtube.com/embed/4pHYJb9GZ1Y?autoplay=0&controls=1&modestbranding=1"
+        title="Calm Timer"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="backup">📞 Need Backup?</h2>
+    <div id="backup" class="collapsible-content" aria-hidden="true">
+      <p>Help is out there. Reach out if you need someone to talk to:</p>
+      <ul>
+        <li><a href="https://tripsit.me/" target="_blank" rel="noopener">TripSit Live Chat</a></li>
+        <li><a href="https://firesideproject.org/" target="_blank" rel="noopener">Fireside Project</a></li>
+        <li><a href="https://neverusealone.com/" target="_blank" rel="noopener">Never Use Alone</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="finalButtons">🚑 Final Help</h2>
+    <div id="finalButtons" class="collapsible-content" aria-hidden="true">
+      <a href="/panic.html" class="btn-link" role="button">🚨 Panic Button</a><br />
+      <a href="/emergency.html" class="btn-link" role="button">🚑 Emergency Help</a><br />
+      <a href="index.html" class="btn-link" role="button">🏠 I'm Feeling Better</a>
+    </div>
+  </section>
+
+  <script>
+    // Toggle sensory safe mode
+    const sensoryToggleBtn = document.getElementById('toggleSensory');
+    sensoryToggleBtn.addEventListener('click', () => {
+      const body = document.body;
+      const isSafe = body.classList.toggle('sensory-safe');
+      sensoryToggleBtn.setAttribute('aria-pressed', isSafe);
+      sensoryToggleBtn.textContent = isSafe ? '🌞 Normal Mode' : '🌙 Calm Mode';
+    });
+
+    // Collapsible sections logic
+    const headers = document.querySelectorAll('section h2');
+    headers.forEach(header => {
+      header.addEventListener('click', toggleCollapse);
+      header.addEventListener('keypress', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleCollapse.call(header);
+        }
+      });
+    });
+
+    function toggleCollapse() {
+      const content = document.getElementById(this.getAttribute('aria-controls'));
+      const isOpen = content.classList.toggle('open');
+      this.setAttribute('aria-expanded', isOpen);
+      content.setAttribute('aria-hidden', !isOpen);
+    }
+  </script>
+</body>
+</html>
