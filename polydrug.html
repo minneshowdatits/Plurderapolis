@@ -1,330 +1,472 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Polydrug Risks | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      background-color: #121212;
-      color: #eee;
-      font-family: 'Open Sans', sans-serif;
-      margin: 0;
-      padding: 1rem;
-    }
-    section.content-section {
-      max-width: 900px;
-      margin: auto;
-      padding: 1rem;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Polydrug Risks & Interaction Checker | PLURderapolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
+<style>
+  /* Reset & base */
+  body {
+    background-color: #121212;
+    color: #eee;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 1rem;
+  }
+  section.content-section {
+    max-width: 900px;
+    margin: auto;
+    padding: 1rem;
+  }
+  h2.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #bf00bf;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    color: #e051ff;
+  }
+  p, li {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .risk-category {
+    background: #220022;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 8px rgba(255,0,255,0.15);
+  }
+  .subsection-title {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #e051ff;
+  }
+  .matrix-table {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(191,0,191,0.3);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 900px;
+    font-size: 0.9rem;
+    color: #eee;
+  }
+  th, td {
+    border: 1px solid #440044;
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    background-color: #550055;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  td {
+    background-color: #2a002a;
+  }
+  form {
+    margin-bottom: 1.5rem;
+  }
+  label {
+    display: block;
+    margin: 0.5rem 0 0.3rem;
+    font-weight: 600;
+    color: #bf00bf;
+  }
+  input[type="text"], select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #550055;
+    background-color: #220022;
+    color: #eee;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  input[type="text"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  #comboResult {
+    background-color: #330033;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 12px rgba(255,0,255,0.6);
+    min-height: 80px;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+  }
+  /* Risk colors */
+  .risk-🟢 { color: #4CAF50; font-weight: 700; }
+  .risk-🟡 { color: #FFC107; font-weight: 700; }
+  .risk-🔴 { color: #F44336; font-weight: 700; }
+  .risk-❌ { color: #9C27B0; font-weight: 700; }
+  .risk-☠️ { color: #000000; background: #FF1744; font-weight: 700; padding: 0 4px; border-radius: 4px; }
+  /* Responsive */
+  @media (max-width: 600px) {
     h2.section-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
-      color: #bf00bf;
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
     h3 {
-      color: #e051ff;
-    }
-    p, li {
-      font-size: 1.05rem;
-      line-height: 1.6;
-    }
-    .risk-category {
-      background: #220022;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 8px rgba(255,0,255,0.15);
-    }
-    .subsection-title {
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #e051ff;
-    }
-    .matrix-table {
-      overflow-x: auto;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
     }
     table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 900px;
-      font-size: 0.9rem;
-      color: #eee;
+      font-size: 0.85rem;
+      min-width: 700px;
     }
-    th, td {
-      border: 1px solid #440044;
-      padding: 0.4rem 0.7rem;
-      text-align: center;
-      vertical-align: middle;
+    input[type="text"], select {
+      max-width: 100%;
     }
-    th {
-      background-color: #550055;
-      font-weight: 700;
-    }
-    td {
-      background-color: #2a002a;
-    }
-    form {
-      margin-bottom: 1.5rem;
-    }
-    label {
-      display: block;
-      margin: 0.5rem 0 0.3rem;
-      font-weight: 600;
-      color: #bf00bf;
-    }
-    select {
-      width: 100%;
-      max-width: 300px;
-      padding: 0.4rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #550055;
-      background-color: #220022;
-      color: #eee;
-      margin-bottom: 1rem;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      cursor: pointer;
-    }
-    #comboResult {
-      background-color: #330033;
-      border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 0 12px rgba(255,0,255,0.4);
-      min-height: 60px;
-      font-size: 1rem;
-      line-height: 1.4;
-      margin-bottom: 3rem;
-    }
-    @media (max-width: 600px) {
-      h2.section-title {
-        font-size: 1.5rem;
-      }
-      h3 {
-        font-size: 1.1rem;
-      }
-      table {
-        font-size: 0.85rem;
-        min-width: 700px;
-      }
-      select {
-        max-width: 100%;
-      }
-    }
-    footer {
-      background:#222;
-      color:#aaa;
-      padding:1rem;
-      margin-top:3rem;
-      font-size:0.85rem;
-      text-align:center;
-      border-top:1px solid #550055;
-    }
-  </style>
+  }
+  footer {
+    background:#222;
+    color:#aaa;
+    padding:1rem;
+    margin-top:3rem;
+    font-size:0.85rem;
+    text-align:center;
+    border-top:1px solid #550055;
+  }
+</style>
 </head>
 <body>
-  <section id="polydrug-risks" class="content-section">
-    <h2 class="section-title">🧠 Polydrug Risks</h2>
-    <p>Ravers don’t always stick to one thing—and that’s real. But mixing substances can make effects way less predictable and way more dangerous. Here’s what you need to know before you mix.</p>
 
-    <!-- Combo Breakdown Cards -->
-    <div class="risk-category">
-      <h3>⚡ Stimulant + Stimulant</h3>
-      <p><strong>Examples:</strong> MDMA + Cocaine, Amphetamine + MDA</p>
-      <p><strong>Risks:</strong> Heart attack, seizures, psychosis, serotonin syndrome, overheating.</p>
-    </div>
-    <div class="risk-category">
-      <h3>💤 Depressant + Depressant</h3>
-      <p><strong>Examples:</strong> Alcohol + Benzos, GHB + Oxycodone</p>
-      <p><strong>Risks:</strong> Respiratory arrest, coma, blackouts, death in sleep.</p>
-    </div>
-    <div class="risk-category">
-      <h3>⚠️ Stimulant + Depressant</h3>
-      <p><strong>Examples:</strong> Cocaine + Alcohol, MDMA + GHB</p>
-      <p><strong>Risks:</strong> Mixed signals to your body = dehydration, liver stress, fatal crash.</p>
-    </div>
-    <div class="risk-category">
-      <h3>🌈 Stimulant + Psychedelic</h3>
-      <p><strong>Examples:</strong> LSD + MDMA (candyflipping)</p>
-      <p><strong>Risks:</strong> Sensory overload, panic attacks, serotonin syndrome.</p>
-    </div>
-    <div class="risk-category">
-      <h3>🌪️ Depressant + Psychedelic</h3>
-      <p><strong>Examples:</strong> Benzos + LSD, Alcohol + Shrooms</p>
-      <p><strong>Risks:</strong> Amnesia, suppressed breathing, unpredictable trips.</p>
-    </div>
-    <div class="risk-category">
-      <h3>🧊 Ketamine Combos</h3>
-      <p><strong>Examples:</strong> K + Alcohol, K + Stimulants</p>
-      <p><strong>Risks:</strong> Respiratory suppression, blackouts, urinary damage, overdose.</p>
-    </div>
-    <div class="risk-category">
-      <h3>☠️ Opioid + Depressants</h3>
-      <p><strong>Examples:</strong> Heroin + Benzos, Fentanyl + Alcohol</p>
-      <p><strong>Risks:</strong> Extremely high overdose risk. One of the most lethal combos.</p>
-    </div>
-    <div class="risk-category">
-      <h3>🧬 Cocaine + Alcohol</h3>
-      <p><strong>Creates:</strong> Cocaethylene (more toxic than coke or alcohol alone)</p>
-      <p><strong>Risks:</strong> Seizures, heart strain, liver toxicity.</p>
-    </div>
+<section id="polydrug-risks" class="content-section">
+  <h2 class="section-title">🧠 Polydrug Risks</h2>
+  <p>Ravers don’t always stick to one thing—and that’s real. But mixing substances can make effects way less predictable and way more dangerous. Here’s what you need to know before you mix.</p>
 
-    <!-- Matrix -->
-    <h3 class="subsection-title">📊 Combo Risk Matrix</h3>
-    <p>Tap or hover for more info. Legend: 🟢 Low Risk | 🟡 Moderate | 🔴 Caution | ❌ Unsafe | ☠️ Deadly</p>
-    <div class="matrix-table scroll-x">
-      <!
-    <h3 class="subsection-title">📊 Combo Risk Matrix</h3>
-    <p>Tap or hover for more info. 🟢 Low • 🟡 Moderate • 🔴 Caution • ❌ Unsafe • ☠️ Deadly</p>
-    <div class="matrix-table">
-      <table>
-        <thead>
-          <tr>
-            <th>↓ / →</th><th>Cannabis</th><th>Ketamine</th><th>MDMA</th><th>Cocaine</th><th>Alcohol</th>
-            <th>GHB / Opioids</th><th>Benzos</th><th>SSRIs</th><th>SNRIs</th><th>ADHD Meds</th><th>Wellbutrin</th><th>Trazodone</th><th>Gabapentin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><th>Cannabis</th><td>—</td><td>🟡</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🟡</td><td>🟡</td><td>🟢</td><td>🟢</td><td>🟢</td><td>🟢</td></tr>
-          <tr><th>Ketamine</th><td>🟡</td><td>—</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🔴</td><td>🟡</td><td>🟡</td></tr>
-          <tr><th>MDMA</th><td>🔴</td><td>❌</td><td>—</td><td>🔴</td><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>❌</td><td>🔴</td></tr>
-          <tr><th>Cocaine</th><td>🔴</td><td>❌</td><td>🔴</td><td>—</td><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>🔴</td><td>🔴</td></tr>
-          <tr><th>Alcohol</th><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>—</td><td>❌</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>❌</td><td>❌</td></tr>
-          <tr><th>GHB / Opioids</th><td>🔴</td><td>❌</td><td>❌</td><td>❌</td><td>☠️</td><td>—</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
-          <tr><th>Benzos</th><td>🔴</td><td>🟡</td><td>🔴</td><td>🔴</td><td>☠️</td><td>☠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
-          <tr><th>SSRIs</th><td>🟡</td><td>🟡</td><td>🔴</td><td>🔴</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
-          <tr><th>SNRIs</th><td>🟡</td><td>🟡</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
-          <tr><th>ADHD Meds</th><td>🟢</td><td>🟡</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>🟡</td><td>🟡</td></tr>
-          <tr><th>Wellbutrin</th><td>🟢</td><td>🟡</td><td>❌</td><td>🔴</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>—</td><td>🟡</td></tr>
-          <tr><th>Trazodone</th><td>🟢</td><td>🟡</td><td>❌</td><td>🔴</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>—</td></tr>
-          <tr><th>Gabapentin</th><td>🟢</td><td>🟡</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>—</td></tr>
-        </tbody>
-      </table>
+  <!-- Combo Breakdown Cards -->
+  <div class="risk-category">
+    <h3>⚡ Stimulant + Stimulant</h3>
+    <p><strong>Examples:</strong> MDMA + Cocaine, Amphetamine + MDA</p>
+    <p><strong>Risks:</strong> Heart attack, seizures, psychosis, serotonin syndrome, overheating.</p>
+  </div>
+  <div class="risk-category">
+    <h3>💤 Depressant + Depressant</h3>
+    <p><strong>Examples:</strong> Alcohol + Benzos, GHB + Oxycodone</p>
+    <p><strong>Risks:</strong> Respiratory arrest, coma, blackouts, death in sleep.</p>
+  </div>
+  <div class="risk-category">
+    <h3>⚠️ Stimulant + Depressant</h3>
+    <p><strong>Examples:</strong> Cocaine + Alcohol, MDMA + GHB</p>
+    <p><strong>Risks:</strong> Mixed signals to your body = dehydration, liver stress, fatal crash.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🌈 Stimulant + Psychedelic</h3>
+    <p><strong>Examples:</strong> LSD + MDMA (candyflipping)</p>
+    <p><strong>Risks:</strong> Sensory overload, panic attacks, serotonin syndrome.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🌪️ Depressant + Psychedelic</h3>
+    <p><strong>Examples:</strong> Benzos + LSD, Alcohol + Shrooms</p>
+    <p><strong>Risks:</strong> Amnesia, suppressed breathing, unpredictable trips.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🧊 Ketamine Combos</h3>
+    <p><strong>Examples:</strong> K + Alcohol, K + Stimulants</p>
+    <p><strong>Risks:</strong> Respiratory suppression, blackouts, urinary damage, overdose.</p>
+  </div>
+  <div class="risk-category">
+    <h3>☠️ Opioid + Depressants</h3>
+    <p><strong>Examples:</strong> Heroin + Benzos, Fentanyl + Alcohol</p>
+    <p><strong>Risks:</strong> Extremely high overdose risk. One of the most lethal combos.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🧬 Cocaine + Alcohol</h3>
+    <p><strong>Creates:</strong> Cocaethylene (more toxic than coke or alcohol alone)</p>
+    <p><strong>Risks:</strong> Seizures, heart strain, liver toxicity.</p>
+  </div>
 
-      <!-- For brevity, omitting it here, but use the matrix you already built -->
-    </div>
+  <!-- Matrix -->
+  <h3 class="subsection-title">📊 Combo Risk Matrix</h3>
+  <p>Tap or hover for more info. Legend: 🟢 Low Risk | 🟡 Moderate | 🔴 Caution | ❌ Unsafe | ☠️ Deadly</p>
+  <div class="matrix-table">
+    <table>
+      <thead>
+        <tr>
+          <th>↓ / →</th>
+          <th>Cannabis</th><th>Ketamine</th><th>MDMA</th><th>Cocaine</th><th>Alcohol</th>
+          <th>GHB / Opioids</th><th>Benzos</th><th>SSRIs</th><th>SNRIs</th><th>ADHD Meds</th>
+          <th>Antipsychotics</th><th>Mood Stabilizers</th><th>Wellbutrin</th><th>Trazodone</th><th>Gabapentin</th><th>LSD</th><th>Shrooms</th><th>Nitrous</th><th>DMT</th><th>GHB</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th>Cannabis</th><td>—</td><td>🟡</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🟡</td><td>🟡</td><td>🟢</td><td>🟡</td><td>🟡</td><td>🟢</td><td>🟢</td><td>🟢</td><td>🔴</td><td>🔴</td><td>🟢</td><td>🔴</td><td>🔴</td></tr>
+        <tr><th>Ketamine</th><td>🟡</td><td>—</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🔴</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>❌</td><td>❌</td><td>🟡</td><td>❌</td><td>❌</td></tr>
+        <tr><th>MDMA</th><td>🔴</td><td>❌</td><td>—</td><td>🔴</td><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td></tr>
+        <tr><th>Cocaine</th><td>🔴</td><td>❌</td><td>🔴</td><td>—</td><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td></tr>
+        <tr><th>Alcohol</th><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>—</td><td>❌</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>❌</td><td>❌</td><td>❌</td><td>🔴</td><td>🔴</td><td>❌</td><td>❌</td><td>☠️</td></tr>
+        <tr><th>GHB / Opioids</th><td>🔴</td><td>❌</td><td>❌</td><td>❌</td><td>☠️</td><td>—</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>❌</td><td>❌</td><td>⚠️</td><td>☠️</td><td>—</td></tr>
+        <tr><th>Benzos</th><td>🔴</td><td>🟡</td><td>🔴</td><td>🔴</td><td>☠️</td><td>☠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>☠️</td><td>⚠️</td></tr>
+        <tr><th>SSRIs</th><td>🟡</td><td>🟡</td><td>🔴</td><td>🔴</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>SNRIs</th><td>🟡</td><td>🟡</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>ADHD Meds</th><td>🟢</td><td>🟡</td><td>❌</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>Antipsychotics</th><td>🟡</td><td>🟡</td><td>❌</td><td>🔴</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>—</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>Mood Stabilizers</th><td>🟡</td><td>🟡</td><td>❌</td><td>🔴</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>—</td><td>🟡</td><td>🟡</td><td>🟡</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>Wellbutrin</th><td>🟢</td><td>🟡</td><td>❌</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>🟡</td><td>—</td><td>🟡</td><td>🟡</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>Trazodone</th><td>🟢</td><td>🟡</td><td>🔴</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>—</td><td>🟢</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>Gabapentin</th><td>🟢</td><td>🟡</td><td>🔴</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟡</td><td>🟢</td><td>—</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>LSD</th><td>🔴</td><td>🟡</td><td>🔴</td><td>🔴</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>—</td><td>🟢</td><td>🟡</td><td>🟡</td><td>🔴</td></tr>
+        <tr><th>Shrooms</th><td>🔴</td><td>❌</td><td>🔴</td><td>🔴</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟢</td><td>⚠️</td><td>🟢</td><td>—</td><td>🟡</td><td>🟡</td><td>🔴</td></tr>
+        <tr><th>Nitrous</th><td>🟢</td><td>🟡</td><td>🔴</td><td>🔴</td><td>❌</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🟡</td><td>🟡</td><td>—</td><td>⚠️</td><td>⚠️</td></tr>
+        <tr><th>DMT</th><td>🔴</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🔴</td><td>🔴</td><td>⚠️</td><td>—</td><td>☠️</td></tr>
+        <tr><th>GHB</th><td>🔴</td><td>❌</td><td>❌</td><td>☠️</td><td>☠️</td><td>—</td><td>☠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>⚠️</td><td>🔴</td><td>🔴</td><td>⚠️</td><td>☠️</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- Interaction Tool -->
-    <section id="interaction-tool">
-      <h3 class="subsection-title">🎛️ Interaction Checker</h3>
-      <p>Select two substances to see if the combo is chill or sketch:</p>
-      <form id="comboForm">
-        <label for="drug1">Substance 1:</label>
-        <select id="drug1">
-          <option value="">— Select —</option>
-          <option value="Cannabis">Cannabis</option>
-          <option value="Ketamine">Ketamine</option>
-          <option value="MDMA">MDMA</option>
-          <option value="Cocaine">Cocaine</option>
-          <option value="Alcohol">Alcohol</option>
-          <option value="GHB / Opioids">GHB / Opioids</option>
-          <option value="Benzos">Benzos</option>
-          <option value="SSRIs">SSRIs</option>
-          <option value="SNRIs">SNRIs</option>
-          <option value="ADHD Meds">ADHD Meds</option>
-          <option value="Antipsychotics">Antipsychotics</option>
-          <option value="Mood Stabilizers">Mood Stabilizers</option>
-          <option value="Wellbutrin">Wellbutrin</option>
-          <option value="Trazodone">Trazodone</option>
-          <option value="Gabapentin">Gabapentin</option>
-        </select>
+  <!-- Interaction Checker -->
+  <h3 class="subsection-title">🔎 Polydrug Interaction Checker</h3>
+  <form id="interactionForm" autocomplete="off">
+    <label for="drug1">Substance 1:</label>
+    <input type="text" id="drug1" name="drug1" list="druglist" placeholder="Start typing..." required />
 
-        <label for="drug2">Substance 2:</label>
-        <select id="drug2">
-          <option value="">— Select —</option>
-          <option value="Cannabis">Cannabis</option>
-          <option value="Ketamine">Ketamine</option>
-          <option value="MDMA">MDMA</option>
-          <option value="Cocaine">Cocaine</option>
-          <option value="Alcohol">Alcohol</option>
-          <option value="GHB / Opioids">GHB / Opioids</option>
-          <option value="Benzos">Benzos</option>
-          <option value="SSRIs">SSRIs</option>
-          <option value="SNRIs">SNRIs</option>
-          <option value="ADHD Meds">ADHD Meds</option>
-          <option value="Antipsychotics">Antipsychotics</option>
-          <option value="Mood Stabilizers">Mood Stabilizers</option>
-          <option value="Wellbutrin">Wellbutrin</option>
-          <option value="Trazodone">Trazodone</option>
-          <option value="Gabapentin">Gabapentin</option>
-        </select>
-      </form>
-      <div id="comboResult"></div>
-    </section>
-  </section>
+    <label for="drug2">Substance 2:</label>
+    <input type="text" id="drug2" name="drug2" list="druglist" placeholder="Start typing..." required />
 
-  <script>
-    const combos = {
-      "Cannabis+Ketamine": { risk: "🟡 Moderate", note: "May cause light sedation or dizziness." },
-      "Cannabis+MDMA": { risk: "🔴 Caution", note: "May increase anxiety or heart rate unpredictably." },
-      "MDMA+SSRIs": { risk: "🔴 Caution", note: "Dulls roll, risks serotonin syndrome." },
-      "Alcohol+Benzos": { risk: "☠️ Deadly", note: "High risk of overdose and death." },
-      "MDMA+SNRIs": { risk: "❌ Unsafe", note: "SNRIs can block MDMA and increase serotonin syndrome risk." },
-      "GHB / Opioids+Benzos": { risk: "☠️ Deadly", note: "Very high overdose risk from respiratory depression." },
-      "Ketamine+Alcohol": { risk: "❌ Unsafe", note: "May lead to blackouts and unconsciousness." },
-      // Add more combos here…
-    };
+    <label for="drug3">Substance 3 (optional):</label>
+    <input type="text" id="drug3" name="drug3" list="druglist" placeholder="Start typing..." />
 
-    document.getElementById("comboForm").addEventListener("change", () => {
-      const drug1 = document.getElementById("drug1").value;
-      const drug2 = document.getElementById("drug2").value;
-      const result = document.getElementById("comboResult");
+    <button type="submit" style="background:#bf00bf; color:#fff; padding:0.6rem 1.2rem; border:none; border-radius:6px; font-weight:700; cursor:pointer;">
+      Check Risk
+    </button>
+  </form>
 
-      if (drug1 && drug2) {
-        const key = ${drug1}+${drug2};
-        const reverseKey = ${drug2}+${drug1};
-        const combo = combos[key] || combos[reverseKey];
+  <datalist id="druglist">
+    <option value="Cannabis" />
+    <option value="Ketamine" />
+    <option value="MDMA" />
+    <option value="Cocaine" />
+    <option value="Alcohol" />
+    <option value="GHB / Opioids" />
+    <option value="Benzos" />
+    <option value="SSRIs" />
+    <option value="SNRIs" />
+    <option value="ADHD Meds" />
+    <option value="Antipsychotics" />
+    <option value="Mood Stabilizers" />
+    <option value="Wellbutrin" />
+    <option value="Trazodone" />
+    <option value="Gabapentin" />
+    <option value="LSD" />
+    <option value="Shrooms" />
+    <option value="Nitrous" />
+    <option value="DMT" />
+    <option value="GHB" />
+  </datalist>
 
-        if (combo) {
-          result.innerHTML = <strong>Risk:</strong> ${combo.risk}<br><p>${combo.note}</p>;
-        } else {
-          result.innerHTML = <p>No specific data—but assume stacking risks unless proven safe. Start low, go slow.</p>;
-        }
-      } else {
-        result.innerHTML = "";
-      }
-    });
-  </script><script>
-  const combos = {
-    "Cannabis+Ketamine": { risk: "🟡 Moderate", note: "May cause light sedation or dizziness." },
-    "Cannabis+MDMA": { risk: "🔴 Caution", note: "May increase anxiety or heart rate unpredictably." },
-    "MDMA+SSRIs": { risk: "🔴 Caution", note: "Dulls roll, risks serotonin syndrome." },
-    "Alcohol+Benzos": { risk: "☠️ Deadly", note: "High risk of overdose and death." },
-    "MDMA+SNRIs": { risk: "❌ Unsafe", note: "SNRIs can block MDMA and increase serotonin syndrome risk." },
-    "GHB / Opioids+Benzos": { risk: "☠️ Deadly", note: "Very high overdose risk from respiratory depression." },
-    "Ketamine+Alcohol": { risk: "❌ Unsafe", note: "May lead to blackouts and unconsciousness." },
-    // Add more combos here…
+  <div id="comboResult" aria-live="polite" role="region"></div>
+
+  <!-- Harm Reduction Tips -->
+  <h3 class="subsection-title">💡 Harm Reduction Tips</h3>
+  <ul>
+    <li>Start with low doses when mixing substances, even if you’ve tried them before alone.</li>
+    <li>Never use alone. Always have a sober, trusted person around if possible.</li>
+    <li>Keep water nearby but don’t overhydrate—sip slowly.</li>
+    <li>Have naloxone (Narcan) accessible if using opioids or depressants.</li>
+    <li>Be mindful of your heart rate and breathing—if they feel off, get help.</li>
+    <li>Know your limits: mixing anything with benzos, alcohol, or opioids ups overdose risk dramatically.</li>
+    <li>If you’re on prescription meds, talk to your doctor before using other substances.</li>
+    <li>Rest and don’t push your body—fatigue lowers your tolerance and increases risk.</li>
+  </ul>
+
+  <!-- Emergency Resources -->
+  <h3 class="subsection-title">🚨 Emergency Resources in Minnesota</h3>
+  <ul>
+    <li><strong>Project Peach MN:</strong> <a href="https://projectpeachmn.org" target="_blank" style="color:#bf00bf;">projectpeachmn.org</a></li>
+    <li><strong>Naloxone Access:</strong> Call 211 or visit <a href="https://harmreduction.org" target="_blank" style="color:#bf00bf;">harmreduction.org</a></li>
+    <li><strong>Substance Use Crisis Line:</strong> 1-833-244-3636</li>
+    <li><strong>Emergency Medical Services:</strong> 911</li>
+  </ul>
+
+</section>
+
+<script>
+(() => {
+  const riskData = {
+    "Cannabis|Ketamine": { risk: "🟡", desc: "Mild risk: may increase sedation or dizziness." },
+    "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
+    "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
+    "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
+    "Cannabis|GHB / Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
+    "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
+    "Cannabis|SSRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
+    "Cannabis|SNRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
+    "Cannabis|ADHD Meds": { risk: "🟢", desc: "Generally safe." },
+    "Cannabis|Antipsychotics": { risk: "🟡", desc: "May affect mental state; use cautiously." },
+    "Cannabis|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
+    "Cannabis|Wellbutrin": { risk: "🟢", desc: "Generally safe." },
+    "Cannabis|Trazodone": { risk: "🟢", desc: "Generally safe." },
+    "Cannabis|Gabapentin": { risk: "🟢", desc: "Generally safe." },
+    "Cannabis|LSD": { risk: "🔴", desc: "May intensify effects and anxiety." },
+    "Cannabis|Shrooms": { risk: "🔴", desc: "May intensify effects and anxiety." },
+    "Cannabis|Nitrous": { risk: "🟢", desc: "Generally safe." },
+    "Cannabis|DMT": { risk: "🔴", desc: "May increase anxiety and cardiovascular strain." },
+    "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
+
+    "Ketamine|MDMA": { risk: "❌", desc: "Dangerous combo: high risk of respiratory failure." },
+    "Ketamine|Cocaine": { risk: "❌", desc: "Dangerous combo: high risk of heart issues." },
+    "Ketamine|Alcohol": { risk: "❌", desc: "Dangerous combo: respiratory depression risk." },
+    "Ketamine|GHB / Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
+    "Ketamine|Benzos": { risk: "🟡", desc: "Increased sedation." },
+    "Ketamine|SSRIs": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|SNRIs": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|ADHD Meds": { risk: "🔴", desc: "Possible heart strain." },
+    "Ketamine|Antipsychotics": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|Wellbutrin": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|Trazodone": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|Gabapentin": { risk: "🟡", desc: "Mild interaction." },
+    "Ketamine|LSD": { risk: "❌", desc: "High risk of confusion, panic." },
+    "Ketamine|Shrooms": { risk: "❌", desc: "High risk of confusion, panic." },
+    "Ketamine|Nitrous": { risk: "🟡", desc: "Mild sedation increase." },
+    "Ketamine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
+    "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
+
+    "MDMA|Cocaine": { risk: "🔴", desc: "High heart strain risk." },
+    "MDMA|Alcohol": { risk: "🔴", desc: "Dehydration, liver strain." },
+    "MDMA|GHB / Opioids": { risk: "❌", desc: "Very dangerous: respiratory failure risk." },
+    "MDMA|Benzos": { risk: "🔴", desc: "Mixed effects; sedation and stimulation." },
+    "MDMA|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
+    "MDMA|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
+    "MDMA|ADHD Meds": { risk: "❌", desc: "Heart strain and serotonin syndrome risk." },
+    "MDMA|Antipsychotics": { risk: "❌", desc: "Potentially dangerous interaction." },
+    "MDMA|Mood Stabilizers": { risk: "❌", desc: "Potentially dangerous interaction." },
+    "MDMA|Wellbutrin": { risk: "❌", desc: "Seizure risk." },
+    "MDMA|Trazodone": { risk: "🔴", desc: "Serotonin syndrome risk." },
+    "MDMA|Gabapentin": { risk: "🔴", desc: "Mixed effects." },
+    "MDMA|LSD": { risk: "🔴", desc: "Sensory overload, panic." },
+    "MDMA|Shrooms": { risk: "🔴", desc: "Sensory overload, panic." },
+    "MDMA|Nitrous": { risk: "🔴", desc: "Oxygen deprivation risk." },
+    "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo." },
+    "MDMA|GHB": { risk: "❌", desc: "High overdose risk." },
+
+    "Cocaine|Alcohol": { risk: "🧬", desc: "Creates cocaethylene: very toxic to heart and liver." },
+    "Cocaine|Benzos": { risk: "🔴", desc: "Risk of heart issues and sedation conflict." },
+    "Cocaine|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
+    "Cocaine|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
+    "Cocaine|ADHD Meds": { risk: "❌", desc: "Severe heart strain risk." },
+    "Cocaine|Antipsychotics": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|Mood Stabilizers": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|Wellbutrin": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|Trazodone": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|Gabapentin": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|LSD": { risk: "🔴", desc: "Possible anxiety and heart strain." },
+    "Cocaine|Shrooms": { risk: "🔴", desc: "Possible anxiety and heart strain." },
+    "Cocaine|Nitrous": { risk: "🔴", desc: "Possible heart strain." },
+    "Cocaine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
+    "Cocaine|GHB": { risk: "☠️", desc: "Extremely dangerous combo; fatal overdose risk." },
+
+    "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+    "Alcohol|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+    "Benzos|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+
+    "SSRIs|SNRIs": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
+    "SSRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
+    "SNRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
+
+    // Add more specific combos as needed
   };
 
-  document.getElementById("comboForm").addEventListener("change", () => {
-    const drug1 = document.getElementById("drug1").value;
-    const drug2 = document.getElementById("drug2").value;
-    const result = document.getElementById("comboResult");
+  // Normalize keys to always be sorted to avoid dupes
+  function comboKey(...drugs) {
+    return drugs.map(d => d.trim().toLowerCase()).sort().join('|');
+  }
 
-    if (drug1 && drug2) {
-      // Build keys as strings properly
-      const key = `${drug1}+${drug2}`;
-      const reverseKey = `${drug2}+${drug1}`;
+  // Risk order for comparison
+  const riskPriority = { '🟢': 1, '🟡': 2, '🔴': 3, '⚠️': 4, '❌': 5, '☠️': 6 };
 
-      // Try both orders because combos might be listed one way
-      const combo = combos[key] || combos[reverseKey];
+  // Function to get the worst risk out of combos
+  function getRiskLevel(a, b) {
+    if (!a || !b) return { risk: 'No data', desc: 'One or both substances unknown.' };
+    const key = comboKey(a, b);
+    const found = riskData[key];
+    if (found) return found;
+    // If no specific data, default moderate caution if both are known
+    if (a && b) return { risk: '🟡', desc: 'No specific data; caution advised.' };
+    return { risk: 'No data', desc: 'Unknown substances.' };
+  }
 
-      if (combo) {
-        result.innerHTML = `<strong>Risk:</strong> ${combo.risk}<br><p>${combo.note}</p>`;
-      } else {
-        result.innerHTML = `<p>No specific data—but assume stacking risks unless proven safe. Start low, go slow.</p>`;
-      }
-    } else {
-      result.innerHTML = "";
+  // Parse user input, standardize capitalization
+  const canonicalNames = [
+    "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", "GHB / Opioids", "Benzos", 
+    "SSRIs", "SNRIs", "ADHD Meds", "Antipsychotics", "Mood Stabilizers", "Wellbutrin", 
+    "Trazodone", "Gabapentin", "LSD", "Shrooms", "Nitrous", "DMT", "GHB"
+  ];
+
+  function capitalizeName(name) {
+    if (!name) return '';
+    const lower = name.toLowerCase();
+    const found = canonicalNames.find(c => c.toLowerCase() === lower);
+    return found || name;
+  }
+
+  // Form handling
+  const form = document.getElementById('interactionForm');
+  const resultDiv = document.getElementById('comboResult');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let d1 = capitalizeName(form.drug1.value.trim());
+    let d2 = capitalizeName(form.drug2.value.trim());
+    let d3 = capitalizeName(form.drug3.value.trim());
+
+    // Validate input
+    if (!d1 || !d2) {
+      resultDiv.innerHTML = '<span style="color:#F44336;">Please enter at least two valid substances.</span>';
+      return;
     }
+    if (![d1, d2, d3].filter(Boolean).some(x => canonicalNames.includes(x)) ) {
+      resultDiv.innerHTML = '<span style="color:#F44336;">One or more substances are not recognized. Check spelling.</span>';
+      return;
+    }
+
+    // Build all pairs for risk analysis
+    const substances = [d1, d2];
+    if (d3) substances.push(d3);
+
+    let highestRisk = { risk: '🟢', desc: 'No significant interactions found.' };
+    let details = [];
+
+    for (let i = 0; i < substances.length; i++) {
+      for (let j = i + 1; j < substances.length; j++) {
+        let res = getRiskLevel(substances[i], substances[j]);
+        details.push(`<strong>${substances[i]} + ${substances[j]}</strong>: <span class="risk-${res.risk}">${res.risk}</span> — ${res.desc}`);
+        if (riskPriority[res.risk] > riskPriority[highestRisk.risk]) {
+          highestRisk = res;
+        }
+      }
+    }
+
+    // Output
+    resultDiv.innerHTML = `<p><strong>Overall risk level:</strong> <span class="risk-${highestRisk.risk}" style="font-size:1.3rem;">${highestRisk.risk}</span></p>
+    <p>${highestRisk.desc}</p>
+    <details>
+      <summary style="cursor:pointer; color:#bf00bf; font-weight:700;">See detailed interactions</summary>
+      <ul>${details.map(d => `<li>${d}</li>`).join('')}</ul>
+    </details>`;
   });
+})();
 </script>
+
+<footer>
+  &copy; 2025 PLURderapolis — Remember: No mix is 100% safe. Always prioritize your health and safety.
+</footer>
+
 </body>
 </html>
