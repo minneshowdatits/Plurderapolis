@@ -391,8 +391,7 @@
   const riskPriority = { '🟢': 1, '🟡': 2, '🔴': 3, '⚠️': 4, '❌': 5, '☠️': 6 };
 
   // Function to get the worst risk out of combos
-  function getRiskLevel(a, b) {
-    if (!a || !b) return { risk: 'No data', desc: 'One or both substances unknown.' };
+  function getRiskLevel(a, b) {if (!a || !b) return { risk: 'No data', desc: 'One or both substances unknown.' };
     const key = comboKey(a, b);
     const found = riskData[key];
     if (found) return found;
@@ -462,55 +461,10 @@
   });
 })();
 </script>
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  let d1 = capitalizeName(form.drug1.value.trim());
-  let d2 = capitalizeName(form.drug2.value.trim());
-  let d3 = capitalizeName(form.drug3.value.trim());
 
-  // Validate input
-  if (!d1 || !d2) {
-    resultDiv.innerHTML = '<span style="color:#F44336;">Please enter at least two valid substances.</span>';
-    return;
-  }
-  const inputs = [d1, d2];
-  if (d3) inputs.push(d3);
-
-  // Check all inputs are valid canonical names
-  const allValid = inputs.every(x => canonicalNames.includes(x));
-  if (!allValid) {
-    resultDiv.innerHTML = '<span style="color:#F44336;">One or more substances are not recognized. Check spelling.</span>';
-    return;
-  }
-
-  let highestRisk = { risk: '🟢', desc: 'No significant interactions found.' };
-  let details = [];
-
-  for (let i = 0; i < inputs.length; i++) {
-    for (let j = i + 1; j < inputs.length; j++) {
-      let res = getRiskLevel(inputs[i], inputs[j]);
-      details.push(`<strong>${inputs[i]} + ${inputs[j]}</strong>: <span class="risk-${res.risk}">${res.risk}</span> — ${res.desc}`);
-      if (riskPriority[res.risk] > riskPriority[highestRisk.risk]) {
-        highestRisk = res;
-      }
-    }
-  }
-
-  // Output overall risk and expandable details
-  resultDiv.innerHTML = `
-    <p><strong>Overall risk level:</strong> <span class="risk-${highestRisk.risk}" style="font-size:1.3rem;">${highestRisk.risk}</span></p>
-    <p>${highestRisk.desc}</p>
-    <details>
-      <summary style="cursor:pointer; color:#bf00bf; font-weight:700;">See all pairwise interactions</summary>
-      <ul>
-        ${details.map(d => `<li>${d}</li>`).join('')}
-      </ul>
-    </details>
-  `;
-});
 <footer>
   &copy; 2025 PLURderapolis — Remember: No mix is 100% safe. Always prioritize your health and safety.
 </footer>
 
 </body>
-</html>
+</html> 
