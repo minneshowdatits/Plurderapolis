@@ -5,335 +5,418 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plurderapolis</title>
   <style>
+    /* ======================
+       GLOBAL COLOR SCHEME
+       ====================== */
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: #f0f0f0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #1c002b, #3a0057, #ff00cc, #6600ff);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      color: #f5f5f5;
     }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    a {
+      color: #ffb3ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 8px #ff00cc;
+    }
+
+    /* ======================
+       HEADER & NAV
+       ====================== */
     header {
       text-align: center;
-      padding: 1rem;
-      background: #1a1a1a;
+      padding: 20px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    header h1 { margin: 0; font-size: 2rem; }
-    header p { margin: 0; font-size: 1rem; color: #aaa; }
-    .search-container {
-      text-align: center;
-      margin: 1rem;
-    }
-    #searchBar {
-      width: 80%;
-      padding: 1rem;
-      font-size: 1.2rem;
-      border-radius: 8px;
-      border: none;
-    }
-    .menu-button {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
+
+    header h1 {
+      margin: 0;
       font-size: 2rem;
-      cursor: pointer;
+      color: #fff;
+      text-shadow: 0 0 12px #ff00cc;
     }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1rem;
+      color: #ddd;
+    }
+
+    .hamburger {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+      box-shadow: 0 0 6px #ff00cc;
+    }
+
     nav {
       display: none;
-      background: #111;
-      padding: 1rem;
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 80%;
+      max-width: 320px;
+      background: rgba(15, 0, 30, 0.95);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 2000;
     }
-    nav .group { margin-bottom: 1rem; }
-    nav h3 { margin: 0.5rem 0; cursor: pointer; }
-    nav ul { list-style: none; padding: 0; display: none; }
-    nav ul li { margin: 0.5rem 0; }
-    nav a { color: #fff; text-decoration: none; }
-    .section {
-      margin: 1rem;
-      border: 1px solid #333;
-      border-radius: 8px;
+
+    nav h3 {
+      color: #ffb3ff;
+      margin-top: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 8px 0;
+    }
+
+    nav ul li a {
+      display: block;
+      padding: 6px 0;
+      font-size: 1rem;
+    }
+
+    .close-nav {
+      text-align: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* ======================
+       SEARCH
+       ====================== */
+    .search-bar {
+      margin: 20px auto;
+      max-width: 500px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #ff00cc;
+      border-radius: 30px;
+      outline: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      box-shadow: 0 0 10px #ff00cc;
+    }
+
+    .search-results {
+      margin: 10px auto;
+      max-width: 500px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 10px;
+      display: none;
+      padding: 10px;
+    }
+
+    .search-results a {
+      display: block;
+      padding: 5px;
+      color: #ffb3ff;
+    }
+
+    /* ======================
+       COLLAPSIBLE SECTIONS
+       ====================== */
+    section {
+      margin: 20px auto;
+      max-width: 800px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 15px;
       overflow: hidden;
+      box-shadow: 0 0 12px #6600ff;
     }
-    .section summary {
-      padding: 1rem;
+
+    section summary {
+      padding: 15px;
       font-size: 1.2rem;
       cursor: pointer;
-      background: #1c1c1c;
+      background: rgba(30,0,40,0.7);
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    .section .content { padding: 1rem; }
-    .button {
-      display: inline-block;
-      padding: 0.8rem 1.2rem;
-      background: #6a1b9a;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      margin-top: 0.5rem;
-      font-weight: bold;
+
+    section summary:hover {
+      background: rgba(50,0,70,0.8);
     }
-    footer {
-      background: #111;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #aaa;
+
+    section div {
+      padding: 15px;
+      font-size: 1rem;
+      line-height: 1.4;
     }
-    footer a { color: #9c27b0; text-decoration: none; }
-    .sticky-bar {
+
+    /* ======================
+       STICKY EMERGENCY BAR
+       ====================== */
+    .emergency-bar {
       position: fixed;
       bottom: 0;
-      left: 0;
-      right: 0;
-      background: #222;
+      width: 100%;
+      background: rgba(0,0,0,0.8);
       display: flex;
       justify-content: space-around;
-      padding: 0.5rem 0;
-      border-top: 2px solid #444;
+      padding: 10px 0;
+      box-shadow: 0 -2px 12px #ff00cc;
     }
-    .sticky-bar button {
-      background: none;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
+
+    .emergency-bar a {
+      font-size: 1.8rem;
+      text-align: center;
+      flex: 1;
       color: #fff;
+      text-shadow: 0 0 8px #ff00cc;
     }
+
+    /* ======================
+       FOOTER
+       ====================== */
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      text-align: center;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    footer .sitemap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    footer h4 {
+      margin-bottom: 5px;
+      color: #ffb3ff;
+    }
+
+    footer a {
+      font-size: 0.9rem;
+      display: block;
+      margin: 2px 0;
+    }
+
   </style>
 </head>
 <body>
-
-  <!-- HEADER -->
   <header>
-    <span class="menu-button" onclick="toggleMenu()">☰</span>
     <h1>Plurderapolis</h1>
     <p>Harm reduction tools & resources for Minnesota ravers</p>
+    <div class="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
   </header>
 
-  <!-- NAV MENU -->
-  <nav id="menu">
-    <div class="group">
-      <h3 onclick="toggleGroup(this)">Safety</h3>
-      <ul>
-        <li><a href="panic.html">Panic Button</a></li>
-        <li><a href="emergency.html">Emergency</a></li>
-        <li><a href="spiking.html">Spiking</a></li>
-        <li><a href="fake.html">Fake Drugs</a></li>
-      </ul>
-    </div>
-    <div class="group">
-      <h3 onclick="toggleGroup(this)">Drug Info</h3>
-      <ul>
-        <li><a href="polydrug.html">Polydrug Tool</a></li>
-        <li><a href="rx.html">RX + Combos</a></li>
-        <li><a href="health.html">Health</a></li>
-        <li><a href="badtrip.html">Bad Trip Mode</a></li>
-      </ul>
-    </div>
-    <div class="group">
-      <h3 onclick="toggleGroup(this)">Consent</h3>
-      <ul>
-        <li><a href="consent.html">Consent Basics</a></li>
-        <li><a href="accountability.html">Accountability</a></li>
-      </ul>
-    </div>
-    <div class="group">
-      <h3 onclick="toggleGroup(this)">Local Scene</h3>
-      <ul>
-        <li><a href="spotlight.html">Spotlight</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="spotify.html">Spotify</a></li>
-      </ul>
-    </div>
-    <div class="group">
-      <h3 onclick="toggleGroup(this)">Extras</h3>
-      <ul>
-        <li><a href="seasonal.html">Seasonal Tips</a></li>
-        <li><a href="sober.html">Sober Ravers</a></li>
-        <li><a href="mn-resources.html">Resources</a></li>
-        <li><a href="submissions.html">Submissions</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- SEARCH -->
-  <div class="search-container">
-    <input type="text" id="searchBar" placeholder="Search..." oninput="searchSite()">
-    <ul id="searchResults"></ul>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for help, tools, or info...">
   </div>
+  <div class="search-results" id="searchResults"></div>
 
-  <!-- SITE KEY -->
-  <details class="section">
-    <summary>📖 Site Key</summary>
-    <div class="content">
-      <p>🚨 = Alerts</p>
-      <p>💊 = Interaction Checker</p>
-      <p>🌀 = Bad Trip Mode</p>
-      <p>🍑 = Panic Button</p>
-      <p>🤝 = Consent</p>
-      <p>🌱 = Sober Options</p>
-      <p>📍 = Minnesota Resources</p>
+  <!-- Site Key -->
+  <section>
+    <summary>🔑 Site Key</summary>
+    <div>
+      🚨 = Emergency & Alerts <br>
+      💊 = Drug Info & Safety <br>
+      🌀 = Bad Trip Support <br>
+      🍑 = Panic Tools <br>
+      🤝 = Consent & Accountability <br>
+      🌱 = Sober Options <br>
+      📍 = Minnesota Resources <br>
+      📝 = Blog & Updates <br>
     </div>
-  </details>
+  </section>
 
-  <!-- SCENE ALERTS -->
-  <details class="section">
+  <!-- Example Collapsible Sections -->
+  <section>
     <summary>🚨 Scene Alerts</summary>
-    <div class="content">
-      <p>[Fentanyl Warning – Aug 2025]</p>
-      <p>[Drink Spiking Alert – Twin Cities]</p>
-      <a href="scene.html" class="button">See all alerts</a>
+    <div>
+      <p>[Fentanyl Warning – Aug 2025] → <a href="scene.html">Read more</a></p>
+      <p>[Drink Spiking Alert – Twin Cities] → <a href="spiking.html">Read more</a></p>
+      <a href="scene.html">See all alerts</a>
     </div>
-  </details>
+  </section>
 
-  <!-- POLYDRUG CHECKER -->
-  <details class="section">
+  <section>
     <summary>💊 Polydrug Interaction Checker</summary>
-    <div class="content">
+    <div>
+      <label for="drugA">Drug A:</label>
       <select id="drugA">
-        <option>MDMA</option>
-        <option>Alcohol</option>
-        <option>Cocaine</option>
+        <option>MDMA</option><option>Alcohol</option><option>LSD</option>
       </select>
+      <br>
+      <label for="drugB">Drug B:</label>
       <select id="drugB">
-        <option>Alcohol</option>
-        <option>MDMA</option>
-        <option>LSD</option>
+        <option>Alcohol</option><option>MDMA</option><option>Ketamine</option>
       </select>
+      <br><br>
       <button onclick="checkInteraction()">Check</button>
       <p id="interactionResult"></p>
-      <a href="polydrug.html" class="button">Full Tool</a>
+      <a href="polydrug.html">Open Full Tool</a>
     </div>
-  </details>
+  </section>
 
-  <!-- BAD TRIP MODE -->
-  <details class="section">
+  <section>
     <summary>🌀 Bad Trip Mode</summary>
-    <div class="content">
-      <a href="badtrip.html" class="button">Enter Bad Trip Mode</a>
+    <div>
+      <a href="badtrip.html"><button>Enter Bad Trip Mode</button></a>
     </div>
-  </details>
+  </section>
 
-  <!-- PANIC -->
-  <details class="section">
-    <summary>🍑 Panic Button</summary>
-    <div class="content">
-      <p>Grounding + resources if you’re overwhelmed.</p>
-      <a href="panic.html" class="button">Activate Panic Button</a>
-    </div>
-  </details>
+  <!-- Add more collapsible sections for Panic, Consent, Resources, Blog, etc. -->
 
-  <!-- CONSENT -->
-  <details class="section">
-    <summary>🤝 Consent & Accountability</summary>
-    <div class="content">
-      <a href="consent.html" class="button">Consent Basics</a>
-      <a href="accountability.html" class="button">Accountability</a>
-    </div>
-  </details>
-
-  <!-- SOBER -->
-  <details class="section">
-    <summary>🌱 Sober Options</summary>
-    <div class="content">
-      <p>Fun alternatives without substances.</p>
-      <a href="sober.html" class="button">Explore Sober Options</a>
-    </div>
-  </details>
-
-  <!-- RESOURCES -->
-  <details class="section">
-    <summary>📍 Minnesota Resources</summary>
-    <div class="content">
-      <p>Narcan Access</p>
-      <p>Mental Health Lines</p>
-      <a href="mn-resources.html" class="button">Full Resources</a>
-    </div>
-  </details>
-
-  <!-- BLOG -->
-  <details class="section">
-    <summary>📝 Blog & Updates</summary>
-    <div class="content">
-      <p>[Blog Post Title – Aug 2025]</p>
-      <a href="blog.html" class="button">See All Blog Posts</a>
-    </div>
-  </details>
-
-  <!-- HOW TO -->
-  <details class="section">
-    <summary>📖 How to Use This Site</summary>
-    <div class="content">
-      <ol>
-        <li>Check alerts before going out.</li>
-        <li>Use the interaction checker if mixing.</li>
-        <li>Hit Panic Button if overwhelmed.</li>
-        <li>Review consent & safety basics.</li>
-        <li>Find MN-specific help.</li>
-      </ol>
-    </div>
-  </details>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>
-      <strong>Site Map:</strong><br>
-      Safety | Drug Info | Consent | Local Scene | Extras
-    </p>
-    <p>📧 projectpeachmn@gmail.com | 📸 <a href="https://instagram.com/plurderapolis">@plurderapolis</a></p>
-    <p><em>This site is for harm reduction & educational purposes only. Not medical advice.</em></p>
-    <p>Last updated: <span id="lastUpdated"></span></p>
-  </footer>
-
-  <!-- STICKY BAR -->
-  <div class="sticky-bar">
-    <button onclick="location.href='emergency.html'">🚨</button>
-    <button onclick="location.href='panic.html'">🍑</button>
-    <button onclick="location.href='badtrip.html'">🌀</button>
+  <div class="emergency-bar">
+    <a href="panic.html">🍑</a>
+    <a href="badtrip.html">🌀</a>
+    <a href="scene.html">🚨</a>
   </div>
 
+  <footer>
+    <div class="sitemap">
+      <div>
+        <h4>Safety</h4>
+        <a href="panic.html">Panic Button</a>
+        <a href="emergency.html">Emergency</a>
+        <a href="spiking.html">Spiking</a>
+        <a href="fake.html">Fake Drugs</a>
+      </div>
+      <div>
+        <h4>Drug Info</h4>
+        <a href="polydrug.html">Polydrug Tool</a>
+        <a href="rxcombos.html">RX Combos</a>
+        <a href="health.html">Health</a>
+        <a href="badtrip.html">Bad Trip Mode</a>
+      </div>
+      <div>
+        <h4>Consent</h4>
+        <a href="consent.html">Consent Basics</a>
+        <a href="accountability.html">Accountability</a>
+      </div>
+      <div>
+        <h4>Local Scene</h4>
+        <a href="spotlight.html">Spotlight</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="spotify.html">Spotify</a>
+      </div>
+      <div>
+        <h4>Extras</h4>
+        <a href="seasonal.html">Seasonal Tips</a>
+        <a href="sober.html">Sober Ravers</a>
+        <a href="resources.html">Resources</a>
+        <a href="submit.html">Submissions</a>
+      </div>
+    </div>
+    <p>📧 projectpeachmn@gmail.com | 📸 <a href="https://instagram.com/plurderapolis" target="_blank">@plurderapolis</a></p>
+    <p><em>This site is for harm reduction & educational purposes only. Not medical advice.</em></p>
+    <p id="lastUpdated"></p>
+  </footer>
+
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    // NAV
+    function toggleNav() {
+      const nav = document.querySelector("nav");
+      nav.style.display = nav.style.display === "block" ? "none" : "block";
     }
-    function toggleGroup(header) {
-      const ul = header.nextElementSibling;
-      ul.style.display = ul.style.display === 'block' ? 'none' : 'block';
-    }
-    function checkInteraction() {
-      const a = document.getElementById('drugA').value;
-      const b = document.getElementById('drugB').value;
-      let result = "No data available.";
-      if ((a === "MDMA" && b === "Alcohol") || (a === "Alcohol" && b === "MDMA")) {
-        result = "⚠️ MDMA + Alcohol = Dehydration & strain on body.";
-      }
-      if ((a === "Cocaine" && b === "Alcohol") || (a === "Alcohol" && b === "Cocaine")) {
-        result = "⚠️ Cocaine + Alcohol = Produces toxic cocaethylene.";
-      }
-      document.getElementById('interactionResult').innerText = result;
-    }
-    function searchSite() {
-      const input = document.getElementById('searchBar').value.toLowerCase();
-      const results = document.getElementById('searchResults');
-      results.innerHTML = "";
-      if (input.length < 2) return;
-      const pages = [
-        {name: "Panic Button", url: "panic.html", tags: ["panic","emergency","grounding"]},
-        {name: "Bad Trip Mode", url: "badtrip.html", tags: ["bad trip","lsd","psychedelic"]},
-        {name: "Polydrug Tool", url: "polydrug.html", tags: ["interaction","drugs","mixing"]},
-        {name: "Consent Basics", url: "consent.html", tags: ["consent","boundaries"]},
-        {name: "Accountability", url: "accountability.html", tags: ["safety","violence"]},
-        {name: "Resources", url: "mn-resources.html", tags: ["help","mn","narcan","support"]}
-      ];
-      pages.forEach(p=>{
-        if (p.name.toLowerCase().includes(input) || p.tags.some(t=>t.includes(input))) {
-          const li = document.createElement('li');
-          li.innerHTML = `<a href="${p.url}">${p.name}</a>`;
-          results.appendChild(li);
+
+    // SEARCH FUNCTION
+    const pages = [
+      {title: "Panic Button", url: "panic.html", tags: ["panic","help","emergency"]},
+      {title: "Bad Trip Mode", url: "badtrip.html", tags: ["trip","psychedelics","support"]},
+      {title: "Polydrug Tool", url: "polydrug.html", tags: ["drugs","interaction","mixing"]},
+      {title: "Fake Drugs", url: "fake.html", tags: ["adulterants","fake","warning"]},
+      {title: "Spiking", url: "spiking.html", tags: ["spike","drink","safety"]},
+      {title: "Consent", url: "consent.html", tags: ["consent","boundaries"]},
+      {title: "Accountability", url: "accountability.html", tags: ["accountability","harm"]},
+      {title: "MN Resources", url: "resources.html", tags: ["local","help","minnesota"]},
+      {title: "Blog", url: "blog.html", tags: ["blog","updates"]},
+    ];
+
+    document.getElementById("searchInput").addEventListener("input", function(){
+      const query = this.value.toLowerCase();
+      const resultsDiv = document.getElementById("searchResults");
+      resultsDiv.innerHTML = "";
+      if(query.length > 1){
+        const matches = pages.filter(p => 
+          p.title.toLowerCase().includes(query) || 
+          p.tags.some(tag => tag.includes(query))
+        );
+        if(matches.length > 0){
+          resultsDiv.style.display = "block";
+          matches.forEach(m => {
+            const link = document.createElement("a");
+            link.href = m.url;
+            link.textContent = m.title;
+            resultsDiv.appendChild(link);
+          });
+        } else {
+          resultsDiv.style.display = "none";
         }
-      });
+      } else {
+        resultsDiv.style.display = "none";
+      }
+    });
+
+    // POLYDRUG DEMO
+    function checkInteraction(){
+      const a = document.getElementById("drugA").value;
+      const b = document.getElementById("drugB").value;
+      const result = document.getElementById("interactionResult");
+      if((a === "MDMA" && b === "Alcohol") || (a === "Alcohol" && b === "MDMA")){
+        result.textContent = "⚠️ MDMA + Alcohol → Dehydration risk. Be careful.";
+      } else {
+        result.textContent = "ℹ️ No major warning in demo. Use full tool.";
+      }
     }
-    document.getElementById("lastUpdated").textContent = new Date().toLocaleDateString();
+
+    // LAST UPDATED
+    document.getElementById("lastUpdated").textContent = "Last updated: " + new Date().toLocaleDateString();
   </script>
 </body>
 </html>
