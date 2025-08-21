@@ -6,6 +6,189 @@
 <title>Polydrug Risks & Interaction Checker | PLURderapolis</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
 <style>
+  /* Reset & base */
+  body {
+    background-color: #121212;
+    color: #eee;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 1rem;
+  }
+  section.content-section {
+    max-width: 900px;
+    margin: auto;
+    padding: 1rem;
+  }
+  h2.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #bf00bf;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    color: #e051ff;
+  }
+  p, li {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  a { color:#bf00bf; }
+  .risk-category {
+    background: #220022;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 8px rgba(255,0,255,0.15);
+  }
+  .subsection-title {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #e051ff;
+  }
+  .matrix-table {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(191,0,191,0.3);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 900px;
+    font-size: 0.9rem;
+    color: #eee;
+  }
+  th, td {
+    border: 1px solid #440044;
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    background-color: #550055;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  td {
+    background-color: #2a002a;
+  }
+  form {
+    margin-bottom: 1.5rem;
+  }
+  label {
+    display: block;
+    margin: 0.5rem 0 0.3rem;
+    font-weight: 600;
+    color: #bf00bf;
+  }
+  input[type="text"], select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #550055;
+    background-color: #220022;
+    color: #eee;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+  input[type="text"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  #comboResult {
+    background-color: #330033;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 12px rgba(255,0,255,0.6);
+    min-height: 80px;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+  }
+  /* Risk colors (match your scheme) */
+  .risk-🟢 { color: #4CAF50; font-weight: 700; }
+  .risk-🟡 { color: #FFC107; font-weight: 700; }
+  .risk-🔴 { color: #F44336; font-weight: 700; }
+  .risk-⚠️ { color: #FF9800; font-weight: 700; }
+  .risk-❌ { color: #9C27B0; font-weight: 700; }
+  .risk-☠️ { color: #000000; background: #FF1744; font-weight: 700; padding: 0 4px; border-radius: 4px; }
+  /* Responsive */
+  @media (max-width: 600px) {
+    h2.section-title { font-size: 1.5rem; }
+    h3 { font-size: 1.1rem; }
+    table { font-size: 0.85rem; min-width: 700px; }
+    input[type="text"], select { max-width: 100%; }
+  }
+  footer {
+    background:#222;
+    color:#aaa;
+    padding:1rem;
+    margin-top:3rem;
+    font-size:0.85rem;
+    text-align:center;
+    border-top:1px solid #550055;
+  }
+  .source-line { font-size: .9rem; color:#bbb; margin-top: .5rem; }
+  .pill {
+    display:inline-block; padding:.2rem .55rem; border-radius:999px; background:#550055; color:#eee; font-weight:700; font-size:.85rem;
+  }
+</style>
+</head>
+<body>
+
+<section id="polydrug-risks" class="content-section">
+  <h2 class="section-title">🧠 Polydrug Risks</h2>
+  <p>Ravers don’t always stick to one thing—and that’s real. But mixing substances can make effects way less predictable and way more dangerous. Here’s what you need to know before you mix.</p>
+
+  <!-- Combo Breakdown Cards -->
+  <div class="risk-category">
+    <h3>⚡ Stimulant + Stimulant</h3>
+    <p><strong>Examples:</strong> MDMA + Cocaine, Amphetamine + MDA</p>
+    <p><strong>Risks:</strong> Heart attack, seizures, psychosis, serotonin syndrome, overheating.</p>
+  </div>
+  <div class="risk-category">
+    <h3>💤 Depressant + Depressant</h3>
+    <p><strong>Examples:</strong> Alcohol + Benzos, GHB + Oxycodone</p>
+    <p><strong>Risks:</strong> Respiratory arrest, coma, blackouts, death in sleep.</p>
+  </div>
+  <div class="risk-category">
+    <h3>⚠️ Stimulant + Depressant</h3>
+    <p><strong>Examples:</strong> Cocaine + Alcohol, MDMA + GHB</p>
+    <p><strong>Risks:</strong> Mixed signals to your body = dehydration, liver stress, fatal crash.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🌈 Stimulant + Psychedelic</h3>
+    <p><strong>Examples:</strong> LSD + MDMA (candyflipping)</p>
+    <p><strong>Risks:</strong> Sensory overload, panic attacks, serotonin syndrome.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🌪️ Depressant + Psychedelic</h3>
+    <p><strong>Examples:</strong> Benzos + LSD, Alcohol + Shrooms</p>
+    <p><strong>Risks:</strong> Amnesia, suppressed breathing, unpredictable trips.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🧊 Ketamine Combos</h3>
+    <p><strong>Examples:</strong> K + Alcohol, K + Stimulants</p>
+    <p><strong>Risks:</strong> Respiratory suppression, blackouts, urinary damage, overdose.</p>
+  </div>
+  <div class="risk-category">
+    <h3>☠️ Opioid + Depressants</h3>
+    <p><strong>Examples:</strong> Heroin + Benzos, Fentanyl + Alcohol</p>
+    <p><strong>Risks:</strong> Extremely high overdose risk. One of the most lethal combos.</p>
+  </div>
+  <div class="risk-category">
+    <h3>🧬 Cocaine + Alcohol</h3>
+    <p><strong>Creates:</strong> Cocaethylene (more toxic than coke or alcohol alone)</p>
+    <p><strong>Risks:</strong> Seizures, heart strain, liver toxicity.</p>
+  </div>
+
   <!-- Matrix -->
   <h3 class="subsection-title">📊 Combo Risk Matrix</h3>
   <p>Tap or hover for more info. Legend: 🟢 Low Risk | 🟡 Moderate | 🔴 Caution | ⚠️ Warning | ❌ Unsafe | ☠️ Deadly</p>
@@ -632,189 +815,6 @@
   });
 })();
 </script>
-  /* Reset & base */
-  body {
-    background-color: #121212;
-    color: #eee;
-    font-family: 'Open Sans', sans-serif;
-    margin: 0;
-    padding: 1rem;
-  }
-  section.content-section {
-    max-width: 900px;
-    margin: auto;
-    padding: 1rem;
-  }
-  h2.section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2rem;
-    color: #bf00bf;
-    margin-bottom: 1rem;
-  }
-  h3 {
-    color: #e051ff;
-  }
-  p, li {
-    font-size: 1.05rem;
-    line-height: 1.6;
-  }
-  a { color:#bf00bf; }
-  .risk-category {
-    background: #220022;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 0 8px rgba(255,0,255,0.15);
-  }
-  .subsection-title {
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-    font-size: 1.3rem;
-    color: #e051ff;
-  }
-  .matrix-table {
-    overflow-x: auto;
-    margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(191,0,191,0.3);
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 900px;
-    font-size: 0.9rem;
-    color: #eee;
-  }
-  th, td {
-    border: 1px solid #440044;
-    padding: 0.4rem 0.7rem;
-    text-align: center;
-    vertical-align: middle;
-  }
-  th {
-    background-color: #550055;
-    font-weight: 700;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-  td {
-    background-color: #2a002a;
-  }
-  form {
-    margin-bottom: 1.5rem;
-  }
-  label {
-    display: block;
-    margin: 0.5rem 0 0.3rem;
-    font-weight: 600;
-    color: #bf00bf;
-  }
-  input[type="text"], select {
-    width: 100%;
-    max-width: 300px;
-    padding: 0.4rem 0.6rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: 1px solid #550055;
-    background-color: #220022;
-    color: #eee;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-  }
-  input[type="text"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-  #comboResult {
-    background-color: #330033;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 0 12px rgba(255,0,255,0.6);
-    min-height: 80px;
-    font-size: 1rem;
-    line-height: 1.4;
-    margin-bottom: 3rem;
-  }
-  /* Risk colors (match your scheme) */
-  .risk-🟢 { color: #4CAF50; font-weight: 700; }
-  .risk-🟡 { color: #FFC107; font-weight: 700; }
-  .risk-🔴 { color: #F44336; font-weight: 700; }
-  .risk-⚠️ { color: #FF9800; font-weight: 700; }
-  .risk-❌ { color: #9C27B0; font-weight: 700; }
-  .risk-☠️ { color: #000000; background: #FF1744; font-weight: 700; padding: 0 4px; border-radius: 4px; }
-  /* Responsive */
-  @media (max-width: 600px) {
-    h2.section-title { font-size: 1.5rem; }
-    h3 { font-size: 1.1rem; }
-    table { font-size: 0.85rem; min-width: 700px; }
-    input[type="text"], select { max-width: 100%; }
-  }
-  footer {
-    background:#222;
-    color:#aaa;
-    padding:1rem;
-    margin-top:3rem;
-    font-size:0.85rem;
-    text-align:center;
-    border-top:1px solid #550055;
-  }
-  .source-line { font-size: .9rem; color:#bbb; margin-top: .5rem; }
-  .pill {
-    display:inline-block; padding:.2rem .55rem; border-radius:999px; background:#550055; color:#eee; font-weight:700; font-size:.85rem;
-  }
-</style>
-</head>
-<body>
-
-<section id="polydrug-risks" class="content-section">
-  <h2 class="section-title">🧠 Polydrug Risks</h2>
-  <p>Ravers don’t always stick to one thing—and that’s real. But mixing substances can make effects way less predictable and way more dangerous. Here’s what you need to know before you mix.</p>
-
-  <!-- Combo Breakdown Cards -->
-  <div class="risk-category">
-    <h3>⚡ Stimulant + Stimulant</h3>
-    <p><strong>Examples:</strong> MDMA + Cocaine, Amphetamine + MDA</p>
-    <p><strong>Risks:</strong> Heart attack, seizures, psychosis, serotonin syndrome, overheating.</p>
-  </div>
-  <div class="risk-category">
-    <h3>💤 Depressant + Depressant</h3>
-    <p><strong>Examples:</strong> Alcohol + Benzos, GHB + Oxycodone</p>
-    <p><strong>Risks:</strong> Respiratory arrest, coma, blackouts, death in sleep.</p>
-  </div>
-  <div class="risk-category">
-    <h3>⚠️ Stimulant + Depressant</h3>
-    <p><strong>Examples:</strong> Cocaine + Alcohol, MDMA + GHB</p>
-    <p><strong>Risks:</strong> Mixed signals to your body = dehydration, liver stress, fatal crash.</p>
-  </div>
-  <div class="risk-category">
-    <h3>🌈 Stimulant + Psychedelic</h3>
-    <p><strong>Examples:</strong> LSD + MDMA (candyflipping)</p>
-    <p><strong>Risks:</strong> Sensory overload, panic attacks, serotonin syndrome.</p>
-  </div>
-  <div class="risk-category">
-    <h3>🌪️ Depressant + Psychedelic</h3>
-    <p><strong>Examples:</strong> Benzos + LSD, Alcohol + Shrooms</p>
-    <p><strong>Risks:</strong> Amnesia, suppressed breathing, unpredictable trips.</p>
-  </div>
-  <div class="risk-category">
-    <h3>🧊 Ketamine Combos</h3>
-    <p><strong>Examples:</strong> K + Alcohol, K + Stimulants</p>
-    <p><strong>Risks:</strong> Respiratory suppression, blackouts, urinary damage, overdose.</p>
-  </div>
-  <div class="risk-category">
-    <h3>☠️ Opioid + Depressants</h3>
-    <p><strong>Examples:</strong> Heroin + Benzos, Fentanyl + Alcohol</p>
-    <p><strong>Risks:</strong> Extremely high overdose risk. One of the most lethal combos.</p>
-  </div>
-  <div class="risk-category">
-    <h3>🧬 Cocaine + Alcohol</h3>
-    <p><strong>Creates:</strong> Cocaethylene (more toxic than coke or alcohol alone)</p>
-    <p><strong>Risks:</strong> Seizures, heart strain, liver toxicity.</p>
-  </div>
-
 
 <footer>
   &copy; 2025 PLURderapolis — Remember: No mix is 100% safe. Always prioritize your health and safety.
