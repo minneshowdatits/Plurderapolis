@@ -212,6 +212,7 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 }
 </style>
 </head>
+
 <body>
 
 <!-- Hamburger menu -->
@@ -292,9 +293,37 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 <div class="section">
   <h2>🔀 Polydrug Interaction Tool</h2>
   <div id="comboTool">
-    <label>Drug 1: <select id="drug1"><option value="none">--Select--</option><option value="mdma">MDMA</option><option value="ketamine">Ketamine</option><option value="cocaine">Cocaine</option><option value="alcohol">Alcohol</option></select></label>
-    <label>Drug 2: <select id="drug2"><option value="none">--Select--</option><option value="mdma">MDMA</option><option value="ketamine">Ketamine</option><option value="cocaine">Cocaine</option><option value="alcohol">Alcohol</option></select></label>
-    <button id="checkComboBtn">Check Risk</button>
+    <label>Drug 1:
+      <select id="drug1">
+        <option value="none">--Select--</option>
+        <option value="mdma">MDMA</option>
+        <option value="ketamine">Ketamine</option>
+        <option value="cocaine">Cocaine</option>
+        <option value="alcohol">Alcohol</option>
+        <option value="ghb">GHB</option>
+        <option value="lsd">LSD</option>
+        <option value="mushrooms">Mushrooms</option>
+        <option value="poppers">Poppers</option>
+        <option value="nitrous">Nitrous</option>
+        <option value="dmt">DMT</option>
+      </select>
+    </label>
+    <label>Drug 2:
+      <select id="drug2">
+        <option value="none">--Select--</option>
+        <option value="mdma">MDMA</option>
+        <option value="ketamine">Ketamine</option>
+        <option value="cocaine">Cocaine</option>
+        <option value="alcohol">Alcohol</option>
+        <option value="ghb">GHB</option>
+        <option value="lsd">LSD</option>
+        <option value="mushrooms">Mushrooms</option>
+        <option value="poppers">Poppers</option>
+        <option value="nitrous">Nitrous</option>
+        <option value="dmt">DMT</option>
+      </select>
+    </label>
+    <button onclick="checkCombo()">Check Risk</button>
     <p id="comboResult"></p>
   </div>
 </div>
@@ -332,115 +361,128 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-
-  // Hamburger toggle
-  const menuBtn = document.getElementById('menuBtn');
-  const sideNav = document.getElementById('sideNav');
-  if(menuBtn && sideNav){
-    menuBtn.addEventListener('click',()=>{
-      menuBtn.classList.toggle('active');
-      sideNav.classList.toggle('active');
-    });
-  }
-
-  const navItems = document.querySelectorAll('.side-nav ul li');
-  navItems.forEach(item=>{
-    item.addEventListener('click',()=>{item.classList.toggle('show');});
-  });
-
-  // Draggable Peach Panic Button
-  const peachWrap = document.getElementById('peachWrap');
-  const peachBtn = document.getElementById('panicButton');
-  if(peachWrap){
-    let offsetX=0, offsetY=0, isDragging=false;
-    peachWrap.addEventListener('mousedown', startDrag);
-    peachWrap.addEventListener('touchstart', startDrag);
-
-    function startDrag(e){
-      isDragging=true;
-      const rect = peachWrap.getBoundingClientRect();
-      const clientX = e.touches? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches? e.touches[0].clientY : e.clientY;
-      offsetX = clientX - rect.left;
-      offsetY = clientY - rect.top;
-    }
-
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-
-    function drag(e){
-      if(!isDragging) return;
-      e.preventDefault();
-      const clientX = e.touches? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches? e.touches[0].clientY : e.clientY;
-      peachWrap.style.left = (clientX - offsetX) + 'px';
-      peachWrap.style.top = (clientY - offsetY) + 'px';
-    }
-
-    document.addEventListener('mouseup', ()=>{isDragging=false;});
-    document.addEventListener('touchend', ()=>{isDragging=false;});
-  }
-
-  // Clickable Peach button
-  if(peachBtn){
-    peachBtn.addEventListener('click', ()=>{
-      const choice = confirm("Go to Panic Button? Cancel = Emergency Response");
-      if(choice) window.location.href='panic.html';
-      else window.location.href='emergency.html';
-    });
-  }
-
-  // Polydrug combo checker
-  const checkBtn = document.getElementById('checkComboBtn');
-  if(checkBtn){
-    checkBtn.addEventListener('click', ()=>{
-      const d1 = document.getElementById('drug1').value;
-      const d2 = document.getElementById('drug2').value;
-      let result="Select two different drugs!";
-      if(d1!=="none" && d2!=="none" && d1!==d2){
-        const combos = {
-          "mdma+alcohol":"⚠️ Medium risk: dehydration & overheating.",
-          "alcohol+mdma":"⚠️ Medium risk: dehydration & overheating.",
-          "mdma+ketamine":"⚠️ Medium risk: disorientation & impaired judgment.",
-          "ketamine+mdma":"⚠️ Medium risk: disorientation & impaired judgment.",
-          "cocaine+alcohol":"⚠️ High risk: heart strain, alcohol toxicity.",
-          "alcohol+cocaine":"⚠️ High risk: heart strain, alcohol toxicity.",
-          "cocaine+ketamine":"⚠️ Medium risk: cardiovascular & coordination issues.",
-          "ketamine+cocaine":"⚠️ Medium risk: cardiovascular & coordination issues."
-        };
-        result = combos[`${d1}+${d2}`] || "✅ Low risk or unknown interaction. Always be cautious!";
-      }
-      document.getElementById('comboResult').innerText = result;
-    });
-  }
-
-  // Site-wide search
-  window.performSearch = function(){
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const resultsDiv = document.getElementById('searchResults');
-    const siteIndex = [
-      { title:"Home", url:"index.html", tags:["home","ravers","harm reduction"] },
-      { title:"Panic Button", url:"panic.html", tags:["panic","emergency","safety"] },
-      { title:"Emergency Response", url:"emergency.html", tags:["emergency","safety"] },
-      { title:"Polydrug Tool", url:"polydrug.html", tags:["drugs","interaction","party"] },
-      { title:"RX + Party Combos", url:"rx-combos.html", tags:["drugs","rx","party"] },
-      { title:"Raver Health", url:"health.html", tags:["health","safety"] },
-      { title:"Consent Basics", url:"consent.html", tags:["consent","boundaries"] },
-      { title:"Accountability", url:"accountability.html", tags:["consent","reporting"] },
-      { title:"Scene Spotlight", url:"spotlight.html", tags:["local","scene","events"] },
-      { title:"Event Calendar", url:"calendar.html", tags:["events","calendar"] },
-      { title:"Spotify", url:"spotify.html", tags:["music","spotify"] },
-      { title:"Seasonal Tips", url:"seasonal.html", tags:["seasonal","safety"] },
-      { title:"Sober Ravers", url:"sober.html", tags:["sobriety","support"] },
-      { title:"MN Resources", url:"resources.html", tags:["resources","support"] }
-    ];
-    const results = siteIndex.filter(p=>p.title.toLowerCase().includes(query) || p.tags.some(t=>t.includes(query)));
-    resultsDiv.innerHTML = results.length ? "<h2>Search Results</h2><ul>" + results.map(r=>`<li><a href="${r.url}">${r.title}</a></li>`).join('') + "</ul>" : "<p>No results found.</p>";
-    resultsDiv.style.display='block';
-  };
-
+// Hamburger toggle
+const menuBtn = document.getElementById('menuBtn');
+const sideNav = document.getElementById('sideNav');
+menuBtn.addEventListener('click',()=>{
+  menuBtn.classList.toggle('active');
+  sideNav.classList.toggle('active');
 });
+const navItems = document.querySelectorAll('.side-nav ul li');
+navItems.forEach(item=>{
+  item.addEventListener('click',()=>{item.classList.toggle('show');});
+});
+
+// Draggable Peach Panic Button
+const peachWrap = document.getElementById('peachWrap');
+let offsetX, offsetY, isDragging=false;
+peachWrap.addEventListener('mousedown', startDrag);
+peachWrap.addEventListener('touchstart', startDrag);
+function startDrag(e){
+  isDragging=true;
+  const rect = peachWrap.getBoundingClientRect();
+  offsetX = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
+  offsetY = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
+}
+document.addEventListener('mousemove', drag);
+document.addEventListener('touchmove', drag);
+function drag(e){
+  if(!isDragging) return;
+  e.preventDefault();
+  const x = (e.touches? e.touches[0].clientX : e.clientX) - offsetX;
+  const y = (e.touches? e.touches[0].clientY : e.clientY) - offsetY;
+  peachWrap.style.left = x + 'px';
+  peachWrap.style.top = y + 'px';
+}
+document.addEventListener('mouseup',()=>{isDragging=false;});
+document.addEventListener('touchend',()=>{isDragging=false;});
+
+// Polydrug Combo Logic
+const combos = {
+  "mdma+alcohol":"⚠️ Medium risk — dehydration & heart stress",
+  "mdma+ketamine":"⚠️ Medium risk — dissociation & overheating",
+  "mdma+cocaine":"⚠️ High risk — heart & seizure risk",
+  "mdma+ghb":"⚠️ High risk — respiratory depression",
+  "mdma+lsd":"⚠️ Low to medium — emotional intensity",
+  "mdma+mushrooms":"⚠️ Low to medium — emotional intensity",
+  "mdma+poppers":"⚠️ Medium — blood pressure drop",
+  "mdma+nitrous":"⚠️ Low — mostly safe but caution",
+  "mdma+dmt":"⚠️ Medium — anxiety risk",
+  "ketamine+alcohol":"⚠️ High — respiratory depression",
+  "ketamine+cocaine":"⚠️ Medium — heart & dissociation",
+  "ketamine+ghb":"⚠️ High — heavy sedation",
+  "ketamine+lsd":"⚠️ Medium — dissociation & intense visuals",
+  "ketamine+mushrooms":"⚠️ Medium — dissociation & nausea",
+  "ketamine+poppers":"⚠️ Medium — blood pressure drop",
+  "ketamine+nitrous":"⚠️ Low — mostly safe",
+  "ketamine+dmt":"⚠️ Medium — strong dissociation",
+  "alcohol+cocaine":"⚠️ High — heart & liver risk",
+  "alcohol+ghb":"⚠️ High — respiratory depression",
+  "alcohol+lsd":"⚠️ Low — mainly mild nausea risk",
+  "alcohol+mushrooms":"⚠️ Low — nausea & vomiting",
+  "alcohol+poppers":"⚠️ Medium — blood pressure drop",
+  "alcohol+nitrous":"⚠️ Medium — nausea & dizziness",
+  "alcohol+dmt":"⚠️ Medium — nausea & anxiety",
+  "ghb+lsd":"⚠️ High — sedation & unconsciousness risk",
+  "ghb+mushrooms":"⚠️ High — sedation & vomiting",
+  "ghb+poppers":"⚠️ High — cardiovascular risk",
+  "ghb+nitrous":"⚠️ High — respiratory risk",
+  "ghb+dmt":"⚠️ High — sedation & anxiety",
+  "lsd+mushrooms":"⚠️ Low — mainly intense visuals",
+  "lsd+poppers":"⚠️ Medium — blood pressure changes",
+  "lsd+nitrous":"⚠️ Low — mostly safe",
+  "lsd+dmt":"⚠️ Medium — intense visuals & anxiety",
+  "mushrooms+poppers":"⚠️ Medium — nausea & blood pressure",
+  "mushrooms+nitrous":"⚠️ Low — mostly safe",
+  "mushrooms+dmt":"⚠️ Medium — nausea & intensity",
+  "poppers+nitrous":"⚠️ Medium — blood pressure & dizziness",
+  "poppers+dmt":"⚠️ Medium — dizziness & anxiety",
+  "nitrous+dmt":"⚠️ Low — mostly safe"
+};
+function checkCombo(){
+  const d1 = document.getElementById('drug1').value;
+  const d2 = document.getElementById('drug2').value;
+  if(d1==="none"||d2==="none"){document.getElementById('comboResult').textContent="Select both drugs first!"; return;}
+  if(d1===d2){document.getElementById('comboResult').textContent="Same drug selected — check dose & tolerance separately."; return;}
+  const key1=d1+"+"+d2;
+  const key2=d2+"+"+d1;
+  const result=combos[key1] || combos[key2] || "⚠️ Unknown combo — always exercise extreme caution";
+  document.getElementById('comboResult').textContent=result;
+}
+
+// Simple search
+const pages = [
+  {title:"Home", url:"index.html", desc:"PLURderapolis main page, site sections overview."},
+  {title:"Panic Button", url:"panic.html", desc:"How to use the peach panic button."},
+  {title:"Emergency Response", url:"emergency.html", desc:"Tips for staying safe and getting help."},
+  {title:"Drink Spiking", url:"spiking.html", desc:"Spotting spiked drinks and what to do."},
+  {title:"Fake Drug Guide", url:"fake.html", desc:"Identifying fake MDMA, ketamine, etc."},
+  {title:"Polydrug Tool", url:"polydrug.html", desc:"Check common drug combos and risks."},
+  {title:"RX + Party Combos", url:"rx-combos.html", desc:"Prescription drugs mixed with party drugs."},
+  {title:"Raver Health", url:"health.html", desc:"Harm reduction & wellness for ravers."},
+  {title:"Consent Basics", url:"consent.html", desc:"Respect, communication, and safer spaces."},
+  {title:"Accountability", url:"accountability.html", desc:"Reporting misconduct and support."},
+  {title:"Scene Spotlight", url:"spotlight.html", desc:"Local Minnesota rave scene highlights."},
+  {title:"Event Calendar", url:"calendar.html", desc:"Upcoming shows and festivals."},
+  {title:"Spotify", url:"spotify.html", desc:"Curated playlists for the scene."},
+  {title:"Seasonal Tips", url:"seasonal.html", desc:"Weather, hydration, and safety tips."},
+  {title:"Sober Ravers", url:"sober.html", desc:"Support & activities for sober attendees."},
+  {title:"MN Resources", url:"resources.html", desc:"Peer support, clinics, recovery, and more."},
+  {title:"Bad Trip Mode", url:"badtrip.html", desc:"Tools to calm yourself during a bad trip."}
+];
+function performSearch(){
+  const query=document.getElementById('searchInput').value.toLowerCase();
+  const results=pages.filter(p=>p.title.toLowerCase().includes(query)||p.desc.toLowerCase().includes(query));
+  const resultsDiv=document.getElementById('searchResults');
+  resultsDiv.innerHTML="";
+  if(results.length===0){resultsDiv.innerHTML="<p>No results found.</p>"; resultsDiv.style.display="block"; return;}
+  results.forEach(r=>{
+    const el=document.createElement('div');
+    el.innerHTML=`<a href="${r.url}" style="color:#00f7e0;text-decoration:none;font-weight:bold;">${r.title}</a><p style="color:#ccc;margin:2px 0;">${r.desc}</p>`;
+    resultsDiv.appendChild(el);
+  });
+  resultsDiv.style.display="block";
+}
 </script>
 
 </body>
