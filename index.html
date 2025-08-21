@@ -4,66 +4,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
 <style>
-  body { margin:0; padding:0; font-family:'Roboto',sans-serif; background:#0d0d0d; color:#fff; line-height:1.6;}
-  .site-title {text-align:center; margin:1rem 0;}
-  .site-title h1 { font-family:'Montserrat',sans-serif; font-weight:700; font-size:clamp(2rem,5vw,3rem); background:linear-gradient(90deg,#00f7e0 0%,#a3f7ff 50%,#00f7e0 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase; letter-spacing:0.1em; filter: drop-shadow(0 0 6px #00f7e0aa); }
-  .site-title .tagline { font-family:'Roboto',sans-serif; color:#88e9e3; font-size:1rem; opacity:0.8; letter-spacing:0.1em; margin-top:0.2rem;}
-  
-  /* Hamburger menu */
-  .hamburger { position: fixed; top:20px; left:20px; z-index:9999; display:flex; flex-direction:column; justify-content:space-around; width:35px; height:30px; cursor:pointer;}
-  .hamburger div { width:35px; height:4px; background:#00f7e0; border-radius:2px; transition: all 0.3s ease; }
-  .nav-menu { position: fixed; top:0; left:-300px; width:280px; height:100%; background:linear-gradient(145deg,#3a0052,#5d3a7d); padding:2rem 1rem; transition:left 0.3s ease; overflow-y:auto; z-index:999; }
-  .nav-menu ul { list-style:none; padding:0; }
-  .nav-menu ul li { margin-bottom:1rem; }
-  .nav-menu ul li a { color:#fff; text-decoration:none; font-weight:bold; display:block; padding:0.5rem; border-radius:6px; transition:0.2s; }
-  .nav-menu ul li a:hover { background:#b066d1; }
-  .nav-menu ul li ul { margin-top:0.5rem; padding-left:1rem; display:none; }
-  .nav-menu ul li.active ul { display:block; }
-  
-  /* Sections/cards */
-  .cards-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin:2rem; }
-  .card { background:#3a0052; padding:1rem; border-radius:12px; box-shadow:0 0 10px rgba(0,255,255,0.1); transition: transform 0.2s ease; }
-  .card:hover { transform: scale(1.03); }
-  .card h2 { color:#00f7e0; font-family:'Montserrat',sans-serif; font-size:1.4rem; }
-  .card p { font-size:0.95rem; }
-  .card a { display:inline-block; margin-top:0.5rem; padding:0.5rem 1rem; border-radius:8px; background:#00f7e0; color:#2e003e; text-decoration:none; font-weight:bold; }
-  .card a:hover { background:#a3f7ff; }
-  
-  /* Search */
-  .search-bar { max-width:600px; margin:1rem auto; display:flex; }
-  .search-bar input { flex:1; padding:10px; border:none; border-radius:5px 0 0 5px; font-size:1rem; }
-  .search-bar button { padding:10px; border:none; border-radius:0 5px 5px 0; background:#ff6ec7; color:#fff; cursor:pointer; }
-  .search-results { max-width:600px; margin:1rem auto; background:#1a1a1a; border-radius:10px; overflow:hidden; }
-  .search-results a { display:block; padding:0.7rem; border-bottom:1px solid #444; color:#88e9e3; text-decoration:none; }
-  .search-results a:hover { background:#2a0052; }
+/* Reset & body */
+body { margin:0; padding:1rem; font-family:'Roboto', sans-serif; background:#0d0d0d; color:#fff; line-height:1.6; }
+a { text-decoration:none; color:inherit; }
+/* Site title */
+.site-title { text-align:center; margin-bottom:1rem; }
+.site-title h1 { font-family:'Montserrat', sans-serif; font-weight:700; font-size:clamp(2rem,5vw,3rem); color:#00f7e0; letter-spacing:0.15em; text-transform:uppercase; background:linear-gradient(90deg,#00f7e0 0%,#a3f7ff 50%,#00f7e0 100%); background-size:200% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:shineMove 6s linear infinite; filter:drop-shadow(0 0 6px #00f7e0aa);}
+.site-title .tagline { font-family:'Open Sans',sans-serif; color:#88e9e3; font-size:1.1rem; letter-spacing:0.1em; margin-top:0.25rem; font-weight:600; text-transform:uppercase; opacity:0.8;}
+@keyframes shineMove {0% {background-position:100% 0;}100% {background-position:0 0;}}
 
-  /* Polydrug iframe */
-  .polydrug { margin:2rem auto; max-width:1000px; border-radius:10px; overflow:hidden; }
-  .polydrug iframe { width:100%; height:500px; border:none; }
-  
-  /* Panic button */
-  #peachWrap { position:fixed; bottom:24px; right:24px; z-index:9999; }
-  #peachWrap a { font-size:4rem; background:rgba(255,112,148,0.25); padding:12px; border-radius:50%; box-shadow:0 0 12px #E040FB,0 0 24px #FF69B4,0 0 36px #00CED1; animation:pulse 2s infinite; display:flex; align-items:center; justify-content:center; color:inherit; text-decoration:none; }
-  #peachWrap a:hover { transform:scale(1.2); }
-  @keyframes pulse { 0%{transform:scale(1);} 50%{transform:scale(1.12);} 100%{transform:scale(1);} }
-  
-  /* Footer */
-  footer { margin-top:3rem; font-size:0.85rem; color:#ccc; text-align:center; padding:2rem 1rem; background:#111; }
-  footer a { color:#88e9e3; text-decoration:none; }
+/* Hamburger nav */
+.hamburger { position:fixed; top:20px; left:20px; z-index:999; display:flex; flex-direction:column; justify-content:space-between; width:32px; height:24px; cursor:pointer; }
+.hamburger div { height:4px; background:#ff6ec7; border-radius:2px; transition: all 0.3s ease; }
+.nav-menu { position:fixed; top:0; left:-100%; width:250px; height:100%; background:#1a003d; color:#fff; overflow-y:auto; padding:4rem 1rem 1rem; transition:left 0.3s ease; z-index:998; }
+.nav-menu ul { list-style:none; padding:0; margin:0; }
+.nav-menu li { margin-bottom:1rem; }
+.nav-menu li a { color:#fff; display:block; padding:0.4rem 0.5rem; border-radius:5px; background:#3a0052; box-shadow:0 0 6px #ff6ec733; }
+.nav-menu li a:hover { background:#b066d1; }
+.nav-menu ul ul { padding-left:1rem; margin-top:0.5rem; }
+.nav-menu.show { left:0; }
+
+/* Search bar */
+.search-bar { display:flex; justify-content:center; margin:1rem 0; max-width:500px; }
+.search-bar input { flex:1; padding:0.6rem 0.8rem; border:none; border-radius:5px 0 0 5px; font-size:1rem; }
+.search-bar button { padding:0.6rem 1rem; border:none; background:#ff6ec7; color:#fff; border-radius:0 5px 5px 0; cursor:pointer; font-size:1rem; }
+
+/* Cards */
+.cards-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-bottom:2rem; }
+.card { background:#3a0052; padding:1rem; border-radius:12px; box-shadow:0 0 10px rgba(0,255,255,0.1); }
+.card h2 { font-family:'Montserrat',sans-serif; color:#00f7e0; margin-top:0; }
+.card a { text-decoration:none; margin-top:0.5rem; display:inline-block; }
+.card .full-content { display:none; margin-top:0.5rem; }
+
+/* Polydrug widget */
+#polydrugWidget { background:#1a003d; padding:1rem; border-radius:12px; margin:2rem 0; }
+#polydrugWidget select, #polydrugWidget button { padding:0.5rem; margin:0.3rem 0; border-radius:5px; border:none; font-size:1rem; }
+#polydrugResults { margin-top:1rem; background:#3a0052; padding:0.5rem; border-radius:8px; }
+
+/* Scrolling rave alert */
+.rave-alert-wrapper { background:#1a1a1a; overflow:hidden; border-top:1px solid #444; border-bottom:1px solid #444; position:fixed; top:0; left:0; width:100%; height:2.5rem; display:flex; align-items:center; z-index:1000; }
+.rave-alert-link { display:inline-block; white-space:nowrap; color:#ff69b4; font-size:1rem; text-decoration:none; padding-left:100%; animation: scroll-left 20s linear infinite; }
+@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+body { padding-top:3.5rem; }
+
+/* Peach button */
+#peachWrap { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; align-items:center; gap:6px; }
+#peachWrap a.emoji-panic { font-size:3.5rem; background:rgba(255,112,148,0.25); padding:12px; border-radius:50%; box-shadow:0 0 12px #E040FB,0 0 24px #FF69B4,0 0 36px #00CED1; animation:emojiPulse 2.2s infinite; color:inherit; display:flex; align-items:center; justify-content:center; transition:transform 0.2s ease; backdrop-filter:blur(6px); cursor:pointer; width:72px; height:72px; line-height:1; }
+#peachWrap a.emoji-panic:hover { transform:scale(1.25);}
+@keyframes emojiPulse {0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
+
+/* Footer */
+footer { background:#111; padding:2rem 1rem; text-align:center; font-size:0.9rem; color:#ccc; }
+footer ul { list-style:none; padding:0; margin:0 0 1rem 0; display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; }
+footer ul li a { color:#fff; background:#3a0052; padding:0.3rem 0.5rem; border-radius:5px; text-decoration:none; font-size:0.9rem; }
+footer ul li a:hover { background:#b066d1; }
+footer p.disclaimer { font-size:0.75rem; color:#888; margin-top:1rem; max-width:800px; margin-left:auto; margin-right:auto; }
+
+/* Responsive */
+@media(max-width:600px){ .cards-container{grid-template-columns:1fr;} .rave-alert-wrapper{font-size:0.9rem; } }
 </style>
 </head>
 <body>
 
-<!-- Hamburger -->
-<div class="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+<!-- Scrolling rave alert -->
+<div class="rave-alert-wrapper">
+  <a href="/mixes.html" class="rave-alert-link" aria-label="MN Drug Supply Alert">
+    🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • Click for full info 🖤
+  </a>
+</div>
 
-<!-- Side navigation -->
-<nav class="nav-menu" id="navMenu">
+<!-- Hamburger -->
+<div class="hamburger" onclick="document.querySelector('.nav-menu').classList.toggle('show');">
+  <div></div><div></div><div></div>
+</div>
+
+<!-- Side nav -->
+<nav class="nav-menu">
   <ul>
     <li><a href="index.html">Home</a></li>
-    <li><a href="#" onclick="toggleSub(this)">Safety ▾</a>
+    <li>Safety
       <ul>
         <li><a href="panic.html">Panic Button</a></li>
         <li><a href="emergency.html">Emergency Response</a></li>
@@ -71,27 +92,27 @@
         <li><a href="fake.html">Fake Drug Guide</a></li>
       </ul>
     </li>
-    <li><a href="#" onclick="toggleSub(this)">Drug Info ▾</a>
+    <li>Drug Info
       <ul>
         <li><a href="polydrug.html">Polydrug Tool</a></li>
         <li><a href="rx-combos.html">RX + Party Drug Combos</a></li>
         <li><a href="health.html">Raver Health</a></li>
       </ul>
     </li>
-    <li><a href="#" onclick="toggleSub(this)">Consent ▾</a>
+    <li>Consent
       <ul>
         <li><a href="consent.html">Consent Basics</a></li>
         <li><a href="accountability.html">Accountability</a></li>
       </ul>
     </li>
-    <li><a href="#" onclick="toggleSub(this)">Local Scene ▾</a>
+    <li>Local Scene
       <ul>
         <li><a href="spotlight.html">Scene Spotlight</a></li>
         <li><a href="calendar.html">Event Calendar</a></li>
         <li><a href="spotify.html">Spotify</a></li>
       </ul>
     </li>
-    <li><a href="#" onclick="toggleSub(this)">Extras ▾</a>
+    <li>Extras
       <ul>
         <li><a href="seasonal.html">Seasonal Tips</a></li>
         <li><a href="sober.html">Sober Ravers</a></li>
@@ -101,101 +122,130 @@
   </ul>
 </nav>
 
-<!-- Search -->
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search all pages..." oninput="performSearch()">
-  <button onclick="performSearch()">🔍</button>
-</div>
-<div class="search-results" id="searchResults"></div>
-
-<!-- Site Title -->
+<!-- Title -->
 <div class="site-title">
   <h1>PLURderapolis</h1>
   <div class="tagline">Harm Reduction for Minnesota Ravers</div>
 </div>
 
-<!-- Cards -->
-<div class="cards-container">
-  <div class="card"><h2>💊 Harm Reduction</h2><p>Narcan, test strips, safe use info, and drug interaction tools — no judgment.</p><a href="polydrug.html">Use Tools</a></div>
-  <div class="card"><h2>🧠 Mental Health</h2><p>Peer support, grounding exercises, and crisis tools for raver mental wellness.</p><a href="health.html">Learn More</a></div>
-  <div class="card"><h2>🕊️ Consent & Culture</h2><p>Building safer spaces and collective care in the Minnesota scene.</p><a href="consent.html">Learn More</a></div>
-  <div class="card"><h2>🔀 Polydrug Interaction Tool</h2><p>Check RX + party drug combos, trips, and interactions safely.</p><a href="polydrug.html">Open Tool</a></div>
-  <div class="card"><h2>📚 MN Resources</h2><p>Access clinics, recovery help, queer-friendly support, and more.</p><a href="resources.html">View Resources</a></div>
-  <div class="card"><h2>🚨 Scene Alerts</h2><p>Track local fake pills, fentanyl incidents, and predator alerts for your safety.</p><a href="calendar.html">View Alerts</a></div>
+<!-- Search -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search the whole site...">
+  <button onclick="searchSite()">🔍</button>
 </div>
 
-<!-- Polydrug Tool iframe -->
-<div class="polydrug"><iframe src="polydrug.html"></iframe></div>
+<!-- Cards container -->
+<div class="cards-container" id="cardsContainer">
+  <!-- example card -->
+  <div class="card">
+    <h2>💊 Harm Reduction</h2>
+    <p>Narcan, test strips, safe use info — no judgment.</p>
+    <a href="polydrug.html">Use Tools</a>
+  </div>
+  <div class="card">
+    <h2>🧠 Mental Health</h2>
+    <p>Peer support, grounding exercises, and crisis tools.</p>
+    <a href="health.html">Learn More</a>
+  </div>
+  <div class="card">
+    <h2>🕊️ Consent & Culture</h2>
+    <p>Safer spaces, accountability, and consent guidance.</p>
+    <a href="consent.html">Learn More</a>
+  </div>
+  <div class="card">
+    <h2>📚 MN Resources</h2>
+    <p>Access clinics, recovery help, queer-friendly support.</p>
+    <a href="resources.html">View Resources</a>
+  </div>
+  <div class="card">
+    <h2>🚨 Scene Alerts</h2>
+    <p>Fake pills, fentanyl, predator alerts — stay aware.</p>
+    <a href="calendar.html">View Alerts</a>
+  </div>
+</div>
 
-<!-- Panic Button -->
+<!-- Polydrug widget -->
+<div id="polydrugWidget">
+  <h2 style="color:#00f7e0;">🔀 Polydrug Interaction Tool</h2>
+  <label>Drug 1: <select id="drug1">
+    <option value="">Select</option>
+    <option value="MDMA">MDMA</option>
+    <option value="LSD">LSD</option>
+    <option value="Ketamine">Ketamine</option>
+    <option value="Alcohol">Alcohol</option>
+    <option value="Cocaine">Cocaine</option>
+  </select></label>
+  <label>Drug 2: <select id="drug2">
+    <option value="">Select</option>
+    <option value="MDMA">MDMA</option>
+    <option value="LSD">LSD</option>
+    <option value="Ketamine">Ketamine</option>
+    <option value="Alcohol">Alcohol</option>
+    <option value="Cocaine">Cocaine</option>
+  </select></label>
+  <button onclick="checkInteraction()">Check Interaction</button>
+  <div id="polydrugResults"></div>
+</div>
+
+<!-- Peach panic button -->
 <div id="peachWrap">
-  <a href="panic.html" class="emoji-panic" aria-label="Panic Button">🍑</a>
+  <a href="/panic.html" class="emoji-panic" aria-label="Panic Button">🍑</a>
 </div>
 
 <!-- Footer -->
 <footer>
-  <hr>
-  <p>
-    &copy; 2025 PLURderapolis — Mutual aid and harm reduction for our community.
-  </p>
-  <p>
-    <a href="index.html">Home</a> | <a href="panic.html">Panic</a> | <a href="emergency.html">Emergency</a> | <a href="polydrug.html">Polydrug Tool</a> | <a href="consent.html">Consent</a> | <a href="resources.html">Resources</a>
-  </p>
-  <p style="font-size:0.8rem; color:#ccc;">
-    PLURderapolis is a community harm reduction initiative. We are not medical professionals. Information shared is for education, solidarity, and safety. In emergencies, call 911. Always test your substances and use your best judgment.
-  </p>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="panic.html">Panic Button</a></li>
+    <li><a href="emergency.html">Emergency</a></li>
+    <li><a href="polydrug.html">Polydrug Tool</a></li>
+    <li><a href="rx-combos.html">RX + Party</a></li>
+    <li><a href="consent.html">Consent</a></li>
+    <li><a href="resources.html">MN Resources</a></li>
+    <li><a href="calendar.html">Event Calendar</a></li>
+  </ul>
+  <p>&copy; 2025 PLURderapolis. Mutual aid and harm reduction for our community.</p>
+  <p class="disclaimer">PLURderapolis is a community harm reduction initiative. We are not medical professionals. Information shared on this site is not medical advice. Always use your best judgment, test your stuff, and take care of yourself and others. In an emergency, call 911. Submissions are reviewed for safety and accuracy, but this is a peer-run platform intended for education, solidarity, and survival — not diagnosis or treatment.</p>
 </footer>
 
 <script>
-  // Hamburger toggle
-  function toggleMenu() {
-    const menu = document.getElementById('navMenu');
-    menu.style.left = (menu.style.left === '0px') ? '-300px' : '0px';
-  }
-  function toggleSub(el) {
-    el.parentElement.classList.toggle('active');
-  }
+// Hamburger toggle
+document.querySelector('.hamburger').addEventListener('click',()=>{document.querySelector('.nav-menu').classList.toggle('show');});
 
-  // Site-wide search index
-  const siteIndex = [
-    {title:"Home", url:"index.html", keywords:["home","plurderapolis","mn"], description:"PLURderapolis homepage, harm reduction, mental health, consent, resources."},
-    {title:"Polydrug Tool", url:"polydrug.html", keywords:["drugs","interactions","polydrug","safety"], description:"Check drug combinations safely."},
-    {title:"Panic Button", url:"panic.html", keywords:["panic","emergency","help"], description:"Immediate panic button for emergencies."},
-    {title:"Emergency Response", url:"emergency.html", keywords:["emergency","help","911"], description:"Emergency response info."},
-    {title:"Consent Basics", url:"consent.html", keywords:["consent","boundaries","culture"], description:"Consent and accountability."},
-    {title:"MN Resources", url:"resources.html", keywords:["resources","clinics","recovery","support"], description:"Minnesota support resources."},
-    {title:"RX + Party Drug Combos", url:"rx-combos.html", keywords:["rx","party","drugs","combinations"], description:"Check drug combinations."},
-    {title:"Raver Health", url:"health.html", keywords:["health","mental","safety"], description:"Raver health and wellness."},
-    {title:"Accountability", url:"accountability.html", keywords:["accountability","consent","culture"], description:"Reporting and support."},
-    {title:"Scene Spotlight", url:"spotlight.html", keywords:["scene","events","local"], description:"Spotlight on local events and organizers."},
-    {title:"Event Calendar", url:"calendar.html", keywords:["events","calendar","shows"], description:"Local events calendar."},
-    {title:"Spotify", url:"spotify.html", keywords:["music","playlist","spotify"], description:"Minnesota rave playlists."},
-    {title:"Seasonal Tips", url:"seasonal.html", keywords:["seasonal","tips","safety"], description:"Safety tips for seasonal events."},
-    {title:"Sober Ravers", url:"sober.html", keywords:["sober","support","community"], description:"Support for sober attendees."},
-    {title:"Drink Spiking", url:"spiking.html", keywords:["drinks","spiking","safety"], description:"Prevent drink spiking incidents."},
-    {title:"Fake Drug Guide", url:"fake.html", keywords:["fake","drugs","safety"], description:"Guide to fake drugs in the scene."},
-  ];
+// Card toggle
+function toggleCard(el){
+  const content = el.previousElementSibling;
+  if(content.style.display==="none"){ content.style.display="block"; el.textContent="Read Less"; }
+  else{ content.style.display="none"; el.textContent="Read More"; }
+}
 
-  // Live search function
-  function performSearch() {
-    const query = document.getElementById('searchInput').value.toLowerCase();
-    const resultsDiv = document.getElementById('searchResults');
-    resultsDiv.innerHTML = '';
-    if(!query) return;
-    const results = siteIndex.filter(item => 
-      item.title.toLowerCase().includes(query) ||
-      item.keywords.join(" ").toLowerCase().includes(query) ||
-      item.description.toLowerCase().includes(query)
-    );
-    if(results.length === 0) { resultsDiv.innerHTML="<p style='padding:0.7rem'>No results found</p>"; return; }
-    results.forEach(item => {
-      const a = document.createElement('a');
-      a.href = item.url;
-      a.textContent = item.title + " — " + item.description;
-      resultsDiv.appendChild(a);
-    });
-  }
+// Search all page content
+function searchSite(){
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const allElements = document.querySelectorAll('body *:not(script):not(style)');
+  allElements.forEach(el=>{
+    if(el.children.length===0){ // only leaf nodes
+      if(el.textContent.toLowerCase().includes(input)){ el.style.display=''; }
+      else{ el.style.display='none'; }
+    }
+  });
+}
+
+// Simple polydrug interactions
+const interactions = {
+  "MDMA+Alcohol":"⚠️ Increased dehydration, higher body temp.",
+  "MDMA+Cocaine":"⚠️ High risk of heart strain and overheating.",
+  "LSD+Alcohol":"⚠️ Impaired judgment, nausea.",
+  "Ketamine+Alcohol":"⚠️ Enhanced sedation and respiratory risk."
+};
+function checkInteraction(){
+  const d1=document.getElementById('drug1').value;
+  const d2=document.getElementById('drug2').value;
+  if(!d1 || !d2){ document.getElementById('polydrugResults').textContent="Select both drugs."; return; }
+  const key1=d1+"+"+d2; const key2=d2+"+"+d1;
+  const result = interactions[key1] || interactions[key2] || "No major known interaction.";
+  document.getElementById('polydrugResults').textContent=result;
+}
 </script>
-
 </body>
 </html>
