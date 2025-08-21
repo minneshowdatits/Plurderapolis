@@ -142,7 +142,8 @@ body {
 
 /* Peach panic button draggable */
 #peachWrap {
-  position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; align-items:center; gap:6px;
+  position:fixed; top:calc(100vh - 100px); left:calc(100vw - 80px);
+  z-index:9999; display:flex; flex-direction:column; align-items:center; gap:6px;
   touch-action: none;
 }
 #peachWrap a.emoji-panic{
@@ -170,6 +171,7 @@ footer hr{border-color:#444;margin-bottom:1rem;}
 footer p{max-width:800px;margin:0.5rem auto;}
 footer a {color:#00f7e0;text-decoration:none;}
 footer a:hover {text-decoration:underline;}
+footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
 
 /* Search bar */
 .search-bar {
@@ -192,10 +194,12 @@ footer a:hover {text-decoration:underline;}
   cursor:pointer;
 }
 
-/* Polydrug demo tool */
+/* Polydrug combo tool */
 #comboTool {
   background:#1c0033; padding:15px; border-radius:8px; text-align:center; color:#fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+#comboTool:hover{ transform:scale(1.02); box-shadow:0 0 15px rgba(255,112,148,0.3);}
 #comboTool select{ padding:8px; margin:5px; border-radius:6px; border:none; background:#3a0052; color:#00f7e0;}
 #comboTool button{ padding:8px 12px; border:none; border-radius:6px; margin-top:8px; cursor:pointer; background:#00f7e0; color:#2e003e; font-weight:bold;}
 #comboTool p{margin-top:10px; font-weight:bold; color:#ff69b4;}
@@ -204,6 +208,7 @@ footer a:hover {text-decoration:underline;}
 @media(max-width:600px){
   .section{margin:1rem;padding:0.8rem;}
   .cta-button{padding:0.5rem 0.8rem;}
+  #peachWrap{top:auto; left:auto; bottom:24px; right:24px;}
 }
 </style>
 </head>
@@ -318,7 +323,7 @@ footer a:hover {text-decoration:underline;}
   <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
   <p style="font-size:0.8rem;color:#ccc;">Not medical advice. Always test your substances, use your best judgment, and in emergencies call 911. Peer-run platform for education, safety, and solidarity. Submissions reviewed for accuracy.</p>
   <p>Follow us on Instagram: <a href="https://instagram.com/plurderapolis" target="_blank">@plurderapolis</a></p>
-  <ul style="list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;margin-top:1rem;">
+  <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="panic.html">Panic</a></li>
     <li><a href="emergency.html">Emergency</a></li>
@@ -341,13 +346,13 @@ navItems.forEach(item=>{
 });
 
 // Draggable Peach Panic Button
-const peachBtnWrap = document.getElementById('peachWrap');
+const peachWrap = document.getElementById('peachWrap');
 let offsetX, offsetY, isDragging=false;
-peachBtnWrap.addEventListener('mousedown', startDrag);
-peachBtnWrap.addEventListener('touchstart', startDrag);
+peachWrap.addEventListener('mousedown', startDrag);
+peachWrap.addEventListener('touchstart', startDrag);
 function startDrag(e){
   isDragging=true;
-  const rect = peachBtnWrap.getBoundingClientRect();
+  const rect = peachWrap.getBoundingClientRect();
   offsetX = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
   offsetY = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
 }
@@ -358,8 +363,8 @@ function drag(e){
   e.preventDefault();
   const x = (e.touches? e.touches[0].clientX : e.clientX) - offsetX;
   const y = (e.touches? e.touches[0].clientY : e.clientY) - offsetY;
-  peachBtnWrap.style.left = x + 'px';
-  peachBtnWrap.style.top = y + 'px';
+  peachWrap.style.left = x + 'px';
+  peachWrap.style.top = y + 'px';
 }
 document.addEventListener('mouseup',()=>{isDragging=false;});
 document.addEventListener('touchend',()=>{isDragging=false;});
@@ -372,19 +377,25 @@ peachBtn.addEventListener('click',()=>{
   else window.location.href='emergency.html';
 });
 
-// Polydrug demo checker
+// Polydrug combo checker
 function checkCombo(){
-  const d1=document.getElementById('drug1').value;
-  const d2=document.getElementById('drug2').value;
+  const d1 = document.getElementById('drug1').value;
+  const d2 = document.getElementById('drug2').value;
   let result="Select two different drugs!";
   if(d1!=="none" && d2!=="none" && d1!==d2){
-    if((d1==="mdma" && d2==="alcohol") || (d1==="alcohol" && d2==="mdma")) result="⚠️ Medium risk: dehydration & overheating.";
-    else if((d1==="mdma" && d2==="ketamine") || (d1==="ketamine" && d2==="mdma")) result="⚠️ Medium risk: disorientation & impaired judgment.";
-    else if((d1==="cocaine" && d2==="alcohol") || (d1==="alcohol" && d2==="cocaine")) result="⚠️ High risk: heart strain, alcohol toxicity.";
-    else if((d1==="cocaine" && d2==="ketamine") || (d1==="ketamine" && d2==="cocaine")) result="⚠️ Medium risk: cardiovascular & coordination issues.";
-    else result="✅ Low risk or unknown interaction. Always be cautious!";
+    const combos = {
+      "mdma+alcohol":"⚠️ Medium risk: dehydration & overheating.",
+      "alcohol+mdma":"⚠️ Medium risk: dehydration & overheating.",
+      "mdma+ketamine":"⚠️ Medium risk: disorientation & impaired judgment.",
+      "ketamine+mdma":"⚠️ Medium risk: disorientation & impaired judgment.",
+      "cocaine+alcohol":"⚠️ High risk: heart strain, alcohol toxicity.",
+      "alcohol+cocaine":"⚠️ High risk: heart strain, alcohol toxicity.",
+      "cocaine+ketamine":"⚠️ Medium risk: cardiovascular & coordination issues.",
+      "ketamine+cocaine":"⚠️ Medium risk: cardiovascular & coordination issues."
+    };
+    result = combos[`${d1}+${d2}`] || "✅ Low risk or unknown interaction. Always be cautious!";
   }
-  document.getElementById('comboResult').innerText=result;
+  document.getElementById('comboResult').innerText = result;
 }
 
 // Site-wide search
