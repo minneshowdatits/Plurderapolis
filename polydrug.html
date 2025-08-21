@@ -32,6 +32,7 @@
     font-size: 1.05rem;
     line-height: 1.6;
   }
+  a { color:#bf00bf; }
   .risk-category {
     background: #220022;
     border-radius: 8px;
@@ -111,27 +112,19 @@
     line-height: 1.4;
     margin-bottom: 3rem;
   }
-  /* Risk colors */
+  /* Risk colors (match your scheme) */
   .risk-🟢 { color: #4CAF50; font-weight: 700; }
   .risk-🟡 { color: #FFC107; font-weight: 700; }
   .risk-🔴 { color: #F44336; font-weight: 700; }
+  .risk-⚠️ { color: #FF9800; font-weight: 700; }
   .risk-❌ { color: #9C27B0; font-weight: 700; }
   .risk-☠️ { color: #000000; background: #FF1744; font-weight: 700; padding: 0 4px; border-radius: 4px; }
   /* Responsive */
   @media (max-width: 600px) {
-    h2.section-title {
-      font-size: 1.5rem;
-    }
-    h3 {
-      font-size: 1.1rem;
-    }
-    table {
-      font-size: 0.85rem;
-      min-width: 700px;
-    }
-    input[type="text"], select {
-      max-width: 100%;
-    }
+    h2.section-title { font-size: 1.5rem; }
+    h3 { font-size: 1.1rem; }
+    table { font-size: 0.85rem; min-width: 700px; }
+    input[type="text"], select { max-width: 100%; }
   }
   footer {
     background:#222;
@@ -141,6 +134,10 @@
     font-size:0.85rem;
     text-align:center;
     border-top:1px solid #550055;
+  }
+  .source-line { font-size: .9rem; color:#bbb; margin-top: .5rem; }
+  .pill {
+    display:inline-block; padding:.2rem .55rem; border-radius:999px; background:#550055; color:#eee; font-weight:700; font-size:.85rem;
   }
 </style>
 </head>
@@ -194,9 +191,9 @@
 
   <!-- Matrix -->
   <h3 class="subsection-title">📊 Combo Risk Matrix</h3>
-  <p>Tap or hover for more info. Legend: 🟢 Low Risk | 🟡 Moderate | 🔴 Caution | ❌ Unsafe | ☠️ Deadly</p>
+  <p>Tap or hover for more info. Legend: 🟢 Low Risk | 🟡 Moderate | 🔴 Caution | ⚠️ Warning | ❌ Unsafe | ☠️ Deadly</p>
   <div class="matrix-table">
-    <table>
+    <table aria-label="Combo Risk Matrix">
       <thead>
         <tr>
           <th>↓ / →</th>
@@ -247,28 +244,8 @@
     </button>
   </form>
 
-  <datalist id="druglist">
-    <option value="Cannabis" />
-    <option value="Ketamine" />
-    <option value="MDMA" />
-    <option value="Cocaine" />
-    <option value="Alcohol" />
-    <option value="GHB / Opioids" />
-    <option value="Benzos" />
-    <option value="SSRIs" />
-    <option value="SNRIs" />
-    <option value="ADHD Meds" />
-    <option value="Antipsychotics" />
-    <option value="Mood Stabilizers" />
-    <option value="Wellbutrin" />
-    <option value="Trazodone" />
-    <option value="Gabapentin" />
-    <option value="LSD" />
-    <option value="Shrooms" />
-    <option value="Nitrous" />
-    <option value="DMT" />
-    <option value="GHB" />
-  </datalist>
+  <!-- Canonical names + common aliases -->
+  <datalist id="druglist"></datalist>
 
   <div id="comboResult" aria-live="polite" role="region"></div>
 
@@ -288,176 +265,553 @@
   <!-- Emergency Resources -->
   <h3 class="subsection-title">🚨 Emergency Resources in Minnesota</h3>
   <ul>
-    <li><strong>Naloxone Access:</strong> Call 211 or visit <a href="https://harmreduction.org" target="_blank" style="color:#bf00bf;">harmreduction.org</a></li>
+    <li><strong>Naloxone Access:</strong> Call 211 or visit <a href="https://harmreduction.org" target="_blank" rel="noopener">harmreduction.org</a></li>
     <li><strong>Substance Use Crisis Line:</strong> 1-833-244-3636</li>
     <li><strong>Emergency Medical Services:</strong> 911</li>
   </ul>
+
+  <p class="source-line">Sources synthesized from: <span class="pill">PLURderapolis</span> & <span class="pill">TripSit Combo Matrix</span> + local scene notes.</p>
 
 </section>
 
 <script>
 (() => {
-  const riskData = {
-    "Cannabis|Ketamine": { risk: "🟡", desc: "Mild risk: may increase sedation or dizziness." },
-    "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
-    "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
-    "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
-    "Cannabis|GHB / Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
-    "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
-    "Cannabis|SSRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-    "Cannabis|SNRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-    "Cannabis|ADHD Meds": { risk: "🟢", desc: "Generally safe." },
-    "Cannabis|Antipsychotics": { risk: "🟡", desc: "May affect mental state; use cautiously." },
-    "Cannabis|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-    "Cannabis|Wellbutrin": { risk: "🟢", desc: "Generally safe." },
-    "Cannabis|Trazodone": { risk: "🟢", desc: "Generally safe." },
-    "Cannabis|Gabapentin": { risk: "🟢", desc: "Generally safe." },
-    "Cannabis|LSD": { risk: "🔴", desc: "May intensify effects and anxiety." },
-    "Cannabis|Shrooms": { risk: "🔴", desc: "May intensify effects and anxiety." },
-    "Cannabis|Nitrous": { risk: "🟢", desc: "Generally safe." },
-    "Cannabis|DMT": { risk: "🔴", desc: "May increase anxiety and cardiovascular strain." },
-    "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
-
-    "Ketamine|MDMA": { risk: "❌", desc: "Dangerous combo: high risk of respiratory failure." },
-    "Ketamine|Cocaine": { risk: "❌", desc: "Dangerous combo: high risk of heart issues." },
-    "Ketamine|Alcohol": { risk: "❌", desc: "Dangerous combo: respiratory depression risk." },
-    "Ketamine|GHB / Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
-    "Ketamine|Benzos": { risk: "🟡", desc: "Increased sedation." },
-    "Ketamine|SSRIs": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|SNRIs": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|ADHD Meds": { risk: "🔴", desc: "Possible heart strain." },
-    "Ketamine|Antipsychotics": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|Wellbutrin": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|Trazodone": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|Gabapentin": { risk: "🟡", desc: "Mild interaction." },
-    "Ketamine|LSD": { risk: "❌", desc: "High risk of confusion, panic." },
-    "Ketamine|Shrooms": { risk: "❌", desc: "High risk of confusion, panic." },
-    "Ketamine|Nitrous": { risk: "🟡", desc: "Mild sedation increase." },
-    "Ketamine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-    "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
-
-    "MDMA|Cocaine": { risk: "🔴", desc: "High heart strain risk." },
-    "MDMA|Alcohol": { risk: "🔴", desc: "Dehydration, liver strain." },
-    "MDMA|GHB / Opioids": { risk: "❌", desc: "Very dangerous: respiratory failure risk." },
-    "MDMA|Benzos": { risk: "🔴", desc: "Mixed effects; sedation and stimulation." },
-    "MDMA|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-    "MDMA|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-    "MDMA|ADHD Meds": { risk: "❌", desc: "Heart strain and serotonin syndrome risk." },
-    "MDMA|Antipsychotics": { risk: "❌", desc: "Potentially dangerous interaction." },
-    "MDMA|Mood Stabilizers": { risk: "❌", desc: "Potentially dangerous interaction." },
-    "MDMA|Wellbutrin": { risk: "❌", desc: "Seizure risk." },
-    "MDMA|Trazodone": { risk: "🔴", desc: "Serotonin syndrome risk." },
-    "MDMA|Gabapentin": { risk: "🔴", desc: "Mixed effects." },
-    "MDMA|LSD": { risk: "🔴", desc: "Sensory overload, panic." },
-    "MDMA|Shrooms": { risk: "🔴", desc: "Sensory overload, panic." },
-    "MDMA|Nitrous": { risk: "🔴", desc: "Oxygen deprivation risk." },
-    "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo." },
-    "MDMA|GHB": { risk: "❌", desc: "High overdose risk." },
-
-    "Cocaine|Alcohol": { risk: "🧬", desc: "Creates cocaethylene: very toxic to heart and liver." },
-    "Cocaine|Benzos": { risk: "🔴", desc: "Risk of heart issues and sedation conflict." },
-    "Cocaine|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-    "Cocaine|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-    "Cocaine|ADHD Meds": { risk: "❌", desc: "Severe heart strain risk." },
-    "Cocaine|Antipsychotics": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|Mood Stabilizers": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|Wellbutrin": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|Trazodone": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|Gabapentin": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|LSD": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-    "Cocaine|Shrooms": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-    "Cocaine|Nitrous": { risk: "🔴", desc: "Possible heart strain." },
-    "Cocaine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-    "Cocaine|GHB": { risk: "☠️", desc: "Extremely dangerous combo; fatal overdose risk." },
-
-    "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-    "Alcohol|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-    "Benzos|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-
-    "SSRIs|SNRIs": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-    "SSRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-    "SNRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-
-    // Add more specific combos as needed
-  };
-
-  // Normalize keys to always be sorted to avoid dupes
-  function comboKey(...drugs) {
-    return drugs.map(d => d.trim().toLowerCase()).sort().join('|');
-  }
-
-  // Risk order for comparison
-  const riskPriority = { '🟢': 1, '🟡': 2, '🔴': 3, '⚠️': 4, '❌': 5, '☠️': 6 };
-
-  // Function to get the worst risk out of combos
-  function getRiskLevel(a, b) {if (!a || !b) return { risk: 'No data', desc: 'One or both substances unknown.' };
-    const key = comboKey(a, b);
-    const found = riskData[key];
-    if (found) return found;
-    // If no specific data, default moderate caution if both are known
-    if (a && b) return { risk: '🟡', desc: 'No specific data; caution advised.' };
-    return { risk: 'No data', desc: 'Unknown substances.' };
-  }
-
-  // Parse user input, standardize capitalization
-  const canonicalNames = [
-    "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", "GHB / Opioids", "Benzos", 
-    "SSRIs", "SNRIs", "ADHD Meds", "Antipsychotics", "Mood Stabilizers", "Wellbutrin", 
-    "Trazodone", "Gabapentin", "LSD", "Shrooms", "Nitrous", "DMT", "GHB"
+  /* ===============================
+     CANONICAL NAMES & ALIASES
+     =============================== */
+  const canonical = [
+    "Cannabis","Ketamine","MDMA","Cocaine","Alcohol","GHB / Opioids","Benzos","SSRIs","SNRIs",
+    "ADHD Meds","Antipsychotics","Mood Stabilizers","Wellbutrin","Trazodone","Gabapentin",
+    "LSD","Shrooms","Nitrous","DMT","GHB","Opioids","MAOIs","Tricyclics","Lithium"
   ];
 
-  function capitalizeName(name) {
-    if (!name) return '';
-    const lower = name.toLowerCase();
-    const found = canonicalNames.find(c => c.toLowerCase() === lower);
-    return found || name;
+  const aliases = {
+    // General
+    "weed":"Cannabis","pot":"Cannabis","thc":"Cannabis","cannabis":"Cannabis",
+    "k":"Ketamine","ket":"Ketamine",
+    "molly":"MDMA","ecstasy":"MDMA","x":"MDMA","e":"MDMA",
+    "coke":"Cocaine","blow":"Cocaine",
+    "booze":"Alcohol","ethanol":"Alcohol",
+    "benzos":"Benzos","xanax":"Benzos","alprazolam":"Benzos","klonopin":"Benzos","clonazepam":"Benzos","valium":"Benzos","diazepam":"Benzos","ativan":"Benzos","lorazepam":"Benzos",
+    "opioids":"GHB / Opioids","opiates":"GHB / Opioids","fentanyl":"GHB / Opioids","percs":"GHB / Opioids","oxycodone":"GHB / Opioids","heroin":"GHB / Opioids",
+    "ghb":"GHB","g":"GHB",
+    "ssri":"SSRIs","lexapro":"SSRIs","zoloft":"SSRIs","prozac":"SSRIs","fluoxetine":"SSRIs","sertraline":"SSRIs","escitalopram":"SSRIs","paroxetine":"SSRIs","citalopram":"SSRIs",
+    "snri":"SNRIs","effexor":"SNRIs","venlafaxine":"SNRIs","duloxetine":"SNRIs","cymbalta":"SNRIs","desvenlafaxine":"SNRIs",
+    "adderall":"ADHD Meds","vyvanse":"ADHD Meds","ritalin":"ADHD Meds","methylphenidate":"ADHD Meds","lisdexamfetamine":"ADHD Meds","amphetamine":"ADHD Meds",
+    "seroquel":"Antipsychotics","abilify":"Antipsychotics","risperdal":"Antipsychotics","latuda":"Antipsychotics",
+    "lamictal":"Mood Stabilizers","lamotrigine":"Mood Stabilizers","lithium":"Mood Stabilizers",
+    "bupropion":"Wellbutrin","wellbutrin":"Wellbutrin",
+    "psilocybin":"Shrooms","mushrooms":"Shrooms","shroom":"Shrooms",
+    "n2o":"Nitrous","whippets":"Nitrous","nitrous oxide":"Nitrous",
+    "dmt":"DMT",
+    "maoi":"MAOIs","maois":"MAOIs",
+    "tca":"Tricyclics","tricyclic":"Tricyclics",
+  };
+
+  function canonicalize(input) {
+    if (!input) return "";
+    const key = String(input).trim().toLowerCase();
+    if (aliases[key]) return aliases[key];
+    // match canonical directly
+    const found = canonical.find(c => c.toLowerCase() === key);
+    return found || input.trim();
   }
 
-  // Form handling
+  /* ===============================
+     DATASET (structured)
+     Each entry standardized; we build a lookup map.
+     risk levels via emojis used in your UI
+     🟢 Low | 🟡 Moderate | 🔴 Caution | ⚠️ Warning | ❌ Unsafe | ☠️ Deadly
+     =============================== */
+  const data = [
+    /* --- From your scene notes --- */
+    {
+      combo:["MDMA","Alcohol"],
+      category:"Stimulant + Depressant",
+      risk:"🔴",
+      risks:["Roll suppression","Overheating","Dehydration","Liver stress","Harsh comedown"],
+      mechanism:"Alcohol worsens dehydration/overheating and can blunt MDMA’s subjective effects.",
+      notes:"Common in Twin Cities; many report it 'kills the roll.'",
+      harm_reduction:["Sip electrolytes","Keep doses low","Avoid hot, crowded spaces","Don’t add other depressants"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Cocaine","Alcohol"],
+      category:"Stimulant + Depressant",
+      risk:"⚠️",
+      risks:["Cocaethylene formation","Cardiotoxicity","Seizures","Liver toxicity"],
+      mechanism:"Liver forms cocaethylene when cocaine and ethanol are combined; more cardiotoxic.",
+      notes:"Seen at house parties/clubs; feels good but is more toxic.",
+      harm_reduction:["Avoid co-use","If used, strict limit and hydrate","Don’t redose to chase euphoria"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Ketamine","Alcohol"],
+      category:"Depressant + Depressant",
+      risk:"❌",
+      risks:["Respiratory depression","Blackout","Aspiration","Injury"],
+      mechanism:"Additive CNS and respiratory depression; impaired reflexes and coordination.",
+      notes:"Common at warehouses/afters; easy to pass out unnoticed.",
+      harm_reduction:["Do not mix","Have a sitter","Keep head to side if nauseous"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Cannabis","Shrooms"],
+      category:"Psychedelic + Psychedelic",
+      risk:"🔴",
+      risks:["Anxiety/panic","Nausea","Derealization"],
+      mechanism:"THC can potentiate psychedelic effects and anxiety.",
+      notes:"Sometimes smooths come-up; other times triggers spin-outs.",
+      harm_reduction:["Delay cannabis until late in trip","Microdose THC if at all"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Cannabis","LSD"],
+      category:"Psychedelic + Psychedelic",
+      risk:"🔴",
+      risks:["Anxiety/panic","Thought loops","Nausea"],
+      mechanism:"THC potentiates visuals and sympathetic activation.",
+      notes:"Very common; effects highly individual.",
+      harm_reduction:["Wait until past peak","Small puffs only"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["MDMA","Shrooms"],
+      category:"Stimulant + Psychedelic (Hippie flipping)",
+      risk:"🔴",
+      risks:["Overwhelm","Panic","Dehydration","Serotonin toxicity (rare)"],
+      mechanism:"Monoamine release + 5-HT2A agonism increases sensory/emotional load.",
+      notes:"Forest raves/Burner-leaning events; can be beautiful or too much.",
+      harm_reduction:["Dose low","Trusted company","Cool, hydration, grounding tools"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Cocaine","Ketamine"],
+      category:"Stimulant + Dissociative",
+      risk:"❌",
+      risks:["Cardiac strain","Blood pressure spikes/drops","Compulsive redosing","Injury"],
+      mechanism:"Sympathomimetic stress from cocaine + dissociation/instability from K.",
+      notes:"Known as Calvin Klein / CK; leads to see-sawing and bingeing.",
+      harm_reduction:["Avoid","If used, cap total doses and timebox","Don’t mix with alcohol/benzos"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Benzos","Alcohol"],
+      category:"Depressant + Depressant",
+      risk:"☠️",
+      risks:["Respiratory failure","Fatal overdose","Blackouts"],
+      mechanism:"GABAergic synergy suppresses breathing and consciousness.",
+      notes:"Leading cause of fatal polydrug ODs; “sleeping it off” can be deadly.",
+      harm_reduction:["Do not mix","Naloxone won’t reverse benzos","Monitor breathing, recovery position"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Benzos","GHB / Opioids"],
+      category:"Depressant + Depressant",
+      risk:"☠️",
+      risks:["Respiratory arrest","Death","Severe sedation/amnesia"],
+      mechanism:"Synergistic CNS and respiratory depression.",
+      notes:"Major driver of ODs in Minneapolis/Duluth.",
+      harm_reduction:["Never combine","Carry naloxone for opioids","Supervise friends"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Nitrous","Ketamine"],
+      category:"Dissociative + Dissociative",
+      risk:"⚠️",
+      risks:["Hypoxia","Fainting","Falls/convulsions"],
+      mechanism:"N2O displaces oxygen; stacked dissociation impairs motor control.",
+      notes:"Common at festivals/afters; people pass out mid-hit.",
+      harm_reduction:["Sit down, spotter, limit balloons","Take breaks to breathe air"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Nitrous","Alcohol"],
+      category:"Depressant + Dissociative",
+      risk:"⚠️",
+      risks:["Hypoxia","Blackout","Vomiting/aspiration"],
+      mechanism:"Respiratory depression and poor airway protection.",
+      notes:"Downers increase risk of seizure-like events during hypoxia.",
+      harm_reduction:["Avoid stacking","If used, small N2O, no chugging drinks"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Nitrous","Benzos"],
+      category:"Depressant + Dissociative",
+      risk:"⚠️",
+      risks:["Deep sedation","Hypoxia","Amnesia"],
+      mechanism:"Sedation + reduced respiratory drive.",
+      notes:"Can look “asleep” while O2 drops.",
+      harm_reduction:["Avoid","Supervision, fresh air"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Cocaine","GHB / Opioids"],
+      category:"Stimulant + Depressant (Speedball)",
+      risk:"☠️",
+      risks:["Cardiac arrest","Hidden sedation → overdose","Sudden respiratory failure"],
+      mechanism:"Stimulant masks opioid sedation; dosing overshoots.",
+      notes:"OD can appear to “come out of nowhere.”",
+      harm_reduction:["Never combine","If opioids in play: carry naloxone, don’t use alone"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["ADHD Meds","MDMA"],
+      category:"Stimulant + Stimulant",
+      risk:"❌",
+      risks:["Serotonin syndrome","Hyperthermia","Hypertension","Neurotoxicity risk","Severe comedown"],
+      mechanism:"Stacked monoamine release/uptake inhibition overloads CNS.",
+      notes:"Short high, long damage potential.",
+      harm_reduction:["Avoid stacking","Cool environment, hydration","Space doses/days"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["MDMA","LSD"],
+      category:"Stimulant + Psychedelic (Candyflipping)",
+      risk:"🔴",
+      risks:["Bad trip/panic","Psychosis in vulnerable folks","Overheating"],
+      mechanism:"5-HT release + 5-HT2A agonism; overstimulation.",
+      notes:"Can be incredible if experienced, dangerous if not stable/alone.",
+      harm_reduction:["Trip sitter","Water/electrolytes","Grounding tools"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Ketamine","Benzos"],
+      category:"Dissociative + Depressant",
+      risk:"⚠️",
+      risks:["Severe sedation","Memory loss","Respiratory depression","Vomiting while unconscious"],
+      mechanism:"GABAergic sedation + dissociation.",
+      notes:"High assault and injury risk when mobility is impaired.",
+      harm_reduction:["Avoid","If used: very low doses, sitter, recovery position"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["SSRIs","MDMA"],
+      category:"Rx + Stimulant-Entactogen",
+      risk:"🔴",
+      risks:["Diminished effects → redosing","Serotonin syndrome (still possible)","Overheating/seizures"],
+      mechanism:"SSRIs downregulate/block SERT; MDMA effect blunted but risks remain.",
+      notes:"People redose to 'make it work' = danger.",
+      harm_reduction:["If on SSRIs, avoid MDMA","Never redose to chase effects"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Wellbutrin","MDMA"],
+      category:"Rx (bupropion) + Stimulant",
+      risk:"❌",
+      risks:["Seizures","Anxiety/panic","Hypertension"],
+      mechanism:"Bupropion lowers seizure threshold; stacked stimulation increases risk.",
+      notes:"Avoid if any seizure history.",
+      harm_reduction:["Do not mix","If meds needed, consult prescriber"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Wellbutrin","Cocaine"],
+      category:"Rx (bupropion) + Stimulant",
+      risk:"🔴",
+      risks:["Seizures","Anxiety/paranoia","Cardiac strain"],
+      mechanism:"Seizure threshold ↓ + sympathomimetic stress ↑.",
+      notes:"High anxiety loops common.",
+      harm_reduction:["Avoid stacking","If used: very low dose, calm setting"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Alcohol","Wellbutrin"],
+      category:"Depressant + Rx (bupropion)",
+      risk:"❌",
+      risks:["Seizures","Blackouts","Aggression/impulsivity"],
+      mechanism:"Bupropion + alcohol further lowers seizure threshold.",
+      notes:"Blackout risk higher than usual.",
+      harm_reduction:["Avoid binge drinking on bupropion"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Mood Stabilizers","LSD"],
+      category:"Rx + Psychedelic",
+      risk:"⚠️",
+      risks:["Blunted/unstable trip","Confusion/panic"],
+      mechanism:"Some mood stabilizers (e.g., lamotrigine) dampen glutamate/affect experience.",
+      notes:"Trips may feel emotionally flat or anxious.",
+      harm_reduction:["Avoid stacking","If tried, very low doses"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Lithium","LSD"],
+      category:"Rx (lithium) + Psychedelic",
+      risk:"☠️",
+      risks:["Uncontrollable seizures","Toxic reactions","Deaths reported"],
+      mechanism:"Unclear; case reports show severe neurotoxicity when combined.",
+      notes:"Hard NO.",
+      harm_reduction:["Do not mix under any circumstance"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Lithium","Shrooms"],
+      category:"Rx (lithium) + Psychedelic",
+      risk:"☠️",
+      risks:["Seizures","Severe adverse reactions"],
+      mechanism:"As above.",
+      notes:"Documented dangerous interaction.",
+      harm_reduction:["Hard NO"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Antipsychotics","LSD"],
+      category:"Rx + Psychedelic",
+      risk:"⚠️",
+      risks:["Trip blunted/unpredictable","Rebound confusion","Extrapyramidal/overheating"],
+      mechanism:"D2/5-HT2A antagonism alters psychedelic effects.",
+      notes:"People may redose to 'break through' → bad.",
+      harm_reduction:["Avoid mixing; don’t chase with more doses"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Antipsychotics","MDMA"],
+      category:"Rx + Stimulant-Entactogen",
+      risk:"❌",
+      risks:["Blunted empathy/euphoria","Redosing risk","Cardiac/serotonin issues"],
+      mechanism:"Receptor antagonism + sympathomimetic load.",
+      notes:"Not safer just because effects feel muted.",
+      harm_reduction:["Avoid","Never redose to push through meds"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["ADHD Meds","Cocaine"],
+      category:"Stimulant + Stimulant",
+      risk:"❌",
+      risks:["Hypertension","Arrhythmia","Stroke risk","Overheating"],
+      mechanism:"Additive catecholamine surge.",
+      notes:"Alcohol on top increases blackout/impulsivity.",
+      harm_reduction:["Do not stack stimulants","No alcohol on top"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Trazodone","Alcohol"],
+      category:"Rx (sedative) + Depressant",
+      risk:"❌",
+      risks:["Deep sedation","Respiratory depression","Blackouts"],
+      mechanism:"Serotonergic/sedative effects + alcohol depressant effects.",
+      notes:"Commonly used to 'sleep'—dangerous when drinking.",
+      harm_reduction:["Avoid combining; never take trazodone as a nightcap with drinks"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Gabapentin","Alcohol"],
+      category:"Rx (gabapentinoid) + Depressant",
+      risk:"⚠️",
+      risks:["Sedation","Motor loss","Memory gaps","Overdose risk ↑ with opioids"],
+      mechanism:"GABAergic modulation stacks sedation with depressants.",
+      notes:"Often misused to 'boost' other downers.",
+      harm_reduction:["Avoid; if used, no opioids/benzos in the mix"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["Gabapentin","Benzos"],
+      category:"Rx (gabapentinoid) + Depressant",
+      risk:"⚠️",
+      risks:["Deep sedation","Falls","Overdose risk"],
+      mechanism:"Additive CNS depression.",
+      notes:"Feels 'chill' but stacks dangerously.",
+      harm_reduction:["Avoid stacking downers","Sitter/safe place"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["MAOIs","DMT"],
+      category:"Rx (MAOI) + Psychedelic",
+      risk:"⚠️",
+      risks:["Hypertensive crisis","Tachycardia","Headache"],
+      mechanism:"MAOI prevents monoamine breakdown; raises levels.",
+      notes:"Ayahuasca context differs (RIMAs, controlled setting).",
+      harm_reduction:["Medical supervision only; do not improvise with pharma-MAOIs"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Tricyclics","LSD"],
+      category:"Rx (TCA) + Psychedelic",
+      risk:"⚠️",
+      risks:["Cardiac stress","Arrhythmia","Overheating"],
+      mechanism:"Anticholinergic and noradrenergic effects plus psychedelic stimulation.",
+      notes:"Unpredictable intensity.",
+      harm_reduction:["Avoid; cardiac screening issues"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["MDMA","GHB / Opioids"],
+      category:"Stimulant + Depressant",
+      risk:"❌",
+      risks:["Respiratory depression","Loss of consciousness","Aspiration"],
+      mechanism:"Sedation masks distress while MDMA strains body.",
+      notes:"Very dangerous; looks 'fine' until not.",
+      harm_reduction:["Do not combine","Never use alone"],
+      sources:["PLURderapolis","TripSit"]
+    },
+    {
+      combo:["MDMA","DMT"],
+      category:"Stimulant + Psychedelic",
+      risk:"❌",
+      risks:["Severe panic","Blood pressure spikes","Serotonin toxicity risk"],
+      mechanism:"Stacked serotonergic load + acute DMT intensity.",
+      notes:"Avoid.",
+      harm_reduction:["Do not mix"],
+      sources:["TripSit"]
+    },
+    {
+      combo:["Anything","Unknown Powder"],
+      category:"Unknown",
+      risk:"⚠️",
+      risks:["Unexpected potency","Fentanyl contamination","Benzo analogs","Mislabeling"],
+      mechanism:"No testing = no idea.",
+      notes:"No matter how cool they seem—if you didn’t test it, you don’t know it.",
+      harm_reduction:["Use test kits","Carry naloxone","Never snort 'just a little' mystery line"],
+      sources:["PLURderapolis"]
+    }
+  ];
+
+  /* ===============================
+     BUILD LOOKUP (sorted lowercase keys)
+     =============================== */
+  function keyFor(a,b){
+    return [a,b].map(s=>String(s||"").trim().toLowerCase()).sort().join("|");
+  }
+  const map = new Map();
+  data.forEach(entry=>{
+    const [a,b] = entry.combo;
+    map.set(keyFor(a,b), entry);
+  });
+
+  /* ===============================
+     RISK ORDER
+     =============================== */
+  const riskPriority = { '🟢': 1, '🟡': 2, '🔴': 3, '⚠️': 4, '❌': 5, '☠️': 6 };
+
+  /* ===============================
+     AUTOCOMPLETE LIST
+     =============================== */
+  const datalist = document.getElementById('druglist');
+  [...new Set(canonical)].sort().forEach(name=>{
+    const opt = document.createElement('option');
+    opt.value = name;
+    datalist.appendChild(opt);
+  });
+
+  /* ===============================
+     CHECKER
+     =============================== */
+  function lookup(a,b){
+    const entry = map.get(keyFor(a,b));
+    if (entry) return entry;
+
+    // Heuristics for classes not explicitly paired (keeps behavior from your matrix)
+    const A = canonicalize(a), B = canonicalize(b);
+    if (!A || !B) return null;
+
+    // Broad class flags for conservative default
+    const depressants = new Set(["Alcohol","GHB","GHB / Opioids","Benzos","Trazodone","Gabapentin"]);
+    const stimulants  = new Set(["Cocaine","ADHD Meds","MDMA","Wellbutrin"]);
+    const psychedelics= new Set(["LSD","Shrooms","DMT"]);
+    const dissoc      = new Set(["Ketamine","Nitrous"]);
+
+    // deadly obvious ones
+    if (depressants.has(A) && depressants.has(B)) {
+      return { combo:[A,B], category:"Depressant + Depressant", risk:"☠️",
+        risks:["Respiratory arrest","Fatal overdose","Blackout"], mechanism:"Synergistic CNS/respiratory depression.",
+        notes:"Classic deadly mix.", harm_reduction:["Do not combine","Supervision, recovery position"], sources:["PLURderapolis","TripSit"]
+      };
+    }
+    // stim + stim
+    if (stimulants.has(A) && stimulants.has(B)) {
+      return { combo:[A,B], category:"Stimulant + Stimulant", risk:"❌",
+        risks:["Cardiac stress","Overheating","Arrhythmia"], mechanism:"Additive catecholamine surge.",
+        notes:"High strain even at 'normal' doses.", harm_reduction:["Avoid stacking","Cool environment, hydration"], sources:["TripSit"]
+      };
+    }
+    // stim + depressant
+    if ((stimulants.has(A) && depressants.has(B)) || (stimulants.has(B) && depressants.has(A))) {
+      return { combo:[A,B], category:"Stimulant + Depressant", risk:"⚠️",
+        risks:["Dehydration","Misjudged intoxication","Cardiac stress"], mechanism:"Mixed signals; masking sedation.",
+        notes:"Risk spikes with alcohol/opiates.", harm_reduction:["Avoid mixing","No redosing"], sources:["PLURderapolis"]
+      };
+    }
+    // cannabis + psychedelics
+    if ((A==="Cannabis" && psychedelics.has(B)) || (B==="Cannabis" && psychedelics.has(A))) {
+      return { combo:[A,B], category:"Psychedelic + Cannabis", risk:"🔴",
+        risks:["Anxiety","Nausea","Derealization"], mechanism:"THC potentiates psychedelic intensity.",
+        notes:"Highly individual.", harm_reduction:["Wait until late in trip","Micro-puffs if any"], sources:["TripSit"]
+      };
+    }
+    // dissociative + depressant
+    if ((dissoc.has(A) && depressants.has(B)) || (dissoc.has(B) && depressants.has(A))) {
+      return { combo:[A,B], category:"Dissociative + Depressant", risk:"⚠️",
+        risks:["Hypoxia","Blackout","Aspiration"], mechanism:"Respiratory depression + impaired airway.",
+        notes:"High accident/assault risk.", harm_reduction:["Avoid","Sitter, safe position"], sources:["TripSit"]
+      };
+    }
+
+    // Default conservative
+    return { combo:[A,B], category:"Unknown/Unmapped", risk:"🟡",
+      risks:["Insufficient data"], mechanism:"—",
+      notes:"Caution advised.", harm_reduction:["Start low, go slow","Don’t use alone"], sources:["—"]
+    };
+  }
+
+  function renderDetails(entry){
+    const riskBadge = `<span class="risk-${entry.risk}" style="font-size:1.3rem;">${entry.risk}</span>`;
+    const list = (arr=[]) => arr && arr.length ? `<ul>${arr.map(i=>`<li>${i}</li>`).join("")}</ul>` : "";
+    return `
+      <p><strong>Overall risk level:</strong> ${riskBadge}</p>
+      <p><strong>Category:</strong> ${entry.category}</p>
+      ${entry.risks?.length ? `<p><strong>Key risks:</strong></p>${list(entry.risks)}` : ""}
+      ${entry.mechanism ? `<p><strong>Mechanism:</strong> ${entry.mechanism}</p>` : ""}
+      ${entry.notes ? `<p><strong>Notes:</strong> ${entry.notes}</p>` : ""}
+      ${entry.harm_reduction?.length ? `<p><strong>Harm reduction:</strong></p>${list(entry.harm_reduction)}` : ""}
+      ${entry.sources?.length ? `<p class="source-line"><strong>Sources:</strong> ${entry.sources.join(", ")}</p>` : ""}
+    `;
+  }
+
+  /* ===============================
+     FORM HANDLING
+     =============================== */
   const form = document.getElementById('interactionForm');
   const resultDiv = document.getElementById('comboResult');
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-    let d1 = capitalizeName(form.drug1.value.trim());
-    let d2 = capitalizeName(form.drug2.value.trim());
-    let d3 = capitalizeName(form.drug3.value.trim());
 
-    // Validate input
-    if (!d1 || !d2) {
-      resultDiv.innerHTML = '<span style="color:#F44336;">Please enter at least two valid substances.</span>';
-      return;
-    }
-    if (![d1, d2, d3].filter(Boolean).some(x => canonicalNames.includes(x)) ) {
-      resultDiv.innerHTML = '<span style="color:#F44336;">One or more substances are not recognized. Check spelling.</span>';
+    // canonicalize inputs
+    const raw = [form.drug1.value, form.drug2.value, form.drug3.value].filter(Boolean);
+    const inputs = raw.map(canonicalize).filter(Boolean);
+
+    if (inputs.length < 2) {
+      resultDiv.innerHTML = '<span class="risk-🔴">Please enter at least two valid substances.</span>';
       return;
     }
 
-    // Build all pairs for risk analysis
-    const substances = [d1, d2];
-    if (d3) substances.push(d3);
-
-    let highestRisk = { risk: '🟢', desc: 'No significant interactions found.' };
-    let details = [];
-
-    for (let i = 0; i < substances.length; i++) {
-      for (let j = i + 1; j < substances.length; j++) {
-        let res = getRiskLevel(substances[i], substances[j]);
-        details.push(`<strong>${substances[i]} + ${substances[j]}</strong>: <span class="risk-${res.risk}">${res.risk}</span> — ${res.desc}`);
-        if (riskPriority[res.risk] > riskPriority[highestRisk.risk]) {
-          highestRisk = res;
-        }
+    // Build pairs, get worst risk
+    let pairs = [];
+    let worst = { risk:'🟢' };
+    for (let i=0;i<inputs.length;i++){
+      for (let j=i+1;j<inputs.length;j++){
+        const a = inputs[i], b = inputs[j];
+        const entry = lookup(a,b);
+        pairs.push({a,b,entry});
+        if (entry && riskPriority[entry.risk] > (riskPriority[worst.risk] || 0)) worst = entry;
       }
     }
 
-    // Output
-    resultDiv.innerHTML = `<p><strong>Overall risk level:</strong> <span class="risk-${highestRisk.risk}" style="font-size:1.3rem;">${highestRisk.risk}</span></p>
-    <p>${highestRisk.desc}</p>
-    <details>
-      <summary style="cursor:pointer; color:#bf00bf; font-weight:700;">See detailed interactions</summary>
-      <ul>${details.map(d => `<li>${d}</li>`).join('')}</ul>
-    </details>`;
+    // Render
+    const details = pairs.map(p=>{
+      const r = p.entry ? p.entry.risk : '🟡';
+      const d = p.entry ? p.entry.notes || p.entry.category : 'No specific data; caution advised.';
+      return `<li><strong>${p.a} + ${p.b}</strong>: <span class="risk-${r}">${r}</span> — ${d}</li>`;
+    }).join('');
+
+    resultDiv.innerHTML = `
+      ${worst ? renderDetails(worst) : '<p>No data.</p>'}
+      <details>
+        <summary style="cursor:pointer; color:#bf00bf; font-weight:700;">See detailed pair interactions</summary>
+        <ul>${details}</ul>
+      </details>
+    `;
   });
 })();
 </script>
@@ -467,4 +821,4 @@
 </footer>
 
 </body>
-</html> 
+</html>
