@@ -67,9 +67,15 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
 
 /* --- Search --- */
-.search-bar{margin:1rem auto; max-width:500px; display:flex;}
-.search-bar input{flex:1;padding:10px;border:none;border-radius:5px 0 0 5px;}
-.search-bar button{padding:10px;border:none;background:#00f7e0;color:#2e003e;border-radius:0 5px 5px 0;cursor:pointer;}
+.search-bar{margin:1rem auto; max-width:500px; display:flex; border:2px solid #00f7e0; border-radius:8px; overflow:hidden;}
+.search-bar input{flex:1;padding:10px;border:none;background:#1a001f;color:#fff; font-weight:bold;}
+.search-bar button{padding:10px;border:none;background:#00f7e0;color:#2e003e;font-weight:bold;cursor:pointer;}
+
+/* --- Search results styling --- */
+#searchResults { background:#2e003e; border-radius:10px; padding:1rem; margin-top:1rem; color:#fff; box-shadow:0 0 12px rgba(0,255,255,0.2);}
+#searchResults h2{color:#ff6ec7;}
+#searchResults ul{padding-left:1rem;}
+#searchResults ul li{margin-bottom:0.5rem;}
 
 /* --- Responsive --- */
 @media(max-width:600px){ .section{margin:1rem;padding:0.8rem;} .cta-button{padding:0.5rem 0.8rem;} }
@@ -138,16 +144,21 @@ footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
   <input type="text" id="searchInput" placeholder="Search the site by keyword...">
   <button onclick="performSearch()">🔍</button>
 </div>
-<div id="searchResults" class="section" style="display:none;"></div>
+<div id="searchResults" style="display:none;"></div>
 
 <!-- Sections -->
 <div class="section">
-  <h2>💡 What We Do</h2>
+  <h2>💡 How to Use This Site</h2>
+  <p>Welcome! Here's how to navigate PLURderapolis safely and get the info you need:</p>
   <ul>
-    <li><a href="resources.html">💊 Harm Reduction — Narcan, test strips, interaction tools.</a></li>
-    <li><a href="badtrip.html">🧠 Mental Health & Crisis — Peer support, grounding, Bad Trip Mode.</a></li>
-    <li><a href="consent.html">🕊️ Consent & Culture — Safer spaces, collective care, reporting tools.</a></li>
+    <li>🔹 <a href="resources.html">Check MN Resources</a> for clinics, queer-friendly support, recovery, and DV help.</li>
+    <li>🔹 <a href="polydrug.html">Polydrug Tool</a> helps you see interaction risks between drugs.</li>
+    <li>🔹 <a href="panic.html">Peach Panic Button</a> for quick emergency access or reporting unsafe situations.</li>
+    <li>🔹 <a href="badtrip.html">Bad Trip Mode</a> for mental health support and grounding exercises.</li>
+    <li>🔹 <a href="consent.html">Consent & Culture</a> guides for safer social spaces and reporting.</li>
+    <li>🔹 <a href="calendar.html">Event Calendar & Scene Spotlight</a> to stay updated on local rave events.</li>
   </ul>
+  <p>Tip: Use the search bar above 🔍 to quickly find pages or topics!</p>
 </div>
 
 <div class="section" id="polydrugDemo">
@@ -180,51 +191,6 @@ footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
   <a class="cta-button" href="polydrug.html" style="margin-top:0.8rem;">Open Full Tool</a>
 </div>
 
-<script>
-// Polydrug interaction demo data
-const interactionMatrix = {
-  "MDMA-Alcohol": "Moderate Risk ⚠️",
-  "MDMA-Ketamine": "High Risk 🔥",
-  "MDMA-Cocaine": "High Risk 🔥",
-  "MDMA-Mushrooms": "Low Risk ✅",
-  "MDMA-LSD": "Moderate Risk ⚠️",
-  "MDMA-GHB": "High Risk 🔥",
-  "Alcohol-Ketamine": "High Risk 🔥",
-  "Alcohol-Cocaine": "High Risk 🔥",
-  "Alcohol-Mushrooms": "Low Risk ✅",
-  "Alcohol-LSD": "Moderate Risk ⚠️",
-  "Alcohol-GHB": "High Risk 🔥",
-  "Ketamine-Cocaine": "High Risk 🔥",
-  "Ketamine-Mushrooms": "Low Risk ✅",
-  "Ketamine-LSD": "Moderate Risk ⚠️",
-  "Ketamine-GHB": "High Risk 🔥",
-  "Cocaine-Mushrooms": "Moderate Risk ⚠️",
-  "Cocaine-LSD": "Moderate Risk ⚠️",
-  "Cocaine-GHB": "High Risk 🔥",
-  "Mushrooms-LSD": "Low Risk ✅",
-  "Mushrooms-GHB": "Moderate Risk ⚠️",
-  "LSD-GHB": "Moderate Risk ⚠️"
-};
-
-function checkInteraction(){
-  const d1 = document.getElementById('drug1').value;
-  const d2 = document.getElementById('drug2').value;
-  const resultDiv = document.getElementById('interactionResult');
-  if(!d1 || !d2 || d1===d2){ resultDiv.textContent="Please select two different drugs."; resultDiv.style.color="#ff6ec7"; return; }
-  const key1 = `${d1}-${d2}`;
-  const key2 = `${d2}-${d1}`;
-  const risk = interactionMatrix[key1] || interactionMatrix[key2] || "Unknown — test with caution ⚠️";
-  
-  // Color coding
-  let color="#88e9e3";
-  if(risk.includes("Low")) color="#00ff95";
-  else if(risk.includes("Moderate")) color="#ffeb3b";
-  else if(risk.includes("High")) color="#ff3d00";
-  
-  resultDiv.textContent = `Interaction: ${risk}`;
-  resultDiv.style.color = color;
-}
-</script>
 <div class="section">
   <h2>🧠 Bad Trip Mode</h2>
   <p>Feeling anxious or overwhelmed? Bad Trip Mode offers calming visuals and exercises to ride it out safely.</p>
@@ -248,11 +214,14 @@ function checkInteraction(){
   <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
   <p style="font-size:0.8rem;color:#ccc;">Not medical advice. Always test your substances, use your best judgment, and in emergencies call 911. Peer-run platform for education, safety, and solidarity. Submissions reviewed for accuracy.</p>
   <ul>
+    <li><strong>Quick Links:</strong></li>
     <li><a href="index.html">Home</a></li>
     <li><a href="panic.html">Panic</a></li>
     <li><a href="emergency.html">Emergency</a></li>
     <li><a href="polydrug.html">Polydrug</a></li>
     <li><a href="resources.html">Resources</a></li>
+    <li><a href="consent.html">Consent</a></li>
+    <li><a href="calendar.html">Events</a></li>
     <li><a href="https://www.instagram.com/plurderapolis" target="_blank">@plurderapolis</a></li>
   </ul>
 </footer>
@@ -269,7 +238,7 @@ document.querySelectorAll('.side-nav ul li').forEach(item=>{
   item.addEventListener('click',()=>{item.classList.toggle('show');});
 });
 
-// Swipeable peach panic button
+// Peach Panic Button
 const peachBtn = document.getElementById('panicButton');
 peachBtn.addEventListener('click',()=>{
   const choice = confirm("Go to Panic Button? Cancel = Emergency Response");
@@ -277,30 +246,56 @@ peachBtn.addEventListener('click',()=>{
   else window.location.href='emergency.html';
 });
 
+// Polydrug interaction demo
+const interactionMatrix = {
+  "MDMA-Alcohol":"Moderate Risk ⚠️","MDMA-Ketamine":"High Risk 🔥","MDMA-Cocaine":"High Risk 🔥",
+  "MDMA-Mushrooms":"Low Risk ✅","MDMA-LSD":"Moderate Risk ⚠️","MDMA-GHB":"High Risk 🔥",
+  "Alcohol-Ketamine":"High Risk 🔥","Alcohol-Cocaine":"High Risk 🔥","Alcohol-Mushrooms":"Low Risk ✅",
+  "Alcohol-LSD":"Moderate Risk ⚠️","Alcohol-GHB":"High Risk 🔥","Ketamine-Cocaine":"High Risk 🔥",
+  "Ketamine-Mushrooms":"Low Risk ✅","Ketamine-LSD":"Moderate Risk ⚠️","Ketamine-GHB":"High Risk 🔥",
+  "Cocaine-Mushrooms":"Moderate Risk ⚠️","Cocaine-LSD":"Moderate Risk ⚠️","Cocaine-GHB":"High Risk 🔥",
+  "Mushrooms-LSD":"Low Risk ✅","Mushrooms-GHB":"Moderate Risk ⚠️","LSD-GHB":"Moderate Risk ⚠️"
+};
+function checkInteraction(){
+  const d1 = document.getElementById('drug1').value;
+  const d2 = document.getElementById('drug2').value;
+  const resultDiv = document.getElementById('interactionResult');
+  if(!d1 || !d2 || d1===d2){ resultDiv.textContent="Please select two different drugs."; resultDiv.style.color="#ff6ec7"; return; }
+  const key1 = `${d1}-${d2}`; const key2 = `${d2}-${d1}`;
+  const risk = interactionMatrix[key1] || interactionMatrix[key2] || "Unknown — test with caution ⚠️";
+  let color="#88e9e3";
+  if(risk.includes("Low")) color="#00ff95";
+  else if(risk.includes("Moderate")) color="#ffeb3b";
+  else if(risk.includes("High")) color="#ff3d00";
+  resultDiv.textContent = `Interaction: ${risk}`;
+  resultDiv.style.color = color;
+}
+
 // Site-wide search
-const siteIndex = [
-  { title:"Home", url:"index.html", tags:["home","ravers","harm reduction"] },
-  { title:"Panic Button", url:"panic.html", tags:["panic","emergency","safety"] },
-  { title:"Emergency Response", url:"emergency.html", tags:["emergency","safety"] },
-  { title:"Polydrug Tool", url:"polydrug.html", tags:["drugs","interaction","party"] },
-  { title:"RX + Party Combos", url:"rx-combos.html", tags:["drugs","rx","party"] },
-  { title:"Raver Health", url:"health.html", tags:["health","safety"] },
-  { title:"Consent Basics", url:"consent.html", tags:["consent","boundaries"] },
-  { title:"Accountability", url:"accountability.html", tags:["consent","reporting"] },
-  { title:"Scene Spotlight", url:"spotlight.html", tags:["local","scene","events"] },
-  { title:"Event Calendar", url:"calendar.html", tags:["events","calendar"] },
-  { title:"Spotify", url:"spotify.html", tags:["music","spotify"] },
-  { title:"Seasonal Tips", url:"seasonal.html", tags:["seasonal","safety"] },
-  { title:"Sober Ravers", url:"sober.html", tags:["sobriety","support"] },
-  { title:"MN Resources", url:"resources.html", tags:["resources","support"] }
+const siteIndex=[
+  {title:"Home",url:"index.html",tags:["home","ravers","harm reduction"]},
+  {title:"Panic Button",url:"panic.html",tags:["panic","emergency","safety"]},
+  {title:"Emergency Response",url:"emergency.html",tags:["emergency","safety"]},
+  {title:"Polydrug Tool",url:"polydrug.html",tags:["drugs","interaction","party"]},
+  {title:"RX + Party Combos",url:"rx-combos.html",tags:["drugs","rx","party"]},
+  {title:"Raver Health",url:"health.html",tags:["health","safety"]},
+  {title:"Consent Basics",url:"consent.html",tags:["consent","boundaries"]},
+  {title:"Accountability",url:"accountability.html",tags:["consent","reporting"]},
+  {title:"Scene Spotlight",url:"spotlight.html",tags:["local","scene","events"]},
+  {title:"Event Calendar",url:"calendar.html",tags:["events","calendar"]},
+  {title:"Spotify",url:"spotify.html",tags:["music","spotify"]},
+  {title:"Seasonal Tips",url:"seasonal.html",tags:["seasonal","safety"]},
+  {title:"Sober Ravers",url:"sober.html",tags:["sobriety","support"]},
+  {title:"MN Resources",url:"resources.html",tags:["resources","support"]}
 ];
 function performSearch(){
-  const query = document.getElementById('searchInput').value.toLowerCase();
-  const resultsDiv = document.getElementById('searchResults');
-  const results = siteIndex.filter(p=>p.title.toLowerCase().includes(query) || p.tags.some(t=>t.includes(query)));
+  const query=document.getElementById('searchInput').value.toLowerCase();
+  const resultsDiv=document.getElementById('searchResults');
+  const results=siteIndex.filter(p=>p.title.toLowerCase().includes(query) || p.tags.some(t=>t.includes(query)));
   resultsDiv.innerHTML = results.length ? "<h2>Search Results</h2><ul>" + results.map(r=>`<li><a href="${r.url}">${r.title}</a></li>`).join('') + "</ul>" : "<p>No results found.</p>";
   resultsDiv.style.display='block';
 }
 </script>
+
 </body>
 </html>
