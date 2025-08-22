@@ -3,1014 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minneapolis EDM & Nightlife Scene Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .pulse-dot { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .genre-tag { 
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-        }
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .venue-card { border-left: 4px solid transparent; }
-        .venue-card.house { border-left-color: #ff6b6b; }
-        .venue-card.techno { border-left-color: #4ecdc4; }
-        .venue-card.trance { border-left-color: #45b7d1; }
-        .venue-card.dubstep { border-left-color: #96ceb4; }
-        .venue-card.mixed { border-left-color: #feca57; }
-    </style>
+    <title>PLURderapolis Venue Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
-    <div class="gradient-bg text-white py-8">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold mb-2">🎵 Minneapolis EDM & Nightlife Guide</h1>
-                <p class="text-xl opacity-90">Discover events, venues, and stay safe in the Twin Cities scene</p>
-            </div>
-        </div>
-    </div>
+<body class="bg-gray-50 text-gray-800">
 
-    <div class="max-w-6xl mx-auto px-4 py-8">
-        <!-- Navigation Tabs -->
-        <div class="bg-white rounded-xl shadow-lg mb-8 overflow-hidden">
-            <div class="flex flex-wrap">
-                <button onclick="showEvents()" id="eventsTab" class="flex-1 py-4 px-6 text-center font-semibold bg-purple-600 text-white transition-colors">
-                    🏢 Venue Safety
-                </button>
-                <button onclick="showVenues()" id="venuesTab" class="flex-1 py-4 px-6 text-center font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
-                    🏢 Popular Venues
-                </button>
-                <button onclick="showSafety()" id="safetyTab" class="flex-1 py-4 px-6 text-center font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
-                    🛡️ Event Safety
-                </button>
-                <button onclick="showResources()" id="resourcesTab" class="flex-1 py-4 px-6 text-center font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">
-                    📱 Resources
-                </button>
-            </div>
+    <!-- Header / Menu -->
+    <header class="bg-purple-600 text-white">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <h1 class="font-bold text-xl">PLURderapolis</h1>
+            <nav class="flex space-x-4 text-sm font-semibold">
+                <button id="eventsTab" class="tab-btn">Events</button>
+                <button id="venuesTab" class="tab-btn">Venues</button>
+                <button id="safetyTab" class="tab-btn">Safety</button>
+                <button id="resourcesTab" class="tab-btn">Resources</button>
+            </nav>
         </div>
+    </header>
 
-        <!-- Main Content Area -->
-        <div id="mainContent">
-            <!-- Events content will be loaded here -->
-        </div>
-    </div>
+    <main class="container mx-auto px-4 py-8" id="mainContent">
+        <!-- Dynamic content injected here -->
+    </main>
 
     <script>
-        // Venue safety and layout data
-        const venueDetails = [
-            {
-                name: "The Loft",
-                location: "Northeast Minneapolis",
-                layout: "Basement venue with single main room",
-                capacity: "300 people",
-                exits: "One main exit via stairs - can get crowded",
-                parking: "Street parking only - arrive early or use rideshare",
-                security: "Minimal security, ID check at door",
-                cellService: "Poor/no service in basement",
-                safetyTips: "Tell friends your exact location, bring cash, stay near exit during peak times",
-                vibe: "Intimate underground scene, cash bar only",
-                accessibility: "Not wheelchair accessible - stairs only",
-                mocktails: "No",
-                soberEvents: "Rare",
-                historicalIssues: "Overcrowding during popular events, limited emergency access"
-            },
-            {
-                name: "Skyway Theatre",
-                location: "Downtown Minneapolis",
-                layout: "Historic theater with main floor and balcony",
-                capacity: "2,500 people",
-                exits: "Multiple exits on main floor and balcony level",
-                parking: "Paid ramps nearby, street parking limited",
-                security: "Professional security team, metal detectors",
-                cellService: "Good cell service throughout venue",
-                safetyTips: "Balcony offers good views and easier exit access, coat check available",
-                vibe: "Historic venue with great acoustics, mixed crowd",
-                accessibility: "ADA accessible with elevator to balcony",
-                mocktails: "Yes - full mocktail menu",
-                soberEvents: "Monthly sober dance parties",
-                historicalIssues: "None recent - well-managed venue"
-            },
-            {
-                name: "Myth Nightclub",
-                location: "Maplewood (Suburb)",
-                layout: "Modern club with main floor and VIP areas",
-                capacity: "1,200 people",
-                exits: "Multiple exits, well-marked emergency routes",
-                parking: "Large free parking lot",
-                security: "Strict security, dress code enforced, ID scanning",
-                cellService: "Excellent cell service",
-                safetyTips: "VIP areas offer safer space, designated rideshare pickup zone",
-                vibe: "Upscale club atmosphere, strict policies",
-                accessibility: "Fully ADA accessible",
-                mocktails: "Yes - premium mocktail selection",
-                soberEvents: "Quarterly sober nights",
-                historicalIssues: "Past issues with overserving, now has strict alcohol policies"
-            },
-            {
-                name: "The Armory",
-                location: "Downtown Minneapolis",
-                layout: "Large historic venue with multiple levels",
-                capacity: "8,400 people",
-                exits: "Numerous exits on all levels, clearly marked",
-                parking: "Multiple paid ramps, public transit accessible",
-                security: "Extensive security, medical staff on-site",
-                cellService: "Good service, venue WiFi available",
-                safetyTips: "Download venue app for maps, stay with group, multiple water stations",
-                vibe: "Major venue for big events, professional production",
-                accessibility: "Full ADA compliance, elevators to all levels",
-                mocktails: "Yes - multiple bars with mocktails",
-                soberEvents: "All-ages shows often alcohol-free sections",
-                historicalIssues: "None recent - professional venue management"
-            },
-            {
-                name: "Amsterdam Bar & Hall",
-                location: "St. Paul",
-                layout: "Converted church with high ceilings and multiple levels",
-                capacity: "1,200 people",
-                exits: "Multiple exits on both levels, well-marked",
-                parking: "Free parking lot, street parking available",
-                security: "Professional security, ID scanning, coat check",
-                cellService: "Good cell service throughout",
-                safetyTips: "Upper level offers great views, main floor gets hot during packed shows",
-                vibe: "Stunning architecture, converted church with modern sound system",
-                accessibility: "ADA accessible with elevator to upper level",
-                mocktails: "Yes - craft cocktail program includes mocktails",
-                soberEvents: "Monthly sober dance events",
-                historicalIssues: "None - newer venue with good safety record"
-            },
-            {
-                name: "Pourhouse",
-                location: "Downtown Minneapolis",
-                layout: "Multi-level club with rooftop patio",
-                capacity: "400 people",
-                exits: "Multiple exits including rooftop access",
-                parking: "Paid ramps nearby, valet available",
-                security: "Professional security, dress code strictly enforced",
-                cellService: "Excellent service throughout",
-                safetyTips: "Rooftop provides fresh air and space, VIP areas available for safety",
-                vibe: "Upscale nightclub with rooftop patio, expensive but well-managed",
-                accessibility: "Main floor accessible, rooftop has limited access",
-                mocktails: "Yes - premium mocktail menu",
-                soberEvents: "Rare - primarily nightclub atmosphere",
-                historicalIssues: "None recent - well-managed upscale venue"
-            },
-            {
-                name: "The Cabooze",
-                location: "West Bank, Minneapolis",
-                layout: "Converted train car with outdoor patio area",
-                capacity: "750 people",
-                exits: "Multiple exits, outdoor patio provides additional space",
-                parking: "Limited street parking, rideshare recommended",
-                security: "Security staff, improved in recent years",
-                cellService: "Good service, outdoor area has excellent coverage",
-                safetyTips: "Outdoor patio great for breaks, gets very crowded inside during popular shows",
-                vibe: "Unique train car venue with character, outdoor space popular in summer",
-                accessibility: "Limited accessibility due to train car design",
-                mocktails: "Limited - basic non-alcoholic options",
-                soberEvents: "Occasional all-ages shows",
-                historicalIssues: "Past issues with fights and overcrowding, improved security in recent years"
-            },
-            {
-                name: "Varsity Theater",
-                location: "Dinkytown, Minneapolis",
-                layout: "Historic theater with main floor and balcony",
-                capacity: "1,000 people",
-                exits: "Multiple exits, theater-style layout",
-                parking: "Limited street parking, light rail accessible",
-                security: "Security staff, popular with college crowd",
-                cellService: "Good service throughout venue",
-                safetyTips: "Easy light rail access, gets packed on weekends, balcony offers better views",
-                vibe: "Historic theater near University of Minnesota, popular with students",
-                accessibility: "ADA accessible with elevator",
-                mocktails: "Yes - standard bar mocktails",
-                soberEvents: "Regular all-ages shows",
-                historicalIssues: "Occasional underage drinking issues due to college location"
-            },
-            {
-                name: "First Avenue & 7th St Entry",
-                location: "Downtown Minneapolis",
-                layout: "Two connected venues - large main room and intimate side room",
-                capacity: "1,550 / 250 people",
-                exits: "Multiple exits in both venues, well-marked",
-                parking: "Paid ramps nearby, public transit accessible",
-                security: "Professional security team, metal detectors for larger shows",
-                cellService: "Good service in both venues",
-                safetyTips: "7th St Entry perfect for intimate shows, main venue can get very crowded",
-                vibe: "Legendary Minneapolis venue where Prince got his start, diverse programming",
-                accessibility: "Main venue ADA accessible, 7th St Entry has limited accessibility",
-                mocktails: "Yes - both venues serve mocktails",
-                soberEvents: "Regular all-ages and sober-friendly shows",
-                historicalIssues: "Occasional overcrowding, but well-managed overall"
-            },
-            {
-                name: "Icehouse",
-                location: "South Minneapolis",
-                layout: "Restaurant and bar with performance space",
-                capacity: "300 people",
-                exits: "Multiple exits, restaurant setting provides safety",
-                parking: "Street parking, easy rideshare access",
-                security: "Restaurant staff, well-lit and safe environment",
-                cellService: "Excellent service throughout",
-                safetyTips: "Great food available, intimate setting, diverse programming appeals to all ages",
-                vibe: "Intimate venue combining restaurant and music, well-regarded in community",
-                accessibility: "Fully ADA accessible",
-                mocktails: "Yes - full restaurant bar",
-                soberEvents: "Regular early shows and all-ages events",
-                historicalIssues: "None - well-regarded venue"
-            }
-        ];
-
         const venues = [
             {
-                name: "Skyway Theatre",
-                location: "Downtown Minneapolis",
-                capacity: "2,500",
-                genres: ["House", "Techno", "Trance"],
-                vibe: "Historic theater converted to music venue",
-                safetyFeatures: ["Multiple exits", "Security staff", "Medical station", "Good lighting"],
-                tips: ["Arrive early for better spots", "Coat check available", "Food trucks outside"],
-                type: "mixed",
-                mocktails: "Yes - full mocktail menu",
-                soberEvents: "Monthly sober dance parties",
-                historicalIssues: "None recent - well-managed venue"
-            },
-            {
-                name: "The Loft",
-                location: "Northeast Minneapolis",
-                capacity: "300",
-                genres: ["Underground Techno", "Minimal"],
-                vibe: "Intimate underground basement venue",
-                safetyFeatures: ["Single exit", "Limited cell service", "Cash bar only"],
-                tips: ["Bring cash", "Tell friends your location", "Stay hydrated"],
-                type: "techno",
-                mocktails: "No",
-                soberEvents: "Rare",
-                historicalIssues: "Overcrowding during popular events, limited emergency access"
-            },
-            {
-                name: "Myth Nightclub",
-                location: "Maplewood (Suburb)",
-                capacity: "1,200",
-                genres: ["Trance", "Progressive House"],
-                vibe: "Modern club with state-of-the-art sound",
-                safetyFeatures: ["Professional security", "VIP areas", "Rideshare pickup zone"],
-                tips: ["Book rideshare early", "VIP worth it for safety", "Dress code enforced"],
-                type: "trance",
-                mocktails: "Yes - premium mocktail selection",
-                soberEvents: "Quarterly sober nights",
-                historicalIssues: "Past issues with overserving, now has strict alcohol policies"
-            },
-            {
-                name: "The Armory",
-                location: "Downtown Minneapolis",
-                capacity: "8,400",
-                genres: ["All EDM genres", "Festivals"],
-                vibe: "Large historic venue for major events",
-                safetyFeatures: ["Multiple levels", "Medical staff", "Professional production"],
-                tips: ["Arrive early", "Download venue app", "Stay with your group"],
-                type: "mixed",
-                mocktails: "Yes - multiple bars with mocktails",
-                soberEvents: "All-ages shows often alcohol-free sections",
-                historicalIssues: "None recent - professional venue management"
-            },
-            {
-                name: "Bauhaus Brew Labs",
-                location: "Northeast Minneapolis",
-                capacity: "200",
-                genres: ["House", "Disco", "Funk"],
-                vibe: "Brewery with dance floor and outdoor space",
-                safetyFeatures: ["Well-lit", "Outdoor area", "Food available"],
-                tips: ["Great for pre-gaming", "Food helps with drinking", "Easy Uber pickup"],
-                type: "house",
-                mocktails: "Yes - craft mocktails and NA beer",
-                soberEvents: "Regular coffee and music mornings",
-                historicalIssues: "None - well-regarded venue"
-            },
-            {
-                name: "First Avenue & 7th St Entry",
-                location: "Downtown Minneapolis",
-                capacity: "1,550 / 250",
-                genres: ["All genres", "Indie", "Electronic"],
-                vibe: "Legendary Minneapolis venue, diverse programming",
-                safetyFeatures: ["Multiple exits", "Professional security", "Two venue sizes"],
-                tips: ["7th St Entry for intimate shows", "Main venue gets crowded", "Historic venue"],
-                type: "mixed",
-                mocktails: "Yes - both venues serve mocktails",
-                soberEvents: "Regular all-ages and sober-friendly shows",
-                historicalIssues: "Occasional overcrowding, but well-managed overall"
-            },
-            {
-                name: "The Cedar Cultural Center",
-                location: "Cedar-Riverside, Minneapolis",
-                capacity: "500",
-                genres: ["World Music", "Folk", "Electronic"],
-                vibe: "Cultural center, diverse programming, family-friendly",
-                safetyFeatures: ["Community-focused", "Multiple exits", "Well-lit"],
-                tips: ["Family-friendly atmosphere", "Diverse programming", "Community events"],
-                type: "mixed",
-                mocktails: "Yes - often alcohol-free events",
-                soberEvents: "Many events are completely alcohol-free",
-                historicalIssues: "None - community-focused venue with good reputation"
+                name: "First Avenue",
+                location: "701 N 1st Ave, Minneapolis, MN 55403",
+                capacity: "2,000",
+                vibe: "Historic venue with multiple stages, iconic murals.",
+                genres: ["EDM", "Pop", "Rock"],
+                safetyFeatures: ["On-site security", "Medical staff", "Well-lit exits", "Clear signage"],
+                tips: ["Arrive early for lines", "Buddy system recommended", "Check local events page for lineup"],
+                layout: "Two main stages, upper balcony, multiple bars",
+                exits: "Multiple clearly marked exits, front and rear",
+                parking: "Street parking nearby; 1st Avenue Parking Ramp a block away",
+                soberOptions: "Non-alcoholic drinks available",
             },
             {
                 name: "Fine Line Music Cafe",
-                location: "Downtown Minneapolis",
-                capacity: "200",
-                genres: ["Jazz", "Blues", "Electronic"],
-                vibe: "Upscale dinner and music venue",
-                safetyFeatures: ["Restaurant setting", "Professional staff", "Good lighting"],
-                tips: ["Dinner venue", "Make reservations", "Upscale atmosphere"],
-                type: "mixed",
-                mocktails: "Yes - full restaurant bar with mocktails",
-                soberEvents: "Some early shows are all-ages/family-friendly",
-                historicalIssues: "None - upscale venue"
+                location: "1531 Nicollet Ave, Minneapolis, MN 55403",
+                capacity: "500",
+                vibe: "Intimate, basement venue for live music.",
+                genres: ["EDM", "Indie", "Rock"],
+                safetyFeatures: ["Small staff team", "Emergency exit at rear"],
+                tips: ["Arrive early for best spots", "Cash only for bar"],
+                layout: "Single stage, bar area in back",
+                exits: "One main exit, one emergency exit",
+                parking: "Street parking only",
+                soberOptions: "Non-alcoholic drinks limited",
             },
             {
-                name: "Palmer's Bar",
-                location: "Cedar-Riverside, Minneapolis",
-                capacity: "75",
-                genres: ["Punk", "Metal", "Underground"],
-                vibe: "Legendary dive bar, cash only, very intimate",
-                safetyFeatures: ["Single exit", "Bartender security only"],
-                tips: ["Cash only", "Very small space", "Dive bar atmosphere"],
-                type: "mixed",
-                mocktails: "No - beer and shots only",
-                soberEvents: "Never - bar atmosphere only",
-                historicalIssues: "Occasional incidents due to dive bar atmosphere and single exit"
+                name: "The Myth",
+                location: "1500 Washington Ave SE, Minneapolis, MN 55414",
+                capacity: "2,500",
+                vibe: "Large venue, popular for touring EDM acts.",
+                genres: ["EDM", "Hip-Hop"],
+                safetyFeatures: ["On-site security", "Medical staff", "Lighting for safe navigation"],
+                tips: ["Know your exits", "Arrive early for general admission"],
+                layout: "Main floor, balcony seating",
+                exits: "Multiple exits, front and rear",
+                parking: "Nearby ramps: 5th St and Washington Ave",
+                soberOptions: "Non-alcoholic drinks available",
             },
             {
-                name: "The Cabooze",
-                location: "West Bank, Minneapolis",
-                capacity: "750",
-                genres: ["Rock", "Metal", "Electronic"],
-                vibe: "Converted train car venue with outdoor patio",
-                safetyFeatures: ["Outdoor space", "Multiple bars", "Security staff"],
-                tips: ["Outdoor patio great in summer", "Gets very crowded", "Parking can be tough"],
-                type: "mixed",
-                mocktails: "Limited - basic non-alcoholic options",
-                soberEvents: "Occasional all-ages shows",
-                historicalIssues: "Past issues with fights and overcrowding, improved security in recent years"
-            },
-            {
-                name: "Varsity Theater",
-                location: "Dinkytown, Minneapolis",
-                capacity: "1,000",
-                genres: ["Indie", "Electronic", "Hip-Hop"],
-                vibe: "Historic theater near University of Minnesota",
-                safetyFeatures: ["Multiple exits", "University area security", "Well-lit"],
-                tips: ["Popular with college crowd", "Easy light rail access", "Gets packed on weekends"],
-                type: "mixed",
-                mocktails: "Yes - standard bar mocktails",
-                soberEvents: "Regular all-ages shows",
-                historicalIssues: "Occasional underage drinking issues due to college location"
-            },
-            {
-                name: "Amsterdam Bar & Hall",
-                location: "St. Paul",
+                name: "Uptown Theatre",
+                location: "2900 Hennepin Ave, Minneapolis, MN 55408",
                 capacity: "1,200",
-                genres: ["House", "Techno", "Disco"],
-                vibe: "Converted church with stunning architecture",
-                safetyFeatures: ["High ceilings", "Multiple levels", "Professional security"],
-                tips: ["Beautiful venue", "Parking available", "Gets hot on main floor"],
-                type: "house",
-                mocktails: "Yes - craft cocktail program includes mocktails",
-                soberEvents: "Monthly sober dance events",
-                historicalIssues: "None - newer venue with good safety record"
+                vibe: "Historic theatre, large stage with balcony",
+                genres: ["EDM", "Rock", "Pop"],
+                safetyFeatures: ["Security personnel", "First aid on-site", "Well-lit pathways"],
+                tips: ["Check show times", "Be aware of balcony steps"],
+                layout: "Main stage, balcony seating",
+                exits: "Multiple exits front/back",
+                parking: "Street parking; lot behind theatre",
+                soberOptions: "Non-alcoholic options available",
             },
             {
-                name: "Pourhouse",
-                location: "Downtown Minneapolis",
-                capacity: "400",
-                genres: ["House", "Techno", "Bass"],
-                vibe: "Upscale club with rooftop patio",
-                safetyFeatures: ["Rooftop space", "Professional security", "VIP areas"],
-                tips: ["Rooftop great in summer", "Dress code enforced", "Expensive drinks"],
-                type: "house",
-                mocktails: "Yes - premium mocktail menu",
-                soberEvents: "Rare - primarily nightclub atmosphere",
-                historicalIssues: "None recent - well-managed upscale venue"
+                name: "Electro Abis",
+                location: "Minneapolis, MN (exact location varies per event)",
+                capacity: "Varies per event",
+                vibe: "Pop-up EDM events, intimate settings",
+                genres: ["EDM", "House", "Bass"],
+                safetyFeatures: ["Security at entry", "Emergency contacts posted"],
+                tips: ["Check event-specific instructions", "Plan transportation in advance"],
+                layout: "Varies per location",
+                exits: "Varies, marked on-site",
+                parking: "Depends on venue, check event page",
+                soberOptions: "Varies, usually limited",
             },
             {
-                name: "Icehouse",
-                location: "South Minneapolis",
-                capacity: "300",
-                genres: ["Jazz", "Electronic", "Experimental"],
-                vibe: "Intimate venue with restaurant and bar",
-                safetyFeatures: ["Restaurant setting", "Good lighting", "Professional staff"],
-                tips: ["Great food", "Intimate setting", "Diverse programming"],
-                type: "mixed",
-                mocktails: "Yes - full restaurant bar",
-                soberEvents: "Regular early shows and all-ages events",
-                historicalIssues: "None - well-regarded venue"
+                name: "Ground Zero Nightclub",
+                location: "15 SE 4th St, Minneapolis, MN 55455",
+                capacity: "Varies",
+                vibe: "Alternative dance nightclub with themed nights.",
+                genres: ["Industrial", "Goth", "EBM"],
+                safetyFeatures: ["On-site security", "Coat check available", "Emergency exits clearly marked"],
+                tips: ["Cash-only bar", "Arrive early for themed nights", "Check schedule for events"],
+                layout: "Main dance floor, multiple themed rooms",
+                exits: "Multiple exits, front and rear",
+                parking: "Street parking, nearby ramps, former Wells Fargo lot after 6PM",
+                soberOptions: "Limited non-alcoholic drinks",
+            },
+            {
+                name: "The Fillmore Minneapolis",
+                location: "525 N 5th St, Minneapolis, MN 55401",
+                capacity: "1,800",
+                vibe: "Modern venue with chandeliers and state-of-the-art sound.",
+                genres: ["EDM", "Pop", "Rock"],
+                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
+                tips: ["Mobile entry tickets", "Bag policy: up to 12” x 6” x 12” allowed", "Arrive early for best spots"],
+                layout: "Main floor, balcony seating, multiple bars",
+                exits: "Multiple exits, front and rear",
+                parking: "Street parking, nearby ramps, ParkWhiz options",
+                soberOptions: "Non-alcoholic drinks available",
             },
             {
                 name: "Turf Club",
-                location: "St. Paul",
-                capacity: "400",
-                genres: ["Indie", "Electronic", "Alternative"],
-                vibe: "Historic dive bar with character",
-                safetyFeatures: ["Single level", "Bartender security", "Regular crowd"],
-                tips: ["Cash preferred", "Dive bar atmosphere", "Loyal local following"],
-                type: "mixed",
-                mocktails: "Limited - basic options only",
-                soberEvents: "Occasional all-ages shows",
-                historicalIssues: "Minor incidents typical of dive bars, generally safe"
+                location: "1601 University Ave W, Saint Paul, MN 55104",
+                capacity: "350",
+                vibe: "Historic venue with upstairs and basement stages.",
+                genres: ["Indie", "Rock", "Alternative"],
+                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
+                tips: ["Arrive early for best spots", "Cash only for bar", "Check schedule for events"],
+                layout: "Upstairs and basement stages, bar areas",
+                exits: "Multiple exits, front and rear",
+                parking: "Lot behind venue off Sherburne Ave, street parking",
+                soberOptions: "Limited non-alcoholic drinks",
             },
             {
-                name: "Uptown VFW",
-                location: "Uptown Minneapolis",
-                capacity: "200",
-                genres: ["Punk", "Electronic", "Experimental"],
-                vibe: "VFW hall hosting underground shows",
-                safetyFeatures: ["Community-run", "Single level", "Local crowd"],
-                tips: ["Support local scene", "BYOB sometimes", "Check event details"],
-                type: "mixed",
-                mocktails: "Varies by event - often BYOB",
-                soberEvents: "Many all-ages and substance-free events",
-                historicalIssues: "None - community-focused venue"
+                name: "Palace Theatre",
+                location: "17 7th Place W, Saint Paul, MN 55102",
+                capacity: "2,500",
+                vibe: "Restored historic theatre with modern amenities.",
+                genres: ["EDM", "Pop", "Rock"],
+                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
+                tips: ["Arrive early for best spots", "Check schedule for events", "Be aware of balcony steps"],
+                layout: "Main floor, balcony seating, multiple bars",
+                exits: "Multiple exits, front and rear",
+                parking: "Nearby ramps: Treasure Island Garage, Travelers Lot",
+                soberOptions: "Non-alcoholic drinks available",
             },
             {
-                name: "Hook & Ladder Theater",
-                location: "Northeast Minneapolis",
-                capacity: "150",
-                genres: ["Experimental", "Electronic", "Avant-garde"],
-                vibe: "Former fire station, intimate experimental venue",
-                safetyFeatures: ["Small capacity", "Community-focused", "Good sightlines"],
-                tips: ["Very intimate", "Experimental programming", "Support local artists"],
-                type: "mixed",
-                mocktails: "Limited - basic options",
-                soberEvents: "Many events are all-ages and sober-friendly",
-                historicalIssues: "None - small community venue"
+                name: "Bar Fly Nightclub",
+                location: "711 Hennepin Ave, Minneapolis, MN 55403",
+                capacity: "Varies",
+                vibe: "Lush venue with multiple areas and sound/light shows.",
+                genres: ["EDM", "Pop", "Hip-Hop"],
+                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
+                tips: ["Arrive early for best spots", "Cash only for bar", "Check schedule for events"],
+                layout: "Boom Boom Room, main stage, multiple bars",
+                exits: "Multiple exits, front and rear",
+                parking: "Street parking, nearby ramps, City Center Garage",
+                soberOptions: "Limited non-alcoholic drinks",
             },
             {
-                name: "Parkway Theater",
-                location: "South Minneapolis",
-                capacity: "250",
-                genres: ["Indie", "Electronic", "Film"],
-                vibe: "Historic movie theater with live music",
-                safetyFeatures: ["Theater seating", "Multiple exits", "Well-maintained"],
-                tips: ["Unique theater setting", "Mix of film and music", "Comfortable seating"],
-                type: "mixed",
-                mocktails: "Yes - theater concessions plus bar",
-                soberEvents: "Regular film screenings and all-ages shows",
-                historicalIssues: "None - well-maintained historic venue"
+                name: "The Saloon",
+                location: "830 Hennepin Ave, Minneapolis, MN 55403",
+                capacity: "Varies",
+                vibe: "Popular LGBTQ+ bar with dance floors and drag shows.",
+                genres: ["Pop", "Dance", "Hip-Hop"],
+                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
+                tips: ["18+ after 9PM", "Check schedule for events", "Arrive early for best spots"],
+                layout: "Multiple dance floors, bar areas",
+                exits: "Multiple exits, front and rear",
+                parking: "Street parking, nearby ramps, validated parking available",
+                soberOptions: "Non-alcoholic drinks available",
             },
             {
-                name: "Mortimer's",
-                location: "Uptown Minneapolis",
+                name: "Studio B at Skyway Theatre",
+                location: "711 Hennepin Ave, Minneapolis, MN 55403",
+                capacity: "Varies",
+                vibe: "Intimate venue with gothic ambiance and chandeliers.",
+                genres: ["EDM", "Indie", "Pop"],
+                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
+                tips: ["Arrive early for best spots", "Check schedule for events", "Be aware of balcony steps"],
+                layout: "Main floor, lounge areas, multiple bars",
+                exits: "Multiple exits, front and rear",
+                parking: "Nearby ramps: City Center Garage, Mayo Clinic Square Garage",
+                soberOptions: "Limited non-alcoholic drinks",
+            },
+            {
+                name: "The Front",
+                location: "15 4th St NE, Minneapolis, MN 55455",
+                capacity: "Varies",
+                vibe:                 vibe: "Small intimate venue, popular for electronic and hip-hop nights.",
+                genres: ["EDM", "Hip-Hop", "Pop"],
+                safetyFeatures: ["Security at entrance", "Emergency exits clearly marked"],
+                tips: ["Check event-specific instructions", "Plan transportation in advance"],
+                layout: "Main dance floor, small bar area",
+                exits: "Front and side emergency exit",
+                parking: "Street parking only",
+                soberOptions: "Limited non-alcoholic drinks"
+            },
+            {
+                name: "The Vault",
+                location: "220 N Washington Ave, Minneapolis, MN 55401",
                 capacity: "300",
-                genres: ["House", "Techno", "Bass"],
-                vibe: "Upscale cocktail bar with late-night dancing",
-                safetyFeatures: ["Upscale clientele", "Professional security", "Well-lit"],
-                tips: ["Cocktail bar first", "Dancing later", "Dress nicely"],
-                type: "house",
-                mocktails: "Yes - extensive craft mocktail menu",
-                soberEvents: "Early evening events sometimes alcohol-free",
-                historicalIssues: "None - upscale venue with good management"
+                vibe: "Underground club with heavy bass and intimate dance floor.",
+                genres: ["EDM", "Bass", "House"],
+                safetyFeatures: ["Security at door", "Emergency exit clearly marked"],
+                tips: ["Bring ID", "Cash only for bar", "Check schedule for events"],
+                layout: "Single room, small bar",
+                exits: "One main exit, one emergency exit",
+                parking: "Street parking, limited lot nearby",
+                soberOptions: "Non-alcoholic drinks available"
             },
             {
-                name: "The Depot Tavern",
-                location: "Hopkins (Suburb)",
+                name: "Union Rooftop",
+                location: "701 Washington Ave SE, Minneapolis, MN 55414",
                 capacity: "500",
-                genres: ["Country", "Rock", "Occasional EDM"],
-                vibe: "Suburban bar with large dance floor",
-                safetyFeatures: ["Large parking lot", "Suburban location", "Security staff"],
-                tips: ["Drive or rideshare required", "Mixed crowd", "Large dance floor"],
-                type: "mixed",
-                mocktails: "Basic options available",
-                soberEvents: "Rare - primarily bar atmosphere",
-                historicalIssues: "Occasional parking lot incidents, generally well-managed"
+                vibe: "Rooftop club with seasonal EDM nights, scenic view.",
+                genres: ["EDM", "House"],
+                safetyFeatures: ["Railing safety", "Security on site", "Emergency stairs clearly marked"],
+                tips: ["Check weather", "Arrive early for rooftop access"],
+                layout: "Open-air rooftop, bar stations",
+                exits: "Front exit plus fire stair access",
+                parking: "Nearby ramp: 2nd Street Parking Ramp",
+                soberOptions: "Non-alcoholic drinks available"
+            },
+            {
+                name: "The Exchange",
+                location: "729 Hennepin Ave, Minneapolis, MN 55403",
+                capacity: "400",
+                vibe: "Dance club with themed EDM nights and VIP sections.",
+                genres: ["EDM", "Pop", "Hip-Hop"],
+                safetyFeatures: ["Security at entrance", "CCTV monitoring", "Emergency exits clearly marked"],
+                tips: ["Arrive early for VIP", "Buddy system recommended"],
+                layout: "Main dance floor, balcony, VIP booths",
+                exits: "Multiple exits, front and rear",
+                parking: "Street parking, nearby ramps: City Center Garage",
+                soberOptions: "Non-alcoholic drinks available"
+            },
+            {
+                name: "The Alibi",
+                location: "4041 Bryant Ave S, Minneapolis, MN 55409",
+                capacity: "200",
+                vibe: "Neighborhood bar with small dance nights and EDM DJs.",
+                genres: ["EDM", "House"],
+                safetyFeatures: ["On-site staff", "Clear emergency exit"],
+                tips: ["Small venue, check schedule for events"],
+                layout: "Single dance floor, bar in front",
+                exits: "One main exit, one emergency exit",
+                parking: "Street parking only",
+                soberOptions: "Non-alcoholic drinks available"
+            },
+            {
+                name: "Electric Susie's",
+                location: "Minneapolis, MN (pop-up / private event location)",
+                capacity: "Varies per event",
+                vibe: "Pop-up electronic events, intimate and immersive.",
+                genres: ["EDM", "House", "Techno"],
+                safetyFeatures: ["Security at entry", "Emergency contacts posted on-site"],
+                tips: ["Check event instructions", "Plan transportation in advance"],
+                layout: "Varies per event",
+                exits: "Varies per event, marked on-site",
+                parking: "Depends on event, check page",
+                soberOptions: "Varies, usually limited"
             }
         ];
 
-        function showEvents() {
-            updateTabs('eventsTab');
-            const content = `
-                <div class="mb-8">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800">🏢 Venue Safety & Layout Guide</h2>
-                        <div class="flex space-x-2">
-                            <button onclick="filterVenues('all')" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">All Venues</button>
-                            <button onclick="filterVenues('small')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">Small</button>
-                            <button onclick="filterVenues('medium')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">Medium</button>
-                            <button onclick="filterVenues('large')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">Large</button>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-6" id="venueGrid">
-                        ${venueDetails.map(venue => `
-                            <div class="bg-white rounded-xl shadow-lg p-6 card-hover venue-detail-card" data-size="${venue.capacity.includes('300') ? 'small' : venue.capacity.includes('1,200') || venue.capacity.includes('2,500') ? 'medium' : 'large'}">
-                                <div class="grid md:grid-cols-3 gap-6">
-                                    <div class="md:col-span-2">
-                                        <div class="flex items-start justify-between mb-4">
-                                            <div>
-                                                <h3 class="text-2xl font-bold text-gray-800 mb-2">${venue.name}</h3>
-                                                <div class="flex items-center text-gray-600 mb-1">
-                                                    <span class="mr-2">📍</span>
-                                                    <span>${venue.location}</span>
-                                                </div>
-                                                <div class="flex items-center text-gray-600 mb-1">
-                                                    <span class="mr-2">👥</span>
-                                                    <span>${venue.capacity}</span>
-                                                </div>
-                                                <div class="flex items-center text-gray-600 mb-3">
-                                                    <span class="mr-2">🏗️</span>
-                                                    <span>${venue.layout}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="grid md:grid-cols-2 gap-4 mb-4">
-                                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                                                <h4 class="font-semibold text-red-800 mb-2 flex items-center">
-                                                    <span class="mr-2">🚪</span>
-                                                    Exits & Safety
-                                                </h4>
-                                                <p class="text-sm text-red-700">${venue.exits}</p>
-                                            </div>
-                                            
-                                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                                <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
-                                                    <span class="mr-2">🅿️</span>
-                                                    Parking
-                                                </h4>
-                                                <p class="text-sm text-blue-700">${venue.parking}</p>
-                                            </div>
-                                            
-                                            <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                                                <h4 class="font-semibold text-purple-800 mb-2 flex items-center">
-                                                    <span class="mr-2">🛡️</span>
-                                                    Security
-                                                </h4>
-                                                <p class="text-sm text-purple-700">${venue.security}</p>
-                                            </div>
-                                            
-                                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                                <h4 class="font-semibold text-green-800 mb-2 flex items-center">
-                                                    <span class="mr-2">📱</span>
-                                                    Cell Service
-                                                </h4>
-                                                <p class="text-sm text-green-700">${venue.cellService}</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
-                                            <h4 class="font-semibold text-orange-800 mb-2 flex items-center">
-                                                <span class="mr-2">♿</span>
-                                                Accessibility
-                                            </h4>
-                                            <p class="text-sm text-orange-700">${venue.accessibility}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="space-y-4">
-                                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
-                                                <span class="mr-2">💡</span>
-                                                Safety Tips
-                                            </h4>
-                                            <p class="text-sm text-yellow-700">${venue.safetyTips}</p>
-                                        </div>
-                                        
-                                        <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-indigo-800 mb-2 flex items-center">
-                                                <span class="mr-2">🎵</span>
-                                                Venue Vibe
-                                            </h4>
-                                            <p class="text-sm text-indigo-700">${venue.vibe}</p>
-                                        </div>
-                                        
-                                        <div class="bg-teal-50 border border-teal-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-teal-800 mb-2 flex items-center">
-                                                <span class="mr-2">🥤</span>
-                                                Sober Options
-                                            </h4>
-                                            <p class="text-xs text-teal-700 mb-1"><strong>Mocktails:</strong> ${venue.mocktails}</p>
-                                            <p class="text-xs text-teal-700"><strong>Sober Events:</strong> ${venue.soberEvents}</p>
-                                        </div>
-                                        
-                                        ${venue.historicalIssues !== "None - well-regarded venue" && venue.historicalIssues !== "None recent - well-managed venue" && venue.historicalIssues !== "None - upscale venue" && venue.historicalIssues !== "None recent" && venue.historicalIssues !== "None - community-focused venue with good reputation" && venue.historicalIssues !== "None - newer venue with good safety record" && venue.historicalIssues !== "None - community-focused venue" ? `
-                                        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-red-800 mb-2 flex items-center">
-                                                <span class="mr-2">⚠️</span>
-                                                Historical Issues
-                                            </h4>
-                                            <p class="text-xs text-red-700">${venue.historicalIssues}</p>
-                                        </div>
-                                        ` : ''}
-                                    </div>
-                                </div>
+        // Pre-event checklist persistence using localStorage
+        function saveChecklist() {
+            const checkboxes = document.querySelectorAll('#preEventChecklist input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                localStorage.setItem(cb.nextElementSibling.textContent, cb.checked);
+            });
+        }
+
+        function loadChecklist() {
+            const checkboxes = document.querySelectorAll('#preEventChecklist input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                const saved = localStorage.getItem(cb.nextElementSibling.textContent);
+                if (saved !== null) cb.checked = saved === 'true';
+            });
+        }
+
+        // Utility: Generate venue HTML
+        function generateVenueHTML(venue) {
+            if (!venue) return '';
+            return `
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6 card-hover">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="md:col-span-2">
+                            <h3 class="text-xl font-bold mb-2">${venue.name}</h3>
+                            <p class="text-gray-600 mb-1"><strong>Address:</strong> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.location)}" target="_blank" class="text-blue-600 underline">${venue.location}</a></p>
+                            <p class="text-gray-600 mb-1"><strong>Capacity:</strong> ${venue.capacity}</p>
+                            <p class="text-gray-700 mb-2">${venue.vibe}</p>
+                            <div class="flex flex-wrap gap-2 mb-2">
+                                ${venue.genres.map(g => `<span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">${g}</span>`).join('')}
                             </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-blue-800 mb-3">🔍 Finding Current Events</h3>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div class="text-center">
-                            <span class="text-2xl mb-2 block">📱</span>
-                            <h4 class="font-semibold text-blue-800">Apps & Websites</h4>
-                            <p class="text-sm text-blue-600">Resident Advisor, Bandsintown, Facebook Events</p>
+                            <p class="text-gray-600 mb-1"><strong>Layout:</strong> ${venue.layout}</p>
+                            <p class="text-gray-600 mb-1"><strong>Exits:</strong> ${venue.exits}</p>
+                            <p class="text-gray-600 mb-1"><strong>Parking:</strong> ${venue.parking}</p>
+                            <p class="text-gray-600 mb-1"><strong>Sober Options:</strong> ${venue.soberOptions}</p>
                         </div>
-                        <div class="text-center">
-                            <span class="text-2xl mb-2 block">👥</span>
-                            <h4 class="font-semibold text-blue-800">Local Groups</h4>
-                            <p class="text-sm text-blue-600">Join Minneapolis EDM Facebook groups and Discord servers</p>
-                        </div>
-                        <div class="text-center">
-                            <span class="text-2xl mb-2 block">🎧</span>
-                            <h4 class="font-semibold text-blue-800">Follow Venues</h4>
-                            <p class="text-sm text-blue-600">Follow venue social media for event announcements</p>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-green-800 mb-2">Safety Features</h4>
+                                <ul class="text-green-700 text-sm space-y-1">${venue.safetyFeatures.map(f => `<li>• ${f}</li>`).join('')}</ul>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-blue-800 mb-2">Tips & Recommendations</h4>
+                                <ul class="text-blue-700 text-sm space-y-1">${venue.tips.map(f => `<li>• ${f}</li>`).join('')}</ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
-            document.getElementById('mainContent').innerHTML = content;
         }
 
         function showVenues() {
-            updateTabs('venuesTab');
             const content = `
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">🏢 Popular Minneapolis EDM Venues</h2>
-                    
-                    <div class="space-y-6">
-                        ${venues.map(venue => `
-                            <div class="bg-white rounded-xl shadow-lg p-6 card-hover venue-card ${venue.type}">
-                                <div class="grid md:grid-cols-3 gap-6">
-                                    <div class="md:col-span-2">
-                                        <div class="flex items-start justify-between mb-4">
-                                            <div>
-                                                <h3 class="text-xl font-bold text-gray-800 mb-2">${venue.name}</h3>
-                                                <div class="flex items-center text-gray-600 mb-1">
-                                                    <span class="mr-2">📍</span>
-                                                    <span>${venue.location}</span>
-                                                </div>
-                                                <div class="flex items-center text-gray-600 mb-3">
-                                                    <span class="mr-2">👥</span>
-                                                    <span>Capacity: ${venue.capacity}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <p class="text-gray-700 mb-4">${venue.vibe}</p>
-                                        
-                                        <div class="flex flex-wrap gap-2 mb-4">
-                                            ${venue.genres.map(genre => `
-                                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">
-                                                    ${genre}
-                                                </span>
-                                            `).join('')}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="space-y-4">
-                                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-green-800 mb-2 flex items-center">
-                                                <span class="mr-2">🛡️</span>
-                                                Safety Features
-                                            </h4>
-                                            <ul class="text-sm text-green-700 space-y-1">
-                                                ${venue.safetyFeatures.map(feature => `<li>• ${feature}</li>`).join('')}
-                                            </ul>
-                                        </div>
-                                        
-                                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                            <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
-                                                <span class="mr-2">💡</span>
-                                                Pro Tips
-                                            </h4>
-                                            <ul class="text-sm text-blue-700 space-y-1">
-                                                ${venue.tips.map(tip => `<li>• ${tip}</li>`).join('')}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div class="bg-purple-50 border border-purple-200 rounded-xl p-6">
-                    <h3 class="text-lg font-semibold text-purple-800 mb-4">🗺️ Venue Districts Overview</h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-semibold text-purple-800 mb-2">Downtown Minneapolis</h4>
-                            <ul class="text-sm text-purple-700 space-y-1">
-                                <li>• Easy public transit access</li>
-                                <li>• Multiple venue options</li>
-                                <li>• Good rideshare availability</li>
-                                <li>• Well-lit streets</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-purple-800 mb-2">Northeast Minneapolis</h4>
-                            <ul class="text-sm text-purple-700 space-y-1">
-                                <li>• Artsy, creative neighborhood</li>
-                                <li>• Smaller, intimate venues</li>
-                                <li>• Limited late-night transit</li>
-                                <li>• Plan transportation ahead</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="text-2xl font-bold mb-6">🏢 Minneapolis Venue Guide</h2>
+                <div id="venueList">${venues.map(generateVenueHTML).join('')}</div>
             `;
             document.getElementById('mainContent').innerHTML = content;
         }
 
-        function showSafety() {
-            updateTabs('safetyTab');
-            const content = `
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">🛡️ Event Safety Guide</h2>
-                    
-                    <div class="grid md:grid-cols-2 gap-8 mb-8">
-                        <div class="space-y-6">
-                            <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold text-green-800 mb-3">💧 Stay Hydrated</h3>
-                                <ul class="space-y-2 text-green-700">
-                                    <li>• Drink water regularly, especially while dancing</li>
-                                    <li>• Take breaks from the dance floor</li>
-                                    <li>• Avoid excessive alcohol consumption</li>
-                                    <li>• Watch for signs of overheating</li>
-                                    <li>• Most venues have free water stations</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold text-blue-800 mb-3">👂 Protect Your Hearing</h3>
-                                <ul class="space-y-2 text-blue-700">
-                                    <li>• Bring earplugs (foam or silicone)</li>
-                                    <li>• Take breaks from loud areas</li>
-                                    <li>• Don't stand directly next to speakers</li>
-                                    <li>• High-fidelity earplugs preserve sound quality</li>
-                                    <li>• Ringing ears = time for a break</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <div class="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold text-purple-800 mb-3">👥 Stay Connected</h3>
-                                <ul class="space-y-2 text-purple-700">
-                                    <li>• Use the buddy system</li>
-                                    <li>• Share your location with friends</li>
-                                    <li>• Have a meeting point if separated</li>
-                                    <li>• Keep your phone charged</li>
-                                    <li>• Check in with friends regularly</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-lg">
-                                <h3 class="text-lg font-semibold text-orange-800 mb-3">🚨 Know the Signs</h3>
-                                <ul class="space-y-2 text-orange-700">
-                                    <li>• Overheating: dizziness, nausea, confusion</li>
-                                    <li>• Dehydration: dry mouth, fatigue, headache</li>
-                                    <li>• Alcohol poisoning: vomiting, slow breathing</li>
-                                    <li>• When in doubt, seek help immediately</li>
-                                    <li>• Don't hesitate to call security or 911</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-red-50 border border-red-200 rounded-xl p-6 mb-8">
-                        <h3 class="text-lg font-semibold text-red-800 mb-4">🚨 Emergency Contacts</h3>
-                        <div class="grid md:grid-cols-3 gap-4">
-                            <div class="text-center">
-                                <div class="text-2xl mb-2">🚑</div>
-                                <h4 class="font-semibold text-red-800">Emergency</h4>
-                                <a href="tel:911" class="text-red-600 font-bold text-lg hover:underline">911</a>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl mb-2">🏥</div>
-                                <h4 class="font-semibold text-red-800">Poison Control</h4>
-                                <a href="tel:1-800-222-1222" class="text-red-600 hover:underline">1-800-222-1222</a>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl mb-2">💬</div>
-                                <h4 class="font-semibold text-red-800">Crisis Text</h4>
-                                <span class="text-red-600">Text HOME to 741741</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
-                        <h3 class="text-lg font-semibold text-yellow-800 mb-4">⚡ Venue-Specific Safety Tips</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-semibold text-yellow-800 mb-2">Large Venues (1000+ capacity)</h4>
-                                <ul class="text-sm text-yellow-700 space-y-1">
-                                    <li>• Know multiple exit routes</li>
-                                    <li>• Stay near edges if claustrophobic</li>
-                                    <li>• Medical staff usually on-site</li>
-                                    <li>• Download venue app for maps</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-yellow-800 mb-2">Small/Underground Venues</h4>
-                                <ul class="text-sm text-yellow-700 space-y-1">
-                                    <li>• Limited exits - know where they are</li>
-                                    <li>• May have poor cell service</li>
-                                    <li>• Tell someone your exact location</li>
-                                    <li>• Bring cash (many are cash-only)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('mainContent').innerHTML = content;
-        }
-
-        function showResources() {
-            updateTabs('resourcesTab');
-            const content = `
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-6">📱 Helpful Resources & Apps</h2>
-                    
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-                            <div class="text-center mb-4">
-                                <span class="text-4xl mb-3 block">🎵</span>
-                                <h3 class="text-lg font-semibold text-gray-800">Event Discovery</h3>
-                            </div>
-                            <ul class="space-y-2 text-gray-600">
-                                <li>• <strong>Resident Advisor:</strong> Global EDM events</li>
-                                <li>• <strong>Bandsintown:</strong> Track favorite artists</li>
-                                <li>• <strong>Facebook Events:</strong> Local scene updates</li>
-                                <li>• <strong>Instagram:</strong> Follow local promoters</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-                            <div class="text-center mb-4">
-                                <span class="text-4xl mb-3 block">🚗</span>
-                                <h3 class="text-lg font-semibold text-gray-800">Transportation</h3>
-                            </div>
-                            <ul class="space-y-2 text-gray-600">
-                                <li>• <strong>Uber/Lyft:</strong> Rideshare apps</li>
-                                <li>• <strong>Metro Transit:</strong> Bus/light rail</li>
-                                <li>• <strong>Nice Ride:</strong> Bike sharing</li>
-                                <li>• <strong>Designated driver apps</strong></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
-                            <div class="text-center mb-4">
-                                <span class="text-4xl mb-3 block">🛡️</span>
-                                <h3 class="text-lg font-semibold text-gray-800">Safety Apps</h3>
-                            </div>
-                            <ul class="space-y-2 text-gray-600">
-                                <li>• <strong>Find My Friends:</strong> Location sharing</li>
-                                <li>• <strong>bSafe:</strong> Emergency features</li>
-                                <li>• <strong>What3Words:</strong> Precise location</li>
-                                <li>• <strong>First Aid by Red Cross</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
-                        <h3 class="text-lg font-semibold text-blue-800 mb-4">🌐 Local EDM Community</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-semibold text-blue-800 mb-2">Facebook Groups</h4>
-                                <ul class="text-sm text-blue-700 space-y-1">
-                                    <li>• Minneapolis EDM Community</li>
-                                    <li>• Twin Cities Ravers</li>
-                                    <li>• Minnesota Electronic Music</li>
-                                    <li>• Minneapolis House Music</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-blue-800 mb-2">Discord Servers</h4>
-                                <ul class="text-sm text-blue-700 space-y-1">
-                                    <li>• Twin Cities EDM Discord</li>
-                                    <li>• Minneapolis Ravers</li>
-                                    <li>• Minnesota Bass Heads</li>
-                                    <li>• Local DJ Networks</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-8">
-                        <h3 class="text-lg font-semibold text-green-800 mb-4">🏥 Harm Reduction Resources</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-semibold text-green-800 mb-2">Local Organizations</h4>
-                                <ul class="text-sm text-green-700 space-y-1">
-                                    <li>• <strong>The Aliveness Project:</strong> Health services</li>
-                                    <li>• <strong>Southside Harm Reduction:</strong> Support services</li>
-                                    <li>• <strong>Minnesota Recovery Connection</strong></li>
-                                    <li>• <strong>Hennepin County Public Health</strong></li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-green-800 mb-2">24/7 Hotlines</h4>
-                                <ul class="text-sm text-green-700 space-y-1">
-                                    <li>• <strong>Crisis Line:</strong> 1-800-273-8255</li>
-                                    <li>• <strong>Poison Control:</strong> 1-800-222-1222</li>
-                                    <li>• <strong>SAMHSA Helpline:</strong> 1-800-662-4357</li>
-                                    <li>• <strong>Crisis Text:</strong> Text HOME to 741741</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-purple-50 border border-purple-200 rounded-xl p-6">
-                        <h3 class="text-lg font-semibold text-purple-800 mb-4">📋 Pre-Event Checklist</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="space-y-3">
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Phone fully charged + portable charger</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Share location with trusted friends</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Plan safe transportation home</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Bring earplugs for hearing protection</span>
-                                </label>
-                            </div>
-                            <div class="space-y-3">
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Emergency contacts saved in phone</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Cash for emergencies</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Know venue layout and exits</span>
-                                </label>
-                                <label class="flex items-center space-x-3 cursor-pointer">
-                                    <input type="checkbox" class="w-5 h-5 text-purple-600 rounded">
-                                    <span class="text-purple-700">Stay hydrated plan</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('mainContent').innerHTML = content;
-        }
-
-        function updateTabs(activeTab) {
-            const tabs = ['eventsTab', 'venuesTab', 'safetyTab', 'resourcesTab'];
-            tabs.forEach(tab => {
-                const element = document.getElementById(tab);
-                if (tab === activeTab) {
-                    element.className = 'flex-1 py-4 px-6 text-center font-semibold bg-purple-600 text-white transition-colors';
-                } else {
-                    element.className = 'flex-1 py-4 px-6 text-center font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors';
-                }
-            });
-        }
-
-        function filterVenues(size) {
-            const venueCards = document.querySelectorAll('.venue-detail-card');
-            venueCards.forEach(card => {
-                if (size === 'all' || card.dataset.size === size) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        function showVenueDetails(venueName) {
-            const venue = venues.find(v => v.name === venueName);
-            if (venue) {
-                alert(`${venue.name}\n\nLocation: ${venue.location}\nCapacity: ${venue.capacity}\n\n${venue.vibe}\n\nSafety Features:\n${venue.safetyFeatures.map(f => '• ' + f).join('\n')}`);
-            }
-        }
-
-        // Initialize with events view
-        showEvents();
+        // Initialize
+        showVenues();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972e11a172ada0b6',t:'MTc1NTgyMDYwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</body>
 </html>
