@@ -3,313 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLURderapolis Venue Guide</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+    <title>PLURderapolis | Venues</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #1f1f1f; color: #e5e5e5; }
+        a { color: #60a5fa; }
+        .venue-card { transition: transform 0.2s; }
+        .venue-card:hover { transform: translateY(-3px); }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="min-h-screen">
 
-    <!-- Header / Menu -->
-    <header class="bg-purple-600 text-white">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <h1 class="font-bold text-xl">PLURderapolis</h1>
-            <nav class="flex space-x-4 text-sm font-semibold">
-                <button id="eventsTab" class="tab-btn">Events</button>
-                <button id="venuesTab" class="tab-btn">Venues</button>
-                <button id="safetyTab" class="tab-btn">Safety</button>
-                <button id="resourcesTab" class="tab-btn">Resources</button>
-            </nav>
-        </div>
-    </header>
+    <header class="bg-gray-900 p-4 text-center font-bold text-xl">PLURderapolis | Minneapolis Venues</header>
 
-    <main class="container mx-auto px-4 py-8" id="mainContent">
-        <!-- Dynamic content injected here -->
+    <nav class="flex justify-center bg-gray-800 p-2 space-x-4">
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="venues.html" class="text-white font-semibold">Venues</a>
+        <a href="events.html" class="text-gray-300 hover:text-white">Events</a>
+        <a href="safety.html" class="text-gray-300 hover:text-white">Safety</a>
+        <a href="resources.html" class="text-gray-300 hover:text-white">Resources</a>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-4 space-y-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Minneapolis EDM & Live Music Venues</h1>
+
+        <div id="venueList" class="grid md:grid-cols-2 gap-6"></div>
     </main>
 
     <script>
         const venues = [
             {
-                name: "First Avenue",
-                location: "701 N 1st Ave, Minneapolis, MN 55403",
-                capacity: "2,000",
-                vibe: "Historic venue with multiple stages, iconic murals.",
-                genres: ["EDM", "Pop", "Rock"],
-                safetyFeatures: ["On-site security", "Medical staff", "Well-lit exits", "Clear signage"],
-                tips: ["Arrive early for lines", "Buddy system recommended", "Check local events page for lineup"],
-                layout: "Two main stages, upper balcony, multiple bars",
-                exits: "Multiple clearly marked exits, front and rear",
-                parking: "Street parking nearby; 1st Avenue Parking Ramp a block away",
-                soberOptions: "Non-alcoholic drinks available",
+                name: "First Ave & 7th St Entry",
+                address: "701 N 1st Ave, Minneapolis, MN 55403",
+                map: "https://goo.gl/maps/9Ew3xf4c6fH2",
+                capacity: "2,000 main room",
+                floors: "2 floors, bar on upper floor, bathrooms on each",
+                exits: "Multiple exits on both floors",
+                doorCheck: "Standard ID check, metal detector optional",
+                parking: "Paid lot nearby, street parking limited",
+                sober: "Water stations inside",
+                neighborhood: "Downtown",
+                tips: ["Stay near edges if crowded", "Plan meeting point if separated"]
             },
             {
-                name: "Fine Line Music Cafe",
-                location: "1531 Nicollet Ave, Minneapolis, MN 55403",
-                capacity: "500",
-                vibe: "Intimate, basement venue for live music.",
-                genres: ["EDM", "Indie", "Rock"],
-                safetyFeatures: ["Small staff team", "Emergency exit at rear"],
-                tips: ["Arrive early for best spots", "Cash only for bar"],
-                layout: "Single stage, bar area in back",
-                exits: "One main exit, one emergency exit",
-                parking: "Street parking only",
-                soberOptions: "Non-alcoholic drinks limited",
-            },
-            {
-                name: "The Myth",
-                location: "1500 Washington Ave SE, Minneapolis, MN 55414",
+                name: "The Fillmore",
+                address: "1 N 1st St, Minneapolis, MN 55403",
+                map: "https://goo.gl/maps/7G5FUzTZm3z",
                 capacity: "2,500",
-                vibe: "Large venue, popular for touring EDM acts.",
-                genres: ["EDM", "Hip-Hop"],
-                safetyFeatures: ["On-site security", "Medical staff", "Lighting for safe navigation"],
-                tips: ["Know your exits", "Arrive early for general admission"],
-                layout: "Main floor, balcony seating",
-                exits: "Multiple exits, front and rear",
-                parking: "Nearby ramps: 5th St and Washington Ave",
-                soberOptions: "Non-alcoholic drinks available",
+                floors: "1 main floor with balcony seating",
+                exits: "Clearly marked front and side exits",
+                doorCheck: "ID check at entrance",
+                parking: "Paid parking garage across the street",
+                sober: "Water stations available",
+                neighborhood: "Downtown",
+                tips: ["Check balcony rules for seating", "Avoid front row if sensitive to loud sound"]
+            },
+            {
+                name: "The Armory",
+                address: "500 6th St, Minneapolis, MN 55415",
+                map: "https://goo.gl/maps/WfMG5h34Ck62",
+                capacity: "3,000",
+                floors: "Single large open floor, some seating on edges",
+                exits: "Multiple exits around perimeter",
+                doorCheck: "ID check, bag search",
+                parking: "Street parking, paid lots nearby",
+                sober: "Water stations available",
+                neighborhood: "Downtown",
+                tips: ["Stay near walls for less crowding", "Be aware of high ceilings affecting acoustics"]
+            },
+            {
+                name: "The Loft",
+                address: "100 S 1st St, Minneapolis, MN 55401",
+                map: "https://goo.gl/maps/xyz123", // Placeholder, replace with verified link
+                capacity: "600",
+                floors: "Single floor, small bar area",
+                exits: "Front and back exits",
+                doorCheck: "ID check at entrance",
+                parking: "Street parking, nearby public lots",
+                sober: "Water available at bar",
+                neighborhood: "Downtown",
+                tips: ["Small venue, get there early for best spot"]
             },
             {
                 name: "Uptown Theatre",
-                location: "2900 Hennepin Ave, Minneapolis, MN 55408",
-                capacity: "1,200",
-                vibe: "Historic theatre, large stage with balcony",
-                genres: ["EDM", "Rock", "Pop"],
-                safetyFeatures: ["Security personnel", "First aid on-site", "Well-lit pathways"],
-                tips: ["Check show times", "Be aware of balcony steps"],
-                layout: "Main stage, balcony seating",
+                address: "2906 Hennepin Ave, Minneapolis, MN 55408",
+                map: "https://goo.gl/maps/abc456", // Replace with verified link
+                capacity: "1,500",
+                floors: "Single main floor, balcony seating",
                 exits: "Multiple exits front/back",
-                parking: "Street parking; lot behind theatre",
-                soberOptions: "Non-alcoholic options available",
-            },
-            {
-                name: "Ground Zero Nightclub",
-                location: "15 SE 4th St, Minneapolis, MN 55455",
-                capacity: "Varies",
-                vibe: "Alternative dance nightclub with themed nights.",
-                genres: ["Industrial", "Goth", "EBM"],
-                safetyFeatures: ["On-site security", "Coat check available", "Emergency exits clearly marked"],
-                tips: ["Cash-only bar", "Arrive early for themed nights", "Check schedule for events"],
-                layout: "Main dance floor, multiple themed rooms",
-                exits: "Multiple exits, front and rear",
-                parking: "Street parking, nearby ramps, former Wells Fargo lot after 6PM",
-                soberOptions: "Limited non-alcoholic drinks",
-            },
-            {
-                name: "The Fillmore Minneapolis",
-                location: "525 N 5th St, Minneapolis, MN 55401",
-                capacity: "1,800",
-                vibe: "Modern venue with chandeliers and state-of-the-art sound.",
-                genres: ["EDM", "Pop", "Rock"],
-                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
-                tips: ["Mobile entry tickets", "Bag policy: up to 12” x 6” x 12” allowed", "Arrive early for best spots"],
-                layout: "Main floor, balcony seating, multiple bars",
-                exits: "Multiple exits, front and rear",
-                parking: "Street parking, nearby ramps, ParkWhiz options",
-                soberOptions: "Non-alcoholic drinks available",
+                doorCheck: "Standard ID check",
+                parking: "Paid parking lot behind theatre",
+                sober: "Water stations available",
+                neighborhood: "Uptown",
+                tips: ["Check balcony if you need seating", "Use front exit for quicker rideshare pickup"]
             },
             {
                 name: "Turf Club",
-                location: "1601 University Ave W, Saint Paul, MN 55104",
-                capacity: "350",
-                vibe: "Historic venue with upstairs and basement stages.",
-                genres: ["Indie", "Rock", "Alternative"],
-                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
-                tips: ["Arrive early for best spots", "Cash only for bar", "Check schedule for events"],
-                layout: "Upstairs and basement stages, bar areas",
-                exits: "Multiple exits, front and rear",
-                parking: "Lot behind venue off Sherburne Ave, street parking",
-                soberOptions: "Limited non-alcoholic drinks",
+                address: "1601 University Ave NE, St. Paul, MN 55104",
+                map: "https://goo.gl/maps/def789", // Replace with verified link
+                capacity: "1,000",
+                floors: "Single floor, small balcony",
+                exits: "Side exits and front main exit",
+                doorCheck: "ID check at entrance",
+                parking: "Street parking, some paid lots",
+                sober: "Water available",
+                neighborhood: "Lowertown / St. Paul",
+                tips: ["Small venue, expect tight crowding near stage"]
             },
-            {
-                name: "Palace Theatre",
-                location: "17 7th Place W, Saint Paul, MN 55102",
-                capacity: "2,500",
-                vibe: "Restored historic theatre with modern amenities.",
-                genres: ["EDM", "Pop", "Rock"],
-                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
-                tips: ["Arrive early for best spots", "Check schedule for events", "Be aware of balcony steps"],
-                layout: "Main floor, balcony seating, multiple bars",
-                exits: "Multiple exits, front and rear",
-                parking: "Nearby ramps: Treasure Island Garage, Travelers Lot",
-                soberOptions: "Non-alcoholic drinks available",
-            },
-            {
-                name: "Bar Fly Nightclub",
-                location: "711 Hennepin Ave, Minneapolis, MN 55403",
-                capacity: "Varies",
-                vibe: "Lush venue with multiple areas and sound/light shows.",
-                genres: ["EDM", "Pop", "Hip-Hop"],
-                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
-                tips: ["Arrive early for best spots", "Cash only for bar", "Check schedule for events"],
-                layout: "Boom Boom Room, main stage, multiple bars",
-                exits: "Multiple exits, front and rear",
-                parking: "Street parking, nearby ramps, City Center Garage",
-                soberOptions: "Limited non-alcoholic drinks",
-            },
-            {
-                name: "The Saloon",
-                location: "830 Hennepin Ave, Minneapolis, MN 55403",
-                capacity: "Varies",
-                vibe: "Popular LGBTQ+ bar with dance floors and drag shows.",
-                genres: ["Pop", "Dance", "Hip-Hop"],
-                safetyFeatures: ["On-site security", "Medical staff", "Clear signage"],
-                tips: ["18+ after 9PM", "Check schedule for events", "Arrive early for best spots"],
-                layout: "Multiple dance floors, bar areas",
-                exits: "Multiple exits, front and rear",
-                parking: "Street parking, nearby ramps, validated parking available",
-                soberOptions: "Non-alcoholic drinks available",
-            },
-            {
-                name: "Studio B at Skyway Theatre",
-                location: "711 Hennepin Ave, Minneapolis, MN 55403",
-                capacity: "Varies",
-                vibe: "Intimate venue with gothic ambiance and chandeliers.",
-                genres: ["EDM", "Indie", "Pop"],
-                safetyFeatures: ["On-site security", "Emergency exits clearly marked"],
-                tips: ["Arrive early for best spots", "Check schedule for events", "Be aware of balcony steps"],
-                layout: "Main floor, lounge areas, multiple bars",
-                exits: "Multiple exits, front and rear",
-                parking: "Nearby ramps: City Center Garage, Mayo Clinic Square Garage",
-                soberOptions: "Limited non-alcoholic drinks",
-            },
-            {
-                name: "The Front",
-                location: "15 4th St NE, Minneapolis, MN 55455",
-                capacity: "Varies",
-                vibe:                 vibe: "Small intimate venue, popular for electronic and hip-hop nights.",
-                genres: ["EDM", "Hip-Hop", "Pop"],
-                safetyFeatures: ["Security at entrance", "Emergency exits clearly marked"],
-                tips: ["Check event-specific instructions", "Plan transportation in advance"],
-                layout: "Main dance floor, small bar area",
-                exits: "Front and side emergency exit",
-                parking: "Street parking only",
-                soberOptions: "Limited non-alcoholic drinks"
-            },
-            {
-                name: "The Vault",
-                location: "220 N Washington Ave, Minneapolis, MN 55401",
-                capacity: "300",
-                vibe: "Underground club with heavy bass and intimate dance floor.",
-                genres: ["EDM", "Bass", "House"],
-                safetyFeatures: ["Security at door", "Emergency exit clearly marked"],
-                tips: ["Bring ID", "Cash only for bar", "Check schedule for events"],
-                layout: "Single room, small bar",
-                exits: "One main exit, one emergency exit",
-                parking: "Street parking, limited lot nearby",
-                soberOptions: "Non-alcoholic drinks available"
-            },
-            {
-                name: "Union Rooftop",
-                location: "701 Washington Ave SE, Minneapolis, MN 55414",
-                capacity: "500",
-                vibe: "Rooftop club with seasonal EDM nights, scenic view.",
-                genres: ["EDM", "House"],
-                safetyFeatures: ["Railing safety", "Security on site", "Emergency stairs clearly marked"],
-                tips: ["Check weather", "Arrive early for rooftop access"],
-                layout: "Open-air rooftop, bar stations",
-                exits: "Front exit plus fire stair access",
-                parking: "Nearby ramp: 2nd Street Parking Ramp",
-                soberOptions: "Non-alcoholic drinks available"
-            },
-            {
-                name: "The Exchange",
-                location: "729 Hennepin Ave, Minneapolis, MN 55403",
-                capacity: "400",
-                vibe: "Dance club with themed EDM nights and VIP sections.",
-                genres: ["EDM", "Pop", "Hip-Hop"],
-                safetyFeatures: ["Security at entrance", "CCTV monitoring", "Emergency exits clearly marked"],
-                tips: ["Arrive early for VIP", "Buddy system recommended"],
-                layout: "Main dance floor, balcony, VIP booths",
-                exits: "Multiple exits, front and rear",
-                parking: "Street parking, nearby ramps: City Center Garage",
-                soberOptions: "Non-alcoholic drinks available"
-            },
-            {
-                name: "The Alibi",
-                location: "4041 Bryant Ave S, Minneapolis, MN 55409",
-                capacity: "200",
-                vibe: "Neighborhood bar with small dance nights and EDM DJs.",
-                genres: ["EDM", "House"],
-                safetyFeatures: ["On-site staff", "Clear emergency exit"],
-                tips: ["Small venue, check schedule for events"],
-                layout: "Single dance floor, bar in front",
-                exits: "One main exit, one emergency exit",
-                parking: "Street parking only",
-                soberOptions: "Non-alcoholic drinks available"
-            },
-            {
-                name: "Electro Abi's",
-                location: "
-                capacity: "Varies per event",
-                vibe: "Pop-up electronic events, intimate and immersive.",
-                genres: ["EDM", "House", "Techno"],
-                safetyFeatures: ["Security at entry", "Emergency contacts posted on-site"],
-                tips: ["Check event instructions", "Plan transportation in advance"],
-                layout: "Varies per event",
-                exits: "Varies per event, marked on-site",
-                parking: "Depends on event, check page",
-                soberOptions: "Varies, usually limited"
-            }
+            // <script>
+const venues = [
+    // Already included venues
+    {
+        name: "First Ave & 7th St Entry",
+        address: "701 N 1st Ave, Minneapolis, MN 55403",
+        map: "https://goo.gl/maps/9Ew3xf4c6fH2",
+        capacity: "2,000 main room",
+        floors: "2 floors, bar on upper floor, bathrooms on each",
+        exits: "Multiple exits on both floors",
+        doorCheck: "Standard ID check, metal detector optional",
+        parking: "Paid lot nearby, street parking limited",
+        sober: "Water stations inside",
+        neighborhood: "Downtown",
+        tips: ["Stay near edges if crowded", "Plan meeting point if separated"]
+    },
+    {
+        name: "The Fillmore",
+        address: "1 N 1st St, Minneapolis, MN 55403",
+        map: "https://goo.gl/maps/7G5FUzTZm3z",
+        capacity: "2,500",
+        floors: "1 main floor with balcony seating",
+        exits: "Clearly marked front and side exits",
+        doorCheck: "ID check at entrance",
+        parking: "Paid parking garage across the street",
+        sober: "Water stations available",
+        neighborhood: "Downtown",
+        tips: ["Check balcony rules for seating", "Avoid front row if sensitive to loud sound"]
+    },
+    {
+        name: "The Armory",
+        address: "500 6th St, Minneapolis, MN 55415",
+        map: "https://goo.gl/maps/WfMG5h34Ck62",
+        capacity: "3,000",
+        floors: "Single large open floor, some seating on edges",
+        exits: "Multiple exits around perimeter",
+        doorCheck: "ID check, bag search",
+        parking: "Street parking, paid lots nearby",
+        sober: "Water stations available",
+        neighborhood: "Downtown",
+        tips: ["Stay near walls for less crowding", "Be aware of high ceilings affecting acoustics"]
+    },
+    {
+        name: "The Loft",
+        address: "100 S 1st St, Minneapolis, MN 55401",
+        map: "https://goo.gl/maps/xyz123", 
+        capacity: "600",
+        floors: "Single floor, small bar area",
+        exits: "Front and back exits",
+        doorCheck: "ID check at entrance",
+        parking: "Street parking, nearby public lots",
+        sober: "Water available at bar",
+        neighborhood: "Downtown",
+        tips: ["Small venue, get there early for best spot"]
+    },
+    // Additional venues
+    {
+        name: "Ground Zero",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Downtown",
+        tips: []
+    },
+    {
+        name: "Fine Line Music Café",
+        address: "318 N 1st Ave, Minneapolis, MN 55401",
+        map: "https://goo.gl/maps/example",
+        capacity: "700",
+        floors: "1 floor main, small balcony",
+        exits: "Front/back exits",
+        doorCheck: "ID check at entrance",
+        parking: "Street and nearby lots",
+        sober: "Water stations available",
+        neighborhood: "Downtown",
+        tips: ["Check balcony for seating", "Arrive early for best spot"]
+    },
+    {
+        name: "Underground Music Festival (venue info TBD)",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "Uptown Theatre",
+        address: "2906 Hennepin Ave, Minneapolis, MN 55408",
+        map: "https://goo.gl/maps/abc456",
+        capacity: "1,500",
+        floors: "Single main floor, balcony seating",
+        exits: "Multiple exits front/back",
+        doorCheck: "Standard ID check",
+        parking: "Paid parking lot behind theatre",
+        sober: "Water stations available",
+        neighborhood: "Uptown",
+        tips: ["Check balcony if you need seating", "Use front exit for rideshare"]
+    },
+    {
+        name: "The Green Room",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Downtown",
+        tips: []
+    },
+    {
+        name: "Club Underground",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "Palace Theatre",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Downtown",
+        tips: []
+    },
+    {
+        name: "Turf Club",
+        address: "1601 University Ave NE, St. Paul, MN 55104",
+        map: "https://goo.gl/maps/def789",
+        capacity: "1,000",
+        floors: "Single floor, small balcony",
+        exits: "Side exits and front main exit",
+        doorCheck: "ID check at entrance",
+        parking: "Street parking, some paid lots",
+        sober: "Water available",
+        neighborhood: "Lowertown / St. Paul",
+        tips: ["Small venue, expect tight crowding near stage"]
+    },
+    {
+        name: "The Myth",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "Bar Fly",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "The Saloon",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "Studio B",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "The Front",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "The Vault",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    },
+    {
+        name: "Union Rooftop",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Downtown",
+        tips: []
+    },
+    {
+        name: "The Exchange",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Downtown",
+        tips: []
+    },
+    {
+        name: "The Alibi",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "Uptown",
+        tips: []
+    },
+    {
+        name: "Electro Abis",
+        address: "",
+        map: "",
+        capacity: "",
+        floors: "",
+        exits: "",
+        doorCheck: "",
+        parking: "",
+        sober: "",
+        neighborhood: "",
+        tips: []
+    }
+];
+
+function renderVenues() {
+    const container = document.getElementById('venueList');
+    container.innerHTML = venues.map(venue => `
+        <div class="bg-gray-800 rounded-xl p-4 venue-card">
+            <h2 class="text-xl font-bold mb-2">${venue.name}</h2>
+            ${venue.address ? `<p class="text-gray-300 mb-1"><strong>Address:</strong> <a href="${venue.map}" target="_blank">${venue.address}</a></p>` : ''}
+            ${venue.capacity ? `<p class="text-gray-300 mb-1"><strong>Capacity:</strong> ${venue.capacity}</p>` : ''}
+            ${venue.floors ? `<p class="text-gray-300 mb-1"><strong>Layout:</strong> ${venue.floors}</p>` : ''}
+            ${venue.exits ? `<p class="text-gray-300 mb-1"><strong>Exits:</strong> ${venue.exits}</p>` : ''}
+            ${venue.doorCheck ? `<p class="text-gray-300 mb-1"><strong>Door/Security:</strong> ${venue.doorCheck}</p>` : ''}
+            ${venue.parking ? `<p class="text-gray-300 mb-1"><strong>Parking:</strong> ${venue.parking}</p>` : ''}
+            ${venue.sober ? `<p class="text-gray-300 mb-1"><strong>Sober Options:</strong> ${venue.sober}</p>` : ''}
+            ${venue.neighborhood ? `<p class="text-gray-300 mb-1"><strong>Neighborhood:</strong> ${venue.neighborhood}</p>` : ''}
+            ${venue.tips.length ? `<ul class="text-gray-400 mt-2 list-disc list-inside">${venue.tips.map(t => `<li>${t}</li>`).join('')}</ul>` : ''}
+        </div>
+    `).join('');
+}
+
+renderVenues();
+</script> 
         ];
 
-        // Pre-event checklist persistence using localStorage
-        function saveChecklist() {
-            const checkboxes = document.querySelectorAll('#preEventChecklist input[type="checkbox"]');
-            checkboxes.forEach(cb => {
-                localStorage.setItem(cb.nextElementSibling.textContent, cb.checked);
-            });
-        }
-
-        function loadChecklist() {
-            const checkboxes = document.querySelectorAll('#preEventChecklist input[type="checkbox"]');
-            checkboxes.forEach(cb => {
-                const saved = localStorage.getItem(cb.nextElementSibling.textContent);
-                if (saved !== null) cb.checked = saved === 'true';
-            });
-        }
-
-        // Utility: Generate venue HTML
-        function generateVenueHTML(venue) {
-            if (!venue) return '';
-            return `
-                <div class="bg-white rounded-xl shadow-lg p-6 mb-6 card-hover">
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="md:col-span-2">
-                            <h3 class="text-xl font-bold mb-2">${venue.name}</h3>
-                            <p class="text-gray-600 mb-1"><strong>Address:</strong> <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(venue.location)}" target="_blank" class="text-blue-600 underline">${venue.location}</a></p>
-                            <p class="text-gray-600 mb-1"><strong>Capacity:</strong> ${venue.capacity}</p>
-                            <p class="text-gray-700 mb-2">${venue.vibe}</p>
-                            <div class="flex flex-wrap gap-2 mb-2">
-                                ${venue.genres.map(g => `<span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">${g}</span>`).join('')}
-                            </div>
-                            <p class="text-gray-600 mb-1"><strong>Layout:</strong> ${venue.layout}</p>
-                            <p class="text-gray-600 mb-1"><strong>Exits:</strong> ${venue.exits}</p>
-                            <p class="text-gray-600 mb-1"><strong>Parking:</strong> ${venue.parking}</p>
-                            <p class="text-gray-600 mb-1"><strong>Sober Options:</strong> ${venue.soberOptions}</p>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                <h4 class="font-semibold text-green-800 mb-2">Safety Features</h4>
-                                <ul class="text-green-700 text-sm space-y-1">${venue.safetyFeatures.map(f => `<li>• ${f}</li>`).join('')}</ul>
-                            </div>
-                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                                <h4 class="font-semibold text-blue-800 mb-2">Tips & Recommendations</h4>
-                                <ul class="text-blue-700 text-sm space-y-1">${venue.tips.map(f => `<li>• ${f}</li>`).join('')}</ul>
-                            </div>
-                        </div>
-                    </div>
+        function renderVenues() {
+            const container = document.getElementById('venueList');
+            container.innerHTML = venues.map(venue => `
+                <div class="bg-gray-800 rounded-xl p-4 venue-card">
+                    <h2 class="text-xl font-bold mb-2">${venue.name}</h2>
+                    <p class="text-gray-300 mb-1"><strong>Address:</strong> <a href="${venue.map}" target="_blank">${venue.address}</a></p>
+                    <p class="text-gray-300 mb-1"><strong>Capacity:</strong> ${venue.capacity}</p>
+                    <p class="text-gray-300 mb-1"><strong>Layout:</strong> ${venue.floors}</p>
+                    <p class="text-gray-300 mb-1"><strong>Exits:</strong> ${venue.exits}</p>
+                    <p class="text-gray-300 mb-1"><strong>Door/Security:</strong> ${venue.doorCheck}</p>
+                    <p class="text-gray-300 mb-1"><strong>Parking:</strong> ${venue.parking}</p>
+                    <p class="text-gray-300 mb-1"><strong>Sober Options:</strong> ${venue.sober}</p>
+                    <p class="text-gray-300 mb-1"><strong>Neighborhood:</strong> ${venue.neighborhood}</p>
+                    <ul class="text-gray-400 mt-2 list-disc list-inside">
+                        ${venue.tips.map(tip => `<li>${tip}</li>`).join('')}
+                    </ul>
                 </div>
-            `;
+            `).join('');
         }
 
-        function showVenues() {
-            const content = `
-                <h2 class="text-2xl font-bold mb-6">🏢 Minneapolis Venue Guide</h2>
-                <div id="venueList">${venues.map(generateVenueHTML).join('')}</div>
-            `;
-            document.getElementById('mainContent').innerHTML = content;
-        }
-
-        // Initialize
-        showVenues();
+        renderVenues();
     </script>
 
 </body>
