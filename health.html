@@ -1,253 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Raver Survival Guide</title>
   <style>
-    /* Container */
-    body {
-      margin: 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: #1a0b3b; /* Dark purple background like site */
-      color: #ffffff;
+    /* Base */
+    :root{
+      --bg:#1a0b3b;        /* dark purple */
+      --card:#2c003e;      /* panel purple */
+      --btn:#4b0082;       /* deep purple */
+      --btn-hover:#6a0dad; /* hover purple */
+      --btn-active:#9400d3;/* active purple */
+      --cyan:#00f0f0;      /* cyan accent */
+      --pink:#ff87ff;      /* link pink */
+      --muted:#ffb3ff;     /* muted pink */
+      --text:#ffffff;
+      --border:#5a2a86;
     }
-    .container {
-      max-width: 800px;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .container{
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px;
     }
-
-    /* Title */
-    .guide-title {
-      text-align: center;
-      font-size: 2rem;
-      color: #00f0f0; /* Cyan accent */
-      margin-bottom: 1rem;
+    .guide-title{
+      text-align:center;
+      font-size:2rem;
+      color:var(--cyan);
+      margin:12px 0 6px;
+    }
+    .guide-sub{
+      text-align:center;
+      color:var(--muted);
+      margin:0 0 20px;
+      font-size:0.98rem;
     }
 
-    /* Accordion buttons */
-    .accordion-button {
-      background-color: #4b0082; /* deep purple */
-      cursor: pointer;
-      padding: 14px 20px;
-      margin-bottom: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      text-align: left;
-      font-size: 16px;
-      font-weight: bold;
-      color: #00f0f0;
-      transition: background-color 0.3s;
+    /* Accordion */
+    .accordion-button{
+      width:100%;
+      background:var(--btn);
+      color:var(--cyan);
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      padding:14px 18px;
+      margin:10px 0 8px;
+      font-size:16px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      transition:background .2s ease;
     }
-    .accordion-button:hover {
-      background-color: #6a0dad;
-    }
-    .accordion-button.active {
-      background-color: #9400d3;
-    }
-
-    /* Accordion content */
-    .accordion-content {
-      display: none;
-      padding: 15px 25px;
-      margin-bottom: 10px;
-      background-color: #2c003e; /* slightly lighter purple */
-      border-radius: 12px;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-    .accordion-content ul {
-      padding-left: 20px;
-    }
-    .accordion-content a {
-      color: #ff87ff; /* pink accent for links */
-      text-decoration: none;
-    }
-    .accordion-content a:hover {
-      text-decoration: underline;
+    .accordion-button:hover{ background:var(--btn-hover); }
+    .accordion-button[aria-expanded="true"]{ background:var(--btn-active); }
+    .accordion-chevron{
+      margin-left:12px;
+      font-size:18px;
+      line-height:1;
+      opacity:.9;
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 600px) {
-      .container {
-        padding: 15px;
-      }
-      .accordion-button {
-        font-size: 15px;
-        padding: 12px 16px;
-      }
-      .accordion-content {
-        padding: 12px 16px;
-      }
+    .accordion-content{
+      display:none;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px 20px;
+      margin:-2px 0 12px;
+      line-height:1.6;
+      font-size:15px;
+    }
+    .pocket{
+      margin:0 0 8px;
+      padding-left:18px;
+    }
+    .pocket li{ margin:6px 0; }
+    .deep h4{
+      margin:14px 0 6px;
+      color:var(--cyan);
+      font-size:15.5px;
+    }
+    .deep ul{ padding-left:18px; margin:8px 0; }
+    .deep li{ margin:6px 0; }
+    a{ color:var(--pink); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .note{ color:var(--muted); font-size:14px; }
+
+    /* Mobile */
+    @media (max-width:600px){
+      .container{ padding:16px; }
+      .accordion-button{ font-size:15px; padding:12px 14px; }
+      .accordion-content{ padding:14px 14px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="guide-title">Raver Survival Guide 🌈✨</h1>
+    <p class="guide-sub">Pocket tips up top. Tap to drop down for the full survival manual. Link-outs go to your existing pages.</p>
 
-    <div class="accordion">
-      <!-- Hydration Section -->
-      <button class="accordion-button">💧 Hydration</button>
-      <div class="accordion-content">
+    <!-- HYDRATION -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>💧 Hydration</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="Hydration details">
+      <ul class="pocket">
+        <li>Sip, don’t chug. Rotate electrolytes with water.</li>
+        <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
+        <li>Headache, dizziness, dry mouth = drink smart.</li>
+        <li><a href="emergency.html">Overheating steps →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Smart Hydration & Temperature</h4>
         <ul>
-          <li>Sip, don’t chug. Electrolytes &gt; plain water.</li>
-          <li>Bring electrolyte packets (cheap + tiny).</li>
-          <li>Signs of dehydration: headache, dizziness, dry mouth, hot skin.</li>
-          <li><a href="hydration.html">More on hydration + overheating →</a></li>
-        </ul>
-      </div>
-
-      <!-- Pre-Show Prep Section -->
-      <button class="accordion-button">🥗 Pre-Show Prep</button>
-      <div class="accordion-content">
-        <ul>
-          <li>Eat something carby + salty before you head in.</li>
-          <li>Don’t experiment with brand-new drugs or combos at the show.</li>
-          <li>Dress for temp swings (sweaty inside, cold outside).</li>
-          <li>Have your “home safe” plan figured out.</li>
-          <li><a href="polydrug.html">Check polydrug combos before you go →</a></li>
-        </ul>
-      </div>
-
-      <!-- During the Show Section -->
-      <button class="accordion-button">🎶 During the Show</button>
-      <div class="accordion-content">
-        <ul>
-          <li><strong>Pace yourself:</strong> You don’t need to rail every 15 mins.</li>
-          <li>Rotate: dance, chill, hydrate, breathe.</li>
-          <li>Snorting? Use your own straw/spoon. Don’t share. Rinse between bumps.</li>
-          <li>Take breaks in fresh air.</li>
-          <li>Keep track of your crew (and their mental state, too).</li>
-          <li><a href="snorting.html">See safe snorting tips →</a></li>
-        </ul>
-      </div>
-
-      <!-- After the Show Section -->
-      <button class="accordion-button">🛌 After the Show</button>
-      <div class="accordion-content">
-        <ul>
-          <li>Rehydrate with electrolytes, not just water.</li>
-          <li>Eat something easy on the stomach (bananas, rice, broth).</li>
-          <li>Sleep in a dark, cool room.</li>
-          <li>Vitamins: magnesium + vitamin C help recovery.</li>
-          <li><a href="aftercare.html">Recovery + comedown tips →</a></li>
-        </ul>
-      </div>
-
-      <!-- Emergency Basics Section -->
-      <button class="accordion-button">🚨 Emergency Basics</button>
-      <div class="accordion-content">
-        <ul>
-          <li>Signs someone’s not okay: unresponsive, seizing, turning blue, can’t stay conscious.</li>
-          <li>Call 911 — Good Samaritan laws protect you.</li>
-          <li>Use the <a href="emergency.html">Emergency Panic Button</a> if you’re unsure what to do.</li>
-          <li>Carry naloxone & test strips.</li>
-          <li><a href="overdose.html">Full overdose & emergency guide →</a></li>
-        </ul>
-      </div>
-
-      <!-- Long-Term Survival Section -->
-      <button class="accordion-button">🌿 Long-Term Survival</button>
-      <div class="accordion-content">
-        <ul>
-          <li>Space your rolls: serotonin isn’t infinite.</li>
-          <li>Know your patterns — partying every weekend hits harder than you think.</li>
-          <li>Therapy, rest, and hobbies outside the rave keep you balanced.</li>
-          <li><a href="mentalhealth.html">Mental health resources →</a></li>
-        </ul>
-      </div>
-
-      <!-- Bonus Hacks Section -->
-      <button class="accordion-button">🍑 Bonus Hacks / Survival Tips</button>
-      <div class="accordion-content">
-        <ul>
-          <li><strong>Baby Vicks:</strong> For rails, stuffy noses, or quick airflow relief.</li>
-          <li><strong>Gum & lollipops:</strong> Jaw clench + dry mouth saver.</li>
-          <li><strong>Bandana:</strong> Dust, sweat wipe, or quick mask.</li>
-          <li><strong>Portable charger:</strong> Lifeline for rideshare, group check-ins, emergencies.</li>
-          <li><strong>AirTag / location sharing:</strong> Keep your bag and friends locatable.</li>
-          <li><strong>Festival body survival:</strong> Sunscreen, extra socks, poncho, foot care—Minnesota weather is unpredictable.</li>
-          <li><strong>Environmental care:</strong> Don’t litter. Dispose of sharps/test kits properly.</li>
-          <li><strong>Digital harm reduction:</strong> Don’t post people railing or blacked out; respect privacy.</li>
-          <li><strong>Consent culture:</strong> PLUR isn’t just bracelets—respect, community care, watch out for the vulnerable.</li>
+          <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
+          <li><b>Pre-hydrate:</b> go in hydrated; you can’t “catch up” mid-heatstroke.</li>
+          <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
+          <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
+          <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
+          <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
+          <li>More: <a href="emergency.html">Emergency</a></li>
         </ul>
       </div>
     </div>
+
+    <!-- PRE-SHOW PREP -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="Pre-show details">
+      <ul class="pocket">
+        <li>Eat carbs + protein. Sleep if you can.</li>
+        <li>Test, label, and pack your stash.</li>
+        <li>Plan your exit + meet spot.</li>
+        <li><a href="polydrug.html">Check combos first →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Tolerances, Allergy Checks, Testing</h4>
+        <ul>
+          <li><b>Tolerance breaks:</b> Space MDMA (many use months between). Avoid daily benzos. Stims = crash cycles—plan off-days.</li>
+          <li><b>Allergy test:</b> new batch → microdose test bump/capsule sliver; wait to assess.</li>
+          <li><b>Test everything:</b> reagents + fent strips (even “trusted” powders). See <a href="polydrug.html">Polydrug Guide</a>.</li>
+          <li><b>Stash plan:</b> label/color-code; separate look-alikes; no mystery pocket roulette.</li>
+        </ul>
+        <h4>Fuel, Sleep, Immunity</h4>
+        <ul>
+          <li>Pre-meal 1–3h before: carbs + protein + a little salt (rice/pasta + tofu/chicken; pretzels).</li>
+          <li>Sleep bank: one decent night before reduces crash intensity.</li>
+          <li>Immunity: hydrate day-of; consider zinc/probiotics before long fests.</li>
+        </ul>
+        <h4>Pack & Plan</h4>
+        <ul>
+          <li><b>Kit:</b> earplugs, electrolytes, charger, condoms + lube, saline spray, gum, blister pads, bandaids, small trash bag.</li>
+          <li><b>Safety:</b> share location; set a dead-phone meet spot; confirm ride; screenshot tickets/maps.</li>
+          <li>Review <a href="consent.html">Consent</a> and <a href="snorting.html">Route/Snorting</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DURING THE SHOW -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🎶 During the Show</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="During the show details">
+      <ul class="pocket">
+        <li>Start low, go slow. Don’t redose out of boredom.</li>
+        <li>Rotate: dance → chill → hydrate → breathe.</li>
+        <li>Own straw/spoon; don’t share. Rinse after.</li>
+        <li>Earplugs. Every. Time.</li>
+        <li><a href="snorting.html">Snorting guide →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Pacing & Temp</h4>
+        <ul>
+          <li>Wait at least an hour before considering more; most mishaps = stacking too soon.</li>
+          <li>Heat checks: cool-downs each set; fans/airflow; step out if you feel off.</li>
+          <li>Quick fuel: small salty snack can fix shakiness (low sugar/sodium).</li>
+        </ul>
+        <h4>Red-Flag Combos (Why They’re Bad)</h4>
+        <ul>
+          <li><b>MDMA + alcohol</b> → dehydration/overheating.</li>
+          <li><b>GHB + alcohol/benzos/opioids</b> → respiratory arrest.</li>
+          <li><b>Cocaine + alcohol</b> → cocaethylene (toxic; heart/liver strain).</li>
+          <li><b>Multiple depressants</b> (benzos, alcohol, opioids) → blackout + breathing suppression.</li>
+          <li>Unsure? See <a href="polydrug.html">Polydrug</a>.</li>
+        </ul>
+        <h4>Route Safety</h4>
+        <ul>
+          <li><b>Snorting:</b> grind fine; your own straw; alternate nostrils; saline rinse after; don’t mix uppers.</li>
+          <li><b>Oral</b> is generally gentler than insufflation. <b>Plugging</b> requires sterile tools + lube; avoid injecting.</li>
+          <li>Details: <a href="snorting.html">Route/Snorting Guide</a>.</li>
+        </ul>
+        <h4>Psychedelics in Crowds</h4>
+        <ul>
+          <li><b>Microdose</b> if you want to stay social; avoid “re-upping” in a chaotic crowd.</li>
+          <li>Shrooms/ket/DMT can disorient: stick with your buddy, find a safe chill zone.</li>
+        </ul>
+        <h4>Grounding, Hearing, Sex</h4>
+        <ul>
+          <li>Grounding: gum, textured object, splash cold water, breathe 4-in/6-out, sit with back to a wall.</li>
+          <li>Hearing: foam plugs; tinnitus is permanent.</li>
+          <li>Safe sex: condoms + lube; get STI testing post-festival. Respect <a href="consent.html">Consent</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AFTER THE SHOW -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🛌 After the Show</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="After the show details">
+      <ul class="pocket">
+        <li>Electrolytes, gentle food, shower, sleep.</li>
+        <li>Saline rinse if you railed.</li>
+        <li>Crash kit by bed: water, snack, meds.</li>
+        <li><a href="aftercare.html">Aftercare guide →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Body Reset</h4>
+        <ul>
+          <li>Electrolytes before bed & on waking; salty/protein snack (eggs, broth, toast, bananas).</li>
+          <li>Sleep sanctuary: dark/cool room, eye mask, earplugs. Don’t stack downers to “force sleep.”</li>
+          <li>Clean up: saline nasal rinse; shower; gentle skincare; moisturize.</li>
+        </ul>
+        <h4>Serotonin & Supplements</h4>
+        <ul>
+          <li>Tryptophan foods: turkey, eggs, bananas, nuts.</li>
+          <li>5-HTP <b>only after</b> rolling (never before MDMA). Avoid if it conflicts with your meds.</li>
+          <li>Magnesium for jaw/clench; vitamin C for stress recovery.</li>
+        </ul>
+        <h4>Mood & Integration</h4>
+        <ul>
+          <li>Post-rave crash (low mood, anxiety, derealization) is common and usually passes.</li>
+          <li>Journal or voice note; sunlight walk; text a friend to debrief.</li>
+          <li>If it lingers, see <a href="mentalhealth.html">Mental Health</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EMERGENCY BASICS -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="Emergency details">
+      <ul class="pocket">
+        <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
+        <li>Recovery position if unconscious but breathing.</li>
+        <li>Carry naloxone; test strips save lives.</li>
+        <li><a href="emergency.html">Emergency steps →</a> • <a href="overdose.html">Overdose guide →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Overdose Signs</h4>
+        <ul>
+          <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
+          <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
+          <li><b>Alcohol/benzos/GHB:</b> can’t wake, vomit + unresponsive, shallow breathing.</li>
+        </ul>
+        <h4>What To Do</h4>
+        <ul>
+          <li><b>Call 911 now.</b> Say what you see (don’t guess substances). MN Good-Samaritan protections apply.</li>
+          <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
+          <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
+          <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
+          <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- LONG-TERM SURVIVAL -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🌿 Long-Term Survival</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="Long-term details">
+      <ul class="pocket">
+        <li>Space your rolls; protect hearing.</li>
+        <li>Rotate party weekends with rest weekends.</li>
+        <li>Therapy & boundaries aren’t “uncool.”</li>
+        <li><a href="mentalhealth.html">Mental health →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>Make It Sustainable</h4>
+        <ul>
+          <li><b>Cycle breaks:</b> sober weekends; months between MDMA; avoid daily benzos.</li>
+          <li><b>Track patterns:</b> sleep/mood/usage/spend—if the graph trends down, change course.</li>
+          <li><b>Hearing:</b> wear plugs; give your ears rest days; tinnitus is forever.</li>
+          <li><b>Boundaries:</b> cap nights out; say no to midweek binges; keep non-nightlife hobbies alive.</li>
+          <li>Normalize therapy + check-ins. See <a href="mentalhealth.html">Mental Health</a>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BONUS HACKS -->
+    <button class="accordion-button" aria-expanded="false">
+      <span>🍑 Bonus Hacks / Survival Tips</span><span class="accordion-chevron">▾</span>
+    </button>
+    <div class="accordion-content" role="region" aria-label="Bonus hacks details">
+      <ul class="pocket">
+        <li>Baby Vicks, gum/lollipops, bandana.</li>
+        <li>Portable charger; share location/AirTag.</li>
+        <li>Sunscreen, socks, blister pads, poncho.</li>
+        <li><a href="consent.html">Consent culture →</a></li>
+      </ul>
+      <div class="deep">
+        <h4>“Stupid Little Hacks” That Save Your Night</h4>
+        <ul>
+          <li><b>Baby Vicks:</b> sniff near (not inside) nostrils for airflow; rinse later with saline.</li>
+          <li><b>Gum/lollipops:</b> reduces jaw clench & dry mouth; also a grounding tool.</li>
+          <li><b>Bandana:</b> sweat rag, dust mask, wrap ice for cooling, or eye cover if overstimmed.</li>
+          <li><b>Portable charger:</b> dead phone = stranded; pack cable + brick.</li>
+          <li><b>Rideshare safety:</b> match plate/driver; rear passenger seat; share live location.</li>
+          <li><b>Digital harm reduction:</b> don’t post people railing/blacked out; blur faces; ask consent.</li>
+          <li><b>Women & queer-specific:</b> watch drinks; stick with a buddy; beware predatory “caretakers”; ask staff if uneasy.</li>
+          <li><b>Eco care:</b> pack in/out; dispose of sharps/test kits correctly; don’t trash venues.</li>
+          <li><b>Festival body:</b> blister pads, dry socks, sunscreen, light layer for MN chills.</li>
+          <li><b>Cultural literacy:</b> PLUR = respect + care; look out for the vulnerable. See <a href="consent.html">Consent</a>.</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    const acc = document.getElementsByClassName("accordion-button");
-    for (let i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        const panel = this.nextElementSibling;
-        panel.style.display = panel.style.display === "block" ? "none" : "block";
+    // Accessible accordion toggles
+    const buttons = document.querySelectorAll(".accordion-button");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!expanded));
+        const panel = btn.nextElementSibling;
+        panel.style.display = expanded ? "none" : "block";
+        // Rotate chevron
+        const chev = btn.querySelector(".accordion-chevron");
+        if (chev) chev.textContent = expanded ? "▾" : "▴";
       });
-    }
+    });
   </script>
 </body>
 </html>
-
-
-
-<div class="section" style="background-color: #2a003f; border-radius: 12px; padding: 1.5rem; box-shadow: 0 0 10px rgba(0,255,255,0.1);">
-  <h2 style="color: #ff6ec7;">🆘 Crisis Support Tools</h2>
-  <p style="color: #f8f8f8;">Click a resource to learn when and how to use it.</p>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      🌀 Bad Trip Mode (PLURderapolis)
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="/badtrip.html" style="color: #ff6ec7;">Bad Trip Mode</a></strong> is a page with grounding tips, calm visuals, and audio loops designed to help someone through a difficult psychedelic experience. Useful mid-trip when someone’s spiraling or overwhelmed.</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      💉 MN Resources (PLURderapolis)
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="/resources.html" style="color: #ff6ec7;">Local MN Resources</a></strong> helps you find Narcan, test strips, queer-friendly clinics, recovery groups, and more — all based in Minnesota. Use this if you or a friend need real-life support, fast.</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      📚 DanceSafe
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="https://dancesafe.org" target="_blank" rel="noopener" style="color: #ff6ec7;">DanceSafe</a></strong> is a harm reduction organization with detailed drug fact sheets and testing kit info. Use it before you take anything to check dosages, risks, and effects.</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      👂 TripSit
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="https://tripsit.me" target="_blank" rel="noopener" style="color: #ff6ec7;">TripSit</a></strong> offers a live anonymous chat where volunteers will stay with you during a bad trip or tough combo. Use it when you're alone and scared and need calm, non-judgy backup.</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      🔥 Fireside Project
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="https://firesideproject.org" target="_blank" rel="noopener" style="color: #ff6ec7;">Fireside Project</a></strong> is a phone/text line for psychedelic support. Great for integration or talking someone down gently. Not just during the trip — also after.</p>
-    </div>
-  </details>
-
-  <details style="margin-top: 1rem;">
-    <summary style="cursor: pointer; font-weight: bold; color: #00f7e0; font-size: 1.1rem;">
-      📞 Never Use Alone
-    </summary>
-    <div style="margin-top: 0.6rem; color: #ddd; font-size: 0.95rem;">
-      <p><strong><a href="https://neverusealone.com" target="_blank" rel="noopener" style="color: #ff6ec7;">Never Use Alone</a></strong> is a service where you can call or text before you use opioids. They’ll stay on the line and call help if you stop responding. Crucial if you're using alone or worried about fentanyl.</p>
-    </div>
-  </details>
-</div>
