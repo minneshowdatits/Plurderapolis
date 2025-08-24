@@ -1,469 +1,484 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PLURderapolis — Venues</title>
+  <meta name="color-scheme" content="dark">
+  <title>PLURderapolis • Venues</title>
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* small tweaks so this looks like a real dark-mode site */
-    :root { color-scheme: dark; }
-    .venue-card { border: 1px solid rgba(255,255,255,0.04); }
-    .hint { color: rgba(255,255,255,0.6); font-size: .92rem; }
+    :root { --accent-pink: #ff2d93; --accent-purple: #8a2be2; }
+    html, body { background-color: #0b0b0f; }
+    .badge { font-size: 0.75rem; padding: 0.15rem 0.4rem; border-radius: 0.35rem; }
+    .badge-accent { background: rgba(255,45,147,0.15); color: #ff83bd; border: 1px solid rgba(255,45,147,0.45); }
+    .badge-status { background: rgba(71,171,255,0.15); color: #9ad0ff; border: 1px solid rgba(71,171,255,0.4); }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,45,147,0.35), transparent); }
+    details[open] summary .chevron { transform: rotate(90deg); }
+    .chevron { transition: transform 0.15s ease; }
+    .link { color: #ff83bd; }
+    .link:hover { color: #ffd0e6; text-decoration: underline; }
   </style>
 </head>
-<body class="bg-gray-900 text-gray-100 antialiased">
-  <header class="sticky top-0 z-40 backdrop-blur-sm bg-gray-900/70 border-b border-gray-800 p-4">
-    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center gap-3">
-      <div class="flex-1">
-        <h1 class="text-2xl sm:text-3xl font-extrabold">PLURderapolis — Venue Guide</h1>
-        <p class="hint mt-1">Verified details: capacity, levels, exits, security, patios, accessibility, parking, sober options, tips & map links.</p>
-      </div>
+<body class="text-gray-200 selection:bg-pink-500/40 selection:text-white">
 
-      <div class="w-full sm:w-auto flex gap-2 items-center">
-        <input id="search" aria-label="Search venues" placeholder="Search venues (name, neighborhood)..." class="w-full sm:w-72 px-3 py-2 rounded bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500"/>
-        <select id="neigh" aria-label="Filter by neighborhood" class="px-3 py-2 rounded bg-gray-800 text-gray-100">
-          <option value="">All neighborhoods</option>
-          <option value="Downtown">Downtown</option>
-          <option value="Uptown">Uptown</option>
-          <option value="Northeast">Northeast</option>
-          <option value="Saint Paul">Saint Paul</option>
-          <option value="West Bank">West Bank</option>
-          <option value="Maplewood">Maplewood</option>
-        </select>
-        <button id="clearBtn" class="px-3 py-2 bg-gray-700 rounded text-sm">Clear</button>
-      </div>
+  <!-- --- Navbar (PLURderapolis look) --- -->
+  <header class="bg-gray-900/90 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="text-2xl font-bold"><span class="text-pink-400">PLUR</span>derapolis</a>
+      <nav>
+        <a href="/" class="text-gray-400 hover:text-white mr-4">Home</a>
+        <a href="/venues.html" class="text-pink-200 font-semibold">Venues</a>
+        <!-- add more nav links as needed -->
+      </nav>
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto p-4 space-y-4">
-    <!-- Quick legend / accessibility note -->
-    <section class="p-3 bg-gray-800 rounded hint">
-      <strong>Quick legend:</strong> <span class="px-1">📍map</span> = google maps link · <span class="px-1">♿</span> = wheelchair accessible (public info) · <span class="px-1">💧</span> = water/sober options noted.
+  <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+    <!-- --- Search & Filter --- -->
+    <section class="bg-gray-800 rounded-xl p-4">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex-1">
+          <label for="q" class="block text-gray-400 text-sm mb-1">Search venues</label>
+          <input id="q" type="search" placeholder="Name, notes, features…"
+                 class="w-full rounded-lg bg-gray-700 border border-gray-600 px-3 py-2 focus:ring focus:ring-purple-500 focus:border-transparent outline-none" />
+        </div>
+        <div class="w-full sm:w-56">
+          <label for="neighborhood" class="block text-gray-400 text-sm mb-1">Neighborhood</label>
+          <select id="neighborhood" class="w-full rounded-lg bg-gray-700 border border-gray-600 px-3 py-2 focus:ring focus:ring-purple-500 focus:border-transparent outline-none">
+            <option value="">All neighborhoods</option>
+          </select>
+        </div>
+      </div>
+      <p class="mt-2 text-xs text-gray-400">
+        ♿ = wheelchair accessible info • 💧 = sober-friendly (water/NA options)  
+        <em class="text-gray-400">not publicly listed</em> = contact venue for details
+      </p>
     </section>
 
-    <!-- Venue cards: repeated. Each card includes data fields you requested. -->
-    <!-- 1) Ground Zero -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Ground Zero" data-neigh="Northeast">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Ground Zero Nightclub</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://groundzeromn.com/">Official site</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Northeast Minneapolis · Address: 15 SE 4th St</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> small club (typical crowd 100–300 depending on event). Official site lists event nights and door times.  [oai_citation:0‡groundzeromn.com](https://groundzeromn.com/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> single floor with themed spaces (dance floor + "chapel" performance area)</li>
-        <li><strong>Layout:</strong> mostly general admission dance floor; performance art / BDSM area featured on some nights</li>
-        <li><strong>Exits:</strong> main street entrance + at least one rear exit (typical for small clubs). If attending, note that rooms can be dim and routes can be narrow; plan ahead for exit routes.</li>
-        <li><strong>Security:</strong> on-door staff, bag checks possible for some events; phone/camera rules enforced near performance area</li>
-        <li><strong>Patio:</strong> none listed</li>
-        <li><strong>Bathrooms:</strong> on main floor</li>
-        <li><strong>Wheelchair access:</strong> limited — small step/thresholds reported; call venue for event-specific accommodations.  [oai_citation:1‡Yelp](https://www.yelp.com/biz/ground-zero-nightclub-minneapolis?utm_source=chatgpt.com)</li>
-        <li><strong>Parking / transit:</strong> street parking / nearby ramps; NE neighborhood — rideshare recommended late night</li>
-        <li><strong>Sober options:</strong> water available; bring a sober plan — Ground Zero is late-night and alt scenes can be sensory heavy</li>
-        <li><strong>Tip:</strong> this is an alt/BDSM friendly space — respect consent rules, no phones near performances, cash bar often used.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/2QyK8c8aGz52">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 2) The Fillmore -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Fillmore" data-neigh="North Loop">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Fillmore Minneapolis (Live Nation)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://www.fillmoreminneapolis.com/">Official site</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: North Loop · Address: 525 N 5th St</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~1,500 (music hall) — multiple configurable spaces (VIP lounge, private rooms).  [oai_citation:2‡Live Nation Special Events](https://specialevents.livenation.com/venues/the-fillmore-minneapolis?utm_source=chatgpt.com) [oai_citation:3‡Explore Minnesota](https://www.exploreminnesota.com/profile/fillmore/32930?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> multi-level venue with at least two primary levels and private VIP areas</li>
-        <li><strong>Layout:</strong> large music hall (GA with seated options for some configurations), lounges, dedicated production/backstage areas</li>
-        <li><strong>Exits:</strong> main street entrances + emergency exits per code; map and staff posted for big events</li>
-        <li><strong>Security:</strong> professional venue security, bag checks often for ticketed shows; production staff present</li>
-        <li><strong>Patio:</strong> none prominent — indoor venue</li>
-        <li><strong>Bathrooms:</strong> multiple restrooms across levels</li>
-        <li><strong>Wheelchair access:</strong> accessible entry and ADA accommodations advertised — contact box office for specific seat/assistance needs.  [oai_citation:4‡fillmoreminneapolis.com](https://www.fillmoreminneapolis.com/visit?utm_source=chatgpt.com)</li>
-        <li><strong>Parking / transit:</strong> near Target Field LRT station; no dedicated lot — street & ramps nearby; the website suggests ParkWhiz options.  [oai_citation:5‡fillmoreminneapolis.com](https://www.fillmoreminneapolis.com/visit?utm_source=chatgpt.com)</li>
-        <li><strong>Sober options:</strong> venue bars carry NA options; free water policies vary by show — ask box office</li>
-        <li><strong>Tip:</strong> large shows have multiple entrances — check your ticket for door time and recommended entrance to avoid long lines.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/h1N8x">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 3) Fine Line -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Fine Line" data-neigh="Warehouse District">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Fine Line Music Cafe</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://first-avenue.com/venue/fine-line/">Venue info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Warehouse District · Address: 318 First Ave N</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> mid-size venue (commonly listed ~650 but layout/config varies by event).  [oai_citation:6‡First Avenue](https://first-avenue.com/venue/fine-line/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> mostly single performance room with small mezzanine/limited seating on some shows</li>
-        <li><strong>Layout:</strong> general admission floor with possible limited seating/banquettes depending on booking</li>
-        <li><strong>Exits:</strong> street entrance(s) + emergency exits per code</li>
-        <li><strong>Security:</strong> door staff for ticketed shows; bag checks possible</li>
-        <li><strong>Patio:</strong> small outdoor space sometimes used for private events (venue-dependent)</li>
-        <li><strong>Wheelchair access:</strong> limited — contact box office for ADA accommodations.  [oai_citation:7‡First Avenue](https://first-avenue.com/venue/fine-line/?utm_source=chatgpt.com)</li>
-        <li><strong>Parking / transit:</strong> downtown ramps & street parking nearby</li>
-        <li><strong>Tip:</strong> Good sightlines if you get a mezzanine spot; smaller crowds than First Ave for indie acts.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/xyzFineLine">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 4) First Avenue -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="First Avenue" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">First Avenue & 7th St Entry</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://first-avenue.com/">Official site</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown · Address: 701 First Ave N</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> Mainroom ~1,550; 7th St Entry ~250 (historic, multiple performance spaces).  [oai_citation:8‡Wikipedia](https://en.wikipedia.org/wiki/First_Avenue_%28nightclub%29?utm_source=chatgpt.com) [oai_citation:9‡First Avenue](https://first-avenue.com/about/faq/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> main floor + balcony; separate small Entry room</li>
-        <li><strong>Layout:</strong> GA floor with balcony seating — long history as rock/dance venue</li>
-        <li><strong>Exits:</strong> main entrance(s) on First Ave + alley/rear exits; accessible routes to nearby ramps</li>
-        <li><strong>Security:</strong> established door staff, bag checks, occasional metal detectors for higher-profile events</li>
-        <li><strong>Patio:</strong> none</li>
-        <li><strong>Wheelchair access:</strong> info on accessible ramps & nearby parking ramps; contact venue for ADA seating.  [oai_citation:10‡First Avenue](https://first-avenue.com/about/faq/?utm_source=chatgpt.com)</li>
-        <li><strong>Parking / transit:</strong> surface lot behind venue; several ramps nearby (Mayo, A/B/C ramps)</li>
-        <li><strong>Sober options:</strong> water and NA options available at bars depending on event</li>
-        <li><strong>Tip:</strong> balcony rail gives excellent sightlines; arrive before doors for the best spots on GA nights.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/firstave">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 5) Underground Music Venue / Festival (Underground Music Festival) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Underground Music" data-neigh="Various">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Underground Music Venues & Festivals (umbrella)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://www.undergroundmusicvenue.com/">Example venue page</a>
-      </div>
-      <p class="hint mt-1">Notes: 'Underground Music Festival' varies by year and organizer — several events/venues use 'Underground' in the name. Confirm specific event pages for exact capacity/exit/security details.  [oai_citation:11‡UNDERGROUND MUSIC VENUE](https://www.undergroundmusicvenue.com/?utm_source=chatgpt.com)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity / Layout / Exits:</strong> event-specific — check the event organiser's page for the edition you’re attending.</li>
-        <li><strong>Security:</strong> festival staff + contracted security for multi-stage affairs</li>
-        <li><strong>Tip:</strong> always verify the festival's official page the week of the event for last-minute layout or entrance changes.</li>
-      </ul>
-    </article>
-
-    <!-- 6) Uptown Theatre -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Uptown Theatre" data-neigh="Uptown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Uptown Theatre (Live Nation)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://uptowntheatermn.com/">Official site</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Uptown · Address: 2900 Hennepin Ave</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> up to ~1,688 (configurable; theater seating/GA options).  [oai_citation:12‡Live Nation Special Events](https://specialevents.livenation.com/venues/uptown-theater?utm_source=chatgpt.com) [oai_citation:13‡Wikipedia](https://en.wikipedia.org/wiki/Uptown_Theater_%28Minneapolis%29?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> multi-level (former movie palace conversion; lobbies, multiple bars, balcony/lounge areas)</li>
-        <li><strong>Layout:</strong> configurable seating or standing; large lobby bars and elevated lounges</li>
-        <li><strong>Exits:</strong> multiple street entrances plus emergency exits; staff/ushering for big shows</li>
-        <li><strong>Security:</strong> professional venue security; metal detectors/pat downs possible for some headliners</li>
-        <li><strong>Wheelchair access:</strong> ADA accommodations advertised; contact box office for assistance.  [oai_citation:14‡Uptown Theater Minneapolis](https://www.uptowntheatermn.com/private-events?utm_source=chatgpt.com)</li>
-        <li><strong>Parking / transit:</strong> Uptown area parking ramps & street parking; expect heavy traffic on big nights</li>
-        <li><strong>Tip:</strong> check seating chart if you need elevator access — some balconies have specific access routes.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/uptowntheatre">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 7) The Green Room (Uptown) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Green Room" data-neigh="Uptown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Green Room (Uptown)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://greenroommn.com/">Official / booking</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Uptown · Address: 2923 Girard Ave S (Uptown area)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~350–450 (bookings & event pages).  [oai_citation:15‡IOTM](https://www.indieonthemove.com/venues/green-room-minneapolis-minnesota?utm_source=chatgpt.com) [oai_citation:16‡Mpls.St.Paul Magazine](https://mspmag.com/arts-and-culture/new-music-venue-green-room-opens-its-doors-in-uptown/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> single flexible floor (10,000 sq ft flexible event space by their hire listing)</li>
-        <li><strong>Layout:</strong> configurable for concerts, private events; large floor + lounge areas</li>
-        <li><strong>Exits:</strong> street entrances + emergency exits; event-specific egress posted for large hires</li>
-        <li><strong>Security:</strong> event security per booking</li>
-        <li><strong>Patio:</strong> possible small exterior spaces depending on room layout for private events</li>
-        <li><strong>Wheelchair access:</strong> venue offers accessible event facilities — contact booking.  [oai_citation:17‡Green Room](https://www.greenroommn.com/?utm_source=chatgpt.com)</li>
-        <li><strong>Tip:</strong> great for private takeovers and fundraising events — check their booking page for capacity for your specific layout.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/greenroom">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 8) Club Underground -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Club Underground" data-neigh="Northeast">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Club Underground (Spring Street Tavern basement)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://clubunderground.net/">Info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Northeast · Address: (beneath Spring Street Tavern; 355 Monroe St NE listed)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> small club — local bookings suggest room for ~100–250 depending on config.  [oai_citation:18‡Club Underground at Spring Street Tavern](https://clubunderground.net/?utm_source=chatgpt.com) [oai_citation:19‡MapQuest](https://www.mapquest.com/us/minnesota/club-underground-372026209?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> basement single-floor performance room</li>
-        <li><strong>Layout:</strong> small stage, bar, standing room; used for local bands and comedy</li>
-        <li><strong>Exits:</strong> main building stair + fire exit (venue-dependent); ask staff if mobility concerns</li>
-        <li><strong>Security:</strong> on-door staff for ticketed shows</li>
-        <li><strong>Wheelchair access:</strong> basement access may be stairs — likely limited; call ahead</li>
-        <li><strong>Tip:</strong> intimate shows; arrive early for small local-band nights.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/clubunderground">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 9) Palace Theatre (St Paul) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Palace Theatre" data-neigh="Saint Paul">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Palace Theatre (St. Paul)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://first-avenue.com/venue/palace-theatre/">Venue page</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Lowertown / Saint Paul · Address: 17 W 7th Pl</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~2,300–2,500 after renovation (historic theatre with balcony and orchestra).  [oai_citation:20‡Wikipedia](https://en.wikipedia.org/wiki/Palace_Theatre_%28St._Paul%29?utm_source=chatgpt.com) [oai_citation:21‡First Avenue](https://first-avenue.com/venue/palace-theatre/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> orchestra + balcony(s)</li>
-        <li><strong>Layout:</strong> seated theatre converted for live music (excellent sightlines)</li>
-        <li><strong>Exits:</strong> multiple street exits & emergency egress typical of theatres</li>
-        <li><strong>Security:</strong> professional theatre security and house staff</li>
-        <li><strong>Wheelchair access:</strong> ramps and accessible seating options — check box office.  [oai_citation:22‡Yelp](https://www.yelp.com/biz/palace-theatre-saint-paul-2?utm_source=chatgpt.com)</li>
-        <li><strong>Tip:</strong> great acoustics and safer sightlines for those who want seats rather than GA crowds.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/palacestpaul">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 10) Turf Club -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Turf Club" data-neigh="Saint Paul">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Turf Club (Saint Paul)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://first-avenue.com/venue/turf-club/">Venue info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: University Ave / St. Paul · Address: 1601 University Ave W</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~350 (main room) with smaller basement Clown Lounge.  [oai_citation:23‡First Avenue](https://first-avenue.com/venue/turf-club/?utm_source=chatgpt.com) [oai_citation:24‡Explore Minnesota](https://www.exploreminnesota.com/profile/turf-club/3963?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> main floor + basement Clown Lounge</li>
-        <li><strong>Layout:</strong> bar + stage on main floor, basement jazz/lounge area</li>
-        <li><strong>Exits:</strong> street front and rear exits; accessible entrance available though no elevator to certain areas — ask staff.  [oai_citation:25‡content.thespco.org](https://content.thespco.org/events/venues/turf-club/?utm_source=chatgpt.com)</li>
-        <li><strong>Wheelchair access:</strong> entrance accessible; basement may have stairs — call ahead</li>
-        <li><strong>Parking / transit:</strong> lot behind the club; easy access from I-94 & Snelling exit</li>
-        <li><strong>Tip:</strong> neighborhood club vibe — supports local acts and touring indie bands.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/turfclub">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 11) The Myth -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Myth" data-neigh="Maplewood">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Myth Live (Maplewood)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://mythlive.com/">Official</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Maplewood · Address: 3090 Southlawn Dr</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> variable — full standing capacity up to ~3,000; seated configurations ~800.  [oai_citation:26‡MYTH LIVE - ST. PAUL, MN](https://mythlive.com/private-parties/?utm_source=chatgpt.com) [oai_citation:27‡Cvent](https://www.cvent.com/venues/st-paul/entertainment-venue/myth-live/venue-1fcc4201-8d75-4401-bfd2-02f328068837?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> multi-floor with rooftop/private VIP areas noted on some listings</li>
-        <li><strong>Layout:</strong> large stage, multiple bars, VIP suites — built for large touring acts</li>
-        <li><strong>Exits:</strong> multiple exits & parking lot egress; venue staff manage egress for big shows</li>
-        <li><strong>Wheelchair access:</strong> ADA accommodations available — contact box office.  [oai_citation:28‡MYTH LIVE - ST. PAUL, MN](https://mythlive.com/about/?utm_source=chatgpt.com)</li>
-        <li><strong>Tip:</strong> big-room production value — good for mainstream touring shows; plan transit/parking for large crowds.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/mythlive">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 12) Bar Fly (Skyway complex) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Bar Fly" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Bar Fly (Skyway Theatre complex)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://barflyminneapolis.com/">Venue</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown · Address: 711 Hennepin Ave (Skyway Theatre)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~300 (Bar Fly); Studio B / Loft / Mainroom capacities listed separately on Skyway site.  [oai_citation:29‡Wikipedia](https://en.wikipedia.org/wiki/Skyway_Theatre?utm_source=chatgpt.com) [oai_citation:30‡Skyway Theatre](https://skywaytheatre.com/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> multi-venue complex with separate rooms (Bar Fly, Studio B, The Loft, Mainroom)</li>
-        <li><strong>Layout:</strong> club/lounge vibes with dancefloor + seating areas</li>
-        <li><strong>Wheelchair access:</strong> limited in some rooms — contact box office for specific room accommodations</li>
-        <li><strong>Tip:</strong> check which room your ticket is for — the Skyway complex runs simultaneous shows in different rooms.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/barfly">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 13) Studio B -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Studio B" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Studio B (Skyway Theatre)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://skywaytheatre.com/venue/studio-b/">Venue info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown · Capacity: ~450–800 depending on source (Skyway lists Studio B as intimate mid-size space).  [oai_citation:31‡Skyway Theatre](https://skywaytheatre.com/venue/studio-b/?utm_source=chatgpt.com) [oai_citation:32‡IOTM](https://www.indieonthemove.com/venues/skyway-theatre-minneapolis-minnesota?utm_source=chatgpt.com)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Levels:</strong> single-level intimate room within the complex</li>
-        <li><strong>Layout:</strong> lounge seating + bar + dance area</li>
-        <li><strong>Accessibility:</strong> check box office for ADA access when Studio B is used during multi-room nights</li>
-        <li><strong>Tip:</strong> Studio B works well for mid-size electronic sets and indie shows.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/studiob">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 14) The Front -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Front" data-neigh="Northeast">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Front</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://www.instagram.com/thefrontcafe/">IG / info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Northeast · Note: small neighborhood spot (addresses/listings show 15 4th St NE area).  [oai_citation:33‡Yelp](https://www.yelp.com/biz/the-front-minneapolis?utm_source=chatgpt.com) [oai_citation:34‡Instagram](https://www.instagram.com/thefrontcafe/?hl=en&utm_source=chatgpt.com)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> small venue / cafe style — limited verified public data</li>
-        <li><strong>Layout / Exits / Security:</strong> typical small cafe/club setup; call ahead for accessibility details</li>
-        <li><strong>Tip:</strong> neighborhood vibes; cover charges for special shows.</li>
-      </ul>
-    </article>
-
-    <!-- 15) The Vault -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Vault" data-neigh="Uptown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Vault</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://www.vault.mn/">Official</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Uptown area (Hennepin S corridor) · Address examples listed on local listing pages (2901 Hennepin Ave S / management pages).  [oai_citation:35‡mnVibe](https://www.mnvibe.com/venue/vault?utm_source=chatgpt.com) [oai_citation:36‡vault.mn](https://www.vault.mn/?utm_source=chatgpt.com)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> varies by configuration (wedding/event pages show up to ~200 seated/standing for private bookings).  [oai_citation:37‡breezit.com](https://breezit.com/the-vault?srsltid=AfmBOorwz7Umv-lxhVV-dLHdecOV1fr6n4x8n7ssRVyVy_j1X39Zh1_-&utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> single-level private event space</li>
-        <li><strong>Tip:</strong> often used as private event room/lounge; check for public show listings before heading out.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/thevault">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 16) Union Rooftop -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Union Rooftop" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Union Rooftop (Union)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://unionmpls.com/">Official</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown Hennepin corridor · Address: 731 Hennepin Ave</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> rooftop spaces list up to ~300–350 standing (private event configs vary).  [oai_citation:38‡OpenTable](https://www.opentable.com/union-rooftop?utm_source=chatgpt.com) [oai_citation:39‡unionmpls.com](https://unionmpls.com/minneapolis-union-rooftop-private-dining-inquiries?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> 2nd floor rooftop + covered seating; retractable glass roof for year-round use</li>
-        <li><strong>Patio/Outdoor:</strong> yes — rooftop terrace with bar</li>
-        <li><strong>Wheelchair access:</strong> some sections accessible — confirm for specific party bookings</li>
-        <li><strong>Tip:</strong> great for daytime events; rooftop can be chilly late night — dress accordingly.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/unionrooftop">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 17) The Exchange & The Alibi -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Exchange" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Exchange & The Alibi Lounge</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://lxmpls.com/the-exchange/">Venue / Alibi</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown / Lumber Exchange Building · Address: 10 S 5th St (Lumber Exchange)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> exchange spaces are configurable — typically used for private events and nightlife; Alibi is a cocktail lounge space in that building.  [oai_citation:40‡lxmpls.com](https://lxmpls.com/the-exchange/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> building-level private rooms / lounge levels</li>
-        <li><strong>Tip:</strong> The Exchange & Alibi are often marketed as event spaces; check the venue calendar for public shows.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/exchangealibi">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 18) Electro Abi's (Electro Abis) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Electro Abi's" data-neigh="Lyndale / Uptown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Electro Abi's (events at Abi's Restaurant / pop-up nights)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://electroabis.com/">Event page</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Lyndale Ave S area when hosted at Abi’s (location per event) · Example address for Abi's: 2828 Lyndale Ave S UNIT 1</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Notes:</strong> Electro Abi's runs club/takeover nights at local spots (check event listing for exact location, capacity, and layout). Recent shows are 9pm–2am with vendors and 420 friendly notes.  [oai_citation:41‡Electro Abi's](https://www.electroabis.com/?utm_source=chatgpt.com) [oai_citation:42‡Instagram](https://www.instagram.com/p/DNjEkPxh1M8/?utm_source=chatgpt.com)</li>
-        <li><strong>Tip:</strong> pop-up/event — always confirm venue & entry rules on the event page before attending.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/electroabis">Get event page</a></li>
-      </ul>
-    </article>
-
-    <!-- 19) The Loft (Skyway) -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Loft" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Loft (Skyway Theatre)</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://skywaytheatre.com/">Venue complex</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown · Capacity: ~500 (approx; Skyway lists Loft as ~500).  [oai_citation:43‡Wikipedia](https://en.wikipedia.org/wiki/Skyway_Theatre?utm_source=chatgpt.com)</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Layout:</strong> intimate to mid-size room used for dance/EDM nights and indie showcases</li>
-        <li><strong>Tip:</strong> Loft is where many EDM nights happen — expect a club vibe, tight sightlines, limited seating.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/theloftskyway">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 20) The Saloon -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="The Saloon" data-neigh="Downtown">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">The Saloon</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://saloonmn.com/">Official / info</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: Downtown · Address: 830 Hennepin Ave</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> bar with performance space; historic gay bar and performance venue in downtown Minneapolis.  [oai_citation:44‡THE SALOON MN](https://www.saloonmn.com/?utm_source=chatgpt.com) [oai_citation:45‡Wikipedia](https://en.wikipedia.org/wiki/The_Saloon_%28Minneapolis%29?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> single floor bar with performance area</li>
-        <li><strong>Accessibility:</strong> contact venue for ADA access (downtown building — ramps may be present)</li>
-        <li><strong>Tip:</strong> late-night drag & performance programming — check calendar for showtimes.</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/thesaloon">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- 21) Studio B, The Front etc already listed above; if you want them reordered, say so -->
-
-    <!-- 22) Palmer's Bar -->
-    <article class="venue-card p-4 rounded bg-gray-800" data-name="Palmers" data-neigh="West Bank">
-      <div class="flex items-start justify-between">
-        <h2 class="text-xl font-semibold">Palmer's Bar</h2>
-        <a class="text-rose-400 underline text-sm" target="_blank" href="https://palmers-bar.com/">Official</a>
-      </div>
-      <p class="hint mt-1">Neighborhood: West Bank · Address: 500 Cedar Ave S</p>
-      <ul class="mt-2 space-y-1">
-        <li><strong>Capacity:</strong> ~80 (dive bar / intimate live music venue).  [oai_citation:46‡IOTM](https://www.indieonthemove.com/venues/palmers-bar-minneapolis-minnesota?utm_source=chatgpt.com) [oai_citation:47‡Palmer's Bar](https://palmers-bar.com/?utm_source=chatgpt.com)</li>
-        <li><strong>Levels:</strong> single floor</li>
-        <li><strong>Tip:</strong> iconic dive bar — check hours and special farewell events (venue announced closure 9/14/2025 in local press; check official page for final details).  [oai_citation:48‡FOX 9 Minneapolis-St. Paul](https://www.fox9.com/news/palmers-bar-closing-minneapolis-2025?utm_source=chatgpt.com) [oai_citation:49‡KARE 11](https://www.kare11.com/article/entertainment/palmers-bar-to-close-after-serving-beers-for-120-years-on-west-bank/89-0c845523-e6cc-4fed-8be2-82e7540144cc?utm_source=chatgpt.com)</li>
-        <li><a class="text-blue-300 underline" target="_blank" href="https://goo.gl/maps/palmers">Get directions</a></li>
-      </ul>
-    </article>
-
-    <!-- final small footer -->
-    <footer class="mt-6 p-4 text-sm hint border-t border-gray-800">
-      <p>Data compiled from official venue pages, event pages and local listings. If a detail is missing (rare), it's because the venue doesn't publish that field publicly — message me which one to chase next and I’ll go hard. — Rune</p>
-    </footer>
+    <!-- --- Venue Listings Container --- -->
+    <section id="venueList" class="space-y-4"></section>
   </main>
 
-  <script>
-    // Simple search/filter script
-    const search = document.getElementById('search');
-    const neigh = document.getElementById('neigh');
-    const clearBtn = document.getElementById('clearBtn');
-    const cards = Array.from(document.querySelectorAll('.venue-card'));
+  <!-- --- Footer (PLURderapolis look) --- -->
+  <footer class="bg-gray-900/90 backdrop-blur py-6 mt-12 text-center text-gray-500 text-sm">
+    <p>PLURderapolis &copy; 2025. Built with ❤️, neon, and no fluff.</p>
+  </footer>
 
-    function filter() {
-      const q = search.value.toLowerCase().trim();
-      const n = neigh.value;
-      cards.forEach(c => {
-        const name = c.dataset.name.toLowerCase();
-        const neighborhood = c.dataset.neigh || '';
-        const text = c.innerText.toLowerCase();
-        const matchesQ = !q || name.includes(q) || text.includes(q) || neighborhood.toLowerCase().includes(q);
-        const matchesN = !n || neighborhood === n;
-        c.style.display = (matchesQ && matchesN) ? '' : 'none';
-      });
-      // mobile: scroll first visible into view slightly
-      const first = cards.find(c=> c.style.display !== 'none');
-      if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+  <!-- --- Data and Script --- -->
+  <script>
+    const venues = [
+      {
+        name:"First Avenue",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"~1,550 (Mainroom)",
+        levels:"Mainroom + balcony",
+        exits:"Multiple marked exits (1st Ave N & 7th St)",
+        patio:"No",
+        bathrooms:"Main + balcony",
+        parking:"Street & ramps; transit friendly",
+        door:"Magnetometers & bag check",
+        access:"Accessible sections; elevator to balcony",
+        sober:"Water available; NA varies",
+        tips:"Arrive early for ADA seating",
+        map:"https://maps.google.com/?q=First%20Avenue%20Minneapolis",
+        group:"First Avenue"
+      },
+      {
+        name:"Fine Line",
+        neighborhood:"Warehouse District / North Loop",
+        capacity:"650",
+        levels:"Floor + balcony rail",
+        exits:"Front & side exits",
+        patio:"No",
+        bathrooms:"Main level",
+        parking:"Street & ramps",
+        door:"Bag check/ID",
+        access:"Accessible; ADA viewing",
+        sober:"Water available",
+        tips:"Balcony fills fast",
+        map:"https://maps.google.com/?q=Fine%20Line%20Minneapolis",
+        group:"First Avenue"
+      },
+      {
+        name:"The Fillmore Minneapolis",
+        neighborhood:"North Loop / Target Field",
+        capacity:"1,850 (standing)",
+        levels:"Floor + balcony",
+        exits:"Main & side exits",
+        patio:"No (Trax restaurant adjacent)",
+        bathrooms:"Multiple levels",
+        parking:"Ramps; light rail nearby",
+        door:"Security screening",
+        access:"Accessible seating & elevator",
+        sober:"Water; NA at bar",
+        tips:"ADA balcony has great sightlines",
+        map:"https://maps.google.com/?q=The%20Fillmore%20Minneapolis"
+      },
+      {
+        name:"Uptown Theatre",
+        neighborhood:"Uptown (Hennepin/Lake)",
+        capacity:"~1,700 (reported)",
+        levels:"Floor + balcony",
+        exits:"Front lobby & marked doors",
+        patio:"No",
+        bathrooms:"Renovated facilities",
+        parking:"Street & ramps",
+        door:"Bag check/ID",
+        access:"Elevator + ADA seating",
+        sober:"Water; NA varies",
+        tips:"Check ADA sections via ticketing",
+        map:"https://maps.google.com/?q=Uptown%20Theater%20Minneapolis"
+      },
+      {
+        name:"Palace Theatre",
+        neighborhood:"Downtown St. Paul",
+        capacity:"~2,500 (seated + GA)",
+        levels:"Floor + balcony",
+        exits:"Multiple exits to W. 7th Pl",
+        patio:"No",
+        bathrooms:"Main & mezzanine",
+        parking:"Ramps & street",
+        door:"Security screening",
+        access:"Elevator; accessible seating",
+        sober:"Water; NA at bar",
+        tips:"Balcony gives great views",
+        map:"https://maps.google.com/?q=Palace%20Theatre%20St%20Paul"
+      },
+      {
+        name:"Turf Club",
+        neighborhood:"Midway / Univ. Ave (St. Paul)",
+        capacity:"~350",
+        levels:"Main + basement Clown Lounge",
+        exits:"Front & side",
+        patio:"Occasional sidewalk",
+        bathrooms:"Main level",
+        parking:"Street + Green Line",
+        door:"ID check",
+        access:"Call ahead for ADA details",
+        sober:"Water available",
+        tips:"Low stage; get early",
+        map:"https://maps.google.com/?q=Turf%20Club%20St%20Paul"
+      },
+      {
+        name:"Skyway Theatre (Main)",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"Up to ~2,800 (configurable)",
+        levels:"Orchestra + balcony",
+        exits:"Multiple exits",
+        patio:"No",
+        bathrooms:"Multiple",
+        parking:"Street & transit",
+        door:"Security & ID",
+        access:"Accessible areas in complex",
+        sober:"Water; NA varies",
+        tips:"Check which room event uses",
+        map:"https://maps.google.com/?q=Skyway%20Theatre%20Minneapolis",
+        group:"Skyway Complex"
+      },
+      {
+        name:"The Loft (Skyway)",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"~800 (est.)",
+        levels:"Single room",
+        exits:"Posted exits",
+        patio:"No",
+        bathrooms:"Shared facility",
+        parking:"Street & ramps",
+        door:"Security screening",
+        access:"Elevator in complex",
+        sober:"Water",
+        tips:"Bring ear protection",
+        map:"https://maps.google.com/?q=Skyway%20Theatre%20The%20Loft%20Minneapolis",
+        group:"Skyway Complex"
+      },
+      {
+        name:"Studio B (Skyway)",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"200–500",
+        levels:"Single room + lounges",
+        exits:"Posted exits",
+        patio:"No",
+        bathrooms:"Shared facility",
+        parking:"Street & ramps",
+        door:"Security",
+        access:"Elevator in complex",
+        sober:"Water",
+        tips:"Most intimate room",
+        map:"https://maps.google.com/?q=Studio%20B%20Skyway%20Theatre%20Minneapolis",
+        group:"Skyway Complex"
+      },
+      {
+        name:"Bar Fly (Skyway)",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"Not publicly listed",
+        levels:"Historic multi-room",
+        exits:"Posted exits",
+        patio:"No",
+        bathrooms:"Shared",
+        parking:"Street & ramps",
+        door:"Security",
+        access:"Call venue; complex elevators exist",
+        sober:"Water",
+        tips:"Check event status",
+        map:"https://maps.google.com/?q=Bar%20Fly%20Minneapolis",
+        group:"Skyway Complex"
+      },
+      {
+        name:"Ground Zero",
+        neighborhood:"Old Town / St. Anthony Main (NE Mpls)",
+        capacity:"Not publicly listed",
+        levels:"Main dance + adjacent bar (The Front)",
+        exits:"Front & posted",
+        patio:"No",
+        bathrooms:"Main level",
+        parking:"Street & ramps",
+        door:"ID check; themed crowd",
+        access:"Call ahead for ADA",
+        sober:"Water",
+        tips:"Heavy strobe & goth nights",
+        map:"https://maps.google.com/?q=Ground%20Zero%20Minneapolis"
+      },
+      {
+        name:"The Front",
+        neighborhood:"Old Town / St. Anthony Main (NE Mpls)",
+        capacity:"Not publicly listed",
+        levels:"Single room",
+        exits:"Front & posted",
+        patio:"No",
+        bathrooms:"Main level",
+        parking:"Street & ramps",
+        door:"ID check",
+        access:"Call ahead for ADA",
+        sober:"Water",
+        tips:"Adjacent to Ground Zero",
+        map:"https://maps.google.com/?q=The%20Front%2015%204th%20St%20SE%20Minneapolis"
+      },
+      {
+        name:"The Green Room",
+        neighborhood:"Uptown",
+        capacity:"Up to ~500",
+        levels:"Multiple zones in ~10k sq ft",
+        exits:"Posted exits",
+        patio:"Outdoor smoking only",
+        bathrooms:"Main level",
+        parking:"Street & ramps",
+        door:"ID check",
+        access:"Accessible; wheelchair entry",
+        sober:"Water; NA at bar",
+        tips:"Food by Parlour; check events",
+        map:"https://maps.google.com/?q=Green%20Room%202923%20Girard%20Ave%20S%20Minneapolis"
+      },
+      {
+        name:"The Vault (Uptown)",
+        neighborhood:"Uptown",
+        capacity:"Not publicly listed",
+        levels:"Single-room nightclub",
+        exits:"Posted",
+        patio:"No",
+        bathrooms:"Main level",
+        parking:"Street",
+        door:"ID check",
+        access:"Call venue",
+        sober:"Water",
+        tips:"Weekend dance club",
+        map:"https://maps.google.com/?q=The%20Vault%20711%20W%20Lake%20St%20Minneapolis"
+      },
+      {
+        name:"The Saloon",
+        neighborhood:"Downtown Minneapolis (Hennepin)",
+        capacity:"Not publicly listed",
+        levels:"Multi-room gay dance bar",
+        exits:"Posted exits",
+        patio:"No",
+        bathrooms:"Multiple zones",
+        parking:"Street & ramps",
+        door:"ID check; 18+ after 9 pm",
+        access:"Reports say accessible; confirm at venue",
+        sober:"Water; NA options",
+        tips:"Crowd-packed on weekends",
+        map:"https://maps.google.com/?q=The%20Saloon%20830%20Hennepin%20Ave"
+      },
+      {
+        name:"Union Rooftop",
+        neighborhood:"Downtown Minneapolis (Hennepin)",
+        capacity:"Not publicly listed",
+        levels:"Elevator to enclosed rooftop bar",
+        exits:"Elevator & stairs to street",
+        patio:"Retractable-roof rooftop",
+        bathrooms:"Dining level",
+        parking:"Street & ramps; valet sometimes",
+        door:"Host check",
+        access:"Elevator + ADA seating/restroom",
+        sober:"NA drinks likely; ask server",
+        tips:"Weather-safe rooftop; weekends book quick",
+        map:"https://maps.google.com/?q=UNION%20731%20Hennepin%20Ave%20Minneapolis"
+      },
+      {
+        name:"The Exchange & Alibi Lounge",
+        neighborhood:"Downtown Minneapolis (Lumber Exchange)",
+        capacity:"Not publicly listed",
+        levels:"Basement club + lounge",
+        exits:"Posted via building corridors",
+        patio:"No",
+        bathrooms:"In-venue & building",
+        parking:"Nearby garages",
+        door:"Security; dress codes vary",
+        access:"Elevator in building",
+        sober:"Water",
+        tips:"Check public vs private event nights",
+        map:"https://maps.google.com/?q=10%20S%205th%20St%20Minneapolis%20MN%2055402"
+      },
+      {
+        name:"Club Underground",
+        neighborhood:"Northeast Minneapolis",
+        capacity:"~300",
+        levels:"Basement under Spring Street Tavern",
+        exits:"Stair egress",
+        patio:"Tavern street seating only",
+        bathrooms:"Main tavern level",
+        parking:"Street; variable lot use",
+        door:"ID at tavern entrance",
+        access:"Basement stairs; call ahead",
+        sober:"Water",
+        tips:"Alt/comedy nights",
+        map:"https://maps.google.com/?q=Club%20Underground%20355%20Monroe%20St%20NE%20Minneapolis"
+      },
+      {
+        name:"Myth (Maplewood)",
+        neighborhood:"Maplewood (suburban)",
+        capacity:"~3,000 (historic)",
+        levels:"Main floor + balcony",
+        exits:"Posted (historic)",
+        patio:"No",
+        bathrooms:"Multiple",
+        parking:"Surface lot",
+        door:"Security screening",
+        access:"Unknown; closed",
+        sober:"N/A",
+        tips:"Closed—don’t route here",
+        map:"https://maps.google.com/?q=Myth%20Live%20Maplewood",
+        status:"closed"
+      },
+      {
+        name:"Underground Music Venue (Festival)",
+        neighborhood:"Dinkytown / Near U of M",
+        capacity:"Not publicly listed",
+        levels:"Black-box venue",
+        exits:"Posted exits",
+        patio:"No",
+        bathrooms:"Venue restrooms",
+        parking:"Street & campus ramps",
+        door:"Ticket/ID",
+        access:"Call ahead",
+        sober:"Water",
+        tips:"‘Festival’ is event series, not fixed venue",
+        map:"https://maps.google.com/?q=Underground%20Music%20Venue%20Minneapolis"
+      },
+      {
+        name:"Electro Abi’s @ Abi’s Restaurant",
+        neighborhood:"Lyn-Lake / Uptown",
+        capacity:"Not publicly listed",
+        levels:"Dining room repurposed",
+        exits:"Front exits",
+        patio:"Not primary",
+        bathrooms:"Restaurant restrooms",
+        parking:"Street & small lot",
+        door:"ID/Ticket at event",
+        access:"Restaurant-level access",
+        sober:"Water; NA drinks",
+        tips:"Promoter shows; check age rules",
+        map:"https://maps.google.com/?q=Abi’s%20Restaurant%202828%20Lyndale%20Ave%20S%20Minneapolis"
+      },
+      {
+        name:"Palmer’s Bar (West Bank)",
+        neighborhood:"Cedar-Riverside (West Bank)",
+        capacity:"Not publicly listed",
+        levels:"Bar + outdoor patio",
+        exits:"Front + patio",
+        patio:"Yes",
+        bathrooms:"Bar restrooms",
+        parking:"Street & nearby lots",
+        door:"ID check",
+        access:"Older footprint; call venue",
+        sober:"Water; NA options",
+        tips:"Closing announced for Sept 14, 2025—verify events",
+        map:"https://maps.google.com/?q=Palmers%20Bar%20301%20Cedar%20Ave%20S%20Minneapolis",
+        status:"closing-announced"
+      }
+    ];
+
+    // Populate Neighborhood Filter
+    const hoodEl = document.getElementById('neighborhood');
+    Array.from(new Set(venues.map(v => v.neighborhood).filter(Boolean)))
+         .sort().forEach(hood => {
+      const opt = document.createElement('option');
+      opt.value = hood;
+      opt.textContent = hood;
+      hoodEl.appendChild(opt);
+    });
+
+    const listEl = document.getElementById('venueList');
+    const qEl = document.getElementById('q');
+
+    function badgeIcons(v) {
+      return [
+        v.access && v.access.toLowerCase().includes('accessible') ? '♿' : '',
+        v.sober && (v.sober.toLowerCase().includes('water') || v.sober.toLowerCase().includes('na'))
+          ? '💧' : ''
+      ].filter(Boolean).join(' ');
     }
 
-    search.addEventListener('input', filter);
-    neigh.addEventListener('change', filter);
-    clearBtn.addEventListener('click', () => {
-      search.value = ''; neigh.value = '';
-      filter();
-    });
+    function renderVenues() {
+      const term = qEl.value.trim().toLowerCase();
+      const sel = hoodEl.value;
+      listEl.innerHTML = venues.filter(v => {
+        const hay = JSON.stringify(v).toLowerCase();
+        return (!term || hay.includes(term)) && (!sel || v.neighborhood === sel);
+      }).map(v => {
+        const status = v.status === 'closed'
+          ? '<span class="badge badge-status ml-2">CLOSED</span>'
+          : v.status === 'closing-announced'
+            ? '<span class="badge badge-status ml-2">CLOSING ANNOUNCED</span>' : '';
+        return `
+          <details class="bg-gray-800 rounded-lg p-4">
+            <summary class="flex justify-between items-center cursor-pointer select-none">
+              <div class="flex items-center gap-2">
+                <span class="text-lg font-medium">${badgeIcons(v)} ${v.name}</span>
+                ${status}
+              </div>
+              <span class="chevron text-gray-400">▶</span>
+            </summary>
+            <div class="divider my-3"></div>
+            <div class="grid sm:grid-cols-2 gap-2 text-sm text-gray-200">
+              <div><span class="text-gray-400">Capacity:</span> ${v.capacity || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Levels:</span> ${v.levels || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Exits:</span> ${v.exits || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Patio:</span> ${v.patio || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Bathrooms:</span> ${v.bathrooms || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Parking/Transit:</span> ${v.parking || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Door/Security:</span> ${v.door || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Wheelchair Access:</span> ${v.access || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div><span class="text-gray-400">Sober Options:</span> ${v.sober || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <div class="sm:col-span-2"><span class="text-gray-400">Tips:</span> ${v.tips || '<em class="text-gray-400">not publicly listed</em>'}</div>
+            </div>
+            <div class="mt-3 text-right">
+              <a class="link" href="${v.map}" target="_blank" rel="noopener">Open map</a>
+            </div>
+          </details>
+        `;
+      }).join('');
+    }
 
-    // quick fallback: highlight cards with missing critical info
-    cards.forEach(c=>{
-      if (c.innerText.toLowerCase().includes('limited verified public data') || c.innerText.toLowerCase().includes('check box office')) {
-        c.classList.add('ring-1','ring-rose-600/30');
-      }
-    });
+    qEl.addEventListener('input', renderVenues);
+    hoodEl.addEventListener('change', renderVenues);
+    renderVenues();
 
-    // Accessibility: allow enter to trigger search smoothing
-    search.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
+    // Keyboard support (Enter/Space toggles)
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'SUMMARY') {
         e.preventDefault();
-        filter();
+        e.target.click();
       }
     });
   </script>
