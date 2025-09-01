@@ -1,217 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLURderapolis</title>
-  <style>
-    /* Global */
-    body { margin: 0; font-family: Arial, sans-serif; background: #121212; color: #fff; overflow-x: hidden; }
-    a { text-decoration: none; color: #ffb380; font-weight: bold; }
-    h1, h2, h3 { margin: 0.5rem 0; }
-    button { cursor: pointer; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLURderapolis</title>
+<style>
+:root {
+  --teal: #00CED1;
+  --peach: #FFCBA4;
+  --bg: #111;
+  --text: #fff;
+  --highlight: #FFD700;
+  --transition: 0.3s ease-in-out;
+}
+body { margin:0; font-family:Arial,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
+header { position:fixed; width:100%; top:0; left:0; background:rgba(17,17,17,0.95); display:flex; align-items:center; justify-content:space-between; padding:12px 20px; z-index:1000; }
+nav { display:flex; gap:16px; }
+nav a { color:var(--text); text-decoration:none; font-weight:600; }
+#lang { padding:6px; border-radius:6px; border:none; font-weight:600; background:var(--teal); color:#111; cursor:pointer; }
 
-    /* Header */
-    #site-header { position: relative; background: #121212; text-align: center; padding: 1rem; overflow: hidden; }
-    .header-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; z-index: 2; position: relative; }
-    .tagline { font-size: 1.2rem; color: #ffb380; }
-    #hamburger { font-size: 2rem; background: none; border: none; color: #ffb380; z-index: 2; position: relative; }
-    .skyline-parallax { position: absolute; top: 0; left: 0; width: 200%; height: 150px; background: url('skyline.png') repeat-x; background-size: cover; transform: translateX(0); z-index: 1; }
+.main { margin-top:72px; padding:20px; display:grid; grid-template-columns:1fr; gap:20px; }
 
-    /* Slide nav */
-    #slide-nav { position: fixed; top: 0; left: 0; width: 250px; height: 100%; background: #1a1a1a; color: #fff; transform: translateX(-100%); transition: transform 0.3s ease; padding-top: 3rem; z-index: 1000; }
-    #slide-nav ul { list-style: none; padding: 0; margin: 0; }
-    #slide-nav ul li { margin: 1rem 0; }
-    #slide-nav ul li a { color: #ffb380; font-weight: bold; }
-    #slide-nav.show { transform: translateX(0); }
+.card { background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; box-shadow:0 8px 22px rgba(0,206,209,0.2); transition:var(--transition); }
+.card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,206,209,0.4); }
 
-    /* Top controls */
-    .top-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
-    #site-search { padding: 0.5rem; width: 200px; border-radius: 4px; border: 1px solid #ffb380; background: #121212; color: #fff; }
-    #language-selector { padding: 0.5rem; border-radius: 4px; border: 1px solid #ffb380; background: #121212; color: #fff; }
+#peachBtn { 
+  position:fixed; bottom:20px; right:20px; width:60px; height:60px; border-radius:50%; background:var(--peach); color:#111; border:none; cursor:pointer; font-size:28px; z-index:999; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px var(--peach); animation:glow 2s infinite alternate; 
+  touch-action: none;
+}
 
-    /* CTA Buttons */
-    .cta-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
-    .cta { padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: bold; color: #fff; transition: all 0.3s ease; }
-    .primary { background: linear-gradient(45deg, #ff4a4a, #ffb380); }
-    .peach { background: linear-gradient(45deg, #ffb380, #ff7f50); }
-    .cta:hover { transform: scale(1.05); box-shadow: 0 0 15px #ffb380; }
+@keyframes glow {
+  from { box-shadow:0 0 20px var(--peach); }
+  to { box-shadow:0 0 30px var(--highlight); }
+}
 
-    /* Quick access grid */
-    #quick-access { padding: 2rem; background: #1a1a1a; }
-    .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; max-width: 1200px; margin: 0 auto; }
-    .grid-item { background: #121212; padding: 1rem; border-radius: 8px; text-align: center; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); }
-    .grid-item:hover { background: #2a2a2a; }
-    .grid-item.show { opacity: 1; transform: translateY(0); }
+#scrollTopBtn { 
+  position:fixed; right:14px; bottom:100px; width:48px; height:48px; border-radius:50%; background:var(--teal); color:#111; display:none; align-items:center; justify-content:center; z-index:999; border:none; font-size:22px; cursor:pointer; box-shadow:0 8px 22px rgba(0,206,209,0.3); 
+}
 
-    /* Social & hydration */
-    #social-hydration { display: flex; flex-wrap: wrap; justify-content: space-around; padding: 2rem; background: #121212; }
-    #social-hydration div { margin: 1rem; text-align: center; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
-    #social-hydration div.show { opacity: 1; transform: translateY(0); }
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000; }
+.modal-content { background:var(--bg); padding:24px; border-radius:12px; max-width:500px; width:90%; text-align:center; position:relative; color:var(--text); }
+.closeBtn { position:absolute; top:12px; right:12px; background:none; border:none; color:var(--highlight); font-size:28px; cursor:pointer; }
 
-    /* Blurb section */
-    #blurb-section { display: flex; flex-wrap: wrap; justify-content: space-around; padding: 2rem; background: #1a1a1a; }
-    .blurb { max-width: 300px; margin: 1rem; padding: 1rem; background: #121212; border-radius: 8px; text-align: center; transition: all 0.3s ease; opacity: 0; transform: translateY(20px); }
-    .blurb.show { opacity: 1; transform: translateY(0); }
-    .learn-more { color: #ffb380; text-decoration: none; font-weight: bold; }
+input[type="text"] { width:100%; padding:12px; border-radius:8px; border:none; margin-top:10px; font-size:16px; }
+button.learn-more { margin-top:12px; padding:10px 16px; border:none; border-radius:8px; background:var(--teal); color:#111; cursor:pointer; font-weight:600; }
 
-    /* Sections */
-    section { padding: 2rem; max-width: 1200px; margin: 0 auto; }
-    #how-to-use, #panic, #polydrug, #consent, #local, #extras { background: #1a1a1a; border-radius: 8px; margin-bottom: 2rem; }
-
-    /* Footer */
-    #site-footer { text-align: center; padding: 1rem; background: #121212; color: #fff; }
-    #site-footer a { color: #ffb380; }
-
-    /* Panic & Scroll buttons */
-    #peach-panic, #scroll-top { position: fixed; right: 20px; border: none; border-radius: 50%; font-size: 2.5rem; cursor: pointer; z-index: 1000; transition: all 0.3s ease; }
-    #peach-panic { bottom: 20px; background: #ffb380; }
-    #peach-panic:hover { transform: scale(1.2) rotate(10deg); box-shadow: 0 0 20px #ffb380; }
-    #scroll-top { bottom: 80px; background: #ff7f50; display: none; }
-
-    /* Responsive tweaks */
-    @media (max-width: 768px) {
-      .header-container { flex-direction: column; gap: 0.5rem; }
-      #blurb-section { flex-direction: column; align-items: center; }
-      #social-hydration { flex-direction: column; align-items: center; }
-    }
-  </style>
+@media(min-width:768px){ .main { grid-template-columns:repeat(2,1fr); } }
+@media(min-width:1200px){ .main { grid-template-columns:repeat(3,1fr); } }
+</style>
 </head>
 <body>
 
-<header id="site-header">
-  <div class="header-container">
-    <h1>PLURderapolis</h1>
-    <p class="tagline">Your partners in shine!</p>
-    <button id="hamburger" aria-label="Open Menu">&#9776;</button>
-  </div>
-  <div class="skyline-parallax"></div>
-</header>
-
-<nav id="slide-nav" class="hidden">
-  <ul>
-    <li><a href="#panic">Safety & Crisis</a></li>
-    <li><a href="#polydrug">Drug Info</a></li>
-    <li><a href="#consent">Consent & Accountability</a></li>
-    <li><a href="#local">Local Scene</a></li>
-    <li><a href="#extras">Extras</a></li>
-  </ul>
-</nav>
-
-<div class="top-controls">
-  <input type="text" id="site-search" placeholder="Search...">
-  <select id="language-selector">
+<header>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#resources">Resources</a>
+    <a href="#safety">Safety</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <select id="lang">
     <option value="en">English</option>
     <option value="es">Español</option>
-    <option value="hm">Hmong</option>
-    <option value="ar">العربية</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="ar">عربي</option>
+    <option value="zh">中文</option>
   </select>
+</header>
+
+<div class="main">
+  <div class="card">
+    <h2>Harm Reduction Tips</h2>
+    <p>Learn to stay safe at raves and events. Naloxone, hydration, and knowing your sources are key.</p>
+    <button class="learn-more" onclick="openModal('modal1')">Learn More</button>
+  </div>
+  <div class="card">
+    <h2>Bad Trip & Support</h2>
+    <p>Know what to do if someone is having a bad reaction. Stay calm, stay with them, get help if needed.</p>
+    <button class="learn-more" onclick="openModal('modal2')">Learn More</button>
+  </div>
+  <div class="card">
+    <h2>Event Planning</h2>
+    <p>Weather, camping, and packing tips to enjoy your festival safely and comfortably.</p>
+    <button class="learn-more" onclick="openModal('modal3')">Learn More</button>
+  </div>
 </div>
 
-<div class="cta-buttons">
-  <a href="#polydrug" class="cta primary">Polydrug Checker</a>
-  <a href="#how-to-use" class="cta peach">How to Use This Site</a>
+<!-- Peach Panic Button -->
+<button id="peachBtn" aria-label="Peach Panic Button">🍑</button>
+
+<!-- Scroll to top button -->
+<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+
+<!-- Modals -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <button class="closeBtn" onclick="closeModal('modal1')">&times;</button>
+    <h2>Harm Reduction Details</h2>
+    <p>Check our full guide on polydrug combos, naloxone usage, hydration, and safe sourcing.</p>
+  </div>
+</div>
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <button class="closeBtn" onclick="closeModal('modal2')">&times;</button>
+    <h2>Bad Trip & Safety</h2>
+    <p>Learn how to respond calmly, create a safe space, and when to seek professional help.</p>
+  </div>
+</div>
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <button class="closeBtn" onclick="closeModal('modal3')">&times;</button>
+    <h2>Event Tips</h2>
+    <p>Packing, weather prep, and femme-friendly advice to make your festival experience smoother.</p>
+  </div>
 </div>
 
-<section id="quick-access">
-  <div class="grid-container">
-    <div class="grid-item"><a href="#panic">Safety & Crisis</a></div>
-    <div class="grid-item"><a href="#polydrug">Polydrug Info</a></div>
-    <div class="grid-item"><a href="#consent">Consent & Accountability</a></div>
-    <div class="grid-item"><a href="#local">Local Scene</a></div>
-    <div class="grid-item"><a href="#extras">Resources & Tips</a></div>
-  </div>
-</section>
-
-<section id="social-hydration">
-  <div class="social">
-    <h2>Follow us</h2>
-    <a href="https://www.instagram.com/plurderapolis" target="_blank">@plurderapolis</a>
-  </div>
-  <div class="hydration">
-    <h2>Stay Hydrated</h2>
-    <p>Water is your best friend. Refill, sip, repeat.</p>
-  </div>
-</section>
-
-<section id="blurb-section">
-  <div class="blurb">
-    <h3>Polydrug Checker</h3>
-    <p>Understand drug combinations and risks with our easy emoji matrix.</p>
-    <a href="#polydrug" class="learn-more">Learn More</a>
-  </div>
-  <div class="blurb">
-    <h3>Consent & Accountability</h3>
-    <p>Guides on setting boundaries, rejecting violence, and safe partying.</p>
-    <a href="#consent" class="learn-more">Learn More</a>
-  </div>
-  <div class="blurb">
-    <h3>Emergency & Panic</h3>
-    <p>Quick access to our Peach Panic button and crisis response info.</p>
-    <a href="#panic" class="learn-more">Learn More</a>
-  </div>
-</section>
-
-<!-- Content Sections -->
-<section id="how-to-use">
-  <h2>How to Use This Site</h2>
-  <p>Everything you need to navigate the scene safely: polydrug info, consent guides, and emergency contacts.</p>
-</section>
-<section id="panic"><h2>Safety & Crisis</h2><p>Access emergency contacts, Peach Panic guide, and festival safety tips.</p></section>
-<section id="polydrug"><h2>Polydrug Info</h2><p>Check drug interactions and learn harm reduction strategies with our emoji matrix.</p></section>
-<section id="consent"><h2>Consent & Accountability</h2><p>Guides on boundaries, rejecting violence, and respecting partners.</p></section>
-<section id="local"><h2>Local Scene</h2><p>Find events, meetups, and community resources around Minnesota nightlife.</p></section>
-<section id="extras"><h2>Resources & Tips</h2><p>Additional harm reduction, wellness, and community tools.</p></section>
-
-<footer id="site-footer">
-  <p>&copy; 2025 PLURderapolis | <a href="#contact">Contact</a> | <a href="#privacy">Privacy</a></p>
-</footer>
-
-<!-- Buttons -->
-<button id="peach-panic" title="Peach Panic">&#x1F351;</button>
-<button id="scroll-top">&#8679;</button>
+<!-- Search input -->
+<div style="padding:20px;">
+  <input type="text" id="searchInput" placeholder="Search site — try 'naloxone', 'bad trip', 'venues'...">
+</div>
 
 <script>
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburger');
-  const slideNav = document.getElementById('slide-nav');
-  hamburger.addEventListener('click', () => slideNav.classList.toggle('show'));
+/* ---------------------------
+   Scroll to top behavior
+--------------------------- */
+const scrollBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 160) scrollBtn.style.display = 'flex';
+  else scrollBtn.style.display = 'none';
+});
+scrollBtn.addEventListener('click', ()=>{ window.scrollTo({top:0,behavior:'smooth'}); });
 
-  // Peach Panic scroll
-  const panicBtn = document.getElementById('peach-panic');
-  panicBtn.addEventListener('click', () => {
-    document.getElementById('how-to-use').scrollIntoView({behavior: 'smooth'});
+/* ---------------------------
+   Multi-language support
+--------------------------- */
+const langSelect = document.getElementById('lang');
+const searchInput = document.getElementById('searchInput');
+const placeholders = {
+  en: "Search site — try 'naloxone', 'bad trip', 'venues'...",
+  es: "Buscar sitio — prueba 'naloxona', 'mal viaje', 'lugares'...",
+  fr: "Rechercher sur le site — essayez 'naloxone', 'mauvais trip', 'lieux'...",
+  de: "Seite durchsuchen — versuche 'Naloxon', 'schlechter Trip', 'Veranstaltungen'...",
+  ar: "ابحث في الموقع — جرب 'نالوكسون'، 'تجربة سيئة'، 'أماكن'...",
+  zh: "搜索网站 — 试试 '纳洛酮'，'坏旅程'，'场地'..."
+};
+langSelect.addEventListener('change', ()=>{
+  const lang = langSelect.value;
+  searchInput.placeholder = placeholders[lang] || placeholders.en;
+});
+
+/* ---------------------------
+   Peach Button Modal
+--------------------------- */
+const peachBtn = document.getElementById('peachBtn');
+peachBtn.addEventListener('click', ()=>{ openModal('modal1'); });
+
+/* ---------------------------
+   Modal Functions
+--------------------------- */
+function openModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+window.onclick = function(event){
+  document.querySelectorAll('.modal').forEach(mod=>{
+    if(event.target === mod) mod.style.display='none';
   });
+}
 
-  // Scroll to top
-  const scrollTopBtn = document.getElementById('scroll-top');
-  window.addEventListener('scroll', () => {
-    scrollTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-  });
-  scrollTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+/* ---------------------------
+   Draggable Peach Button
+--------------------------- */
+let isDragging=false, offsetX, offsetY;
 
-  // Language selector placeholder
-  const langSelector = document.getElementById('language-selector');
-  langSelector.addEventListener('change', (e) => {
-    alert(`Language switched to ${e.target.value}. Implement content translation here.`);
-  });
+peachBtn.addEventListener('mousedown', startDrag);
+peachBtn.addEventListener('touchstart', startDrag);
 
-  // Parallax effect
-  const skyline = document.querySelector('.skyline-parallax');
-  window.addEventListener('scroll', () => {
-    skyline.style.transform = `translateX(${window.scrollY * -0.5}px)`;
-  });
+function startDrag(e){
+  isDragging=true;
+  const rect = peachBtn.getBoundingClientRect();
+  offsetX = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
+  offsetY = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', stopDrag);
+  document.addEventListener('touchmove', drag);
+  document.addEventListener('touchend', stopDrag);
+}
 
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, { threshold: 0.2 });
+function drag(e){
+  if(!isDragging) return;
+  e.preventDefault();
+  const x = (e.touches? e.touches[0].clientX : e.clientX) - offsetX;
+  const y = (e.touches? e.touches[0].clientY : e.clientY) - offsetY;
+  peachBtn.style.left = `${Math.max(0, Math.min(window.innerWidth - 60, x))}px`;
+  peachBtn.style.top = `${Math.max(0, Math.min(window.innerHeight - 60, y))}px`;
+  peachBtn.style.bottom = 'auto';
+  peachBtn.style.right = 'auto';
+}
 
-  document.querySelectorAll('.grid-item, .blurb, #social-hydration div').forEach(el => observer.observe(el));
+function stopDrag(){
+  isDragging=false;
+  document.removeEventListener('mousemove', drag);
+  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener('touchmove', drag);
+  document.removeEventListener('touchend', stopDrag);
+}
 </script>
+
 </body>
 </html>
