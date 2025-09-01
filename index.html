@@ -1,209 +1,565 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLURderapolis</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PLURderapolis — mobile ready prototype</title>
 <style>
-:root {
-  --teal: #00CED1;
-  --peach: #FFCBA4;
-  --bg: #111;
-  --text: #fff;
-  --highlight: #FFD700;
-  --transition: 0.3s ease-in-out;
-}
-body { margin:0; font-family:Arial,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; }
-header { position:fixed; width:100%; top:0; left:0; background:rgba(17,17,17,0.95); display:flex; align-items:center; justify-content:space-between; padding:12px 20px; z-index:1000; }
-nav { display:flex; gap:16px; }
-nav a { color:var(--text); text-decoration:none; font-weight:600; }
-#lang { padding:6px; border-radius:6px; border:none; font-weight:600; background:var(--teal); color:#111; cursor:pointer; }
-
-.main { margin-top:72px; padding:20px; display:grid; grid-template-columns:1fr; gap:20px; }
-
-.card { background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; box-shadow:0 8px 22px rgba(0,206,209,0.2); transition:var(--transition); }
-.card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,206,209,0.4); }
-
-#peachBtn { 
-  position:fixed; bottom:20px; right:20px; width:60px; height:60px; border-radius:50%; background:var(--peach); color:#111; border:none; cursor:pointer; font-size:28px; z-index:999; display:flex; align-items:center; justify-content:center; box-shadow:0 0 20px var(--peach); animation:glow 2s infinite alternate; 
-  touch-action: none;
-}
-
-@keyframes glow {
-  from { box-shadow:0 0 20px var(--peach); }
-  to { box-shadow:0 0 30px var(--highlight); }
-}
-
-#scrollTopBtn { 
-  position:fixed; right:14px; bottom:100px; width:48px; height:48px; border-radius:50%; background:var(--teal); color:#111; display:none; align-items:center; justify-content:center; z-index:999; border:none; font-size:22px; cursor:pointer; box-shadow:0 8px 22px rgba(0,206,209,0.3); 
-}
-
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000; }
-.modal-content { background:var(--bg); padding:24px; border-radius:12px; max-width:500px; width:90%; text-align:center; position:relative; color:var(--text); }
-.closeBtn { position:absolute; top:12px; right:12px; background:none; border:none; color:var(--highlight); font-size:28px; cursor:pointer; }
-
-input[type="text"] { width:100%; padding:12px; border-radius:8px; border:none; margin-top:10px; font-size:16px; }
-button.learn-more { margin-top:12px; padding:10px 16px; border:none; border-radius:8px; background:var(--teal); color:#111; cursor:pointer; font-weight:600; }
-
-@media(min-width:768px){ .main { grid-template-columns:repeat(2,1fr); } }
-@media(min-width:1200px){ .main { grid-template-columns:repeat(3,1fr); } }
+  :root{
+    --bg:#1C1C1C;
+    --text:#F5F5F5;
+    --plum:#5D3A7D;
+    --pink:#E040FB;
+    --teal:#00CED1;
+    --peach:#FF8C69;
+    --card-radius:12px;
+    --max-width:420px;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;-webkit-font-smoothing:antialiased}
+  .container{max-width:var(--max-width);margin:0 auto;padding:14px 14px 120px;box-sizing:border-box;}
+  /* Header + skyline */
+  .header{position:relative;padding-top:6px;padding-bottom:12px;text-align:center}
+  .brand{font-weight:800;font-size:30px;color:var(--plum);text-shadow:0 6px 18px rgba(93,58,125,0.06)}
+  .tag{font-size:13px;color:var(--text);opacity:.88;margin-top:6px}
+  .skyline-wrap{position:relative;margin-top:12px;height:86px;overflow:visible}
+  .skyline{width:100%;height:100%;display:block;opacity:.95;filter:drop-shadow(0 8px 32px rgba(93,58,125,0.06));}
+  /* Search */
+  .top-row{display:flex;gap:8px;align-items:center;margin-top:10px}
+  .search{flex:1;position:relative}
+  .search input{width:100%;padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--text);outline:none;font-size:15px}
+  .lang{background:transparent;color:var(--text);border:none;padding:8px;border-radius:8px}
+  .suggestions{position:absolute;left:0;right:0;top:100%;background:linear-gradient(180deg,#111, #141214);border-radius:10px;margin-top:8px;padding:6px;box-shadow:0 8px 36px rgba(0,0,0,0.6);z-index:40;display:none;max-height:240px;overflow:auto}
+  .suggestions li{list-style:none;padding:10px;border-radius:8px;color:var(--text);font-size:14px;cursor:pointer}
+  .suggestions li:hover{background:rgba(255,255,255,0.02)}
+  /* CTA */
+  .cta-row{display:flex;gap:8px;margin:12px 0;justify-content:center}
+  .btn{padding:10px 14px;border-radius:12px;font-weight:700;border:none;cursor:pointer}
+  .btn-primary{background:linear-gradient(90deg,var(--pink),var(--teal));color:#050505}
+  .btn-peach{background:var(--peach);color:#111;box-shadow:0 8px 22px rgba(255,140,105,0.18);font-weight:800}
+  /* grid */
+  .section-head{color:var(--plum);font-weight:700;margin:12px 0 8px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .card{border-radius:12px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.03);display:flex;gap:10px;align-items:center;min-height:62px}
+  .icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .label{font-size:15px;font-weight:700}
+  /* Footer */
+  footer{margin-top:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03);font-size:13px;color:var(--text);line-height:1.5}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .legal{font-size:12px;color:rgba(255,255,255,0.72);margin-top:12px}
+  /* Peach panic button */
+  #peachBtn{position:fixed;right:14px;bottom:18px;width:68px;height:68px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 30%, #ffd0b8,#ff8c69);box-shadow:0 12px 38px rgba(255,140,105,0.26);z-index:999;border:none;touch-action:none}
+  #peachBtn svg{width:44px;height:44px}
+  #peachBtn:focus{outline:3px solid rgba(255,255,255,0.12)}
+  /* Nav/hamburger */
+  .hamburger{position:fixed;left:12px;top:12px;z-index:1000;background:transparent;border:0;padding:8px;display:flex;align-items:center;justify-content:center}
+  .bars{width:28px;height:18px;position:relative}
+  .bars span{position:absolute;height:3px;background:linear-gradient(90deg,var(--pink),var(--teal));left:0;right:0;border-radius:3px}
+  .bars span:nth-child(1){top:0}
+  .bars span:nth-child(2){top:7px}
+  .bars span:nth-child(3){top:14px}
+  .side-nav{position:fixed;left:-300px;top:0;height:100%;width:300px;background:linear-gradient(180deg,#0f0f11, #141116);padding:72px 18px;transition:left .32s cubic-bezier(.2,.9,.2,1);z-index:980;box-shadow:6px 0 40px rgba(0,0,0,0.6);overflow:auto}
+  .side-nav.open{left:0}
+  .side-nav h3{color:var(--pink);margin-top:6px}
+  .side-nav nav a{display:block;padding:10px 6px;border-radius:8px;color:var(--text);text-decoration:none;margin-bottom:6px}
+  .group-title{color:var(--teal);font-weight:800;margin-top:12px;margin-bottom:6px}
+  /* Modal (How to use site) */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:flex-end;justify-content:center;z-index:1200;padding:0}
+  .modal-backdrop.open{display:flex}
+  .modal{width:100%;max-width:640px;border-radius:14px 14px 0 0;background:linear-gradient(180deg,#0f0f11,#131116);padding:12px 14px 20px;color:var(--text);box-shadow:0 -18px 60px rgba(0,0,0,0.8);border-top:3px solid rgba(93,58,125,0.12)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .tab{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .tab.active{background:linear-gradient(90deg,var(--pink),var(--teal));color:#050505}
+  .modal-content{max-height:56vh;overflow:auto;padding:8px 2px}
+  /* Hydration timer */
+  .hydration{display:flex;gap:8px;align-items:center}
+  .hydration button{background:transparent;border:1px solid rgba(255,255,255,0.05);padding:8px;border-radius:8px;color:var(--text)}
+  /* small devices tweak */
+  @media(min-width:640px){ .container{max-width:640px} .grid{grid-template-columns:repeat(4,1fr)} .footer-grid{grid-template-columns:repeat(4,1fr)} }
 </style>
 </head>
 <body>
+  <!-- hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
 
-<header>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#resources">Resources</a>
-    <a href="#safety">Safety</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <select id="lang">
-    <option value="en">English</option>
-    <option value="es">Español</option>
-    <option value="fr">Français</option>
-    <option value="de">Deutsch</option>
-    <option value="ar">عربي</option>
-    <option value="zh">中文</option>
-  </select>
-</header>
+  <!-- slide nav -->
+  <aside class="side-nav" id="sideNav" aria-hidden="true">
+    <h3>PLURderapolis</h3>
+    <nav>
+      <div class="group-title">Safety & Crisis</div>
+      <a href="#panic" data-target="panic">Panic Button</a>
+      <a href="#emergency" data-target="emergency">Emergency Response</a>
+      <a href="#drink" data-target="drink">Drink Spiking</a>
+      <a href="#badtrip" data-target="badtrip">Bad Trip Mode</a>
+      <a href="#fake" data-target="fake">Fake Drug Guide</a>
 
-<div class="main">
-  <div class="card">
-    <h2>Harm Reduction Tips</h2>
-    <p>Learn to stay safe at raves and events. Naloxone, hydration, and knowing your sources are key.</p>
-    <button class="learn-more" onclick="openModal('modal1')">Learn More</button>
-  </div>
-  <div class="card">
-    <h2>Bad Trip & Support</h2>
-    <p>Know what to do if someone is having a bad reaction. Stay calm, stay with them, get help if needed.</p>
-    <button class="learn-more" onclick="openModal('modal2')">Learn More</button>
-  </div>
-  <div class="card">
-    <h2>Event Planning</h2>
-    <p>Weather, camping, and packing tips to enjoy your festival safely and comfortably.</p>
-    <button class="learn-more" onclick="openModal('modal3')">Learn More</button>
-  </div>
-</div>
+      <div class="group-title">Drug Info</div>
+      <a href="#druginfo" data-target="druginfo">Drug Info</a>
+      <a href="#polydrug" data-target="polydrug">Polydrug Tool</a>
+      <a href="#rx" data-target="rx">RX + Party Combos</a>
+      <a href="#health" data-target="health">Raver Health</a>
 
-<!-- Peach Panic Button -->
-<button id="peachBtn" aria-label="Peach Panic Button">🍑</button>
+      <div class="group-title">Consent & Accountability</div>
+      <a href="#consent" data-target="consent">Consent</a>
+      <a href="#consent-basics" data-target="consent-basics">Consent Basics</a>
+      <a href="#accountability" data-target="accountability">Accountability</a>
+      <a href="#rbv" data-target="rbv">Rejection Based Violence</a>
 
-<!-- Scroll to top button -->
-<button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+      <div class="group-title">Local Scene</div>
+      <a href="#local" data-target="local">Local Scene</a>
+      <a href="#venues" data-target="venues">Venue Guide</a>
+      <a href="#calendar" data-target="calendar">Event Calendar</a>
+      <a href="#mnres" data-target="mnres">MN Resources</a>
+      <a href="#sober" data-target="sober">Sober Ravers</a>
 
-<!-- Modals -->
-<div id="modal1" class="modal">
-  <div class="modal-content">
-    <button class="closeBtn" onclick="closeModal('modal1')">&times;</button>
-    <h2>Harm Reduction Details</h2>
-    <p>Check our full guide on polydrug combos, naloxone usage, hydration, and safe sourcing.</p>
-  </div>
-</div>
-<div id="modal2" class="modal">
-  <div class="modal-content">
-    <button class="closeBtn" onclick="closeModal('modal2')">&times;</button>
-    <h2>Bad Trip & Safety</h2>
-    <p>Learn how to respond calmly, create a safe space, and when to seek professional help.</p>
-  </div>
-</div>
-<div id="modal3" class="modal">
-  <div class="modal-content">
-    <button class="closeBtn" onclick="closeModal('modal3')">&times;</button>
-    <h2>Event Tips</h2>
-    <p>Packing, weather prep, and femme-friendly advice to make your festival experience smoother.</p>
-  </div>
-</div>
+      <div class="group-title">Extras</div>
+      <a href="#seasonal" data-target="seasonal">Seasonal Tips</a>
+      <a href="#spotify" data-target="spotify">Spotify</a>
+      <a href="#stories" data-target="stories">Anonymous Stories</a>
 
-<!-- Search input -->
-<div style="padding:20px;">
-  <input type="text" id="searchInput" placeholder="Search site — try 'naloxone', 'bad trip', 'venues'...">
-</div>
+      <hr style="opacity:.06;margin:12px 0" />
+      <button id="lockPeach" style="padding:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--text);border-radius:8px;width:100%;">Lock panic button</button>
+    </nav>
+  </aside>
+
+  <main class="container" id="app">
+    <header class="header" role="banner">
+      <div class="brand">PLURderapolis</div>
+      <div class="tag">Your partners in shine — harm reduction, safety, and community care for Twin Cities ravers</div>
+      <div class="skyline-wrap" aria-hidden="true">
+        <!-- Stylized Minneapolis skyline placeholder - replace with your detailed SVG -->
+        <svg class="skyline" viewBox="0 0 800 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minneapolis skyline">
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#5D3A7D"/><stop offset="1" stop-color="#00CED1"/></linearGradient></defs>
+          <rect width="100%" height="100%" fill="transparent"/>
+          <g stroke="url(#g)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,16)">
+            <path d="M12 70 L12 40 L40 40 L40 70"/>
+            <path d="M58 70 L58 20 L102 20 L102 70"/>
+            <path d="M120 70 L120 46 L160 46 L160 70"/>
+            <path d="M180 70 L180 18 L220 18 L220 70"/>
+            <path d="M240 70 L240 64 L280 64 L280 70"/>
+            <path d="M300 70 L300 30 L360 30 L360 70"/>
+            <path d="M380 70 L380 56 L410 56 L410 70"/>
+            <path d="M430 70 L430 22 L470 22 L470 70"/>
+            <path d="M490 70 L490 50 L540 50 L540 70"/>
+            <path d="M560 70 L560 18 L610 18 L610 70"/>
+            <path d="M630 70 L630 44 L680 44 L680 70"/>
+          </g>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Search + lang -->
+    <div class="top-row">
+      <div class="search" style="flex:1">
+        <input id="searchInput" placeholder="Search site — try 'naloxone', 'bad trip', 'venues'..." aria-label="Site search" inputmode="search" autocomplete="off">
+        <ul id="suggestions" class="suggestions" role="listbox" aria-live="polite"></ul>
+      </div>
+      <select id="lang" class="lang" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="hm">HM</option>
+        <option value="ar">AR</option>
+      </select>
+    </div>
+
+    <!-- CTA buttons -->
+    <div class="cta-row" role="region" aria-label="quick actions">
+      <button class="btn btn-primary" id="openPolydrug">Polydrug Checker</button>
+      <button class="btn btn-peach" id="howtoBtn">How to use this site</button>
+    </div>
+
+    <!-- Quick Access -->
+    <div class="section-head">Quick access</div>
+    <div class="grid">
+      <a class="card" href="#panic"><div class="icon" style="color:var(--peach)">⚠️</div><div class="label">Panic Button</div></a>
+      <a class="card" href="#badtrip"><div class="icon" style="color:var(--teal)">☹️</div><div class="label">Bad Trip Mode</div></a>
+
+      <a class="card" href="#polydrug"><div class="icon" style="color:var(--pink)">💊</div><div class="label">Polydrug Tool</div></a>
+      <a class="card" href="#sober"><div class="icon" style="color:var(--teal)">⭐</div><div class="label">Sober Ravers</div></a>
+
+      <a class="card" href="#drink"><div class="icon" style="color:var(--teal)">🥤</div><div class="label">Drink Spiking</div></a>
+      <a class="card" href="#consent"><div class="icon" style="color:var(--pink)">🤝</div><div class="label">Consent</div></a>
+
+      <a class="card" href="#mnres"><div class="icon" style="color:var(--teal)">📍</div><div class="label">MN Resources</div></a>
+      <a class="card" href="#raver-safety"><div class="icon" style="color:var(--teal)">🎧</div><div class="label">Raver Safety</div></a>
+    </div>
+
+    <!-- IG + Hydration + Anonymous Stories CTA -->
+    <div style="margin-top:12px;display:flex;gap:10px;flex-direction:column;">
+      <div style="background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:10px;border:1px solid rgba(255,255,255,0.03);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong style="color:var(--plum)">@plurderapolis</strong>
+          <a href="https://instagram.com/plurderapolis" target="_blank" rel="noopener" style="color:var(--teal);font-weight:700">Follow</a>
+        </div>
+        <!-- replace this placeholder with your Instagram embed code or plugin -->
+        <div id="igPlaceholder" style="height:120px;border-radius:8px;background:linear-gradient(90deg,#0f0f11,#111);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.45)">Instagram feed preview</div>
+      </div>
+
+      <div style="background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong style="color:var(--plum)">Hydration Timer</strong>
+          <small style="color:rgba(255,255,255,0.6)">Stay topped up</small>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="hydrateInterval" type="number" min="5" value="30" style="width:70px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text)">
+          <button id="startHydrate" class="btn" style="border:1px solid rgba(255,255,255,0.04)">Start</button>
+          <button id="stopHydrate" class="btn" style="border:1px solid rgba(255,255,255,0.04)">Stop</button>
+        </div>
+        <div id="hydrateStatus" style="color:rgba(255,255,255,0.7);font-size:13px">Not running</div>
+      </div>
+
+      <a class="card" href="#stories" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;padding:12px">
+        <div style="display:flex;gap:10px;align-items:center"><div class="icon" style="color:var(--pink)">✉️</div><div class="label">Share an anonymous story</div></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6)">Submit</div>
+      </a>
+    </div>
+
+    <footer>
+      <div class="footer-grid">
+        <div>
+          <strong>Safety</strong><br>
+          <a href="#panic">Panic / Emergency</a><br>
+          <a href="#drink">Drink Spiking</a><br>
+          <a href="#raver-safety">Raver Safety</a><br>
+          <a href="#badtrip">Bad Trip Mode</a>
+        </div>
+        <div>
+          <strong>Drug Info</strong><br>
+          <a href="#polydrug">Polydrug Tool</a><br>
+          <a href="#rx">RX + Party Combos</a><br>
+          <a href="#health">Raver Health</a>
+        </div>
+        <div>
+          <strong>Consent</strong><br>
+          <a href="#consent-basics">Consent Basics</a><br>
+          <a href="#accountability">Accountability</a><br>
+          <a href="#rbv">Rejection Based Violence</a>
+        </div>
+        <div>
+          <strong>Local</strong><br>
+          <a href="#mnres">MN Resources</a><br>
+          <a href="#venues">Venue Guide</a><br>
+          <a href="#calendar">Event Calendar</a><br>
+          <a href="#sober">Sober Ravers</a>
+        </div>
+      </div>
+
+      <div class="legal">
+        PLURderapolis provides community-based harm reduction resources for educational purposes only. We do not encourage illegal activity. In a life-threatening emergency call 911. Do not rely on this site as medical advice.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Peach panic button -->
+  <button id="peachBtn" title="Peach panic button - drag me" aria-label="Peach panic button">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g transform="translate(0,2)">
+        <ellipse cx="32" cy="34" rx="17" ry="16" fill="#FFAC86"/>
+        <ellipse cx="26" cy="28" rx="7" ry="7" fill="#fff" opacity="0.12"/>
+        <path d="M42 17c-2-5-9-8-12-6" fill="none" stroke="#6FAF73" stroke-width="2" stroke-linecap="round"/>
+        <path d="M40 14c1.3 1.2 2.5 3.8 2.5 6" fill="none" stroke="#7DAE7D" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </button>
+
+  <!-- How-to modal (starts with Panic -> Emergency) -->
+  <div class="modal-backdrop" id="howtoModal" aria-hidden="true" role="dialog" aria-label="How to use this site">
+    <div class="modal" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong style="font-size:16px;color:var(--plum)">How to use this site</strong>
+        <button id="closeModal" style="background:transparent;border:0;color:var(--text);font-weight:700">Close</button>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="How to use tabs">
+        <button class="tab active" data-tab="panicTab" role="tab" aria-selected="true">Panic</button>
+        <button class="tab" data-tab="emergencyTab" role="tab" aria-selected="false">Emergency Response</button>
+        <button class="tab" data-tab="howtoTab" role="tab" aria-selected="false">How to use site</button>
+      </div>
+
+      <div class="modal-content">
+        <section id="panicTab" class="tabcontent" aria-hidden="false">
+          <h4 style="margin-top:0;color:var(--peach)">Panic — quick steps</h4>
+          <ol>
+            <li>Stay where you are if safe. Breathe slowly for 1 minute.</li>
+            <li>Call or text a trusted person. Use your venue’s help desk if available.</li>
+            <li>If you’re in immediate danger call 911; tell them your location.</li>
+            <li>Use grounding techniques: 5 things you see, 4 things you feel, 3 things you hear.</li>
+          </ol>
+          <div style="margin-top:8px"><button class="btn btn-primary" onclick="location.href='#panic'">Go to Panic Page</button></div>
+        </section>
+
+        <section id="emergencyTab" class="tabcontent" aria-hidden="true" style="display:none">
+          <h4 style="margin-top:0;color:var(--teal)">Emergency Response</h4>
+          <p>Recognize overdose signs, how to use naloxone, and when to call emergency services. This section summarizes action steps and local MN hotlines.</p>
+          <div style="margin-top:8px"><button class="btn btn-primary" onclick="location.href='#emergency'">Go to Emergency Response</button></div>
+        </section>
+
+        <section id="howtoTab" class="tabcontent" aria-hidden="true" style="display:none">
+          <h4 style="margin-top:0;color:var(--plum)">Using PLURderapolis</h4>
+          <p>Quick guide: use the search to find exact resources, use the polydrug checker before mixing, and press the peach panic for immediate guidance.</p>
+        </section>
+      </div>
+    </div>
+  </div>
 
 <script>
 /* ---------------------------
-   Scroll to top behavior
---------------------------- */
-const scrollBtn = document.getElementById('scrollTopBtn');
-window.addEventListener('scroll', ()=>{
-  if(window.scrollY > 160) scrollBtn.style.display = 'flex';
-  else scrollBtn.style.display = 'none';
+   Client-side pages array for search
+   --------------------------- */
+const pages = [
+  { id:'home', title:'Home', url:'#home', keywords:['home']},
+  { id:'panic', title:'Panic Button', url:'#panic', keywords:['panic','emergency']},
+  { id:'emergency', title:'Emergency Response', url:'#emergency', keywords:['overdose','naloxone','911']},
+  { id:'drink', title:'Drink Spiking', url:'#drink', keywords:['drink','spiking']},
+  { id:'fake', title:'Fake Drug Guide', url:'#fake', keywords:['fake','counterfeit']},
+  { id:'badtrip', title:'Bad Trip Mode', url:'#badtrip', keywords:['bad trip','psychedelic','grounding']},
+  { id:'polydrug', title:'Polydrug Tool', url:'#polydrug', keywords:['mix','combos','polydrug']},
+  { id:'rx', title:'RX + Party Combos', url:'#rx', keywords:['rx','meds']},
+  { id:'health', title:'Raver Health', url:'#health', keywords:['health','wellness']},
+  { id:'consent', title:'Consent', url:'#consent', keywords:['consent']},
+  { id:'consent-basics', title:'Consent Basics', url:'#consent-basics', keywords:['consent basics']},
+  { id:'accountability', title:'Accountability', url:'#accountability', keywords:['accountability']},
+  { id:'rbv', title:'Rejection Based Violence', url:'#rbv', keywords:['rejection','violence']},
+  { id:'local', title:'Local Scene', url:'#local', keywords:['local','scene']},
+  { id:'venues', title:'Venue Guide', url:'#venues', keywords:['venue','map']},
+  { id:'calendar', title:'Event Calendar', url:'#calendar', keywords:['events','calendar']},
+  { id:'mnres', title:'MN Resources', url:'#mnres', keywords:['mn','resources']},
+  { id:'sober', title:'Sober Ravers', url:'#sober', keywords:['sober']},
+  { id:'seasonal', title:'Seasonal Tips', url:'#seasonal', keywords:['seasonal']},
+  { id:'spotify', title:'Spotify', url:'#spotify', keywords:['music','playlist']},
+  { id:'stories', title:'Anonymous Stories', url:'#stories', keywords:['stories','anonymous']},
+];
+
+/* ---------------------------
+   Predictive search behavior
+   --------------------------- */
+const input = document.getElementById('searchInput');
+const sugg  = document.getElementById('suggestions');
+input.addEventListener('input', e=>{
+  const q = (e.target.value||'').trim().toLowerCase();
+  if(!q){ sugg.style.display='none'; return; }
+  const results = pages.filter(p => p.title.toLowerCase().includes(q) || (p.keywords && p.keywords.some(k=>k.includes(q))));
+  renderSuggestions(results);
 });
-scrollBtn.addEventListener('click', ()=>{ window.scrollTo({top:0,behavior:'smooth'}); });
+function renderSuggestions(list){
+  sugg.innerHTML = '';
+  if(!list.length){ sugg.style.display='none'; return; }
+  for(const p of list.slice(0,8)){
+    const li = document.createElement('li');
+    li.textContent = p.title;
+    li.tabIndex = 0;
+    li.addEventListener('click', ()=> { location.href = p.url; });
+    li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter') location.href = p.url; });
+    sugg.appendChild(li);
+  }
+  sugg.style.display='block';
+}
+document.addEventListener('click', (e)=>{ if(!e.target.closest('.search')) sugg.style.display='none'; });
 
 /* ---------------------------
-   Multi-language support
---------------------------- */
-const langSelect = document.getElementById('lang');
-const searchInput = document.getElementById('searchInput');
-const placeholders = {
-  en: "Search site — try 'naloxone', 'bad trip', 'venues'...",
-  es: "Buscar sitio — prueba 'naloxona', 'mal viaje', 'lugares'...",
-  fr: "Rechercher sur le site — essayez 'naloxone', 'mauvais trip', 'lieux'...",
-  de: "Seite durchsuchen — versuche 'Naloxon', 'schlechter Trip', 'Veranstaltungen'...",
-  ar: "ابحث في الموقع — جرب 'نالوكسون'، 'تجربة سيئة'، 'أماكن'...",
-  zh: "搜索网站 — 试试 '纳洛酮'，'坏旅程'，'场地'..."
-};
-langSelect.addEventListener('change', ()=>{
-  const lang = langSelect.value;
-  searchInput.placeholder = placeholders[lang] || placeholders.en;
+   Hamburger nav
+   --------------------------- */
+const hamburger = document.getElementById('hamburger');
+const sideNav = document.getElementById('sideNav');
+hamburger.addEventListener('click', ()=>{
+  const open = sideNav.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open? 'true' : 'false');
+  sideNav.setAttribute('aria-hidden', open? 'false' : 'true');
+});
+
+/* close nav when link clicked (mobile) */
+document.querySelectorAll('.side-nav nav a').forEach(a=>{
+  a.addEventListener('click',(e)=>{
+    sideNav.classList.remove('open'); hamburger.setAttribute('aria-expanded','false');
+  });
 });
 
 /* ---------------------------
-   Peach Button Modal
---------------------------- */
-const peachBtn = document.getElementById('peachBtn');
-peachBtn.addEventListener('click', ()=>{ openModal('modal1'); });
+   Hydration timer
+   --------------------------- */
+let hydrateTimer = null;
+const startBtn = document.getElementById('startHydrate');
+const stopBtn = document.getElementById('stopHydrate');
+const intervalInput = document.getElementById('hydrateInterval');
+const hydrateStatus = document.getElementById('hydrateStatus');
+
+startBtn.addEventListener('click', ()=>{
+  const mins = Math.max(1, parseInt(intervalInput.value||30,10));
+  if(hydrateTimer) clearInterval(hydrateTimer);
+  hydrateStatus.textContent = `Reminders every ${mins} minutes`;
+  hydrateTimer = setInterval(()=> { notifyHydration(mins); }, mins*60*1000);
+  // immediate gentle reminder
+  notifyHydration(mins);
+});
+stopBtn.addEventListener('click', ()=>{
+  if(hydrateTimer) clearInterval(hydrateTimer);
+  hydrateTimer = null;
+  hydrateStatus.textContent = 'Not running';
+});
+function notifyHydration(mins){
+  // simple UI reminder - replace with real notifications if PWA
+  hydrateStatus.textContent = `Last reminder: sip! Next in ${mins} minutes`;
+  // add subtle animation or use Notification API (with permission)
+}
 
 /* ---------------------------
-   Modal Functions
---------------------------- */
-function openModal(id){ document.getElementById(id).style.display='flex'; }
-function closeModal(id){ document.getElementById(id).style.display='none'; }
-window.onclick = function(event){
-  document.querySelectorAll('.modal').forEach(mod=>{
-    if(event.target === mod) mod.style.display='none';
+   Peach draggable + snap + lock
+   --------------------------- */
+const peach = document.getElementById('peachBtn');
+let dragging=false, dragId=null, offsetX=0, offsetY=0;
+let locked = false;
+
+// restore pos from localStorage
+const saved = localStorage.getItem('plur_peach_pos');
+if(saved){
+  try{
+    const pos = JSON.parse(saved);
+    if(pos.left) { peach.style.left = pos.left; peach.style.top = pos.top; peach.style.right='auto'; peach.style.bottom='auto'; }
+  }catch(e){}
+}
+
+function clamp(v,min,max){ return Math.min(max,Math.max(min,v)); }
+
+peach.addEventListener('pointerdown', (e)=>{
+  if(locked) return;
+  dragging = true; dragId = e.pointerId;
+  peach.setPointerCapture(dragId);
+  const rect = peach.getBoundingClientRect();
+  offsetX = e.clientX - rect.left; offsetY = e.clientY - rect.top;
+  peach.style.transition = 'none';
+});
+document.addEventListener('pointermove', (e)=>{
+  if(!dragging || e.pointerId !== dragId) return;
+  const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  let x = clamp(e.clientX - offsetX, 8, vw - peach.offsetWidth - 8);
+  let y = clamp(e.clientY - offsetY, 8, vh - peach.offsetHeight - 8);
+  peach.style.left = x + 'px';
+  peach.style.top = y + 'px';
+  peach.style.right = 'auto'; peach.style.bottom = 'auto';
+});
+document.addEventListener('pointerup', (e)=>{
+  if(!dragging || e.pointerId !== dragId) return;
+  dragging = false;
+  peach.releasePointerCapture(dragId);
+  dragId = null;
+  snapPeach();
+});
+function snapPeach(){
+  const rect = peach.getBoundingClientRect();
+  const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+  const leftDist = rect.left;
+  const rightDist = vw - rect.right;
+  const snapLeft = rightDist > leftDist;
+  peach.style.transition = 'left .28s cubic-bezier(.2,.9,.2,1), top .18s linear';
+  if(snapLeft) peach.style.left = '12px'; else peach.style.left = (vw - peach.offsetWidth - 12) + 'px';
+  let top = clamp(rect.top, 12, (window.innerHeight - peach.offsetHeight - 12));
+  peach.style.top = top + 'px';
+  savePeachPos();
+}
+function savePeachPos(){
+  localStorage.setItem('plur_peach_pos', JSON.stringify({ left: peach.style.left || '', top: peach.style.top || '' }));
+}
+/* keyboard control */
+peach.tabIndex = 0;
+peach.addEventListener('keydown', (e)=>{
+  if(e.key.startsWith('Arrow')){
+    e.preventDefault();
+    const step = e.shiftKey ? 20 : 8;
+    const rect = peach.getBoundingClientRect();
+    let x = rect.left, y = rect.top;
+    if(e.key==='ArrowLeft') x -= step;
+    if(e.key==='ArrowRight') x += step;
+    if(e.key==='ArrowUp') y -= step;
+    if(e.key==='ArrowDown') y += step;
+    x = clamp(x, 8, window.innerWidth - peach.offsetWidth - 8);
+    y = clamp(y, 8, window.innerHeight - peach.offsetHeight - 8);
+    peach.style.left = x + 'px'; peach.style.top = y + 'px';
+    savePeachPos();
+  }
+  if(e.key === 'Enter' || e.key === ' '){
+    e.preventDefault();
+    openHowTo(true); // open modal and start with panic/emergency
+  }
+});
+/* lock toggle */
+const lockBtn = document.getElementById('lockPeach');
+lockBtn.addEventListener('click', ()=>{
+  locked = !locked;
+  lockBtn.textContent = locked ? 'Unlock panic button' : 'Lock panic button';
+  lockBtn.style.background = locked ? 'rgba(255,140,105,0.06)' : 'transparent';
+});
+
+/* peach click opens howto modal (and auto-opens Panic tab) */
+peach.addEventListener('click', (e)=>{
+  if(dragging) return;
+  openHowTo(true); // open and auto-select Panic then Emergency
+});
+document.getElementById('howtoBtn').addEventListener('click', ()=> openHowTo(false));
+
+/* ---------------------------
+   How-to modal tabs + auto open flow
+   --------------------------- */
+const modal = document.getElementById('howtoModal');
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const tabContents = { panicTab: document.getElementById('panicTab'), emergencyTab: document.getElementById('emergencyTab'), howtoTab: document.getElementById('howtoTab') };
+function openHowTo(startWithPanic){
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); modal.style.display='flex';
+  // default: show Panic tab then auto-suggest Emergency
+  selectTab('panicTab');
+  if(startWithPanic){
+    // optionally auto-switch to Emergency after showing panic briefly (user asked panic -> emergency)
+    setTimeout(()=> { selectTab('emergencyTab'); }, 1000); // small delay so users see Panic then Emergency
+  }
+  document.body.style.overflow='hidden';
+}
+function closeHowTo(){
+  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); modal.style.display='none';
+  document.body.style.overflow='';
+}
+function selectTab(tabId){
+  tabs.forEach(t=>{ t.classList.toggle('active', t.dataset.tab===tabId); t.setAttribute('aria-selected', t.dataset.tab===tabId?'true':'false'); });
+  Object.keys(tabContents).forEach(k=>{
+    const el = tabContents[k];
+    if(k===tabId){ el.style.display='block'; el.setAttribute('aria-hidden','false'); }
+    else { el.style.display='none'; el.setAttribute('aria-hidden','true'); }
   });
 }
+tabs.forEach(t=>{
+  t.addEventListener('click', ()=> selectTab(t.dataset.tab) );
+});
+document.getElementById('closeModal').addEventListener('click', closeHowTo);
+document.getElementById('howtoModal').addEventListener('click', (e)=> { if(e.target === document.getElementById('howtoModal')) closeHowTo(); });
 
 /* ---------------------------
-   Draggable Peach Button
---------------------------- */
-let isDragging=false, offsetX, offsetY;
+   make modal open/close accessible
+   --------------------------- */
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeHowTo(); });
 
-peachBtn.addEventListener('mousedown', startDrag);
-peachBtn.addEventListener('touchstart', startDrag);
+/* ---------------------------
+   Sample polydrug and quick open buttons
+   --------------------------- */
+document.getElementById('openPolydrug').addEventListener('click', ()=> { location.href='#polydrug'; });
 
-function startDrag(e){
-  isDragging=true;
-  const rect = peachBtn.getBoundingClientRect();
-  offsetX = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
-  offsetY = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', stopDrag);
-  document.addEventListener('touchmove', drag);
-  document.addEventListener('touchend', stopDrag);
-}
+/* on resize keep peach visible */
+window.addEventListener('resize', ()=>{
+  const rect = peach.getBoundingClientRect();
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let left = parseFloat(peach.style.left) || rect.left;
+  let top = parseFloat(peach.style.top) || rect.top;
+  left = clamp(left, 8, vw - peach.offsetWidth - 8);
+  top = clamp(top, 8, vh - peach.offsetHeight - 8);
+  peach.style.left = left + 'px'; peach.style.top = top + 'px';
+  savePeachPos();
+});
 
-function drag(e){
-  if(!isDragging) return;
-  e.preventDefault();
-  const x = (e.touches? e.touches[0].clientX : e.clientX) - offsetX;
-  const y = (e.touches? e.touches[0].clientY : e.clientY) - offsetY;
-  peachBtn.style.left = `${Math.max(0, Math.min(window.innerWidth - 60, x))}px`;
-  peachBtn.style.top = `${Math.max(0, Math.min(window.innerHeight - 60, y))}px`;
-  peachBtn.style.bottom = 'auto';
-  peachBtn.style.right = 'auto';
-}
-
-function stopDrag(){
-  isDragging=false;
-  document.removeEventListener('mousemove', drag);
-  document.removeEventListener('mouseup', stopDrag);
-  document.removeEventListener('touchmove', drag);
-  document.removeEventListener('touchend', stopDrag);
-}
+/* small skyline parallax */
+const skyline = document.querySelector('.skyline');
+document.addEventListener('scroll', ()=>{
+  const y = window.scrollY || window.pageYOffset;
+  if(skyline) skyline.style.transform = `translateY(${Math.min(0, -y * 0.06)}px)`;
+});
 </script>
-
 </body>
 </html>
