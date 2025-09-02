@@ -1,91 +1,106 @@
-/* Reset */
-body, h1, h2, h3, p, ul { margin: 0; padding: 0; }
-body { font-family: 'Poppins', sans-serif; background: #1C1C1C; color: #F5F5F5; }
-
-/* Background Skyline */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url('skyline.png') center bottom no-repeat;
+/* Global Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #1C1C1C url('skyline.png') no-repeat bottom center;
   background-size: cover;
-  opacity: 0.15;
-  z-index: -1;
-  filter: blur(2px);
+  color: #F5F5F5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Navbar */
-.navbar {
-  background: #5D3A7D;
-  display: flex; justify-content: space-between; align-items: center;
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 1rem;
-  position: sticky; top: 0;
+  background: rgba(28,28,28,0.9);
+  position: sticky; top: 0; z-index: 1000;
 }
-.navbar h1 { font-size: 1.2rem; }
-.btn-emergency { background: #E040FB; padding: 0.5rem 1rem; border-radius: 6px; }
+.logo { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; color: #E040FB; }
+.hamburger { background: none; border: none; color: #F5F5F5; font-size: 1.5rem; display: none; }
+.nav-menu { display: flex; gap: 1rem; }
+.nav-menu a { color: #F5F5F5; text-decoration: none; }
+.nav-menu a:hover { color: #00CED1; }
 
-/* Sidebar Menu */
-#sidebar {
-  position: fixed; left: -100%; top: 0; width: 70%; height: 100%;
-  background: #1C1C1C; transition: left 0.3s ease; padding: 1rem;
-  overflow-y: auto; z-index: 100;
+/* Search Bar */
+.search-bar { position: relative; flex: 1; margin-left: 1rem; }
+.search-bar input {
+  width: 100%; padding: 0.3rem 0.5rem;
+  border: 2px solid #E040FB; border-radius: 4px;
+  background: #1C1C1C; color: #F5F5F5;
 }
-#sidebar.active { left: 0; }
-#sidebar ul { list-style: none; }
-#sidebar li { margin: 0.5rem 0; }
-
-/* Hero */
-.hero {
-  text-align: center; padding: 3rem 1rem;
+#suggestions {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: #2a2a2a; list-style: none; max-height: 200px; overflow-y: auto;
 }
-.glitch {
-  font-size: 1.8rem;
-  color: #E040FB;
-  text-shadow: 0 0 5px #E040FB, 0 0 10px #00CED1;
-}
+#suggestions li { padding: 0.5rem; cursor: pointer; }
+#suggestions li:hover { background: #5D3A7D; }
 
-/* Buttons */
-.btn-primary, .btn-secondary {
-  display: inline-block; margin: 0.5rem; padding: 0.8rem 1.2rem;
-  border-radius: 8px; font-weight: bold; text-decoration: none;
-}
-.btn-primary { background: #E040FB; }
-.btn-secondary { background: #00CED1; }
-
-/* Polydrug Preview */
-.polydrug-preview { text-align: center; margin: 2rem auto; }
-.result-box { margin: 1rem auto; padding: 0.5rem; background: #333; border-radius: 6px; }
-
-/* Search */
-.search { text-align: center; padding: 1rem; }
-#searchBar { width: 80%; padding: 0.7rem; border-radius: 8px; border: none; }
-
-/* Quick Links */
-.quick-links .grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+/* Homepage Grid */
+.quick-access {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem; padding: 1rem;
 }
 .card {
-  background: #333; padding: 1rem; border-radius: 8px;
-  text-align: center; text-decoration: none; color: #F5F5F5;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem; border-radius: 8px;
+  background: rgba(45,45,45,0.8); text-align: center;
+  text-decoration: none; color: #F5F5F5;
+  font-weight: bold; font-size: 1rem;
+  transition: box-shadow 0.3s;
 }
-.card:hover { transform: scale(1.05); box-shadow: 0 0 10px #E040FB; }
-.card.danger { background: #FF4444; }
+.card:hover { box-shadow: 0 0 20px #E040FB; }
+.card.panic:hover { box-shadow: 0 0 20px peachpuff; }
+.card.badtrip:hover { box-shadow: 0 0 20px #E040FB; }
+.card.polydrug:hover { box-shadow: 0 0 20px #00CED1; }
+.card.resources:hover { box-shadow: 0 0 20px peachpuff; }
+.card.health:hover { box-shadow: 0 0 20px #00CED1; }
+.card.sober:hover { box-shadow: 0 0 20px lightgreen; }
+
+/* Polydrug Preview */
+.polydrug-preview { padding: 1rem; text-align: center; }
+.polydrug-preview table {
+  margin: 1rem auto; border-collapse: collapse;
+}
+.polydrug-preview td {
+  border: 1px solid #5D3A7D; padding: 0.5rem 1rem;
+}
+.button {
+  display: inline-block; padding: 0.5rem 1rem;
+  background: #E040FB; color: #fff; text-decoration: none;
+  border-radius: 4px;
+}
 
 /* Panic Button */
-.panic-btn {
-  position: fixed; bottom: 20px; right: 20px;
-  background: #FFB07C; color: #1C1C1C;
-  border-radius: 50%; padding: 1rem;
-  font-size: 2rem; text-align: center;
-  animation: pulse 2s infinite;
+.panic-button {
+  position: fixed; bottom: 1rem; right: 1rem;
+  background: peachpuff; color: #000;
+  padding: 1rem; border-radius: 50%;
+  font-size: 1.5rem; animation: pulse 1.5s infinite;
+  text-decoration: none;
 }
 @keyframes pulse {
-  0%, 100% { box-shadow: 0 0 5px #FF4444; }
-  50% { box-shadow: 0 0 20px #FF4444; }
+  0% { box-shadow: 0 0 0 0 rgba(255,165,0,0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(255,165,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,165,0,0); }
 }
 
 /* Footer */
-footer { background: #5D3A7D; text-align: center; padding: 1rem; margin-top: 2rem; }
+.site-footer {
+  background: rgba(28,28,28,0.9);
+  padding: 1rem; text-align: center;
+  margin-top: auto;
+}
+.site-footer a { color: #E040FB; text-decoration: none; }
+.site-footer a:hover { color: #00CED1; }
+
+/* Responsive */
+@media(max-width:768px){
+  .hamburger{display:block;}
+  .nav-menu{display:none; flex-direction:column; background:#1C1C1C; position:absolute; top:60px; right:0; padding:1rem;}
+  .nav-menu.show{display:flex;}
+}
