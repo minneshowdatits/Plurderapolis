@@ -1,152 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
-<meta name="description" content="PLURderapolis — harm reduction, rave safety, polydrug info, and local Minnesota resources." />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
 <style>
-  /* Color palette */
-  :root{
-    --bg:#1C1C1C; --panel:#2A0036; --text:#F5F5F5; --muted:#B0B0B0;
-    --neon-pink:#E040FB; --neon-teal:#00CED1; --deep-plum:#5D3A7D;
-    --peach-light:#FFB07C; --peach-mid:#FF6F91; --peach-deep:#FF3D6E;
-    --leaf:#2EB62C; --glass: rgba(255,255,255,0.03); --max-width:1100px;
-  }
-  html,body{height:100%;}
-  body{margin:0; background:var(--bg); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; line-height:1.35;}
-  a { color: var(--neon-pink); text-decoration: none; }
-  a:focus { outline: 3px solid rgba(224,64,251,0.15); outline-offset: 4px; }
-  .wrap{max-width:var(--max-width); margin: 0 auto; padding: 16px; box-sizing: border-box;}
-  /* Skyline hero */
-  .hero{position: relative; padding: 28px 12px 40px; margin-bottom: 14px; overflow: visible;}
-  .skyline{
-    position:absolute; inset:0;
-    background: url('/assets/skyline/skyline.png') no-repeat center center/cover;
-    filter: blur(12px) saturate(1.2);
-    pointer-events:none;
-  }
-  .hero-inner{position:relative; display:flex; gap:12px; align-items:center; justify-content:space-between; z-index:2;}
-  .brand{display:flex; gap:12px; align-items:center;}
-  .logo{width:56px;height:56px;border-radius:10px;background: linear-gradient(135deg,var(--neon-pink),var(--neon-teal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--text);}
-  h1{margin:0;font-size:20px;color:var(--deep-plum); text-shadow:0 0 10px rgba(224,64,251,0.08);}
-  .tag{color:var(--muted);font-size:13px;}
-  .top-controls{display:flex; gap:8px; align-items:center;}
-  .hamburger{--size:42px;width:var(--size);height:var(--size);display:inline-grid; place-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:10px; cursor:pointer;box-shadow:0 6px 30px rgba(0,0,0,0.5);}
-  .hamburger .lines{width:18px;height:2px;background:var(--text);position:relative;transition: transform .18s ease, opacity .18s ease;}
-  .hamburger .lines::before, .hamburger .lines::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--text);transition: transform .18s ease, top .18s ease, bottom .18s ease;}
-  .hamburger .lines::before{top:-6px;} .hamburger .lines::after{bottom:-6px;}
-  .lang{background:var(--panel);padding:8px 10px;border-radius:10px;font-size:13px;color:var(--text);display:flex;gap:8px;align-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.6);}
-  .search-wrap{margin:18px 0 12px; display:flex; gap:8px; align-items:center;}
-  .search{flex:1; min-width:0;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:12px 14px; display:flex; gap:8px; align-items:center; box-shadow:0 6px 18px rgba(0,0,0,0.6), 0 0 24px rgba(93,58,125,0.04) inset; border:1px solid rgba(93,58,125,0.12);}
-  .search input{background:transparent;border:none;color:var(--text);font-size:15px;outline:none;width:100%;}
-  .suggestions{position:relative;}
-  .suggestions-list{position:absolute;left:0;right:0;top:48px;z-index:50;background:var(--panel);border-radius:10px;padding:8px;box-shadow:0 10px 30px rgba(0,0,0,0.7);max-height:260px;overflow:auto;border:1px solid rgba(0,0,0,0.6);}
-  .suggestions-list button{display:block;width:100%;text-align:left;background:none;border:none;padding:10px;color:var(--text);border-radius:8px;font-size:14px;cursor:pointer;}
-  .suggestions-list button:hover{ background: rgba(224,64,251,0.06); color:var(--neon-pink); }
-  .grid{display:grid; grid-template-columns: repeat(2,1fr); gap:12px; margin-bottom:14px;}
-  .card{background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); padding:14px; border-radius:12px; min-height:78px; box-shadow:0 6px 30px rgba(0,0,0,0.6); border:1px solid rgba(93,58,125,0.08); transition: transform .12s ease, box-shadow .12s ease;}
-  .card:hover{ transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 60px rgba(93,58,125,0.12);}
-  .card h3{ margin:0 0 6px 0; color:var(--deep-plum);} .card p{ margin:0;color:var(--muted); font-size:13px;}
-  .badtrip{background: linear-gradient(180deg, rgba(93,58,125,0.08), rgba(42,0,54,0.6)); border-radius:14px; padding:14px; margin:10px 0 20px; border:1px solid rgba(224,64,251,0.06); display:flex; gap:12px; align-items:center; justify-content:space-between;}
-  .badtrip .info{flex:1} .btn{ border:none; padding:12px 14px; border-radius:10px; font-weight:700; cursor:pointer; font-size:14px;}
-  .btn-primary{ background: linear-gradient(90deg,var(--peach-mid),var(--peach-deep)); color:#fff; box-shadow:0 10px 30px rgba(255,61,110,0.12);} 
-  .btn-teal{ background: linear-gradient(90deg,var(--neon-teal), #00f3e5); color:#000; }
-  .poly-demo{ display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; background:var(--glass); border: 1px solid rgba(93,58,125,0.06);}
-  select,input[type=number]{ padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); }
-  footer{ margin-top:22px; padding:18px 12px; border-top:1px solid rgba(255,255,255,0.03); color:var(--muted); font-size:13px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-  .legal{ opacity:0.9; }
-  .links{ display:flex; gap:12px; align-items:center; }
+/* Reset & body */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #0d0d0d;
+  color: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
+}
+
+/* Neon Minneapolis skyline background */
+#skyline {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  background: url('https://i.imgur.com/IZTXaow.png') no-repeat bottom center;
+  background-size: contain;
+  filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
+  pointer-events: none;
+  z-index: 0;
+  animation: skylineGlow 4s infinite alternate;
+}
+@keyframes skylineGlow {
+  0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
+  100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); }
+}
+
+/* Site Title */
+.site-title {
+  text-align: center;
+  padding: 1rem 0;
+  position: relative;
+  z-index: 2;
+}
+.site-title h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem,5vw,3rem);
+  color: #00f7e0;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #00f7e0 0%, #a3f7ff 50%, #00f7e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineMove 6s linear infinite;
+  filter: drop-shadow(0 0 6px #00f7e0aa);
+}
+.site-title .tagline {
+  font-family: 'Roboto', sans-serif;
+  color: #88e9e3;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+@keyframes shineMove {0% {background-position: 100% 0;}100% {background-position: 0 0;}}
+
+/* Hamburger Menu */
+.menu-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  cursor: pointer;
+  width: 35px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.menu-btn div {
+  height: 5px;
+  background: #00f7e0;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+.menu-btn.active div:nth-child(1){ transform: rotate(45deg) translate(6px,6px);}
+.menu-btn.active div:nth-child(2){ opacity:0;}
+.menu-btn.active div:nth-child(3){ transform: rotate(-45deg) translate(7px,-7px);}
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 260px;
+  height: 100%;
+  background: #3a0052;
+  box-shadow: 2px 0 10px #000000aa;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  padding-top: 70px;
+  z-index:1000;
+}
+.side-nav.active { left:0;}
+.side-nav ul { list-style:none; padding:0;}
+.side-nav ul li { padding:0;}
+.side-nav ul li a {
+  display:block; padding:12px 20px; color:#fff; text-decoration:none; border-bottom:1px solid #5d3a7d;
+  font-weight:bold;
+}
+.side-nav ul li a:hover { background:#5d3a7d; }
+.side-nav ul li ul { display:none; padding-left:10px;}
+.side-nav ul li.show > ul { display:block; }
+.side-nav ul li ul li a { font-weight:normal; font-size:0.95rem; }
+
+/* Scroll alert */
+.rave-alert-wrapper {
+  background-color:#1a1a1a;
+  overflow:hidden;
+  border-top:1px solid #444;
+  border-bottom:1px solid #444;
+  position:relative;
+  height:2.5rem;
+  display:flex;
+  align-items:center;
+  width:100vw;
+  z-index:2;
+}
+.rave-alert-link {
+  display:inline-block;
+  white-space:nowrap;
+  color:#ff69b4;
+  font-size:1.1rem;
+  text-decoration:none;
+  padding-left:100%;
+  animation: scroll-left 20s linear infinite;
+}
+@keyframes scroll-left {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+/* Sections */
+.section {
+  margin:1.5rem auto;
+  padding:1rem 1.5rem;
+  max-width:1000px;
+  background-color:#3a0052;
+  border-radius:10px;
+  box-shadow:0 0 12px rgba(0,255,255,0.1);
+  position: relative;
+  z-index: 2;
+}
+.section h2 { color:#00f7e0; font-family:'Montserrat',sans-serif;}
+.section ul { padding-left:1.2rem;}
+.section ul li { margin-bottom:0.5rem;}
+.cta-button { display:inline-block; margin-top:0.8rem; background:#00f7e0; color:#2e003e; padding:0.6rem 1.1rem; border-radius:8px; text-decoration:none; font-weight:bold; transition: all 0.2s;}
+.cta-button:hover{opacity:0.85; transform:scale(1.03);}
+
+/* Cards layout for resources */
+.card-container { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
+.card { background:#2a0036; border-radius:10px; padding:1rem; width:280px; box-shadow:0 0 15px rgba(255,111,145,0.3); transition: all 0.2s; }
+.card:hover { transform:scale(1.03); box-shadow:0 0 25px rgba(255,111,145,0.6); }
+.card h3 { color:#ff69b4; font-family:'Montserrat',sans-serif; margin-top:0;}
+.card p { font-size:0.95rem; }
+
+/* Search bar */
+.search-bar { margin:1rem auto; max-width:500px; display:flex; position:relative; z-index:2; }
+.search-bar input{ flex:1; padding:10px; border:none; border-radius:5px 0 0 5px; }
+.search-bar button{ padding:10px; border:none; background:#00f7e0; color:#2e003e; border-radius:0 5px 5px 0; cursor:pointer; }
+#searchResults { position:absolute; top:100%; left:0; right:0; background:#3a0052; max-height:250px; overflow-y:auto; border-radius:0 0 5px 5px; display:none; z-index:10; box-shadow:0 0 12px rgba(0,255,255,0.2);}
+#searchResults ul { list-style:none; padding:0; margin:0;}
+#searchResults li { padding:8px 12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
+#searchResults li:hover { background:#5d3a7d; }
+
+/* Peach panic button */
+#peachWrap {
+  position:fixed; bottom:24px; right:24px; z-index:1002; display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+#peachWrap a.emoji-panic{
+  width:60px; height:60px; font-size:2.5rem;
+  background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
+  border-radius:50% 50% 45% 55% / 60% 55% 45% 50%;
+  position: relative;
+  display:flex; justify-content:center; align-items:center;
+  cursor:pointer; text-decoration:none; color:#fff;
+  box-shadow: 0 0 10px #ff69b4, 0 0 20px #00f7e0;
+  animation: emojiPulse 2s infinite;
+}
+#peachWrap a.emoji-panic::before{
+  content:"";
+  position:absolute;
+  top:-10px; left:22px;
+  width:15px; height:12px;
+  background: linear-gradient(135deg,#7aff7a,#2eb62c);
+  border-radius:50%;
+  transform:rotate(-20deg);
+}
+#peachWrap a.emoji-panic:hover { transform:scale(1.2);}
+@keyframes emojiPulse{0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
+
+/* Footer */
+footer{margin-top:2rem;font-size:0.9rem;color:#aaa;text-align:center; position: relative; z-index:2;}
+footer hr{border-color:#444;margin-bottom:1rem;}
+footer p{max-width:800px;margin:0.5rem auto;}
+footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
+footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
+footer ul li a:hover{text-decoration:underline;}
+
+/* Collapsible content */
+.collapsible-content { display:none; margin-top:1rem; }
+.collapsible-content.show { display:block; animation: fadeIn 0.3s ease-in-out;}
+@keyframes fadeIn {from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
+
+/* Responsive */
+@media(max-width:600px){
+  .section{margin:1rem;padding:0.8rem;}
+  .cta-button{padding:0.5rem 0.8rem;}
+  .card-container { flex-direction: column; align-items:center;}
+}
 </style>
 </head>
 <body>
-<div class="skyline"></div>
 
-<div class="wrap">
-<header class="hero">
-  <div class="hero-inner">
-    <div class="brand">
-      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="site-drawer" aria-label="Open menu"><span class="lines"></span></button>
-      <div class="logo" aria-hidden="true">P</div>
-      <div>
-        <h1 id="site-title">PLURderapolis</h1>
-        <div class="tag" id="site-tag">Harm Reduction for Minnesota Ravers</div>
-      </div>
-    </div>
-    <div class="top-controls">
-      <div class="lang">EN</div>
-    </div>
-  </div>
-  <div class="search-wrap">
-    <div class="search">
-      <input type="text" id="search-input" placeholder="Search site..." aria-label="Search site"/>
-    </div>
-    <div class="suggestions">
-      <div class="suggestions-list" id="suggestions-list"></div>
-    </div>
-  </div>
-</header>
+<div id="skyline"></div>
 
-<nav id="site-drawer" style="display:none;">
+<!-- Hamburger menu -->
+<div class="menu-btn" id="menuBtn">
+  <div></div><div></div><div></div>
+</div>
+<nav class="side-nav" id="sideNav">
   <ul>
     <li><a href="index.html">Home</a></li>
-    <li><a href="venue-guide.html">Venue Guide</a></li>
-    <li><a href="event-calendar.html">Event Calendar</a></li>
-    <li><a href="spotify.html">Spotify</a></li>
-    <li><a href="mn-resources.html">MN Resources</a></li>
-    <li><a href="sober-ravers.html">Sober Ravers</a></li>
-    <li><a href="consent-basics.html">Consent Basics</a></li>
-    <li><a href="accountability.html">Accountability</a></li>
-    <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
-    <li><a href="polydrug-tool.html">Polydrug Tool</a></li>
-    <li><a href="bad-trip.html">Having a Bad Trip?</a></li>
-    <li><a href="rave-tarot.html">Rave Tarot</a></li>
+    <li><a href="#">Safety</a>
+      <ul>
+        <li><a href="panic.html">Panic Button</a></li>
+        <li><a href="emergency.html">Emergency Guides</a></li>
+        <li><a href="spiking.html">Drink Spiking</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Drug Info</a>
+      <ul>
+        <li><a href="polydrug.html">Polydrug Tool</a></li>
+        <li><a href="rx-combos.html">RX + Party Combos</a></li>
+        <li><a href="health.html">Raver Health</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Consent</a>
+      <ul>
+        <li><a href="consent.html">Consent Basics</a></li>
+        <li><a href="accountability.html">Accountability</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Local Scene</a>
+      <ul>
+        <li><a href="spotlight.html">Scene Spotlight</a></li>
+        <li><a href="calendar.html">Event Calendar</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Extras</a>
+      <ul>
+        <li><a href="seasonal.html">Seasonal Tips</a></li>
+        <li><a href="sober.html">Sober Ravers</a></li>
+        <li><a href="resources.html">MN Resources</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
-<main>
-  <section class="grid">
-    <a href="venue-guide.html" class="card"><h3>Venue Guide</h3><p>Find the safest and best spaces to rave in Minnesota.</p></a>
-    <a href="event-calendar.html" class="card"><h3>Event Calendar</h3><p>Keep track of local raves and festivals.</p></a>
-    <a href="mn-resources.html" class="card"><h3>MN Resources</h3><p>Local harm reduction, medical, and support resources.</p></a>
-    <a href="polydrug-tool.html" class="card"><h3>Polydrug Tool</h3><p>Check interactions, dosage, and safety info.</p></a>
-    <a href="bad-trip.html" class="card"><h3>Bad Trip Mode</h3><p>Calming resources and grounding tools for psychedelic crises.</p></a>
-    <a href="rave-tarot.html" class="card"><h3>Rave Tarot</h3><p>Fun, interactive guidance for your next rave experience.</p></a>
-  </section>
-</main>
-
-<footer>
-  <div class="legal">© 2025 PLURderapolis | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a></div>
-  <div class="links">
-    <a href="https://instagram.com/plurderapolis" target="_blank" rel="noopener noreferrer">@plurderapolis</a>
-  </div>
-</footer>
+<!-- Scroll alert -->
+<div class="rave-alert-wrapper">
+  <a href="/mixes.html" class="rave-alert-link">
+    🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • Click for full info 🖤
+  </a>
 </div>
 
-<script>
-const drawer = document.getElementById('site-drawer');
-const hamburger = document.getElementById('hamburger');
-hamburger.addEventListener('click',()=>{drawer.style.display=drawer.style.display==='none'?'block':'none'; hamburger.setAttribute('aria-expanded', drawer.style.display==='block');});
+<!-- Site title -->
+<div class="site-title">
+  <h1>PLURderapolis</h1>
+  <div class="tagline">Harm Reduction for Minnesota Ravers</div>
+</div>
 
-// Expanded search index
-const pages = [
-  {title:'Home',url:'index.html'},
-  {title:'Venue Guide',url:'venue-guide.html'},
-  {title:'Event Calendar',url:'event-calendar.html'},
-  {title:'Spotify',url:'spotify.html'},
-  {title:'MN Resources',url:'mn-resources.html'},
-  {title:'Sober Ravers',url:'sober-ravers.html'},
-  {title:'Consent Basics',url:'consent-basics.html'},
-  {title:'Accountability',url:'accountability.html'},
-  {title:'Rejection-Based Violence',url:'rejection-based-violence.html'},
-  {title:'Polydrug Tool',url:'polydrug-tool.html'},
-  {title:'Bad Trip Mode',url:'bad-trip.html'},
-  {title:'Rave Tarot',url:'rave-tarot.html'}
+<!-- Search -->
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search the site...">
+  <button onclick="performSearch()">🔍</button>
+  <div id="searchResults"></div>
+</div>
+
+<!-- Sections -->
+<div class="section">
+  <h2>💡 What We Do</h2>
+  <ul>
+    <li>💊 Harm Reduction — Narcan, test strips, interaction tools.</li>
+    <li>🧠 Mental Health & Crisis — Peer support, Bad Trip Mode.</li>
+    <li>🕊️ Consent & Culture — Safer spaces, collective care.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>🔀 Panic & Emergency Tools</h2>
+  <div class="card-container">
+    <div class="card">
+      <h3>Panic Button</h3>
+      <p>Immediate access to help in emergencies.</p>
+      <a class="cta-button" href="panic.html">Go</a>
+    </div>
+    <div class="card">
+      <h3>Emergency Guides</h3>
+      <p>Step-by-step instructions for common crises.</p>
+      <a class="cta-button" href="emergency.html">View</a>
+    </div>
+    <div class="card">
+      <h3>Bad Trip Mode</h3>
+      <p>Calming visuals & exercises to ride it out safely.</p>
+      <a class="cta-button" href="badtrip.html" style="background-color:#ff6ec7; color:#1c0028;">Visit</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔀 Polydrug Interaction Tool</h2>
+  <iframe src="polydrug.html" style="width:100%;height:400px;border:none;border-radius:8px;"></iframe>
+  <a class="cta-button" href="polydrug.html">Open Full Tool</a>
+</div>
+
+<div class="section">
+  <h2>📚 Resources</h2>
+  <div class="card-container">
+    <div class="card">
+      <h3>MN Resources</h3>
+      <p>Plan B, queer-friendly clinics, DV support, recovery help.</p>
+      <a class="cta-button" href="resources.html">View</a>
+    </div>
+    <div class="card">
+      <h3>Sober Ravers</h3>
+      <p>Tips & support for enjoying the scene sober.</p>
+      <a class="cta-button" href="sober.html">View</a>
+    </div>
+    <div class="card">
+      <h3>Raver Health</h3>
+      <p>Hydration, cooling, and drug safety tips.</p>
+      <a class="cta-button" href="health.html">View</a>
+    </div>
+  </div>
+</div>
+
+<!-- Peach panic button -->
+<div id="peachWrap">
+  <a class="emoji-panic" id="panicButton" title="Emergency">🍑</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <hr/>
+  <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+  <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
+  <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="panic.html">Panic</a></li>
+    <li><a href="emergency.html">Emergency</a></li>
+    <li><a href="polydrug.html">Polydrug</a></li>
+    <li><a href="resources.html">Resources</a></li>
+  </ul>
+</footer>
+
+<script>
+// Hamburger toggle
+const menuBtn = document.getElementById('menuBtn');
+const sideNav = document.getElementById('sideNav');
+menuBtn.addEventListener('click',()=>{
+  menuBtn.classList.toggle('active');
+  sideNav.classList.toggle('active');
+});
+const navItems = document.querySelectorAll('.side-nav ul li');
+navItems.forEach(item=>{
+  item.addEventListener('click',()=>{item.classList.toggle('show');});
+});
+
+// Peach panic button
+const peachBtn = document.getElementById('panicButton');
+peachBtn.addEventListener('click',()=>{
+  const choice = confirm("Go to Panic Button? Cancel = Emergency Response");
+  if(choice) window.location.href='panic.html';
+  else window.location.href='emergency.html';
+});
+
+// Universal predictive search
+const siteIndex = [
+  { title:"Home", url:"index.html", tags:["home","ravers","harm reduction"] },
+  { title:"Panic Button", url:"panic.html", tags:["panic","emergency","safety"] },
+  { title:"Emergency Response", url:"emergency.html", tags:["emergency","safety"] },
+  { title:"Polydrug Tool", url:"polydrug.html", tags:["drugs","interaction","party"] },
+  { title:"RX + Party Combos", url:"rx-combos.html", tags:["drugs","rx","party"] },
+  { title:"Raver Health", url:"health.html", tags:["health","safety"] },
+  { title:"Consent Basics", url:"consent.html", tags:["consent","boundaries"] },
+  { title:"Accountability", url:"accountability.html", tags:["consent","reporting"] },
+  { title:"Scene Spotlight", url:"spotlight.html", tags:["local","scene","events"] },
+  { title:"Event Calendar", url:"calendar.html", tags:["events","calendar"] },
+  { title:"Spotify", url:"spotify.html", tags:["music","spotify"] },
+  { title:"Seasonal Tips", url:"seasonal.html", tags:["seasonal","safety"] },
+  { title:"Sober Ravers", url:"sober.html", tags:["sobriety","support"] },
+  { title:"MN Resources", url:"resources.html", tags:["resources","support"] }
 ];
-const input=document.getElementById('search-input');
-const suggestionsList=document.getElementById('suggestions-list');
-input.addEventListener('input',()=>{const val=input.value.toLowerCase();suggestionsList.innerHTML='';if(val.length<1)return;pages.forEach(p=>{if(p.title.toLowerCase().includes(val)){const btn=document.createElement('button');btn.textContent=p.title;btn.onclick=()=>{window.location.href=p.url};suggestionsList.appendChild(btn);}});});
-document.addEventListener('click',e=>{if(!input.contains(e.target)) suggestionsList.innerHTML='';});
+const input = document.getElementById('searchInput');
+const resultsDiv = document.getElementById('searchResults');
+
+input.addEventListener('input',()=>{
+  const query = input.value.toLowerCase();
+  if(!query){ resultsDiv.style.display='none'; return;}
+  const results = siteIndex.filter(p=>p.title.toLowerCase().includes(query) || p.tags.some(t=>t.includes(query)));
+  if(results.length){
+    resultsDiv.innerHTML = "<ul>"+results.map(r=>`<li onclick="window.location.href='${r.url}'">${r.title}</li>`).join('')+"</ul>";
+  } else resultsDiv.innerHTML="<p style='padding:8px;'>No results found.</p>";
+  resultsDiv.style.display='block';
+});
+
+document.addEventListener('click', (e)=>{ if(!e.target.closest('.search-bar')) resultsDiv.style.display='none'; });
 </script>
+
 </body>
 </html>
