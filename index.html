@@ -1,263 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #1c1c1c;
-      color: #f5f5f5;
-    }
-
-    /* Skyline backdrop */
-    header {
-      background: url('skyline-backdrop.png') no-repeat center center/cover;
-      color: #f5f5f5;
-      text-align: center;
-      padding: 80px 20px;
-      position: relative;
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0;
-      text-shadow: 0 0 10px #000;
-    }
-
-    /* Hamburger nav */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(28, 28, 28, 0.95);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      z-index: 1000;
-    }
-
-    nav .logo {
-      font-weight: bold;
-      color: #e040fb;
-      font-size: 1.2rem;
-      text-decoration: none;
-    }
-
-    nav .menu-toggle {
-      font-size: 1.8rem;
-      color: #f5f5f5;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 75%;
-      height: 100%;
-      background: #1c1c1c;
-      transition: right 0.3s ease;
-      padding-top: 60px;
-      overflow-y: auto;
-    }
-
-    nav ul.show {
-      right: 0;
-    }
-
-    nav ul li {
-      border-bottom: 1px solid #333;
-    }
-
-    nav ul li a {
-      display: block;
-      padding: 15px 20px;
-      color: #f5f5f5;
-      text-decoration: none;
-    }
-
-    nav ul li a:hover {
-      background: #5d3a7d;
-    }
-
-    /* Submenus */
-    nav ul li ul {
-      display: none;
-      background: #2a2a2a;
-    }
-
-    nav ul li.open ul {
-      display: block;
-    }
-
-    nav ul li ul li a {
-      padding-left: 40px;
-    }
-
-    /* Panic Peach Button */
-    .panic-peach {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 70px;
-      height: 70px;
-      background: radial-gradient(circle at 30% 30%, #ffb347, #ff6f61);
-      border-radius: 50% 50% 45% 55% / 55% 50% 50% 45%;
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
-      cursor: pointer;
-      z-index: 2000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #fff;
-      transition: transform 0.2s ease, opacity 0.3s ease;
-    }
-
-    .panic-peach::before {
-      content: "🍑";
-      font-size: 2rem;
-    }
-
-    .panic-peach:active {
-      transform: scale(0.9);
-    }
-
-    .panic-peach.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(100px);
-    }
-
-    /* Fake "How to Use This Site" reveal section */
-    #how-to {
-      display: none;
-      padding: 40px 20px;
-      background: #2a2a2a;
-    }
-
-    #how-to.active {
-      display: block;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PLURderapolis</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <nav>
-    <a href="/index.html" class="logo">PLURderapolis</a>
-    <button class="menu-toggle">☰</button>
-    <ul id="menu">
-      <li><a href="/index.html">Home</a></li>
-      <li><a href="/about.html">About</a></li>
-      <li><a href="/contact.html">Contact</a></li>
 
-      <li>
-        <a href="#">Local Scene ▾</a>
-        <ul>
-          <li><a href="/venues.html">Venue Guide</a></li>
-          <li><a href="/events.html">Event Calendar</a></li>
-          <li><a href="/spotify.html">Spotify</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#">Extras ▾</a>
-        <ul>
-          <li><a href="/mn-resources.html">MN Resources</a></li>
-          <li><a href="/sober-ravers.html">Sober Ravers</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#">Consent ▾</a>
-        <ul>
-          <li><a href="/consent-basics.html">Consent Basics</a></li>
-          <li><a href="/accountability.html">Accountability</a></li>
-          <li><a href="/kayli.html">Rejection-Based Violence</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#">Drug Info ▾</a>
-        <ul>
-          <li><a href="/polydrug.html">Polydrug Tool</a></li>
-          <li><a href="/rx-combos.html">Rx + Party Drug Combos</a></li>
-          <li><a href="/health.html">Raver Health</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#">Safety ▾</a>
-        <ul>
-          <li><a href="/panic.html">Panic Button</a></li>
-          <li><a href="/emergency.html">Emergency Response</a></li>
-          <li><a href="/fake-drugs.html">Fake Drug Guide</a></li>
-          <li><a href="/drink-spiking.html">Drink Spiking</a></li>
-          <li><a href="/badtrip.html">Bad Trip Mode</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-
-  <header>
-    <h1>Welcome to PLURderapolis</h1>
-    <p>Harm reduction, safety, and community for Minnesota ravers</p>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">PLURderapolis</div>
+    <button class="hamburger" aria-label="Menu">☰</button>
+    <nav class="nav-menu">
+      <a href="index.html">Home</a>
+      <a href="safety.html">Safety</a>
+      <a href="drugs.html">Drug Info</a>
+      <a href="consent.html">Consent</a>
+      <a href="localscene.html">Local Scene</a>
+      <a href="extras.html">Extras</a>
+      <a href="badtrip.html">Bad Trip Mode</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="🔎 Search…" />
+      <ul id="suggestions"></ul>
+    </div>
   </header>
 
-  <section id="how-to">
-    <h2>How to Use This Site</h2>
-    <p>This section provides guidance on quick access tools, emergency support, and navigation tips for ravers.</p>
-  </section>
+  <!-- Quick Access Grid -->
+  <main class="homepage">
+    <section class="quick-access">
+      <a href="panic.html" class="card panic">🚨 Panic / Emergency</a>
+      <a href="badtrip.html" class="card badtrip">🌌 Bad Trip Mode</a>
+      <a href="polydrug.html" class="card polydrug">💊 Polydrug Tool</a>
+      <a href="mnresources.html" class="card resources">🌆 MN Resources</a>
+      <a href="health.html" class="card health">❤️ Raver Health</a>
+      <a href="sober.html" class="card sober">✨ Sober Ravers</a>
+    </section>
 
-  <!-- Peach Panic Button -->
-  <div class="panic-peach" id="panicPeach"></div>
+    <!-- Mini Polydrug Preview -->
+    <section class="polydrug-preview">
+      <h2>Polydrug Tool Preview</h2>
+      <table>
+        <tr><td>MDMA</td><td>⚠️</td><td>✔️</td></tr>
+        <tr><td>LSD</td><td>✔️</td><td>⚠️</td></tr>
+        <tr><td>Alcohol</td><td>❌</td><td>⚠️</td></tr>
+      </table>
+      <a class="button" href="polydrug.html">Open Full Tool →</a>
+    </section>
+  </main>
 
-  <script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const menu = document.getElementById('menu');
-    const submenuParents = menu.querySelectorAll('li > a[href="#"]');
-    const peach = document.getElementById('panicPeach');
-    const howTo = document.getElementById('how-to');
+  <!-- Panic Button -->
+  <a href="panic.html" class="panic-button">🚨</a>
 
-    menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('show');
-    });
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>Harm reduction information only. Not medical advice.</p>
+    <p><a href="https://instagram.com/plurderapolis">@plurderapolis</a> • plurderapolis@gmail.com</p>
+  </footer>
 
-    submenuParents.forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const parentLi = link.parentElement;
-        parentLi.classList.toggle('open');
-      });
-    });
-
-    // Open How to Use This Site
-    peach.addEventListener('click', () => {
-      howTo.classList.toggle('active');
-      window.scrollTo({ top: howTo.offsetTop, behavior: 'smooth' });
-    });
-
-    // Swipe-away functionality
-    let startX = 0;
-    peach.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    });
-
-    peach.addEventListener('touchmove', e => {
-      const moveX = e.touches[0].clientX;
-      if (startX - moveX > 50) { // swipe left
-        peach.classList.add('hidden');
-      }
-    });
-  </script>
 </body>
 </html>
