@@ -1,64 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PLURderapolis</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
+<meta name="description" content="PLURderapolis — harm reduction, rave safety, polydrug info, and local Minnesota resources." />
+<style>
+  /* Color palette */
+  :root{
+    --bg:#1C1C1C; --panel:#2A0036; --text:#F5F5F5; --muted:#B0B0B0;
+    --neon-pink:#E040FB; --neon-teal:#00CED1; --deep-plum:#5D3A7D;
+    --peach-light:#FFB07C; --peach-mid:#FF6F91; --peach-deep:#FF3D6E;
+    --leaf:#2EB62C; --glass: rgba(255,255,255,0.03); --max-width:1100px;
+  }
+  html,body{height:100%;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; line-height:1.35;}
+  a { color: var(--neon-pink); text-decoration: none; }
+  a:focus { outline: 3px solid rgba(224,64,251,0.15); outline-offset: 4px; }
+  .wrap{max-width:var(--max-width); margin: 0 auto; padding: 16px; box-sizing: border-box;}
+  /* Skyline hero */
+  .hero{position: relative; padding: 28px 12px 40px; margin-bottom: 14px; overflow: visible;}
+  .skyline{
+    position:absolute; inset:0;
+    background: url('/assets/skyline/skyline.png') no-repeat center center/cover;
+    filter: blur(12px) saturate(1.2);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; display:flex; gap:12px; align-items:center; justify-content:space-between; z-index:2;}
+  .brand{display:flex; gap:12px; align-items:center;}
+  .logo{width:56px;height:56px;border-radius:10px;background: linear-gradient(135deg,var(--neon-pink),var(--neon-teal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--text);}
+  h1{margin:0;font-size:20px;color:var(--deep-plum); text-shadow:0 0 10px rgba(224,64,251,0.08);}
+  .tag{color:var(--muted);font-size:13px;}
+  .top-controls{display:flex; gap:8px; align-items:center;}
+  .hamburger{--size:42px;width:var(--size);height:var(--size);display:inline-grid; place-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:10px; cursor:pointer;box-shadow:0 6px 30px rgba(0,0,0,0.5);}
+  .hamburger .lines{width:18px;height:2px;background:var(--text);position:relative;transition: transform .18s ease, opacity .18s ease;}
+  .hamburger .lines::before, .hamburger .lines::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--text);transition: transform .18s ease, top .18s ease, bottom .18s ease;}
+  .hamburger .lines::before{top:-6px;} .hamburger .lines::after{bottom:-6px;}
+  .lang{background:var(--panel);padding:8px 10px;border-radius:10px;font-size:13px;color:var(--text);display:flex;gap:8px;align-items:center;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.6);}
+  .search-wrap{margin:18px 0 12px; display:flex; gap:8px; align-items:center;}
+  .search{flex:1; min-width:0;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:12px 14px; display:flex; gap:8px; align-items:center; box-shadow:0 6px 18px rgba(0,0,0,0.6), 0 0 24px rgba(93,58,125,0.04) inset; border:1px solid rgba(93,58,125,0.12);}
+  .search input{background:transparent;border:none;color:var(--text);font-size:15px;outline:none;width:100%;}
+  .suggestions{position:relative;}
+  .suggestions-list{position:absolute;left:0;right:0;top:48px;z-index:50;background:var(--panel);border-radius:10px;padding:8px;box-shadow:0 10px 30px rgba(0,0,0,0.7);max-height:260px;overflow:auto;border:1px solid rgba(0,0,0,0.6);}
+  .suggestions-list button{display:block;width:100%;text-align:left;background:none;border:none;padding:10px;color:var(--text);border-radius:8px;font-size:14px;cursor:pointer;}
+  .suggestions-list button:hover{ background: rgba(224,64,251,0.06); color:var(--neon-pink); }
+  .grid{display:grid; grid-template-columns: repeat(2,1fr); gap:12px; margin-bottom:14px;}
+  .card{background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); padding:14px; border-radius:12px; min-height:78px; box-shadow:0 6px 30px rgba(0,0,0,0.6); border:1px solid rgba(93,58,125,0.08); transition: transform .12s ease, box-shadow .12s ease;}
+  .card:hover{ transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 60px rgba(93,58,125,0.12);}
+  .card h3{ margin:0 0 6px 0; color:var(--deep-plum);} .card p{ margin:0;color:var(--muted); font-size:13px;}
+  .badtrip{background: linear-gradient(180deg, rgba(93,58,125,0.08), rgba(42,0,54,0.6)); border-radius:14px; padding:14px; margin:10px 0 20px; border:1px solid rgba(224,64,251,0.06); display:flex; gap:12px; align-items:center; justify-content:space-between;}
+  .badtrip .info{flex:1} .btn{ border:none; padding:12px 14px; border-radius:10px; font-weight:700; cursor:pointer; font-size:14px;}
+  .btn-primary{ background: linear-gradient(90deg,var(--peach-mid),var(--peach-deep)); color:#fff; box-shadow:0 10px 30px rgba(255,61,110,0.12);} 
+  .btn-teal{ background: linear-gradient(90deg,var(--neon-teal), #00f3e5); color:#000; }
+  .poly-demo{ display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; background:var(--glass); border: 1px solid rgba(93,58,125,0.06);}
+  select,input[type=number]{ padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:var(--text); }
+  footer{ margin-top:22px; padding:18px 12px; border-top:1px solid rgba(255,255,255,0.03); color:var(--muted); font-size:13px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .legal{ opacity:0.9; }
+  .links{ display:flex; gap:12px; align-items:center; }
+</style>
 </head>
 <body>
+<div class="skyline"></div>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="logo">PLURderapolis</div>
-    <button class="hamburger" aria-label="Menu">☰</button>
-    <nav class="nav-menu">
-      <a href="index.html">Home</a>
-      <a href="safety.html">Safety</a>
-      <a href="drugs.html">Drug Info</a>
-      <a href="consent.html">Consent</a>
-      <a href="localscene.html">Local Scene</a>
-      <a href="extras.html">Extras</a>
-      <a href="badtrip.html">Bad Trip Mode</a>
-    </nav>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="🔎 Search…" />
-      <ul id="suggestions"></ul>
+<div class="wrap">
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="site-drawer" aria-label="Open menu"><span class="lines"></span></button>
+      <div class="logo" aria-hidden="true">P</div>
+      <div>
+        <h1 id="site-title">PLURderapolis</h1>
+        <div class="tag" id="site-tag">Harm Reduction for Minnesota Ravers</div>
+      </div>
     </div>
-  </header>
+    <div class="top-controls">
+      <div class="lang">EN</div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <div class="search">
+      <input type="text" id="search-input" placeholder="Search site..." aria-label="Search site"/>
+    </div>
+    <div class="suggestions">
+      <div class="suggestions-list" id="suggestions-list"></div>
+    </div>
+  </div>
+</header>
 
-  <!-- Quick Access Grid -->
-  <main class="homepage">
-    <section class="quick-access">
-      <a href="panic.html" class="card panic">🚨 Panic / Emergency</a>
-      <a href="badtrip.html" class="card badtrip">🌌 Bad Trip Mode</a>
-      <a href="polydrug.html" class="card polydrug">💊 Polydrug Tool</a>
-      <a href="mnresources.html" class="card resources">🌆 MN Resources</a>
-      <a href="health.html" class="card health">❤️ Raver Health</a>
-      <a href="sober.html" class="card sober">✨ Sober Ravers</a>
-    </section>
+<nav id="site-drawer" style="display:none;">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="venue-guide.html">Venue Guide</a></li>
+    <li><a href="event-calendar.html">Event Calendar</a></li>
+    <li><a href="spotify.html">Spotify</a></li>
+    <li><a href="mn-resources.html">MN Resources</a></li>
+    <li><a href="sober-ravers.html">Sober Ravers</a></li>
+    <li><a href="consent-basics.html">Consent Basics</a></li>
+    <li><a href="accountability.html">Accountability</a></li>
+    <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
+    <li><a href="polydrug-tool.html">Polydrug Tool</a></li>
+    <li><a href="bad-trip.html">Having a Bad Trip?</a></li>
+    <li><a href="rave-tarot.html">Rave Tarot</a></li>
+  </ul>
+</nav>
 
-    <!-- Mini Polydrug Preview -->
-    <section class="polydrug-preview">
-      <h2>Polydrug Tool Preview</h2>
-      <table>
-        <tr><td>MDMA</td><td>⚠️</td><td>✔️</td></tr>
-        <tr><td>LSD</td><td>✔️</td><td>⚠️</td></tr>
-        <tr><td>Alcohol</td><td>❌</td><td>⚠️</td></tr>
-      </table>
-      <a class="button" href="polydrug.html">Open Full Tool →</a>
-    </section>
-  </main>
+<main>
+  <section class="grid">
+    <a href="venue-guide.html" class="card"><h3>Venue Guide</h3><p>Find the safest and best spaces to rave in Minnesota.</p></a>
+    <a href="event-calendar.html" class="card"><h3>Event Calendar</h3><p>Keep track of local raves and festivals.</p></a>
+    <a href="mn-resources.html" class="card"><h3>MN Resources</h3><p>Local harm reduction, medical, and support resources.</p></a>
+    <a href="polydrug-tool.html" class="card"><h3>Polydrug Tool</h3><p>Check interactions, dosage, and safety info.</p></a>
+    <a href="bad-trip.html" class="card"><h3>Bad Trip Mode</h3><p>Calming resources and grounding tools for psychedelic crises.</p></a>
+    <a href="rave-tarot.html" class="card"><h3>Rave Tarot</h3><p>Fun, interactive guidance for your next rave experience.</p></a>
+  </section>
+</main>
 
-  <!-- Panic Button -->
-  <a href="panic.html" class="panic-button">🚨</a>
+<footer>
+  <div class="legal">© 2025 PLURderapolis | <a href="privacy.html">Privacy</a> | <a href="terms.html">Terms</a></div>
+  <div class="links">
+    <a href="https://instagram.com/plurderapolis" target="_blank" rel="noopener noreferrer">@plurderapolis</a>
+  </div>
+</footer>
+</div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>Harm reduction information only. Not medical advice.</p>
-    <p><a href="https://instagram.com/plurderapolis">@plurderapolis</a> • plurderapolis@gmail.com</p>
-  </footer>
+<script>
+const drawer = document.getElementById('site-drawer');
+const hamburger = document.getElementById('hamburger');
+hamburger.addEventListener('click',()=>{drawer.style.display=drawer.style.display==='none'?'block':'none'; hamburger.setAttribute('aria-expanded', drawer.style.display==='block');});
 
+// Expanded search index
+const pages = [
+  {title:'Home',url:'index.html'},
+  {title:'Venue Guide',url:'venue-guide.html'},
+  {title:'Event Calendar',url:'event-calendar.html'},
+  {title:'Spotify',url:'spotify.html'},
+  {title:'MN Resources',url:'mn-resources.html'},
+  {title:'Sober Ravers',url:'sober-ravers.html'},
+  {title:'Consent Basics',url:'consent-basics.html'},
+  {title:'Accountability',url:'accountability.html'},
+  {title:'Rejection-Based Violence',url:'rejection-based-violence.html'},
+  {title:'Polydrug Tool',url:'polydrug-tool.html'},
+  {title:'Bad Trip Mode',url:'bad-trip.html'},
+  {title:'Rave Tarot',url:'rave-tarot.html'}
+];
+const input=document.getElementById('search-input');
+const suggestionsList=document.getElementById('suggestions-list');
+input.addEventListener('input',()=>{const val=input.value.toLowerCase();suggestionsList.innerHTML='';if(val.length<1)return;pages.forEach(p=>{if(p.title.toLowerCase().includes(val)){const btn=document.createElement('button');btn.textContent=p.title;btn.onclick=()=>{window.location.href=p.url};suggestionsList.appendChild(btn);}});});
+document.addEventListener('click',e=>{if(!input.contains(e.target)) suggestionsList.innerHTML='';});
+</script>
 </body>
 </html>
