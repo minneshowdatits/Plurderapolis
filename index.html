@@ -163,16 +163,26 @@ body {
 .card h3 { color:#ff69b4; font-family:'Montserrat',sans-serif; margin-top:0;}
 .card p { font-size:0.95rem; }
 
-/* Search bar */
-.search-bar { margin:1rem auto; max-width:500px; display:flex; position:relative; z-index:1003; }
-.search-bar input{ flex:1; padding:10px; border:none; border-radius:5px 0 0 5px; }
-.search-bar button{ padding:10px; border:none; background:#00f7e0; color:#2e003e; border-radius:0 5px 5px 0; cursor:pointer; }
-#searchResults { position:absolute; top:100%; left:0; right:0; background:#3a0052; max-height:350px; overflow-y:auto; border-radius:0 0 5px 5px; display:none; z-index:1004; box-shadow:0 0 12px rgba(0,255,255,0.2);}
+/* Search bar - moved to fixed top-center so it won't be inside the side-nav visually */
+.search-bar {
+  position: fixed;
+  top: 86px; /* sits below site title */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  max-width: 700px;
+  width: calc(100% - 40px);
+  display:flex;
+  z-index:1005;
+}
+.search-bar input{ flex:1; padding:12px 14px; border:none; border-radius:8px 0 0 8px; font-size:1rem; }
+.search-bar button{ padding:12px; border:none; background:#00f7e0; color:#2e003e; border-radius:0 8px 8px 0; cursor:pointer; }
+#searchResults { position:absolute; top:110%; left:0; right:0; background:#3a0052; max-height:350px; overflow-y:auto; border-radius:0 0 8px 8px; display:none; z-index:1006; box-shadow:0 6px 24px rgba(0,0,0,0.6);}
 #searchResults ul { list-style:none; padding:0; margin:0;}
 #searchResults li { padding:10px 12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
 #searchResults li:hover { background:#5d3a7d; }
 #searchResults .result-title{ font-weight:700; color:#00f7e0; margin-bottom:4px; }
-#searchResults .result-snippet{ font-size:0.85rem; color:#eaeaea; opacity:0.9; line-height:1.35; }
+#searchResults .result-snippet{ font-size:0.85rem; color:#eaeaea; opacity:0.95; line-height:1.35; }
 #searchResults mark{ background:#ff6ec7; color:#1c0028; padding:0 2px; border-radius:2px; }
 
 /* Peach panic button */
@@ -209,8 +219,14 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
 footer ul li a:hover{text-decoration:underline;}
 
-/* Responsive */
+/* Responsive tweaks */
+@media(max-width:800px){
+  .search-bar{ max-width: calc(100% - 40px); top: 76px; width: calc(100% - 28px); }
+  #searchResults { top: 110%; }
+}
 @media(max-width:600px){
+  .site-title { padding-top: 12px; }
+  .search-bar{ top: 72px; left: 50%; transform: translateX(-50%); width: calc(100% - 28px); }
   .section{margin:1rem;padding:0.8rem;}
   .cta-button{padding:0.5rem 0.8rem;}
   .card-container { flex-direction: column; align-items:center;}
@@ -277,11 +293,11 @@ footer ul li a:hover{text-decoration:underline;}
   <div class="tagline">Harm Reduction for Minnesota Ravers</div>
 </div>
 
-<!-- Search -->
+<!-- SEARCH - placed outside the nav so it won't appear inside the side menu -->
 <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search the site..." oninput="performSearch()" />
-  <button onclick="performSearch()">🔍</button>
-  <div id="searchResults"></div>
+  <input type="text" id="searchInput" placeholder="Search the site..." autocomplete="off" />
+  <button id="searchBtn" aria-label="Search">🔍</button>
+  <div id="searchResults" role="listbox" aria-label="Search results"></div>
 </div>
 
 <!-- Sections -->
@@ -366,25 +382,28 @@ footer ul li a:hover{text-decoration:underline;}
 <script src="https://unpkg.com/lunr/lunr.js"></script>
 
 <script>
-// Hamburger toggle
+// ----- UI: hamburger, nav toggles, panic button -----
 const menuBtn = document.getElementById('menuBtn');
 const sideNav = document.getElementById('sideNav');
-menuBtn.addEventListener('click',()=>{
+menuBtn.addEventListener('click', () => {
   menuBtn.classList.toggle('active');
   sideNav.classList.toggle('active');
 });
 const navItems = document.querySelectorAll('.side-nav ul li');
-navItems.forEach(item=>{
-  item.addEventListener('click',()=>{item.classList.toggle('show');});
+navItems.forEach(item => {
+  item.addEventListener('click', (e) => {
+    // avoid toggling when clicking inner links
+    if (e.target.tagName.toLowerCase() === 'a') return;
+    item.classList.toggle('show');
+  });
 });
 
-// Peach panic button
 const peachBtn = document.getElementById('panicButton');
-peachBtn.addEventListener('click',()=>{window.location.href="panic.html";});
+peachBtn.addEventListener('click', () => { window.location.href = "panic.html"; });
 
-// ===== Full-text search (Lunr.js) =====
+// ----- Full-text search (Lunr.js) -----
 
-// Pages to index (add/remove here as you add pages)
+// Pages to index (adjust as you add/remove pages)
 const pagesToIndex = [
   { id:"home",        title:"Home",                 url:"index.html" },
   { id:"panic",       title:"Panic Button",         url:"panic.html" },
@@ -405,16 +424,16 @@ const pagesToIndex = [
 ];
 
 let searchIndex = null;
-const docsMap = new Map(); // id -> {id,title,url,content}
+const docsMap = new Map();
 
 /** Strip tags & boilerplate for indexing */
 function extractTextFromHTML(htmlString){
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, 'text/html');
 
-  // remove non-contenty elements
+  // remove non-content elements that pollute index
   ['script','style','nav','footer','header'].forEach(sel => {
-    doc.querySelectorAll(sel).forEach(el=>el.remove());
+    doc.querySelectorAll(sel).forEach(el => el.remove());
   });
 
   // prefer main/section if present
@@ -423,20 +442,27 @@ function extractTextFromHTML(htmlString){
   return text;
 }
 
-/** Build index by fetching all pages (same-origin) */
+/** Build index by fetching all pages (same-origin). If fetch fails (local file://), fall back to indexing current DOM or title. */
 async function buildSearchIndex(){
   const fetches = pagesToIndex.map(async p => {
-    try{
-      const res = await fetch(p.url, {cache: 'no-store'});
-      if(!res.ok) throw new Error('HTTP '+res.status);
+    try {
+      const res = await fetch(p.url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const html = await res.text();
       const content = extractTextFromHTML(html);
-      const doc = { id:p.id, title:p.title, url:p.url, content };
+      const doc = { id: p.id, title: p.title, url: p.url, content };
       docsMap.set(p.id, doc);
       return doc;
-    }catch(e){
-      // Fallback: at least index the title if fetch fails (e.g., local file://)
-      const fallback = { id:p.id, title:p.title, url:p.url, content: p.title };
+    } catch (e) {
+      // If it's the index page, use the current DOM content
+      if (p.url === 'index.html' || p.url === window.location.pathname.split('/').pop()) {
+        const fallbackContent = extractTextFromHTML(document.documentElement.outerHTML);
+        const doc = { id: p.id, title: p.title, url: p.url, content: fallbackContent || p.title };
+        docsMap.set(p.id, doc);
+        return doc;
+      }
+      // otherwise fallback to indexing the page title (so it still surfaces)
+      const fallback = { id: p.id, title: p.title, url: p.url, content: p.title };
       docsMap.set(p.id, fallback);
       return fallback;
     }
@@ -444,52 +470,55 @@ async function buildSearchIndex(){
 
   const docs = await Promise.all(fetches);
 
-  searchIndex = lunr(function(){
+  searchIndex = lunr(function () {
     this.ref('id');
     this.field('title');
     this.field('content');
+
     docs.forEach(d => this.add(d));
   });
 }
 
-const searchInput   = document.getElementById('searchInput');
-const resultsBox    = document.getElementById('searchResults');
+// Elements
+const searchInput = document.getElementById('searchInput');
+const searchBtn   = document.getElementById('searchBtn');
+const resultsBox  = document.getElementById('searchResults');
 
-/** Simple debounce */
-function debounce(fn, delay=200){
-  let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), delay); };
+// Debounce util
+function debounce(fn, delay = 160){
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); };
 }
 
-/** Create HTML-safe snippet + highlight terms */
+// build a snippet and highlight tokens
 function makeSnippet(content, query){
-  const q = query.trim();
-  if(!q) return '';
-  const lcContent = content.toLowerCase();
+  const q = (query || '').trim();
+  if (!q) return '';
+  const lc = content.toLowerCase();
   const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
   let pos = -1;
-  for(const tok of tokens){
-    pos = lcContent.indexOf(tok);
-    if(pos !== -1) break;
+  for (const tok of tokens){
+    pos = lc.indexOf(tok);
+    if (pos !== -1) break;
   }
-  if(pos === -1) pos = 0;
+  if (pos === -1) pos = 0;
   const start = Math.max(0, pos - 60);
-  const end   = Math.min(content.length, pos + 140);
+  const end = Math.min(content.length, pos + 140);
   let snippet = content.slice(start, end).trim();
-  // highlight each token
   tokens.forEach(tok=>{
-    const re = new RegExp(`(${tok.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'ig');
+    const esc = tok.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    const re = new RegExp(`(${esc})`, 'ig');
     snippet = snippet.replace(re, '<mark>$1</mark>');
   });
-  if(start>0) snippet = '… ' + snippet;
-  if(end<content.length) snippet += ' …';
+  if (start > 0) snippet = '… ' + snippet;
+  if (end < content.length) snippet += ' …';
   return snippet;
 }
 
-/** Render results list */
 function renderResults(items, query){
   resultsBox.innerHTML = '';
   const ul = document.createElement('ul');
-  items.forEach(r=>{
+  items.forEach(r => {
     const doc = docsMap.get(r.ref);
     const li = document.createElement('li');
     const title = document.createElement('div');
@@ -497,67 +526,88 @@ function renderResults(items, query){
     title.textContent = doc.title;
     const snip = document.createElement('div');
     snip.className = 'result-snippet';
-    snip.innerHTML = makeSnippet(doc.content, query);
+    snip.innerHTML = makeSnippet(doc.content || '', query);
     li.appendChild(title);
     li.appendChild(snip);
-    li.onclick = ()=>{ window.location.href = doc.url; };
+    li.onclick = () => { window.location.href = doc.url; };
     ul.appendChild(li);
   });
   resultsBox.appendChild(ul);
   resultsBox.style.display = 'block';
 }
 
-/** Search handler */
+/** Main search handler (lazy builds index on first use) */
 async function performSearch(){
-  const query = searchInput.value.trim();
-  if(!query){
+  const query = (searchInput.value || '').trim();
+  if (!query) {
     resultsBox.style.display = 'none';
     resultsBox.innerHTML = '';
     return;
   }
 
-  if(!searchIndex){
+  if (!searchIndex) {
     resultsBox.style.display = 'block';
     resultsBox.innerHTML = "<p style='padding:8px;'>Building search index…</p>";
     await buildSearchIndex();
   }
 
-  // Lunr search (supports partials with trailing wildcard)
-  let results = searchIndex.search(query + '*');
-  // If nothing, try a looser search
-  if(results.length === 0 && query.split(/\s+/).length === 1){
-    try{ results = searchIndex.search(`*${query}*`); }catch(e){}
+  // try exact tokens with wildcard
+  let results = [];
+  try { results = searchIndex.search(query + '*'); } catch (e) { /* ignore */ }
+
+  // loosen search if no results
+  if (!results.length) {
+    // try fuzzy / proximity if single term or try each token
+    const tokens = query.split(/\s+/).filter(Boolean);
+    try {
+      if (tokens.length === 1) {
+        results = searchIndex.search(query + '~1');
+      } else {
+        // combine tokens with AND to favor pages containing all words
+        const combined = tokens.map(t => t + '*').join(' ');
+        results = searchIndex.search(combined);
+      }
+    } catch (e) {
+      // fallback: empty
+      results = [];
+    }
   }
 
-  if(results.length){
+  if (results.length) {
     renderResults(results.slice(0, 12), query);
-  }else{
+  } else {
     resultsBox.style.display = 'block';
     resultsBox.innerHTML = "<p style='padding:8px;'>No results found</p>";
   }
 }
+
 const debouncedSearch = debounce(performSearch, 120);
 searchInput.addEventListener('input', debouncedSearch);
+searchBtn.addEventListener('click', performSearch);
 
-// Close results on outside click
-document.addEventListener('click', (e)=>{
-  if(!document.querySelector('.search-bar').contains(e.target)){
+// Hide results when clicking outside
+document.addEventListener('click', (e) => {
+  const bar = document.querySelector('.search-bar');
+  if (!bar.contains(e.target)) {
     resultsBox.style.display = 'none';
   }
 });
 
-// Enter => go to top result
-searchInput.addEventListener('keydown', async (e)=>{
-  if(e.key === 'Enter'){
+// Enter key -> go to top match
+searchInput.addEventListener('keydown', async (e) => {
+  if (e.key === 'Enter') {
     e.preventDefault();
-    if(!searchIndex) await buildSearchIndex();
-    const query = searchInput.value.trim();
-    if(!query) return;
-    let results = searchIndex.search(query + '*');
-    if(!results.length) try{ results = searchIndex.search(`*${query}*`);}catch(_){}
-    if(results.length){
+    if (!searchIndex) await buildSearchIndex();
+    const q = (searchInput.value || '').trim();
+    if (!q) return;
+    let results = [];
+    try { results = searchIndex.search(q + '*'); } catch (_) {}
+    if (!results.length) {
+      try { results = searchIndex.search(q + '~1'); } catch (_) {}
+    }
+    if (results.length) {
       const top = docsMap.get(results[0].ref);
-      if(top) window.location.href = top.url;
+      if (top) window.location.href = top.url;
     }
   }
 });
