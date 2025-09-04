@@ -17,19 +17,16 @@ body {
   background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
 }
 
-/* Neon Minneapolis skyline background */
+/* Neon Minneapolis skyline above footer */
 #skyline {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 220px;
   background: url('https://i.imgur.com/IZTXaow.png') no-repeat bottom center;
   background-size: contain;
+  background-color: #0d0d0d; /* fallback behind */
   filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
-  pointer-events: none;
-  z-index: 0;
   animation: skylineGlow 4s infinite alternate;
+  margin-top: 2rem;
 }
 @keyframes skylineGlow {
   0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
@@ -221,8 +218,6 @@ footer ul li a:hover{text-decoration:underline;}
 </head>
 <body>
 
-<div id="skyline"></div>
-
 <!-- Hamburger menu -->
 <div class="menu-btn" id="menuBtn">
   <div></div><div></div><div></div>
@@ -349,12 +344,23 @@ footer ul li a:hover{text-decoration:underline;}
   <a class="emoji-panic" id="panicButton" title="Emergency">🍑</a>
 </div>
 
+<!-- Skyline above footer -->
+<div id="skyline"></div>
+
 <!-- Footer -->
 <footer>
   <hr/>
   <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
-  <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
-  <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
+  <p>Your partners in shine ✦ 
+    <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | 
+    Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a>
+  </p>
+  <p style="font-size:0.8rem;color:#ccc;">
+    Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. 
+    The information provided is for educational purposes only and is not intended as medical 
+    or legal advice. Always consult with a qualified professional for concerns related to health, 
+    safety, or legal matters.
+  </p>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="panic.html">Panic</a></li>
@@ -374,48 +380,55 @@ menuBtn.addEventListener('click',()=>{
 });
 const navItems = document.querySelectorAll('.side-nav ul li');
 navItems.forEach(item=>{
-  item.addEventListener('click',()=>{item.classList.toggle('show');});
+  item.addEventListener('click',()=>{
+    item.classList.toggle('show');
+  });
 });
 
-// Peach panic button
-const peachBtn = document.getElementById('panicButton');
-peachBtn.addEventListener('click',()=>{
-  const choice = confirm("Go to Panic Button? Cancel = Emergency Response");
-  if(choice) window.location.href='panic.html';
-  else window.location.href='emergency.html';
-});
-
-// Universal predictive search
-const siteIndex = [
-  { title:"Home", url:"index.html", tags:["home","ravers","harm reduction"] },
-  { title:"Panic Button", url:"panic.html", tags:["panic","emergency","safety"] },
-  { title:"Emergency Response", url:"emergency.html", tags:["emergency","safety"] },
-  { title:"Polydrug Tool", url:"polydrug.html", tags:["drugs","interaction","party"] },
-  { title:"RX + Party Combos", url:"rx-combos.html", tags:["drugs","rx","party"] },
-  { title:"Raver Health", url:"health.html", tags:["health","safety"] },
-  { title:"Consent Basics", url:"consent.html", tags:["consent","boundaries"] },
-  { title:"Accountability", url:"accountability.html", tags:["consent","reporting"] },
-  { title:"Scene Spotlight", url:"spotlight.html", tags:["local","scene","events"] },
-  { title:"Event Calendar", url:"calendar.html", tags:["events","calendar"] },
-  { title:"Spotify", url:"spotify.html", tags:["music","spotify"] },
-  { title:"Seasonal Tips", url:"seasonal.html", tags:["seasonal","safety"] },
-  { title:"Sober Ravers", url:"sober.html", tags:["sobriety","support"] },
-  { title:"MN Resources", url:"resources.html", tags:["resources","support"] }
+// Search function
+const sitePages = [
+  {title:"Home",url:"index.html"},
+  {title:"Panic Button",url:"panic.html"},
+  {title:"Emergency Guides",url:"emergency.html"},
+  {title:"Polydrug Tool",url:"polydrug.html"},
+  {title:"RX + Party Combos",url:"rx-combos.html"},
+  {title:"Raver Health",url:"health.html"},
+  {title:"Consent Basics",url:"consent.html"},
+  {title:"Accountability",url:"accountability.html"},
+  {title:"Scene Spotlight",url:"spotlight.html"},
+  {title:"Event Calendar",url:"calendar.html"},
+  {title:"Seasonal Tips",url:"seasonal.html"},
+  {title:"Sober Ravers",url:"sober.html"},
+  {title:"MN Resources",url:"resources.html"},
+  {title:"Bad Trip Mode",url:"badtrip.html"},
+  {title:"Mixes",url:"mixes.html"}
 ];
-const input = document.getElementById('searchInput');
-const resultsDiv = document.getElementById('searchResults');
+function performSearch(){
+  const input=document.getElementById('searchInput').value.toLowerCase();
+  const results=document.getElementById('searchResults');
+  results.innerHTML="";
+  if(!input){results.style.display="none";return;}
+  const filtered=sitePages.filter(page=>page.title.toLowerCase().includes(input));
+  if(filtered.length>0){
+    const ul=document.createElement('ul');
+    filtered.forEach(page=>{
+      const li=document.createElement('li');
+      li.textContent=page.title;
+      li.onclick=()=>{window.location.href=page.url;};
+      ul.appendChild(li);
+    });
+    results.appendChild(ul);
+    results.style.display="block";
+  } else {
+    results.innerHTML="<p style='padding:8px;'>No results found</p>";
+    results.style.display="block";
+  }
+}
 
-input.addEventListener('input',()=>{
-  const query = input.value.toLowerCase();
-  if(!query){ resultsDiv.style.display='none'; return;}
-  const results = siteIndex.filter(p=>p.title.toLowerCase().includes(query) || p.tags.some(t=>t.includes(query)));
-  if(results.length){
-    resultsDiv.innerHTML = "<ul>"+results.map(r=>`<li onclick="window.location.href='${r.url}'">${r.title}</li>`).join('')+"</ul>";
-  } else resultsDiv.innerHTML="<p style='padding:8px;'>No results found.</p>";
-  resultsDiv.style.display='block';
+// Peach panic button scroll
+document.getElementById("panicButton").addEventListener("click",()=> {
+  window.location.href="panic.html";
 });
-
-document.addEventListener('click', (e)=>{ if(!e.target.closest('.search-bar')) resultsDiv.style.display='none'; });
 </script>
 
 </body>
