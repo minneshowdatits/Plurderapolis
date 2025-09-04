@@ -17,16 +17,19 @@ body {
   background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
 }
 
-/* Neon Minneapolis skyline above footer */
+/* Neon Minneapolis skyline */
 #skyline {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 220px;
-  background: url('https://i.imgur.com/IZTXaow.png') no-repeat bottom center;
+  background: url('images/skyline.png') no-repeat bottom center;
   background-size: contain;
-  background-color: #0d0d0d; /* fallback behind */
   filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
+  pointer-events: none;
+  z-index: 0;
   animation: skylineGlow 4s infinite alternate;
-  margin-top: 2rem;
 }
 @keyframes skylineGlow {
   0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
@@ -153,7 +156,7 @@ body {
 .cta-button { display:inline-block; margin-top:0.8rem; background:#00f7e0; color:#2e003e; padding:0.6rem 1.1rem; border-radius:8px; text-decoration:none; font-weight:bold; transition: all 0.2s;}
 .cta-button:hover{opacity:0.85; transform:scale(1.03);}
 
-/* Cards layout for resources */
+/* Cards layout */
 .card-container { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
 .card { background:#2a0036; border-radius:10px; padding:1rem; width:280px; box-shadow:0 0 15px rgba(255,111,145,0.3); transition: all 0.2s; }
 .card:hover { transform:scale(1.03); box-shadow:0 0 25px rgba(255,111,145,0.6); }
@@ -203,11 +206,6 @@ footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:
 footer ul li a{color:#00f7e0;padding:0 10px;text-decoration:none;}
 footer ul li a:hover{text-decoration:underline;}
 
-/* Collapsible content */
-.collapsible-content { display:none; margin-top:1rem; }
-.collapsible-content.show { display:block; animation: fadeIn 0.3s ease-in-out;}
-@keyframes fadeIn {from{opacity:0;transform:translateY(-5px);}to{opacity:1;transform:translateY(0);}}
-
 /* Responsive */
 @media(max-width:600px){
   .section{margin:1rem;padding:0.8rem;}
@@ -217,6 +215,8 @@ footer ul li a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
+
+<div id="skyline"></div>
 
 <!-- Hamburger menu -->
 <div class="menu-btn" id="menuBtn">
@@ -344,23 +344,12 @@ footer ul li a:hover{text-decoration:underline;}
   <a class="emoji-panic" id="panicButton" title="Emergency">🍑</a>
 </div>
 
-<!-- Skyline above footer -->
-<div id="skyline"></div>
-
 <!-- Footer -->
 <footer>
   <hr/>
   <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
-  <p>Your partners in shine ✦ 
-    <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | 
-    Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a>
-  </p>
-  <p style="font-size:0.8rem;color:#ccc;">
-    Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. 
-    The information provided is for educational purposes only and is not intended as medical 
-    or legal advice. Always consult with a qualified professional for concerns related to health, 
-    safety, or legal matters.
-  </p>
+  <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
+  <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="panic.html">Panic</a></li>
@@ -380,10 +369,12 @@ menuBtn.addEventListener('click',()=>{
 });
 const navItems = document.querySelectorAll('.side-nav ul li');
 navItems.forEach(item=>{
-  item.addEventListener('click',()=>{
-    item.classList.toggle('show');
-  });
+  item.addEventListener('click',()=>{item.classList.toggle('show');});
 });
+
+// Peach panic button
+const peachBtn = document.getElementById('panicButton');
+peachBtn.addEventListener('click',()=>{window.location.href="panic.html";});
 
 // Search function
 const sitePages = [
@@ -424,11 +415,6 @@ function performSearch(){
     results.style.display="block";
   }
 }
-
-// Peach panic button scroll
-document.getElementById("panicButton").addEventListener("click",()=> {
-  window.location.href="panic.html";
-});
 </script>
 
 </body>
