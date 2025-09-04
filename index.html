@@ -167,10 +167,13 @@ body {
 .search-bar { margin:1rem auto; max-width:500px; display:flex; position:relative; z-index:1003; }
 .search-bar input{ flex:1; padding:10px; border:none; border-radius:5px 0 0 5px; }
 .search-bar button{ padding:10px; border:none; background:#00f7e0; color:#2e003e; border-radius:0 5px 5px 0; cursor:pointer; }
-#searchResults { position:absolute; top:100%; left:0; right:0; background:#3a0052; max-height:250px; overflow-y:auto; border-radius:0 0 5px 5px; display:none; z-index:1004; box-shadow:0 0 12px rgba(0,255,255,0.2);}
+#searchResults { position:absolute; top:100%; left:0; right:0; background:#3a0052; max-height:350px; overflow-y:auto; border-radius:0 0 5px 5px; display:none; z-index:1004; box-shadow:0 0 12px rgba(0,255,255,0.2);}
 #searchResults ul { list-style:none; padding:0; margin:0;}
-#searchResults li { padding:8px 12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
+#searchResults li { padding:10px 12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
 #searchResults li:hover { background:#5d3a7d; }
+#searchResults .result-title{ font-weight:700; color:#00f7e0; margin-bottom:4px; }
+#searchResults .result-snippet{ font-size:0.85rem; color:#eaeaea; opacity:0.9; line-height:1.35; }
+#searchResults mark{ background:#ff6ec7; color:#1c0028; padding:0 2px; border-radius:2px; }
 
 /* Peach panic button */
 #peachWrap {
@@ -276,7 +279,7 @@ footer ul li a:hover{text-decoration:underline;}
 
 <!-- Search -->
 <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search the site...">
+  <input type="text" id="searchInput" placeholder="Search the site..." oninput="performSearch()" />
   <button onclick="performSearch()">🔍</button>
   <div id="searchResults"></div>
 </div>
@@ -359,6 +362,9 @@ footer ul li a:hover{text-decoration:underline;}
   </ul>
 </footer>
 
+<!-- Lunr.js -->
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+
 <script>
 // Hamburger toggle
 const menuBtn = document.getElementById('menuBtn');
@@ -376,45 +382,185 @@ navItems.forEach(item=>{
 const peachBtn = document.getElementById('panicButton');
 peachBtn.addEventListener('click',()=>{window.location.href="panic.html";});
 
-// Search function
-const sitePages = [
-  {title:"Home",url:"index.html"},
-  {title:"Panic Button",url:"panic.html"},
-  {title:"Emergency Guides",url:"emergency.html"},
-  {title:"Polydrug Tool",url:"polydrug.html"},
-  {title:"RX + Party Combos",url:"rx-combos.html"},
-  {title:"Raver Health",url:"health.html"},
-  {title:"Consent Basics",url:"consent.html"},
-  {title:"Accountability",url:"accountability.html"},
-  {title:"Scene Spotlight",url:"spotlight.html"},
-  {title:"Event Calendar",url:"calendar.html"},
-  {title:"Seasonal Tips",url:"seasonal.html"},
-  {title:"Sober Ravers",url:"sober.html"},
-  {title:"MN Resources",url:"resources.html"},
-  {title:"Bad Trip Mode",url:"badtrip.html"},
-  {title:"Mixes",url:"mixes.html"}
+// ===== Full-text search (Lunr.js) =====
+
+// Pages to index (add/remove here as you add pages)
+const pagesToIndex = [
+  { id:"home",        title:"Home",                 url:"index.html" },
+  { id:"panic",       title:"Panic Button",         url:"panic.html" },
+  { id:"emergency",   title:"Emergency Guides",     url:"emergency.html" },
+  { id:"spiking",     title:"Drink Spiking",        url:"spiking.html" },
+  { id:"polydrug",    title:"Polydrug Tool",        url:"polydrug.html" },
+  { id:"rx-combos",   title:"RX + Party Combos",    url:"rx-combos.html" },
+  { id:"health",      title:"Raver Health",         url:"health.html" },
+  { id:"consent",     title:"Consent Basics",       url:"consent.html" },
+  { id:"account",     title:"Accountability",       url:"accountability.html" },
+  { id:"spotlight",   title:"Scene Spotlight",      url:"spotlight.html" },
+  { id:"calendar",    title:"Event Calendar",       url:"calendar.html" },
+  { id:"seasonal",    title:"Seasonal Tips",        url:"seasonal.html" },
+  { id:"sober",       title:"Sober Ravers",         url:"sober.html" },
+  { id:"resources",   title:"MN Resources",         url:"resources.html" },
+  { id:"badtrip",     title:"Bad Trip Mode",        url:"badtrip.html" },
+  { id:"mixes",       title:"Mixes",                url:"mixes.html" }
 ];
-function performSearch(){
-  const input=document.getElementById('searchInput').value.toLowerCase();
-  const results=document.getElementById('searchResults');
-  results.innerHTML="";
-  if(!input){results.style.display="none";return;}
-  const filtered=sitePages.filter(page=>page.title.toLowerCase().includes(input));
-  if(filtered.length>0){
-    const ul=document.createElement('ul');
-    filtered.forEach(page=>{
-      const li=document.createElement('li');
-      li.textContent=page.title;
-      li.onclick=()=>{window.location.href=page.url;};
-      ul.appendChild(li);
-    });
-    results.appendChild(ul);
-    results.style.display="block";
-  } else {
-    results.innerHTML="<p style='padding:8px;'>No results found</p>";
-    results.style.display="block";
+
+let searchIndex = null;
+const docsMap = new Map(); // id -> {id,title,url,content}
+
+/** Strip tags & boilerplate for indexing */
+function extractTextFromHTML(htmlString){
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+
+  // remove non-contenty elements
+  ['script','style','nav','footer','header'].forEach(sel => {
+    doc.querySelectorAll(sel).forEach(el=>el.remove());
+  });
+
+  // prefer main/section if present
+  const main = doc.querySelector('main') || doc.body;
+  const text = (main.textContent || '').replace(/\s+/g,' ').trim();
+  return text;
+}
+
+/** Build index by fetching all pages (same-origin) */
+async function buildSearchIndex(){
+  const fetches = pagesToIndex.map(async p => {
+    try{
+      const res = await fetch(p.url, {cache: 'no-store'});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const html = await res.text();
+      const content = extractTextFromHTML(html);
+      const doc = { id:p.id, title:p.title, url:p.url, content };
+      docsMap.set(p.id, doc);
+      return doc;
+    }catch(e){
+      // Fallback: at least index the title if fetch fails (e.g., local file://)
+      const fallback = { id:p.id, title:p.title, url:p.url, content: p.title };
+      docsMap.set(p.id, fallback);
+      return fallback;
+    }
+  });
+
+  const docs = await Promise.all(fetches);
+
+  searchIndex = lunr(function(){
+    this.ref('id');
+    this.field('title');
+    this.field('content');
+    docs.forEach(d => this.add(d));
+  });
+}
+
+const searchInput   = document.getElementById('searchInput');
+const resultsBox    = document.getElementById('searchResults');
+
+/** Simple debounce */
+function debounce(fn, delay=200){
+  let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), delay); };
+}
+
+/** Create HTML-safe snippet + highlight terms */
+function makeSnippet(content, query){
+  const q = query.trim();
+  if(!q) return '';
+  const lcContent = content.toLowerCase();
+  const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+  let pos = -1;
+  for(const tok of tokens){
+    pos = lcContent.indexOf(tok);
+    if(pos !== -1) break;
+  }
+  if(pos === -1) pos = 0;
+  const start = Math.max(0, pos - 60);
+  const end   = Math.min(content.length, pos + 140);
+  let snippet = content.slice(start, end).trim();
+  // highlight each token
+  tokens.forEach(tok=>{
+    const re = new RegExp(`(${tok.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`,'ig');
+    snippet = snippet.replace(re, '<mark>$1</mark>');
+  });
+  if(start>0) snippet = '… ' + snippet;
+  if(end<content.length) snippet += ' …';
+  return snippet;
+}
+
+/** Render results list */
+function renderResults(items, query){
+  resultsBox.innerHTML = '';
+  const ul = document.createElement('ul');
+  items.forEach(r=>{
+    const doc = docsMap.get(r.ref);
+    const li = document.createElement('li');
+    const title = document.createElement('div');
+    title.className = 'result-title';
+    title.textContent = doc.title;
+    const snip = document.createElement('div');
+    snip.className = 'result-snippet';
+    snip.innerHTML = makeSnippet(doc.content, query);
+    li.appendChild(title);
+    li.appendChild(snip);
+    li.onclick = ()=>{ window.location.href = doc.url; };
+    ul.appendChild(li);
+  });
+  resultsBox.appendChild(ul);
+  resultsBox.style.display = 'block';
+}
+
+/** Search handler */
+async function performSearch(){
+  const query = searchInput.value.trim();
+  if(!query){
+    resultsBox.style.display = 'none';
+    resultsBox.innerHTML = '';
+    return;
+  }
+
+  if(!searchIndex){
+    resultsBox.style.display = 'block';
+    resultsBox.innerHTML = "<p style='padding:8px;'>Building search index…</p>";
+    await buildSearchIndex();
+  }
+
+  // Lunr search (supports partials with trailing wildcard)
+  let results = searchIndex.search(query + '*');
+  // If nothing, try a looser search
+  if(results.length === 0 && query.split(/\s+/).length === 1){
+    try{ results = searchIndex.search(`*${query}*`); }catch(e){}
+  }
+
+  if(results.length){
+    renderResults(results.slice(0, 12), query);
+  }else{
+    resultsBox.style.display = 'block';
+    resultsBox.innerHTML = "<p style='padding:8px;'>No results found</p>";
   }
 }
+const debouncedSearch = debounce(performSearch, 120);
+searchInput.addEventListener('input', debouncedSearch);
+
+// Close results on outside click
+document.addEventListener('click', (e)=>{
+  if(!document.querySelector('.search-bar').contains(e.target)){
+    resultsBox.style.display = 'none';
+  }
+});
+
+// Enter => go to top result
+searchInput.addEventListener('keydown', async (e)=>{
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    if(!searchIndex) await buildSearchIndex();
+    const query = searchInput.value.trim();
+    if(!query) return;
+    let results = searchIndex.search(query + '*');
+    if(!results.length) try{ results = searchIndex.search(`*${query}*`);}catch(_){}
+    if(results.length){
+      const top = docsMap.get(results[0].ref);
+      if(top) window.location.href = top.url;
+    }
+  }
+});
 </script>
 
 </body>
