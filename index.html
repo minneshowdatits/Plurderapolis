@@ -73,7 +73,7 @@ body {
   position: fixed;
   top: 15px;
   left: 15px;
-  z-index: 1001;
+  z-index: 1100; /* stays above search */
   cursor: pointer;
   width: 35px;
   height: 30px;
@@ -164,7 +164,7 @@ body {
 .card p { font-size:0.95rem; }
 
 /* Search bar */
-.search-bar { margin:1rem auto; max-width:500px; display:flex; position:relative; z-index:1003; }
+.search-bar { margin:1rem auto; max-width:500px; display:flex; position:relative; z-index:1005; }
 .search-bar input{ flex:1; padding:10px; border:none; border-radius:5px 0 0 5px; }
 .search-bar button{ padding:10px; border:none; background:#00f7e0; color:#2e003e; border-radius:0 5px 5px 0; cursor:pointer; }
 #searchResults { position:absolute; top:100%; left:0; right:0; background:#3a0052; max-height:250px; overflow-y:auto; border-radius:0 0 5px 5px; display:none; z-index:1004; box-shadow:0 0 12px rgba(0,255,255,0.2);}
@@ -376,35 +376,43 @@ navItems.forEach(item=>{
 const peachBtn = document.getElementById('panicButton');
 peachBtn.addEventListener('click',()=>{window.location.href="panic.html";});
 
-// Search function
+// Search index (titles + content snippets)
 const sitePages = [
-  {title:"Home",url:"index.html"},
-  {title:"Panic Button",url:"panic.html"},
-  {title:"Emergency Guides",url:"emergency.html"},
-  {title:"Polydrug Tool",url:"polydrug.html"},
-  {title:"RX + Party Combos",url:"rx-combos.html"},
-  {title:"Raver Health",url:"health.html"},
-  {title:"Consent Basics",url:"consent.html"},
-  {title:"Accountability",url:"accountability.html"},
-  {title:"Scene Spotlight",url:"spotlight.html"},
-  {title:"Event Calendar",url:"calendar.html"},
-  {title:"Seasonal Tips",url:"seasonal.html"},
-  {title:"Sober Ravers",url:"sober.html"},
-  {title:"MN Resources",url:"resources.html"},
-  {title:"Bad Trip Mode",url:"badtrip.html"},
-  {title:"Mixes",url:"mixes.html"}
+  {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
+  {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
+  {title:"Emergency Guides",url:"emergency.html",content:"Step-by-step instructions for medical and crisis situations."},
+  {title:"Polydrug Tool",url:"polydrug.html",content:"Check dangerous drug interactions and polydrug risks."},
+  {title:"RX + Party Combos",url:"rx-combos.html",content:"Prescription drug and party drug combination risks."},
+  {title:"Raver Health",url:"health.html",content:"Hydration, cooling, safety tips for events and raves."},
+  {title:"Consent Basics",url:"consent.html",content:"Consent education for safer nightlife and festivals."},
+  {title:"Accountability",url:"accountability.html",content:"Resources on community accountability and safer spaces."},
+  {title:"Scene Spotlight",url:"spotlight.html",content:"Highlighting Minnesota rave community and local collectives."},
+  {title:"Event Calendar",url:"calendar.html",content:"Upcoming events, shows, and festivals in Minnesota."},
+  {title:"Seasonal Tips",url:"seasonal.html",content:"Tips for staying safe during hot summer raves or cold winters."},
+  {title:"Sober Ravers",url:"sober.html",content:"Support and advice for enjoying raves without substances."},
+  {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
+  {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
+  {title:"Mixes",url:"mixes.html",content:"Local DJ mixes, rave playlists, and harm reduction soundscapes."}
 ];
+
+// Predictive search
+const searchInput=document.getElementById('searchInput');
+const results=document.getElementById('searchResults');
+searchInput.addEventListener('input',performSearch);
+
 function performSearch(){
-  const input=document.getElementById('searchInput').value.toLowerCase();
-  const results=document.getElementById('searchResults');
+  const input=searchInput.value.toLowerCase();
   results.innerHTML="";
   if(!input){results.style.display="none";return;}
-  const filtered=sitePages.filter(page=>page.title.toLowerCase().includes(input));
+  const filtered=sitePages.filter(page=>
+    page.title.toLowerCase().includes(input) ||
+    page.content.toLowerCase().includes(input)
+  );
   if(filtered.length>0){
     const ul=document.createElement('ul');
     filtered.forEach(page=>{
       const li=document.createElement('li');
-      li.textContent=page.title;
+      li.innerHTML="<strong>"+page.title+"</strong><br><small>"+page.content.substring(0,60)+"...</small>";
       li.onclick=()=>{window.location.href=page.url;};
       ul.appendChild(li);
     });
