@@ -1,336 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
-<style>
-/* Reset & body */
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #0d0d0d;
-  color: #fff;
-  line-height: 1.6;
-  overflow-x: hidden;
-  background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
+    <meta name="description" content="PLURderapolis provides harm reduction resources, drug safety information, and consent education for the Minnesota rave community.">
+    <meta name="keywords" content="harm reduction, Minnesota, rave, EDM, drug safety, consent, Narcan, fentanyl test strips, Minneapolis">
+    <meta name="author" content="PLURderapolis">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
+            padding-bottom: 100px;
+        }
 
-/* Neon Minneapolis skyline */
-#skyline {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 180px;
-  background: linear-gradient(to top, 
-    rgba(0, 247, 224, 0.2) 0%, 
-    transparent 20%,
-    transparent 80%,
-    rgba(255, 105, 180, 0.1) 100%
-  ), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="180" viewBox="0 0 1200 180"><path d="M0,180 L0,120 L30,120 L30,100 L50,100 L50,140 L70,140 L70,80 L90,80 L90,160 L110,160 L110,60 L130,60 L130,140 L150,140 L150,100 L170,100 L170,160 L190,160 L190,120 L210,120 L210,180 L230,180 L230,140 L250,140 L250,100 L270,100 L270,160 L290,160 L290,80 L310,80 L310,140 L330,140 L330,120 L350,120 L350,180 L370,180 L370,100 L390,100 L390,160 L410,160 L410,60 L430,60 L430,140 L450,140 L450,100 L470,100 L470,180 L490,180 L490,120 L510,120 L510,80 L530,80 L530,160 L550,160 L550,140 L570,140 L570,100 L590,100 L590,180 L610,180 L610,120 L630,120 L630,140 L650,140 L650,100 L670,100 L670,160 L690,160 L690,80 L710,80 L710,140 L730,140 L730,120 L750,120 L750,180 L770,180 L770,100 L790,100 L790,160 L810,160 L810,60 L830,60 L830,140 L850,140 L850,100 L870,100 L870,180 L890,180 L890,120 L910,120 L910,80 L930,80 L930,160 L950,160 L950,140 L970,140 L970,100 L990,100 L990,180 L1010,180 L1010,120 L1030,120 L1030,140 L1050,140 L1050,100 L1070,100 L1070,160 L1090,160 L1090,80 L1110,80 L1110,140 L1130,140 L1130,120 L1150,120 L1150,180 L1170,180 L1170,100 L1190,100 L1190,160 L1200,160 L1200,180 Z" fill="%2300f7e0" opacity="0.6"/></svg>');
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: 100% 180px;
-  filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
-  pointer-events: none;
-  z-index: 0;
-  animation: skylineGlow 4s infinite alternate;
-}
-@keyframes skylineGlow {
-  0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
-  100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); }
-}
+        /* Enhanced Minneapolis skyline */
+        #skyline {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 150"><path d="M0,150 L0,90 L40,90 L40,20 L70,20 L70,80 L90,80 L90,40 L120,40 L120,100 L150,100 L150,60 L180,60 L180,120 L210,120 L210,30 L240,30 L240,100 L270,100 L270,50 L300,50 L300,130 L330,130 L330,70 L360,70 L360,150 L390,150 L390,100 L420,100 L420,60 L450,60 L450,120 L480,120 L480,80 L510,80 L510,140 L540,140 L540,40 L570,40 L570,100 L600,100 L600,60 L630,60 L630,120 L660,120 L660,30 L700,30 L700,90 L730,90 L730,50 L760,50 L760,110 L790,110 L790,70 L820,70 L820,150 L850,150 L850,100 L880,100 L880,130 L910,130 L910,80 L940,80 L940,120 L970,120 L970,60 L1000,60 L1000,140 L1030,140 L1030,90 L1060,90 L1060,40 L1090,40 L1090,110 L1120,110 L1120,70 L1150,70 L1150,130 L1180,130 L1180,50 L1200,50 L1200,150 Z" fill="%2300f7e0" opacity="0.6"/><rect x="500" y="60" width="80" height="90" fill="%2300f7e0" opacity="0.8"/><rect x="600" y="30" width="60" height="120" fill="%23ff69b4" opacity="0.8"/><rect x="680" y="80" width="70" height="70" fill="%2300f7e0" opacity="0.7"/><rect x="400" y="100" width="50" height="50" fill="%23ff69b4" opacity="0.7"/></svg>');
+            background-position: bottom center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
+            pointer-events: none;
+            z-index: 0;
+            animation: skylineGlow 4s infinite alternate;
+        }
+        
+        @keyframes skylineGlow {
+            0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
+            100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); }
+        }
 
-/* Site Title */
-.site-title {
-  text-align: center;
-  padding: 1rem 0;
-  position: relative;
-  z-index: 2;
-  margin-top: 1rem;
-}
-.site-title h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: clamp(2rem,5vw,3rem);
-  color: #00f7e0;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, #00f7e0 0%, #a3f7ff 50%, #00f7e0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shineMove 6s linear infinite;
-  filter: drop-shadow(0 0 6px #00f7e0aa);
-}
-.site-title .tagline {
-  font-family: 'Roboto', sans-serif;
-  color: #88e9e3;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
-  margin-top: 0.25rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
-@keyframes shineMove {0% {background-position: 100% 0;}100% {background-position: 0 0;}}
+        /* Header styles */
+        .site-title {
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .site-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #00f7e0;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00f7e0 0%, #a3f7ff 50%, #00f7e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineMove 6s linear infinite;
+            filter: drop-shadow(0 0 6px #00f7e0aa);
+            margin-bottom: 0.5rem;
+        }
+        
+        .site-title .tagline {
+            font-family: 'Roboto', sans-serif;
+            color: #88e9e3;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        .instagram-handle {
+            display: block;
+            margin-top: 0.5rem;
+            color: #ff69b4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .instagram-handle:hover {
+            text-decoration: underline;
+        }
+        
+        @keyframes shineMove {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
 
-/* Hamburger Menu */
-.menu-btn {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1100;
-  cursor: pointer;
-  width: 35px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.menu-btn div {
-  height: 5px;
-  background: #00f7e0;
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
-.menu-btn.active div:nth-child(1){ transform: rotate(45deg) translate(6px,6px);}
-.menu-btn.active div:nth-child(2){ opacity:0;}
-.menu-btn.active div:nth-child(3){ transform: rotate(-45deg) translate(7px,-7px);}
-.side-nav {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100%;
-  background: #3a0052;
-  box-shadow: 2px 0 10px #000000aa;
-  overflow-y: auto;
-  transition: left 0.3s ease;
-  padding-top: 70px;
-  z-index:1000;
-}
-.side-nav.active { left:0;}
-.side-nav ul { list-style:none; padding:0;}
-.side-nav ul li { padding:0;}
-.side-nav ul li a {
-  display:block; padding:12px 20px; color:#fff; text-decoration:none; border-bottom:1px solid #5d3a7d;
-  font-weight:bold;
-}
-.side-nav ul li a:hover { background:#5d3a7d; }
-.side-nav ul li ul { display:none; padding-left:10px;}
-.side-nav ul li.show > ul { display:block; }
-.side-nav ul li ul li a { font-weight:normal; font-size:0.95rem; }
+        /* Navigation */
+        .menu-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1100;
+            cursor: pointer;
+            width: 35px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .menu-btn div {
+            height: 5px;
+            background: #00f7e0;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-btn.active div:nth-child(1) { 
+            transform: rotate(45deg) translate(6px, 6px); 
+        }
+        
+        .menu-btn.active div:nth-child(2) { 
+            opacity: 0; 
+        }
+        
+        .menu-btn.active div:nth-child(3) { 
+            transform: rotate(-45deg) translate(7px, -7px); 
+        }
+        
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 260px;
+            height: 100%;
+            background: #3a0052;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.67);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            padding-top: 70px;
+            z-index: 1000;
+        }
+        
+        .side-nav.active { 
+            left: 0; 
+        }
+        
+        .side-nav ul { 
+            list-style: none; 
+            padding: 0; 
+        }
+        
+        .side-nav ul li { 
+            padding: 0; 
+        }
+        
+        .side-nav ul li a {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #5d3a7d;
+            font-weight: bold;
+        }
+        
+        .side-nav ul li a:hover { 
+            background: #5d3a7d; 
+        }
+        
+        .side-nav ul li ul { 
+            display: none; 
+            padding-left: 10px; 
+        }
+        
+        .side-nav ul li.show > ul { 
+            display: block; 
+        }
+        
+        .side-nav ul li ul li a { 
+            font-weight: normal; 
+            font-size: 0.95rem; 
+        }
 
-/* Scroll alert */
-.rave-alert-wrapper {
-  background-color:#1a1a1a;
-  overflow:hidden;
-  border-top:1px solid #444;
-  border-bottom:1px solid #444;
-  position:relative;
-  height:2.5rem;
-  display:flex;
-  align-items:center;
-  width:100vw;
-  z-index:2;
-  margin-top: 1rem;
-}
-.rave-alert-link {
-  display:inline-block;
-  white-space:nowrap;
-  color:#ff69b4;
-  font-size:1.1rem;
-  text-decoration:none;
-  padding-left:100%;
-  animation: scroll-left 20s linear infinite;
-}
-@keyframes scroll-left {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+        /* Alert banner */
+        .rave-alert-wrapper {
+            background-color: #1a1a1a;
+            overflow: hidden;
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+            position: relative;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            width: 100vw;
+            z-index: 2;
+        }
+        
+        .rave-alert-link {
+            display: inline-block;
+            white-space: nowrap;
+            color: #ff69b4;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+        
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
 
-/* Sections */
-.section {
-  margin:1.5rem auto;
-  padding:1rem 1.5rem;
-  max-width:1000px;
-  background-color:#3a0052;
-  border-radius:10px;
-  box-shadow:0 0 12px rgba(0,255,255,0.1);
-  position: relative;
-  z-index: 1;
-}
-.section h2 { color:#00f7e0; font-family:'Montserrat',sans-serif;}
-.section ul { padding-left:1.2rem;}
-.section ul li { margin-bottom:0.5rem;}
-.cta-button { display:inline-block; margin-top:0.8rem; background:#00f7e0; color:#2e003e; padding:0.6rem 1.1rem; border-radius:8px; text-decoration:none; font-weight:bold; transition: all 0.2s;}
-.cta-button:hover{opacity:0.85; transform:scale(1.03);}
+        /* Main content sections */
+        .section {
+            margin: 1.5rem auto;
+            padding: 1.5rem;
+            max-width: 1000px;
+            background-color: #3a0052;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section h2 {
+            color: #00f7e0;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        .section ul {
+            padding-left: 1.2rem;
+        }
+        
+        .section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #00f7e0;
+            color: #2e003e;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            opacity: 0.85;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 247, 224, 0.5);
+        }
+        
+        .download-btn {
+            background: linear-gradient(90deg, #9d4edd, #ff69b4);
+            display: inline-flex;
+            align-items: center;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn::before {
+            content: "⬇️";
+            margin-right: 0.5rem;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.7);
+        }
 
-/* Cards layout */
-.card-container { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;}
-.card { background:#2a0036; border-radius:10px; padding:1rem; width:280px; box-shadow:0 0 15px rgba(255,111,145,0.3); transition: all 0.2s; }
-.card:hover { transform:scale(1.03); box-shadow:0 0 25px rgba(255,111,145,0.6); }
-.card h3 { color:#ff69b4; font-family:'Montserrat',sans-serif; margin-top:0;}
-.card p { font-size:0.95rem; }
+        /* Card components */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .card {
+            background: #2a0036;
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 280px;
+            box-shadow: 0 0 15px rgba(255, 111, 145, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(255, 111, 145, 0.6);
+        }
+        
+        .card h3 {
+            color: #ff69b4;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .card p {
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
 
-/* Search bar - Fixed positioning */
-.search-container {
-  position: relative;
-  max-width: 500px;
-  margin: 1rem auto;
-  z-index: 100;
-}
+        /* Booth cards */
+        .booth-card {
+            background: #2a0036;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #ff69b4;
+        }
+        
+        .booth-card h3 {
+            color: #ff69b4;
+            margin-top: 0;
+        }
+        
+        .booth-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #88e9e3;
+            flex-wrap: wrap;
+        }
+        
+        .booth-resources {
+            background: rgba(255, 176, 124, 0.1);
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
 
-.search-bar { 
-  display:flex; 
-  position: relative;
-}
-.search-bar input{ 
-  flex:1; 
-  padding:12px; 
-  border:none; 
-  border-radius:5px 0 0 5px; 
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid #00f7e0;
-}
-.search-bar input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-.search-bar button{ 
-  padding:12px; 
-  border:none; 
-  background:#00f7e0; 
-  color:#2e003e; 
-  border-radius:0 5px 5px 0; 
-  cursor:pointer; 
-  font-weight: bold;
-}
+        /* Instagram section */
+        .instagram-section {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .instagram-posts {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        
+        .instagram-post {
+            width: 150px;
+            height: 150px;
+            background: #2a0036;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff69b4;
+            font-size: 3rem;
+            box-shadow: 0 0 10px rgba(255, 111, 145, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .instagram-post:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 111, 145, 0.5);
+        }
 
-#searchResults { 
-  position:absolute; 
-  top:100%; 
-  left:0; 
-  right:0; 
-  background:#3a0052; 
-  max-height:250px; 
-  overflow-y:auto; 
-  border-radius:0 0 5px 5px; 
-  display:none; 
-  z-index:1004; 
-  box-shadow:0 0 12px rgba(0,255,255,0.2);
-  border: 1px solid #00f7e0;
-  border-top: none;
-}
-#searchResults ul { list-style:none; padding:0; margin:0;}
-#searchResults li { padding:12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
-#searchResults li:hover { background:#5d3a7d; }
-#searchResults li:last-child { border-bottom: none; }
+        /* Search bar */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 1.5rem auto;
+            z-index: 100;
+        }
+        
+        .search-bar {
+            display: flex;
+            position: relative;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 25px 0 0 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid #00f7e0;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 247, 224, 0.5);
+        }
+        
+        .search-bar button {
+            padding: 12px 15px;
+            border: none;
+            background: #00f7e0;
+            color: #2e003e;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        #searchResults {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #3a0052;
+            max-height: 250px;
+            overflow-y: auto;
+            border-radius: 0 0 8px 8px;
+            display: none;
+            z-index: 1004;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+            border: 1px solid #00f7e0;
+            border-top: none;
+        }
+        
+        #searchResults ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        #searchResults li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #5d3a7d;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        #searchResults li:hover {
+            background: #5d3a7d;
+        }
+        
+        #searchResults li:last-child {
+            border-bottom: none;
+        }
 
-/* Peach panic button */
-#peachWrap {
-  position:fixed; 
-  bottom:30px; 
-  right:30px; 
-  z-index:1002; 
-  display:flex; 
-  flex-direction:column; 
-  align-items:center; 
-  gap:6px;
-}
-#peachWrap a.emoji-panic{
-  width:60px; 
-  height:60px; 
-  font-size:2.5rem;
-  background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
-  border-radius:50% 50% 45% 55% / 60% 55% 45% 50%;
-  position: relative;
-  display:flex; 
-  justify-content:center; 
-  align-items:center;
-  cursor:pointer; 
-  text-decoration:none; 
-  color:#fff;
-  box-shadow: 0 0 10px #ff69b4, 0 0 20px #00f7e0;
-  animation: emojiPulse 2s infinite;
-}
-#peachWrap a.emoji-panic::before{
-  content:"";
-  position:absolute;
-  top:-10px; 
-  left:22px;
-  width:15px; 
-  height:12px;
-  background: linear-gradient(135deg,#7aff7a,#2eb62c);
-  border-radius:50%;
-  transform:rotate(-20deg);
-}
-#peachWrap a.emoji-panic:hover { 
-  transform:scale(1.2);
-  animation: none;
-}
-@keyframes emojiPulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.12);}
-  100%{transform:scale(1);}
-}
+        /* Panic button */
+        #peachWrap {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        #panicButton {
+            width: 70px;
+            height: 70px;
+            font-size: 2.5rem;
+            background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1c0032;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+            animation: emojiPulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+        
+        #panicButton:hover {
+            transform: scale(1.2);
+            animation: none;
+        }
+        
+        @keyframes emojiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
 
-/* Footer */
-footer{
-  margin-top:2rem;
-  font-size:0.9rem;
-  color:#aaa;
-  text-align:center; 
-  position: relative; 
-  z-index:2;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.5);
-}
-footer hr{
-  border-color:#444;
-  margin-bottom:1rem;
-}
-footer p{
-  max-width:800px;
-  margin:0.5rem auto;
-}
-footer ul{
-  list-style:none;
-  padding:0;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:1rem;
-}
-footer ul li a{
-  color:#00f7e0;
-  padding:0 10px;
-  text-decoration:none;
-}
-footer ul li a:hover{
-  text-decoration:underline;
-}
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #aaa;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        footer hr {
+            border-color: #444;
+            margin-bottom: 1.5rem;
+        }
+        
+        footer p {
+            max-width: 800px;
+            margin: 0.5rem auto;
+        }
+        
+        footer ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        footer ul li a {
+            color: #00f7e0;
+            padding: 0 10px;
+            text-decoration: none;
+        }
+        
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
 
-/* Responsive */
-@media(max-width:600px){
-  .section{
-    margin:1rem;
-    padding:0.8rem;
-  }
-  .cta-button{
-    padding:0.5rem 0.8rem;
-  }
-  .card-container { 
-    flex-direction: column; 
-    align-items:center;
-  }
-  #skyline {
-    height: 120px;
-  }
-  .search-container {
-    width: 90%;
-  }
-}
-</style>
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .section {
+                margin: 1rem;
+                padding: 1.2rem;
+            }
+            
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .instagram-post {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .booth-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            #skyline {
+                height: 120px;
+            }
+            
+            #panicButton {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .search-container {
+                width: 90%;
+            }
+        }
+
+        /* Special badge for downloadable items */
+        .download-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #9d4edd, #ff69b4);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        .download-badge::before {
+            content: "⬇️";
+            margin-right: 0.3rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -338,234 +613,348 @@ footer ul li a:hover{
 
 <!-- Hamburger menu -->
 <div class="menu-btn" id="menuBtn">
-  <div></div><div></div><div></div>
+    <div></div>
+    <div></div>
+    <div></div>
 </div>
+
 <nav class="side-nav" id="sideNav">
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="#">Safety</a>
-      <ul>
-        <li><a href="panic.html">Panic Button</a></li>
-        <li><a href="emergency.html">Emergency Guides</a></li>
-        <li><a href="spiking.html">Drink Spiking</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Drug Info</a>
-      <ul>
-        <li><a href="polydrug.html">Polydrug Tool</a></li>
-        <li><a href="rx-combos.html">RX + Party Combos</a></li>
-        <li><a href="health.html">Raver Health</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Consent</a>
-      <ul>
-        <li><a href="consent.html">Consent Basics</a></li>
-        <li><a href="accountability.html">Accountability</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Local Scene</a>
-      <ul>
-        <li><a href="spotlight.html">Scene Spotlight</a></li>
-        <li><a href="calendar.html">Event Calendar</a></li>
-      </ul>
-    </li>
-    <li><a href="#">Extras</a>
-      <ul>
-        <li><a href="seasonal.html">Seasonal Tips</a></li>
-        <li><a href="sober.html">Sober Ravers</a></li>
-        <li><a href="resources.html">MN Resources</a></li>
-      </ul>
-    </li>
-  </ul>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#safety">Safety</a>
+            <ul>
+                <li><a href="panic.html">Panic Button</a></li>
+                <li><a href="emergency.html">Emergency Guides</a></li>
+                <li><a href="spiking.html">Drink Spiking</a></li>
+            </ul>
+        </li>
+        <li><a href="#drug-info">Drug Info</a>
+            <ul>
+                <li><a href="polydrug.html">Polydrug Tool</a></li>
+                <li><a href="rx-combos.html">RX + Party Combos</a></li>
+                <li><a href="health.html">Raver Health</a></li>
+            </ul>
+        </li>
+        <li><a href="#consent">Consent</a>
+            <ul>
+                <li><a href="consent.html">Consent Basics</a></li>
+                <li><a href="accountability.html">Accountability</a></li>
+                <li><a href="rejection-violence.html">Rejection-Based Violence</a></li>
+            </ul>
+        </li>
+        <li><a href="#local">Local Scene</a>
+            <ul>
+                <li><a href="venues.html">Venue Guide</a></li>
+                <li><a href="calendar.html">Event Calendar</a></li>
+            </ul>
+        </li>
+        <li><a href="#extras">Extras</a>
+            <ul>
+                <li><a href="seasonal.html">Seasonal Tips</a></li>
+                <li><a href="sober.html">Sober Ravers</a></li>
+                <li><a href="resources.html">MN Resources</a></li>
+            </ul>
+        </li>
+    </ul>
 </nav>
 
 <!-- Scroll alert -->
 <div class="rave-alert-wrapper">
-  <a href="/testing.html" class="rave-alert-link">
-    🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • Click for full info 🖤
-  </a>
+    <div class="rave-alert-link">
+        🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • <a href="testing.html" style="color:#ff69b4; text-decoration: underline;">Click for full info</a> 🖤
+    </div>
 </div>
 
 <!-- Site title -->
 <div class="site-title">
-  <h1>PLURderapolis</h1>
-  <div class="tagline">Harm Reduction for Minnesota Ravers</div>
+    <h1>PLURderapolis</h1>
+    <div class="tagline">Harm Reduction for Minnesota Ravers</div>
+    <a href="https://www.instagram.com/plurderapolis" class="instagram-handle" target="_blank">@plurderapolis</a>
 </div>
 
 <!-- Search -->
 <div class="search-container">
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search the site...">
-    <button onclick="performSearch()">🔍</button>
-  </div>
-  <div id="searchResults"></div>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for resources, info, or help...">
+        <button onclick="performSearch()">🔍</button>
+    </div>
+    <div id="searchResults"></div>
 </div>
 
-<!-- Sections -->
+<!-- Instagram Section -->
 <div class="section">
-  <h2>💡 What We Do</h2>
-  <ul>
-    <li>💊 Harm Reduction — Narcan, test strips, interaction tools.</li>
-    <li>🧠 Mental Health & Crisis — Peer support, Bad Trip Mode.</li>
-    <li>🕊️ Consent & Culture — Safer spaces, collective care.</li>
-  </ul>
+    <h2>📱 Follow Us on Instagram</h2>
+    <div class="instagram-section">
+        <p>Stay updated with the latest harm reduction tips, event coverage, and community resources</p>
+        <div class="instagram-posts">
+            <div class="instagram-post">📸</div>
+            <div class="instagram-post">🎭</div>
+            <div class="instagram-post">💕</div>
+            <div class="instagram-post">🌈</div>
+        </div>
+        <a href="https://www.instagram.com/plurderapolis" class="cta-button" target="_blank">Follow @plurderapolis</a>
+    </div>
 </div>
 
+<!-- What We Do Section -->
 <div class="section">
-  <h2>🔀 Panic & Emergency Tools</h2>
-  <div class="card-container">
-    <div class="card">
-      <h3>Panic Button</h3>
-      <p>Immediate access to help in emergencies.</p>
-      <a class="cta-button" href="panic.html">Go</a>
-    </div>
-    <div class="card">
-      <h3>Emergency Guides</h3>
-      <p>Step-by-step instructions for common crises.</p>
-      <a class="cta-button" href="emergency.html">View</a>
-    </div>
-    <div class="card">
-      <h3>Bad Trip Mode</h3>
-      <p>Calming visuals & exercises to ride it out safely.</p>
-      <a class="cta-button" href="badtrip.html" style="background-color:#ff6ec7; color:#1c0028;">Visit</a>
-    </div>
-  </div>
+    <h2>💡 What We Do</h2>
+    <ul>
+        <li>💊 <strong>Harm Reduction</strong> — Narcan, test strips, interaction tools.</li>
+        <li>🧠 <strong>Mental Health & Crisis</strong> — Peer support, Bad Trip Mode.</li>
+        <li>🕊️ <strong>Consent & Culture</strong> — Safer spaces, collective care.</li>
+        <li>🏙️ <strong>Minnesota Focus</strong> — Local resources, venues, community.</li>
+    </ul>
+    <a href="resources.html" class="cta-button">Explore All Resources</a>
 </div>
 
+<!-- Panic & Emergency Tools -->
 <div class="section">
-  <h2>🔀 Polydrug Interaction Tool</h2>
-  <div style="background:#2a0036; padding:1rem; border-radius:8px; text-align:center;">
-    <p>Interactive matrix to check dangerous drug combinations</p>
-    <a class="cta-button" href="polydrug.html">Open Full Tool</a>
-  </div>
+    <h2>🔀 Panic & Emergency Tools</h2>
+    <div class="card-container">
+        <div class="card">
+            <h3>Panic Button</h3>
+            <p>Immediate access to help in emergencies with quick exit options.</p>
+            <a class="cta-button" href="panic.html">Go</a>
+        </div>
+        <div class="card">
+            <h3>Emergency Guides</h3>
+            <p>Step-by-step instructions for common crises and overdose response.</p>
+            <a class="cta-button" href="emergency.html">View Guides</a>
+        </div>
+        <div class="card">
+            <h3>Bad Trip Mode</h3>
+            <p>Calming visuals & exercises to ride it out safely.</p>
+            <a class="cta-button" href="badtrip.html" style="background-color:#ff6ec7; color:#1c0028;">Visit</a>
+        </div>
+    </div>
 </div>
 
+<!-- Booth Locations Section -->
 <div class="section">
-  <h2>📚 Resources</h2>
-  <div class="card-container">
-    <div class="card">
-      <h3>MN Resources</h3>
-      <p>Plan B, queer-friendly clinics, DV support, recovery help.</p>
-      <a class="cta-button" href="resources.html">View</a>
+    <h2>🎪 Find Our Harm Reduction Booths</h2>
+    <p>Visit our physical booths at Minnesota events for free resources, testing kits, and support</p>
+    
+    <div class="booth-card">
+        <h3>Skyway Theatre</h3>
+        <div class="booth-meta">
+            <span class="date">Next event: Sept 12-13, 2025</span>
+            <span class="time">8PM - 2AM</span>
+        </div>
+        <div class="booth-resources">
+            <strong>Resources available:</strong> Narcan, Fentanyl Test Strips, Ear Protection, Water
+        </div>
+        <p>Find us near the main entrance. Look for the neon PLURderapolis sign!</p>
+        <a class="cta-button" href="venues.html#skyway">Venue Details & Directions</a>
     </div>
-    <div class="card">
-      <h3>Sober Ravers</h3>
-      <p>Tips & support for enjoying the scene sober.</p>
-      <a class="cta-button" href="sober.html">View</a>
+    
+    <div class="booth-card">
+        <h3>The Loft</h3>
+        <div class="booth-meta">
+            <span class="date">Next event: Sept 19, 2025</span>
+            <span class="time">9PM - 3AM</span>
+        </div>
+        <div class="booth-resources">
+            <strong>Resources available:</strong> Narcan, Water, Safe Sex Supplies, Drug Interaction Guides
+        </div>
+        <p>We'll be in the chill-out area throughout the event</p>
+        <a class="cta-button" href="venues.html#loft">Venue Details & Directions</a>
     </div>
-    <div class="card">
-      <h3>Raver Health</h3>
-      <p>Hydration, cooling, and drug safety tips.</p>
-      <a class="cta-button" href="health.html">View</a>
+
+    <div class="booth-notification" style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255, 176, 124, 0.1); border-radius: 10px;">
+        <h3 style="color: #ff69b4; margin-top: 0;">Get Booth Updates</h3>
+        <p>Text <strong>PLURBOOTH</strong> to (612) 555-1234 to receive text alerts about where we'll be each weekend</p>
     </div>
-  </div>
+</div>
+
+<!-- Polydrug Tool Section -->
+<div class="section">
+    <h2>🔀 Polydrug Interaction Tool</h2>
+    <p>Check how different substances interact with each other. This is a simplified demo - use the full tool for complete information.</p>
+    
+    <div style="background:#2a0036; padding:1.5rem; border-radius:10px; margin:1.5rem 0;">
+        <h3 style="color:#ff69b4; margin-top:0;">Common Interaction Warnings</h3>
+        <ul>
+            <li>Alcohol + Benzodiazepines: <span style="color:#ff6e6e;">Dangerous</span> - Severe respiratory depression risk</li>
+            <li>MDMA + SSRIs: <span style="color:#ffb86c;">Caution</span> - Reduced effects, serotonin syndrome risk</li>
+            <li>LSD + Cannabis: <span style="color:#ffb86c;">Caution</span> - Potentially overwhelming experience</li>
+        </ul>
+    </div>
+    
+    <a class="cta-button" href="polydrug.html">Open Full Interaction Tool</a>
+    <a class="download-btn" href="downloads/drug-interaction-guide.pdf">Download Interaction Chart</a>
+</div>
+
+<!-- Resources Section -->
+<div class="section">
+    <h2>📚 Resources & Downloads</h2>
+    <p>Access our harm reduction materials anytime, even offline</p>
+    
+    <div class="card-container">
+        <div class="card">
+            <h3>MN Resources <span class="download-badge">PDF</span></h3>
+            <p>Local Minnesota harm reduction resources, clinics, and support services.</p>
+            <a class="cta-button" href="resources.html">View Online</a>
+            <a class="download-btn" href="downloads/mn-resources.pdf">Download</a>
+        </div>
+        <div class="card">
+            <h3>Sober Ravers <span class="download-badge">PDF</span></h3>
+            <p>Tips & support for enjoying the scene sober or reducing substance use.</p>
+            <a class="cta-button" href="sober.html">View Online</a>
+            <a class="download-btn" href="downloads/sober-ravers.pdf">Download</a>
+        </div>
+        <div class="card">
+            <h3>Raver Health <span class="download-badge">PDF</span></h3>
+            <p>Hydration, cooling, and drug safety tips for events and raves.</p>
+            <a class="cta-button" href="health.html">View Online</a>
+            <a class="download-btn" href="downloads/raver-health.pdf">Download</a>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Pages Section -->
+<div class="section">
+    <h2>📍 Featured Resources</h2>
+    <div class="card-container">
+        <div class="card">
+            <h3>Venue Guide <span class="download-badge">PDF</span></h3>
+            <p>Find harm reduction-friendly venues across Minnesota with safety information.</p>
+            <a class="cta-button" href="venues.html">Explore Venues</a>
+            <a class="download-btn" href="downloads/venue-guide.pdf">Download</a>
+        </div>
+        <div class="card">
+            <h3>Rejection-Based Violence</h3>
+            <p>Resources for understanding and preventing violence after rejection.</p>
+            <a class="cta-button" href="rejection-violence.html">Learn More</a>
+        </div>
+        <div class="card">
+            <h3>Event Calendar</h3>
+            <p>Find parties and events where we'll have booths setup.</p>
+            <a class="cta-button" href="calendar.html">View Calendar</a>
+        </div>
+    </div>
 </div>
 
 <!-- Peach panic button -->
 <div id="peachWrap">
-  <a class="emoji-panic" id="panicButton" title="Emergency">🍑</a>
+    <a id="panicButton" title="Emergency">🍑</a>
 </div>
 
 <!-- Footer -->
 <footer>
-  <hr/>
-  <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
-  <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.org" style="color:#00f7e0;">plurderapolis@gmail.org</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
-  <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="panic.html">Panic</a></li>
-    <li><a href="emergency.html">Emergency</a></li>
-    <li><a href="polydrug.html">Polydrug</a></li>
-    <li><a href="resources.html">Resources</a></li>
-  </ul>
+    <hr/>
+    <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+    <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:#00f7e0;">plurderapolis@gmail.com</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
+    <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="panic.html">Panic</a></li>
+        <li><a href="emergency.html">Emergency</a></li>
+        <li><a href="polydrug.html">Polydrug</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="venues.html">Venues</a></li>
+        <li><a href="rejection-violence.html">Rejection Violence</a></li>
+    </ul>
 </footer>
 
 <script>
-// Hamburger toggle
-const menuBtn = document.getElementById('menuBtn');
-const sideNav = document.getElementById('sideNav');
-menuBtn.addEventListener('click',()=>{
-  menuBtn.classList.toggle('active');
-  sideNav.classList.toggle('active');
-});
-const navItems = document.querySelectorAll('.side-nav ul li');
-navItems.forEach(item=>{
-  item.addEventListener('click',()=>{item.classList.toggle('show');});
-});
-
-// Peach panic button
-const peachBtn = document.getElementById('panicButton');
-peachBtn.addEventListener('click',()=>{
-  if (confirm("For immediate exit, press OK. For emergency resources, press Cancel.")) {
-    window.location.href = "panic.html";
-  } else {
-    window.location.href = "emergency.html";
-  }
-});
-
-// Close search results when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.search-container')) {
-    document.getElementById('searchResults').style.display = 'none';
-  }
-});
-
-// Search index (titles + content snippets)
-const sitePages = [
-  {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
-  {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
-  {title:"Emergency Guides",url:"emergency.html",content:"Step-by-step instructions for medical and crisis situations."},
-  {title:"Polydrug Tool",url:"polydrug.html",content:"Check dangerous drug interactions and polydrug risks."},
-  {title:"RX + Party Combos",url:"rx-combos.html",content:"Prescription drug and party drug combination risks."},
-  {title:"Raver Health",url:"health.html",content:"Hydration, cooling, safety tips for events and raves."},
-  {title:"Consent Basics",url:"consent.html",content:"Consent education for safer nightlife and festivals."},
-  {title:"Accountability",url:"accountability.html",content:"Resources on community accountability and safer spaces."},
-  {title:"Scene Spotlight",url:"spotlight.html",content:"Highlighting Minnesota rave community and local collectives."},
-  {title:"Event Calendar",url:"calendar.html",content:"Upcoming events, shows, and festivals in Minnesota."},
-  {title:"Seasonal Tips",url:"seasonal.html",content:"Tips for staying safe during hot summer raves or cold winters."},
-  {title:"Sober Ravers",url:"sober.html",content:"Support and advice for enjoying raves without substances."},
-  {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
-  {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
-  {title:"Mixes",url:"mixes.html",content:"Local DJ mixes, rave playlists, and harm reduction soundscapes."}
-];
-
-// Predictive search
-const searchInput = document.getElementById('searchInput');
-const results = document.getElementById('searchResults');
-
-searchInput.addEventListener('input', performSearch);
-searchInput.addEventListener('focus', performSearch);
-
-function performSearch(){
-  const input = searchInput.value.toLowerCase();
-  results.innerHTML = "";
-  
-  if(!input){
-    results.style.display = "none";
-    return;
-  }
-  
-  const filtered = sitePages.filter(page =>
-    page.title.toLowerCase().includes(input) ||
-    page.content.toLowerCase().includes(input)
-  );
-  
-  if(filtered.length > 0){
-    const ul = document.createElement('ul');
-    filtered.forEach(page=>{
-      const li = document.createElement('li');
-      li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0,60) + "...</small>";
-      li.onclick = ()=>{window.location.href = page.url;};
-      ul.appendChild(li);
+    // Hamburger toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sideNav = document.getElementById('sideNav');
+    
+    menuBtn.addEventListener('click', () => {
+        menuBtn.classList.toggle('active');
+        sideNav.classList.toggle('active');
     });
-    results.appendChild(ul);
-    results.style.display = "block";
-  } else {
-    results.innerHTML = "<div style='padding:12px;'>No results found</div>";
-    results.style.display = "block";
-  }
-}
+    
+    const navItems = document.querySelectorAll('.side-nav ul li');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('show');
+        });
+    });
+
+    // Peach panic button
+    const panicButton = document.getElementById('panicButton');
+    panicButton.addEventListener('click', () => {
+        if (confirm("For immediate exit, press OK. For emergency resources, press Cancel.")) {
+            window.location.href = "panic.html";
+        } else {
+            window.location.href = "emergency.html";
+        }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+
+    // Search index (titles + content snippets)
+    const sitePages = [
+        {title: "Home", url: "index.html", content: "PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
+        {title: "Panic Button", url: "panic.html", content: "Emergency panic button for instant access to help."},
+        {title: "Emergency Guides", url: "emergency.html", content: "Step-by-step instructions for medical and crisis situations."},
+        {title: "Polydrug Tool", url: "polydrug.html", content: "Check dangerous drug interactions and polydrug risks."},
+        {title: "RX + Party Combos", url: "rx-combos.html", content: "Prescription drug and party drug combination risks."},
+        {title: "Raver Health", url: "health.html", content: "Hydration, cooling, safety tips for events and raves."},
+        {title: "Consent Basics", url: "consent.html", content: "Consent education for safer nightlife and festivals."},
+        {title: "Accountability", url: "accountability.html", content: "Resources on community accountability and safer spaces."},
+        {title: "Rejection-Based Violence", url: "rejection-violence.html", content: "Understanding and preventing violence after rejection."},
+        {title: "Venue Guide", url: "venues.html", content: "Minnesota venues with harm reduction information."},
+        {title: "Event Calendar", url: "calendar.html", content: "Upcoming events, shows, and festivals in Minnesota."},
+        {title: "Seasonal Tips", url: "seasonal.html", content: "Tips for staying safe during hot summer raves or cold winters."},
+        {title: "Sober Ravers", url: "sober.html", content: "Support and advice for enjoying raves without substances."},
+        {title: "MN Resources", url: "resources.html", content: "Plan B, queer clinics, DV support, recovery, mental health."},
+        {title: "Bad Trip Mode", url: "badtrip.html", content: "Calming visuals, grounding exercises, safe trip support."},
+        {title: "Mixes", url: "mixes.html", content: "Local DJ mixes, rave playlists, and harm reduction soundscapes."}
+    ];
+
+    // Predictive search
+    const searchInput = document.getElementById('searchInput');
+    const results = document.getElementById('searchResults');
+
+    searchInput.addEventListener('input', performSearch);
+    searchInput.addEventListener('focus', performSearch);
+
+    function performSearch() {
+        const input = searchInput.value.toLowerCase();
+        results.innerHTML = "";
+        
+        if (!input) {
+            results.style.display = "none";
+            return;
+        }
+        
+        const filtered = sitePages.filter(page =>
+            page.title.toLowerCase().includes(input) ||
+            page.content.toLowerCase().includes(input)
+        );
+        
+        if (filtered.length > 0) {
+            const ul = document.createElement('ul');
+            filtered.forEach(page => {
+                const li = document.createElement('li');
+                li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0, 60) + "...</small>";
+                li.onclick = () => {
+                    window.location.href = page.url;
+                };
+                ul.appendChild(li);
+            });
+            results.appendChild(ul);
+            results.style.display = "block";
+        } else {
+            results.innerHTML = "<div style='padding: 12px;'>No results found. Try different keywords.</div>";
+            results.style.display = "block";
+        }
+    }
+
+    // Check if page is loaded offline
+    if (!navigator.onLine) {
+        // Could add offline functionality here in the future
+        console.log("Offline mode");
+    }
 </script>
 
 </body>
