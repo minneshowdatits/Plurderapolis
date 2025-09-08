@@ -27,7 +27,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
     <style>
-        /* Your existing styles with optimizations */
+        /* Base styles */
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
@@ -36,32 +36,59 @@
             line-height: 1.6;
             overflow-x: hidden;
             background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
+            padding-bottom: 70px;
         }
 
-        #skyline {
+        /* Enhanced Minneapolis Skyline */
+        .skyline-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: 150px;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .skyline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(to top, 
-                rgba(0, 247, 224, 0.2) 0%, 
+                rgba(0, 247, 224, 0.3) 0%, 
                 transparent 20%,
                 transparent 80%,
-                rgba(255, 105, 180, 0.1) 100%
+                rgba(255, 105, 180, 0.2) 100%
             );
-            background-position: bottom center;
-            background-repeat: no-repeat;
-            background-size: 100% 120px;
-            filter: drop-shadow(0 0 10px #00f7e0) drop-shadow(0 0 20px #ff69b4);
-            pointer-events: none;
-            z-index: 0;
-            animation: skylineGlow 4s infinite alternate;
+            clip-path: polygon(
+                0% 100%, 2% 70%, 4% 80%, 6% 60%, 8% 90%, 10% 50%,
+                12% 70%, 14% 85%, 16% 65%, 18% 95%, 20% 55%, 22% 75%,
+                24% 85%, 26% 60%, 28% 80%, 30% 90%, 32% 65%, 34% 75%,
+                36% 100%, 38% 70%, 40% 85%, 42% 60%, 44% 95%, 46% 50%,
+                48% 80%, 50% 70%, 52% 90%, 54% 60%, 56% 85%, 58% 75%,
+                60% 100%, 62% 65%, 64% 90%, 66% 55%, 68% 80%, 70% 70%,
+                72% 95%, 74% 60%, 76% 85%, 78% 75%, 80% 100%, 82% 65%,
+                84% 90%, 86% 50%, 88% 80%, 90% 70%, 92% 95%, 94% 60%,
+                96% 85%, 98% 75%, 100% 100%
+            );
+            filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4);
+            animation: skylineGlow 4s infinite alternate, glitch 5s infinite;
         }
         
         @keyframes skylineGlow {
-            0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); }
-            100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); }
+            0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); opacity: 0.8; }
+            100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); opacity: 1; }
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            5% { transform: translateX(-2px); }
+            10% { transform: translateX(2px); }
+            15% { transform: translateX(-1px); }
+            20% { transform: translateX(1px); }
+            50% { transform: translateX(0); }
         }
 
         .site-title {
@@ -150,27 +177,29 @@
         .side-nav ul li.show > ul { display:block; }
         .side-nav ul li ul li a { font-weight:normal; font-size:0.95rem; }
 
+        /* Less obtrusive alert banner */
         .rave-alert-wrapper {
-            background-color:#1a1a1a;
-            overflow:hidden;
-            border-top:1px solid #444;
-            border-bottom:1px solid #444;
-            position:relative;
-            height:2.5rem;
-            display:flex;
-            align-items:center;
-            width:100vw;
-            z-index:2;
+            background-color: rgba(26, 26, 26, 0.9);
+            overflow: hidden;
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+            position: relative;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            width: 100vw;
+            z-index: 2;
             margin-top: 1rem;
+            backdrop-filter: blur(4px);
         }
         
         .rave-alert-link {
-            display:inline-block;
-            white-space:nowrap;
-            color:#ff69b4;
-            font-size:1.1rem;
-            text-decoration:none;
-            padding-left:100%;
+            display: inline-block;
+            white-space: nowrap;
+            color: #ff69b4;
+            font-size: 0.9rem;
+            text-decoration: none;
+            padding-left: 100%;
             animation: scroll-left 20s linear infinite;
         }
         
@@ -276,118 +305,123 @@
         #searchResults li:hover { background:#5d3a7d; }
         #searchResults li:last-child { border-bottom: none; }
 
+        /* Larger, swipeable peach button */
         #peachWrap {
-            position:fixed; 
-            bottom:30px; 
-            right:30px; 
-            z-index:1002; 
-            display:flex; 
-            flex-direction:column; 
-            align-items:center; 
-            gap:6px;
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 1002; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 6px;
+            touch-action: none;
         }
         
-        #peachWrap a.emoji-panic{
-            width:60px; 
-            height:60px; 
-            font-size:2.5rem;
+        #panicButton {
+            width: 80px; 
+            height: 80px; 
+            font-size: 3.5rem;
             background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
-            border-radius:50% 50% 45% 55% / 60% 55% 45% 50%;
+            border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
             position: relative;
-            display:flex; 
-            justify-content:center; 
-            align-items:center;
-            cursor:pointer; 
-            text-decoration:none; 
-            color:#fff;
-            box-shadow: 0 0 10px #ff69b4, 0 0 20px #00f7e0;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            text-decoration: none; 
+            color: #fff;
+            box-shadow: 0 0 15px #ff69b4, 0 0 30px #00f7e0;
             animation: emojiPulse 2s infinite;
+            user-select: none;
         }
         
-        #peachWrap a.emoji-panic::before{
-            content:"";
-            position:absolute;
-            top:-10px; 
-            left:22px;
-            width:15px; 
-            height:12px;
-            background: linear-gradient(135deg,#7aff7a,#2eb62c);
-            border-radius:50%;
-            transform:rotate(-20deg);
+        #panicButton::before {
+            content: "";
+            position: absolute;
+            top: -12px; 
+            left: 30px;
+            width: 20px; 
+            height: 16px;
+            background: linear-gradient(135deg, #7aff7a, #2eb62c);
+            border-radius: 50%;
+            transform: rotate(-20deg);
         }
         
-        #peachWrap a.emoji-panic:hover { 
-            transform:scale(1.2);
+        #panicButton:hover { 
+            transform: scale(1.2);
             animation: none;
         }
         
-        @keyframes emojiPulse{
-            0%{transform:scale(1);}
-            50%{transform:scale(1.12);}
-            100%{transform:scale(1);}
+        @keyframes emojiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
         }
 
-        footer{
-            margin-top:2rem;
-            font-size:0.9rem;
-            color:#aaa;
-            text-align:center; 
+        footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #aaa;
+            text-align: center; 
             position: relative; 
-            z-index:2;
+            z-index: 2;
             padding: 1rem;
             background: rgba(0, 0, 0, 0.5);
         }
         
-        footer hr{
-            border-color:#444;
-            margin-bottom:1rem;
+        footer hr {
+            border-color: #444;
+            margin-bottom: 1rem;
         }
         
-        footer p{
-            max-width:800px;
-            margin:0.5rem auto;
+        footer p {
+            max-width: 800px;
+            margin: 0.5rem auto;
         }
         
-        footer ul{
-            list-style:none;
-            padding:0;
-            display:flex;
-            flex-wrap:wrap;
-            justify-content:center;
-            margin-top:1rem;
+        footer ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
         }
         
-        footer ul li a{
-            color:#00f7e0;
-            padding:0 10px;
-            text-decoration:none;
+        footer ul li a {
+            color: #00f7e0;
+            padding: 0 10px;
+            text-decoration: none;
         }
         
-        footer ul li a:hover{
-            text-decoration:underline;
+        footer ul li a:hover {
+            text-decoration: underline;
         }
 
-        @media(max-width:600px){
-            .section{
-                margin:1rem;
-                padding:0.8rem;
+        @media (max-width: 600px) {
+            .section {
+                margin: 1rem;
+                padding: 0.8rem;
             }
             
-            .cta-button{
-                padding:0.5rem 0.8rem;
+            .cta-button {
+                padding: 0.5rem 0.8rem;
             }
             
             .card-container { 
                 flex-direction: column; 
-                align-items:center;
-            }
-            
-            #skyline {
-                height: 120px;
+                align-items: center;
             }
             
             .search-container {
                 width: 90%;
+            }
+            
+            #panicButton {
+                width: 70px;
+                height: 70px;
+                font-size: 3rem;
             }
         }
 
@@ -505,67 +539,120 @@
             }
         }
 
-        /* Polydrug Matrix Styles */
-        .polydrug-matrix {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
+        /* Mini Polydrug Tool Preview Styles */
+        .mini-polydrug {
+            background: #2a0036;
+            border-radius: 10px;
+            padding: 15px;
             margin: 20px 0;
-            max-width: 100%;
-            overflow-x: auto;
+            border: 1px solid #5d3a7d;
         }
-
-        .matrix-header {
+        
+        .mini-drug-selectors {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .mini-drug-select {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .mini-drug-select label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00f7e0;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .mini-drug-select select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            background: #3a0052;
+            color: white;
+            border: 1px solid #00f7e0;
+        }
+        
+        .mini-check-btn {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        
+        .mini-matrix {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            margin: 15px 0;
+        }
+        
+        .mini-matrix-header {
             background: #5d3a7d;
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             font-weight: bold;
             border-radius: 5px;
+            font-size: 0.9rem;
         }
-
-        .matrix-cell {
-            padding: 10px;
+        
+        .mini-matrix-cell {
+            padding: 8px;
             text-align: center;
             border-radius: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 50px;
+            min-height: 40px;
+            font-size: 0.9rem;
         }
-
+        
         .safe { background-color: rgba(76, 175, 80, 0.3); }
         .caution { background-color: rgba(255, 193, 7, 0.3); }
         .danger { background-color: rgba(244, 67, 54, 0.3); }
-
-        .drug-icon {
-            font-size: 1.5rem;
-            margin-right: 5px;
+        
+        .mini-result {
+            background: #3a0052;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #00f7e0;
         }
-
-        .interaction-icon {
-            font-size: 1.8rem;
+        
+        .mini-result-text {
+            font-weight: bold;
+            margin-bottom: 5px;
         }
-
-        .matrix-legend {
+        
+        .mini-legend {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 15px 0;
+            gap: 10px;
+            margin: 10px 0;
             flex-wrap: wrap;
         }
-
-        .legend-item {
+        
+        .mini-legend-item {
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 0.8rem;
         }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 3px;
+        
+        .mini-legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
         }
-
+        
         .legend-safe { background-color: rgba(76, 175, 80, 0.3); }
         .legend-caution { background-color: rgba(255, 193, 7, 0.3); }
         .legend-danger { background-color: rgba(244, 67, 54, 0.3); }
@@ -599,7 +686,9 @@
 </head>
 <body>
 
-<div id="skyline"></div>
+<div class="skyline-container">
+    <div class="skyline"></div>
+</div>
 
 <!-- Hamburger menu -->
 <div class="menu-btn" id="menuBtn">
@@ -645,7 +734,7 @@
     </ul>
 </nav>
 
-<!-- Scroll alert - Fixed link -->
+<!-- Less obtrusive alert banner -->
 <div class="rave-alert-wrapper">
     <a href="testing.html" class="rave-alert-link">
         🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • Click for full info 🖤
@@ -690,11 +779,28 @@
 <!-- Sections -->
 <div class="section">
     <h2>💡 What We Do</h2>
-    <ul>
-        <li>💊 Harm Reduction — Narcan, test strips, interaction tools.</li>
-        <li>🧠 Mental Health & Crisis — Peer support, Bad Trip Mode.</li>
-        <li>🕊️ Consent & Culture — Safer spaces, collective care.</li>
-    </ul>
+    <div class="card-container">
+        <div class="card">
+            <h3>💊 Harm Reduction</h3>
+            <p>Narcan, test strips, interaction tools, and safety resources.</p>
+            <a class="cta-button" href="resources.html">Get Resources</a>
+        </div>
+        <div class="card">
+            <h3>🧠 Mental Health & Crisis</h3>
+            <p>Peer support, Bad Trip Mode, and emergency resources.</p>
+            <a class="cta-button" href="emergency.html">Find Support</a>
+        </div>
+        <div class="card">
+            <h3>🕊️ Consent & Culture</h3>
+            <p>Building respectful communities and addressing harm.</p>
+            <a class="cta-button" href="consent.html">Learn More</a>
+        </div>
+        <div class="card">
+            <h3>🎉 Our Booth</h3>
+            <p>Find our harm reduction booth at local events and festivals.</p>
+            <a class="cta-button" href="booth.html">Find Our Booth</a>
+        </div>
+    </div>
 </div>
 
 <div class="section">
@@ -718,65 +824,85 @@
     </div>
 </div>
 
+<!-- Mini Polydrug Tool Preview -->
 <div class="section">
     <h2>🔀 Polydrug Interaction Tool Preview</h2>
-    <p>Check how different substances interact with each other. Here's a preview of our interaction matrix:</p>
+    <p>Check how different substances interact with each other. Select two substances to see their interaction:</p>
     
-    <div class="matrix-legend">
-        <div class="legend-item">
-            <div class="legend-color legend-safe"></div>
-            <span>Generally Safe</span>
+    <div class="mini-polydrug">
+        <div class="mini-drug-selectors">
+            <div class="mini-drug-select">
+                <label for="miniDrug1">First Substance:</label>
+                <select id="miniDrug1">
+                    <option value="">Select a substance</option>
+                    <option value="alcohol">🍺 Alcohol</option>
+                    <option value="mdma">✨ MDMA</option>
+                    <option value="cannabis">🌿 Cannabis</option>
+                    <option value="opioids">💊 Opioids</option>
+                </select>
+            </div>
+            <div class="mini-drug-select">
+                <label for="miniDrug2">Second Substance:</label>
+                <select id="miniDrug2">
+                    <option value="">Select a substance</option>
+                    <option value="alcohol">🍺 Alcohol</option>
+                    <option value="mdma">✨ MDMA</option>
+                    <option value="cannabis">🌿 Cannabis</option>
+                    <option value="opioids">💊 Opioids</option>
+                </select>
+            </div>
+            <button class="mini-check-btn" id="miniCheckBtn">Check</button>
         </div>
-        <div class="legend-item">
-            <div class="legend-color legend-caution"></div>
-            <span>Use Caution</span>
+        
+        <div class="mini-legend">
+            <div class="mini-legend-item">
+                <div class="mini-legend-color legend-safe"></div>
+                <span>Generally Safe</span>
+            </div>
+            <div class="mini-legend-item">
+                <div class="mini-legend-color legend-caution"></div>
+                <span>Use Caution</span>
+            </div>
+            <div class="mini-legend-item">
+                <div class="mini-legend-color legend-danger"></div>
+                <span>Dangerous</span>
+            </div>
         </div>
-        <div class="legend-item">
-            <div class="legend-color legend-danger"></div>
-            <span>Dangerous</span>
+        
+        <div class="mini-matrix">
+            <!-- Header row -->
+            <div class="mini-matrix-header"></div>
+            <div class="mini-matrix-header"><span>🍺</span></div>
+            <div class="mini-matrix-header"><span>✨</span></div>
+            <div class="mini-matrix-header"><span>🌿</span></div>
+            
+            <!-- Alcohol row -->
+            <div class="mini-matrix-header"><span>🍺</span></div>
+            <div class="mini-matrix-cell danger"><span>💀</span></div>
+            <div class="mini-matrix-cell danger"><span>💀</span></div>
+            <div class="mini-matrix-cell caution"><span>⚠️</span></div>
+            
+            <!-- MDMA row -->
+            <div class="mini-matrix-header"><span>✨</span></div>
+            <div class="mini-matrix-cell danger"><span>💀</span></div>
+            <div class="mini-matrix-cell danger"><span>💀</span></div>
+            <div class="mini-matrix-cell safe"><span>✅</span></div>
+            
+            <!-- Cannabis row -->
+            <div class="mini-matrix-header"><span>🌿</span></div>
+            <div class="mini-matrix-cell caution"><span>⚠️</span></div>
+            <div class="mini-matrix-cell safe"><span>✅</span></div>
+            <div class="mini-matrix-cell safe"><span>✅</span></div>
         </div>
+        
+        <div id="miniResult" class="mini-result">
+            <p>Select two substances to check interaction</p>
+        </div>
+        
+        <p style="text-align: center; margin-top: 15px;">
+            <a class="cta-button" href="polydrug.html">Open Full Interaction Tool</a>
+        </p>
     </div>
-    
-    <div class="polydrug-matrix">
-        <!-- Header row -->
-        <div class="matrix-header"></div>
-        <div class="matrix-header"><span class="drug-icon">🍺</span> Alcohol</div>
-        <div class="matrix-header"><span class="drug-icon">✨</span> MDMA</div>
-        <div class="matrix-header"><span class="drug-icon">🌿</span> Cannabis</div>
-        <div class="matrix-header"><span class="drug-icon">💊</span> Opioids</div>
-        
-        <!-- Alcohol row -->
-        <div class="matrix-header"><span class="drug-icon">🍺</span> Alcohol</div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell caution"><span class="interaction-icon">⚠️</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        
-        <!-- MDMA row -->
-        <div class="matrix-header"><span class="drug-icon">✨</span> MDMA</div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell safe"><span class="interaction-icon">✅</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        
-        <!-- Cannabis row -->
-        <div class="matrix-header"><span class="drug-icon">🌿</span> Cannabis</div>
-        <div class="matrix-cell caution"><span class="interaction-icon">⚠️</span></div>
-        <div class="matrix-cell safe"><span class="interaction-icon">✅</span></div>
-        <div class="matrix-cell safe"><span class="interaction-icon">✅</span></div>
-        <div class="matrix-cell caution"><span class="interaction-icon">⚠️</span></div>
-        
-        <!-- Opioids row -->
-        <div class="matrix-header"><span class="drug-icon">💊</span> Opioids</div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-        <div class="matrix-cell caution"><span class="interaction-icon">⚠️</span></div>
-        <div class="matrix-cell danger"><span class="interaction-icon">💀</span></div>
-    </div>
-    
-    <p style="text-align: center; margin-top: 20px;">
-        <a class="cta-button" href="polydrug.html">Open Full Interaction Tool</a>
-    </p>
 </div>
 
 <div class="section">
@@ -846,9 +972,9 @@
     </div>
 </div>
 
-<!-- Peach panic button -->
+<!-- Larger, swipeable peach panic button -->
 <div id="peachWrap">
-    <a class="emoji-panic" id="panicButton" title="Emergency">🍑</a>
+    <div id="panicButton">🍑</div>
 </div>
 
 <!-- Footer -->
@@ -880,9 +1006,75 @@
         item.addEventListener('click',()=>{item.classList.toggle('show');});
     });
 
-    // Peach panic button - Enhanced for immediate emergency access
+    // Peach panic button functionality with swipe
     const peachBtn = document.getElementById('panicButton');
-    peachBtn.addEventListener('click',()=>{
+    let startX, startY, distX, distY;
+    const threshold = 50; // minimum distance for a swipe
+    
+    peachBtn.addEventListener('touchstart', function(e) {
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+    });
+    
+    peachBtn.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // prevent scrolling while swiping
+    });
+    
+    peachBtn.addEventListener('touchend', function(e) {
+        const touch = e.changedTouches[0];
+        distX = touch.clientX - startX;
+        distY = touch.clientY - startY;
+        
+        // Check if it's a swipe (more horizontal than vertical and enough distance)
+        if (Math.abs(distX) > Math.abs(distY) && Math.abs(distX) > threshold) {
+            // Swipe detected - hide the button
+            document.getElementById('peachWrap').style.display = 'none';
+            
+            // Show a temporary message that it can be reopened
+            const message = document.createElement('div');
+            message.textContent = 'Swipe down from top right to show emergency button';
+            message.style.position = 'fixed';
+            message.style.top = '20px';
+            message.style.right = '20px';
+            message.style.background = '#3a0052';
+            message.style.color = 'white';
+            message.style.padding = '10px';
+            message.style.borderRadius = '5px';
+            message.style.zIndex = '1003';
+            message.style.border = '1px solid #00f7e0';
+            document.body.appendChild(message);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 3000);
+            
+            // Allow reopening by swiping down from top right
+            let reopenStartY;
+            document.addEventListener('touchstart', function reopenStart(e) {
+                if (e.touches[0].clientY < 100 && e.touches[0].clientX > window.innerWidth - 100) {
+                    reopenStartY = e.touches[0].clientY;
+                }
+            });
+            
+            document.addEventListener('touchend', function reopenEnd(e) {
+                if (reopenStartY && e.changedTouches[0].clientY - reopenStartY > 100) {
+                    document.getElementById('peachWrap').style.display = 'flex';
+                    reopenStartY = null;
+                    
+                    // Remove these event listeners after reopening
+                    document.removeEventListener('touchstart', reopenStart);
+                    document.removeEventListener('touchend', reopenEnd);
+                }
+            });
+        } else {
+            // Regular tap - show emergency modal
+            showEmergencyModal();
+        }
+    });
+    
+    peachBtn.addEventListener('click', function() {
         showEmergencyModal();
     });
 
@@ -919,6 +1111,69 @@
             closeEmergencyModal();
         }
     });
+
+    // Mini Polydrug Tool Preview functionality
+    const miniDrug1 = document.getElementById('miniDrug1');
+    const miniDrug2 = document.getElementById('miniDrug2');
+    const miniCheckBtn = document.getElementById('miniCheckBtn');
+    const miniResult = document.getElementById('miniResult');
+    
+    // Define interaction matrix for preview
+    const interactionMatrix = {
+        'alcohol': {
+            'alcohol': { level: 'danger', text: 'Extreme risk of alcohol poisoning' },
+            'mdma': { level: 'danger', text: 'Increased dehydration risk' },
+            'cannabis': { level: 'caution', text: 'May increase dizziness' },
+            'opioids': { level: 'danger', text: 'Severe respiratory depression risk' }
+        },
+        'mdma': {
+            'alcohol': { level: 'danger', text: 'Increased dehydration risk' },
+            'mdma': { level: 'danger', text: 'Greatly increases neurotoxicity' },
+            'cannabis': { level: 'safe', text: 'Generally safe, may help with anxiety' },
+            'opioids': { level: 'danger', text: 'Increased sedation risk' }
+        },
+        'cannabis': {
+            'alcohol': { level: 'caution', text: 'May increase dizziness' },
+            'mdma': { level: 'safe', text: 'Generally safe, may help with anxiety' },
+            'cannabis': { level: 'safe', text: 'Generally safe' },
+            'opioids': { level: 'caution', text: 'May increase sedation' }
+        },
+        'opioids': {
+            'alcohol': { level: 'danger', text: 'Severe respiratory depression risk' },
+            'mdma': { level: 'danger', text: 'Increased sedation risk' },
+            'cannabis': { level: 'caution', text: 'May increase sedation' },
+            'opioids': { level: 'danger', text: 'Extreme overdose risk' }
+        }
+    };
+    
+    // Set up event listeners for drug selects
+    miniCheckBtn.addEventListener('click', checkMiniInteraction);
+    
+    function checkMiniInteraction() {
+        const drug1 = miniDrug1.value;
+        const drug2 = miniDrug2.value;
+        
+        if (!drug1 || !drug2) {
+            miniResult.innerHTML = '<p>Please select two substances to check interaction</p>';
+            return;
+        }
+        
+        // Check if we have a defined interaction
+        let interaction;
+        if (interactionMatrix[drug1] && interactionMatrix[drug1][drug2]) {
+            interaction = interactionMatrix[drug1][drug2];
+        } else if (interactionMatrix[drug2] && interactionMatrix[drug2][drug1]) {
+            interaction = interactionMatrix[drug2][drug1];
+        } else {
+            interaction = { level: 'caution', text: 'Limited data on this combination. Exercise caution.' };
+        }
+        
+        // Display the result
+        miniResult.innerHTML = `
+            <div class="mini-result-text">${drug1} + ${drug2} → <span style="font-size: 1.2rem;">${interaction.level === 'danger' ? '💀' : interaction.level === 'caution' ? '⚠️' : '✅'}</span></div>
+            <p>${interaction.text}</p>
+        `;
+    }
 
     // Search functionality
     const sitePages = [
@@ -998,25 +1253,6 @@
                 });
             }
         });
-    }
-
-    // Preload critical emergency pages
-    function preloadEmergencyPages() {
-        const emergencyPages = ['panic.html', 'emergency.html', 'spiking.html', 'badtrip.html'];
-        emergencyPages.forEach(page => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.href = page;
-            link.as = 'document';
-            document.head.appendChild(link);
-        });
-    }
-    
-    // Start preloading when page is loaded
-    if (window.requestIdleCallback) {
-        window.requestIdleCallback(preloadEmergencyPages);
-    } else {
-        setTimeout(preloadEmergencyPages, 500);
     }
 </script>
 
