@@ -1,1275 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bad Trip Mode — PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bad Trip Guide | PLURderapolis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
   <style>
-    /* Base dark neon aesthetic (keeps original vibe) */
-    :root{
-      --bg:#1c0028;
-      --panel:#2a0040;
-      --accent:#ff6ec7;
-      --teal:#00f7e0;
-      --muted:#e9d7f0;
-      --safe-bg:#0d0d0d;
-      --safe-muted:#ddd;
-      --card-radius:12px;
-      --shadow: 0 6px 20px rgba(0,0,0,0.6);
-      --glass: rgba(255,255,255,0.03);
-    }
-
-    html,body{height:100%;}
+    /* --- Base Theme --- */
     body {
-      margin:0;
-      min-height:100%;
-      font-family: 'Roboto',system-ui, -apple-system, 'Segoe UI', Roboto, 'Open Sans', sans-serif;
-      background: linear-gradient(180deg,var(--bg) 0%, #120014 100%);
-      color:var(--muted);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:1.25rem;
-      box-sizing:border-box;
-      user-select:none;
+      font-family: 'Roboto', sans-serif;
+      background: #1c0028;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
     }
-
-    header.topbar {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:0.8rem;
-      margin-bottom:1rem;
-    }
-    .brand {
-      display:flex;
-      align-items:center;
-      gap:0.75rem;
-    }
-    .brand .logo {
-      width:44px;height:44px;border-radius:12px;
-      background:linear-gradient(135deg,#ff6ec7,#ffb3e0);
-      box-shadow:0 6px 16px rgba(255,110,199,0.18), inset 0 -6px 18px rgba(0,0,0,0.25);
-      display:flex;align-items:center;justify-content:center;
+    h1, h2 {
       font-family: 'Montserrat', sans-serif;
-      font-weight:700;color:#1a0016;
-      transform:translateY(-1px);
+      text-align: center;
+      margin: 1rem 0;
     }
-    h1 {font-family:'Montserrat',sans-serif;color:var(--accent);font-size:1.6rem;margin:0;}
-    .subtitle {font-weight:700;font-size:0.95rem;color:#f5d6ef;opacity:0.95;margin-top:0.25rem;}
+    h1 {
+      font-size: 2rem;
+      color: #ff6ec7;
+      text-shadow: 0 0 8px #ff6ec7aa;
+    }
+    h2 {
+      background: #2a0040;
+      color: #00f7e0;
+      padding: 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00f7e055;
+      transition: background 0.3s;
+    }
+    h2:hover {
+      background: #3a0055;
+    }
 
-    /* top control buttons */
-    .controls {
-      display:flex;
-      gap:0.5rem;
-      align-items:center;
-      flex-wrap:wrap;
+    /* --- Collapsible Content --- */
+    .collapsible-content {
+      display: none;
+      padding: 1rem;
+      margin: 0.5rem 0 1rem;
+      background: #2a0040;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #00000055;
     }
-    button.control {
+    .collapsible-content.open {
+      display: block;
+    }
+
+    /* --- Top Controls --- */
+    .top-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .mode-btn {
+      background: #00f7e0;
+      color: #1c0028;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
       border: none;
-      background: linear-gradient(90deg,var(--accent),#ff49b2);
-      color:#1c0028;
-      padding:0.55rem 0.9rem;
-      border-radius:999px;
-      font-weight:800;
-      font-family:'Montserrat',sans-serif;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(255,110,199,0.12);
-      transition: transform .12s ease, opacity .12s;
+      border-radius: 25px;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 8px #00f7e0aa;
+      transition: background 0.3s ease;
     }
-    button.control:active{transform:translateY(1px);}
-    button.ghost {
-      background: transparent;
-      color: var(--teal);
-      border: 1px solid rgba(0,247,224,0.12);
-      box-shadow:none;
-    }
-    .toggle {
-      display:inline-flex; gap:0.5rem; align-items:center;
-    }
-    .small {
-      padding:0.45rem 0.65rem; font-size:0.92rem;
+    .mode-btn:hover {
+      background: #00d6c7;
     }
 
-    /* layout */
-    main.container {
-      display:grid;
-      grid-template-columns: 1fr 380px;
-      gap:1rem;
-      align-items:start;
+    /* --- Sensory Safe Mode --- */
+    body.safe-mode {
+      background: #111;
+      color: #fff;
     }
-    @media (max-width: 980px){
-      main.container { grid-template-columns: 1fr; }
+    body.safe-mode h2 {
+      background: #222;
+      color: #fff;
+      box-shadow: none;
     }
-
-    /* left column - modules / guided */
-    .panel {
-      background: var(--panel);
-      border-radius: var(--card-radius);
-      padding:1rem;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,110,199,0.06);
+    body.safe-mode .collapsible-content {
+      display: block !important;
+      background: #111;
+      box-shadow: none;
     }
-    .panel .section {
-      margin-bottom:1rem;
-    }
-
-    /* collapsible headers (modular) */
-    .collapsible {
-      border-radius:10px;
-      overflow:hidden;
-      margin-bottom:0.8rem;
-    }
-    .collapsible h2 {
-      margin:0;
-      padding:0.72rem 1rem;
-      font-family:'Montserrat',sans-serif;
-      font-size:1.05rem;
-      color:var(--accent);
-      background: linear-gradient(180deg, rgba(255,110,199,0.06), transparent);
-      cursor:pointer;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:0.75rem;
-      border-bottom:1px solid rgba(255,110,199,0.03);
-    }
-    .collapsible h2:focus {outline:2px solid rgba(255,110,199,0.08);}
-
-    .collapsible .content {
-      padding:0.9rem 1rem;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      max-height:0; overflow:hidden;
-      transition: max-height .36s ease, padding .2s ease;
-    }
-    .collapsible.open .content { max-height:900px; padding:0.9rem 1rem; }
-
-    p, ul { margin:0 0 0.8rem 0; color:var(--muted); font-family:'Open Sans',sans-serif; font-size:1rem; }
-    ul { padding-left:1.1rem; }
-
-    /* right sidebar tools */
-    aside.tools {
-      position:sticky;
-      top:1.25rem;
-      align-self:start;
-      display:flex;
-      flex-direction:column;
-      gap:1rem;
-    }
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      border-radius:12px;
-      padding:0.9rem;
-      box-shadow: var(--shadow);
-      border:1px solid rgba(255,110,199,0.04);
-    }
-
-    /* breathing circle */
-    .breathing {
-      display:flex;flex-direction:column;align-items:center;gap:0.65rem;
-      padding:0.5rem;
-    }
-    .breath-circle {
-      width:150px;height:150px;border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,110,199,0.12), transparent 30%), linear-gradient(180deg, rgba(255,110,199,0.06), rgba(0,0,0,0.05));
-      display:flex;align-items:center;justify-content:center;
-      box-shadow: 0 8px 24px rgba(255,110,199,0.06), inset 0 -8px 24px rgba(0,0,0,0.35);
-      transition: transform 1s ease, box-shadow .5s ease;
-    }
-    .breath-circle.pulse { transform: scale(1.15); box-shadow:0 12px 34px rgba(255,110,199,0.10); }
-    .breath-label { font-weight:700; color:var(--teal); font-family:'Montserrat',sans-serif; }
-
-    /* timer display */
-    .timer-display {
-      display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:.6rem;
-    }
-    .big-time {
-      font-family:'Montserrat',sans-serif;font-size:2.6rem;color:var(--accent);
-      background: linear-gradient(90deg, rgba(255,110,199,0.06), rgba(0,247,224,0.02));
-      padding:0.4rem 0.9rem;border-radius:12px; font-weight:800;
-      min-width:160px;text-align:center;
-    }
-
-    /* mantra carousel */
-    .mantra {
-      font-style:italic;font-weight:700;font-size:1.05rem;color:#ffe8fa;
-      min-height:48px;display:flex;align-items:center;justify-content:center;padding:0.6rem 0.4rem;
-      text-align:center;
-    }
-
-    /* buttons and inputs inside cards */
-    .controls-row { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; }
-    .btn-pill {
-      background:var(--teal); color:#071415; border:none; padding:0.45rem 0.75rem; border-radius:999px; font-weight:800; cursor:pointer; font-family:'Montserrat';
-      box-shadow: 0 6px 18px rgba(0,247,224,0.08);
-    }
-    .btn-outline { background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); padding:0.45rem 0.7rem; border-radius:10px; cursor:pointer; }
-    .link-like { color:var(--teal); text-decoration:underline; cursor:pointer; font-weight:700; }
-
-    /* grounding checklist */
-    .ground-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:0.6rem; }
-    @media(max-width:520px){ .ground-grid { grid-template-columns: 1fr; } }
-    .ground-item {
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      border-radius:8px;
-      padding:0.6rem;
-      display:flex;align-items:center;gap:0.6rem; cursor:pointer;
-      border:1px solid rgba(255,110,199,0.03);
-    }
-    .ground-item.done { opacity:0.55; text-decoration:line-through; }
-
-    /* final emergency / utility row */
-    .utility-row { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; }
-
-    /* sensory safe mode overrides */
-    body.sensory-safe {
-      background: var(--safe-bg) !important;
-      color: var(--safe-muted) !important;
-    }
-    body.sensory-safe h1, body.sensory-safe h2 { color: var(--safe-muted) !important; background:none !important; box-shadow:none !important; }
-    body.sensory-safe .breath-circle { display:none !important; }
-    body.sensory-safe .card, body.sensory-safe .panel { background:transparent !important; border: none !important; box-shadow:none !important; }
-    body.sensory-safe .btn-pill, body.sensory-safe .control { display:none !important; }
-    body.sensory-safe .mantra { font-style:normal; color:var(--safe-muted) !important; }
-    body.sensory-safe .collapsible .content { max-height: none !important; padding:0.4rem 0 !important; overflow:visible !important; }
-    body.sensory-safe audio { display:none !important; }
-
-    /* small utilities */
-    .muted-small { color: #cdb9d7; font-size:0.9rem; }
-    footer { margin-top:1.2rem; text-align:center; font-size:0.85rem; color:#cbb3d6; }
-    /* ensure focus outlines visible */
-    button:focus, a:focus { outline:3px solid rgba(0,247,224,0.12); outline-offset:2px; }
-
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand" aria-hidden="false">
-      <div class="logo" aria-hidden="true">PB</div>
-      <div>
-        <h1>Bad Trip Mode</h1>
-        <div class="subtitle">This will pass. You are not dying. You are just high.</div>
-      </div>
-    </div>
-
-    <div class="controls" aria-hidden="false">
-      <div class="toggle" role="group" aria-label="Modes">
-        <button id="modeToggle" class="control small" aria-pressed="false" title="Switch to Guided Mode">Switch to Guided Mode</button>
-        <button id="sensoryToggle" class="control ghost small" aria-pressed="false" title="Toggle Sensory Safe Mode">Calm Mode</button>
-      </div>
-      <button id="collapseAll" class="control small ghost" title="Collapse all sections">Collapse All</button>
-      <button id="expandAll" class="control small ghost" title="Expand all sections">Expand All</button>
+  <header>
+    <h1>🍑 Bad Trip Grounding Guide</h1>
+    <div class="top-controls">
+      <button class="mode-btn" id="toggleSafe">Sensory Safe Mode</button>
+      <button class="mode-btn" id="toggleFlow">Switch to Guided Mode</button>
     </div>
   </header>
 
-  <main class="container" id="appRoot">
-    <!-- LEFT: Content / Modular & Guided -->
-    <section class="panel" id="mainPanel" aria-live="polite">
-      <!-- Guided flow container (hidden in modular) -->
-      <div id="guidedFlow" class="section" hidden>
-        <div style="display:flex;flex-direction:column;gap:0.8rem;">
-          <div class="card" id="guidedCard" role="region" aria-labelledby="guidedStepTitle">
-            <h2 id="guidedStepTitle" style="margin-top:0; color:var(--accent); font-family:'Montserrat'">Guided step</h2>
-            <div id="guidedStepContent" style="min-height:160px;">
-              <!-- Filled dynamically -->
-            </div>
-            <div style="display:flex;gap:0.6rem;justify-content:center;margin-top:0.75rem;">
-              <button id="guidedBack" class="btn-outline">Back</button>
-              <button id="guidedPause" class="btn-outline">Pause here</button>
-              <button id="guidedNext" class="btn-pill">Next</button>
-            </div>
-          </div>
-        </div>
+  <main id="guideContent">
+       <main id="guideContent">
+  <!-- Start Here -->
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
+    <div id="intro" class="collapsible-content" aria-hidden="true">
+      <p>Hey, you’re safe. This page will walk you through grounding and calming tools. 
+      You can use it however you want — either one section at a time (Modular Mode), 
+      or step-by-step (Guided Mode).</p>
+    </div>
+  </section>
+
+  <!-- Breathing Exercise -->
+  <section>
+    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">🌬️ Breathe With Me</h2>
+    <div id="breathing" class="collapsible-content" aria-hidden="true">
+      <p>Follow the circle below: breathe in as it grows, breathe out as it shrinks.</p>
+      <div class="breathing-container">
+        <div class="breathing-circle"></div>
       </div>
-
-      <!-- Modular: collapsible sections -->
-      <div id="modularMode" class="section" aria-live="polite">
-        <!-- Grounding -->
-        <div class="collapsible" id="c-ground">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="ground-content">
-            🌬️ Ground Yourself
-            <span class="muted-small">5-4-3-2-1</span>
-          </h2>
-          <div id="ground-content" class="content" aria-hidden="true">
-            <p>Try this interactive 5-4-3-2-1 grounding tool. Click each item as you find it.</p>
-            <div class="ground-grid" id="groundGrid">
-              <div class="ground-item" data-type="see" tabindex="0">👀 <strong>See</strong> — 5 items</div>
-              <div class="ground-item" data-type="touch" tabindex="0">✋ <strong>Touch</strong> — 4 items</div>
-              <div class="ground-item" data-type="hear" tabindex="0">👂 <strong>Hear</strong> — 3 items</div>
-              <div class="ground-item" data-type="smell" tabindex="0">👃 <strong>Smell</strong> — 2 items</div>
-              <div class="ground-item" data-type="taste" tabindex="0">👅 <strong>Taste</strong> — 1 item</div>
-            </div>
-            <div style="margin-top:0.8rem;display:flex;gap:0.6rem;">
-              <button id="resetGround" class="btn-outline">Reset</button>
-              <button id="autoGround" class="btn-pill">Guide me</button>
-            </div>
-          </div>
+    </div>
+  </section>
+</main>
+    /* --- Breathing Exercise --- */
+.breathing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+.breathing-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff6ec7 20%, #2a0040 90%);
+  animation: breathe 8s infinite;
+  box-shadow: 0 0 20px #ff6ec7aa;
+}
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.7; }
+  40% { transform: scale(1.4); opacity: 1; }   /* inhale */
+  60% { transform: scale(1.4); opacity: 1; }   /* hold */
+  100% { transform: scale(1); opacity: 0.7; }  /* exhale */
+}
+    <section>
+      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">🌬️ Breathe With Me</h2>
+      <div id="breathing" class="collapsible-content" aria-hidden="true">
+        
+        <p>Follow the circle below: breathe in as it grows, breathe out as it shrinks.</p>
+        <div class="breathing-container">
+          <div class="breathing-circle"></div>
         </div>
-
-        <!-- Breathing -->
-        <div class="collapsible" id="c-breath">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breath-content">
-            🌬️ Breathing Exercise
-            <span class="muted-small">Circle + pace</span>
-          </h2>
-          <div id="breath-content" class="content" aria-hidden="true">
-            <p>Follow the circle. Choose a pace and press play. Use keyboard: space to play/pause.</p>
-            <div style="display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap;">
-              <div class="breathing card" style="min-width:180px;">
-                <div id="breathCircle" class="breath-circle" aria-hidden="true">
-                  <div style="text-align:center;">
-                    <div id="breathText" class="breath-label" aria-live="polite">Inhale</div>
-                  </div>
-                </div>
-                <div style="display:flex;gap:0.5rem;margin-top:0.6rem;">
-                  <button id="breathPlay" class="btn-pill">Play</button>
-                  <button id="breathStop" class="btn-outline">Stop</button>
-                </div>
-              </div>
-
-              <div class="card" style="flex:1; min-width:200px;">
-                <div style="display:flex;flex-direction:column;gap:0.5rem;">
-                  <label class="muted-small">Pace</label>
-                  <div style="display:flex;gap:0.45rem;">
-                    <button class="btn-outline pace" data-breathe="slow">Slow (4-7-8)</button>
-                    <button class="btn-outline pace" data-breathe="med">Medium</button>
-                    <button class="btn-outline pace" data-breathe="fast">Normal</button>
-                  </div>
-                  <div style="margin-top:0.5rem;">
-                    <label class="muted-small">Cycle type</label>
-                    <div style="display:flex;gap:0.45rem;margin-top:0.3rem;">
-                      <button class="btn-outline modeToggle" data-mode="count">Count</button>
-                      <button class="btn-outline modeToggle" data-mode="hold">Hold</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mantras -->
-        <div class="collapsible" id="c-mantra">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantra-content">
-            🧠 Mantras to Remember
-            <span class="muted-small">One at a time</span>
-          </h2>
-          <div id="mantra-content" class="content" aria-hidden="true">
-            <div class="card">
-              <div id="mantraText" class="mantra" aria-live="polite">"I took a substance. It will wear off. I am safe."</div>
-              <div style="display:flex;gap:0.6rem;justify-content:center;margin-top:0.6rem;">
-                <button id="mantraPrev" class="btn-outline">Prev</button>
-                <button id="mantraNext" class="btn-pill">Next</button>
-                <button id="mantraAuto" class="btn-outline">Auto</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Check-in -->
-        <div class="collapsible" id="c-checkin">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin-content">
-            🧍 Check-In With Yourself
-            <span class="muted-small">Hydration & talk</span>
-          </h2>
-          <div id="checkin-content" class="content" aria-hidden="true">
-            <p>Quick body check. Use the buttons to remind yourself of small actions.</p>
-            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-              <button id="hydration" class="btn-pill">💧 Sip water</button>
-              <button id="stretch" class="btn-outline">🧘 Stretch</button>
-              <button id="callFriend" class="btn-outline">📞 Call a sitter</button>
-            </div>
-            <div id="hydroNote" style="margin-top:0.6rem;color:#bfc0d8;"></div>
-          </div>
-        </div>
-
-        <!-- Timer / Wait -->
-        <div class="collapsible" id="c-timer">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="timer-content">
-            ⏳ Countdown Timer
-            <span class="muted-small">Pick 5 / 10 / 15</span>
-          </h2>
-          <div id="timer-content" class="content" aria-hidden="true">
-            <div class="card timer-display">
-              <div id="timeBig" class="big-time" role="timer" aria-live="polite">00:00</div>
-              <div class="controls-row" style="margin-top:0.4rem;">
-                <button class="btn-pill time-set" data-min="5">5 min</button>
-                <button class="btn-pill time-set" data-min="10">10 min</button>
-                <button class="btn-pill time-set" data-min="15">15 min</button>
-                <button id="timerStart" class="btn-outline">Start</button>
-                <button id="timerStop" class="btn-outline">Stop</button>
-              </div>
-              <div id="reassurance" class="muted-small" style="margin-top:0.6rem;min-height:1.1rem;text-align:center;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sounds -->
-        <div class="collapsible" id="c-sound">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="sound-content">
-            🎧 Soft Sounds (low stimulation)
-            <span class="muted-small">WebAudio loops</span>
-          </h2>
-          <div id="sound-content" class="content" aria-hidden="true">
-            <p class="muted-small">Choose one sound at low volume. Use the stop button to silence.</p>
-            <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-              <button class="btn-pill soundBtn" data-sound="white">White noise</button>
-              <button class="btn-pill soundBtn" data-sound="rain">Rain</button>
-              <button class="btn-pill soundBtn" data-sound="drone">Soft drone</button>
-              <button id="soundStop" class="btn-outline">Stop</button>
-            </div>
-            <div style="margin-top:0.6rem;">
-              <label class="muted-small">Volume</label>
-              <input id="soundVolume" type="range" min="0" max="1" step="0.01" value="0.25" style="width:100%;" />
-            </div>
-          </div>
-        </div>
-
-        <!-- Backup / Links -->
-        <div class="collapsible" id="c-backup">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="backup-content">
-            📞 Need Backup?
-            <span class="muted-small">Hotlines & live chats</span>
-          </h2>
-          <div id="backup-content" class="content" aria-hidden="true">
-            <p>If you feel unsafe, please use these resources. Copy numbers or open links.</p>
-            <ul>
-              <li><span class="link-like" id="copyHotline" role="button" tabindex="0">Copy US Emergency Hotline: 988</span></li>
-              <li><a href="https://tripsit.me/" target="_blank" rel="noopener" class="link-like">TripSit Live Chat</a></li>
-              <li><a href="https://firesideproject.org/" target="_blank" rel="noopener" class="link-like">Fireside Project</a></li>
-              <li><a href="https://neverusealone.com/" target="_blank" rel="noopener" class="link-like">Never Use Alone</a></li>
-            </ul>
-            <div style="display:flex;gap:0.6rem;margin-top:0.6rem;">
-              <button id="shareLocation" class="btn-outline">Share location with 911 (optional)</button>
-              <button id="openPanic" class="btn-pill">Go to Panic Page</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Final Helpers -->
-        <div class="collapsible" id="c-final">
-          <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="final-content">
-            🚑 Final Help
-            <span class="muted-small">Panic & emergency</span>
-          </h2>
-          <div id="final-content" class="content" aria-hidden="true">
-            <p>Use these only if you feel in immediate danger.</p>
-            <div class="utility-row">
-              <a href="/panic.html" class="btn-pill" role="button">🚨 Panic</a>
-              <a href="/emergency.html" class="btn-outline" role="button">🚑 Emergency</a>
-              <a href="index.html" class="btn-outline" role="button">🏠 I'm Feeling Better</a>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
-
-    <!-- RIGHT: tools / quick access -->
-    <aside class="tools" aria-hidden="false">
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.6rem;">
-          <div>
-            <div style="font-weight:800;color:var(--accent);font-family:'Montserrat'">Quick Breathing</div>
-            <div class="muted-small">Start a breathing cycle immediately</div>
-          </div>
-          <div>
-            <button id="quickBreath" class="btn-pill small">Start</button>
-          </div>
-        </div>
+    <!-- Sections will be added here step by step -->
+    <section>
+      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
+      <div id="intro" class="collapsible-content" aria-hidden="true">
+        <p>Hey, you’re safe. This page will walk you through grounding and calming tools. 
+        You can use it however you want — either one section at a time (Modular Mode), 
+        or step-by-step (Guided Mode).</p>
       </div>
-
-      <div class="card">
-        <div style="font-weight:800;color:var(--accent);font-family:'Montserrat'">Quick Timer</div>
-        <div class="muted-small" style="margin-top:0.5rem">Tap to start a short countdown</div>
-        <div style="display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;">
-          <button class="btn-pill quickTime" data-min="3">3m</button>
-          <button class="btn-pill quickTime" data-min="7">7m</button>
-          <button class="btn-pill quickTime" data-min="12">12m</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <div style="font-weight:800;color:var(--accent);font-family:'Montserrat'">Mantra</div>
-        <div id="sideMantra" class="mantra" style="margin-top:0.6rem">"This feeling is temporary."</div>
-        <div style="display:flex;gap:0.6rem;margin-top:0.6rem;justify-content:center;">
-          <button id="sideMantraNext" class="btn-pill">Next</button>
-        </div>
-      </div>
-
-      <div class="card" style="text-align:center;">
-        <div style="font-weight:800;color:var(--accent);font-family:'Montserrat'">Sensory Safe</div>
-        <div class="muted-small" style="margin-top:0.4rem">Quick toggle will disable sounds & animations</div>
-        <div style="margin-top:0.6rem;"><button id="quickSensory" class="btn-outline">Toggle Calm</button></div>
-      </div>
-    </aside>
+    </section>
   </main>
 
-  <footer>
-    PLURderapolis • Your partners in shine.
-  </footer>
-
   <script>
-    /***********************
-     * Utilities & State
-     ***********************/
-    const body = document.body;
-    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-    const collapsibles = Array.from(document.querySelectorAll('.collapsible'));
-    const modeToggle = document.getElementById('modeToggle');
-    const sensoryToggle = document.getElementById('sensoryToggle');
-    const guidedFlow = document.getElementById('guidedFlow');
-    const modularMode = document.getElementById('modularMode');
-    const collapseAllBtn = document.getElementById('collapseAll');
-    const expandAllBtn = document.getElementById('expandAll');
-
-    // helpers for ARIA + keyboard
-    function setCollapsibleOpen(el, open) {
-      if (open) {
-        el.classList.add('open');
-        el.querySelector('h2').setAttribute('aria-expanded','true');
-        const content = el.querySelector('.content');
-        content.setAttribute('aria-hidden','false');
-      } else {
-        el.classList.remove('open');
-        el.querySelector('h2').setAttribute('aria-expanded','false');
-        const content = el.querySelector('.content');
-        content.setAttribute('aria-hidden','true');
-      }
-    }
-    // init: make them closed
-    collapsibles.forEach(c => setCollapsibleOpen(c, false));
-
-    // header toggles
-    let guided = false;
-    modeToggle.addEventListener('click', () => {
-      guided = !guided;
-      modeToggle.setAttribute('aria-pressed', String(guided));
-      modeToggle.textContent = guided ? 'Switch to Modular Mode' : 'Switch to Guided Mode';
-      guidedFlow.hidden = !guided;
-      modularMode.hidden = guided;
-      if (guided) startGuided(); else stopGuided();
-    });
-
-    // sensory safe toggle
-    sensoryToggle.addEventListener('click', () => {
-      const isSafe = body.classList.toggle('sensory-safe');
-      sensoryToggle.setAttribute('aria-pressed', String(isSafe));
-      sensoryToggle.textContent = isSafe ? 'Normal Mode' : 'Calm Mode';
-      // if entering sensory-safe: open all collapsibles and stop audio/animations
-      if (isSafe) {
-        collapsibles.forEach(c => setCollapsibleOpen(c, true));
-        stopAllAudio();
-        stopBreathing();
-      } else {
-        collapsibles.forEach(c => setCollapsibleOpen(c, false));
-      }
-    });
-    document.getElementById('quickSensory').addEventListener('click', () => sensoryToggle.click());
-
-    // expand/collapse all
-    expandAllBtn.addEventListener('click', () => collapsibles.forEach(c => setCollapsibleOpen(c, true)));
-    collapseAllBtn.addEventListener('click', () => collapsibles.forEach(c => setCollapsibleOpen(c, false)));
-
-    // header h2 click handlers
-    collapsibles.forEach(node => {
-      const header = node.querySelector('h2');
-      header.addEventListener('click', () => {
-        // toggle
-        const open = node.classList.contains('open');
-        setCollapsibleOpen(node, !open);
-      });
-      header.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); header.click(); }
-      });
-    });
-
-    /***********************
-     * Guided Flow Logic
-     ***********************/
-    const steps = [
-      { id:'g-ground', title:'Ground Yourself', render: renderGuidedGround },
-      { id:'g-breath', title:'Breathing', render: renderGuidedBreath },
-      { id:'g-mantra', title:'Mantras', render: renderGuidedMantra },
-      { id:'g-check', title:'Check-In', render: renderGuidedCheck },
-      { id:'g-timer', title:'Timer', render: renderGuidedTimer },
-      { id:'g-backup', title:'Backup', render: renderGuidedBackup }
-    ];
-    let stepIndex = 0;
-    const guidedCard = document.getElementById('guidedCard');
-    const guidedStepTitle = document.getElementById('guidedStepTitle');
-    const guidedStepContent = document.getElementById('guidedStepContent');
-    const guidedNext = document.getElementById('guidedNext');
-    const guidedBack = document.getElementById('guidedBack');
-    const guidedPause = document.getElementById('guidedPause');
-
-    function startGuided(){
-      stepIndex = 0;
-      guidedCard.focus();
-      renderCurrentStep();
-    }
-    function stopGuided(){
-      guidedStepContent.innerHTML = '';
-    }
-    function renderCurrentStep(){
-      const s = steps[stepIndex];
-      guidedStepTitle.textContent = s.title;
-      guidedStepContent.innerHTML = '';
-      s.render(guidedStepContent);
-      // show/hide back button
-      guidedBack.disabled = stepIndex === 0;
-      guidedBack.style.opacity = stepIndex === 0 ? '0.45' : '1';
-      guidedNext.textContent = stepIndex === steps.length - 1 ? 'Finish' : 'Next';
-    }
-    guidedNext.addEventListener('click', () => {
-      if (stepIndex < steps.length - 1) stepIndex++;
-      else { guided = false; modeToggle.click(); } // finish guided: go back to modular
-      renderCurrentStep();
-    });
-    guidedBack.addEventListener('click', () => { if (stepIndex>0) { stepIndex--; renderCurrentStep(); }});
-    guidedPause.addEventListener('click', () => { guided = false; modeToggle.click(); });
-
-    // guided step renderers:
-    function renderGuidedGround(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>Let's do a quick 5-4-3-2-1 grounding. Click each item as you notice it.</p>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-top:0.6rem;">
-          <button class="btn-outline g-ground" data-type="see">👀 See — 5</button>
-          <button class="btn-outline g-ground" data-type="touch">✋ Touch — 4</button>
-          <button class="btn-outline g-ground" data-type="hear">👂 Hear — 3</button>
-          <button class="btn-outline g-ground" data-type="smell">👃 Smell — 2</button>
-          <button class="btn-outline g-ground" data-type="taste" style="grid-column:1/-1">👅 Taste — 1</button>
-        </div>
-        <div id="gGroundNote" style="margin-top:0.6rem;color:#cdb9d7;"></div>
-      `;
-      container.appendChild(el);
-      container.querySelectorAll('.g-ground').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const t = btn.getAttribute('data-type');
-          const note = container.querySelector('#gGroundNote');
-          note.textContent = `Good — try to find ${t === 'see' ? '5 things you can see' : t==='touch'?'4 things to touch':t==='hear'?'3 sounds':'2 smells':'1 taste'}.`;
-        });
-      });
-    }
-
-    function renderGuidedBreath(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>Follow the circle below. Start when you're ready.</p>
-        <div style="display:flex;gap:0.9rem;align-items:center;flex-wrap:wrap;margin-top:0.6rem;">
-          <div style="min-width:170px;">
-            <div id="gBreathCircle" class="breath-circle" style="width:140px;height:140px;"></div>
-            <div style="display:flex;gap:0.5rem;margin-top:0.6rem;justify-content:center">
-              <button id="gBreathPlay" class="btn-pill">Play</button>
-              <button id="gBreathStop" class="btn-outline">Stop</button>
-            </div>
-          </div>
-          <div style="flex:1;min-width:220px;">
-            <label class="muted-small">Pace</label>
-            <div style="display:flex;gap:0.4rem;margin-top:0.4rem;">
-              <button class="btn-outline gpace" data-breathe="slow">Slow</button>
-              <button class="btn-outline gpace" data-breathe="med">Medium</button>
-              <button class="btn-outline gpace" data-breathe="fast">Normal</button>
-            </div>
-          </div>
-        </div>
-      `;
-      container.appendChild(el);
-      // hook
-      const gPlay = container.querySelector('#gBreathPlay');
-      const gStop = container.querySelector('#gBreathStop');
-      const gCircle = container.querySelector('#gBreathCircle');
-      container.querySelectorAll('.gpace').forEach(b => b.addEventListener('click', () => {
-        const p = b.getAttribute('data-breathe');
-        setBreathPace(p);
-      }));
-      gPlay.addEventListener('click', () => startBreathing(gCircle));
-      gStop.addEventListener('click', () => stopBreathing());
-    }
-
-    function renderGuidedMantra(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>Read or listen to one calming phrase at a time.</p>
-        <div style="margin-top:0.6rem;">
-          <div id="gMantra" class="mantra">"This feeling will pass."</div>
-          <div style="display:flex;gap:0.6rem;margin-top:0.6rem;justify-content:center">
-            <button id="gMantraPrev" class="btn-outline">Prev</button>
-            <button id="gMantraNext" class="btn-pill">Next</button>
-          </div>
-        </div>
-      `;
-      container.appendChild(el);
-      const gList = MANTRAS;
-      let gIdx = 0;
-      const gMan = container.querySelector('#gMantra');
-      container.querySelector('#gMantraNext').addEventListener('click', () => {
-        gIdx = (gIdx+1) % gList.length;
-        gMan.textContent = gList[gIdx];
-      });
-      container.querySelector('#gMantraPrev').addEventListener('click', () => {
-        gIdx = (gIdx-1 + gList.length) % gList.length;
-        gMan.textContent = gList[gIdx];
-      });
-    }
-
-    function renderGuidedCheck(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>Quick reminders to check your body.</p>
-        <div style="display:flex;gap:0.6rem;margin-top:0.6rem;flex-wrap:wrap;">
-          <button id="gHyd" class="btn-pill">💧 Sip water</button>
-          <button id="gStr" class="btn-outline">🧘 Stretch</button>
-          <button id="gCall" class="btn-outline">📞 Call a sitter</button>
-        </div>
-        <div id="gNote" style="margin-top:0.6rem;color:#cdb9d7;"></div>
-      `;
-      container.appendChild(el);
-      container.querySelector('#gHyd').addEventListener('click', () => {
-        container.querySelector('#gNote').textContent = 'Take a slow sip now. Good job.';
-      });
-      container.querySelector('#gStr').addEventListener('click', () => {
-        container.querySelector('#gNote').textContent = 'Try neck rolls and shake your hands gently.';
-      });
-      container.querySelector('#gCall').addEventListener('click', () => {
-        container.querySelector('#gNote').textContent = 'If you can, call someone you trust to stay with you.';
-      });
-    }
-
-    function renderGuidedTimer(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>Set a short countdown. A gentle reassurance message will appear when half way through.</p>
-        <div style="display:flex;gap:0.6rem;margin-top:0.6rem;align-items:center;">
-          <button class="btn-pill g-time" data-min="5">5</button>
-          <button class="btn-pill g-time" data-min="10">10</button>
-          <button class="btn-pill g-time" data-min="15">15</button>
-          <button id="gTimerStart" class="btn-outline">Start</button>
-        </div>
-        <div id="gTimerDisplay" class="big-time" style="margin-top:0.8rem;">00:00</div>
-        <div id="gTimerNote" style="margin-top:0.6rem;color:#cdb9d7;"></div>
-      `;
-      container.appendChild(el);
-      let chosen = 5;
-      container.querySelectorAll('.g-time').forEach(b => b.addEventListener('click', () => {
-        chosen = Number(b.getAttribute('data-min'));
-        b.style.outline = '2px solid rgba(255,110,199,0.12)';
-        setTimeout(()=>b.style.outline = '', 650);
-      }));
-      container.querySelector('#gTimerStart').addEventListener('click', () => {
-        startTimer(chosen*60, (left, half)=> {
-          const d = container.querySelector('#gTimerDisplay');
-          d.textContent = formatTime(left);
-          const note = container.querySelector('#gTimerNote');
-          if (half) note.textContent = "You're halfway there — keep breathing slowly.";
-          if (left === 0) note.textContent = "Time's up. How are you now?";
-        });
-      });
-    }
-
-    function renderGuidedBackup(container){
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.innerHTML = `
-        <p>If you need more help, these are available. Copy the hotline or open a support chat.</p>
-        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.6rem;">
-          <button id="gCopyHotline" class="btn-outline">Copy 988</button>
-          <a class="btn-pill" href="https://tripsit.me/" target="_blank" rel="noopener">TripSit</a>
-        </div>
-      `;
-      container.appendChild(el);
-      container.querySelector('#gCopyHotline').addEventListener('click', () => {
-        navigator.clipboard?.writeText('988').then(()=> alert('988 copied to clipboard.'));
-      });
-    }
-
-    /***********************
-     * Grounding module logic
-     ***********************/
-    const groundGrid = document.getElementById('groundGrid');
-    const groundState = { see:0, touch:0, hear:0, smell:0, taste:0 };
-    const groundTargets = { see:5, touch:4, hear:3, smell:2, taste:1 };
-    groundGrid.querySelectorAll('.ground-item').forEach(node => {
-      node.addEventListener('click', () => {
-        const type = node.getAttribute('data-type');
-        groundState[type] = Math.min(groundState[type]+1, groundTargets[type]);
-        node.classList.toggle('done', groundState[type] === groundTargets[type]);
-        node.querySelector('strong')?.setAttribute('aria-label', `${groundState[type]} of ${groundTargets[type]}`);
-        node.querySelector('strong') && (node.innerHTML = node.innerHTML.split('—')[0] + `— ${groundState[type]}/${groundTargets[type]}`);
-      });
-      node.addEventListener('keydown', (e) => { if (e.key==='Enter' || e.key===' ') { e.preventDefault(); node.click(); } });
-    });
-    document.getElementById('resetGround').addEventListener('click', () => {
-      for (let k in groundState) groundState[k]=0;
-      groundGrid.querySelectorAll('.ground-item').forEach(n => {
-        n.classList.remove('done');
-        const type = n.getAttribute('data-type');
-        const label = type.charAt(0).toUpperCase() + type.slice(1);
-        n.innerHTML = (type==='see'?'👀 ':'') + `<strong>${label}</strong> — ${groundTargets[type]}`;
-      });
-    });
-
-    // auto guide: helps by prompting
-    document.getElementById('autoGround').addEventListener('click', async () => {
-      const prompts = [
-        'Look for five things you can see nearby (color, shape, movement).',
-        'Find four things you can touch (soft, hard, warm, cool).',
-        'Notice three sounds around you (small or far).',
-        'Try to identify two smells (or remember two).',
-        'Taste one thing (sip water or notice your breath).'
-      ];
-      for (let i=0;i<prompts.length;i++){
-        if (body.classList.contains('sensory-safe')) {
-          alert(prompts[i]);
-        } else {
-          speakText(prompts[i]);
+    // --- Collapsible Toggle ---
+    document.querySelectorAll("h2").forEach(header => {
+      header.addEventListener("click", () => {
+        const target = document.getElementById(header.getAttribute("aria-controls"));
+        if (target) {
+          target.classList.toggle("open");
+          header.setAttribute("aria-expanded", target.classList.contains("open"));
         }
-        await new Promise(r=>setTimeout(r, 4200));
-      }
-    });
-
-    /***********************
-     * Breathing logic
-     ***********************/
-    // state & controls
-    const breathPlay = document.getElementById('breathPlay');
-    const breathStop = document.getElementById('breathStop');
-    const breathCircle = document.getElementById('breathCircle');
-    const breathText = document.getElementById('breathText');
-    let breathTimer = null;
-    let breathPace = 'med'; // slow/med/fast
-    let breathMode = 'count'; // count/hold
-    const paceSettings = {
-      slow: { inhale:4000, hold:7000, exhale:8000 },
-      med: { inhale:3500, hold:1200, exhale:3500 },
-      fast: { inhale:2400, hold:200, exhale:2400 }
-    };
-    function setBreathPace(p){ breathPace = p; }
-    document.querySelectorAll('.pace').forEach(b => b.addEventListener('click', () => {
-      setBreathPace(b.getAttribute('data-breathe'));
-      // highlight
-      document.querySelectorAll('.pace').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-    }));
-    document.querySelectorAll('.modeToggle').forEach(b => b.addEventListener('click', () => {
-      breathMode = b.getAttribute('data-mode');
-      document.querySelectorAll('.modeToggle').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-    }));
-
-    function startBreathing(externalCircle=null){
-      if (body.classList.contains('sensory-safe')) return;
-      const circle = externalCircle || breathCircle;
-      const label = externalCircle ? externalCircle.parentElement.querySelector('.breath-label') : breathText;
-      if (breathTimer) return;
-      runBreathCycle(circle, label);
-    }
-    function runBreathCycle(circle,label){
-      // cycle using durations
-      const s = paceSettings[breathPace] || paceSettings.med;
-      // pattern: inhale -> hold (optional) -> exhale -> hold (brief)
-      let phase = 0;
-      function step(){
-        if (body.classList.contains('sensory-safe')) { stopBreathing(); return; }
-        if (phase === 0) {
-          circle.classList.add('pulse');
-          if (label) label.textContent = 'Inhale';
-          breathTimer = setTimeout(()=>{ phase=1; step(); }, s.inhale);
-        } else if (phase === 1) {
-          if (breathMode === 'hold') {
-            if (label) label.textContent = 'Hold';
-            breathTimer = setTimeout(()=>{ phase=2; step(); }, s.hold);
-          } else { phase = 2; step(); }
-        } else if (phase === 2) {
-          circle.classList.remove('pulse');
-          if (label) label.textContent = 'Exhale';
-          breathTimer = setTimeout(()=>{ phase=3; step(); }, s.exhale);
-        } else {
-          // small pause then repeat
-          breathTimer = setTimeout(()=>{ phase=0; step(); }, 350);
-        }
-      }
-      step();
-    }
-    function stopBreathing(){
-      clearTimeout(breathTimer);
-      breathTimer = null;
-      breathCircle.classList.remove('pulse');
-      if (breathText) breathText.textContent = 'Breathe';
-      // guided versions: remove pulse circle too
-      const gCircle = document.querySelector('#gBreathCircle');
-      if (gCircle) gCircle.classList.remove('pulse');
-    }
-    breathPlay.addEventListener('click', ()=>startBreathing());
-    breathStop.addEventListener('click', ()=>stopBreathing());
-    document.getElementById('quickBreath').addEventListener('click', ()=>startBreathing());
-
-    // keyboard spacebar toggles breath if focused in body
-    window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
-        e.preventDefault();
-        if (!breathTimer) startBreathing();
-        else stopBreathing();
-      }
-    });
-
-    /***********************
-     * Mantra logic
-     ***********************/
-    const MANTRAS = [
-      '"I took a substance. It will wear off. I am safe."',
-      '"This feeling is temporary. I am in control."',
-      '"I can breathe. I can wait."',
-      '"I am not alone. Help is available."',
-      '"Small actions help — sip, slow breath, soft focus."'
-    ];
-    let mantraIndex = 0;
-    const mantraText = document.getElementById('mantraText');
-    document.getElementById('mantraNext').addEventListener('click', () => {
-      mantraIndex = (mantraIndex+1) % MANTRAS.length; mantraText.textContent = MANTRAS[mantraIndex];
-    });
-    document.getElementById('mantraPrev').addEventListener('click', () => {
-      mantraIndex = (mantraIndex-1 + MANTRAS.length) % MANTRAS.length; mantraText.textContent = MANTRAS[mantraIndex];
-    });
-    let mantraAuto = false;
-    document.getElementById('mantraAuto').addEventListener('click', () => {
-      mantraAuto = !mantraAuto;
-      document.getElementById('mantraAuto').textContent = mantraAuto ? 'Auto On' : 'Auto';
-      if (mantraAuto) mantraAutoLoop = setInterval(()=>document.getElementById('mantraNext').click(), 60000);
-      else clearInterval(mantraAutoLoop);
-    });
-
-    // side mantra quick
-    document.getElementById('sideMantraNext').addEventListener('click', ()=>{
-      mantraIndex = (mantraIndex+1) % MANTRAS.length;
-      document.getElementById('sideMantra').textContent = MANTRAS[mantraIndex];
-    });
-
-    /***********************
-     * Timer logic
-     ***********************/
-    let timerInterval = null;
-    let timerLeft = 0;
-    let timerHalfFlag = false;
-    const timeBig = document.getElementById('timeBig');
-    document.querySelectorAll('.time-set').forEach(b => b.addEventListener('click', () => {
-      const min = Number(b.getAttribute('data-min'));
-      timerLeft = min*60; updateTimerDisplay();
-    }));
-    document.getElementById('timerStart').addEventListener('click', ()=> {
-      if (timerLeft <= 0) { timerLeft = 15*60; } // default
-      startTimer(timerLeft, (left, half)=>{
-        timerLeft = left; updateTimerDisplay();
-        const r = document.getElementById('reassurance');
-        if (half) r.textContent = 'Halfway there — breathe slow and steady.';
-        if (left === 0) r.textContent = "Time's up. How are you feeling?";
-      });
-    });
-    document.getElementById('timerStop').addEventListener('click', ()=> stopTimer());
-
-    function startTimer(durationSec, onTick){
-      stopTimer();
-      timerLeft = durationSec;
-      timerHalfFlag = false;
-      updateTimerDisplay();
-      timerInterval = setInterval(() => {
-        timerLeft--;
-        const half = (!timerHalfFlag && timerLeft <= Math.floor(durationSec/2));
-        if (half) timerHalfFlag = true;
-        if (onTick) onTick(timerLeft, half);
-        if (timerLeft <= 0) { stopTimer(); }
-        updateTimerDisplay();
-      }, 1000);
-    }
-    function stopTimer(){
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
-    function updateTimerDisplay(){
-      timeBig.textContent = formatTime(timerLeft);
-    }
-    function formatTime(sec){
-      if (!sec || sec <= 0) return '00:00';
-      const m = Math.floor(sec/60).toString().padStart(2,'0');
-      const s = (sec%60).toString().padStart(2,'0');
-      return `${m}:${s}`;
-    }
-
-    // quick times (sidebar)
-    document.querySelectorAll('.quickTime').forEach(btn => btn.addEventListener('click', () => {
-      const m = Number(btn.getAttribute('data-min'));
-      startTimer(m*60, (left, half) => {
-        // bubble simple reassurance
-        if (half && !body.classList.contains('sensory-safe')) speakText('You are halfway there. Keep breathing slowly.');
-      });
-    }));
-
-    /***********************
-     * Hydration / Stretch / Call
-     ***********************/
-    const hydroNote = document.getElementById('hydroNote');
-    document.getElementById('hydration').addEventListener('click', ()=>{
-      hydroNote.textContent = 'Sip slowly. Good — one breath between sips.';
-      if (!body.classList.contains('sensory-safe')) speakText('Take a sip of water, slowly.');
-      setTimeout(()=> hydroNote.textContent = '', 8000);
-    });
-    document.getElementById('stretch').addEventListener('click', ()=>{
-      hydroNote.textContent = 'Do a gentle neck roll and shake your arms.';
-      if (!body.classList.contains('sensory-safe')) speakText('Try a gentle neck roll and shake your hands.');
-      setTimeout(()=> hydroNote.textContent = '', 9000);
-    });
-    document.getElementById('callFriend').addEventListener('click', ()=>{
-      hydroNote.textContent = 'Call someone you trust if you can. A human voice helps.';
-    });
-
-    /***********************
-     * Sound generation (WebAudio) - no external files
-     ***********************/
-    let audioCtx = null;
-    let masterGain = null;
-    let currentSource = null;
-    const soundBtns = document.querySelectorAll('.soundBtn');
-    const soundVolume = document.getElementById('soundVolume');
-
-    function ensureAudio(){
-      if (!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.value = parseFloat(soundVolume.value || 0.25);
-        masterGain.connect(audioCtx.destination);
-      }
-    }
-    soundVolume.addEventListener('input', () => {
-      if (masterGain) masterGain.gain.value = parseFloat(soundVolume.value);
-    });
-
-    // sound creation helpers
-    function playWhiteNoise(){
-      stopAllAudio();
-      ensureAudio();
-      const bufferSize = 2 * audioCtx.sampleRate;
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const output = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) output[i] = Math.random()*2 - 1;
-      const white = audioCtx.createBufferSource();
-      white.buffer = buffer;
-      white.loop = true;
-      const whiteFilter = audioCtx.createBiquadFilter();
-      whiteFilter.type = 'lowpass';
-      whiteFilter.frequency.value = 4500;
-      white.connect(whiteFilter).connect(masterGain);
-      white.start();
-      currentSource = { node: white, stop: ()=>{ white.stop(); } };
-    }
-
-    function playRain(){
-      stopAllAudio();
-      ensureAudio();
-      // filtered noise + stereo delay for raindrop-like
-      const bufferSize = 2 * audioCtx.sampleRate;
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const output = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) output[i] = (Math.random()*2 - 1) * (Math.sin(i*0.0005));
-      const src = audioCtx.createBufferSource();
-      src.buffer = buffer; src.loop = true;
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'bandpass';
-      filter.frequency.value = 1200;
-      filter.Q.value = 0.8;
-      const delay = audioCtx.createDelay();
-      delay.delayTime.value = 0.25;
-      src.connect(filter);
-      filter.connect(masterGain);
-      filter.connect(delay);
-      delay.connect(masterGain);
-      src.start();
-      currentSource = { node: src, stop: ()=>{ src.stop(); } };
-    }
-
-    function playDrone(){
-      stopAllAudio();
-      ensureAudio();
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = 110;
-      g.gain.value = 0.02;
-      osc.connect(g);
-      g.connect(masterGain);
-      osc.start();
-      currentSource = { node: osc, stop: ()=>{ osc.stop(); } };
-    }
-
-    function stopAllAudio(){
-      if (currentSource && currentSource.stop) {
-        try{ currentSource.stop(); } catch(e){}
-      }
-      currentSource = null;
-      if (audioCtx && audioCtx.state === 'running' && !document.hidden) {
-        // don't close audioCtx because reopening can be delayed by user gesture
-      }
-    }
-
-    soundBtns.forEach(btn => btn.addEventListener('click', (e) => {
-      const s = btn.getAttribute('data-sound');
-      if (body.classList.contains('sensory-safe')) return;
-      if (s === 'white') playWhiteNoise();
-      if (s === 'rain') playRain();
-      if (s === 'drone') playDrone();
-    }));
-    document.getElementById('soundStop').addEventListener('click', ()=>stopAllAudio());
-
-    /***********************
-     * Hotlines & Utilities
-     ***********************/
-    document.getElementById('copyHotline').addEventListener('click', () => {
-      navigator.clipboard?.writeText('988').then(()=> {
-        flashNotice('988 copied to clipboard');
-      }).catch(()=>{ alert('988'); });
-    });
-    document.getElementById('shareLocation').addEventListener('click', async () => {
-      if (!navigator.geolocation) { alert('Geolocation not supported.'); return; }
-      try {
-        const pos = await new Promise((res,rej)=> navigator.geolocation.getCurrentPosition(res,rej));
-        const text = `Location: https://www.google.com/maps/search/?api=1&query=${pos.coords.latitude},${pos.coords.longitude}`;
-        navigator.clipboard?.writeText(text);
-        alert('Location copied to clipboard. Paste it into an emergency chat/call.');
-      } catch(e){
-        alert('Location access denied or failed.');
-      }
-    });
-    document.getElementById('openPanic').addEventListener('click', ()=> location.href = '/panic.html');
-
-    function flashNotice(msg){
-      const n = document.createElement('div');
-      n.textContent = msg;
-      Object.assign(n.style,{position:'fixed',left:'50%',transform:'translateX(-50%)',bottom:'1.25rem',background:'rgba(0,0,0,0.7)',padding:'0.6rem 1rem',borderRadius:'10px',color:'#fff',zIndex:9999});
-      document.body.appendChild(n);
-      setTimeout(()=>n.remove(),2200);
-    }
-
-    /***********************
-     * Simple Text-to-speech for prompts (muted in safe)
-     ***********************/
-    function speakText(txt){
-      if (!('speechSynthesis' in window) || body.classList.contains('sensory-safe')) return;
-      const u = new SpeechSynthesisUtterance(txt);
-      u.lang = 'en-US';
-      u.rate = 0.95;
-      u.volume = 0.85;
-      try { window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); } catch(e){}
-    }
-
-    /***********************
-     * Mantra auto-speech: optional (not autoplayed)
-     ***********************/
-    // left intentionally not auto-speaking except for guided prompts
-
-    /***********************
-     * Simple accessible helpers
-     ***********************/
-    // make sure pressing Enter on link-like behaves
-    document.querySelectorAll('.link-like').forEach(el => {
-      el.addEventListener('keydown', (e)=>{
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
       });
     });
 
-    /***********************
-     * small helpers: formatTime already defined
-     ***********************/
-
-    /***********************
-     * Quick breath/guided hooking for external circle
-     ***********************/
-    function startBreathingOnElement(el){
-      // emulate the same cycle for external circle
-      if (!el) return;
-      // toggle: if already pulsing, stop
-      if (el.classList.contains('pulse')) { el.classList.remove('pulse'); stopBreathing(); return; }
-      // create an ad-hoc label
-      const label = document.createElement('div');
-      label.style.position='absolute';
-      label.style.width='1px'; label.style.height='1px'; label.style.overflow='hidden';
-      document.body.appendChild(label);
-      runBreathCycle(el, { textContent:'Inhale', set text(t){ label.textContent=t; }, get text(){ return label.textContent; } });
-      setTimeout(()=>{ document.body.removeChild(label); }, 10);
-    }
-    // hook quick breath to default circle
-    document.getElementById('quickBreath').addEventListener('click', ()=> startBreathingOnElement(document.querySelector('.breath-circle')));
-
-    /***********************
-     * Side actions & hookup
-     ***********************/
-    // hydration note hook for guided:
-    // already provided
-
-    /***********************
-     * Start/Stop breath for guided circle if present
-     ***********************/
-    function startBreathing(circleElement){
-      if (!circleElement) circleElement = document.querySelector('.breath-circle');
-      if (!circleElement) return;
-      // if guided circle exists, use its local label
-      const label = circleElement.parentElement ? circleElement.parentElement.querySelector('.breath-label') : breathText;
-      if (body.classList.contains('sensory-safe')) return;
-      // reuse startBreathing generic
-      runBreathCycle(circleElement, label);
-    }
-
-    /***********************
-     * Silence audio on page hide to conserve resources
-     ***********************/
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (audioCtx && audioCtx.state === 'running') { /* keep paused or not */ }
-      }
+    // --- Sensory Safe Mode ---
+    const safeBtn = document.getElementById("toggleSafe");
+    safeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("safe-mode");
     });
 
-    /***********************
-     * Format improvements on load
-     ***********************/
-    // set some defaults
-    setBreathPace('med');
-    breathMode = 'count';
-    document.querySelectorAll('.modeToggle')[0].classList.add('active');
-    document.querySelectorAll('.pace')[1].classList.add('active');
-
-    // timer small initial state
-    timeBig.textContent = '00:00';
-
-    /***********************
-     * Graceful fallback for older browsers
-     ***********************/
-    window.addEventListener('error', (e) => {
-      console.warn('Error in Bad Trip Mode page:', e.error || e.message);
+    // --- Guided Mode (placeholder for now) ---
+    const flowBtn = document.getElementById("toggleFlow");
+    flowBtn.addEventListener("click", () => {
+      alert("Guided Mode will walk through one section at a time. Coming soon!");
     });
-
-    /***********************
-     * helpers used by guided timer
-     ***********************/
-    // already used startTimer & formatTime
-
-    /***********************
-     * Speak a gentle welcome if not safe mode (optional)
-     ***********************/
-    if (!body.classList.contains('sensory-safe')) {
-      // small unobtrusive welcome
-      setTimeout(()=> {
-        // don't force speak; comment out if you'd prefer silent load
-        // speakText('If you are having a hard time, follow the steps here: ground, breathe, sip water, and reach out if needed.');
-      }, 900);
-    }
-
-    /***********************
-     * End of script
-     ***********************/
   </script>
 </body>
 </html>
