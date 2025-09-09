@@ -28,6 +28,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
     <style>
         /* Base styles */
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
@@ -45,7 +49,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 150px;
+            height: 100px;
             z-index: 0;
             overflow: hidden;
         }
@@ -93,16 +97,16 @@
 
         .site-title {
             text-align: center;
-            padding: 1rem 0;
+            padding: 1rem 1rem 0.5rem;
             position: relative;
             z-index: 2;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
         
         .site-title h1 {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: clamp(2rem,5vw,3rem);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: #00f7e0;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -111,12 +115,13 @@
             -webkit-text-fill-color: transparent;
             animation: shineMove 6s linear infinite;
             filter: drop-shadow(0 0 6px #00f7e0aa);
+            margin: 0;
         }
         
         .site-title .tagline {
             font-family: 'Roboto', sans-serif;
             color: #88e9e3;
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 0.1em;
             margin-top: 0.25rem;
             font-weight: 600;
@@ -128,27 +133,27 @@
 
         .menu-btn {
             position: fixed;
-            top: 15px;
-            left: 15px;
+            top: 12px;
+            left: 12px;
             z-index: 1100;
             cursor: pointer;
-            width: 35px;
-            height: 30px;
+            width: 30px;
+            height: 25px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
         
         .menu-btn div {
-            height: 5px;
+            height: 4px;
             background: #00f7e0;
             border-radius: 3px;
             transition: all 0.3s ease;
         }
         
-        .menu-btn.active div:nth-child(1){ transform: rotate(45deg) translate(6px,6px);}
+        .menu-btn.active div:nth-child(1){ transform: rotate(45deg) translate(5px,5px);}
         .menu-btn.active div:nth-child(2){ opacity:0;}
-        .menu-btn.active div:nth-child(3){ transform: rotate(-45deg) translate(7px,-7px);}
+        .menu-btn.active div:nth-child(3){ transform: rotate(-45deg) translate(6px,-6px);}
         
         .side-nav {
             position: fixed;
@@ -160,7 +165,7 @@
             box-shadow: 2px 0 10px #000000aa;
             overflow-y: auto;
             transition: left 0.3s ease;
-            padding-top: 70px;
+            padding-top: 60px;
             z-index:1000;
         }
         
@@ -189,7 +194,7 @@
             align-items: center;
             width: 100vw;
             z-index: 2;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             backdrop-filter: blur(4px);
         }
         
@@ -197,7 +202,7 @@
             display: inline-block;
             white-space: nowrap;
             color: #ff69b4;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-decoration: none;
             padding-left: 100%;
             animation: scroll-left 20s linear infinite;
@@ -206,9 +211,8 @@
         @keyframes scroll-left {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
         .section {
-            margin:1.5rem auto;
-            padding:1.5rem;
-            max-width:1000px;
+            margin:1rem;
+            padding:1.2rem;
             background-color:#3a0052;
             border-radius:10px;
             box-shadow:0 0 12px rgba(0,255,255,0.1);
@@ -216,13 +220,42 @@
             z-index: 1;
         }
         
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem 0;
+        }
+        
         .section h2 { 
             color:#00f7e0; 
             font-family:'Montserrat',sans-serif;
-            margin-top: 0;
-            font-size: 1.8rem;
-            border-bottom: 2px solid #ff69b4;
-            padding-bottom: 0.5rem;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        
+        .section-content {
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .section.expanded .section-content {
+            max-height: 2000px;
+        }
+        
+        .section.collapsed .section-content {
+            max-height: 0;
+        }
+        
+        .toggle-icon {
+            color: #00f7e0;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .section.expanded .toggle-icon {
+            transform: rotate(180deg);
         }
         
         .section ul { padding-left:1.2rem;}
@@ -241,12 +274,12 @@
             margin-top:0.8rem; 
             background:#00f7e0; 
             color:#2e003e; 
-            padding:0.8rem 1.5rem; 
+            padding:0.8rem 1.2rem; 
             border-radius:8px; 
             text-decoration:none; 
             font-weight:bold; 
             transition: all 0.2s;
-            font-size: 1rem;
+            font-size: 0.9rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
@@ -259,16 +292,17 @@
         .card-container { 
             display:flex; 
             flex-wrap:wrap; 
-            gap:1.5rem; 
+            gap:1rem; 
             justify-content:center;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
         
         .card { 
             background:#2a0036; 
-            border-radius:12px; 
-            padding:1.5rem; 
-            width:280px; 
+            border-radius:10px; 
+            padding:1.2rem; 
+            width:100%; 
+            max-width: 320px;
             box-shadow:0 0 15px rgba(255,111,145,0.3); 
             transition: all 0.2s; 
             border: 1px solid #5d3a7d;
@@ -277,7 +311,7 @@
         }
         
         .card:hover { 
-            transform:translateY(-5px) scale(1.03); 
+            transform:translateY(-5px); 
             box-shadow:0 0 25px rgba(255,111,145,0.6); 
         }
         
@@ -285,20 +319,20 @@
             color:#ff69b4; 
             font-family:'Montserrat',sans-serif; 
             margin-top:0;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             border-bottom: 1px solid #ff69b4;
             padding-bottom: 0.5rem;
         }
         
         .card p { 
-            font-size:0.95rem; 
+            font-size:0.9rem; 
             flex-grow: 1;
         }
 
         .search-container {
             position: relative;
-            max-width: 500px;
-            margin: 1.5rem auto;
+            width: 90%;
+            margin: 1rem auto;
             z-index: 100;
         }
 
@@ -309,13 +343,13 @@
         
         .search-bar input{ 
             flex:1; 
-            padding:12px; 
+            padding:10px; 
             border:none; 
             border-radius:5px 0 0 5px; 
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid #00f7e0;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
         .search-bar input::placeholder {
@@ -323,7 +357,7 @@
         }
         
         .search-bar button{ 
-            padding:12px; 
+            padding:10px; 
             border:none; 
             background:#00f7e0; 
             color:#2e003e; 
@@ -338,7 +372,7 @@
             left:0; 
             right:0; 
             background:#3a0052; 
-            max-height:250px; 
+            max-height:200px; 
             overflow-y:auto; 
             border-radius:0 0 5px 5px; 
             display:none; 
@@ -349,28 +383,28 @@
         }
         
         #searchResults ul { list-style:none; padding:0; margin:0;}
-        #searchResults li { padding:12px; border-bottom:1px solid #5d3a7d; cursor:pointer;}
+        #searchResults li { padding:10px; border-bottom:1px solid #5d3a7d; cursor:pointer; font-size: 0.9rem;}
         #searchResults li:hover { background:#5d3a7d; }
         #searchResults li:last-child { border-bottom: none; }
 
         /* Enhanced peach button with "HELP!" text */
         #peachWrap {
             position: fixed; 
-            bottom: 30px; 
-            right: 30px; 
+            bottom: 20px; 
+            right: 20px; 
             z-index: 1002; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            gap: 8px;
+            gap: 6px;
             touch-action: none;
             cursor: move;
         }
         
         #panicButton {
-            width: 80px; 
-            height: 80px; 
-            font-size: 3.5rem;
+            width: 60px; 
+            height: 60px; 
+            font-size: 2.5rem;
             background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
             border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
             position: relative;
@@ -388,10 +422,10 @@
         #panicButton::before {
             content: "";
             position: absolute;
-            top: -12px; 
-            left: 30px;
-            width: 20px; 
-            height: 16px;
+            top: -8px; 
+            left: 22px;
+            width: 15px; 
+            height: 12px;
             background: linear-gradient(135deg, #7aff7a, #2eb62c);
             border-radius: 50%;
             transform: rotate(-20deg);
@@ -406,7 +440,7 @@
             color: #ff69b4;
             font-weight: bold;
             text-shadow: 0 0 8px rgba(255, 105, 180, 0.8);
-            font-size: 1rem;
+            font-size: 0.8rem;
             text-align: center;
             animation: blink 3s infinite;
         }
@@ -424,19 +458,19 @@
 
         footer {
             margin-top: 2rem;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #aaa;
             text-align: center; 
             position: relative; 
             z-index: 2;
-            padding: 1.5rem;
+            padding: 1rem;
             background: rgba(0, 0, 0, 0.5);
             border-top: 1px solid #444;
         }
         
         footer hr {
             border-color: #444;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         
         footer p {
@@ -451,15 +485,16 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 1rem 0;
-            gap: 10px;
+            margin: 0.8rem 0;
+            gap: 8px;
         }
         
         footer ul li a {
             color: #00f7e0;
-            padding: 0 10px;
+            padding: 0 8px;
             text-decoration: none;
             transition: color 0.2s;
+            font-size: 0.8rem;
         }
         
         footer ul li a:hover {
@@ -471,22 +506,22 @@
         .venue-preview {
             background: #2a0036;
             border-radius: 10px;
-            padding: 20px;
-            margin: 25px 0;
+            padding: 15px;
+            margin: 20px 0;
             border: 1px solid #5d3a7d;
         }
         
         .venue-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
         }
         
         .venue-card {
             background: #3a0052;
             border-radius: 8px;
-            padding: 15px;
+            padding: 12px;
             border: 1px solid #00f7e0;
             transition: transform 0.2s;
         }
@@ -500,72 +535,111 @@
             color: #ff69b4;
             margin-top: 0;
             border-bottom: 1px solid #ff69b4;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
+            font-size: 1.1rem;
         }
         
         .venue-features {
-            margin: 10px 0;
+            margin: 8px 0;
         }
         
         .venue-features li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
+            font-size: 0.9rem;
         }
         
         .venue-features li::before {
             content: "✓";
             color: #00f7e0;
-            margin-right: 8px;
+            margin-right: 6px;
             font-weight: bold;
         }
         
         .view-all {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
-        @media (max-width: 768px) {
-            .section {
-                margin: 1rem;
-                padding: 1.2rem;
-            }
-            
-            .card-container { 
-                flex-direction: column; 
-                align-items: center;
-            }
-            
-            .card {
-                width: 100%;
-                max-width: 320px;
-            }
-            
-            .search-container {
-                width: 90%;
-            }
-            
-            #panicButton {
-                width: 70px;
-                height: 70px;
-                font-size: 3rem;
-            }
-            
-            footer ul {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            footer ul li {
-                margin-bottom: 5px;
-            }
-            
-            .venue-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Improved link visibility */
+        a {
+            transition: color 0.2s, background-color 0.2s;
+        }
+        
+        .resource-links {
+            margin-top: 12px;
+            border-top: 1px solid #5d3a7d;
+            padding-top: 12px;
+        }
+        
+        .resource-links h4 {
+            color: #00f7e0;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .resource-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .resource-links li {
+            margin-bottom: 6px;
+        }
+        
+        .resource-links a {
+            display: block;
+            color: #ff69b4;
+            text-decoration: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            background: rgba(255, 105, 180, 0.1);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .resource-links a:hover {
+            background-color: rgba(255, 105, 180, 0.2);
+            padding-left: 12px;
+            color: #ff8ac0;
         }
 
-        /* NEW: Emergency Modal */
+        /* Mobile HUD Navigation */
+        .mobile-hud {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(58, 0, 82, 0.95);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1001;
+            backdrop-filter: blur(5px);
+            border-top: 1px solid #00f7e0;
+        }
+
+        .hud-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            padding: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .hud-btn span {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+
+        /* Emergency Modal */
         .emergency-modal {
             display: none;
             position: fixed;
@@ -577,14 +651,15 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 1rem;
         }
 
         .modal-content {
             background-color: #3a0052;
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 90%;
-            max-height: 80%;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 90%;
             overflow-y: auto;
             border: 2px solid #00f7e0;
             box-shadow: 0 0 20px rgba(0, 247, 224, 0.5);
@@ -619,66 +694,66 @@
         .emergency-steps li {
             margin-bottom: 10px;
             line-height: 1.5;
+            font-size: 0.9rem;
         }
 
         .emergency-contact {
             background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 15px;
+            font-size: 0.9rem;
         }
 
         .emergency-contact h4 {
             color: #ff69b4;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1rem;
         }
 
-        /* Mobile HUD Navigation */
-        .mobile-hud {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(58, 0, 82, 0.95);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1001;
-            backdrop-filter: blur(5px);
-            border-top: 1px solid #00f7e0;
+        @media (min-width: 768px) {
+            .section {
+                max-width: 1000px;
+                margin: 1.5rem auto;
+                padding: 1.5rem;
+            }
+            
+            .venue-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card-container {
+                gap: 1.5rem;
+            }
+            
+            .card {
+                width: 280px;
+                padding: 1.5rem;
+            }
+            
+            #panicButton {
+                width: 70px;
+                height: 70px;
+                font-size: 3rem;
+            }
+            
+            .help-text {
+                font-size: 1rem;
+            }
+            
+            .skyline-container {
+                height: 150px;
+            }
         }
 
-        .hud-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 0.8rem;
-            padding: 5px;
-            flex: 1;
-            text-align: center;
-        }
-
-        .hud-btn span {
-            font-size: 1.5rem;
-            margin-bottom: 3px;
-        }
-        
-        /* Improved link visibility */
-        a {
-            transition: color 0.2s, background-color 0.2s;
-        }
-        
-        .resource-links a {
-            display: block;
-            padding: 5px 0;
-            border-radius: 4px;
-        }
-        
-        .resource-links a:hover {
-            background-color: rgba(255, 105, 180, 0.1);
-            padding-left: 5px;
+        @media (min-width: 1024px) {
+            .venue-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .mobile-hud {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -775,209 +850,234 @@
     </a>
 </div>
 
-<!-- Sections -->
-<div class="section">
-    <h2>💡 What We Do</h2>
-    <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community. We believe in keeping each other safe through practical information and community care.</p>
-    
-    <div class="card-container">
-        <div class="card">
-            <h3>💊 Harm Reduction</h3>
-            <p>Narcan, test strips, interaction tools, and safety resources to keep our community safe.</p>
-            <a class="cta-button" href="resources.html">Get Resources</a>
-            
-            <div class="resource-links">
-                <h4>Related Resources:</h4>
-                <ul>
-                    <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
-                    <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
-                    <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
-                    <li><a href="health.html">🌡️ Raver Health & Safer Use</a></li>
-                    <li><a href="seasonal.html">🌞 Seasonal Harm Reduction Tips</a></li>
-                </ul>
-            </div>
-        </div>
+<!-- Sections with dropdown functionality -->
+<div class="section expanded" id="whatWeDo">
+    <div class="section-header">
+        <h2>💡 What We Do</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community. We believe in keeping each other safe through practical information and community care.</p>
         
-        <div class="card">
-            <h3>🧠 Mental Health & Crisis</h3>
-            <p>Peer support, Bad Trip Mode, and emergency resources for when things get difficult.</p>
-            <a class="cta-button" href="emergency.html">Find Support</a>
-            
-            <div class="resource-links">
-                <h4>Support Resources:</h4>
-                <ul>
-                    <li><a href="panic.html">🚨 Panic Button & Emergency Protocols</a></li>
-                    <li><a href="badtrip.html">🌀 Bad Trip Support Guide</a></li>
-                    <li><a href="resources.html#mentalhealth">📞 MN Mental Health Resources</a></li>
-                    <li><a href="sober.html">🚫 Sober Raving & Recovery Support</a></li>
-                    <li><a href="resources.html#crisis">🆘 Crisis Hotlines & Text Lines</a></li>
-                </ul>
+        <div class="card-container">
+            <div class="card">
+                <h3>💊 Harm Reduction</h3>
+                <p>Narcan, test strips, interaction tools, and safety resources to keep our community safe.</p>
+                <a class="cta-button" href="resources.html">Get Resources</a>
+                
+                <div class="resource-links">
+                    <h4>Related Resources:</h4>
+                    <ul>
+                        <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
+                        <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
+                        <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
+                        <li><a href="health.html">🌡️ Raver Health & Safer Use</a></li>
+                        <li><a href="seasonal.html">🌞 Seasonal Harm Reduction Tips</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        
-        <div class="card">
-            <h3>🕊️ Consent & Culture</h3>
-            <p>Building respectful communities and addressing harm through education and accountability.</p>
-            <a class="cta-button" href="consent.html">Learn More</a>
             
-            <div class="resource-links">
-                <h4>Community Resources:</h4>
-                <ul>
-                    <li><a href="consent.html">✅ Consent Basics & Boundaries</a></li>
-                    <li><a href="accountability.html">⚖️ Community Accountability</a></li>
-                    <li><a href="spiking.html">🚫 Drink Spiking Prevention</a></li>
-                    <li><a href="resources.html#dv">🛡️ Domestic Violence Resources</a></li>
-                    <li><a href="resources.html#lgbtq">🏳️‍🌈 LGBTQ+ Specific Resources</a></li>
-                </ul>
+            <div class="card">
+                <h3>🧠 Mental Health & Crisis</h3>
+                <p>Peer support, Bad Trip Mode, and emergency resources for when things get difficult.</p>
+                <a class="cta-button" href="emergency.html">Find Support</a>
+                
+                <div class="resource-links">
+                    <h4>Support Resources:</h4>
+                    <ul>
+                        <li><a href="panic.html">🚨 Panic Button & Emergency Protocols</a></li>
+                        <li><a href="badtrip.html">🌀 Bad Trip Support Guide</a></li>
+                        <li><a href="resources.html#mentalhealth">📞 MN Mental Health Resources</a></li>
+                        <li><a href="sober.html">🚫 Sober Raving & Recovery Support</a></li>
+                        <li><a href="resources.html#crisis">🆘 Crisis Hotlines & Text Lines</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        
-        <!-- Rejection-Based Violence Prevention Card -->
-        <div class="card">
-            <h3>🛡️ Rejection-Based Violence Prevention</h3>
-            <p>Resources and strategies for preventing violence when someone says 'no' or sets boundaries.</p>
-            <a class="cta-button" href="rejection-based-violence.html">Learn More</a>
             
-            <div class="resource-links">
-                <h4>Prevention Resources:</h4>
-                <ul>
-                    <li><a href="rejection-based-violence.html#de-escalation">🔄 De-escalation Techniques</a></li>
-                    <li><a href="rejection-based-violence.html#bystander">👥 Bystander Intervention</a></li>
-                    <li><a href="rejection-based-violence.html#safety">🧠 Safety Planning</a></li>
-                    <li><a href="rejection-based-violence.html#support">🤝 Support Resources</a></li>
-                </ul>
+            <div class="card">
+                <h3>🕊️ Consent & Culture</h3>
+                <p>Building respectful communities and addressing harm through education and accountability.</p>
+                <a class="cta-button" href="consent.html">Learn More</a>
+                
+                <div class="resource-links">
+                    <h4>Community Resources:</h4>
+                    <ul>
+                        <li><a href="consent.html">✅ Consent Basics & Boundaries</a></li>
+                        <li><a href="accountability.html">⚖️ Community Accountability</a></li>
+                        <li><a href="spiking.html">🚫 Drink Spiking Prevention</a></li>
+                        <li><a href="resources.html#dv">🛡️ Domestic Violence Resources</a></li>
+                        <li><a href="resources.html#lgbtq">🏳️‍🌈 LGBTQ+ Specific Resources</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        
-        <div class="card">
-            <h3>🎉 Our Booth</h3>
-            <p>Find our harm reduction booth at local events and festivals throughout Minnesota.</p>
-            <a class="cta-button" href="booth.html">Find Our Booth</a>
             
-            <div class="resource-links">
-                <h4>Local Resources:</h4>
-                <ul>
-                    <li><a href="booth.html">📍 Booth Schedule & Locations</a></li>
-                    <li><a href="venues-guide.html">🏢 Venue Safety Guides</a></li>
-                    <li><a href="resources.html#testing">🧪 Free Testing Locations</a></li>
-                    <li><a href="resources.html#naloxone">💊 Narcan Distribution Sites</a></li>
-                    <li><a href="resources.html#planb">❤️ Plan B & Sexual Health</a></li>
-                </ul>
+            <!-- Rejection-Based Violence Prevention Card -->
+            <div class="card">
+                <h3>🛡️ Rejection-Based Violence Prevention</h3>
+                <p>Resources and strategies for preventing violence when someone says 'no' or sets boundaries.</p>
+                <a class="cta-button" href="rejection-based-violence.html">Learn More</a>
+                
+                <div class="resource-links">
+                    <h4>Prevention Resources:</h4>
+                    <ul>
+                        <li><a href="rejection-based-violence.html#de-escalation">🔄 De-escalation Techniques</a></li>
+                        <li><a href="rejection-based-violence.html#bystander">👥 Bystander Intervention</a></li>
+                        <li><a href="rejection-based-violence.html#safety">🧠 Safety Planning</a></li>
+                        <li><a href="rejection-based-violence.html#support">🤝 Support Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>🎉 Our Booth</h3>
+                <p>Find our harm reduction booth at local events and festivals throughout Minnesota.</p>
+                <a class="cta-button" href="booth.html">Find Our Booth</a>
+                
+                <div class="resource-links">
+                    <h4>Local Resources:</h4>
+                    <ul>
+                        <li><a href="booth.html">📍 Booth Schedule & Locations</a></li>
+                        <li><a href="venues-guide.html">🏢 Venue Safety Guides</a></li>
+                        <li><a href="resources.html#testing">🧪 Free Testing Locations</a></li>
+                        <li><a href="resources.html#naloxone">💊 Narcan Distribution Sites</a></li>
+                        <li><a href="resources.html#planb">❤️ Plan B & Sexual Health</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Venue Guides Preview Section -->
-<div class="section">
-    <h2>📍 Minnesota Venue Guides Preview</h2>
-    <p>Get to know Minnesota's electronic music venues and their safety features. Here's a preview of our comprehensive venue guides:</p>
-    
-    <div class="venue-preview">
-        <div class="venue-grid">
-            <div class="venue-card">
-                <h3>The Loft</h3>
-                <p>Minneapolis • Capacity: 800</p>
-                <div class="venue-features">
-                    <ul>
-                        <li>Free water stations</li>
-                        <li>Safe space area</li>
-                        <li>Trained security</li>
-                        <li>Harm reduction resources</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="venue-card">
-                <h3>Skyway Theatre</h3>
-                <p>Minneapolis • Capacity: 2,500</p>
-                <div class="venue-features">
-                    <ul>
-                        <li>Medical staff on site</li>
-                        <li>Chill-out areas</li>
-                        <li>Clear safety policies</li>
-                        <li>Accessible entrance</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="venue-card">
-                <h3>The Armory</h3>
-                <p>Minneapolis • Capacity: 8,400</p>
-                <div class="venue-features">
-                    <ul>
-                        <li>Multiple water stations</li>
-                        <li>First aid rooms</li>
-                        <li>Security cameras throughout</li>
-                        <li>Clear evacuation routes</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<div class="section expanded" id="venuePreview">
+    <div class="section-header">
+        <h2>📍 Minnesota Venue Guides Preview</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <p>Get to know Minnesota's electronic music venues and their safety features. Here's a preview of our comprehensive venue guides:</p>
         
-        <div class="view-all">
-            <a href="venues-guide.html" class="cta-button">View All Venue Guides</a>
+        <div class="venue-preview">
+            <div class="venue-grid">
+                <div class="venue-card">
+                    <h3>The Loft</h3>
+                    <p>Minneapolis • Capacity: 800</p>
+                    <div class="venue-features">
+                        <ul>
+                            <li>Free water stations</li>
+                            <li>Safe space area</li>
+                            <li>Trained security</li>
+                            <li>Harm reduction resources</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="venue-card">
+                    <h3>Skyway Theatre</h3>
+                    <p>Minneapolis • Capacity: 2,500</p>
+                    <div class="venue-features">
+                        <ul>
+                            <li>Medical staff on site</li>
+                            <li>Chill-out areas</li>
+                            <li>Clear safety policies</li>
+                            <li>Accessible entrance</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="venue-card">
+                    <h3>The Armory</h3>
+                    <p>Minneapolis • Capacity: 8,400</p>
+                    <div class="venue-features">
+                        <ul>
+                            <li>Multiple water stations</li>
+                            <li>First aid rooms</li>
+                            <li>Security cameras throughout</li>
+                            <li>Clear evacuation routes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="view-all">
+                <a href="venues-guide.html" class="cta-button">View All Venue Guides</a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="section">
-    <h2>🔀 Panic & Emergency Tools</h2>
-    <p>Quick access to emergency resources when you need them most. These tools are designed to provide immediate assistance in crisis situations.</p>
-    
-    <div class="card-container">
-        <div class="card">
-            <h3>Panic Button</h3>
-            <p>Immediate access to help in emergencies with one click.</p>
-            <a class="cta-button" href="panic.html">Go</a>
-        </div>
-        <div class="card">
-            <h3>Emergency Guides</h3>
-            <p>Step-by-step instructions for common crises and medical emergencies.</p>
-            <a class="cta-button" href="emergency.html">View</a>
-        </div>
-        <div class="card">
-            <h3>Bad Trip Mode</h3>
-            <p>Calming visuals & exercises to ride it out safely when things get overwhelming.</p>
-            <a class="cta-button" href="badtrip.html" style="background-color:#ff6ec7; color:#1c0028;">Visit</a>
+<div class="section collapsed" id="panicTools">
+    <div class="section-header">
+        <h2>🔀 Panic & Emergency Tools</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <p>Quick access to emergency resources when you need them most. These tools are designed to provide immediate assistance in crisis situations.</p>
+        
+        <div class="card-container">
+            <div class="card">
+                <h3>Panic Button</h3>
+                <p>Immediate access to help in emergencies with one click.</p>
+                <a class="cta-button" href="panic.html">Go</a>
+            </div>
+            <div class="card">
+                <h3>Emergency Guides</h3>
+                <p>Step-by-step instructions for common crises and medical emergencies.</p>
+                <a class="cta-button" href="emergency.html">View</a>
+            </div>
+            <div class="card">
+                <h3>Bad Trip Mode</h3>
+                <p>Calming visuals & exercises to ride it out safely when things get overwhelming.</p>
+                <a class="cta-button" href="badtrip.html" style="background-color:#ff6ec7; color:#1c0028;">Visit</a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="section">
-    <h2>📚 Resources</h2>
-    <p>Comprehensive resources for harm reduction, mental health support, and community building in Minnesota's electronic music scene.</p>
-    
-    <div class="card-container">
-        <div class="card">
-            <h3>MN Resources</h3>
-            <p>Plan B, queer-friendly clinics, DV support, recovery help, and local Minnesota resources.</p>
-            <a class="cta-button" href="resources.html">View</a>
-        </div>
-        <div class="card">
-            <h3>Sober Ravers</h3>
-            <p>Tips & support for enjoying the scene sober and recovery resources.</p>
-            <a class="cta-button" href="sober.html">View</a>
-        </div>
-        <div class="card">
-            <h3>Raver Health</h3>
-            <p>Hydration, cooling, and drug safety tips for maintaining your health at events.</p>
-            <a class="cta-button" href="health.html">View</a>
+<div class="section collapsed" id="resources">
+    <div class="section-header">
+        <h2>📚 Resources</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <p>Comprehensive resources for harm reduction, mental health support, and community building in Minnesota's electronic music scene.</p>
+        
+        <div class="card-container">
+            <div class="card">
+                <h3>MN Resources</h3>
+                <p>Plan B, queer-friendly clinics, DV support, recovery help, and local Minnesota resources.</p>
+                <a class="cta-button" href="resources.html">View</a>
+            </div>
+            <div class="card">
+                <h3>Sober Ravers</h3>
+                <p>Tips & support for enjoying the scene sober and recovery resources.</p>
+                <a class="cta-button" href="sober.html">View</a>
+            </div>
+            <div class="card">
+                <h3>Raver Health</h3>
+                <p>Hydration, cooling, and drug safety tips for maintaining your health at events.</p>
+                <a class="cta-button" href="health.html">View</a>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Our Story Section -->
-<div class="section">
-    <h2>Our Story</h2>
-    <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
-    
-    <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
-    
-    <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
-    
-    <div style="text-align: center; margin-top: 25px;">
-        <a href="booth.html" class="cta-button">Learn About Our Booth</a>
+<div class="section expanded" id="ourStory">
+    <div class="section-header">
+        <h2>Our Story</h2>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
+        
+        <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
+        
+        <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
+        
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="booth.html" class="cta-button">Learn About Our Booth</a>
+        </div>
     </div>
 </div>
 
@@ -1020,7 +1120,7 @@
             Remember: Good Samaritan laws protect you when seeking help for an overdose.
         </p>
         
-        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <a href="panic.html" class="cta-button">More Panic Resources</a>
             <a href="emergency.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
         </div>
@@ -1061,6 +1161,16 @@
     const navItems = document.querySelectorAll('.side-nav ul li');
     navItems.forEach(item=>{
         item.addEventListener('click',()=>{item.classList.toggle('show');});
+    });
+
+    // Section dropdown functionality
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        const header = section.querySelector('.section-header');
+        header.addEventListener('click', () => {
+            section.classList.toggle('expanded');
+            section.classList.toggle('collapsed');
+        });
     });
 
     // Peach panic button functionality with drag
