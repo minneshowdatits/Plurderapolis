@@ -1,193 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bad Trip Guide | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
-  <style>
-    /* --- Base Theme --- */
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: #1c0028;
-      color: #eee;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      font-family: 'Montserrat', sans-serif;
-      text-align: center;
-      margin: 1rem 0;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #ff6ec7;
-      text-shadow: 0 0 8px #ff6ec7aa;
-    }
-    h2 {
-      background: #2a0040;
-      color: #00f7e0;
-      padding: 0.8rem;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00f7e055;
-      transition: background 0.3s;
-    }
-    h2:hover {
-      background: #3a0055;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bad Trip Mode | PLURderapolis</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+<style>
+/* --- Base Theme --- */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #1c0028;
+  color: #eee;
+  margin: 0;
+  padding: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2 { font-family: 'Montserrat', sans-serif; text-align: center; margin: 1rem 0; }
+h1 { font-size: 2rem; color: #ff6ec7; text-shadow: 0 0 8px #ff6ec7aa; }
+h2 {
+  background: #2a0040; color: #00f7e0; padding: 0.8rem;
+  border-radius: 8px; cursor: pointer; box-shadow: 0 0 10px #00f7e055;
+  transition: background 0.3s;
+}
+h2:hover { background: #3a0055; }
 
-    /* --- Collapsible Content --- */
-    .collapsible-content {
-      display: none;
-      padding: 1rem;
-      margin: 0.5rem 0 1rem;
-      background: #2a0040;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #00000055;
-    }
-    .collapsible-content.open {
-      display: block;
-    }
+/* --- Collapsible Content --- */
+.collapsible-content { display: none; padding: 1rem; margin: 0.5rem 0 1rem; background: #2a0040; border-radius: 8px; box-shadow: 0 0 15px #00000055; }
+.collapsible-content.open { display: block; }
 
-    /* --- Top Controls --- */
-    .top-controls {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-    .mode-btn {
-      background: #00f7e0;
-      color: #1c0028;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      border: none;
-      border-radius: 25px;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 8px #00f7e0aa;
-      transition: background 0.3s ease;
-    }
-    .mode-btn:hover {
-      background: #00d6c7;
-    }
+/* --- Top Controls --- */
+.top-controls { display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap; }
+.mode-btn { background: #00f7e0; color: #1c0028; font-family: 'Montserrat', sans-serif; font-weight: 600; border: none; border-radius: 25px; padding: 0.6rem 1rem; cursor: pointer; box-shadow: 0 0 8px #00f7e0aa; transition: background 0.3s ease; }
+.mode-btn:hover { background: #00d6c7; }
 
-    /* --- Sensory Safe Mode --- */
-    body.safe-mode {
-      background: #111;
-      color: #fff;
-    }
-    body.safe-mode h2 {
-      background: #222;
-      color: #fff;
-      box-shadow: none;
-    }
-    body.safe-mode .collapsible-content {
-      display: block !important;
-      background: #111;
-      box-shadow: none;
-    }
-  </style>
+/* --- Sensory Safe Mode --- */
+body.safe-mode { background: #111; color: #fff; }
+body.safe-mode h2 { background: #222; color: #fff; box-shadow: none; }
+body.safe-mode .collapsible-content { display: block !important; background: #111; box-shadow: none; }
+
+/* --- Breathing --- */
+.breathing-container { display: flex; justify-content: center; align-items: center; margin: 1rem 0; }
+.breathing-circle { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle,#ff6ec7 20%,#2a0040 90%); animation: breathe 8s infinite; box-shadow: 0 0 20px #ff6ec7aa; }
+@keyframes breathe {0% {transform:scale(1);opacity:0.7;}40% {transform:scale(1.4);opacity:1;}60% {transform:scale(1.4);opacity:1;}100% {transform:scale(1);opacity:0.7;}}
+
+/* --- Grounding Buttons --- */
+.groundBtn { display: block; width: 100%; margin: 0.3rem 0; padding: 0.6rem 1rem; font-family: 'Montserrat', sans-serif; font-weight: 600; background: #00f7e0; color: #1c0028; border: none; border-radius: 25px; cursor: pointer; box-shadow: 0 0 8px #00f7e0aa; transition: background 0.3s ease; }
+.groundBtn:hover { background: #00d6c7; }
+.groundBtn.done { background: #444; color: #aaa; text-decoration: line-through; cursor: default; box-shadow: none; }
+
+/* --- Timer --- */
+.timer-display { font-size: 2rem; font-weight:700; text-align:center; color:#ff6ec7; margin:1rem 0; text-shadow:0 0 8px #ff6ec7aa; }
+.timer-controls { display:flex; justify-content:center; gap:1rem; margin:1rem 0; flex-wrap: wrap; }
+.timer-btn { background:#00f7e0; color:#1c0028; border:none; padding:0.5rem 1rem; border-radius:25px; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7e0aa; }
+.timer-btn:hover { background:#00d6c7; }
+
+/* --- Mantra --- */
+.mantra-text { font-size:1.2rem; text-align:center; font-weight:700; color:#00f7e0; margin:1rem 0; }
+.mantra-btn { display:block; margin:0.5rem auto; background:#ff6ec7; color:#1c0028; border:none; padding:0.5rem 1rem; border-radius:25px; font-weight:700; cursor:pointer; box-shadow:0 0 8px #ff6ec7aa; }
+.mantra-btn:hover { background:#ff49b2; }
+
+/* --- Emergency / Resources --- */
+.resource-btn { display:block; width:100%; margin:0.3rem 0; padding:0.6rem 1rem; font-family:'Montserrat',sans-serif; font-weight:600; background:#ff6ec7; color:#1c0028; border:none; border-radius:25px; cursor:pointer; box-shadow:0 0 8px #ff6ec7aa; text-align:center; text-decoration:none; }
+.resource-btn:hover { background:#ff49b2; }
+
+/* --- Footer Branding --- */
+footer { text-align:center; color:#aaa; margin:2rem 0 1rem; font-size:0.85rem; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>🍑 Bad Trip Grounding Guide</h1>
-    <div class="top-controls">
-      <button class="mode-btn" id="toggleSafe">Sensory Safe Mode</button>
-      <button class="mode-btn" id="toggleFlow">Switch to Guided Mode</button>
-    </div>
-  </header>
+<header>
+<h1>🍑 Bad Trip Guide</h1>
+<div class="top-controls">
+  <button class="mode-btn" id="toggleSafe">Sensory Safe Mode</button>
+  <button class="mode-btn" id="guidedMode">Guided Start</button>
+  <button class="mode-btn" id="modularMode">Modular Mode</button>
+</div>
+</header>
 
-  <main id="guideContent">
-       <main id="guideContent">
-  <!-- Start Here -->
-  <section>
-    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
-    <div id="intro" class="collapsible-content" aria-hidden="true">
-      <p>Hey, you’re safe. This page will walk you through grounding and calming tools. 
-      You can use it however you want — either one section at a time (Modular Mode), 
-      or step-by-step (Guided Mode).</p>
-    </div>
-  </section>
+<main id="guideContent">
+<!-- Start Here -->
+<section class="step-section">
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
+  <div id="intro" class="collapsible-content" aria-hidden="true">
+    <p>You are safe. This page will walk you through grounding and calming tools.</p>
+    <p>Choose guided mode to go step by step, or modular to open any section.</p>
+  </div>
+</section>
 
-  <!-- Breathing Exercise -->
-  <section>
-    <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">🌬️ Breathe With Me</h2>
-    <div id="breathing" class="collapsible-content" aria-hidden="true">
-      <p>Follow the circle below: breathe in as it grows, breathe out as it shrinks.</p>
-      <div class="breathing-container">
-        <div class="breathing-circle"></div>
-      </div>
+<!-- Breathing -->
+<section class="step-section">
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">🌬️ Breathe With Me</h2>
+  <div id="breathing" class="collapsible-content" aria-hidden="true">
+    <p>Follow the circle below: breathe in as it grows, breathe out as it shrinks.</p>
+    <div class="breathing-container"><div class="breathing-circle"></div></div>
+  </div>
+</section>
+
+<!-- Grounding -->
+<section class="step-section">
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="grounding">🪨 Ground Yourself</h2>
+  <div id="grounding" class="collapsible-content" aria-hidden="true">
+    <p>Click through the 5-4-3-2-1 grounding exercise:</p>
+    <ul id="groundingList">
+      <li><button class="groundBtn">👀 Name 5 things you can see</button></li>
+      <li><button class="groundBtn">✋ Name 4 things you can touch</button></li>
+      <li><button class="groundBtn">👂 Name 3 things you can hear</button></li>
+      <li><button class="groundBtn">👃 Name 2 things you can smell</button></li>
+      <li><button class="groundBtn">👅 Name 1 thing you can taste</button></li>
+    </ul>
+    <p id="groundingDone" style="display:none; font-weight:700; text-align:center; color:#00f7e0;">✅ Grounding complete — you’re safe.</p>
+  </div>
+</section>
+
+<!-- Calm Timer -->
+<section class="step-section">
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="timer">⏳ Calm Timer</h2>
+  <div id="timer" class="collapsible-content" aria-hidden="true">
+    <div class="timer-display" id="timerDisplay">05:00</div>
+    <div class="timer-controls">
+      <button class="timer-btn" id="startTimer">Start</button>
+      <button class="timer-btn" id="pauseTimer">Pause</button>
+      <button class="timer-btn" id="resetTimer">Reset</button>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- Mantra Rotator -->
+<section class="step-section">
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧘 Mantras to Remember</h2>
+  <div id="mantras" class="collapsible-content" aria-hidden="true">
+    <div class="mantra-text" id="mantraText">I am safe and this will pass.</div>
+    <button class="mantra-btn" id="nextMantra">Next Mantra</button>
+  </div>
+</section>
+
+<!-- Emergency & Resources -->
+<section>
+  <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="resources">📞 Emergency & Resources</h2>
+  <div id="resources" class="collapsible-content" aria-hidden="true">
+    <p>Reach out if you need immediate support:</p>
+    <a href="https://tripsit.me/" target="_blank" class="resource-btn">TripSit Live Chat</a>
+    <a href="https://firesideproject.org/" target="_blank" class="resource-btn">Fireside Project</a>
+    <a href="https://neverusealone.com/" target="_blank" class="resource-btn">Never Use Alone</a>
+    <a href="/panic.html" class="resource-btn">🚨 Panic Button</a>
+    <a href="/emergency.html" class="resource-btn">🚑 Emergency Help</a>
+  </div>
+</section>
+
 </main>
-    /* --- Breathing Exercise --- */
-.breathing-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-}
-.breathing-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ff6ec7 20%, #2a0040 90%);
-  animation: breathe 8s infinite;
-  box-shadow: 0 0 20px #ff6ec7aa;
-}
-@keyframes breathe {
-  0% { transform: scale(1); opacity: 0.7; }
-  40% { transform: scale(1.4); opacity: 1; }   /* inhale */
-  60% { transform: scale(1.4); opacity: 1; }   /* hold */
-  100% { transform: scale(1); opacity: 0.7; }  /* exhale */
-}
-    <section>
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">🌬️ Breathe With Me</h2>
-      <div id="breathing" class="collapsible-content" aria-hidden="true">
-        
-        <p>Follow the circle below: breathe in as it grows, breathe out as it shrinks.</p>
-        <div class="breathing-container">
-          <div class="breathing-circle"></div>
-        </div>
-      </div>
-    </section>
-    <!-- Sections will be added here step by step -->
-    <section>
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
-      <div id="intro" class="collapsible-content" aria-hidden="true">
-        <p>Hey, you’re safe. This page will walk you through grounding and calming tools. 
-        You can use it however you want — either one section at a time (Modular Mode), 
-        or step-by-step (Guided Mode).</p>
-      </div>
-    </section>
-  </main>
 
-  <script>
-    // --- Collapsible Toggle ---
-    document.querySelectorAll("h2").forEach(header => {
-      header.addEventListener("click", () => {
-        const target = document.getElementById(header.getAttribute("aria-controls"));
-        if (target) {
-          target.classList.toggle("open");
-          header.setAttribute("aria-expanded", target.classList.contains("open"));
-        }
-      });
-    });
+<footer>PLURderapolis • Your partners in shine</footer>
 
-    // --- Sensory Safe Mode ---
-    const safeBtn = document.getElementById("toggleSafe");
-    safeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("safe-mode");
-    });
+<script>
+// --- Collapsible ---
+document.querySelectorAll("h2").forEach(header=>{
+  header.addEventListener("click",()=>{
+    const target=document.getElementById(header.getAttribute("aria-controls"));
+    if(target){
+      target.classList.toggle("open");
+      header.setAttribute("aria-expanded",target.classList.contains("open"));
+    }
+  });
+});
 
-    // --- Guided Mode (placeholder for now) ---
-    const flowBtn = document.getElementById("toggleFlow");
-    flowBtn.addEventListener("click", () => {
-      alert("Guided Mode will walk through one section at a time. Coming soon!");
-    });
-  </script>
+// --- Sensory Safe Mode ---
+document.getElementById("toggleSafe").addEventListener("click",()=>{document.body.classList.toggle("safe-mode");});
+
+// --- Grounding ---
+const groundBtns=document.querySelectorAll(".groundBtn");
+const groundingDone=document.getElementById("groundingDone");
+let completed=0;
+groundBtns.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    if(!btn.classList.contains("done")){
+      btn.classList.add("done");
+      completed++;
+      if(completed===groundBtns.length) groundingDone.style.display="block";
+    }
+  });
+});
+
+// --- Timer ---
+let timerSeconds=300; let timerInterval=null;
+const timerDisplay=document.getElementById("timerDisplay");
+function updateTimer(){const min=String(Math.floor(timerSeconds/60)).padStart(2,'0'); const sec=String(timerSeconds%60).padStart(2,'0'); timerDisplay.textContent=`${min}:${sec}`;}
+document.getElementById("startTimer").addEventListener("click",()=>{
+  if(timerInterval)return;
+  timerInterval=setInterval(()=>{
+    if(timerSeconds>0) timerSeconds--;
+    updateTimer();
+    if(timerSeconds===0) clearInterval(timerInterval);
+  },1000);
+});
+document.getElementById("pauseTimer").addEventListener("click",()=>{clearInterval(timerInterval); timerInterval=null;});
+document.getElementById("resetTimer").addEventListener("click",()=>{clearInterval(timerInterval); timerInterval=null; timerSeconds=300; updateTimer();});
+
+// --- Mantra Rotator ---
+const mantras=["I am safe and this will pass.","I am in control of my breath and body.","This feeling is temporary.","I can wait and breathe.","I am grounded in this moment."];
+let mantraIndex=0;
+const mantraText=document.getElementById("mantraText");
+document.getElementById("nextMantra").addEventListener("click",()=>{mantraIndex=(mantraIndex+1)%mantras.length; mantraText.textContent=mantras[mantraIndex];});
+
+// --- Guided vs Modular ---
+const steps=document.querySelectorAll(".step-section");
+document.getElementById("guidedMode").addEventListener("click",()=>{
+  steps.forEach(s=>s.classList.remove("open"));
+  let i=0;
+  function openNextStep(){
+    if(i<steps.length){steps[i].classList.add("open"); steps[i].querySelector("h2").setAttribute("aria-expanded","true"); i++; setTimeout(openNextStep,1000);}
+  }
+  openNextStep();
+});
+document.getElementById("modularMode").addEventListener("click",()=>{steps.forEach(s=>s.classList.remove("open"));});
+
+</script>
 </body>
 </html>
