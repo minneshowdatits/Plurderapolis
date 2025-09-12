@@ -992,6 +992,32 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
 
+        /* What We Do dropdown styles */
+        .what-we-do-card .card-header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .what-we-do-card .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .what-we-do-card.expanded .card-content {
+            max-height: 2000px;
+        }
+        
+        .what-we-do-card .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .what-we-do-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
         @media (min-width: 768px) {
             .sections-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1061,8 +1087,6 @@
                 <li><a href="panic.html">Panic Button</a></li>
                 <li><a href="emergency.html">Emergency Guides</a></li>
                 <li><a href="spiking.html">Drink Spiking</a></li>
-                <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
-                <li><a href="fake-drugs.html">Fake Drugs & Alerts</a></li>
             </ul>
         </li>
         <li><a href="#">Drug Info</a>
@@ -1070,12 +1094,14 @@
                 <li><a href="polydrug.html">Polydrug Tool</a></li>
                 <li><a href="rx-combos.html">RX + Party Combos</a></li>
                 <li><a href="health.html">Raver Health</a></li>
+                <li><a href="fake.html">Fake Drugs & Alerts</a></li>
             </ul>
         </li>
         <li><a href="#">Consent</a>
             <ul>
                 <li><a href="consent.html">Consent Basics</a></li>
                 <li><a href="accountability.html">Accountability</a></li>
+                <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
             </ul>
         </li>
         <li><a href="#">Local Scene</a>
@@ -1153,67 +1179,91 @@
             <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
             
             <div class="card-container">
-                <div class="card">
-                    <h3>💊 Harm Reduction</h3>
-                    <p>Narcan, test strips, interaction tools, and safety resources to keep our community safe.</p>
-                    <a class="cta-button" href="resources.html">Get Resources</a>
-                    
-                    <div class="resource-links">
-                        <h4>Related Resources:</h4>
-                        <ul>
-                            <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
-                            <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
-                            <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
-                            <li><a href="fake-drugs.html">⚠️ Fake Drugs & Alerts</a></li>
-                        </ul>
+                <!-- Harm Reduction Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>💊 Harm Reduction</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Narcan, test strips, interaction tools, and safety resources to keep our community safe.</p>
+                        <a class="cta-button" href="resources.html">Get Resources</a>
+                        
+                        <div class="resource-links">
+                            <h4>Related Resources:</h4>
+                            <ul>
+                                <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
+                                <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
+                                <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
+                                <li><a href="fake.html">⚠️ Fake Drugs & Alerts</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="card">
-                    <h3>🧠 Mental Health & Crisis</h3>
-                    <p>Peer support, Bad Trip Mode, and emergency resources for when things get difficult.</p>
-                    <a class="cta-button" href="emergency.html">Find Support</a>
-                    
-                    <div class="resource-links">
-                        <h4>Support Resources:</h4>
-                        <ul>
-                            <li><a href="panic.html">🚨 Panic Button & Emergency Protocols</a></li>
-                            <li><a href="badtrip.html">🌀 Bad Trip Support Guide</a></li>
-                            <li><a href="resources.html#mentalhealth">📞 MN Mental Health Resources</a></li>
-                            <li><a href="sober.html">🚫 Sober Raving & Recovery Support</a></li>
-                        </ul>
+                <!-- Mental Health Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🧠 Mental Health & Crisis</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Peer support, Bad Trip Mode, and emergency resources for when things get difficult.</p>
+                        <a class="cta-button" href="emergency.html">Find Support</a>
+                        
+                        <div class="resource-links">
+                            <h4>Support Resources:</h4>
+                            <ul>
+                                <li><a href="panic.html">🚨 Panic Button & Emergency Protocols</a></li>
+                                <li><a href="badtrip.html">🌀 Bad Trip Support Guide</a></li>
+                                <li><a href="resources.html#mentalhealth">📞 MN Mental Health Resources</a></li>
+                                <li><a href="sober.html">🚫 Sober Raving & Recovery Support</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="card">
-                    <h3>🕊️ Consent & Culture</h3>
-                    <p>Building respectful communities and addressing harm through education and accountability.</p>
-                    <a class="cta-button" href="consent.html">Learn More</a>
-                    
-                    <div class="resource-links">
-                        <h4>Community Resources:</h4>
-                        <ul>
-                            <li><a href="consent.html">✅ Consent Basics & Boundaries</a></li>
-                            <li><a href="accountability.html">⚖️ Community Accountability</a></li>
-                            <li><a href="spiking.html">🚫 Drink Spiking Prevention</a></li>
-                            <li><a href="rejection-based-violence.html">🛡️ Rejection Violence Prevention</a></li>
-                        </ul>
+                <!-- Consent & Culture Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🕊️ Consent & Culture</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Building respectful communities and addressing harm through education and accountability.</p>
+                        <a class="cta-button" href="consent.html">Learn More</a>
+                        
+                        <div class="resource-links">
+                            <h4>Community Resources:</h4>
+                            <ul>
+                                <li><a href="consent.html">✅ Consent Basics & Boundaries</a></li>
+                                <li><a href="accountability.html">⚖️ Community Accountability</a></li>
+                                <li><a href="spiking.html">🚫 Drink Spiking Prevention</a></li>
+                                <li><a href="rejection-based-violence.html">🛡️ Rejection Violence Prevention</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="card">
-                    <h3>🎉 Our Booth</h3>
-                    <p>Find our harm reduction booth at local events and festivals throughout Minnesota.</p>
-                    <a class="cta-button" href="booth.html">Find Our Booth</a>
-                    
-                    <div class="resource-links">
-                        <h4>Local Resources:</h4>
-                        <ul>
-                            <li><a href="booth.html">📍 Booth Schedule & Locations</a></li>
-                            <li><a href="venues-guide.html">🏢 Venue Safety Guides</a></li>
-                            <li><a href="resources.html#testing">🧪 Free Testing Locations</a></li>
-                            <li><a href="resources.html#naloxone">💊 Narcan Distribution Sites</a></li>
-                        </ul>
+                <!-- Our Booth Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🎉 Our Booth</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Find our harm reduction booth at local events and festivals throughout Minnesota.</p>
+                        <a class="cta-button" href="booth.html">Find Our Booth</a>
+                        
+                        <div class="resource-links">
+                            <h4>Local Resources:</h4>
+                            <ul>
+                                <li><a href="booth.html">📍 Booth Schedule & Locations</a></li>
+                                <li><a href="venues-guide.html">🏢 Venue Safety Guides</a></li>
+                                <li><a href="resources.html#testing">🧪 Free Testing Locations</a></li>
+                                <li><a href="resources.html#naloxone">💊 Narcan Distribution Sites</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1597,6 +1647,14 @@
         card.classList.toggle('expanded');
         content.classList.toggle('expanded');
     }
+    
+    // What We Do card toggle functionality
+    function toggleWhatWeDoCard(element) {
+        const card = element.parentElement;
+        card.classList.toggle('expanded');
+        const content = card.querySelector('.card-content');
+        content.classList.toggle('expanded');
+    }
 
     // Peach panic button functionality with drag
     const peachWrap = document.getElementById('peachWrap');
@@ -1824,7 +1882,7 @@
         {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
         {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
         {title:"Rejection-Based Violence Prevention",url:"rejection-based-violence.html",content:"Resources and strategies for preventing violence when someone says 'no'."},
-        {title:"Fake Drugs & Alerts",url:"fake-drugs.html",content:"Information about counterfeit drugs circulating in Minnesota."}
+        {title:"Fake Drugs & Alerts",url:"fake.html",content:"Information about counterfeit drugs circulating in Minnesota."}
     ];
 
     // Simple search implementation
