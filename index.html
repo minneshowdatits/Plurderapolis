@@ -210,7 +210,7 @@
         
         @keyframes scroll-left {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
 
-        /* Section styles with grid layout */
+        /* Grid Layout */
         .sections-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -220,7 +220,7 @@
             margin: 0 auto;
         }
         
-        .section {
+        .section-card {
             background-color: #3a0052;
             border-radius: 10px;
             padding: 1rem;
@@ -232,35 +232,35 @@
         }
         
         /* Color assignments for each section */
-        #whatWeDo {
+        .section-card:nth-child(1) {
             border-left-color: #bf00bf;
         }
         
-        #polydrugTool {
+        .section-card:nth-child(2) {
             border-left-color: #e051ff;
         }
         
-        #venuePreview {
+        .section-card:nth-child(3) {
             border-left-color: #00b7ff;
         }
         
-        #panicTools {
-            border-left-color: #ff9a7a; /* Neon peach for safety */
+        .section-card:nth-child(4) {
+            border-left-color: #ff9a7a;
         }
         
-        #resources {
+        .section-card:nth-child(5) {
             border-left-color: #00c896;
         }
         
-        #ourStory {
-            border-left-color: #bf00bf;
-        }
-        
-        #rejectionViolence {
+        .section-card:nth-child(6) {
             border-left-color: #ffb300;
         }
         
-        .section-header {
+        .section-card:nth-child(7) {
+            border-left-color: #bf00bf;
+        }
+        
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -268,23 +268,29 @@
             padding: 0.5rem 0;
         }
         
-        .section h2 { 
+        .section-card h2 { 
             font-family:'Montserrat',sans-serif;
             margin: 0;
             font-size: 1.2rem;
         }
         
         /* Different header colors for each section */
-        #whatWeDo h2 { color: #bf00bf; }
-        #polydrugTool h2 { color: #e051ff; }
-        #venuePreview h2 { color: #00b7ff; }
-        #panicTools h2 { color: #ff9a7a; } /* Neon peach for safety */
-        #resources h2 { color: #00c896; }
-        #ourStory h2 { color: #bf00bf; }
-        #rejectionViolence h2 { color: #ffb300; }
+        .section-card:nth-child(1) h2 { color: #bf00bf; }
+        .section-card:nth-child(2) h2 { color: #e051ff; }
+        .section-card:nth-child(3) h2 { color: #00b7ff; }
+        .section-card:nth-child(4) h2 { color: #ff9a7a; }
+        .section-card:nth-child(5) h2 { color: #00c896; }
+        .section-card:nth-child(6) h2 { color: #ffb300; }
+        .section-card:nth-child(7) h2 { color: #bf00bf; }
         
-        .section-content {
+        .card-content {
             overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease;
+        }
+        
+        .card-content.expanded {
+            max-height: 1000px;
         }
         
         .toggle-icon {
@@ -292,26 +298,17 @@
             transition: transform 0.3s ease;
         }
         
-        /* Different toggle icon colors for each section */
-        #whatWeDo .toggle-icon { color: #bf00bf; }
-        #polydrugTool .toggle-icon { color: #e051ff; }
-        #venuePreview .toggle-icon { color: #00b7ff; }
-        #panicTools .toggle-icon { color: #ff9a7a; } /* Neon peach for safety */
-        #resources .toggle-icon { color: #00c896; }
-        #ourStory .toggle-icon { color: #bf00bf; }
-        #rejectionViolence .toggle-icon { color: #ffb300; }
-        
-        .section.expanded .toggle-icon {
+        .section-card.expanded .toggle-icon {
             transform: rotate(180deg);
         }
         
-        .section ul { padding-left:1.2rem;}
-        .section ul li { 
+        .section-card ul { padding-left:1.2rem;}
+        .section-card ul li { 
             margin-bottom:0.8rem;
             line-height: 1.5;
         }
         
-        .section p {
+        .section-card p {
             line-height: 1.6;
             margin-bottom: 1rem;
             font-size: 0.9rem;
@@ -921,6 +918,27 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Bad Trip Button */
+        .bad-trip-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff69b4, #00f7e0);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .bad-trip-button:hover {
+            opacity: 0.85;
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
         @media (min-width: 768px) {
             .sections-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -991,6 +1009,7 @@
                 <li><a href="emergency.html">Emergency Guides</a></li>
                 <li><a href="spiking.html">Drink Spiking</a></li>
                 <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
+                <li><a href="badtrip.html">Bad Trip Mode</a></li>
             </ul>
         </li>
         <li><a href="#">Drug Info</a>
@@ -1062,27 +1081,33 @@
         <span>📍</span>
         Local
     </a>
+    <a href="badtrip.html" class="hud-btn">
+        <span>🌈</span>
+        Bad Trip
+    </a>
 </div>
 
 <!-- Grid layout for sections -->
 <div class="sections-grid">
     <!-- What We Do Section -->
-    <div class="section" id="whatWeDo">
-        <div class="section-header">
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>💡 What We Do</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
             <a class="cta-button" href="resources.html">Explore Resources</a>
         </div>
     </div>
 
     <!-- Polydrug Interaction Tool Widget -->
-    <div class="section" id="polydrugTool">
-        <div class="section-header">
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>🔬 Drug Interactions</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>Check how different substances interact with each other.</p>
             
             <div class="polydrug-widget">
@@ -1128,11 +1153,12 @@
     </div>
 
     <!-- Venue Guides Preview Section -->
-    <div class="section" id="venuePreview">
-        <div class="section-header">
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>📍 Venue Guides</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>Get to know Minnesota's electronic music venues and their safety features.</p>
             
             <div class="venue-preview">
@@ -1184,11 +1210,12 @@
     </div>
 
     <!-- Panic & Emergency Tools -->
-    <div class="section" id="panicTools">
-        <div class="section-header">
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>🔀 Emergency Tools</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>Quick access to emergency resources when you need them most.</p>
             
             <div class="card-container">
@@ -1202,16 +1229,22 @@
                     <p>Step-by-step instructions for crises.</p>
                     <a class="cta-button" href="emergency.html">View</a>
                 </div>
+                <div class="card">
+                    <h3>Bad Trip Mode</h3>
+                    <p>Calming resources for difficult experiences.</p>
+                    <a class="cta-button" href="badtrip.html">Help</a>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Resources Section -->
-    <div class="section" id="resources">
-        <div class="section-header">
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>📚 Resources</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>Comprehensive resources for harm reduction and mental health support.</p>
             
             <div class="card-container">
@@ -1230,13 +1263,33 @@
     </div>
 
     <!-- Rejection-Based Violence Prevention Section -->
-    <div class="section glow-section" id="rejectionViolence">
-        <div class="section-header">
+    <div class="section-card glow-section">
+        <div class="card-header" onclick="toggleCard(this)">
             <h2>🛡️ Violence Prevention</h2>
+            <span class="toggle-icon">▼</span>
         </div>
-        <div class="section-content">
+        <div class="card-content">
             <p>Resources for preventing violence when someone says 'no' or sets boundaries.</p>
             <a class="cta-button" href="rejection-based-violence.html">Learn More</a>
+        </div>
+    </div>
+
+    <!-- Our Story Section -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>📖 Our Story</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
+            
+            <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
+            
+            <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="booth.html" class="cta-button">Learn About Our Booth</a>
+            </div>
         </div>
     </div>
 </div>
@@ -1246,24 +1299,6 @@
     <a href="http://users.smartgb.com/g/g.php?a=s&i=g19-02505-d5" target="_blank" style="color:#ff69b4; font-weight:bold; text-decoration:none;">
         💬 Leave an Anonymous Tip
     </a>
-</div>
-
-<!-- Our Story Section -->
-<div class="section" id="ourStory" style="max-width: 1000px; margin: 1.5rem auto;">
-    <div class="section-header">
-        <h2>Our Story</h2>
-    </div>
-    <div class="section-content">
-        <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
-        
-        <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
-        
-        <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
-        
-        <div style="text-align: center; margin-top: 25px;">
-            <a href="booth.html" class="cta-button">Learn About Our Booth</a>
-        </div>
-    </div>
 </div>
 
 <!-- Emergency Modal -->
@@ -1331,6 +1366,7 @@
         <li><a href="polydrug.html">Polydrug</a></li>
         <li><a href="resources.html">Resources</a></li>
         <li><a href="rejection-based-violence.html">Violence Prevention</a></li>
+        <li><a href="badtrip.html">Bad Trip Mode</a></li>
     </ul>
 </footer>
 
@@ -1347,6 +1383,14 @@
     navItems.forEach(item=>{
         item.addEventListener('click',()=>{item.classList.toggle('show');});
     });
+
+    // Card toggle functionality
+    function toggleCard(element) {
+        const card = element.parentElement;
+        const content = card.querySelector('.card-content');
+        card.classList.toggle('expanded');
+        content.classList.toggle('expanded');
+    }
 
     // Peach panic button functionality with drag
     const peachWrap = document.getElementById('peachWrap');
@@ -1617,6 +1661,15 @@
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.search-container')) {
             results.style.display = 'none';
+        }
+    });
+
+    // Auto-expand first card on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstCard = document.querySelector('.section-card');
+        if (firstCard) {
+            firstCard.classList.add('expanded');
+            firstCard.querySelector('.card-content').classList.add('expanded');
         }
     });
 </script>
