@@ -1,437 +1,2089 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Polydrug Risks & Interaction Checker | PLURderapolis</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-  :root{
-    --bg:#121212;
-    --card:#1b0b1b;
-    --ink:#eee;
-    --muted:#bcbcbc;
-    --accent:#bf00bf;
-    --accent-2:#e051ff;
-    --line:#440044;
-    --chip:#550055;
-    --shadow:0 0 12px rgba(191,0,191,.25);
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-  a{color:var(--accent)}
-  .wrap{max-width:1000px;margin:auto;padding:16px}
-  h1,h2,h3{font-family:'Montserrat',sans-serif;letter-spacing:.2px}
-  h1{font-size:clamp(1.6rem,2.5vw,2.2rem);color:var(--accent);margin:8px 0 6px}
-  p.lede{color:#f0d1ff;margin:.25rem 0 1rem}
-  /* Top checker card */
-  .tool{background:var(--card);border-radius:14px;padding:14px;box-shadow:var(--shadow);position:sticky;top:0.35rem;z-index:5}
-  .tool h2{font-size:1.1rem;margin:.2rem 0 .6rem;color:var(--accent-2)}
-  .row{display:flex;gap:8px;flex-wrap:wrap}
-  .sel{flex:1 1 180px;min-width:160px;display:flex;flex-direction:column;gap:6px}
-  label{font-weight:700;color:var(--accent);font-size:.9rem}
-  select{width:100%;padding:.6rem .7rem;border:1px solid var(--line);border-radius:10px;background:#220022;color:var(--ink);appearance:none}
-  button.primary{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:.7rem 1rem;font-weight:800;cursor:pointer}
-  button.primary:active{transform:translateY(1px)}
-  .icons{font-size:1.05rem;opacity:.95}
-  .result{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:10px;background:#170717}
-  .result h3{margin:.2rem 0 .4rem;color:#ffd6ff;font-size:1rem}
-  .pairs{margin:.4rem 0 0;padding-left:18px}
-  .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 0;font-size:.95rem;color:var(--muted)}
-  .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem}
-  /* Matrix */
-  .controls{display:flex;align-items:center;gap:10px;margin:14px 0 8px}
-  .download{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
-  .share{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
-  .matrix{overflow:auto;border-radius:12px;box-shadow:var(--shadow);border:1px solid var(--line);background:#160616}
-  table{border-collapse:collapse;width:100%;min-width:980px;font-size:.92rem}
-  th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:center;vertical-align:middle}
-  thead th{position:sticky;top:0;background:#3b0a3b;color:#ffe5ff;z-index:2}
-  tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:1}
-  td{background:#1f001f}
-  .chip {display:inline-block;background:var(--chip);border-radius:999px;padding:.18rem .55rem;font-weight:700}
-  /* Sections at bottom (accordion) */
-  details.info{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.6rem .8rem;margin:.6rem 0}
-  details.info summary{cursor:pointer;font-weight:800;list-style:none}
-  details.info summary::marker, details.info summary::-webkit-details-marker{display:none}
-  details.info summary .tag{margin-left:.5rem;opacity:.85}
-  /* Footer */
-  footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;padding:18px;margin-top:16px;text-align:center}
-  .pill{display:inline-block;background:var(--chip);padding:.22rem .6rem;border-radius:999px;font-weight:800}
-  /* Mobile niceties */
-  @media (max-width:640px){
-    .tool{position:static}
-    .legend{font-size:.9rem}
-    table{font-size:.86rem;min-width:840px}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLURderapolis — Harm Reduction for Minnesota Ravers</title>
+    <meta name="description" content="Minnesota's premier harm reduction resource for the electronic music community. Get emergency help, drug interaction info, and rave safety resources.">
+    <meta name="keywords" content="harm reduction, Minnesota, rave, electronic music, drug safety, overdose prevention, Narcan, PLUR">
+    <meta name="author" content="PLURderapolis">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://plurderapolis.org/">
+    <meta property="og:title" content="PLURderapolis — Harm Reduction for Minnesota Ravers">
+    <meta property="og:description" content="Minnesota's premier harm reduction resource for the electronic music community.">
+    <meta property="og:image" content="https://plurderapolis.org/images/social-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://plurderapolis.org/">
+    <meta property="twitter:title" content="PLURderapolis — Harm Reduction for Minnesota Ravers">
+    <meta property="twitter:description" content="Minnesota's premier harm reduction resource for the electronic music community.">
+    <meta property="twitter:image" content="https://plurderapolis.org/images/social-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍑</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0d0d0d;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
+            padding-bottom: 70px;
+        }
+
+        /* Enhanced Minneapolis Skyline */
+        .skyline-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .skyline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, 
+                rgba(0, 247, 224, 0.3) 0%, 
+                transparent 20%,
+                transparent 80%,
+                rgba(255, 105, 180, 0.2) 100%
+            );
+            clip-path: polygon(
+                0% 100%, 2% 70%, 4% 80%, 6% 60%, 8% 90%, 10% 50%,
+                12% 70%, 14% 85%, 16% 65%, 18% 95%, 20% 55%, 22% 75%,
+                24% 85%, 26% 60%, 28% 80%, 30% 90%, 32% 65%, 34% 75%,
+                36% 100%, 38% 70%, 40% 85%, 42% 60%, 44% 95%, 46% 50%,
+                48% 80%, 50% 70%, 52% 90%, 54% 60%, 56% 85%, 58% 75%,
+                60% 100%, 62% 65%, 64% 90%, 66% 55%, 68% 80%, 70% 70%,
+                72% 95%, 74% 60%, 76% 85%, 78% 75%, 80% 100%, 82% 65%,
+                84% 90%, 86% 50%, 88% 80%, 90% 70%, 92% 95%, 94% 60%,
+                96% 85%, 98% 75%, 100% 100%
+            );
+            filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4);
+            animation: skylineGlow 4s infinite alternate, glitch 5s infinite;
+        }
+        
+        @keyframes skylineGlow {
+            0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); opacity: 0.8; }
+            100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); opacity: 1; }
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translateX(0); }
+            5% { transform: translateX(-2px); }
+            10% { transform: translateX(2px); }
+            15% { transform: translateX(-1px); }
+            20% { transform: translateX(1px); }
+            50% { transform: translateX(0); }
+        }
+
+        .site-title {
+            text-align: center;
+            padding: 1rem 1rem 0.5rem;
+            position: relative;
+            z-index: 2;
+            margin-top: 0.5rem;
+        }
+        
+        .site-title h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: #00f7e0;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00f7e0 0%, #a3f7ff 50%, #00f7e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineMove 6s linear infinite;
+            filter: drop-shadow(0 0 6px #00f7e0aa);
+            margin: 0;
+        }
+        
+        .site-title .tagline {
+            font-family: 'Roboto', sans-serif;
+            color: #88e9e3;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        @keyframes shineMove {0% {background-position: 100% 0;}100% {background-position: 0 0;}}
+
+        .menu-btn {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 1100;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .menu-btn div {
+            height: 4px;
+            background: #00f7e0;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-btn.active div:nth-child(1){ transform: rotate(45deg) translate(5px,5px);}
+        .menu-btn.active div:nth-child(2){ opacity:0;}
+        .menu-btn.active div:nth-child(3){ transform: rotate(-45deg) translate(6px,-6px);}
+        
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 260px;
+            height: 100%;
+            background: #3a0052;
+            box-shadow: 2px 0 10px #000000aa;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+            z-index:1000;
+        }
+        
+        .side-nav.active { left:0;}
+        .side-nav ul { list-style:none; padding:0;}
+        .side-nav ul li { padding:0; position: relative;}
+        .side-nav ul li a {
+            display:block; padding:12px 20px; color:#fff; text-decoration:none; border-bottom:1px solid #5d3a7d;
+            font-weight:bold;
+        }
+        
+        .side-nav ul li a:hover { background:#5d3a7d; }
+        
+        /* Horizontal dropdown menus */
+        .side-nav ul li ul { 
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 200px;
+            background: #5d3a7d;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.2);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .side-nav ul li.show > ul { 
+            max-height: 500px;
+        }
+        
+        /* Dropdown arrows with animation */
+        .side-nav ul li > a:after {
+            content: '›';
+            float: right;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+            margin-left: 10px;
+        }
+        
+        .side-nav ul li.show > a:after {
+            transform: rotate(90deg);
+        }
+        
+        .side-nav ul li ul li a { font-weight:normal; font-size:0.95rem; }
+
+        /* Less obtrusive alert banner */
+        .rave-alert-wrapper {
+            background-color: rgba(26, 26, 26, 0.9);
+            overflow: hidden;
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+            position: relative;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            width: 100vw;
+            z-index: 2;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(4px);
+        }
+        
+        .rave-alert-link {
+            display: inline-block;
+            white-space: nowrap;
+            color: #ff69b4;
+            font-size: 0.8rem;
+            text-decoration: none;
+            padding-left: 100%;
+            animation: scroll-left 20s linear infinite;
+        }
+        
+        @keyframes scroll-left {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+        /* Grid Layout with Spacing */
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-card {
+            background-color: #3a0052;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 0 15px rgba(0,255,255,0.1);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        /* Color assignments for each section */
+        .section-card:nth-child(1) {
+            border-left-color: #bf00bf;
+        }
+        
+        .section-card:nth-child(2) {
+            border-left-color: #e051ff;
+        }
+        
+        .section-card:nth-child(3) {
+            border-left-color: #00b7ff;
+        }
+        
+        .section-card:nth-child(4) {
+            border-left-color: #ff9a7a;
+        }
+        
+        .section-card:nth-child(5) {
+            border-left-color: #00c896;
+        }
+        
+        .section-card:nth-child(6) {
+            border-left-color: #ffb300;
+        }
+        
+        .section-card:nth-child(7) {
+            border-left-color: #bf00bf;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+        }
+        
+        .section-card h2 { 
+            font-family:'Montserrat',sans-serif;
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        /* Different header colors for each section */
+        .section-card:nth-child(1) h2 { color: #bf00bf; }
+        .section-card:nth-child(2) h2 { color: #e051ff; }
+        .section-card:nth-child(3) h2 { color: #00b7ff; }
+        .section-card:nth-child(4) h2 { color: #ff9a7a; }
+        .section-card:nth-child(5) h2 { color: #00c896; }
+        .section-card:nth-child(6) h2 { color: #ffb300; }
+        .section-card:nth-child(7) h2 { color: #bf00bf; }
+        
+        /* Enhanced dropdown animation */
+        .card-content {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .card-content.expanded {
+            max-height: 2000px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .section-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .section-card ul { padding-left:1.2rem;}
+        .section-card ul li { 
+            margin-bottom:0.8rem;
+            line-height: 1.5;
+        }
+        
+        .section-card p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .cta-button { 
+            display:inline-block; 
+            margin-top:0.8rem; 
+            background:#00f7e0; 
+            color:#2e003e; 
+            padding:0.7rem 1.2rem; 
+            border-radius:8px; 
+            text-decoration:none; 
+            font-weight:bold; 
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-button:hover{
+            opacity:0.85; 
+            transform:scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-container { 
+            display:flex; 
+            flex-wrap:wrap; 
+            gap:1rem; 
+            justify-content:center;
+            margin-top: 1rem;
+        }
+        
+        .card { 
+            background:#2a0036; 
+            border-radius:10px; 
+            padding:1.2rem; 
+            width:100%; 
+            max-width: 280px;
+            box-shadow:0 0 15px rgba(255,111,145,0.3); 
+            transition: all 0.2s; 
+            border: 1px solid #5d3a7d;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover { 
+            transform:translateY(-5px); 
+            box-shadow:0 0 25px rgba(255,111,145,0.6); 
+        }
+        
+        .card h3 { 
+            color:#ff69b4; 
+            font-family:'Montserrat',sans-serif; 
+            margin-top:0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #ff69b4;
+            padding-bottom: 0.5rem;
+        }
+        
+        .card p { 
+            font-size:0.9rem; 
+            flex-grow: 1;
+        }
+
+        .search-container {
+            position: relative;
+            width: 90%;
+            margin: 1rem auto;
+            z-index: 100;
+        }
+
+        .search-bar { 
+            display:flex; 
+            position: relative;
+        }
+        
+        .search-bar input{ 
+            flex:1; 
+            padding:10px; 
+            border:none; 
+            border-radius:5px 0 0 5px; 
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid #00f7e0;
+            font-size: 0.9rem;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-bar button{ 
+            padding:10px; 
+            border:none; 
+            background:#00f7e0; 
+            color:#2e003e; 
+            border-radius:0 5px 5px 0; 
+            cursor:pointer; 
+            font-weight: bold;
+        }
+
+        #searchResults { 
+            position:absolute; 
+            top:100%; 
+            left:0; 
+            right:0; 
+            background:#3a0052; 
+            max-height:200px; 
+            overflow-y:auto; 
+            border-radius:0 0 5px 5px; 
+            display:none; 
+            z-index:1004; 
+            box-shadow:0 0 12px rgba(0,255,255,0.2);
+            border: 1px solid #00f7e0;
+            border-top: none;
+        }
+        
+        #searchResults ul { list-style:none; padding:0; margin:0;}
+        #searchResults li { padding:10px; border-bottom:1px solid #5d3a7d; cursor:pointer; font-size: 0.9rem;}
+        #searchResults li:hover { background:#5d3a7d; }
+        #searchResults li:last-child { border-bottom: none; }
+
+        /* Enhanced peach button with "HELP!" text */
+        #peachWrap {
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            z-index: 1002; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 6px;
+            touch-action: none;
+            cursor: move;
+        }
+        
+        #panicButton {
+            width: 60px; 
+            height: 60px; 
+            font-size: 2.5rem;
+            background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
+            border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
+            position: relative;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            text-decoration: none; 
+            color: #fff;
+            box-shadow: 0 0 15px #ff69b4, 0 0 30px #00f7e0;
+            animation: emojiPulse 2s infinite;
+            user-select: none;
+        }
+        
+        #panicButton::before {
+            content: "";
+            position: absolute;
+            top: -8px; 
+            left: 22px;
+            width: 15px; 
+            height: 12px;
+            background: linear-gradient(135deg, #ff9a7a, #ff7a5a);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+        
+        #panicButton:hover { 
+            transform: scale(1.2);
+            animation: none;
+        }
+        
+        .help-text {
+            color: #ff9a7a;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 154, 122, 0.8);
+            font-size: 0.8rem;
+            text-align: center;
+            animation: blink 3s infinite;
+        }
+        
+        @keyframes emojiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #aaa;
+            text-align: center; 
+            position: relative; 
+            z-index: 2;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid #444;
+        }
+        
+        footer hr {
+            border-color: #444;
+            margin-bottom: 0.8rem;
+        }
+        
+        footer p {
+            max-width: 800px;
+            margin: 0.5rem auto;
+            line-height: 1.5;
+        }
+        
+        footer ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0.8rem 0;
+            gap: 8px;
+        }
+        
+        footer ul li a {
+            color: #00f7e0;
+            padding: 0 8px;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 0.8rem;
+        }
+        
+        footer ul li a:hover {
+            color: #ff69b4;
+            text-decoration: underline;
+        }
+
+        /* Raver Health Guide Styles - Horizontal Scroll */
+        .health-guide {
+            background: #2a0036;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #5d3a7d;
+        }
+        
+        .health-scroll-container {
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-top: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: #00f7e0 #2a0036;
+        }
+        
+        .health-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .health-scroll-container::-webkit-scrollbar-track {
+            background: #2a0036;
+            border-radius: 3px;
+        }
+        
+        .health-scroll-container::-webkit-scrollbar-thumb {
+            background: #00f7e0;
+            border-radius: 3px;
+        }
+        
+        .health-grid {
+            display: flex;
+            gap: 15px;
+            padding: 5px;
+            width: max-content;
+        }
+        
+        .health-card {
+            background: #3a0052;
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #00f7e0;
+            transition: transform 0.2s;
+            min-width: 250px;
+            flex-shrink: 0;
+        }
+        
+        .health-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 247, 224, 0.3);
+        }
+        
+        .health-card h3 {
+            color: #ff69b4;
+            margin-top: 0;
+            border-bottom: 1px solid #ff69b4;
+            padding-bottom: 6px;
+            font-size: 1.1rem;
+        }
+        
+        .health-tips {
+            margin: 8px 0;
+        }
+        
+        .health-tips li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .health-tips li::before {
+            content: "✓";
+            color: #00f7e0;
+            margin-right: 6px;
+            font-weight: bold;
+        }
+        
+        .view-all {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* Improved link visibility */
+        a {
+            transition: color 0.2s, background-color 0.2s;
+        }
+        
+        .resource-links {
+            margin-top: 12px;
+            border-top: 1px solid #5d3a7d;
+            padding-top: 12px;
+        }
+        
+        .resource-links h4 {
+            color: #00f7e0;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .resource-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .resource-links li {
+            margin-bottom: 6px;
+        }
+        
+        .resource-links a {
+            display: block;
+            color: #ff69b4;
+            text-decoration: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            background: rgba(255, 105, 180, 0.1);
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        
+        .resource-links a:hover {
+            background-color: rgba(255, 105, 180, 0.2);
+            padding-left: 12px;
+            color: #ff8ac0;
+        }
+
+        /* Mobile HUD Navigation */
+        .mobile-hud {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(58, 0, 82, 0.95);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1001;
+            backdrop-filter: blur(5px);
+            border-top: 1px solid #00f7e0;
+        }
+
+        .hud-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            padding: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .hud-btn span {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+
+        /* Emergency Modal */
+        .emergency-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: #3a0052;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 90%;
+            overflow-y: auto;
+            border: 2px solid #00f7e0;
+            box-shadow: 0 0 20px rgba(0, 247, 224, 0.5);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #00f7e0;
+            padding-bottom: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #00f7e0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .emergency-steps {
+            margin: 15px 0;
+        }
+
+        .emergency-steps ol {
+            padding-left: 20px;
+        }
+
+        .emergency-steps li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .emergency-contact {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .emergency-contact h4 {
+            color: #ff69b4;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        /* Polydrug Tool Widget Styles */
+        .polydrug-widget {
+            background: #1b0b1b;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 0 12px rgba(191, 0, 191, 0.25);
+            margin: 15px 0;
+            border: 1px solid #440044;
+        }
+        
+        .polydrug-widget h3 {
+            font-size: 1.1rem;
+            margin: 0.2rem 0 0.6rem;
+            color: #e051ff;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .widget-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .widget-sel {
+            flex: 1 1 180px;
+            min-width: 160px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .widget-sel label {
+            font-weight: 700;
+            color: #bf00bf;
+            font-size: 0.9rem;
+        }
+        
+        .widget-sel select {
+            width: 100%;
+            padding: 0.6rem 0.7rem;
+            border: 1px solid #440044;
+            border-radius: 10px;
+            background: #220022;
+            color: #fff;
+            appearance: none;
+            font-size: 0.9rem;
+        }
+        
+        .widget-btn {
+            background: #bf00bf;
+            color: #fff;
+            border: 0;
+            border-radius: 10px;
+            padding: 0.7rem 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: all 0.2s;
+        }
+        
+        .widget-btn:hover {
+            background: #e051ff;
+            transform: translateY(-2px);
+        }
+        
+        .widget-result {
+            margin-top: 10px;
+            border: 1px dashed #440044;
+            border-radius: 12px;
+            padding: 10px;
+            background: #170717;
+            min-height: 80px;
+        }
+        
+        .widget-result h4 {
+            margin: 0.2rem 0 0.4rem;
+            color: #ffd6ff;
+            font-size: 1rem;
+        }
+        
+        .widget-legend {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 8px 0 0;
+            font-size: 0.85rem;
+            color: #bcbcbc;
+        }
+        
+        .legend-item {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+            background: #200120;
+            border: 1px solid #440044;
+            border-radius: 999px;
+            padding: 0.25rem 0.6rem;
+        }
+        
+        .widget-open-full {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .widget-open-full .cta-button {
+            background: #e051ff;
+            color: #fff;
+        }
+
+        /* NEW: Enhanced Polydrug Matrix Styles */
+        .polydrug-matrix {
+            margin-top: 15px;
+            overflow-x: auto;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1f0a1f, #2a0f2a);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            position: relative;
+        }
+        
+        .polydrug-matrix::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, #00f7e0, #bf00bf);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 2px;
+            font-size: 0.8rem;
+        }
+        
+        .matrix-table th, .matrix-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .matrix-table th {
+            background: linear-gradient(145deg, #3a0052, #2a0036);
+            color: #00f7e0;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 247, 224, 0.5);
+            border: 1px solid #5d3a7d;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .matrix-table th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00f7e0, transparent);
+        }
+        
+        .matrix-table td {
+            background: rgba(34, 0, 34, 0.7);
+            border: 1px solid #3a0036;
+            font-weight: 600;
+            cursor: help;
+        }
+        
+        .matrix-table td:hover {
+            transform: scale(1.05);
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .safe-cell {
+            background: linear-gradient(145deg, rgba(0, 200, 83, 0.3), rgba(0, 150, 63, 0.2));
+            color: #a0ffc8;
+            border: 1px solid rgba(0, 200, 83, 0.5) !important;
+            box-shadow: 0 0 5px rgba(0, 200, 83, 0.3);
+        }
+        
+        .safe-cell::before {
+            content: '✓';
+            margin-right: 4px;
+            font-weight: bold;
+        }
+        
+        .caution-cell {
+            background: linear-gradient(145deg, rgba(255, 179, 0, 0.3), rgba(200, 140, 0, 0.2));
+            color: #ffdf90;
+            border: 1px solid rgba(255, 179, 0, 0.5) !important;
+            box-shadow: 0 0 5px rgba(255, 179, 0, 0.3);
+        }
+        
+        .caution-cell::before {
+            content: '⚠️';
+            margin-right: 4px;
+        }
+        
+        .danger-cell {
+            background: linear-gradient(145deg, rgba(255, 82, 82, 0.3), rgba(200, 40, 40, 0.2));
+            color: #ffa0a0;
+            border: 1px solid rgba(255, 82, 82, 0.5) !important;
+            box-shadow: 0 0 5px rgba(255, 82, 82, 0.3);
+            animation: pulseDanger 2s infinite;
+        }
+        
+        .danger-cell::before {
+            content: '☠️';
+            margin-right: 4px;
+        }
+        
+        @keyframes pulseDanger {
+            0% { box-shadow: 0 0 5px rgba(255, 82, 82, 0.3); }
+            50% { box-shadow: 0 0 10px rgba(255, 82, 82, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(255, 82, 82, 0.3); }
+        }
+        
+        .unknown-cell {
+            background: linear-gradient(145deg, rgba(100, 100, 100, 0.3), rgba(70, 70, 70, 0.2));
+            color: #d4d4d4;
+            border: 1px solid rgba(100, 100, 100, 0.5) !important;
+        }
+        
+        .matrix-table td:first-child {
+            font-weight: bold;
+            background: linear-gradient(145deg, #3a0052, #2a0036);
+            color: #e051ff;
+            border: 1px solid #5d3a7d;
+        }
+        
+        .matrix-info {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: #bcbcbc;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* New style for the glowing section */
+        .glow-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-section::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff69b4, #00f7e0, #ff69b4, #00f7e0);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: glowing 3s ease-in-out infinite;
+            border-radius: 15px;
+            opacity: 0.3;
+            filter: blur(8px);
+        }
+        
+        @keyframes glowing {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Bad Trip Button */
+        .bad-trip-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff69b4, #00f7e0);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .bad-trip-button:hover {
+            opacity: 0.85;
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* What We Do dropdown styles */
+        .what-we-do-card .card-header {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .what-we-do-card .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .what-we-do-card.expanded .card-content {
+            max-height: 2000px;
+        }
+        
+        .what-we-do-card .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .what-we-do-card.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Drug interaction section always visible */
+        #drug-interaction-section .card-content {
+            max-height: none;
+            opacity: 1;
+            transform: none;
+            display: block;
+        }
+        
+        #drug-interaction-section .card-header {
+            cursor: default;
+        }
+        
+        #drug-interaction-section .toggle-icon {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .sections-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .card-container {
+                gap: 1.5rem;
+            }
+            
+            .card {
+                width: 280px;
+                padding: 1.5rem;
+            }
+            
+            #panicButton {
+                width: 70px;
+                height: 70px;
+                font-size: 3rem;
+            }
+            
+            .help-text {
+                font-size: 1rem;
+            }
+            
+            .skyline-container {
+                height: 150px;
+            }
+            
+            .health-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                width: 100%;
+            }
+            
+            .health-card {
+                min-width: auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .sections-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .mobile-hud {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Polydrug Interaction Checker <span class="icons">⚡💊💀🌈</span></h1>
-    <p class="lede">Mobile-first, harm-reduction focused. Pick up to three substances and see risks & tips. Matrix is downloadable + shareable.</p>
 
-    <!-- ===== Interaction Checker (TOP) ===== -->
-    <section class="tool" aria-label="Polydrug Interaction Checker">
-      <h2>Quick Check</h2>
-      <div class="row">
-        <div class="sel">
-          <label for="drugA">Substance A</label>
-          <select id="drugA"></select>
-        </div>
-        <div class="sel">
-          <label for="drugB">Substance B</label>
-          <select id="drugB"></select>
-        </div>
-        <div class="sel">
-          <label for="drugC">Substance C (optional)</label>
-          <select id="drugC"></select>
-        </div>
-        <div class="sel" style="align-self:flex-end">
-          <button class="primary" id="checkBtn">Check <span class="icons">⚡</span></button>
-        </div>
-      </div>
+<div class="skyline-container">
+    <div class="skyline"></div>
+</div>
 
-      <div class="legend" aria-label="Legend">
-        <span><b>🌈</b> Low concern / typical</span>
-        <span><b>⚡</b> Caution</span>
-        <span><b>💊</b> Strong caution / interaction risk</span>
-        <span><b>💀</b> Dangerous / avoid</span>
-      </div>
+<!-- Hamburger menu -->
+<div class="menu-btn" id="menuBtn">
+    <div></div><div></div><div></div>
+</div>
 
-      <div class="result" id="resultBox" aria-live="polite">
-        <h3>Results will appear here</h3>
-        <p>We’ll show A+B, A+C, B+C and a combined A+B+C overview with quick harm-reduction pointers.</p>
-      </div>
-    </section>
+<nav class="side-nav" id="sideNav">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Safety</a>
+            <ul>
+                <li><a href="panic.html">Panic Button</a></li>
+                <li><a href="emergency.html">Emergency Guides</a></li>
+                <li><a href="spiking.html">Drink Spiking</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Drug Info</a>
+            <ul>
+                <li><a href="polydrug.html">Polydrug Tool</a></li>
+                <li><a href="rx-combos.html">RX + Party Combos</a></li>
+                <li><a href="health.html">Raver Health</a></li>
+                <li><a href="fake.html">Fake Drugs & Alerts</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Consent</a>
+            <ul>
+                <li><a href="consent.html">Consent Basics</a></li>
+                <li><a href="accountability.html">Accountability</a></li>
+                <li><a href="rejection-based-violence.html">Rejection-Based Violence</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Local Scene</a>
+            <ul>
+                <li><a href="venues-guide.html">Venues Guide</a></li>
+                <li><a href="booth.html">Our Booth</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Extras</a>
+            <ul>
+                <li><a href="seasonal.html">Seasonal Tips</a></li>
+                <li><a href="sober.html">Sober Ravers</a></li>
+                <li><a href="resources.html">MN Resources</a></li>
+                <li><a href="badtrip.html">Bad Trip Mode</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 
-    <!-- ===== Controls + Matrix ===== -->
-    <div class="controls">
-      <button class="download" id="dlCsv">Download Matrix (CSV)</button>
-      <button class="share" id="shareBtn">Share Page</button>
-      <span class="muted" style="color:var(--muted)">Tip: drag left/right to explore the grid on mobile.</span>
+<!-- Less obtrusive alert banner -->
+<div class="rave-alert-wrapper">
+    <a href="testing.html" class="rave-alert-link">
+        🚨 MN Drug Supply Alert: Gray Death circulating • Fake K = fentanyl + xylazine • Test before you trust • Carry Narcan • No solo dosing • Click for full info 🖤
+    </a>
+</div>
+
+<!-- Site title -->
+<div class="site-title">
+    <h1>PLURderapolis</h1>
+    <div class="tagline">Harm Reduction for Minnesota Ravers</div>
+</div>
+
+<!-- Search -->
+<div class="search-container">
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search the site...">
+        <button onclick="performSearch()">🔍</button>
+    </div>
+    <div id="searchResults"></div>
+</div>
+
+<!-- Mobile HUD Navigation - Updated with Venue Guide -->
+<div class="mobile-hud">
+    <a href="panic.html" class="hud-btn">
+        <span>🚨</span>
+        Panic
+    </a>
+    <a href="polydrug.html" class="hud-btn">
+        <span>💊</span>
+        Tool
+    </a>
+    <a href="resources.html" class="hud-btn">
+        <span>📚</span>
+        Resources
+    </a>
+    <a href="health.html" class="hud-btn">
+        <span>💚</span>
+        Health
+    </a>
+    <!-- Added Venue Guide to HUD -->
+    <a href="venues-guide.html" class="hud-btn">
+        <span>🏢</span>
+        Venues
+    </a>
+    <a href="badtrip.html" class="hud-btn">
+        <span>🌈</span>
+        Bad Trip
+    </a>
+</div>
+
+<!-- Grid layout for sections -->
+<div class="sections-grid">
+    <!-- What We Do Section -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>💡 What We Do</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
+            
+            <div class="card-container">
+                <!-- Harm Reduction Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>💊 Harm Reduction</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Narcan, test strips, interaction tools, and safety resources to keep our community safe.</p>
+                        <a class="cta-button" href="resources.html">Get Resources</a>
+                        
+                        <div class="resource-links">
+                            <h4>Related Resources:</h4>
+                            <ul>
+                                <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
+                                <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
+                                <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
+                                <li><a href="fake.html">⚠️ Fake Drugs & Alerts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mental Health Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🧠 Mental Health & Crisis</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Peer support, Bad Trip Mode, and emergency resources for when things get difficult.</p>
+                        <a class="cta-button" href="emergency.html">Find Support</a>
+                        
+                        <div class="resource-links">
+                            <h4>Support Resources:</h4>
+                            <ul>
+                                <li><a href="panic.html">🚨 Panic Button & Emergency Protocols</a></li>
+                                <li><a href="badtrip.html">🌀 Bad Trip Support Guide</a></li>
+                                <li><a href="resources.html#mentalhealth">📞 MN Mental Health Resources</a></li>
+                                <li><a href="sober.html">🚫 Sober Raving & Recovery Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consent & Culture Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🕊️ Consent & Culture</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Building respectful communities and addressing harm through education and accountability.</p>
+                        <a class="cta-button" href="consent.html">Learn More</a>
+                        
+                        <div class="resource-links">
+                            <h4>Community Resources:</h4>
+                            <ul>
+                                <li><a href="consent.html">✅ Consent Basics & Boundaries</a></li>
+                                <li><a href="accountability.html">⚖️ Community Accountability</a></li>
+                                <li><a href="spiking.html">🚫 Drink Spiking Prevention</a></li>
+                                <li><a href="rejection-based-violence.html">🛡️ Rejection Violence Prevention</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Our Booth Card with Dropdown -->
+                <div class="card what-we-do-card">
+                    <div class="card-header" onclick="toggleWhatWeDoCard(this)">
+                        <h3>🎉 Our Booth</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="card-content">
+                        <p>Find our harm reduction booth at local events and festivals throughout Minnesota.</p>
+                        <a class="cta-button" href="booth.html">Find Our Booth</a>
+                        
+                        <div class="resource-links">
+                            <h4>Local Resources:</h4>
+                            <ul>
+                                <li><a href="booth.html">📍 Booth Schedule & Locations</a></li>
+                                <li><a href="venues-guide.html">🏢 Venue Safety Guides</a></li>
+                                <li><a href="resources.html#testing">🧪 Free Testing Locations</a></li>
+                                <li><a href="resources.html#naloxone">💊 Narcan Distribution Sites</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="matrix" role="region" aria-label="Combo Risk Matrix">
-      <table id="matrix"></table>
+    <!-- Polydrug Interaction Tool Widget - Always visible -->
+    <div class="section-card" id="drug-interaction-section">
+        <div class="card-header">
+            <h2>🔬 Drug Interactions</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>Check how different substances interact with each other.</p>
+            
+            <div class="polydrug-widget">
+                <h3>Quick Check <span class="icons">⚡💊🌈</span></h3>
+                <div class="widget-row">
+                    <div class="widget-sel">
+                        <label for="widget-drugA">Substance A</label>
+                        <select id="widget-drugA">
+                            <option value="">— Select —</option>
+                            <option value="Cannabis">🌿 Cannabis</option>
+                            <option value="Alcohol">🍺 Alcohol</option>
+                            <option value="MDMA">✨ MDMA</option>
+                            <option value="Cocaine">❄️ Cocaine</option>
+                            <option value="Opioids">💊 Opioids</option>
+                            <option value="Benzos">😴 Benzos</option>
+                        </select>
+                    </div>
+                    <div class="widget-sel">
+                        <label for="widget-drugB">Substance B</label>
+                        <select id="widget-drugB">
+                            <option value="">— Select —</option>
+                            <option value="Cannabis">🌿 Cannabis</option>
+                            <option value="Alcohol">🍺 Alcohol</option>
+                            <option value="MDMA">✨ MDMA</option>
+                            <option value="Cocaine">❄️ Cocaine</option>
+                            <option value="Opioids">💊 Opioids</option>
+                            <option value="Benzos">😴 Benzos</option>
+                        </select>
+                    </div>
+                    <button class="widget-btn" id="widget-checkBtn">Check ⚡</button>
+                </div>
+                
+                <div class="widget-result" id="widget-resultBox">
+                    <h4>Results will appear here</h4>
+                    <p>Select two substances to check their interaction risk.</p>
+                </div>
+                
+                <!-- NEW: Enhanced Polydrug Matrix -->
+                <div class="polydrug-matrix">
+                    <h4>Interaction Matrix</h4>
+                    <table class="matrix-table">
+                        <tr>
+                            <th></th>
+                            <th>🌿 Cannabis</th>
+                            <th>🍺 Alcohol</th>
+                            <th>✨ MDMA</th>
+                            <th>💊 Opioids</th>
+                            <th>😴 Benzos</th>
+                        </tr>
+                        <tr>
+                            <th>🌿 Cannabis</th>
+                            <td class="safe-cell">Safe</td>
+                            <td class="caution-cell">Caution</td>
+                            <td class="safe-cell">Safe</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="caution-cell">Caution</td>
+                        </tr>
+                        <tr>
+                            <th>🍺 Alcohol</th>
+                            <td class="caution-cell">Caution</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                        </tr>
+                        <tr>
+                            <th>✨ MDMA</th>
+                            <td class="safe-cell">Safe</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="caution-cell">Caution</td>
+                        </tr>
+                        <tr>
+                            <th>💊 Opioids</th>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                        </tr>
+                        <tr>
+                            <th>😴 Benzos</th>
+                            <td class="caution-cell">Caution</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="caution-cell">Caution</td>
+                            <td class="danger-cell">Danger</td>
+                            <td class="danger-cell">Danger</td>
+                        </tr>
+                    </table>
+                    <div class="matrix-info">Hover over cells for more information</div>
+                </div>
+                
+                <div class="widget-legend">
+                    <div class="legend-item">
+                        <div style="width:12px;height:12px;background:rgba(0,200,83,0.3);border-radius:2px;"></div>
+                        <span>Safe</span>
+                    </div>
+                    <div class="legend-item">
+                        <div style="width:12px;height:12px;background:rgba(255,179,0,0.3);border-radius:2px;"></div>
+                        <span>Caution</span>
+                    </div>
+                    <div class="legend-item">
+                        <div style="width:12px;height:12px;background:rgba(255,82,82,0.3);border-radius:2px;"></div>
+                        <span>Danger</span>
+                    </div>
+                </div>
+                
+                <div class="widget-open-full">
+                    <a href="polydrug.html" class="cta-button">Open Full Tool</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- ===== Tips (quick) ===== -->
-    <details class="info" open>
-      <summary>💡 Harm Reduction Tips <span class="tag">(quick)</span></summary>
-      <ul>
-        <li>Test what you can. Start low, go slow. Space redoses.</li>
-        <li><span class="pill">Never stack depressants</span> (alcohol, benzos, GHB, opioids) — biggest driver of fatal ODs.</li>
-        <li>Heat + stimulants = risk. Cool environment, electrolyte sips, rest breaks.</li>
-        <li>Carry naloxone if opioids could be around. Don’t use alone. Recovery position if someone is out.</li>
-        <li>On Rx meds? Avoid chasing “muted” effects by redosing — risk goes up even if euphoria doesn’t.</li>
-      </ul>
-    </details>
+    <!-- Raver Health Guide Section -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>💚 Raver Health Guide</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>Essential tips for maintaining your health and safety while enjoying electronic music events.</p>
+            
+            <div class="health-guide">
+                <div class="health-scroll-container">
+                    <div class="health-grid">
+                        <div class="health-card">
+                            <h3>💧 Hydration</h3>
+                            <div class="health-tips">
+                                <ul>
+                                    <li>Drink water regularly</li>
+                                    <li>Avoid excessive water intake</li>
+                                    <li>Balance with electrolytes</li>
+                                    <li>Recognize dehydration signs</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="health-card">
+                            <h3>🌡️ Temperature</h3>
+                            <div class="health-tips">
+                                <ul>
+                                    <li>Take cooling breaks</li>
+                                    <li>Wear breathable clothing</li>
+                                    <li>Recognize overheating signs</li>
+                                    <li>Use cooling stations</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="health-card">
+                            <h3>🦵 Physical Care</h3>
+                            <div class="health-tips">
+                                <ul>
+                                    <li>Wear comfortable shoes</li>
+                                    <li>Take sitting breaks</li>
+                                    <li>Stretch regularly</li>
+                                    <li>Pace your energy</li>
+                                </ul>
+                            </div>
+                        </div>
 
-    <!-- ===== Category cards at bottom ===== -->
-    <h2 style="margin-top:14px;color:var(--accent-2)">Combo Categories</h2>
+                        <div class="health-card">
+                            <h3>👂 Hearing Protection</h3>
+                            <div class="health-tips">
+                                <ul>
+                                    <li>Wear earplugs designed for music</li>
+                                    <li>Take breaks from loud areas</li>
+                                    <li>Monitor volume levels</li>
+                                    <li>Recognize hearing damage signs</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="view-all">
+                    <a href="health.html" class="cta-button">View Full Health Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <details class="info"><summary>💊 Depressant × Depressant <span class="tag">benzodiazepines, alcohol, GHB, opioids, trazodone, gabapentin</span></summary>
-      <p><b>Risk:</b> <b>💀</b> — synergistic respiratory depression, blackouts, aspiration.</p>
-      <ul>
-        <li>Keep people awake & breathing; recovery position if unresponsive.</li>
-        <li>Naloxone reverses opioids (not benzos/GHB); still call EMS.</li>
-      </ul>
-    </details>
+    <!-- Panic & Emergency Tools -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>🔀 Emergency Tools</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>Quick access to emergency resources when you need them most.</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h3>Panic Button</h3>
+                    <p>Immediate access to help in emergencies.</p>
+                    <a class="cta-button" href="panic.html">Go</a>
+                </div>
+                <div class="card">
+                    <h3>Emergency Guides</h3>
+                    <p>Step-by-step instructions for crises.</p>
+                    <a class="cta-button" href="emergency.html">View</a>
+                </div>
+                <div class="card">
+                    <h3>Bad Trip Mode</h3>
+                    <p>Calming resources for difficult experiences.</p>
+                    <a class="cta-button" href="badtrip.html">Help</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <details class="info"><summary>⚡ Stimulant × Stimulant <span class="tag">MDMA, cocaine, ADHD meds, bupropion</span></summary>
-      <p><b>Risk:</b> <b>💊→💀</b> — hypertension, hyperthermia, arrhythmia, panic.</p>
-      <ul>
-        <li>Avoid stacking; cool down, hydrate, don’t chase muted highs.</li>
-      </ul>
-    </details>
+    <!-- Resources Section -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>📚 Resources</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>Comprehensive resources for harm reduction and mental health support.</p>
+            
+            <div class="card-container">
+                <div class="card">
+                    <h3>MN Resources</h3>
+                    <p>Plan B, clinics, DV support, and recovery help.</p>
+                    <a class="cta-button" href="resources.html">View</a>
+                </div>
+                <div class="card">
+                    <h3>Sober Ravers</h3>
+                    <p>Tips & support for enjoying the scene sober.</p>
+                    <a class="cta-button" href="sober.html">View</a>
+                </div>
+                <div class="card">
+                    <h3>Seasonal Tips</h3>
+                    <p>Stay safe in Minnesota's extreme weather.</p>
+                    <a class="cta-button" href="seasonal.html">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <details class="info"><summary>⚡ Stimulant × Depressant <span class="tag">e.g., cocaine+alcohol, MDMA+GHB</span></summary>
-      <p><b>Risk:</b> <b>💊</b> — masking sedation, dehydration, liver stress (cocaethylene with alcohol+cocaine).</p>
-      <ul>
-        <li>Don’t redose to “even it out”. Watch breathing and heat load.</li>
-      </ul>
-    </details>
+    <!-- Rejection-Based Violence Prevention Section -->
+    <div class="section-card glow-section">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>🛡️ Violence Prevention</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p>Resources for preventing violence when someone says 'no' or sets boundaries.</p>
+            <a class="cta-button" href="rejection-based-violence.html">Learn More</a>
+        </div>
+    </div>
 
-    <details class="info"><summary>🌈/⚡ Psychedelics with Cannabis</summary>
-      <p>Can potentiate intensity/anxiety. Delay THC until past peak; micro-puffs if at all.</p>
-    </details>
+    <!-- Our Story Section -->
+    <div class="section-card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <h2>📖 Our Story</h2>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="card-content">
+            <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
+            
+            <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
+            
+            <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <a href="booth.html" class="cta-button">Learn About Our Booth</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <details class="info"><summary>⚡ Dissociative × Depressant <span class="tag">ketamine/nitrous + alcohol/benzos/GHB</span></summary>
-      <p>Hypoxia/airway risk + amnesia. Sit down, supervised, fresh air breaks.</p>
-    </details>
+<!-- Anonymous Tip Link -->
+<div style="text-align: center; margin: 1rem;">
+    <a href="http://users.smartgb.com/g/g.php?a=s&i=g19-02505-d5" target="_blank" style="color:#ff69b4; font-weight:bold; text-decoration:none;">
+        💬 Leave an Anonymous Tip
+    </a>
+</div>
 
-    <!-- ===== Legal disclaimer (single) ===== -->
-    <footer>
-      <p><strong>Legal & Medical Disclaimer:</strong> Educational content only; not medical advice. No mix is 100% safe. Accuracy is prioritized using established harm-reduction resources (TripSit, DanceSafe, IMPACT SF, TheBody) plus your local notes, but contexts differ. If someone shows trouble breathing, severe chest pain, seizures, or won’t wake, call emergency services.</p>
-      <p>© 2025 PLURderapolis • <span class="pill">Stay safe. Stay kind.</span></p>
-    </footer>
-  </div>
+<!-- Emergency Modal -->
+<div class="emergency-modal" id="emergencyModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Emergency Assistance</h2>
+            <button class="close-modal" onclick="closeEmergencyModal()">&times;</button>
+        </div>
+        <div class="emergency-steps">
+            <h3>If someone is unresponsive:</h3>
+            <ol>
+                <li>Check for responsiveness - tap shoulder and shout</li>
+                <li>Call 911 immediately</li>
+                <li>Check breathing - look for chest movement</li>
+                <li>Administer Narcan if available and trained</li>
+                <li>Perform rescue breathing if not breathing</li>
+                <li>Place in recovery position if breathing</li>
+            </ol>
+            
+            <h3>Overdose signs:</h3>
+            <ul>
+                <li>Unresponsive to stimuli</li>
+                <li>Slow or no breathing</li>
+                <li>Pale or clammy skin</li>
+                <li>Blue lips or fingertips</li>
+                <li>Gurgling sounds</li>
+            </ul>
+        </div>
+        
+        <div class="emergency-contact">
+            <h4>Minnesota Emergency Resources:</h4>
+            <p>🆘 Crisis Text Line: Text "HOME" to 741741</p>
+            <p>🆘 MN Poison Control: 1-800-222-1222</p>
+            <p>🆘 Mobile Crisis Services: **CRISIS (**74747)</p>
+        </div>
+        
+        <p style="margin-top: 20px; font-weight: bold;">
+            Remember: Good Samaritan laws protect you when seeking help for an overdose.
+        </p>
+        
+        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <a href="panic.html" class="cta-button">More Panic Resources</a>
+            <a href="emergery.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced peach panic button with "HELP!" text -->
+<div id="peachWrap">
+    <div id="panicButton">🍑</div>
+    <div class="help-text">HELP!</div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <hr/>
+    <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+    <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:#00f7e0;">plurderapolis@gmail.com</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0;">@plurderapolis</a></p>
+    <p style="font-size:0.8rem;color:#ccc;">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="panic.html">Panic</a></li>
+        <li><a href="emergency.html">Emergency</a></li>
+        <li><a href="polydrug.html">Polydrug</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="rejection-based-violence.html">Violence Prevention</a></li>
+        <li><a href="badtrip.html">Bad Trip Mode</a></li>
+    </ul>
+</footer>
 
 <script>
-/* ============================================================
-   DATA INGEST: Your original 20-substance matrix (as posted)
-   Symbols: —, 🟢, 🟡, 🔴, ⚠️, ❌, ☠️
-   We will translate to minimalist icons later.
-============================================================ */
-const originalHeaders = ["Cannabis","Ketamine","MDMA","Cocaine","Alcohol","GHB / Opioids","Benzos","SSRIs","SNRIs","ADHD Meds","Antipsychotics","Mood Stabilizers","Wellbutrin","Trazodone","Gabapentin","LSD","Shrooms","Nitrous","DMT","GHB"];
-// NOTE: Your pasted table had 20 columns; the last header label you included row-wise was “GHB” again.
-// We’re trusting the body rows you posted below (they match 20-wide). The body:
-const originalRows = [
-  ["Cannabis","—","🟡","🔴","🔴","🔴","🔴","🔴","🟡","🟡","🟢","🟡","🟡","🟢","🟢","🟢","🔴","🔴","🟢","🔴","🔴"],
-  ["Ketamine","🟡","—","❌","❌","❌","❌","🟡","🟡","🟡","🔴","🟡","🟡","🟡","🟡","🟡","❌","❌","🟡","❌","❌"],
-  ["MDMA","🔴","❌","—","🔴","🔴","❌","🔴","🔴","❌","❌","❌","❌","❌","🔴","🔴","🔴","🔴","🔴","❌","❌"],
-  ["Cocaine","🔴","❌","🔴","—","🔴","❌","🔴","🔴","❌","❌","🔴","🔴","🔴","🔴","🔴","🔴","🔴","🔴","❌","❌"],
-  ["Alcohol","🔴","❌","🔴","🔴","—","❌","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","❌","❌","❌","🔴","🔴","❌","❌","☠️"],
-  ["GHB / Opioids","🔴","❌","❌","❌","☠️","—","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","❌","❌","⚠️","☠️","—"],
-  ["Benzos","🔴","🟡","🔴","🔴","☠️","☠️","—","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","☠️","⚠️"],
-  ["SSRIs","🟡","🟡","🔴","🔴","⚠️","⚠️","⚠️","—","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["SNRIs","🟡","🟡","❌","❌","⚠️","⚠️","⚠️","⚠️","—","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["ADHD Meds","🟢","🟡","❌","❌","⚠️","⚠️","⚠️","⚠️","⚠️","—","🟡","🟡","🟡","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["Antipsychotics","🟡","🟡","❌","🔴","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","—","🟡","🟡","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["Mood Stabilizers","🟡","🟡","❌","🔴","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","🟡","—","🟡","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["Wellbutrin","🟢","🟡","❌","🔴","❌","⚠️","⚠️","⚠️","⚠️","🟡","🟡","🟡","—","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["Trazodone","🟢","🟡","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","🟡","🟡","🟡","🟡","—","🟢","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["Gabapentin","🟢","🟡","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","🟡","🟡","🟡","🟡","🟢","—","⚠️","⚠️","⚠️","⚠️","⚠️"],
-  ["LSD","🔴","🟡","🔴","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","—","🟢","🟡","🟡","🔴"],
-  ["Shrooms","🔴","❌","🔴","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🟢","⚠️","🟢","—","🟡","🟡","🔴"],
-  ["Nitrous","🟢","🟡","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","🟡","—","⚠️","⚠️"],
-  ["DMT","🔴","❌","❌","❌","❌","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🔴","🔴","⚠️","—","☠️"],
-  ["GHB","🔴","❌","❌","☠️","☠️","—","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🔴","🔴","⚠️","☠️","—"]
-];
-
-/* ============================================================
-   TRANSLATION to minimalist icons
-   —, 🟢 -> 🌈   |   🟡 -> ⚡   |   🔴/⚠️ -> 💊   |   ❌/☠️ -> 💀
-============================================================ */
-const toMini = s => {
-  if (s==="—" || s==="🟢") return "🌈";
-  if (s==="🟡") return "⚡";
-  if (s==="🔴" || s==="⚠️") return "💊";
-  if (s==="❌" || s==="☠️") return "💀";
-  return s || "🌈";
-};
-
-/* ============================================================
-   Expand “GHB / Opioids” -> split into “GHB” + “Opioids”
-   Then add “Viagra”. Non-specified Viagra cells are conservative.
-============================================================ */
-function buildExpandedMatrix(){
-  // Build base map from original
-  const baseCols = originalHeaders;
-  const baseMap = new Map(); // key "row|col" -> minimalist icon
-  for (const r of originalRows){
-    const rowName = r[0];
-    const cols = r.slice(1);
-    cols.forEach((val,i)=>{
-      const colName = baseCols[i];
-      baseMap.set(`${rowName}|${colName}`, toMini(val));
+    // Hamburger toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sideNav = document.getElementById('sideNav');
+    menuBtn.addEventListener('click',()=>{
+        menuBtn.classList.toggle('active');
+        sideNav.classList.toggle('active');
     });
-  }
-
-  // Start list from original headers, but replace combined class with two
-  const expanded = [
-    "Cannabis","Ketamine","MDMA","Cocaine","Alcohol",
-    "GHB","Opioids", // split
-    "Benzos","SSRIs","SNRIs","ADHD Meds","Antipsychotics","Mood Stabilizers",
-    "Wellbutrin","Trazodone","Gabapentin","LSD","Shrooms","Nitrous","DMT"
-  ];
-
-  // Helper to read combined mapping for either GHB or Opioids from "GHB / Opioids"
-  const readCombined = (row, col) => {
-    const key1 = `${row}|GHB / Opioids`;
-    const key2 = `GHB / Opioids|${col}`;
-    // prefer direct if exists
-    if (baseMap.has(key1) && col==="GHB / Opioids") return baseMap.get(key1);
-    if (baseMap.has(`${row}|${col}`)) return baseMap.get(`${row}|${col}`);
-    if (baseMap.has(key1)) return baseMap.get(key1);
-    if (baseMap.has(key2)) return baseMap.get(key2);
-    return "⚡";
-  };
-
-  // Build expanded map (without Viagra yet)
-  const m = new Map();
-
-  // Copy all non-combined pairs first
-  for (const r of expanded){
-    for (const c of expanded){
-      if (r===c){ m.set(`${r}|${c}`,"🌈"); continue; }
-      // If either is GHB or Opioids, pull from combined where needed
-      if ((r==="GHB" || r==="Opioids") && (c!=="GHB" && c!=="Opioids")){
-        m.set(`${r}|${c}`, readCombined("GHB / Opioids", c));
-        m.set(`${c}|${r}`, readCombined(c, "GHB / Opioids"));
-      } else if ((c==="GHB" || c==="Opioids") && (r!=="GHB" && r!=="Opioids")){
-        m.set(`${r}|${c}`, readCombined(r, "GHB / Opioids"));
-        m.set(`${c}|${r}`, readCombined("GHB / Opioids", r));
-      } else if ( (r!=="GHB" && r!=="Opioids") && (c!=="GHB" && c!=="Opioids") ){
-        // both sides not split items: read from base
-        const val = baseMap.get(`${r}|${c}`) ?? baseMap.get(`${c}|${r}`) ?? "⚡";
-        m.set(`${r}|${c}`, val);
-      }
-    }
-  }
-  // Set explicit GHB <-> Opioids as 💀
-  m.set("GHB|Opioids","💀"); m.set("Opioids|GHB","💀");
-
-  // Now add Viagra row/col conservatively
-  const withViagra = [...expanded, "Viagra"];
-  for (const x of withViagra){
-    if (x==="Viagra") continue;
-  }
-  // Defaults for Viagra
-  const vDefaults = {
-    "Cannabis":"🌈",
-    "Ketamine":"⚡",
-    "MDMA":"💊",
-    "Cocaine":"💊",
-    "Alcohol":"💊",
-    "GHB":"💊",
-    "Opioids":"💊",
-    "Benzos":"⚡",
-    "SSRIs":"🌈",
-    "SNRIs":"⚡",
-    "ADHD Meds":"💊",
-    "Antipsychotics":"⚡",
-    "Mood Stabilizers":"⚡",
-    "Wellbutrin":"⚡",
-    "Trazodone":"💊",
-    "Gabapentin":"💊",
-    "LSD":"⚡",
-    "Shrooms":"⚡",
-    "Nitrous":"🌈", // N2O ≠ nitrites
-    "DMT":"⚡"
-  };
-  for (const s of expanded){
-    const val = vDefaults[s] ?? "⚡";
-    m.set(`Viagra|${s}`, val);
-    m.set(`${s}|Viagra`, val);
-  }
-  m.set("Viagra|Viagra","🌈");
-
-  return {headers: withViagra, map:m};
-}
-
-const {headers, map:mini} = buildExpandedMatrix();
-
-/* ============================================================
-   UI: Populate selects, render matrix, CSV download, share
-============================================================ */
-const allSubs = headers.slice(); // 21 including Viagra
-
-function fillSelect(id){
-  const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">— Select —</option>' + allSubs.map(s=>`<option>${s}</option>`).join('');
-}
-["drugA","drugB","drugC"].forEach(fillSelect);
-
-function iconExplain(x){
-  switch(x){
-    case "🌈": return "Low concern / typical co-use profile reported";
-    case "⚡": return "Caution — increased side-effect potential; go slow";
-    case "💊": return "Strong caution — meaningful interaction risk";
-    case "💀": return "Danger — avoid / high overdose or medical risk";
-    default: return "—";
-  }
-}
-
-function renderPairs(sel){
-  // Unique pairs + worst icon
-  const pairs = [];
-  const rank = {"🌈":1,"⚡":2,"💊":3,"💀":4};
-  let worst = "🌈";
-  for (let i=0;i<sel.length;i++){
-    for (let j=i+1;j<sel.length;j++){
-      const a = sel[i], b = sel[j];
-      const v = mini.get(`${a}|${b}`) ?? mini.get(`${b}|${a}`) ?? "⚡";
-      pairs.push({a,b,v});
-      if (rank[v] > rank[worst]) worst = v;
-    }
-  }
-  return {pairs,worst};
-}
-
-function tripleAdvisory(sel, worst){
-  if (sel.length<3) return "";
-  const [a,b,c]=sel;
-  // Simple combined note anchored to worst symbol
-  const msg = {
-    "🌈":"No notable red flags reported for this trio; still pace yourself and hydrate.",
-    "⚡":"Caution: overlapping effects. Keep doses low, add time between, and monitor heat/heart.",
-    "💊":"Strong caution: interactions likely stack. Avoid redosing to overcome muted effects. Have a sober buddy.",
-    "💀":"Danger: this trio includes a high-risk pair (e.g., depressant stacking or stimulant+depressant with opioids). Avoid."
-  }[worst];
-  return `<p><b>All three:</b> ${a} + ${b} + ${c} → <b>${worst}</b> — ${msg}</p>`;
-}
-
-document.getElementById("checkBtn").addEventListener("click", ()=>{
-  const sel = ["drugA","drugB","drugC"].map(id=>document.getElementById(id).value).filter(Boolean);
-  const box = document.getElementById("resultBox");
-  if (sel.length<2){
-    box.innerHTML = `<h3>Please select at least two substances.</h3>`;
-    return;
-  }
-  const {pairs,worst} = renderPairs(sel);
-  const items = pairs.map(p=>`<li><b>${p.a}</b> + <b>${p.b}</b> → <span class="chip">${p.v}</span> <span style="color:var(--muted)">(${iconExplain(p.v)})</span></li>`).join('');
-  box.innerHTML = `
-    <h3>Results</h3>
-    <ul class="pairs">${items}</ul>
-    ${tripleAdvisory(sel, worst)}
-    <p style="margin-top:.5rem;color:var(--muted)">Icons: 🌈 low • ⚡ caution • 💊 strong caution • 💀 danger. Use the matrix below for more context.</p>
-  `;
-});
-
-// Render matrix table
-(function renderMatrix(){
-  const tbl = document.getElementById("matrix");
-  const thead = document.createElement("thead");
-  const hrow = document.createElement("tr");
-  hrow.appendChild(document.createElement("th")).textContent = "↓ / →";
-  headers.forEach(h=>{ const th=document.createElement("th"); th.textContent=h; hrow.appendChild(th); });
-  thead.appendChild(hrow);
-  const tbody = document.createElement("tbody");
-  headers.forEach(r=>{
-    const tr = document.createElement("tr");
-    const rowTh = document.createElement("th"); rowTh.textContent=r; tr.appendChild(rowTh);
-    headers.forEach(c=>{
-      const td = document.createElement("td");
-      td.setAttribute("data-label", c);
-      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
-      td.textContent = val;
-      tr.appendChild(td);
+    
+    const navItems = document.querySelectorAll('.side-nav ul li');
+    navItems.forEach(item=>{
+        item.addEventListener('click',()=>{item.classList.toggle('show');});
     });
-    tbody.appendChild(tr);
-  });
-  tbl.appendChild(thead); tbl.appendChild(tbody);
-})();
 
-// CSV download (minimalist icons)
-document.getElementById("dlCsv").addEventListener("click", ()=>{
-  let csv = "Substance," + headers.join(",") + "\n";
-  headers.forEach(r=>{
-    let line = [r];
-    headers.forEach(c=>{
-      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
-      line.push(val);
-    });
-    csv += line.join(",") + "\n";
-  });
-  const blob = new Blob([csv],{type:"text/csv"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "plur-polydrug-matrix.csv";
-  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-});
-
-// Share button (Web Share API)
-document.getElementById("shareBtn").addEventListener("click", async ()=>{
-  try{
-    if (navigator.share){
-      await navigator.share({title:"PLURderapolis Polydrug Matrix", text:"Check interactions + harm reduction tips", url:location.href});
-    } else {
-      alert("Copy this page URL to share:\n"+location.href);
+    // Card toggle functionality
+    function toggleCard(element) {
+        const card = element.parentElement;
+        const content = card.querySelector('.card-content');
+        card.classList.toggle('expanded');
+        content.classList.toggle('expanded');
     }
-  }catch(e){ /* user cancelled */ }
-});
+    
+    // What We Do card toggle functionality
+    function toggleWhatWeDoCard(element) {
+        const card = element.parentElement;
+        card.classList.toggle('expanded');
+        const content = card.querySelector('.card-content');
+        content.classList.toggle('expanded');
+    }
+
+    // Peach panic button functionality with drag
+    const peachWrap = document.getElementById('peachWrap');
+    const panicButton = document.getElementById('panicButton');
+    let isDragging = false;
+    let startX, startY, initialX, initialY;
+    
+    // Make the peach button draggable
+    peachWrap.addEventListener('mousedown', dragStart);
+    peachWrap.addEventListener('touchstart', dragStart);
+    
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('touchmove', drag);
+    
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('touchend', dragEnd);
+    
+    function dragStart(e) {
+        if (e.type === 'touchstart') {
+            initialX = e.touches[0].clientX - peachWrap.offsetLeft;
+            initialY = e.touches[0].clientY - peachWrap.offsetTop;
+        } else {
+            initialX = e.clientX - peachWrap.offsetLeft;
+            initialY = e.clientY - peachWrap.offsetTop;
+        }
+        
+        if (e.target === panicButton || e.target === peachWrap) {
+            isDragging = true;
+        }
+    }
+    
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            
+            let currentX, currentY;
+            
+            if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+            
+            // Constrain to viewport boundaries
+            currentX = Math.max(0, Math.min(currentX, window.innerWidth - peachWrap.offsetWidth));
+            currentY = Math.max(0, Math.min(currentY, window.innerHeight - peachWrap.offsetHeight));
+            
+            peachWrap.style.left = currentX + 'px';
+            peachWrap.style.top = currentY + 'px';
+            peachWrap.style.right = 'auto';
+            peachWrap.style.bottom = 'auto';
+        }
+    }
+    
+    function dragEnd() {
+        isDragging = false;
+    }
+    
+    // Click functionality for the panic button
+    panicButton.addEventListener('click', function() {
+        if (!isDragging) {
+            showEmergencyModal();
+        }
+    });
+
+    // Emergency Modal functions
+    function showEmergencyModal() {
+        document.getElementById('emergencyModal').style.display = 'flex';
+        // Add to history to allow back button to close modal
+        window.history.pushState({modal: true}, '');
+    }
+
+    function closeEmergencyModal() {
+        document.getElementById('emergencyModal').style.display = 'none';
+        if (window.history.state && window.history.state.modal) {
+            window.history.back();
+        }
+    }
+
+    // Close modal when clicking outside or pressing Escape
+    window.addEventListener('click', function(event) {
+        if (event.target === document.getElementById('emergencyModal')) {
+            closeEmergencyModal();
+        }
+    });
+    
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeEmergencyModal();
+        }
+    });
+    
+    // Handle browser back button for modal
+    window.addEventListener('popstate', function(event) {
+        if (document.getElementById('emergencyModal').style.display === 'flex') {
+            closeEmergencyModal();
+        }
+    });
+
+    // Polydrug Interaction Checker functionality for widget
+    const widgetDrugA = document.getElementById('widget-drugA');
+    const widgetDrugB = document.getElementById('widget-drugB');
+    const widgetCheckBtn = document.getElementById('widget-checkBtn');
+    const widgetResultBox = document.getElementById('widget-resultBox');
+    
+    // Simple interaction matrix for the widget
+    const widgetInteractionMatrix = {
+        'Cannabis': {
+            'Cannabis': { level: '🌈', text: 'Generally safe, but be mindful of set and setting.' },
+            'Alcohol': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
+            'MDMA': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
+            'Cocaine': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
+            'Opioids': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
+            'Benzos': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' }
+        },
+        'Alcohol': {
+            'Cannabis': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
+            'Alcohol': { level: '💀', text: 'Extreme risk of alcohol poisoning at high doses.' },
+            'MDMA': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
+            'Cocaine': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
+            'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+            'Benzos': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' }
+        },
+        'MDMA': {
+            'Cannabis': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
+            'Alcohol': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
+            'MDMA': { level: '💊', text: 'Increased neurotoxicity and overheating risk.' },
+            'Cocaine': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
+            'Opioids': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
+            'Benzos': { level: '💊', text: 'Conflicting effects, may dull experience.' }
+        },
+        'Cocaine': {
+            'Cannabis': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
+            'Alcohol': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
+            'MDMA': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
+            'Cocaine': { level: '💀', text: 'Extreme cardiovascular strain and overdose risk.' },
+            'Opioids': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
+            'Benzos': { level: '💊', text: 'Conflicting effects, may increase anxiety.' }
+        },
+        'Opioids': {
+            'Cannabis': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
+            'Alcohol': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+            'MDMA': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
+            'Cocaine': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
+            'Opioids': { level: '💀', text: 'Extreme overdose risk. Never combine opioids.' },
+            'Benzos': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' }
+        },
+        'Benzos': {
+            'Cannabis': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' },
+            'Alcohol': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' },
+            'MDMA': { level: '💊', text: 'Conflicting effects, may dull experience.' },
+            'Cocaine': { level: '💊', text: 'Conflicting effects, may increase anxiety.' },
+            'Opioids': {极 text: 'Severe respiratory depression risk. Potentially fatal.' },
+            'Benzos': { level: '💀', text: 'Increased sedation and respiratory depression risk.' }
+        }
+    };
+    
+    // Set up event listeners for widget
+    widgetCheckBtn.addEventListener('click', checkWidgetInteraction);
+    
+    function checkWidgetInteraction() {
+        const substanceA = widgetDrugA.value;
+        const substanceB = widgetDrugB.value;
+        
+        if (!substanceA || !substanceB) {
+            widgetResultBox.innerHTML = '<h4>Please select two substances</h4><p>Choose substances from both dropdown menus to check their interaction.</p>';
+            return;
+        }
+        
+        // Check if we have a defined interaction
+        let interaction;
+        if (widgetInteractionMatrix[substanceA] && widgetInteractionMatrix[substanceA][substanceB]) {
+            interaction = widgetInteractionMatrix[substanceA][substanceB];
+        } else if (widgetInteractionMatrix[substanceB] && widgetInteractionMatrix[substanceB][substanceA]) {
+            interaction = widgetInteractionMatrix[substanceB][substanceA];
+        } else {
+            interaction = { level: '⚡', text: 'Limited data on this combination. Exercise caution and start with low doses.' };
+        }
+        
+        // Display the result
+        let levelClass = '';
+        let levelText = '';
+        
+        switch(interaction.level) {
+            case '🌈':
+                levelClass = 'safe';
+                levelText = 'Low Concern';
+                break;
+            case '⚡':
+                levelClass = 'caution';
+                levelText = 'Caution';
+                break;
+            case '💊':
+                levelClass = 'strong-caution';
+                levelText = 'Strong Caution';
+                break;
+            case '💀':
+                levelClass = 'danger';
+                levelText = 'Dangerous';
+                break;
+        }
+        
+        widgetResultBox.innerHTML = `
+            <h4>${substanceA} + ${substanceB} → <span style="font-size: 1.2em;">${interaction.level}</span> ${levelText}</h4>
+            <p>${interaction.text}</p>
+        `;
+    }
+
+    // Search functionality
+    const sitePages = [
+        {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
+        {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
+        {title:"Emergency Guides",url:"emergency.html",content:"Step-by-step instructions for medical and crisis situations."},
+        {title:"Polydrug Tool",url:"polydrug.html",content:"Check dangerous drug interactions and polydrug risks."},
+        {title:"RX + Party Combos",url:"rx-combos.html",content:"Prescription drug and party drug combination risks."},
+        {title:"Raver Health",url:"health.html",content:"Hydration, cooling, safety tips for events and raves."},
+        {title:"Consent Basics",url:"consent.html",content:"Consent education for safer nightlife and festivals."},
+        {title:"Accountability",url:"accountability.html",content:"Resources on community accountability and safer spaces."},
+        {title:"Venues Guide",url:"venues-guide.html",content:"Minnesota venue information and safety guides."},
+        {title:"Our Booth",url:"booth.html",content:"Information about our harm reduction booth services."},
+        {title:"Seasonal Tips",url:"seasonal.html",content:"Tips for staying safe during hot summer raves or cold winters."},
+        {title:"Sober Ravers",url:"sober.html",content:"Support and advice for enjoying raves without substances."},
+        {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
+        {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
+        {title:"Rejection-Based Violence Prevention",url:"rejection-based-violence.html",content:"Resources and strategies for preventing violence when someone says 'no'."},
+        {title:"Fake Drugs & Alerts",url:"fake.html",content:"Information about counterfeit drugs circulating in Minnesota."}
+    ];
+
+    // Simple search implementation
+    const searchInput = document.getElementById('searchInput');
+    const results = document.getElementById('searchResults');
+
+    searchInput.addEventListener('input', performSearch);
+    searchInput.addEventListener('focus', performSearch);
+
+    function performSearch(){
+        const input = searchInput.value.toLowerCase();
+        results.innerHTML = "";
+        
+        if(!input){
+            results.style.display = "none";
+            return;
+        }
+        
+        const filtered = sitePages.filter(page =>
+            page.title.toLowerCase().includes(input) ||
+            page.content.toLowerCase().includes(input)
+        );
+        
+        if(filtered.length > 0){
+            const ul = document.createElement('ul');
+            filtered.forEach(page=>{
+                const li = document.createElement('li');
+                li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0,60) + "...</small>";
+                li.onclick = ()=>{window.location.href = page.url;};
+                ul.appendChild(li);
+            });
+            results.appendChild(ul);
+            results.style.display = "block";
+        } else {
+            results.innerHTML = "<div style='padding:12px;'>No results found</div>";
+            results.style.display = "block";
+        }
+    }
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            results.style.display = 'none';
+        }
+    });
+
+    // Auto-expand first card on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstCard = document.querySelector('.section-card');
+        if (firstCard) {
+            firstCard.classList.add('expanded');
+            firstCard.querySelector('.card-content').classList.add('expanded');
+        }
+    });
 </script>
+
 </body>
 </html>
