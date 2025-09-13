@@ -931,52 +931,140 @@
             color: #fff;
         }
 
-        /* Polydrug Matrix Styles */
+        /* NEW: Enhanced Polydrug Matrix Styles */
         .polydrug-matrix {
             margin-top: 15px;
             overflow-x: auto;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1f0a1f, #2a0f2a);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            position: relative;
+        }
+        
+        .polydrug-matrix::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, #00f7e0, #bf00bf);
+            border-radius: 3px 3px 0 0;
         }
         
         .matrix-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 2px;
             font-size: 0.8rem;
         }
         
         .matrix-table th, .matrix-table td {
-            border: 1px solid #5d3a7d;
-            padding: 6px;
+            padding: 10px 8px;
             text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .matrix-table th {
-            background: #2a0036;
+            background: linear-gradient(145deg, #3a0052, #2a0036);
             color: #00f7e0;
             font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 247, 224, 0.5);
+            border: 1px solid #5d3a7d;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .matrix-table th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00f7e0, transparent);
         }
         
         .matrix-table td {
-            background: #220022;
+            background: rgba(34, 0, 34, 0.7);
+            border: 1px solid #3a0036;
+            font-weight: 600;
+            cursor: help;
+        }
+        
+        .matrix-table td:hover {
+            transform: scale(1.05);
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
         
         .safe-cell {
-            background-color: rgba(0, 200, 83, 0.2);
-            color: #00c853;
+            background: linear-gradient(145deg, rgba(0, 200, 83, 0.3), rgba(0, 150, 63, 0.2));
+            color: #a0ffc8;
+            border: 1px solid rgba(0, 200, 83, 0.5) !important;
+            box-shadow: 0 0 5px rgba(0, 200, 83, 0.3);
+        }
+        
+        .safe-cell::before {
+            content: '✓';
+            margin-right: 4px;
+            font-weight: bold;
         }
         
         .caution-cell {
-            background-color: rgba(255, 179, 0, 0.2);
-            color: #ffb300;
+            background: linear-gradient(145deg, rgba(255, 179, 0, 0.3), rgba(200, 140, 0, 0.2));
+            color: #ffdf90;
+            border: 1px solid rgba(255, 179, 0, 0.5) !important;
+            box-shadow: 0 0 5px rgba(255, 179, 0, 0.3);
+        }
+        
+        .caution-cell::before {
+            content: '⚠️';
+            margin-right: 4px;
         }
         
         .danger-cell {
-            background-color: rgba(255, 82, 82, 0.2);
-            color: #ff5252;
+            background: linear-gradient(145deg, rgba(255, 82, 82, 0.3), rgba(200, 40, 40, 0.2));
+            color: #ffa0a0;
+            border: 1px solid rgba(255, 82, 82, 0.5) !important;
+            box-shadow: 0 0 5px rgba(255, 82, 82, 0.3);
+            animation: pulseDanger 2s infinite;
+        }
+        
+        .danger-cell::before {
+            content: '☠️';
+            margin-right: 4px;
+        }
+        
+        @keyframes pulseDanger {
+            0% { box-shadow: 0 0 5px rgba(255, 82, 82, 0.3); }
+            50% { box-shadow: 0 0 10px rgba(255, 82, 82, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(255, 82, 82, 0.3); }
         }
         
         .unknown-cell {
-            background-color: rgba(100, 100, 100, 0.2);
-            color: #b4b4b4;
+            background: linear-gradient(145deg, rgba(100, 100, 100, 0.3), rgba(70, 70, 70, 0.2));
+            color: #d4d4d4;
+            border: 1px solid rgba(100, 100, 100, 0.5) !important;
+        }
+        
+        .matrix-table td:first-child {
+            font-weight: bold;
+            background: linear-gradient(145deg, #3a0052, #2a0036);
+            color: #e051ff;
+            border: 1px solid #5d3a7d;
+        }
+        
+        .matrix-info {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: #bcbcbc;
+            text-align: center;
+            font-style: italic;
         }
 
         /* New style for the glowing section */
@@ -1371,7 +1459,7 @@
                     <p>Select two substances to check their interaction risk.</p>
                 </div>
                 
-                <!-- Polydrug Matrix -->
+                <!-- NEW: Enhanced Polydrug Matrix -->
                 <div class="polydrug-matrix">
                     <h4>Interaction Matrix</h4>
                     <table class="matrix-table">
@@ -1424,6 +1512,7 @@
                             <td class="danger-cell">Danger</td>
                         </tr>
                     </table>
+                    <div class="matrix-info">Hover over cells for more information</div>
                 </div>
                 
                 <div class="widget-legend">
@@ -1655,7 +1744,7 @@
         
         <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <a href="panic.html" class="cta-button">More Panic Resources</a>
-            <a href="emergency.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
+            <a href="emergery.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
         </div>
     </div>
 </div>
@@ -1866,7 +1955,7 @@
             'Alcohol': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' },
             'MDMA': { level: '💊', text: 'Conflicting effects, may dull experience.' },
             'Cocaine': { level: '💊', text: 'Conflicting effects, may increase anxiety.' },
-            'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+            'Opioids': {极 text: 'Severe respiratory depression risk. Potentially fatal.' },
             'Benzos': { level: '💀', text: 'Increased sedation and respiratory depression risk.' }
         }
     };
