@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLURderapolis — Color Scheme Check</title>
+    <title>PLURderapolis — Enhanced Navigation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -11,14 +13,25 @@
             padding: 0;
         }
         
+        :root {
+            --neon-cyan: #00f7e0;
+            --hot-pink: #ff69b4;
+            --deep-purple: #3a0052;
+            --dark-bg: #0d0d0d;
+            --light-cyan: #88e9e3;
+            --magenta: #bf00bf;
+            --menu-width: 280px;
+        }
+        
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #0d0d0d;
+            background-color: var(--dark-bg);
             color: #fff;
             line-height: 1.6;
             overflow-x: hidden;
-            background: radial-gradient(circle at bottom, #0d0d0d 0%, #1a001a 100%);
+            background: radial-gradient(circle at bottom, var(--dark-bg) 0%, #1a001a 100%);
             padding: 20px;
+            min-height: 100vh;
         }
         
         .container {
@@ -28,26 +41,47 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 247, 224, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--hot-pink));
+            z-index: 1;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
         }
         
         h1 {
-            font-family: 'Montserrat', sans-serif;
             text-align: center;
-            color: #00f7e0;
             font-size: 2.5rem;
             margin: 20px 0;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            background: linear-gradient(90deg, #00f7e0 0%, #a3f7ff 50%, #00f7e0 100%);
+            position: relative;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--neon-cyan) 0%, #a3f7ff 50%, var(--neon-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
             animation: shineMove 6s linear infinite;
-            filter: drop-shadow(0 0 6px #00f7e0aa);
         }
         
         .tagline {
             text-align: center;
-            color: #88e9e3;
+            color: var(--light-cyan);
             font-size: 1.2rem;
             margin-bottom: 30px;
         }
@@ -66,6 +100,28 @@
             text-align: center;
             border-left: 4px solid;
             box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 247, 224, 0.3);
+        }
+        
+        .color-card:nth-child(1) {
+            border-color: var(--neon-cyan);
+        }
+        
+        .color-card:nth-child(2) {
+            border-color: var(--hot-pink);
+        }
+        
+        .color-card:nth-child(3) {
+            border-color: var(--deep-purple);
+        }
+        
+        .color-card:nth-child(4) {
+            border-color: #333;
         }
         
         .color-swatch {
@@ -73,39 +129,48 @@
             height: 100px;
             border-radius: 8px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         
         .swatch-cyan {
-            background: #00f7e0;
-            box-shadow: 0 0 15px #00f7e0aa;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
         }
         
         .swatch-pink {
-            background: #ff69b4;
-            box-shadow: 0 0 15px #ff69b4aa;
+            background: var(--hot-pink);
+            box-shadow: 0 0 15px var(--hot-pink);
         }
         
         .swatch-purple {
-            background: #3a0052;
-            box-shadow: 0 0 15px #3a0052aa;
+            background: var(--deep-purple);
+            box-shadow: 0 0 15px var(--deep-purple);
+            color: white;
         }
         
         .swatch-dark {
-            background: #0d0d0d;
-            box-shadow: 0 0 15px #0d0d0daa;
+            background: var(--dark-bg);
+            box-shadow: 0 0 15px var(--dark-bg);
+            color: white;
+            border: 1px solid #333;
         }
         
         .vibe-check {
-            background: #3a0052;
+            background: var(--deep-purple);
             border-radius: 12px;
             padding: 25px;
             margin: 30px 0;
-            border-left: 4px solid #bf00bf;
+            border-left: 4px solid var(--magenta);
+            position: relative;
         }
         
         .vibe-check h2 {
-            color: #bf00bf;
-            font-family: 'Montserrat', sans-serif;
+            color: var(--magenta);
             margin-bottom: 15px;
         }
         
@@ -113,6 +178,13 @@
             display: flex;
             align-items: center;
             margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        
+        .vibe-item:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
         
         .vibe-icon {
@@ -120,6 +192,7 @@
             margin-right: 15px;
             width: 50px;
             text-align: center;
+            flex-shrink: 0;
         }
         
         .buttons {
@@ -127,6 +200,7 @@
             justify-content: center;
             gap: 20px;
             margin: 30px 0;
+            flex-wrap: wrap;
         }
         
         .btn {
@@ -134,26 +208,35 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             display: inline-block;
+            text-align: center;
+            min-width: 160px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .btn-primary {
-            background: #00f7e0;
+            background: var(--neon-cyan);
             color: #2e003e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px var(--neon-cyan);
         }
         
         .btn-secondary {
-            background: #ff69b4;
+            background: var(--hot-pink);
             color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px var(--hot-pink);
         }
         
         .btn:hover {
-            opacity: 0.85;
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 15px currentColor;
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
         }
         
         .skyline-preview {
@@ -175,20 +258,301 @@
                 84% 90%, 86% 50%, 88% 80%, 90% 70%, 92% 95%, 94% 60%,
                 96% 85%, 98% 75%, 100% 100%
             );
-            filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4);
+            filter: drop-shadow(0 0 8px var(--neon-cyan)) drop-shadow(0 0 16px var(--hot-pink));
             animation: skylineGlow 4s infinite alternate;
             margin: 40px 0;
             border-radius: 8px;
         }
         
-        @keyframes shineMove {
-            0% { background-position: 100% 0; }
-            100% { background-position: 0 0; }
+        /* Enhanced Dropdown Styles */
+        .dropdown-container {
+            margin: 30px 0;
+            background: rgba(42, 0, 54, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid var(--neon-cyan);
         }
         
-        @keyframes skylineGlow {
-            0% { filter: drop-shadow(0 0 8px #00f7e0) drop-shadow(0 0 16px #ff69b4); opacity: 0.8; }
-            100% { filter: drop-shadow(0 0 12px #00f7e0) drop-shadow(0 0 24px #ff69b4); opacity: 1; }
+        .dropdown-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px;
+            background: linear-gradient(90deg, rgba(0, 247, 224, 0.2) 0%, transparent 100%);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-title:hover {
+            background: linear-gradient(90deg, rgba(0, 247, 224, 0.3) 0%, transparent 100%);
+        }
+        
+        .dropdown-title h2 {
+            color: var(--neon-cyan);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .dropdown-arrow {
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            color: var(--hot-pink);
+            font-size: 1.5rem;
+        }
+        
+        .dropdown-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+        
+        .dropdown-item {
+            background: rgba(58, 0, 82, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 247, 224, 0.2);
+        }
+        
+        .dropdown-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+            border-color: var(--hot-pink);
+        }
+        
+        .dropdown-active .dropdown-content {
+            max-height: 500px;
+            padding-top: 20px;
+        }
+        
+        .dropdown-active .dropdown-arrow {
+            transform: rotate(180deg) scale(1.2);
+            text-shadow: 0 0 10px var(--hot-pink);
+        }
+        
+        /* Hamburger Menu Styles */
+        .menu-container {
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .hamburger-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: var(--deep-purple);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            position: relative;
+            z-index: 100;
+            margin: 0 auto;
+        }
+        
+        .hamburger-line {
+            width: 30px;
+            height: 3px;
+            background: var(--neon-cyan);
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            transform-origin: center;
+        }
+        
+        .menu-active .hamburger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background: var(--hot-pink);
+        }
+        
+        .menu-active .hamburger-line:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .menu-active .hamburger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background: var(--hot-pink);
+        }
+        
+        .nav-menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--deep-purple);
+            border-radius: 12px;
+            padding: 70px 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 90;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .menu-active .nav-menu {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
+        }
+        
+        .nav-item {
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-link:hover {
+            background: rgba(0, 247, 224, 0.2);
+            color: var(--neon-cyan);
+        }
+        
+        .nav-link i {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-submenu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .nav-submenu a {
+            display: block;
+            padding: 10px 15px;
+            background: rgba(255, 105, 180, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .nav-submenu a:hover {
+            background: var(--hot-pink);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .submenu-active .nav-submenu {
+            max-height: 200px;
+            margin: 10px 0;
+        }
+        
+        .submenu-active .nav-link i {
+            transform: rotate(90deg);
+        }
+        
+        /* Venue Guide Section */
+        .venue-guide {
+            background: linear-gradient(to right, var(--deep-purple), #2a0036);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 247, 224, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .venue-guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--hot-pink));
+        }
+        
+        .venue-guide h2 {
+            color: var(--neon-cyan);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+        
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .venue-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 247, 224, 0.2);
+        }
+        
+        .venue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+            border-color: var(--hot-pink);
+        }
+        
+        .venue-card h3 {
+            color: var(--hot-pink);
+            margin-bottom: 10px;
+        }
+        
+        .venue-card p {
+            color: var(--light-cyan);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .venue-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--neon-cyan);
+            color: var(--deep-purple);
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .venue-link:hover {
+            background: var(--hot-pink);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--hot-pink);
         }
         
         .conclusion {
@@ -197,47 +561,143 @@
             border-radius: 8px;
             margin: 30px 0;
             text-align: center;
-            border: 1px solid #00f7e0;
+            border: 1px solid var(--neon-cyan);
+            position: relative;
         }
         
         .conclusion h2 {
-            color: #00f7e0;
+            color: var(--neon-cyan);
             margin-bottom: 15px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes shineMove {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        @keyframes skylineGlow {
+            0% { 
+                filter: drop-shadow(0 0 8px var(--neon-cyan)) drop-shadow(0 0 16px var(--hot-pink)); 
+                opacity: 0.8; 
+            }
+            100% { 
+                filter: drop-shadow(0 0 12px var(--neon-cyan)) drop-shadow(0 0 24px var(--hot-pink)); 
+                opacity: 1; 
+            }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        /* Arrow bounce animation */
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dropdown-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .venue-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .nav-submenu {
+                flex-direction: column;
+            }
+            
+            .nav-submenu a {
+                min-width: auto;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>PLURderapolis</h1>
+        <h1><span class="gradient-text">PLURderapolis</span></h1>
         <div class="tagline">Color Scheme & Vibe Check</div>
         
         <div class="color-grid">
             <div class="color-card">
-                <div class="color-swatch swatch-cyan"></div>
+                <div class="color-swatch swatch-cyan">Neon Cyan</div>
                 <h3>Neon Cyan</h3>
                 <p>#00f7e0</p>
                 <p>Primary accent color</p>
             </div>
             
             <div class="color-card">
-                <div class="color-swatch swatch-pink"></div>
+                <div class="color-swatch swatch-pink">Hot Pink</div>
                 <h3>Hot Pink</h3>
                 <p>#ff69b4</p>
                 <p>Secondary accent color</p>
             </div>
             
             <div class="color-card">
-                <div class="color-swatch swatch-purple"></div>
+                <div class="color-swatch swatch-purple">Deep Purple</div>
                 <h3>Deep Purple</h3>
                 <p>#3a0052</p>
                 <p>Card backgrounds</p>
             </div>
             
             <div class="color-card">
-                <div class="color-swatch swatch-dark"></div>
+                <div class="color-swatch swatch-dark">Dark Background</div>
                 <h3>Dark Background</h3>
                 <p>#0d0d0d</p>
                 <p>Main background</p>
+            </div>
+        </div>
+        
+        <!-- Enhanced Dropdown Section -->
+        <div class="dropdown-container">
+            <div class="dropdown-title">
+                <h2>Event Resources</h2>
+                <div class="dropdown-arrow"><i class="fas fa-chevron-down"></i></div>
+            </div>
+            <div class="dropdown-content">
+                <div class="dropdown-item">
+                    <h3>Safety Guidelines</h3>
+                    <p>How to stay safe at events</p>
+                </div>
+                <div class="dropdown-item">
+                    <h3>Vendor Info</h3>
+                    <p>Our trusted partners</p>
+                </div>
+                <div class="dropdown-item">
+                    <h3>Sound Systems</h3>
+                    <p>Audio tech specifications</p>
+                </div>
+                <div class="dropdown-item">
+                    <h3>Lighting</h3>
+                    <p>Visual experience details</p>
+                </div>
             </div>
         </div>
         
@@ -277,7 +737,76 @@
             </div>
         </div>
         
+        <!-- Hamburger Menu -->
+        <div class="menu-container">
+            <div class="hamburger-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Home <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Events <i class="fas fa-chevron-right"></i></a>
+                    <div class="nav-submenu">
+                        <a href="#">Festivals</a>
+                        <a href="#">Club Nights</a>
+                        <a href="#">Underground</a>
+                    </div>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Resources <i class="fas fa-chevron-right"></i></a>
+                    <div class="nav-submenu">
+                        <a href="#">Safety</a>
+                        <a href="#">Vendor Guide</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Community <i class="fas fa-chevron-right"></i></a>
+                    <div class="nav-submenu">
+                        <a href="#">Forums</a>
+                        <a href="#">Photos</a>
+                        <a href="#">Stories</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        
         <div class="skyline-preview"></div>
+        
+        <!-- Venue Guide Section -->
+        <div class="venue-guide">
+            <h2>Venue Guide</h2>
+            <div class="venue-grid">
+                <div class="venue-card">
+                    <h3>The Skyway Theatre</h3>
+                    <p>Minneapolis' premier EDM venue with state-of-the-art production</p>
+                    <a href="#" class="venue-link">Explore</a>
+                </div>
+                <div class="venue-card">
+                    <h3>The Loft</h3>
+                    <p>Intimate space for underground sounds and emerging artists</p>
+                    <a href="#" class="venue-link">Explore</a>
+                               </div>
+                <div class="venue-card">
+                    <h3>Rev Ultra Lounge</h3>
+                    <p>Upscale club experience with top-tier DJs and sound system</p>
+                    <a href="#" class="venue-link">Explore</a>
+                </div>
+                <div class="venue-card">
+                    <h3>The Armory</h3>
+                    <p>Historic venue hosting massive events and international acts</p>
+                    <a href="#" class="venue-link">Explore</a>
+                </div>
+            </div>
+        </div>
         
         <div class="buttons">
             <a href="#" class="btn btn-primary">Get Resources</a>
@@ -285,10 +814,66 @@
         </div>
         
         <div class="conclusion">
-            <h2>Color Scheme Preserved ✅</h2>
-            <p>The changes made to your site maintained the original color scheme and vibe perfectly.</p>
-            <p>The neon cyan (#00f7e0) and pink (#ff69b4) against dark backgrounds create the distinctive PLURderapolis look that resonates with Minnesota's electronic music community.</p>
+            <h2>Enhanced Navigation Added <span class="pulse">✅</span></h2>
+            <p>The venue guide has been added to the bottom section with direct links to popular Minneapolis venues.</p>
+            <p>Dropdown arrows now feature enhanced animations with rotation and scaling effects for better visual feedback.</p>
+            <p>The hamburger menu maintains the original colors but now features horizontal dropdowns with animated arrows.</p>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dropdown functionality
+            const dropdownTitles = document.querySelectorAll('.dropdown-title');
+            
+            dropdownTitles.forEach(title => {
+                title.addEventListener('click', () => {
+                    const container = title.parentElement;
+                    container.classList.toggle('dropdown-active');
+                });
+            });
+            
+            // Hamburger menu functionality
+            const hamburgerBtn = document.querySelector('.hamburger-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            hamburgerBtn.addEventListener('click', () => {
+                document.querySelector('.menu-container').classList.toggle('menu-active');
+            });
+            
+            // Nav item functionality for submenus
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                if (item.querySelector('.nav-submenu')) {
+                    const link = item.querySelector('.nav-link');
+                    
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        item.classList.toggle('submenu-active');
+                    });
+                }
+            });
+            
+            // Close menus when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.dropdown-container')) {
+                    document.querySelectorAll('.dropdown-container').forEach(container => {
+                        container.classList.remove('dropdown-active');
+                    });
+                }
+                
+                if (!e.target.closest('.menu-container') && !e.target.closest('.nav-menu')) {
+                    document.querySelector('.menu-container').classList.remove('menu-active');
+                }
+                
+                if (!e.target.closest('.nav-item')) {
+                    document.querySelectorAll('.nav-item').forEach(item => {
+                        item.classList.remove('submenu-active');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
