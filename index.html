@@ -415,9 +415,11 @@
             flex-grow: 1;
         }
 
+        /* NEW: Enhanced Search Container */
         .search-container {
             position: relative;
             width: 90%;
+            max-width: 600px;
             margin: 1rem auto;
             z-index: 100;
         }
@@ -425,17 +427,28 @@
         .search-bar { 
             display:flex; 
             position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 247, 224, 0.25);
         }
         
         .search-bar input{ 
             flex:1; 
-            padding:10px; 
+            padding: 12px 20px;
             border:none; 
-            border-radius:5px 0 0 5px; 
+            border-radius:30px 0 0 30px; 
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid #00f7e0;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 247, 224, 0.4);
+            outline: none;
         }
         
         .search-bar input::placeholder {
@@ -443,13 +456,19 @@
         }
         
         .search-bar button{ 
-            padding:10px; 
+            padding:12px 20px; 
             border:none; 
             background:#00f7e0; 
             color:#2e003e; 
-            border-radius:0 5px 5px 0; 
+            border-radius:0 30px 30px 0; 
             cursor:pointer; 
             font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .search-bar button:hover {
+            background: #00e5cb;
+            box-shadow: 0 0 10px rgba(0, 247, 224, 0.5);
         }
 
         #searchResults { 
@@ -457,21 +476,26 @@
             top:100%; 
             left:0; 
             right:0; 
-            background:#3a0052; 
-            max-height:200px; 
+            background: rgba(58, 0, 82, 0.95);
+            backdrop-filter: blur(10px);
+            max-height:300px; 
             overflow-y:auto; 
-            border-radius:0 0 5px 5px; 
+            border-radius:0 0 15px 15px; 
             display:none; 
             z-index:1004; 
-            box-shadow:0 0 12px rgba(0,255,255,0.2);
+            box-shadow:0 5px 25px rgba(0,0,0,0.2);
             border: 1px solid #00f7e0;
             border-top: none;
+            padding: 10px 0;
         }
         
         #searchResults ul { list-style:none; padding:0; margin:0;}
-        #searchResults li { padding:10px; border-bottom:1px solid #5d3a7d; cursor:pointer; font-size: 0.9rem;}
-        #searchResults li:hover { background:#5d3a7d; }
+        #searchResults li { padding:12px 20px; border-bottom:1px solid rgba(93, 58, 125, 0.5); cursor:pointer; font-size: 0.95rem; transition: all 0.2s ease;}
+        #searchResults li:hover { background:rgba(93, 58, 125, 0.3); }
         #searchResults li:last-child { border-bottom: none; }
+        #searchResults li strong {
+            color: #00f7e0;
+        }
 
         /* Enhanced peach button with "HELP!" text */
         #peachWrap {
@@ -931,7 +955,7 @@
             color: #fff;
         }
 
-        /* NEW: Enhanced Polydrug Matrix Styles */
+        /* NEW: Enhanced Polydrug Matrix Styles - Sleek & Cute Design */
         .polydrug-matrix {
             margin-top: 15px;
             overflow-x: auto;
@@ -1274,7 +1298,7 @@
     <div class="tagline">Harm Reduction for Minnesota Ravers</div>
 </div>
 
-<!-- Search -->
+<!-- NEW: Enhanced Search with Predictive Functionality -->
 <div class="search-container">
     <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search the site...">
@@ -1744,7 +1768,7 @@
         
         <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
             <a href="panic.html" class="cta-button">More Panic Resources</a>
-            <a href="emergery.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
+            <a href="emergency.html" class="cta-button" style="background-color: #ff6ec7;">Emergency Guides</a>
         </div>
     </div>
 </div>
@@ -1781,9 +1805,24 @@
         sideNav.classList.toggle('active');
     });
     
+    // Fixed dropdown functionality
     const navItems = document.querySelectorAll('.side-nav ul li');
-    navItems.forEach(item=>{
-        item.addEventListener('click',()=>{item.classList.toggle('show');});
+    navItems.forEach(item => {
+        // Only add click event to items that have dropdowns
+        if (item.querySelector('ul')) {
+            item.addEventListener('click', (e) => {
+                // Prevent closing when clicking on links
+                if (e.target.tagName === 'A') return;
+                
+                // Close other open dropdowns
+                document.querySelectorAll('.side-nav ul li.show').forEach(otherItem => {
+                    if (otherItem !== item) otherItem.classList.remove('show');
+                });
+                
+                // Toggle current dropdown
+                item.classList.toggle('show');
+            });
+        }
     });
 
     // Card toggle functionality
@@ -1936,7 +1975,7 @@
         },
         'Cocaine': {
             'Cannabis': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
-            'Alcohol': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
+            'Alcohol': {极 text: 'Creates cocaethylene, toxic to liver and heart.' },
             'MDMA': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
             'Cocaine': { level: '💀', text: 'Extreme cardiovascular strain and overdose risk.' },
             'Opioids': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
@@ -1954,8 +1993,8 @@
             'Cannabis': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' },
             'Alcohol': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' },
             'MDMA': { level: '💊', text: 'Conflicting effects, may dull experience.' },
-            'Cocaine': { level: '💊', text: 'Conflicting effects, may increase anxiety.' },
-            'Opioids': {极 text: 'Severe respiratory depression risk. Potentially fatal.' },
+            'Cocaine': { level: '💊',极 text: 'Conflicting effects, may increase anxiety.' },
+            'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
             'Benzos': { level: '💀', text: 'Increased sedation and respiratory depression risk.' }
         }
     };
@@ -2011,7 +2050,7 @@
         `;
     }
 
-    // Search functionality
+    // NEW: Enhanced Search functionality with predictive text
     const sitePages = [
         {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
         {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
@@ -2031,7 +2070,6 @@
         {title:"Fake Drugs & Alerts",url:"fake.html",content:"Information about counterfeit drugs circulating in Minnesota."}
     ];
 
-    // Simple search implementation
     const searchInput = document.getElementById('searchInput');
     const results = document.getElementById('searchResults');
 
@@ -2047,16 +2085,33 @@
             return;
         }
         
+        // Use regex to search anywhere in the title or content [citation:2]
+        const regex = new RegExp(input, 'i');
         const filtered = sitePages.filter(page =>
-            page.title.toLowerCase().includes(input) ||
-            page.content.toLowerCase().includes(input)
+            regex.test(page.title) || regex.test(page.content)
         );
         
         if(filtered.length > 0){
             const ul = document.createElement('ul');
             filtered.forEach(page=>{
                 const li = document.createElement('li');
-                li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0,60) + "...</small>";
+                
+                // Highlight matching text [citation:5]
+                const titleMatch = page.title.match(new RegExp(input, 'i'));
+                const contentMatch = page.content.match(new RegExp(input, 'i'));
+                
+                let highlightedTitle = page.title;
+                let highlightedContent = page.content.substring(0,60) + "...";
+                
+                if (titleMatch) {
+                    highlightedTitle = page.title.replace(new RegExp(input, 'gi'), match => `<strong>${match}</strong>`);
+                }
+                
+                if (contentMatch) {
+                    highlightedContent = page.content.replace(new RegExp(input, 'gi'), match => `<strong>${match}</strong>`).substring(0,60) + "...";
+                }
+                
+                li.innerHTML = `<div>${highlightedTitle}</div><small>${highlightedContent}</small>`;
                 li.onclick = ()=>{window.location.href = page.url;};
                 ul.appendChild(li);
             });
@@ -2082,6 +2137,14 @@
             firstCard.classList.add('expanded');
             firstCard.querySelector('.card-content').classList.add('expanded');
         }
+        
+        // Add keyboard shortcut for search (Cmd+K / Ctrl+K) [citation:6]
+        document.addEventListener('keydown', function(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
     });
 </script>
 
