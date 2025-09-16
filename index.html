@@ -544,6 +544,7 @@
             text-decoration: none;
             transition: color 0.2s;
             font-size: 0.8rem;
+            cursor: pointer;
         }
         
         footer ul li a:hover {
@@ -672,6 +673,7 @@
             background: rgba(255, 105, 180, 0.1);
             transition: all 0.2s;
             font-size: 0.9rem;
+            cursor: pointer;
         }
         
         .resource-links a:hover {
@@ -705,6 +707,7 @@
             padding: 5px;
             flex: 1;
             text-align: center;
+            cursor: pointer;
         }
 
         .hud-btn span {
@@ -1090,7 +1093,7 @@
         </li>
         <li><a href="#">Drug Info</a>
             <ul>
-                <li><a href="polydrug.html">Polydrug Tool</a></li>
+                <li><a href="Polydrug.html">Polydrug Tool</a></li>
                 <li><a href="rx-combos.html">RX + Party Combos</a></li>
                 <li><a href="health.html">Raver Health</a></li>
                 <li><a href="fake.html">Fake Drugs & Alerts</a></li>
@@ -1148,7 +1151,7 @@
         <span>🚨</span>
         Panic
     </a>
-    <a href="polydrug.html" class="hud-btn">
+    <a href="Polydrug.html" class="hud-btn">
         <span>💊</span>
         Tool
     </a>
@@ -1192,7 +1195,7 @@
                             <h4>Related Resources:</h4>
                             <ul>
                                 <li><a href="testing.html">🦠 Testing Resources & Fentanyl Info</a></li>
-                                <li><a href="polydrug.html">🔀 Polydrug Interaction Tool</a></li>
+                                <li><a href="Polydrug.html">🔀 Polydrug Interaction Tool</a></li>
                                 <li><a href="rx-combos.html">💊 RX + Party Drug Combos</a></li>
                                 <li><a href="fake.html">⚠️ Fake Drugs & Alerts</a></li>
                             </ul>
@@ -1384,7 +1387,7 @@
                 </div>
                 
                 <div class="widget-open-full">
-                    <a href="polydrug.html" class="cta-button">Open Full Tool</a>
+                    <a href="Polydrug.html" class="cta-button">Open Full Tool</a>
                 </div>
             </div>
         </div>
@@ -1618,7 +1621,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="panic.html">Panic</a></li>
         <li><a href="emergency.html">Emergency</a></li>
-        <li><a href="polydrug.html">Polydrug</a></li>
+        <li><a href="Polydrug.html">Polydrug</a></li>
         <li><a href="resources.html">Resources</a></li>
         <li><a href="rejection-based-violence.html">Violence Prevention</a></li>
         <li><a href="badtrip.html">Bad Trip Mode</a></li>
@@ -1626,98 +1629,293 @@
 </footer>
 
 <script>
-    // Hamburger toggle
-    const menuBtn = document.getElementById('menuBtn');
-    const sideNav = document.getElementById('sideNav');
-    menuBtn.addEventListener('click',()=>{
-        menuBtn.classList.toggle('active');
-        sideNav.classList.toggle('active');
-    });
-    
-    const navItems = document.querySelectorAll('.side-nav ul li');
-    navItems.forEach(item=>{
-        item.addEventListener('click',()=>{item.classList.toggle('show');});
-    });
-
-    // Card toggle functionality
-    function toggleCard(element) {
-        const card = element.parentElement;
-        const content = card.querySelector('.card-content');
-        card.classList.toggle('expanded');
-        content.classList.toggle('expanded');
-    }
-    
-    // What We Do card toggle functionality
-    function toggleWhatWeDoCard(element) {
-        const card = element.parentElement;
-        card.classList.toggle('expanded');
-        const content = card.querySelector('.card-content');
-        content.classList.toggle('expanded');
-    }
-
-    // Peach panic button functionality with drag
-    const peachWrap = document.getElementById('peachWrap');
-    const panicButton = document.getElementById('panicButton');
-    let isDragging = false;
-    let startX, startY, initialX, initialY;
-    
-    // Make the peach button draggable
-    peachWrap.addEventListener('mousedown', dragStart);
-    peachWrap.addEventListener('touchstart', dragStart);
-    
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('touchmove', drag);
-    
-    document.addEventListener('mouseup', dragEnd);
-    document.addEventListener('touchend', dragEnd);
-    
-    function dragStart(e) {
-        if (e.type === 'touchstart') {
-            initialX = e.touches[0].clientX - peachWrap.offsetLeft;
-            initialY = e.touches[0].clientY - peachWrap.offsetTop;
-        } else {
-            initialX = e.clientX - peachWrap.offsetLeft;
-            initialY = e.clientY - peachWrap.offsetTop;
+    // Hamburger toggle - Fixed implementation
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('menuBtn');
+        const sideNav = document.getElementById('sideNav');
+        
+        if (menuBtn && sideNav) {
+            menuBtn.addEventListener('click', function() {
+                menuBtn.classList.toggle('active');
+                sideNav.classList.toggle('active');
+            });
         }
         
-        if (e.target === panicButton || e.target === peachWrap) {
-            isDragging = true;
+        const navItems = document.querySelectorAll('.side-nav ul li');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                item.classList.toggle('show');
+            });
+        });
+
+        // Card toggle functionality
+        function toggleCard(element) {
+            const card = element.parentElement;
+            const content = card.querySelector('.card-content');
+            card.classList.toggle('expanded');
+            content.classList.toggle('expanded');
         }
-    }
-    
-    function drag(e) {
-        if (isDragging) {
-            e.preventDefault();
+        
+        // What We Do card toggle functionality
+        function toggleWhatWeDoCard(element) {
+            const card = element.parentElement;
+            card.classList.toggle('expanded');
+            const content = card.querySelector('.card-content');
+            content.classList.toggle('expanded');
+        }
+
+        // Peach panic button functionality with drag
+        const peachWrap = document.getElementById('peachWrap');
+        const panicButton = document.getElementById('panicButton');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+        
+        // Make the peach button draggable
+        if (peachWrap) {
+            peachWrap.addEventListener('mousedown', dragStart);
+            peachWrap.addEventListener('touchstart', dragStart);
             
-            let currentX, currentY;
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag);
             
-            if (e.type === 'touchmove') {
-                currentX = e.touches[0].clientX - initialX;
-                currentY = e.touches[0].clientY - initialY;
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+        }
+        
+        function dragStart(e) {
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - peachWrap.offsetLeft;
+                initialY = e.touches[0].clientY - peachWrap.offsetTop;
             } else {
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
+                initialX = e.clientX - peachWrap.offsetLeft;
+                initialY = e.clientY - peachWrap.offsetTop;
             }
             
-            // Constrain to viewport boundaries
-            currentX = Math.max(0, Math.min(currentX, window.innerWidth - peachWrap.offsetWidth));
-            currentY = Math.max(0, Math.min(currentY, window.innerHeight - peachWrap.offsetHeight));
-            
-            peachWrap.style.left = currentX + 'px';
-            peachWrap.style.top = currentY + 'px';
-            peachWrap.style.right = 'auto';
-            peachWrap.style.bottom = 'auto';
+            if (e.target === panicButton || e.target === peachWrap) {
+                isDragging = true;
+            }
         }
-    }
-    
-    function dragEnd() {
-        isDragging = false;
-    }
-    
-    // Click functionality for the panic button
-    panicButton.addEventListener('click', function() {
-        if (!isDragging) {
-            showEmergencyModal();
+        
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                
+                let currentX, currentY;
+                
+                if (e.type === 'touchmove') {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                
+                // Constrain to viewport boundaries
+                currentX = Math.max(0, Math.min(currentX, window.innerWidth - peachWrap.offsetWidth));
+                currentY = Math.max(0, Math.min(currentY, window.innerHeight - peachWrap.offsetHeight));
+                
+                peachWrap.style.left = currentX + 'px';
+                peachWrap.style.top = currentY + 'px';
+                peachWrap.style.right = 'auto';
+                peachWrap.style.bottom = 'auto';
+            }
+        }
+        
+        function dragEnd() {
+            isDragging = false;
+        }
+        
+        // Click functionality for the panic button
+        if (panicButton) {
+            panicButton.addEventListener('click', function() {
+                if (!isDragging) {
+                    showEmergencyModal();
+                }
+            });
+        }
+
+        // Polydrug Interaction Checker functionality for widget
+        const widgetDrugA = document.getElementById('widget-drugA');
+        const widgetDrugB = document.getElementById('widget-drugB');
+        const widgetCheckBtn = document.getElementById('widget-checkBtn');
+        const widgetResultBox = document.getElementById('widget-resultBox');
+        
+        // Simple interaction matrix for the widget
+        const widgetInteractionMatrix = {
+            'Cannabis': {
+                'Cannabis': { level: '🌈', text: 'Generally safe, but be mindful of set and setting.' },
+                'Alcohol': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
+                'MDMA': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
+                'Cocaine': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
+                'Opioids': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
+                'Benzos': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' }
+            },
+            'Alcohol': {
+                'Cannabis': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
+                'Alcohol': { level: '💀', text: 'Extreme risk of alcohol poisoning at high doses.' },
+                'MDMA': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
+                'Cocaine': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
+                'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+                'Benzos': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' }
+            },
+            'MDMA': {
+                'Cannabis': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
+                'Alcohol': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
+                'MDMA': { level: '💊', text: 'Increased neurotoxicity and overheating risk.' },
+                'Cocaine': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
+                'Opioids': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
+                'Benzos': { level: '💊', text: 'Conflicting effects, may dull experience.' }
+            },
+            'Cocaine': {
+                'Cannabis': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
+                'Alcohol': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
+                'MDMA': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
+                'Cocaine': { level: '💀', text: 'Extreme cardiovascular strain and overdose risk.' },
+                'Opioids': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
+                'Benzos': { level: '💊', text: 'Conflicting effects, may increase anxiety.' }
+            },
+            'Opioids': {
+                'Cannabis': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
+                'Alcohol': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+                'MDMA': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
+                'Cocaine': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
+                'Opioids': { level: '💀', text: 'Extreme overdose risk. Never combine opioids.' },
+                'Benzos': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' }
+            },
+            'Benzos': {
+                'Cannabis': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' },
+                'Alcohol': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' },
+                'MDMA': { level: '💊', text: 'Conflicting effects, may dull experience.' },
+                'Cocaine': { level: '💊', text: 'Conflicting effects, may increase anxiety.' },
+                'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
+                'Benzos': { level: '💀', text: 'Increased sedation and respiratory depression risk.' }
+            }
+        };
+        
+        // Set up event listeners for widget
+        if (widgetCheckBtn) {
+            widgetCheckBtn.addEventListener('click', checkWidgetInteraction);
+        }
+        
+        function checkWidgetInteraction() {
+            const substanceA = widgetDrugA.value;
+            const substanceB = widgetDrugB.value;
+            
+            if (!substanceA || !substanceB) {
+                widgetResultBox.innerHTML = '<h4>Please select two substances</h4><p>Choose substances from both dropdown menus to check their interaction.</p>';
+                return;
+            }
+            
+            // Check if we have a defined interaction
+            let interaction;
+            if (widgetInteractionMatrix[substanceA] && widgetInteractionMatrix[substanceA][substanceB]) {
+                interaction = widgetInteractionMatrix[substanceA][substanceB];
+            } else if (widgetInteractionMatrix[substanceB] && widgetInteractionMatrix[substanceB][substanceA]) {
+                interaction = widgetInteractionMatrix[substanceB][substanceA];
+            } else {
+                interaction = { level: '⚡', text: 'Limited data on this combination. Exercise caution and start with low doses.' };
+            }
+            
+            // Display the result
+            let levelClass = '';
+            let levelText = '';
+            
+            switch(interaction.level) {
+                case '🌈':
+                    levelClass = 'safe';
+                    levelText = 'Low Concern';
+                    break;
+                case '⚡':
+                    levelClass = 'caution';
+                    levelText = 'Caution';
+                    break;
+                case '💊':
+                    levelClass = 'strong-caution';
+                    levelText = 'Strong Caution';
+                    break;
+                case '💀':
+                    levelClass = 'danger';
+                    levelText = 'Dangerous';
+                    break;
+            }
+            
+            widgetResultBox.innerHTML = `
+                <h4>${substanceA} + ${substanceB} → <span style="font-size: 1.2em;">${interaction.level}</span> ${levelText}</h4>
+                <p>${interaction.text}</p>
+            `;
+        }
+
+        // Search functionality
+        const sitePages = [
+            {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
+            {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
+            {title:"Emergency Guides",url:"emergency.html",content:"Step-by-step instructions for medical and crisis situations."},
+            {title:"Polydrug Tool",url:"Polydrug.html",content:"Check dangerous drug interactions and polydrug risks."},
+            {title:"RX + Party Combos",url:"rx-combos.html",content:"Prescription drug and party drug combination risks."},
+            {title:"Raver Health",url:"health.html",content:"Hydration, cooling, safety tips for events and raves."},
+            {title:"Consent Basics",url:"consent.html",content:"Consent education for safer nightlife and festivals."},
+            {title:"Accountability",url:"accountability.html",content:"Resources on community accountability and safer spaces."},
+            {title:"Venues Guide",url:"venues-guide.html",content:"Minnesota venue information and safety guides."},
+            {title:"Our Booth",url:"booth.html",content:"Information about our harm reduction booth services."},
+            {title:"Seasonal Tips",url:"seasonal.html",content:"Tips for staying safe during hot summer raves or cold winters."},
+            {title:"Sober Ravers",url:"sober.html",content:"Support and advice for enjoying raves without substances."},
+            {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
+            {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
+            {title:"Rejection-Based Violence Prevention",url:"rejection-based-violence.html",content:"Resources and strategies for preventing violence when someone says 'no'."},
+            {title:"Fake Drugs & Alerts",url:"fake.html",content:"Information about counterfeit drugs circulating in Minnesota."}
+        ];
+
+        // Simple search implementation
+        const searchInput = document.getElementById('searchInput');
+        const results = document.getElementById('searchResults');
+
+        if (searchInput && results) {
+            searchInput.addEventListener('input', performSearch);
+            searchInput.addEventListener('focus', performSearch);
+
+            function performSearch(){
+                const input = searchInput.value.toLowerCase();
+                results.innerHTML = "";
+                
+                if(!input){
+                    results.style.display = "none";
+                    return;
+                }
+                
+                const filtered = sitePages.filter(page =>
+                    page.title.toLowerCase().includes(input) ||
+                    page.content.toLowerCase().includes(input)
+                );
+                
+                if(filtered.length > 0){
+                    const ul = document.createElement('ul');
+                    filtered.forEach(page=>{
+                        const li = document.createElement('li');
+                        li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0,60) + "...</small>";
+                        li.onclick = ()=>{window.location.href = page.url;};
+                        ul.appendChild(li);
+                    });
+                    results.appendChild(ul);
+                    results.style.display = "block";
+                } else {
+                    results.innerHTML = "<div style='padding:12px;'>No results found</div>";
+                    results.style.display = "block";
+                }
+            }
+
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    results.style.display = 'none';
+                }
+            });
+        }
+
+        // Auto-expand first card on page load
+        const firstCard = document.querySelector('.section-card');
+        if (firstCard) {
+            firstCard.classList.add('expanded');
+            firstCard.querySelector('.card-content').classList.add('expanded');
         }
     });
 
@@ -1752,188 +1950,6 @@
     window.addEventListener('popstate', function(event) {
         if (document.getElementById('emergencyModal').style.display === 'flex') {
             closeEmergencyModal();
-        }
-    });
-
-    // Polydrug Interaction Checker functionality for widget
-    const widgetDrugA = document.getElementById('widget-drugA');
-    const widgetDrugB = document.getElementById('widget-drugB');
-    const widgetCheckBtn = document.getElementById('widget-checkBtn');
-    const widgetResultBox = document.getElementById('widget-resultBox');
-    
-    // Simple interaction matrix for the widget
-    const widgetInteractionMatrix = {
-        'Cannabis': {
-            'Cannabis': { level: '🌈', text: 'Generally safe, but be mindful of set and setting.' },
-            'Alcohol': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
-            'MDMA': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
-            'Cocaine': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
-            'Opioids': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
-            'Benzos': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' }
-        },
-        'Alcohol': {
-            'Cannabis': { level: '💊', text: 'Increased dizziness and impairment. Go slow.' },
-            'Alcohol': { level: '💀', text: 'Extreme risk of alcohol poisoning at high doses.' },
-            'MDMA': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
-            'Cocaine': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
-            'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
-            'Benzos': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' }
-        },
-        'MDMA': {
-            'Cannabis': { level: '🌈', text: 'Generally safe, may help with anxiety on the comedown.' },
-            'Alcohol': { level: '💊', text: 'Increased dehydration risk. Avoid excessive alcohol.' },
-            'MDMA': { level: '💊', text: 'Increased neurotoxicity and overheating risk.' },
-            'Cocaine': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
-            'Opioids': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
-            'Benzos': { level: '💊', text: 'Conflicting effects, may dull experience.' }
-        },
-        'Cocaine': {
-            'Cannabis': { level: '💊', text: 'Cardiovascular strain. Increased heart rate and anxiety risk.' },
-            'Alcohol': { level: '💀', text: 'Creates cocaethylene, toxic to liver and heart.' },
-            'MDMA': { level: '💀', text: 'Cardiovascular strain and overheating risk.' },
-            'Cocaine': { level: '💀', text: 'Extreme cardiovascular strain and overdose risk.' },
-            'Opioids': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
-            'Benzos': { level: '💊', text: 'Conflicting effects, may increase anxiety.' }
-        },
-        'Opioids': {
-            'Cannabis': { level: '💀', text: 'Dangerous combination. High risk of respiratory depression.' },
-            'Alcohol': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
-            'MDMA': { level: '💀', text: 'Increased sedation risk and respiratory depression.' },
-            'Cocaine': { level: '💀', text: 'Conflicting effects, cardiovascular strain.' },
-            'Opioids': { level: '💀', text: 'Extreme overdose risk. Never combine opioids.' },
-            'Benzos': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' }
-        },
-        'Benzos': {
-            'Cannabis': { level: '💊', text: 'Increased sedation. Risk of over-sedation and memory loss.' },
-            'Alcohol': { level: '💀', text: 'Extreme risk of respiratory depression and blackout.' },
-            'MDMA': { level: '💊', text: 'Conflicting effects, may dull experience.' },
-            'Cocaine': { level: '💊', text: 'Conflicting effects, may increase anxiety.' },
-            'Opioids': { level: '💀', text: 'Severe respiratory depression risk. Potentially fatal.' },
-            'Benzos': { level: '💀', text: 'Increased sedation and respiratory depression risk.' }
-        }
-    };
-    
-    // Set up event listeners for widget
-    widgetCheckBtn.addEventListener('click', checkWidgetInteraction);
-    
-    function checkWidgetInteraction() {
-        const substanceA = widgetDrugA.value;
-        const substanceB = widgetDrugB.value;
-        
-        if (!substanceA || !substanceB) {
-            widgetResultBox.innerHTML = '<h4>Please select two substances</h4><p>Choose substances from both dropdown menus to check their interaction.</p>';
-            return;
-        }
-        
-        // Check if we have a defined interaction
-        let interaction;
-        if (widgetInteractionMatrix[substanceA] && widgetInteractionMatrix[substanceA][substanceB]) {
-            interaction = widgetInteractionMatrix[substanceA][substanceB];
-        } else if (widgetInteractionMatrix[substanceB] && widgetInteractionMatrix[substanceB][substanceA]) {
-            interaction = widgetInteractionMatrix[substanceB][substanceA];
-        } else {
-            interaction = { level: '⚡', text: 'Limited data on this combination. Exercise caution and start with low doses.' };
-        }
-        
-        // Display the result
-        let levelClass = '';
-        let levelText = '';
-        
-        switch(interaction.level) {
-            case '🌈':
-                levelClass = 'safe';
-                levelText = 'Low Concern';
-                break;
-            case '⚡':
-                levelClass = 'caution';
-                levelText = 'Caution';
-                break;
-            case '💊':
-                levelClass = 'strong-caution';
-                levelText = 'Strong Caution';
-                break;
-            case '💀':
-                levelClass = 'danger';
-                levelText = 'Dangerous';
-                break;
-        }
-        
-        widgetResultBox.innerHTML = `
-            <h4>${substanceA} + ${substanceB} → <span style="font-size: 1.2em;">${interaction.level}</span> ${levelText}</h4>
-            <p>${interaction.text}</p>
-        `;
-    }
-
-    // Search functionality
-    const sitePages = [
-        {title:"Home",url:"index.html",content:"PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
-        {title:"Panic Button",url:"panic.html",content:"Emergency panic button for instant access to help."},
-        {title:"Emergency Guides",url:"emergency.html",content:"Step-by-step instructions for medical and crisis situations."},
-        {title:"Polydrug Tool",url:"polydrug.html",content:"Check dangerous drug interactions and polydrug risks."},
-        {title:"RX + Party Combos",url:"rx-combos.html",content:"Prescription drug and party drug combination risks."},
-        {title:"Raver Health",url:"health.html",content:"Hydration, cooling, safety tips for events and raves."},
-        {title:"Consent Basics",url:"consent.html",content:"Consent education for safer nightlife and festivals."},
-        {title:"Accountability",url:"accountability.html",content:"Resources on community accountability and safer spaces."},
-        {title:"Venues Guide",url:"venues-guide.html",content:"Minnesota venue information and safety guides."},
-        {title:"Our Booth",url:"booth.html",content:"Information about our harm reduction booth services."},
-        {title:"Seasonal Tips",url:"seasonal.html",content:"Tips for staying safe during hot summer raves or cold winters."},
-        {title:"Sober Ravers",url:"sober.html",content:"Support and advice for enjoying raves without substances."},
-        {title:"MN Resources",url:"resources.html",content:"Plan B, queer clinics, DV support, recovery, mental health."},
-        {title:"Bad Trip Mode",url:"badtrip.html",content:"Calming visuals, grounding exercises, safe trip support."},
-        {title:"Rejection-Based Violence Prevention",url:"rejection-based-violence.html",content:"Resources and strategies for preventing violence when someone says 'no'."},
-        {title:"Fake Drugs & Alerts",url:"fake.html",content:"Information about counterfeit drugs circulating in Minnesota."}
-    ];
-
-    // Simple search implementation
-    const searchInput = document.getElementById('searchInput');
-    const results = document.getElementById('searchResults');
-
-    searchInput.addEventListener('input', performSearch);
-    searchInput.addEventListener('focus', performSearch);
-
-    function performSearch(){
-        const input = searchInput.value.toLowerCase();
-        results.innerHTML = "";
-        
-        if(!input){
-            results.style.display = "none";
-            return;
-        }
-        
-        const filtered = sitePages.filter(page =>
-            page.title.toLowerCase().includes(input) ||
-            page.content.toLowerCase().includes(input)
-        );
-        
-        if(filtered.length > 0){
-            const ul = document.createElement('ul');
-            filtered.forEach(page=>{
-                const li = document.createElement('li');
-                li.innerHTML = "<strong>" + page.title + "</strong><br><small>" + page.content.substring(0,60) + "...</small>";
-                li.onclick = ()=>{window.location.href = page.url;};
-                ul.appendChild(li);
-            });
-            results.appendChild(ul);
-            results.style.display = "block";
-        } else {
-            results.innerHTML = "<div style='padding:12px;'>No results found</div>";
-            results.style.display = "block";
-        }
-    }
-
-    // Close search results when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.search-container')) {
-            results.style.display = 'none';
-        }
-    });
-
-    // Auto-expand first card on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const firstCard = document.querySelector('.section-card');
-        if (firstCard) {
-            firstCard.classList.add('expanded');
-            firstCard.querySelector('.card-content').classList.add('expanded');
         }
     });
 </script>
