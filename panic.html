@@ -1,69 +1,364 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panic | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Poppins:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Panic Center | PLURderapolis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* Color scheme & fonts */
+    :root {
+      --primary-purple: #2e003e;
+      --dark-purple: #1a0026;
+      --light-purple: #3a0052;
+      --accent-teal: #00f7e0;
+      --bright-pink: #ff2a92;
+      --neon-blue: #00b3ff;
+      --text-light: #f8f8f8;
+      --card-bg: rgba(58, 0, 82, 0.85);
+      --glow-teal: 0 0 10px rgba(0, 247, 224, 0.7);
+      --glow-pink: 0 0 10px rgba(255, 42, 146, 0.7);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
-      background-color: #2e003e;
-      color: #f8f8f8;
-      font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 1rem;
+      min-height: 100vh;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--primary-purple);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(94, 58, 125, 0.3) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(255, 42, 146, 0.25) 0%, transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(0, 247, 224, 0.2) 0%, transparent 25%),
+        linear-gradient(to bottom, var(--dark-purple), var(--primary-purple));
+      color: var(--text-light);
       line-height: 1.6;
     }
-    h1, h2, summary {
-      font-family: 'Montserrat', sans-serif;
-      color: #00f7e0;
-    }
-    details {
-      background: #3a0052;
-      border-radius: 10px;
-      margin: 1rem 0;
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
       padding: 1rem;
-      box-shadow: 0 0 10px rgba(0,255,255,0.1);
     }
-    summary {
-      font-size: 1.2rem;
-      cursor: pointer;
-      outline: none;
+    
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-teal);
     }
+    
+    .logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-teal);
+      text-decoration: none;
+      text-shadow: var(--glow-teal);
+    }
+    
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--accent-teal);
+      margin: 0;
+      text-shadow: var(--glow-teal);
+      font-size: 1.8rem;
+    }
+    
+    .emergency-alert {
+      background: linear-gradient(135deg, var(--bright-pink), #ff0066);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(255, 42, 146, 0.4);
+      animation: pulse 2s infinite;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 42, 146, 0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 42, 146, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 42, 146, 0); }
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 12px 25px rgba(0, 247, 224, 0.2);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .card-icon {
+      font-size: 1.8rem;
+      margin-right: 1rem;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.2);
+      text-shadow: 0 0 10px rgba(0, 247, 224, 0.7);
+    }
+    
+    .card h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--accent-teal);
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    
+    .card p {
+      flex-grow: 1;
+    }
+    
     a.button-link {
       display: block;
-      margin: 0.5rem 0;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
+      margin: 0.7rem 0;
+      padding: 0.9rem 1.2rem;
+      border-radius: 10px;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 1.1rem;
       text-align: center;
       text-decoration: none;
-      color: #2e003e;
-      background-color: #00f7e0;
+      color: var(--primary-purple);
+      background-color: var(--accent-teal);
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 247, 224, 0.3);
     }
+    
+    a.button-link:hover {
+      background-color: #00e0ca;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 247, 224, 0.4);
+    }
+    
+    .pink-button {
+      background-color: var(--bright-pink);
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 42, 146, 0.3);
+    }
+    
+    .pink-button:hover {
+      background-color: #e0007a;
+      box-shadow: 0 6px 15px rgba(255, 42, 146, 0.4);
+    }
+    
+    button.action-btn {
+      display: block;
+      width: 100%;
+      margin: 0.75rem 0;
+      padding: 0.9rem 1.2rem;
+      background: linear-gradient(to right, #5D3A7D, #7A4D9C);
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(93, 58, 125, 0.3);
+    }
+    
+    button.action-btn:hover {
+      background: linear-gradient(to right, #6d4a8d, #8A5DAC);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(93, 58, 125, 0.4);
+    }
+    
+    .resource-section {
+      margin-top: 3rem;
+      background: var(--dark-purple);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .resource-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--accent-teal);
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 2rem;
+      text-shadow: var(--glow-teal);
+      font-size: 1.8rem;
+    }
+    
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .resource-item {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .resource-item h4 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--accent-teal);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--accent-teal);
+      padding-bottom: 0.5rem;
+    }
+    
+    .resource-item p {
+      margin: 0.7rem 0;
+    }
+    
+    .resource-item a {
+      color: var(--neon-blue);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .resource-item a:hover {
+      color: var(--accent-teal);
+      text-decoration: underline;
+    }
+    
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #b8a0c8;
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .help-card {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(46, 0, 62, 0.98);
+      color: var(--text-light);
+      font-size: 2rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 10000;
+    }
+    
+    .help-content {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 20px;
+      max-width: 600px;
+      box-shadow: var(--glow-teal);
+      border: 2px solid var(--accent-teal);
+      animation: glow-pulse 2s infinite;
+    }
+    
+    @keyframes glow-pulse {
+      0% { box-shadow: 0 0 20px rgba(0, 247, 224, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(0, 247, 224, 0.8); }
+      100% { box-shadow: 0 0 20px rgba(0, 247, 224, 0.5); }
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin: 1rem 0;
+    }
+    
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    
+    .checkbox-group label:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 10px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-teal);
+    }
+    
     textarea {
       width: 100%;
       padding: 1rem;
-      background: #1C1C1C;
-      color: #f8f8f8;
+      background: rgba(28, 28, 28, 0.7);
+      color: var(--text-light);
       border: 2px solid #5D3A7D;
       border-radius: 10px;
       resize: vertical;
       font-size: 1rem;
       min-height: 150px;
+      margin-top: 0.5rem;
+      font-family: 'Roboto', sans-serif;
     }
-    button.action-btn {
-      display: block;
-      width: 100%;
-      margin: 0.75rem 0;
-      padding: 0.75rem 1rem;
-      background-color: #5D3A7D;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .logo {
+        margin-bottom: 0.5rem;
+      }
+      
+      .card-grid, .resource-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .help-content {
+        padding: 1.5rem;
+        font-size: 1.5rem;
+      }
     }
   </style>
   <script>
@@ -81,53 +376,157 @@
         alert("Geolocation not supported on this device.");
       }
     }
+    
+    function openHelpCard() {
+      document.getElementById('helpCard').style.display = 'flex';
+    }
+    
+    function closeHelpCard() {
+      document.getElementById('helpCard').style.display = 'none';
+    }
+    
+    // Save notes to local storage
+    function saveNote() {
+      const noteText = document.getElementById('incidentNotes').value;
+      localStorage.setItem('panicPageNotes', noteText);
+      alert('Your notes have been saved locally on this device.');
+    }
+    
+    // Load notes when page loads
+    window.addEventListener('DOMContentLoaded', (event) => {
+      const savedNotes = localStorage.getItem('panicPageNotes');
+      if (savedNotes) {
+        document.getElementById('incidentNotes').value = savedNotes;
+      }
+    });
   </script>
 </head>
-<body>  <h1>🚨 Panic Center</h1>
-  <p><em>If you're feeling unsafe or unsure, this page is built to help you make quick, informed choices. Everything here works on mobile and is designed for speed and clarity.</em></p>  <details>
-    <summary>📲 Text or Call for Help</summary>
-    <p>Reach someone you trust. You’ll be able to choose who to contact.</p>
-    <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">Text a Trusted Contact</a>
-    <a class="button-link" href="tel:">Call Someone</a>
-  </details>  <details>
-    <summary>📍 Share Your Location</summary>
-    <p>This sends your current location via text. Your GPS must be enabled.</p>
-    <button class="action-btn" onclick="shareLocation()">Send My Location</button>
-  </details>  <details>
-    <summary>✅ Let Someone Know You're Safe</summary>
-    <p>Reassure your people once you’re okay.</p>
-    <a class="button-link" href="sms:?&body=I'm safe now. Thank you for checking on me 💚">Send I'm Safe Message</a>
-  </details>  <details>
-    <summary>🖐 Need Help In Person</summary>
-    <p>Open this fullscreen message to silently ask someone nearby for help.</p>
-    <button class="action-btn" onclick="document.getElementById('helpCard').style.display='flex'">Show Help Message</button>
-  </details>  <details>
-    <summary>🧠 What Just Happened?</summary>
-    <p>Tap what feels relevant. This helps ground your thoughts and memory.</p>
-    <form>
-      <label><input type="checkbox"> I think I was drugged</label><br>
-      <label><input type="checkbox"> Someone crossed my boundaries</label><br>
-      <label><input type="checkbox"> I lost my group or ride</label><br>
-      <label><input type="checkbox"> I need help getting home</label><br>
-      <label><input type="checkbox"> I'm scared or overwhelmed</label>
-    </form>
-  </details>  <details>
-    <summary>📝 Remember Everything</summary>
-    <p>Jot down what happened. This stays only on your device.</p>
-    <textarea placeholder="Who, what, where, when... Type anything important while it’s fresh."></textarea>
-  </details>  <details>
-    <summary>🧭 Quick Resources</summary>
-    <ul>
-      <li><a href="/resources.html">Local Clinics and Crisis Centers</a></li>
-      <li><a href="/emergency.html">Emergency Contacts in MN</a></li>
-      <li><a href="/consent.html">Consent & Boundaries Info</a></li>
-      <li><a href="/spiking.html">Drink Spiking Signs + What To Do</a></li>
-    </ul>
-  </details>  <div id="helpCard" style="display:none; position:fixed; top:0; left:0; width:60vw; height:6
-  0vh; background-color:#2e003e; color:#f8f8f8; font-size:2rem; display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem; z-index:10000;">
-    <div>
-      <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
-      <button style="margin-top:1rem; background:#5D3A7D; color:white; border:none; padding:0.5rem 1rem; border-radius:8px; font-size:1rem;" onclick="document.getElementById('helpCard').style.display='none'">Close</button>
+<body>
+  <div class="container">
+    <header>
+      <a href="/" class="logo">PLURderapolis</a>
+      <h1>🚨 Panic Center</h1>
+    </header>
+
+    <div class="emergency-alert">
+      <strong>EMERGENCY ASSISTANCE</strong><br>
+      If you're in immediate danger, <a href="tel:911" style="color:white; text-decoration:underline; font-weight:bold;">call 911</a> now.
     </div>
-  </div></body>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">📲</span>
+          <h3>Text or Call Trusted Contact</h3>
+        </div>
+        <p>Send a message or place a call to someone you trust.</p>
+        <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">Text a Trusted Contact</a>
+        <a class="button-link" href="tel:">Call Someone</a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">📍</span>
+          <h3>Send My Location</h3>
+        </div>
+        <p>Share where you are via text message.</p>
+        <button class="action-btn" onclick="shareLocation()">Send My Location via Text</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">✅</span>
+          <h3>I'm Safe</h3>
+        </div>
+        <p>Let people know when you're okay.</p>
+        <a class="button-link" href="sms:?&body=I'm safe now. Thank you for checking on me 💚">Send "I'm Safe" Message</a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">🖐</span>
+          <h3>Help Message (Silent)</h3>
+        </div>
+        <p>Show a message silently asking nearby for help.</p>
+        <button class="action-btn" onclick="openHelpCard()">Show Help Message</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">🧠</span>
+          <h3>What Just Happened?</h3>
+        </div>
+        <p>Tap what feels relevant to help ground your thoughts.</p>
+        <div class="checkbox-group">
+          <label><input type="checkbox"> I think I was drugged</label>
+          <label><input type="checkbox"> Someone crossed my boundaries</label>
+          <label><input type="checkbox"> I lost my group or ride</label>
+          <label><input type="checkbox"> I need help getting home</label>
+          <label><input type="checkbox"> I'm scared or overwhelmed</label>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">📝</span>
+          <h3>Remember Everything</h3>
+        </div>
+        <p>Jot down what happened. This stays only on your device.</p>
+        <textarea id="incidentNotes" placeholder="Who, what, where, when... Type anything important while it's fresh."></textarea>
+        <button class="action-btn" onclick="saveNote()">Save Notes</button>
+      </div>
+    </div>
+
+    <div class="resource-section">
+      <h2>🧭 Local Twin Cities Support & Venue Contacts</h2>
+      
+      <div class="resource-grid">
+        <div class="resource-item">
+          <h4>Sexual Violence / Assault Support</h4>
+          <p>Sexual Violence Center (24-hour crisis): <a href="tel:6128715111">612-871-5111</a></p>
+          <p>Hennepin Assault Response Team: <a href="tel:6128735832">612-873-5832</a></p>
+        </div>
+
+        <div class="resource-item">
+          <h4>Law Enforcement & Crisis Hotlines</h4>
+          <p>Emergency: <a href="tel:911">911</a></p>
+          <p>Minneapolis non-emergency: <a href="tel:311">311</a></p>
+          <p>Hennepin County Sheriff: <a href="tel:9522585321">952-258-5321</a></p>
+        </div>
+
+        <div class="resource-item">
+          <h4>Crisis / Domestic Abuse Support</h4>
+          <p>Domestic Abuse Service Center: <a href="tel:6123485073">612-348-5073</a></p>
+          <p>After-hours crisis line (Day One): <a href="tel:18662231111">1-866-223-1111</a></p>
+          <p>COPE Mobile Crisis (24/7): <a href="tel:6125961223">612-596-1223</a></p>
+        </div>
+
+        <div class="resource-item">
+          <h4>Venue Safety Contacts</h4>
+          <p>The Armory: <a href="tel:6123153965">612-315-3965</a></p>
+          <p>Skyway Theatre: <a href="tel:6123336100">612-333-6100</a></p>
+          <p>First Avenue: <a href="tel:6123388388">612-338-8388</a></p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a class="button-link pink-button" href="/emergency.html">Emergency Resources</a>
+        <a class="button-link pink-button" href="/bad-trip-mode.html">Bad Trip Assistance</a>
+        <a class="button-link pink-button" href="/resources.html">Full Resource Directory</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>PLURderapolis — Promoting Peace, Love, Unity, Respect in the Twin Cities Music Scene</p>
+      <p>Need to talk or debrief? <a href="mailto:support@plurderapolis.org" style="color:var(--accent-teal);">support@plurderapolis.org</a></p>
+    </div>
+  </div>
+
+  <div id="helpCard" class="help-card">
+    <div class="help-content">
+      <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
+      <button class="action-btn" onclick="closeHelpCard()">Close</button>
+    </div>
+  </div>
+</body>
 </html>
