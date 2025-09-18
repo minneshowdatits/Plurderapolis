@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sober Ravers - PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg: #0f0015;
@@ -13,146 +14,679 @@
       --accent: #ff6ec7;
       --text: #f8f8f8;
       --shadow: rgba(0, 255, 255, 0.1);
+      --card-border: rgba(255, 110, 199, 0.2);
     }
+    
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
+      padding: 0;
+    }
+    
+    body {
       background-color: var(--bg);
       color: var(--text);
       font-family: 'Roboto', sans-serif;
-      line-height: 1.5;
-      padding: 1rem 1.25rem;
+      line-height: 1.6;
+      padding: 0;
       min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 110, 199, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 70%, rgba(0, 247, 224, 0.05) 0%, transparent 20%);
     }
-    h2, h3 {
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    
+    /* Header & Navigation */
+    header {
+      background-color: rgba(28, 0, 42, 0.95);
+      backdrop-filter: blur(5px);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
       color: var(--highlight);
-      margin-top: 1.5rem;
-      margin-bottom: 0.8rem;
-      user-select: none;
+      text-decoration: none;
     }
-    h2 {
-      font-size: 1.8rem;
-      margin-top: 0;
-    }
-    p, li {
-      font-size: 1rem;
-      margin-bottom: 0.75rem;
-    }
-    p strong {
+    
+    .logo span {
       color: var(--accent);
     }
-    ul {
-      padding-left: 1.3rem;
-      margin: 0 0 1.5rem 0;
+    
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      background: rgba(255, 110, 199, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
     }
-    li a {
+    
+    .back-button:hover {
+      color: var(--highlight);
+      background: rgba(255, 110, 199, 0.2);
+    }
+    
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--highlight);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    
+    nav a:hover, nav a.active {
+      color: var(--highlight);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--highlight);
+      transition: width 0.3s;
+    }
+    
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(to bottom, rgba(15, 0, 21, 0.8), var(--bg)), 
+                  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%231c002a" width="100" height="100"/><path fill="%2300f7e0" opacity="0.2" d="M0 0h100v100H0z"/><path fill="%23ff6ec7" opacity="0.1" d="M20 20h60v60H20z"/></svg>');
+      background-size: cover;
+      border-radius: 0 0 1rem 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      color: var(--highlight);
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .hero strong {
       color: var(--accent);
-      text-decoration: underline;
-      word-break: break-word;
     }
-    li a:hover,
-    li a:focus {
-      color: #fff;
-      outline: none;
+    
+    /* Cards Layout */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
     }
-    section {
+    
+    .card {
       background-color: var(--card);
       border-radius: 1rem;
-      box-shadow: 0 0 12px var(--shadow);
-      padding: 1.5rem 2rem;
-      max-width: 720px;
-      margin: auto;
+      box-shadow: 0 0 20px var(--shadow);
+      padding: 1.5rem;
+      border: 1px solid var(--card-border);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    em {
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 25px var(--shadow);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .card-header i {
+      color: var(--highlight);
+      font-size: 1.5rem;
+    }
+    
+    .card-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--highlight);
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    
+    /* Resource List */
+    .resource-list {
+      list-style: none;
+    }
+    
+    .resource-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .resource-item:last-child {
+      border-bottom: none;
+    }
+    
+    .resource-title {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .resource-title strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+    
+    .resource-desc {
       color: #ccc;
-      font-style: italic;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
     }
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-        font-size: 0.95rem;
+    
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    
+    .resource-link:hover {
+      color: #fff;
+    }
+    
+    /* Mocktail Cards */
+    .mocktail-card {
+      background: linear-gradient(to bottom, rgba(28, 0, 42, 0.7), rgba(28, 0, 42, 0.9));
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .mocktail-card:last-child {
+      margin-bottom: 0;
+    }
+    
+    .mocktail-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    
+    .mocktail-title strong {
+      font-weight: 500;
+    }
+    
+    .mocktail-steps {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+    
+    .mocktail-steps li {
+      counter-increment: step-counter;
+      margin-bottom: 0.5rem;
+      padding-left: 1.75rem;
+      position: relative;
+    }
+    
+    .mocktail-steps li::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      background-color: var(--highlight);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    
+    .mocktail-note {
+      margin-top: 0.75rem;
+      font-style: italic;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--card);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 3rem;
+      border-top: 1px solid var(--card-border);
+    }
+    
+    .footer-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .footer-content p {
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+    
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .contact-link:hover {
+      color: #fff;
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--accent);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, background-color 0.3s;
+      z-index: 99;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      background-color: var(--highlight);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
       }
-      h2 {
-        font-size: 1.5rem;
+      
+      .nav-toggle {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
       }
-      h3 {
-        font-size: 1.2rem;
+      
+      nav {
+        width: 100%;
+        display: none;
       }
-      section {
-        padding: 1rem 1.25rem;
+      
+      nav.active {
+        display: block;
       }
+      
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .nav-toggle {
+        display: none;
+      }
+      
+      nav {
+        display: block !important;
+      }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    
+    .card:nth-child(3) {
+      animation-delay: 0.2s;
     }
   </style>
 </head>
 <body>
-  <section>
-    <h2>🕊️ Sober Ravers & Community</h2>
-    <p><strong>Why go sober?</strong> Enjoy the music, dance, and vibes fully aware — plus, it’s safer and helps your body and mind recover.</p>
+  <header>
+    <div class="container header-content">
+      <a href="javascript:history.back()" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+      
+      <a href="#" class="logo">
+        <i class="fas fa-dove"></i>
+        Sober <span>Ravers</span>
+      </a>
+      
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav id="mainNav">
+        <ul>
+          <li><a href="#events" class="active">Events</a></li>
+          <li><a href="#support">Support</a></li>
+          <li><a href="#mocktails">Mocktails</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <h3>🎉 Local Sober Rave Events</h3>
-    <ul>
-      <li><strong>Sober Rave Nights at The Exchange (Minneapolis)</strong>: Monthly sober dance parties with DJ sets, chill zones, and mixers. Check their <a href="https://www.instagram.com/theexchangempls" target="_blank" rel="noopener noreferrer">Instagram</a>.</li>
-      <li><strong>Sober Glow Meetups (Twin Cities)</strong>: Hosted by MN Sober Ravers Collective. Casual meetups focused on connection, meditation, and sober fun. See their <a href="https://www.facebook.com/groups/MNSoberRavers" target="_blank" rel="noopener noreferrer">Facebook Group</a>.</li>
-      <li><strong>The Sanctuary (Minneapolis)</strong>: Sober-friendly space offering alcohol-free dance events and wellness workshops. Visit <a href="https://sanctuarympls.org" target="_blank" rel="noopener noreferrer">sanctuarympls.org</a>.</li>
-    </ul>
+  <main class="container">
+    <section class="hero">
+      <h1>🕊️ Sober Ravers & Community</h1>
+      <p><strong>Why go sober?</strong> Enjoy the music, dance, and vibes fully aware — plus, it's safer and helps your body and mind recover.</p>
+    </section>
 
-    <h3>💬 Sober Raver Social Groups & Support</h3>
-    <ul>
-      <li><strong>Sober Rave Discord MN</strong>: Peer support space for sober ravers to share events, tips, or just hang. Ask for an invite via the MN Sober Ravers Facebook group.</li>
-      <li><strong>Meetup: Minnesota Sober Dance & Wellness</strong>: Group organizing sober hikes, yoga, dance parties. Search “Minnesota Sober Dance” on <a href="https://www.meetup.com" target="_blank" rel="noopener noreferrer">Meetup.com</a>.</li>
-      <li><strong>Minnesota Recovery Connection</strong>: Peer-led support organization hosting sober social events and recovery resources across the Twin Cities. Visit <a href="https://mnrecovery.org" target="_blank" rel="noopener noreferrer">mnrecovery.org</a>.</li>
-      <li><strong>SMART Recovery Minnesota</strong>: Evidence-based, self-empowerment focused addiction recovery meetings across metro and suburbs. See <a href="https://smartrecovery.org/minnesota" target="_blank" rel="noopener noreferrer">smartrecovery.org/minnesota</a>.</li>
-      <li><strong>Celebrate Recovery at Grace Church</strong>: Inclusive support group providing social events and sponsor networks in Minneapolis. Info: <a href="https://gracechurchmpls.org" target="_blank" rel="noopener noreferrer">gracechurchmpls.org</a>.</li>
-      <li><strong>Adult Children of Alcoholics (ACA) – MN Chapter</strong>: Support for individuals healing from family-related trauma. Visit <a href="https://adultchildren.org" target="_blank" rel="noopener noreferrer">adultchildren.org</a>.</li>
-      <li><strong>Alano Club of Minneapolis</strong>: Sober social club downtown hosting daily AA/NA/Al‑Anon meetings plus communal activities. Visit <a href="https://alanoclubmpls.org" target="_blank" rel="noopener noreferrer">alanoclubmpls.org</a>.</li>
-      <li><strong>Minnesota Harm Reduction Action Center</strong>: While focused on harm reduction, they host sober space circles and peer events occasionally. Visit <a href="https://mnharc.org" target="_blank" rel="noopener noreferrer">mnharc.org</a>.</li>
-    </ul>
+    <div class="cards-container">
+      <!-- Events Card -->
+      <div class="card" id="events">
+        <div class="card-header">
+          <i class="fas fa-calendar-alt"></i>
+          <h2>Local Sober Events & Spaces</h2>
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-store"></i>
+              <strong>Marigold (NA Bottle Shop & Events)</strong>
+            </div>
+            <p class="resource-desc">Visit Marigold in Minneapolis (3506 Nicollet Ave). Non-alcoholic spirits, wines, frequent tasting & pop-up events.</p>
+            <a href="https://shopmari.gold/pages/events" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> See Marigold Events
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-female"></i>
+              <strong>The Sober Hang for Women</strong>
+            </div>
+            <p class="resource-desc">Community meetups for women in the Twin Cities who are sober or sober-curious: art, outdoors, connection.</p>
+            <a href="https://www.meetup.com/the-sober-hang-for-women/" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Join Their Meetups
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-rainbow"></i>
+              <strong>Out & Sober Minnesota</strong>
+            </div>
+            <p class="resource-desc">LGBTQ+ sober community events like BBQs & social gatherings.</p>
+            <a href="https://outsobermn.org/" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Out & Sober MN Events
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-peace"></i>
+              <strong>The Sanctuary (Minneapolis)</strong>
+            </div>
+            <p class="resource-desc">Sober-friendly space offering alcohol-free dance events and wellness workshops.</p>
+            <a href="https://sanctuarympls.org" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Visit website
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <h3>🍹 Top-Rated Mocktail Recipes</h3>
-    <ul>
-      <li>
-        <strong>Electric Lemonade:</strong><br />
-        1. Fill a glass with ice.<br />
-        2. Pour 6 oz lemonade.<br />
-        3. Add 1 oz non-alcoholic blue curaçao syrup.<br />
-        4. Top with 2 oz sparkling water.<br />
-        5. Stir gently.<br />
-        6. Garnish with a lemon slice.<br />
-        <em>(Bonus: glows under blacklight!)</em>
-      </li>
-      <li>
-        <strong>Ginger Citrus Fizz:</strong><br />
-        1. Fill a glass with ice.<br />
-        2. Add 4 oz ginger beer.<br />
-        3. Squeeze 1 oz fresh lime juice.<br />
-        4. Add 1 oz fresh orange juice.<br />
-        5. Drop in a few fresh mint leaves.<br />
-        6. Stir lightly and garnish with an orange wedge.
-      </li>
-      <li>
-        <strong>Virgin Mojito:</strong><br />
-        1. Muddle 8 fresh mint leaves with 1 tsp sugar in a glass.<br />
-        2. Add juice of 1 lime.<br />
-        3. Fill the glass with ice.<br />
-        4. Top with soda water.<br />
-        5. Stir well and garnish with a mint sprig and lime wedge.
-      </li>
-      <li>
-        <strong>Cucumber Cooler:</strong><br />
-        1. Muddle 3-4 slices of cucumber in a glass.<br />
-        2. Add juice of 1 lime and 1 oz simple syrup.<br />
-        3. Fill with ice.<br />
-        4. Top with tonic water.<br />
-        5. Stir gently and garnish with a cucumber slice.
-      </li>
-    </ul>
+      <!-- Support Card -->
+      <div class="card" id="support">
+        <div class="card-header">
+          <i class="fas fa-hands-helping"></i>
+          <h2>Sober Raver Support Groups</h2>
+        </div>
+        <ul class="resource-list">
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-heart"></i>
+              <strong>Minnesota Recovery Connection</strong>
+            </div>
+            <p class="resource-desc">Peer-led support organization hosting sober social events and recovery resources.</p>
+            <a href="https://mnrecovery.org" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Visit website
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-smile"></i>
+              <strong>SMART Recovery Minnesota</strong>
+            </div>
+            <p class="resource-desc">Evidence-based, self-empowerment focused addiction recovery meetings.</p>
+            <a href="https://smartrecovery.org/minnesota" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Learn more
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-hands"></i>
+              <strong>Alano Club of Minneapolis</strong>
+            </div>
+            <p class="resource-desc">Sober social club downtown hosting daily meetings plus communal activities.</p>
+            <a href="https://alanoclubmpls.org" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Visit website
+            </a>
+          </li>
+          <li class="resource-item">
+            <div class="resource-title">
+              <i class="fas fa-users"></i>
+              <strong>Refuge Recovery Minneapolis</strong>
+            </div>
+            <p class="resource-desc">Buddhist-inspired recovery meetings and meditation practice.</p>
+            <a href="https://refugerecovery.org/meetings?location=Minneapolis%2C+MN%2C+USA" target="_blank" class="resource-link">
+              <i class="fas fa-external-link-alt"></i> Find Meetings
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <p style="margin-top: 1rem; font-style: italic; color: #ccc;">
-      Know an event or sober venue we should include? Let us know: <a href="mailto:projectpeachmn@gmail.com" style="color: var(--accent); text-decoration: underline;">projectpeachmn@gmail.com</a>.
-    </p>
-  </section>
+      <!-- Mocktails Card -->
+      <div class="card" id="mocktails">
+        <div class="card-header">
+          <i class="fas fa-glass-cheers"></i>
+          <h2>Top-Rated Mocktail Recipes</h2>
+        </div>
+        
+        <div class="mocktail-card">
+          <div class="mocktail-title">
+            <i class="fas fa-cocktail"></i>
+            <strong>Electric Lemonade</strong>
+          </div>
+          <ol class="mocktail-steps">
+            <li>Fill a glass with ice</li>
+            <li>Pour 6 oz lemonade</li>
+            <li>Add 1 oz non-alcoholic blue curaçao syrup</li>
+            <li>Top with 2 oz sparkling water</li>
+            <li>Stir gently</li>
+            <li>Garnish with a lemon slice</li>
+          </ol>
+          <p class="mocktail-note">Bonus: glows under blacklight!</p>
+        </div>
+        
+        <div class="mocktail-card">
+          <div class="mocktail-title">
+            <i class="fas fa-cocktail"></i>
+            <strong>Ginger Citrus Fizz</strong>
+          </div>
+          <ol class="mocktail-steps">
+            <li>Fill a glass with ice</li>
+            <li>Add 4 oz ginger beer</li>
+            <li>Squeeze 1 oz fresh lime juice</li>
+            <li>Add 1 oz fresh orange juice</li>
+            <li>Drop in a few fresh mint leaves</li>
+            <li>Stir lightly and garnish with an orange wedge</li>
+          </ol>
+        </div>
+        
+        <div class="mocktail-card">
+          <div class="mocktail-title">
+            <i class="fas fa-cocktail"></i>
+            <strong>Virgin Mojito</strong>
+          </div>
+          <ol class="mocktail-steps">
+            <li>Muddle 8 fresh mint leaves with 1 tsp sugar in a glass</li>
+            <li>Add juice of 1 lime</li>
+            <li>Fill the glass with ice</li>
+            <li>Top with soda water</li>
+            <li>Stir well and garnish with a mint sprig and lime wedge</li>
+          </ol>
+        </div>
+
+        <div class="mocktail-card">
+          <div class="mocktail-title">
+            <i class="fas fa-cocktail"></i>
+            <strong>PLUR Punch</strong>
+          </div>
+          <ol class="mocktail-steps">
+            <li>Mix 4 oz cranberry juice with 2 oz pineapple juice</li>
+            <li>Add 1 oz fresh lime juice</li>
+            <li>Fill with ice and top with club soda</li>
+            <li>Garnish with lime wheel and edible glitter</li>
+          </ol>
+          <p class="mocktail-note">Perfect for rave-themed gatherings!</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="contact">
+    <div class="container footer-content">
+      <p>Know an event or sober venue we should include?</p>
+      <a href="mailto:projectpeachmn@gmail.com" class="contact-link">
+        <i class="fas fa-envelope"></i> projectpeachmn@gmail.com
+      </a>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <script>
+    // Navigation toggle for mobile
+    document.getElementById('navToggle').addEventListener('click', function() {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('active');
+    });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+        
+        // Update active class
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+    
+    // Show/hide back to top button based on scroll position
+    window.addEventListener('scroll', function() {
+      const backToTop = document.querySelector('.back-to-top');
+      if (window.scrollY > 500) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+  </script>
 </body>
-</html>  
+</html>
