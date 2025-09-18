@@ -8,60 +8,213 @@
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --accent-pink: #ff2d93; --accent-purple: #8a2be2; }
-    html, body { background-color: #0b0b0f; }
-    .badge { font-size: 0.75rem; padding: 0.15rem 0.4rem; border-radius: 0.35rem; }
-    .badge-accent { background: rgba(255,45,147,0.15); color: #ff83bd; border: 1px solid rgba(255,45,147,0.45); }
-    .badge-status { background: rgba(71,171,255,0.15); color: #9ad0ff; border: 1px solid rgba(71,171,255,0.4); }
-    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,45,147,0.35), transparent); }
-    details[open] summary .chevron { transform: rotate(90deg); }
-    .chevron { transition: transform 0.15s ease; }
-    .link { color: #ff83bd; }
-    .link:hover { color: #ffd0e6; text-decoration: underline; }
+    :root { 
+      --accent-pink: #ff2d93; 
+      --accent-purple: #8a2be2; 
+      --accent-blue: #4775ff;
+      --accent-cyan: #2dd4ff;
+    }
+    html, body { 
+      background-color: #0b0b0f;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(41, 10, 69, 0.3) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(69, 10, 55, 0.3) 0%, transparent 25%);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .badge { 
+      font-size: 0.75rem; 
+      padding: 0.15rem 0.4rem; 
+      border-radius: 0.35rem; 
+    }
+    .badge-accent { 
+      background: rgba(255,45,147,0.15); 
+      color: #ff83bd; 
+      border: 1px solid rgba(255,45,147,0.45); 
+    }
+    .badge-status { 
+      background: rgba(71,171,255,0.15); 
+      color: #9ad0ff; 
+      border: 1px solid rgba(71,171,255,0.4); 
+    }
+    .badge-neighborhood {
+      background: rgba(138,43,226,0.15);
+      color: #b98af9;
+      border: 1px solid rgba(138,43,226,0.4);
+    }
+    .badge-group {
+      background: rgba(45,212,255,0.15);
+      color: #7ae4ff;
+      border: 1px solid rgba(45,212,255,0.4);
+    }
+    .divider { 
+      height: 1px; 
+      background: linear-gradient(90deg, transparent, rgba(255,45,147,0.35), transparent); 
+      margin: 0.75rem 0;
+    }
+    details[open] summary .chevron { 
+      transform: rotate(90deg); 
+    }
+    .chevron { 
+      transition: transform 0.15s ease; 
+    }
+    .link { 
+      color: #ff83bd; 
+    }
+    .link:hover { 
+      color: #ffd0e6; 
+      text-decoration: underline; 
+    }
+    .glow-text {
+      text-shadow: 0 0 5px rgba(255, 45, 147, 0.7);
+    }
+    .venue-card {
+      background: linear-gradient(145deg, #121218, #0d0d12);
+      border: 1px solid rgba(255,45,147,0.1);
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+    }
+    .venue-card:hover {
+      border-color: rgba(255,45,147,0.3);
+      box-shadow: 0 0 15px rgba(255,45,147,0.1);
+    }
+    .tab-button {
+      background: transparent;
+      border: 1px solid rgba(255,45,147,0.3);
+      color: #ff83bd;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .tab-button.active {
+      background: rgba(255,45,147,0.15);
+      color: #ffd0e6;
+      box-shadow: 0 0 10px rgba(255,45,147,0.2);
+    }
+    .search-input {
+      background: rgba(25,25,35,0.5);
+      border: 1px solid rgba(255,45,147,0.2);
+      color: white;
+    }
+    .search-input:focus {
+      box-shadow: 0 0 0 2px rgba(255,45,147,0.3);
+    }
+    .filter-select {
+      background: rgba(25,25,35,0.5);
+      border: 1px solid rgba(255,45,147,0.2);
+      color: white;
+    }
+    .filter-select:focus {
+      box-shadow: 0 0 0 2px rgba(255,45,147,0.3);
+    }
+    .sober-link {
+      background: linear-gradient(45deg, rgba(71,171,255,0.15), rgba(71,171,255,0.25));
+      border: 1px solid rgba(71,171,255,0.3);
+      color: #9ad0ff;
+    }
+    .sober-link:hover {
+      background: linear-gradient(45deg, rgba(71,171,255,0.25), rgba(71,171,255,0.35));
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-pink);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,45,147,0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(255,45,147,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,45,147,0); }
+    }
   </style>
 </head>
-<body class="text-gray-200 selection:bg-pink-500/40 selection:text-white">
+<body class="text-gray-200 selection:bg-pink-500/40 selection:text-white min-h-screen flex flex-col">
 
   <!-- --- Navbar (PLURderapolis look) --- -->
-  <header class="bg-gray-900/90 backdrop-blur sticky top-0 z-30">
+  <header class="bg-gray-900/90 backdrop-blur sticky top-0 z-30 border-b border-pink-500/10">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="/" class="text-2xl font-bold"><span class="text-pink-400">PLUR</span>derapolis</a>
-      <nav>
-        <a href="/" class="text-gray-400 hover:text-white mr-4">Home</a>
-        <a href="/venues.html" class="text-pink-200 font-semibold">Venues</a>
-        <!-- add more nav links as needed -->
+      <a href="/" class="text-2xl font-bold glow-text"><span class="text-pink-400">PLUR</span>derapolis</a>
+      <nav class="flex items-center gap-4">
+        <a href="/" class="text-gray-400 hover:text-white transition-colors nav-link">Home</a>
+        <a href="/venues.html" class="text-pink-200 font-semibold transition-colors nav-link">Venues</a>
+        <a href="/sober.html" class="text-blue-300 hover:text-blue-200 transition-colors text-sm flex items-center gap-1 nav-link">
+          <span>💧</span> Sober
+        </a>
       </nav>
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+  <main class="max-w-5xl mx-auto px-4 py-6 space-y-6 flex-1 w-full">
+    <!-- Page Header -->
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold mb-2 glow-text">PLURderapolis Venues</h1>
+      <p class="text-gray-400 max-w-2xl mx-auto">Find the perfect spot for your night out. Filter by neighborhood, search for specific features, and get all the details you need.</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="flex flex-wrap justify-center gap-2 mb-6">
+      <button class="tab-button active" data-tab="all">All Venues</button>
+      <button class="tab-button" data-tab="accessible">♿ Accessible</button>
+      <button class="tab-button" data-tab="sober">💧 Sober-Friendly</button>
+      <button class="tab-button" data-tab="large">⭐ Large Venues</button>
+    </div>
+
     <!-- --- Search & Filter --- -->
-    <section class="bg-gray-800 rounded-xl p-4">
+    <section class="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
       <div class="flex flex-col sm:flex-row gap-3">
         <div class="flex-1">
           <label for="q" class="block text-gray-400 text-sm mb-1">Search venues</label>
-          <input id="q" type="search" placeholder="Name, notes, features…"
-                 class="w-full rounded-lg bg-gray-700 border border-gray-600 px-3 py-2 focus:ring focus:ring-purple-500 focus:border-transparent outline-none" />
+          <input id="q" type="search" placeholder="Name, features…"
+                 class="search-input w-full rounded-lg px-3 py-2 outline-none" />
         </div>
         <div class="w-full sm:w-56">
           <label for="neighborhood" class="block text-gray-400 text-sm mb-1">Neighborhood</label>
-          <select id="neighborhood" class="w-full rounded-lg bg-gray-700 border border-gray-600 px-3 py-2 focus:ring focus:ring-purple-500 focus:border-transparent outline-none">
+          <select id="neighborhood" class="filter-select w-full rounded-lg px-3 py-2 outline-none">
             <option value="">All neighborhoods</option>
           </select>
         </div>
       </div>
-      <p class="mt-2 text-xs text-gray-400">
-        ♿ = wheelchair accessible info • 💧 = sober-friendly (water/NA options)  
-        <em class="text-gray-400">not publicly listed</em> = contact venue for details
-      </p>
+      <div class="flex flex-wrap gap-2 mt-3 text-xs text-gray-400">
+        <div class="flex items-center"><span class="mr-1">♿</span> Wheelchair accessible</div>
+        <div class="flex items-center"><span class="mr-1">💧</span> Sober-friendly options</div>
+        <div class="flex items-center"><span class="mr-1">⭐</span> Large capacity venue</div>
+      </div>
     </section>
 
+    <!-- Sober Resources Link -->
+    <div class="text-center pulse">
+      <a href="/sober.html" class="sober-link inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all hover:gap-3">
+        <span>💧</span>
+        <span>Explore Sober Resources & NA Options</span>
+        <span>→</span>
+      </a>
+    </div>
+
     <!-- --- Venue Listings Container --- -->
-    <section id="venueList" class="space-y-4"></section>
+    <section id="venueList" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6"></section>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="hidden text-center py-10">
+      <div class="text-5xl mb-4">🔍</div>
+      <h3 class="text-xl font-medium text-gray-300 mb-2">No venues found</h3>
+      <p class="text-gray-500">Try adjusting your search or filters</p>
+    </div>
   </main>
 
   <!-- --- Footer (PLURderapolis look) --- -->
-  <footer class="bg-gray-900/90 backdrop-blur py-6 mt-12 text-center text-gray-500 text-sm">
+  <footer class="bg-gray-900/90 backdrop-blur py-6 mt-12 text-center text-gray-500 text-sm border-t border-pink-500/10">
     <p>PLURderapolis &copy; 2025. Built with ❤️, neon, and no fluff.</p>
   </footer>
 
@@ -69,28 +222,41 @@
   <script>
     const venues = [
       {
+        name:"The Armory",
+        neighborhood:"Downtown Minneapolis",
+        capacity:"8,400",
+        levels:"Main floor + balcony",
+        exits:"Multiple marked exits",
+        bathrooms:"Multiple, including gender-neutral",
+        parking:"Adjacent ramp and street parking; light rail nearby",
+        door:"Magnetometers & bag check",
+        access:"Fully accessible; elevators to balcony, ADA seating",
+        sober:"Water stations; NA drinks available",
+        tips:"Large venue; arrive early for best experience",
+        map:"https://maps.google.com/?q=The%20Armory%20Minneapolis",
+        largeVenue: true
+      },
+      {
         name:"First Avenue",
         neighborhood:"Downtown Minneapolis",
-        capacity:"~1,550 (Mainroom)",
+        capacity:"1,550",
         levels:"Mainroom + balcony",
-        exits:"Multiple marked exits (1st Ave N & 7th St)",
-        patio:"No",
+        exits:"Multiple marked exits",
         bathrooms:"Main + balcony",
         parking:"Street & ramps; transit friendly",
         door:"Magnetometers & bag check",
         access:"Accessible sections; elevator to balcony",
-        sober:"Water available; NA varies",
+        sober:"Water available; NA options",
         tips:"Arrive early for ADA seating",
         map:"https://maps.google.com/?q=First%20Avenue%20Minneapolis",
         group:"First Avenue"
       },
       {
         name:"Fine Line",
-        neighborhood:"Warehouse District / North Loop",
+        neighborhood:"North Loop",
         capacity:"650",
         levels:"Floor + balcony rail",
         exits:"Front & side exits",
-        patio:"No",
         bathrooms:"Main level",
         parking:"Street & ramps",
         door:"Bag check/ID",
@@ -102,56 +268,55 @@
       },
       {
         name:"The Fillmore Minneapolis",
-        neighborhood:"North Loop / Target Field",
-        capacity:"1,850 (standing)",
+        neighborhood:"North Loop",
+        capacity:"1,850",
         levels:"Floor + balcony",
         exits:"Main & side exits",
-        patio:"No (Trax restaurant adjacent)",
         bathrooms:"Multiple levels",
         parking:"Ramps; light rail nearby",
         door:"Security screening",
         access:"Accessible seating & elevator",
         sober:"Water; NA at bar",
         tips:"ADA balcony has great sightlines",
-        map:"https://maps.google.com/?q=The%20Fillmore%20Minneapolis"
+        map:"https://maps.google.com/?q=The%20Fillmore%20Minneapolis",
+        largeVenue: true
       },
       {
         name:"Uptown Theatre",
-        neighborhood:"Uptown (Hennepin/Lake)",
-        capacity:"~1,700 (reported)",
+        neighborhood:"Uptown",
+        capacity:"1,700",
         levels:"Floor + balcony",
         exits:"Front lobby & marked doors",
-        patio:"No",
         bathrooms:"Renovated facilities",
         parking:"Street & ramps",
         door:"Bag check/ID",
         access:"Elevator + ADA seating",
-        sober:"Water; NA varies",
+        sober:"Water; NA options",
         tips:"Check ADA sections via ticketing",
-        map:"https://maps.google.com/?q=Uptown%20Theater%20Minneapolis"
+        map:"https://maps.google.com/?q=Uptown%20Theater%20Minneapolis",
+        largeVenue: true
       },
       {
         name:"Palace Theatre",
         neighborhood:"Downtown St. Paul",
-        capacity:"~2,500 (seated + GA)",
+        capacity:"2,500",
         levels:"Floor + balcony",
-        exits:"Multiple exits to W. 7th Pl",
-        patio:"No",
+        exits:"Multiple exits",
         bathrooms:"Main & mezzanine",
         parking:"Ramps & street",
         door:"Security screening",
         access:"Elevator; accessible seating",
         sober:"Water; NA at bar",
         tips:"Balcony gives great views",
-        map:"https://maps.google.com/?q=Palace%20Theatre%20St%20Paul"
+        map:"https://maps.google.com/?q=Palace%20Theatre%20St%20Paul",
+        largeVenue: true
       },
       {
         name:"Turf Club",
-        neighborhood:"Midway / Univ. Ave (St. Paul)",
-        capacity:"~350",
+        neighborhood:"Midway, St. Paul",
+        capacity:"350",
         levels:"Main + basement Clown Lounge",
         exits:"Front & side",
-        patio:"Occasional sidewalk",
         bathrooms:"Main level",
         parking:"Street + Green Line",
         door:"ID check",
@@ -161,28 +326,27 @@
         map:"https://maps.google.com/?q=Turf%20Club%20St%20Paul"
       },
       {
-        name:"Skyway Theatre (Main)",
+        name:"Skyway Theatre",
         neighborhood:"Downtown Minneapolis",
-        capacity:"Up to ~2,800 (configurable)",
+        capacity:"2,800",
         levels:"Orchestra + balcony",
         exits:"Multiple exits",
-        patio:"No",
         bathrooms:"Multiple",
         parking:"Street & transit",
         door:"Security & ID",
         access:"Accessible areas in complex",
-        sober:"Water; NA varies",
+        sober:"Water; NA options",
         tips:"Check which room event uses",
         map:"https://maps.google.com/?q=Skyway%20Theatre%20Minneapolis",
-        group:"Skyway Complex"
+        group:"Skyway Complex",
+        largeVenue: true
       },
       {
-        name:"The Loft (Skyway)",
+        name:"The Loft",
         neighborhood:"Downtown Minneapolis",
-        capacity:"~800 (est.)",
+        capacity:"800",
         levels:"Single room",
         exits:"Posted exits",
-        patio:"No",
         bathrooms:"Shared facility",
         parking:"Street & ramps",
         door:"Security screening",
@@ -193,12 +357,11 @@
         group:"Skyway Complex"
       },
       {
-        name:"Studio B (Skyway)",
+        name:"Studio B",
         neighborhood:"Downtown Minneapolis",
-        capacity:"200–500",
+        capacity:"500",
         levels:"Single room + lounges",
         exits:"Posted exits",
-        patio:"No",
         bathrooms:"Shared facility",
         parking:"Street & ramps",
         door:"Security",
@@ -209,58 +372,11 @@
         group:"Skyway Complex"
       },
       {
-        name:"Bar Fly (Skyway)",
-        neighborhood:"Downtown Minneapolis",
-        capacity:"Not publicly listed",
-        levels:"Historic multi-room",
-        exits:"Posted exits",
-        patio:"No",
-        bathrooms:"Shared",
-        parking:"Street & ramps",
-        door:"Security",
-        access:"Call venue; complex elevators exist",
-        sober:"Water",
-        tips:"Check event status",
-        map:"https://maps.google.com/?q=Bar%20Fly%20Minneapolis",
-        group:"Skyway Complex"
-      },
-      {
-        name:"Ground Zero",
-        neighborhood:"Old Town / St. Anthony Main (NE Mpls)",
-        capacity:"Not publicly listed",
-        levels:"Main dance + adjacent bar (The Front)",
-        exits:"Front & posted",
-        patio:"No",
-        bathrooms:"Main level",
-        parking:"Street & ramps",
-        door:"ID check; themed crowd",
-        access:"Call ahead for ADA",
-        sober:"Water",
-        tips:"Heavy strobe & goth nights",
-        map:"https://maps.google.com/?q=Ground%20Zero%20Minneapolis"
-      },
-      {
-        name:"The Front",
-        neighborhood:"Old Town / St. Anthony Main (NE Mpls)",
-        capacity:"Not publicly listed",
-        levels:"Single room",
-        exits:"Front & posted",
-        patio:"No",
-        bathrooms:"Main level",
-        parking:"Street & ramps",
-        door:"ID check",
-        access:"Call ahead for ADA",
-        sober:"Water",
-        tips:"Adjacent to Ground Zero",
-        map:"https://maps.google.com/?q=The%20Front%2015%204th%20St%20SE%20Minneapolis"
-      },
-      {
         name:"The Green Room",
         neighborhood:"Uptown",
-        capacity:"Up to ~500",
-        levels:"Multiple zones in ~10k sq ft",
+        capacity:"500",
+        levels:"Multiple zones",
         exits:"Posted exits",
-        patio:"Outdoor smoking only",
         bathrooms:"Main level",
         parking:"Street & ramps",
         door:"ID check",
@@ -270,27 +386,10 @@
         map:"https://maps.google.com/?q=Green%20Room%202923%20Girard%20Ave%20S%20Minneapolis"
       },
       {
-        name:"The Vault (Uptown)",
-        neighborhood:"Uptown",
-        capacity:"Not publicly listed",
-        levels:"Single-room nightclub",
-        exits:"Posted",
-        patio:"No",
-        bathrooms:"Main level",
-        parking:"Street",
-        door:"ID check",
-        access:"Call venue",
-        sober:"Water",
-        tips:"Weekend dance club",
-        map:"https://maps.google.com/?q=The%20Vault%20711%20W%20Lake%20St%20Minneapolis"
-      },
-      {
         name:"The Saloon",
-        neighborhood:"Downtown Minneapolis (Hennepin)",
-        capacity:"Not publicly listed",
-        levels:"Multi-room gay dance bar",
+        neighborhood:"Downtown Minneapolis",
+        levels:"Multi-room dance bar",
         exits:"Posted exits",
-        patio:"No",
         bathrooms:"Multiple zones",
         parking:"Street & ramps",
         door:"ID check; 18+ after 9 pm",
@@ -301,8 +400,7 @@
       },
       {
         name:"Union Rooftop",
-        neighborhood:"Downtown Minneapolis (Hennepin)",
-        capacity:"Not publicly listed",
+        neighborhood:"Downtown Minneapolis",
         levels:"Elevator to enclosed rooftop bar",
         exits:"Elevator & stairs to street",
         patio:"Retractable-roof rooftop",
@@ -313,98 +411,6 @@
         sober:"NA drinks likely; ask server",
         tips:"Weather-safe rooftop; weekends book quick",
         map:"https://maps.google.com/?q=UNION%20731%20Hennepin%20Ave%20Minneapolis"
-      },
-      {
-        name:"The Exchange & Alibi Lounge",
-        neighborhood:"Downtown Minneapolis (Lumber Exchange)",
-        capacity:"Not publicly listed",
-        levels:"Basement club + lounge",
-        exits:"Posted via building corridors",
-        patio:"No",
-        bathrooms:"In-venue & building",
-        parking:"Nearby garages",
-        door:"Security; dress codes vary",
-        access:"Elevator in building",
-        sober:"Water",
-        tips:"Check public vs private event nights",
-        map:"https://maps.google.com/?q=10%20S%205th%20St%20Minneapolis%20MN%2055402"
-      },
-      {
-        name:"Club Underground",
-        neighborhood:"Northeast Minneapolis",
-        capacity:"~300",
-        levels:"Basement under Spring Street Tavern",
-        exits:"Stair egress",
-        patio:"Tavern street seating only",
-        bathrooms:"Main tavern level",
-        parking:"Street; variable lot use",
-        door:"ID at tavern entrance",
-        access:"Basement stairs; call ahead",
-        sober:"Water",
-        tips:"Alt/comedy nights",
-        map:"https://maps.google.com/?q=Club%20Underground%20355%20Monroe%20St%20NE%20Minneapolis"
-      },
-      {
-        name:"Myth (Maplewood)",
-        neighborhood:"Maplewood (suburban)",
-        capacity:"~3,000 (historic)",
-        levels:"Main floor + balcony",
-        exits:"Posted (historic)",
-        patio:"No",
-        bathrooms:"Multiple",
-        parking:"Surface lot",
-        door:"Security screening",
-        access:"Unknown; closed",
-        sober:"N/A",
-        tips:"Closed—don’t route here",
-        map:"https://maps.google.com/?q=Myth%20Live%20Maplewood",
-        status:"closed"
-      },
-      {
-        name:"Underground Music Venue (Festival)",
-        neighborhood:"Dinkytown / Near U of M",
-        capacity:"Not publicly listed",
-        levels:"Black-box venue",
-        exits:"Posted exits",
-        patio:"No",
-        bathrooms:"Venue restrooms",
-        parking:"Street & campus ramps",
-        door:"Ticket/ID",
-        access:"Call ahead",
-        sober:"Water",
-        tips:"‘Festival’ is event series, not fixed venue",
-        map:"https://maps.google.com/?q=Underground%20Music%20Venue%20Minneapolis"
-      },
-      {
-        name:"Electro Abi’s @ Abi’s Restaurant",
-        neighborhood:"Lyn-Lake / Uptown",
-        capacity:"250",
-        levels:"Dining room repurposed",
-        exits:"Front exits",
-        patio:"Not primary",
-        bathrooms:"Restaurant restrooms",
-        parking:"Free parking + ample street parking",
-        door:"ID/Ticket at event",
-        access:"Restaurant-level access",
-        sober:"Water; NA drinks",
-        tips:"Promoter shows; check age rules",
-        map:"https://maps.google.com/?q=Abi’s%20Restaurant%202828%20Lyndale%20Ave%20S%20Minneapolis"
-      },
-      {
-        name:"Palmer’s Bar (West Bank)",
-        neighborhood:"Cedar-Riverside (West Bank)",
-        capacity:"Not publicly listed",
-        levels:"Bar + outdoor patio",
-        exits:"Front + patio",
-        patio:"Yes",
-        bathrooms:"Bar restrooms",
-        parking:"Street & nearby lots",
-        door:"ID check",
-        access:"Older footprint; call venue",
-        sober:"Water; NA options",
-        tips:"Closing announced for Sept 14, 2025—verify events",
-        map:"https://maps.google.com/?q=Palmers%20Bar%20301%20Cedar%20Ave%20S%20Minneapolis",
-        status:"closing-announced"
       }
     ];
 
@@ -420,67 +426,100 @@
 
     const listEl = document.getElementById('venueList');
     const qEl = document.getElementById('q');
+    const noResultsEl = document.getElementById('noResults');
+    const tabButtons = document.querySelectorAll('.tab-button');
 
     function badgeIcons(v) {
       return [
         v.access && v.access.toLowerCase().includes('accessible') ? '♿' : '',
         v.sober && (v.sober.toLowerCase().includes('water') || v.sober.toLowerCase().includes('na'))
-          ? '💧' : ''
+          ? '💧' : '',
+        v.largeVenue ? '⭐' : ''
       ].filter(Boolean).join(' ');
     }
 
     function renderVenues() {
       const term = qEl.value.trim().toLowerCase();
       const sel = hoodEl.value;
-      listEl.innerHTML = venues.filter(v => {
+      const activeTab = document.querySelector('.tab-button.active').dataset.tab;
+      
+      const filteredVenues = venues.filter(v => {
         const hay = JSON.stringify(v).toLowerCase();
-        return (!term || hay.includes(term)) && (!sel || v.neighborhood === sel);
-      }).map(v => {
-        const status = v.status === 'closed'
-          ? '<span class="badge badge-status ml-2">CLOSED</span>'
-          : v.status === 'closing-announced'
-            ? '<span class="badge badge-status ml-2">CLOSING ANNOUNCED</span>' : '';
+        const matchesSearch = (!term || hay.includes(term));
+        const matchesHood = (!sel || v.neighborhood === sel);
+        let matchesTab = true;
+        
+        if (activeTab === 'accessible') {
+          matchesTab = v.access && v.access.toLowerCase().includes('accessible');
+        } else if (activeTab === 'sober') {
+          matchesTab = v.sober && (v.sober.toLowerCase().includes('water') || v.sober.toLowerCase().includes('na'));
+        } else if (activeTab === 'large') {
+          matchesTab = v.largeVenue;
+        }
+        
+        return matchesSearch && matchesHood && matchesTab;
+      });
+      
+      if (filteredVenues.length === 0) {
+        listEl.innerHTML = '';
+        noResultsEl.classList.remove('hidden');
+        return;
+      }
+      
+      noResultsEl.classList.add('hidden');
+      
+      listEl.innerHTML = filteredVenues.map(v => {
+        const groupBadge = v.group ? `<span class="badge badge-group">${v.group}</span>` : '';
+            
         return `
-          <details class="bg-gray-800 rounded-lg p-4">
-            <summary class="flex justify-between items-center cursor-pointer select-none">
-              <div class="flex items-center gap-2">
-                <span class="text-lg font-medium">${badgeIcons(v)} ${v.name}</span>
-                ${status}
+          <div class="venue-card p-4">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-lg font-medium">${badgeIcons(v)} ${v.name}</h3>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="badge badge-neighborhood text-xs">${v.neighborhood}</span>
+                  ${groupBadge}
+                </div>
               </div>
-              <span class="chevron text-gray-400">▶</span>
-            </summary>
-            <div class="divider my-3"></div>
-            <div class="grid sm:grid-cols-2 gap-2 text-sm text-gray-200">
-              <div><span class="text-gray-400">Capacity:</span> ${v.capacity || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Levels:</span> ${v.levels || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Exits:</span> ${v.exits || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Patio:</span> ${v.patio || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Bathrooms:</span> ${v.bathrooms || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Parking/Transit:</span> ${v.parking || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Door/Security:</span> ${v.door || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Wheelchair Access:</span> ${v.access || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div><span class="text-gray-400">Sober Options:</span> ${v.sober || '<em class="text-gray-400">not publicly listed</em>'}</div>
-              <div class="sm:col-span-2"><span class="text-gray-400">Tips:</span> ${v.tips || '<em class="text-gray-400">not publicly listed</em>'}</div>
+              <a href="${v.map}" target="_blank" class="text-gray-400 hover:text-pink-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </a>
             </div>
-            <div class="mt-3 text-right">
-              <a class="link" href="${v.map}" target="_blank" rel="noopener">Open map</a>
+            
+            <div class="grid grid-cols-1 gap-2 text-sm text-gray-200 mt-3">
+              ${v.capacity ? `<div><span class="text-gray-400">Capacity:</span> ${v.capacity}</div>` : ''}
+              ${v.levels ? `<div><span class="text-gray-400">Levels:</span> ${v.levels}</div>` : ''}
+              ${v.exits ? `<div><span class="text-gray-400">Exits:</span> ${v.exits}</div>` : ''}
+              ${v.patio ? `<div><span class="text-gray-400">Patio:</span> ${v.patio}</div>` : ''}
+              ${v.bathrooms ? `<div><span class="text-gray-400">Bathrooms:</span> ${v.bathrooms}</div>` : ''}
+              ${v.parking ? `<div><span class="text-gray-400">Parking/Transit:</span> ${v.parking}</div>` : ''}
+              ${v.door ? `<div><span class="text-gray-400">Door/Security:</span> ${v.door}</div>` : ''}
+              ${v.access ? `<div><span class="text-gray-400">Wheelchair Access:</span> ${v.access}</div>` : ''}
+              ${v.sober ? `<div><span class="text-gray-400">Sober Options:</span> ${v.sober}</div>` : ''}
+              ${v.tips ? `<div><span class="text-gray-400">Tips:</span> ${v.tips}</div>` : ''}
             </div>
-          </details>
+          </div>
         `;
       }).join('');
     }
 
+    // Event listeners
     qEl.addEventListener('input', renderVenues);
     hoodEl.addEventListener('change', renderVenues);
-    renderVenues();
-
-    // Keyboard support (Enter/Space toggles)
-    document.addEventListener('keydown', e => {
-      if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'SUMMARY') {
-        e.preventDefault();
-        e.target.click();
-      }
+    
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        renderVenues();
+      });
     });
+
+    // Initial render
+    renderVenues();
   </script>
 </body>
 </html>
