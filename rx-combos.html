@@ -5,600 +5,566 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RX + Party Drug Combos | PLURderapolis</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg: #121212;
-      --card: #1b0b1b;
-      --ink: #eee;
-      --muted: #bcbcbc;
-      --accent: #bf00bf;
-      --accent-2: #e051ff;
-      --line: #440044;
-      --chip: #550055;
-      --shadow: 0 0 12px rgba(191,0,191,.25);
-      --teal: #00f0e0;
-      --pink: #ff1493;
+      --bg: #0a0a1a;
+      --card: #1a0930;
+      --text: #f0e6ff;
+      --accent1: #ff00aa;
+      --accent2: #00d0ff;
+      --accent3: #a355ff;
+      --danger: #ff2a6d;
+      --warning: #ffcc00;
+      --safe: #00ffaa;
+      --muted: #9d8fb3;
+      --border: #34294f;
+      --shadow: 0 4px 20px rgba(160, 0, 255, 0.15);
     }
     
-    * { box-sizing: border-box; }
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    
+    body {
       background: var(--bg);
-      color: var(--ink);
+      color: var(--text);
       font-family: 'Open Sans', sans-serif;
       line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(160, 0, 255, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 208, 255, 0.1) 0%, transparent 20%);
     }
     
-    .wrap {
-      max-width: 1000px;
-      margin: auto;
-      padding: 16px;
-    }
-    
-    header, footer {
-      text-align: center;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 1rem;
-      background-color: #1f1f1f;
-      margin-bottom: 1.5rem;
-      border-radius: 8px;
     }
     
-    h1, h2, h3 {
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--card) 0%, #25074d 100%);
+      padding: 1.5rem;
+      border-radius: 0 0 16px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    
+    .logo {
       font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
     }
     
-    h1 {
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-      color: var(--pink);
-      margin: 8px 0 6px;
+    .tagline {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
     }
     
-    h2 {
-      color: var(--accent-2);
+    /* Navigation */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      background: linear-gradient(135deg, var(--accent3) 0%, #7a3dcc 100%);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(160, 0, 255, 0.3);
+    }
+    
+    .btn-secondary {
+      background: rgba(163, 85, 255, 0.2);
+      border: 1px solid var(--accent3);
+    }
+    
+    /* Content Sections */
+    .section {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent2);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    /* Combo Cards */
+    .combo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
       margin-top: 1.5rem;
     }
     
-    a {
-      color: var(--teal);
-      text-decoration: underline;
+    .combo-card {
+      background: rgba(42, 15, 74, 0.6);
+      border-radius: 12px;
+      padding: 1.2rem;
+      border-left: 4px solid var(--accent3);
+      transition: transform 0.3s ease;
     }
     
-    a:hover {
-      color: #a0ffff;
+    .combo-card:hover {
+      transform: translateY(-3px);
     }
     
-    .back-btn {
-      display: inline-block;
-      margin-bottom: 1rem;
-      padding: 0.5rem 1rem;
-      background: var(--accent);
-      color: white;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    
-    .back-btn:hover {
-      background: var(--accent-2);
-      color: white;
-    }
-    
-    /* Combo sections styling */
-    .combo-section {
-      margin-bottom: 2rem;
-    }
-    
-    details {
-      background: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-    
-    summary {
-      font-weight: bold;
+    .combo-card h3 {
       font-size: 1.2rem;
-      cursor: pointer;
-      color: var(--teal);
+      margin-bottom: 0.8rem;
+      color: var(--accent1);
     }
     
-    summary::-webkit-details-marker {
-      display: none;
-    }
-    
-    ul {
+    .combo-card ul {
       padding-left: 1.2rem;
-      margin-top: 0.5rem;
+      color: var(--muted);
     }
     
-    /* Tool styling */
-    .tool {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: var(--shadow);
-      margin: 2rem 0;
+    .combo-card li {
+      margin-bottom: 0.5rem;
     }
     
-    .tool h2 {
-      font-size: 1.1rem;
-      margin: .2rem 0 .6rem;
-      color: var(--accent-2);
+    /* Tool */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
     }
     
-    .row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    @media (min-width: 768px) {
+      .tool-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
     
-    .sel {
-      flex: 1 1 180px;
-      min-width: 160px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    .select-wrapper {
+      position: relative;
     }
     
-    label {
-      font-weight: 700;
-      color: var(--accent);
-      font-size: .9rem;
-    }
-    
-    select {
+    .select-wrapper select {
       width: 100%;
-      padding: .6rem .7rem;
-      border: 1px solid var(--line);
+      padding: 0.9rem;
+      background: rgba(42, 15, 74, 0.6);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      background: #220022;
-      color: var(--ink);
+      color: var(--text);
+      font-size: 1rem;
       appearance: none;
     }
     
-    button.primary {
-      background: var(--accent);
-      color: #fff;
-      border: 0;
-      border-radius: 10px;
-      padding: .7rem 1rem;
-      font-weight: 800;
-      cursor: pointer;
+    .select-wrapper::after {
+      content: "▼";
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent2);
+      pointer-events: none;
     }
     
-    button.primary:active {
-      transform: translateY(1px);
-    }
-    
-    .icons {
-      font-size: 1.05rem;
-      opacity: .95;
-    }
-    
-    .result {
-      margin-top: 10px;
-      border: 1px dashed var(--line);
-      border-radius: 12px;
-      padding: 10px;
-      background: #170717;
-    }
-    
-    .result h3 {
-      margin: .2rem 0 .4rem;
-      color: #ffd6ff;
-      font-size: 1rem;
-    }
-    
-    .pairs {
-      margin: .4rem 0 0;
-      padding-left: 18px;
-    }
-    
-    .legend {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 8px 0 0;
-      font-size: .95rem;
-      color: var(--muted);
-    }
-    
-    .legend span {
-      display: inline-flex;
-      gap: 6px;
-      align-items: center;
-      background: #200120;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: .25rem .6rem;
-    }
-    
-    /* New sections styling */
-    .section-header {
-      text-align: center;
-      margin: 2.5rem 0 1.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--accent);
-    }
-    
-    .slide {
-      background: var(--card);
+    .result-box {
+      background: rgba(42, 15, 74, 0.8);
       border-radius: 12px;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow);
+      margin-top: 1.5rem;
+      border: 1px solid var(--border);
     }
     
-    .slide h3 {
-      color: var(--teal);
-      margin-top: 0;
+    .risk-high {
+      color: var(--danger);
+      font-weight: bold;
     }
     
-    .warning {
-      background: #330000;
-      border-left: 4px solid #ff3333;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 4px;
+    .risk-medium {
+      color: var(--warning);
+      font-weight: bold;
     }
     
-    .tip {
-      background: #003300;
-      border-left: 4px solid #33ff33;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 4px;
+    .risk-low {
+      color: var(--safe);
+      font-weight: bold;
     }
     
-    /* Footer styling */
+    /* Info Cards */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .info-card {
+      background: rgba(42, 15, 74, 0.6);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+    }
+    
+    .info-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent2);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Footer */
     footer {
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: .9rem;
-      padding: 18px;
-      margin-top: 16px;
       text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
     }
     
-    .pill {
-      display: inline-block;
-      background: var(--chip);
-      padding: .22rem .6rem;
-      border-radius: 999px;
-      font-weight: 800;
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent1) 0%, #d1007f 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      opacity: 0.8;
+      transition: opacity 0.3s;
+      z-index: 1000;
     }
     
-    .legal {
-      font-size: 0.8rem;
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #1a1a1a;
-      border-radius: 8px;
+    .back-to-top:hover {
+      opacity: 1;
+    }
+    
+    /* Share buttons */
+    .share-section {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: rgba(163, 85, 255, 0.2);
+      color: var(--text);
+      border: 1px solid var(--accent3);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .share-btn:hover {
+      background: rgba(163, 85, 255, 0.4);
     }
     
     /* Mobile adjustments */
-    @media (max-width: 640px) {
-      .tool {
-        position: static;
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.8rem;
       }
       
-      .legend {
-        font-size: .9rem;
+      .logo {
+        font-size: 1.8rem;
       }
       
-      .row {
+      .combo-grid,
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .section {
+        padding: 1.2rem;
+      }
+      
+      .nav-buttons {
         flex-direction: column;
+        gap: 0.8rem;
       }
       
-      .slide {
-        padding: 1rem;
+      .btn {
+        justify-content: center;
       }
     }
     
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.6rem;
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    /* Print styles */
+    @media print {
+      .nav-buttons,
+      .back-to-top,
+      .share-section {
+        display: none;
       }
       
-      h2 {
-        font-size: 1.3rem;
+      body {
+        background: white;
+        color: black;
       }
       
-      summary {
-        font-size: 1.1rem;
+      .section {
+        border: 1px solid #ddd;
+        box-shadow: none;
+        page-break-inside: avoid;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <header>
-      <a href="javascript:history.back()" class="back-btn">← Back</a>
-      <h1>🍑 RX + Party Drug Combos</h1>
-      <p>Polydrug risks people aren't talking about enough</p>
+      <h1 class="logo">PLURderapolis</h1>
+      <p class="tagline">Harm Reduction & Community Safety</p>
+      
+      <div class="nav-buttons">
+        <a href="javascript:history.back()" class="btn">
+          <i class="fas fa-arrow-left"></i> Back
+        </a>
+        <button onclick="window.print()" class="btn btn-secondary">
+          <i class="fas fa-download"></i> Download Guide
+        </button>
+      </div>
     </header>
 
     <main>
-      <!-- COLLAPSIBLE SECTIONS -->
-      <section class="combo-section">
-        <details open>
-          <summary>💊 SSRI / SNRI + Party Drugs</summary>
-          <p><em>(Lexapro, Zoloft, Prozac, Effexor, Cymbalta)</em></p>
-          <ul>
-            <li><strong>+ MDMA / Molly:</strong> Dulls the high → redosing → serotonin syndrome.</li>
-            <li><strong>+ LSD / Shrooms:</strong> Flat visuals or erratic tripping. Tempts unsafe stacking.</li>
-            <li><strong>+ Cocaine / Adderall:</strong> Anxiety spike, heart risk, mood crashes.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>💥 Wellbutrin + Stimulants</summary>
-          <ul>
-            <li><strong>+ MDMA / Coke:</strong> Lowers seizure threshold, anxiety and panic risk.</li>
-            <li><strong>+ Alcohol:</strong> Blackouts, impulsivity, seizures more likely.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>🛑 Benzos + Depressants</summary>
-          <ul>
-            <li><strong>+ Opiates:</strong> Breathing stops. People die in their sleep.</li>
-            <li><strong>+ Alcohol:</strong> Common, still deadly. Respiratory depression.</li>
-            <li><strong>+ K / GHB:</strong> Memory loss, vomit risk, loss of control.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>🌿 ADHD Meds + Stimulants</summary>
-          <ul>
-            <li><strong>+ MDMA / Coke / Meth:</strong> Overheating, heart stress, stroke potential.</li>
-            <li><strong>+ Alcohol:</strong> Blackouts, impaired judgment, risk-taking.</li>
-            <li><strong>+ Psychedelics:</strong> Heightened confusion, intensity.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>🧬 Antipsychotics + Psychedelics</summary>
-          <p><em>(Seroquel, Abilify, Risperdal, Latuda)</em></p>
-          <ul>
-            <li>May block trips but cause rebound panic/psychosis.</li>
-            <li>Redosing on MDMA can cause serotonin overload.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>🌀 Mood Stabilizers + Psychedelics</summary>
-          <p><em>(Lamictal, Lithium)</em></p>
-          <ul>
-            <li>Lamictal = flat or dysphoric trips.</li>
-            <li>Lithium = 🚫 Seizures, erratic reactions, even death.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>😴 Sleep Meds + Downers</summary>
-          <ul>
-            <li><strong>+ Alcohol or Benzos:</strong> Risk of blackout, breathing issues.</li>
-            <li><strong>+ K or GHB:</strong> Dangerous sedation and vomit risk.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>⚠️ Gabapentin + Alcohol or Opiates</summary>
-          <ul>
-            <li>Enhances sedation and euphoria → OD risk increases fast.</li>
-          </ul>
-        </details>
-
-        <details>
-          <summary>🍊 Grapefruit + Everything</summary>
-          <ul>
-            <li>Blocks liver enzyme CYP3A4 → drugs build up in your system.</li>
-            <li><strong>Risk:</strong> Serotonin syndrome, overdose, seizures.</li>
-          </ul>
-        </details>
-      </section>
-
-      <!-- HORMONES AND BIRTH CONTROL SECTION -->
-      <div class="section-header">
-        <h2>🌸 Hormones, Birth Control, and Club Drugs</h2>
-        <p>Why it matters: Most rave drug info isn't made with AFAB folks in mind</p>
-      </div>
-
-      <div class="slide">
-        <h3>How Birth Control and Hormones Affect Your Roll (and More)</h3>
-        <p>Hormones, cycles, and birth control can change how substances hit, and people deserve to know that.</p>
-      </div>
-
-      <div class="slide">
-        <h3>Estrogen + Stimulants</h3>
-        <ul>
-          <li>Higher estrogen levels (like mid-cycle or on some birth controls) can intensify effects of MDMA and other stimulants.</li>
-          <li>This can increase risk of overheating, serotonin syndrome, or comedown crash.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Hormones + Psychedelics</h3>
-        <ul>
-          <li>Hormonal shifts can change how you experience shrooms, LSD, or DMT.</li>
-          <li>Some users report stronger visuals or more emotional depth around ovulation or during PMS.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Birth Control + Liver Enzymes</h3>
-        <ul>
-          <li>Some substances (like speed or certain RCs) compete for liver enzymes.</li>
-          <li>Hormonal BC can slow or intensify metabolization—meaning unpredictable roll length or strength.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>No Research, No Protection</h3>
-        <ul>
-          <li>Clinical drug trials often exclude AFAB folks or don't study interactions with HRT/BC.</li>
-          <li>That means DIY harm reduction matters more than ever.</li>
-        </ul>
-      </div>
-
-      <div class="slide tip">
-        <h3>What You Can Do</h3>
-        <ul>
-          <li>Track your cycle alongside substance use</li>
-          <li>Use lower doses at high-estrogen times</li>
-          <li>Talk openly about what you're taking</li>
-          <li>Share your experience to help others</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Your Body Isn't a Liability</h3>
-        <p>It's just been ignored by the system. Follow @PLURderapolis for more femme-focused harm reduction info.</p>
-      </div>
-
-      <!-- MENTAL HEALTH MEDS EXPANDED SECTION -->
-      <div class="section-header">
-        <h2>🧠 The Reality of Substance Interactions With Mental Health Meds</h2>
-        <p>Mixing Party Drugs & Mental Health Meds? What You Really Need to Know</p>
-      </div>
-
-      <div class="slide warning">
-        <h3>SSRIs (like Lexapro, Zoloft, Prozac) + Stimulants</h3>
-        <ul>
-          <li>Can increase risk of serotonin syndrome — symptoms include agitation, rapid heart rate, sweating, confusion, and in severe cases, seizures or death.</li>
-          <li>Stimulants (cocaine, MDMA) already boost serotonin—mixing can push levels dangerously high.</li>
-          <li>Always watch for sudden changes in mood, heart rate, or temperature.</li>
-        </ul>
-      </div>
-
-      <div class="slide warning">
-        <h3>Benzodiazepines (Xanax, Valium) + Alcohol + Other Depressants</h3>
-        <ul>
-          <li>Combining benzos with alcohol or opioids causes compounded sedation and respiratory depression.</li>
-          <li>This combo can lead to unconsciousness or fatal overdose.</li>
-          <li>Narcan only reverses opioid overdose—not benzo or alcohol sedation.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Mood Stabilizers & Antipsychotics (Lithium, Abilify, Seroquel) + Drugs</h3>
-        <ul>
-          <li>Many of these meds alter metabolism of party drugs, making effects unpredictable.</li>
-          <li>Mixing with stimulants can cause heart issues or severe anxiety.</li>
-          <li>Combining with depressants may worsen sedation or lower blood pressure dangerously.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Other Risks to Know:</h3>
-        <ul>
-          <li>Psychiatric meds can blunt or intensify drug effects—leading to accidental overdose or harmful behaviors.</li>
-          <li>Some meds affect the liver's ability to process substances, raising toxicity.</li>
-          <li>Discontinuing or missing psychiatric meds while partying risks relapse or severe mental health symptoms.</li>
-        </ul>
-      </div>
-
-      <div class="slide tip">
-        <h3>Harm Reduction Tips:</h3>
-        <ul>
-          <li>Always talk with your prescriber about your drug use—no shame, just facts.</li>
-          <li>Avoid mixing stimulants and SSRIs without medical advice.</li>
-          <li>Carry naloxone if you use opioids or benzos with other depressants.</li>
-          <li>Have a trusted sober friend aware of your meds and signs of overdose or distress.</li>
-          <li>Test your substances whenever possible.</li>
-        </ul>
-      </div>
-
-      <div class="slide">
-        <h3>Mental health meds save lives</h3>
-        <p>Treat them like the serious business they are. In Minnesota's rave scene, misinformation kills. Stay informed, stay cautious, and protect yourself and your crew.</p>
-      </div>
-
-      <!-- INTERACTION TOOL -->
-      <section class="tool" aria-label="Polydrug Interaction Checker">
-        <h2>🎛️ Interaction Checker</h2>
-        <p>Select two substances or meds to see the risk:</p>
-        <form id="comboForm">
-          <div class="row">
-            <div class="sel">
-              <label for="drug1">Substance 1:</label>
-              <select id="drug1">
-                <option value="">— Select —</option>
-                <option value="MDMA">MDMA</option>
-                <option value="Alcohol">Alcohol</option>
-                <option value="Cocaine">Cocaine</option>
-                <option value="Cannabis">Cannabis</option>
-                <option value="Ketamine">Ketamine</option>
-                <option value="Opioids">Opioids</option>
-                <option value="Benzos">Benzos</option>
-                <option value="SSRIs">SSRIs</option>
-                <option value="ADHD Meds">ADHD Meds</option>
-                <option value="Wellbutrin">Wellbutrin</option>
-                <option value="Antipsychotics">Antipsychotics</option>
-                <option value="Mood Stabilizers">Mood Stabilizers</option>
-                <option value="Trazodone">Trazodone</option>
-                <option value="Gabapentin">Gabapentin</option>
-              </select>
-            </div>
-
-            <div class="sel">
-              <label for="drug2">Substance 2:</label>
-              <select id="drug2">
-                <option value="">— Select —</option>
-                <option value="MDMA">MDMA</option>
-                <option value="Alcohol">Alcohol</option>
-                <option value="Cocaine">Cocaine</option>
-                <option value="Cannabis">Cannabis</option>
-                <option value="Ketamine">Ketamine</option>
-                <option value="Opioids">Opioids</option>
-                <option value="Benzos">Benzos</option>
-                <option value="SSRIs">SSRIs</option>
-                <option value="ADHD Meds">ADHD Meds</option>
-                <option value="Wellbutrin">Wellbutrin</option>
-                <option value="Antipsychotics">Antipsychotics</option>
-                <option value="Mood Stabilizers">Mood Stabilizers</option>
-                <option value="Trazodone">Trazodone</option>
-                <option value="Gabapentin">Gabapentin</option>
-              </select>
-            </div>
+      <section class="section animate">
+        <h2 class="section-title"><i class="fas fa-pills"></i> RX + Party Drug Combos</h2>
+        <p>Understanding polydrug risks that aren't discussed enough in the community.</p>
+        
+        <div class="combo-grid">
+          <div class="combo-card">
+            <h3><i class="fas fa-capsules"></i> SSRI/SNRI + Party Drugs</h3>
+            <ul>
+              <li><strong>+ MDMA/Molly:</strong> Dulls the high → redosing → serotonin syndrome</li>
+              <li><strong>+ LSD/Shrooms:</strong> Flat visuals or erratic tripping</li>
+              <li><strong>+ Cocaine/Adderall:</strong> Anxiety spike, heart risk</li>
+            </ul>
           </div>
-        </form>
-        <div id="comboResult" class="result"></div>
+          
+          <div class="combo-card">
+            <h3><i class="fas fa-bolt"></i> Wellbutrin + Stimulants</h3>
+            <ul>
+              <li><strong>+ MDMA/Coke:</strong> Lowers seizure threshold</li>
+              <li><strong>+ Alcohol:</strong> Blackouts, impulsivity, seizures</li>
+            </ul>
+          </div>
+          
+          <div class="combo-card">
+            <h3><i class="fas fa-bed"></i> Benzos + Depressants</h3>
+            <ul>
+              <li><strong>+ Opiates:</strong> Breathing stops → fatal risk</li>
+              <li><strong>+ Alcohol:</strong> Respiratory depression</li>
+              <li><strong>+ K/GHB:</strong> Memory loss, vomit risk</li>
+            </ul>
+          </div>
+          
+          <div class="combo-card">
+            <h3><i class="fas fa-brain"></i> ADHD Meds + Stimulants</h3>
+            <ul>
+              <li><strong>+ MDMA/Coke/Meth:</strong> Overheating, heart stress</li>
+              <li><strong>+ Alcohol:</strong> Blackouts, impaired judgment</li>
+              <li><strong>+ Psychedelics:</strong> Heightened confusion</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
-      <!-- LEGAL DISCLAIMER -->
-      <div class="legal">
-        <h3>⚠️ Legal & Medical Disclaimer</h3>
-        <p>This content is for educational and harm reduction purposes only. It does not constitute medical advice and is not a substitute for professional medical consultation. The information provided is based on harm reduction resources and community knowledge, but may not be complete or applicable to all individuals.</p>
-        <p>Drug use carries inherent risks, and combining substances always increases these risks. Laws regarding drug use vary by location. Always comply with local regulations.</p>
-        <p>If you or someone you know is experiencing a medical emergency related to substance use, call emergency services immediately.</p>
-        <p>© 2025 PLURderapolis. All information is provided "as is" without warranty of any kind.</p>
+      <section class="section animate">
+        <h2 class="section-title"><i class="fas fa-heart"></i> Hormones, Birth Control & Club Drugs</h2>
+        <p>Why it matters: Most rave drug info isn't made with AFAB folks in mind.</p>
+        
+        <div class="info-cards">
+          <div class="info-card">
+            <h3><i class="fas fa-venus"></i> Estrogen + Stimulants</h3>
+            <p>Higher estrogen levels can intensify effects of MDMA and other stimulants, increasing risk of overheating, serotonin syndrome, or comedown crash.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-cloud-sun"></i> Hormones + Psychedelics</h3>
+            <p>Hormonal shifts can change how you experience shrooms, LSD, or DMT. Some report stronger visuals or more emotional depth around ovulation or during PMS.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-liver"></i> Birth Control + Liver Enzymes</h3>
+            <p>Some substances compete for liver enzymes. Hormonal BC can slow or intensify metabolization—meaning unpredictable roll length or strength.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-flask"></i> Research Gap</h3>
+            <p>Clinical drug trials often exclude AFAB folks or don't study interactions with HRT/BC. That means DIY harm reduction matters more than ever.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section animate">
+        <h2 class="section-title"><i class="fas fa-brain"></i> Mental Health Meds + Party Drugs</h2>
+        <p>Mixing psychiatric medications with recreational substances requires special caution.</p>
+        
+        <div class="info-cards">
+          <div class="info-card">
+            <h3><i class="fas fa-exclamation-triangle"></i> SSRIs + Stimulants</h3>
+            <p>Increased risk of serotonin syndrome — symptoms include agitation, rapid heart rate, sweating, confusion, and in severe cases, seizures or death.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-skull-crossbones"></i> Benzos + Depressants</h3>
+            <p>Combining benzos with alcohol or opioids causes compounded sedation and respiratory depression, potentially leading to unconsciousness or fatal overdose.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-balance-scale"></i> Mood Stabilizers & Antipsychotics</h3>
+            <p>Many of these meds alter metabolism of party drugs, making effects unpredictable. Can cause heart issues or severe anxiety when mixed with stimulants.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-tips"></i> Harm Reduction Tips</h3>
+            <ul>
+              <li>Talk with your prescriber about your drug use</li>
+              <li>Avoid mixing stimulants and SSRIs</li>
+              <li>Carry naloxone if using opioids or benzos</li>
+              <li>Have a trusted sober friend aware of your meds</li>
+              <li>Test your substances whenever possible</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section animate">
+        <h2 class="section-title"><i class="fas fa-search"></i> Interaction Checker</h2>
+        <p>Select two substances to check potential interactions:</p>
+        
+        <div class="tool-grid">
+          <div class="select-wrapper">
+            <select id="drug1">
+              <option value="">— Select First Substance —</option>
+              <option value="MDMA">MDMA</option>
+              <option value="Alcohol">Alcohol</option>
+              <option value="Cocaine">Cocaine</option>
+              <option value="Cannabis">Cannabis</option>
+              <option value="Ketamine">Ketamine</option>
+              <option value="Opioids">Opioids</option>
+              <option value="Benzos">Benzos</option>
+              <option value="SSRIs">SSRIs</option>
+              <option value="ADHD Meds">ADHD Meds</option>
+              <option value="Wellbutrin">Wellbutrin</option>
+            </select>
+          </div>
+          
+          <div class="select-wrapper">
+            <select id="drug2">
+              <option value="">— Select Second Substance —</option>
+              <option value="MDMA">MDMA</option>
+              <option value="Alcohol">Alcohol</option>
+              <option value="Cocaine">Cocaine</option>
+              <option value="Cannabis">Cannabis</option>
+              <option value="Ketamine">Ketamine</option>
+              <option value="Opioids">Opioids</option>
+              <option value="Benzos">Benzos</option>
+              <option value="SSRIs">SSRIs</option>
+              <option value="ADHD Meds">ADHD Meds</option>
+              <option value="Wellbutrin">Wellbutrin</option>
+            </select>
+          </div>
+        </div>
+        
+        <div id="comboResult" class="result-box">
+          <p>Select two substances to see interaction results.</p>
+        </div>
+      </section>
+
+      <div class="share-section">
+        <a href="#" class="share-btn" onclick="sharePage()">
+          <i class="fas fa-share-alt"></i> Share this Page
+        </a>
+        <button onclick="window.print()" class="share-btn">
+          <i class="fas fa-file-pdf"></i> Save as PDF
+        </button>
       </div>
     </main>
 
     <footer>
-      <p><strong>Disclaimer:</strong> This page is for harm reduction and educational purposes. It does not promote drug use. Mixing drugs is always risky. Use with care, stay hydrated, and look out for each other.</p>
-      <p>© 2025 PLURderapolis • <span class="pill">Stay safe. Stay kind.</span></p>
+      <p><strong>Disclaimer:</strong> This information is for harm reduction purposes only and does not constitute medical advice. Combining substances always carries risks.</p>
+      <p>© 2025 PLURderapolis • <i class="fas fa-heart"></i> Stay safe, stay informed</p>
     </footer>
+
+    <a href="#" class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </a>
   </div>
 
   <script>
+    // Interaction checker
     const combos = {
-      "MDMA+SSRIs": { risk: "🔴 Caution", note: "Can dull effects; redosing risks serotonin syndrome." },
-      "MDMA+Alcohol": { risk: "🔴 Caution", note: "Dehydration, overheating, masking effects." },
-      "Alcohol+Benzos": { risk: "☠️ Deadly", note: "Both slow your nervous system. High overdose risk." },
-      "Alcohol+Gabapentin": { risk: "❌ Dangerous", note: "Sedation and memory loss increase." },
-      "Opioids+Benzos": { risk: "☠️ Deadly", note: "Most common fatal combo. Risk of not waking up." },
-      "Ketamine+Benzos": { risk: "❌ Unsafe", note: "Respiratory suppression, blackouts." },
-      "ADHD Meds+MDMA": { risk: "🔴 Caution", note: "Dopamine overload, overheating, intense crash." },
-      "Wellbutrin+Alcohol": { risk: "❌ Unsafe", note: "Lowers seizure threshold, increases impulsivity." },
-      "SSRIs+LSD": { risk: "🔴 Variable", note: "Dulls visuals or creates erratic effects. Risky redosing." },
+      "MDMA+SSRIs": { risk: "high", note: "Can dull effects; redosing risks serotonin syndrome." },
+      "MDMA+Alcohol": { risk: "medium", note: "Dehydration, overheating, masking effects." },
+      "Alcohol+Benzos": { risk: "high", note: "Both slow your nervous system. High overdose risk." },
+      "Alcohol+Gabapentin": { risk: "high", note: "Sedation and memory loss increase." },
+      "Opioids+Benzos": { risk: "high", note: "Most common fatal combo. Risk of not waking up." },
+      "Ketamine+Benzos": { risk: "medium", note: "Respiratory suppression, blackouts." },
+      "ADHD Meds+MDMA": { risk: "medium", note: "Dopamine overload, overheating, intense crash." },
+      "Wellbutrin+Alcohol": { risk: "medium", note: "Lowers seizure threshold, increases impulsivity." },
+      "SSRIs+LSD": { risk: "medium", note: "Dulls visuals or creates erratic effects. Risky redosing." },
     };
 
-    document.getElementById("comboForm").addEventListener("change", () => {
+    document.getElementById("drug1").addEventListener("change", checkCombo);
+    document.getElementById("drug2").addEventListener("change", checkCombo);
+
+    function checkCombo() {
       const drug1 = document.getElementById("drug1").value;
       const drug2 = document.getElementById("drug2").value;
       const result = document.getElementById("comboResult");
@@ -609,13 +575,72 @@
         const combo = combos[key] || combos[reverseKey];
 
         if (combo) {
-          result.innerHTML = `<strong>Risk:</strong> ${combo.risk}<br /><p>${combo.note}</p>`;
+          let riskClass = "risk-medium";
+          if (combo.risk === "high") riskClass = "risk-high";
+          if (combo.risk === "low") riskClass = "risk-low";
+          
+          result.innerHTML = `
+            <p><strong>Interaction:</strong> <span class="${riskClass}">${drug1} + ${drug2}</span></p>
+            <p>${combo.note}</p>
+            <p><strong>Risk Level:</strong> <span class="${riskClass}">${combo.risk.toUpperCase()}</span></p>
+          `;
         } else {
-          result.innerHTML = "<p>No specific data—but different drug classes = more risk. Start low, stay safe.</p>";
+          result.innerHTML = "<p>No specific data available. Remember: mixing substances always increases risks. Start low, go slow, and have a sober friend present.</p>";
         }
       } else {
-        result.innerHTML = "";
+        result.innerHTML = "<p>Select two substances to see interaction results.</p>";
       }
+    }
+
+    // Back to top button
+    const backToTopButton = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.style.display = 'flex';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+    
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Share page function
+    function sharePage() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'PLURderapolis Polydrug Safety Guide',
+          text: 'Check out this harm reduction resource about drug combinations and interactions',
+          url: window.location.href
+        })
+        .catch(error => {
+          console.log('Error sharing:', error);
+        });
+      } else {
+        alert('Share this page using: ' + window.location.href);
+      }
+    }
+
+    // Add animations when scrolling
+    document.addEventListener('DOMContentLoaded', function() {
+      const animatedElements = document.querySelectorAll('.animate');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      animatedElements.forEach(element => {
+        element.style.opacity = 0;
+        element.style.transition = 'opacity 0.5s ease-in-out';
+        observer.observe(element);
+      });
     });
   </script>
 </body>
