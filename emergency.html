@@ -4,169 +4,469 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emergency Response – Plurderapolis</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --bg-dark: #0a0a12;
+      --bg-card: #161625;
+      --accent-pink: #ff2b9e;
+      --accent-blue: #2bd6ff;
+      --accent-purple: #b967ff;
+      --text-light: #f0f0ff;
+      --text-gray: #a0a0c0;
+      --danger: #ff4757;
+      --warning: #ff9f43;
+      --success: #2ed573;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      background-color: #111;
-      color: #eee;
-      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 100%);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
-      padding: 1em;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
     }
-
-    h1, h2 {
-      color: #ff66cc;
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1rem;
     }
-
-    details {
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 6px;
-      margin-bottom: 1em;
-      padding: 1em;
+    
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 1.5rem;
     }
-
-    summary {
-      font-weight: bold;
-      font-size: 1.1em;
-      color: #fff;
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent-pink);
+      text-decoration: none;
+    }
+    
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .back-btn {
+      background: rgba(255,255,255,0.1);
+      color: var(--text-light);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    /* Emergency Action Bar */
+    .emergency-bar {
+      background: linear-gradient(135deg, var(--danger) 0%, #ff6b81 100%);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3);
+    }
+    
+    .emergency-bar h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .emergency-call {
+      display: inline-block;
+      background: white;
+      color: var(--danger);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      margin: 1rem 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .emergency-call:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    
+    /* Quick Access Grid */
+    .quick-access {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .quick-btn {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .quick-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      border-color: var(--accent-blue);
+    }
+    
+    .quick-btn i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-blue);
+    }
+    
+    .quick-btn h3 {
+      color: var(--accent-pink);
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Info Cards */
+    .info-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--accent-purple);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
       cursor: pointer;
     }
-
-    a {
-      color: #66ccff;
-      text-decoration: underline;
+    
+    .card-header h3 {
+      color: var(--accent-purple);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
+    
+    .card-content {
+      display: none;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .card-content.active {
+      display: block;
+    }
+    
     ul {
-      padding-left: 1.2em;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
     }
-
-    code {
-      background-color: #222;
-      padding: 0.2em 0.4em;
-      border-radius: 4px;
-      font-family: monospace;
-      color: #ffcc99;
+    
+    li {
+      margin-bottom: 0.5rem;
     }
-
+    
     .highlight {
-      color: #ff9999;
-      font-weight: bold;
+      color: var(--accent-pink);
+      font-weight: 700;
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-gray);
+    }
+    
+    .disclaimer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .quick-access {
+        grid-template-columns: 1fr;
+      }
+      
+      .emergency-bar h2 {
+        font-size: 1.5rem;
+      }
+      
+      .emergency-call {
+        font-size: 1.2rem;
+        padding: 0.7rem 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <a href="#" class="logo">
+        <div class="logo-img">P</div>
+        <span>Plurderapolis</span>
+      </a>
+      <button class="back-btn" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+    </header>
+    
+    <div class="emergency-bar">
+      <h2>🚨 Emergency Situation?</h2>
+      <p>If something goes wrong, minutes matter. Trust your instincts.</p>
+      <a href="tel:911" class="emergency-call">CALL 911 NOW</a>
+      <p>Minnesota's Good Samaritan Law protects you when seeking help</p>
+    </div>
+    
+    <div class="quick-access">
+      <div class="quick-btn" data-target="overdose">
+        <i class="fas fa-pills"></i>
+        <h3>Overdose Response</h3>
+        <p>Recognize and respond to drug-related emergencies</p>
+      </div>
+      
+      <div class="quick-btn" data-target="recovery">
+        <i class="fas fa-first-aid"></i>
+        <h3>Recovery Position</h3>
+        <p>How to position someone to keep airways clear</p>
+      </div>
+      
+      <div class="quick-btn" data-target="heatstroke">
+        <i class="fas fa-temperature-high"></i>
+        <h3>Heatstroke</h3>
+        <p>Recognize and respond to overheating emergencies</p>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('recovery')">
+        <h3><i class="fas fa-first-aid"></i> Recovery Position</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="recovery-content">
+        <ul>
+          <li>Lay the person on their side.</li>
+          <li>Bend top knee to stabilize.</li>
+          <li>Tilt head back slightly to keep airway open.</li>
+          <li>Make sure mouth is clear.</li>
+          <li>Stay with them and monitor breathing.</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('overdose')">
+        <h3><i class="fas fa-pills"></i> How to Spot an Overdose</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="overdose-content">
+        <p><strong>Opioids (fentanyl, heroin, oxy):</strong></p>
+        <ul>
+          <li>Pinpoint pupils</li>
+          <li>Blue lips/nails</li>
+          <li>Slow or no breathing</li>
+          <li>Snoring/gurgling sounds</li>
+          <li>Unresponsive</li>
+        </ul>
+        <p><span class="highlight">Use Narcan/Naloxone ASAP</span>. Spray into one nostril. Wait 2–3 minutes, give another if needed. Call 911.</p>
 
-  <h1>🚨 Emergency Response</h1>
-  <p>If something goes wrong, minutes matter. Trust your instincts. When in doubt, <span class="highlight">call 911</span>.</p>
+        <p><strong>Stimulants (MDMA, meth, coke):</strong></p>
+        <ul>
+          <li>Overheating, seizure, panic</li>
+          <li>Fast heartbeat, collapse</li>
+        </ul>
+        <p>Cool them down, use ice packs, move to shade, call 911.</p>
 
-  <details open>
-    <summary>🧍 Recovery Position</summary>
-    <ul>
-      <li>Lay the person on their side.</li>
-      <li>Bend top knee to stabilize.</li>
-      <li>Tilt head back slightly to keep airway open.</li>
-      <li>Make sure mouth is clear.</li>
-      <li>Stay with them and monitor breathing.</li>
-    </ul>
-  </details>
+        <p><strong>Alcohol poisoning:</strong></p>
+        <ul>
+          <li>Passed out & vomiting</li>
+          <li>Cold, clammy, blue skin</li>
+          <li>Slow or irregular breathing</li>
+        </ul>
+        <p>Put them in recovery position, monitor breathing, <span class="highlight">do NOT let them sleep it off</span>.</p>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('heatstroke')">
+        <h3><i class="fas fa-temperature-high"></i> Heatstroke</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="heatstroke-content">
+        <ul>
+          <li>Hot, dry, red skin (no sweat)</li>
+          <li>Dizziness, confusion, collapse</li>
+          <li>Very fast pulse</li>
+        </ul>
+        <p>Get them out of heat, use cold water & fans, hydrate if awake. Call 911.</p>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('seizures')">
+        <h3><i class="fas fa-head-side-vomit"></i> Seizures</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="seizures-content">
+        <ul>
+          <li>Clear the area, cushion head</li>
+          <li>Turn on side if possible</li>
+          <li><span class="highlight">Don't put anything in mouth</span></li>
+          <li>If it lasts over 5 mins → call 911</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('serotonin')">
+        <h3><i class="fas fa-brain"></i> Serotonin Syndrome</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="serotonin-content">
+        <ul>
+          <li>High fever, confusion</li>
+          <li>Muscle twitching/rigidity</li>
+          <li>Fast heart rate, sweating</li>
+        </ul>
+        <p>Usually from MDMA + antidepressants or multiple serotonergic drugs. Cool down. <span class="highlight">Call 911 immediately</span>.</p>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('other')">
+        <h3><i class="fas fa-first-aid"></i> Other Emergencies</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="other-content">
+        <p><strong>Panic attack (not medical emergency):</strong></p>
+        <ul>
+          <li>Breathe: 4 in – 4 hold – 4 out</li>
+          <li>Reassure, stay calm</li>
+          <li>Cold water helps</li>
+        </ul>
 
-  <details>
-    <summary>💊 How to Spot an Overdose</summary>
-    <strong>Opioids (fentanyl, heroin, oxy):</strong>
-    <ul>
-      <li>Pinpoint pupils</li>
-      <li>Blue lips/nails</li>
-      <li>Slow or no breathing</li>
-      <li>Snoring/gurgling sounds</li>
-      <li>Unresponsive</li>
-    </ul>
-    <p><span class="highlight">Use Narcan/Naloxone ASAP</span>. Spray into one nostril. Wait 2–3 minutes, give another if needed. Call 911.</p>
+        <p><strong>Choking:</strong></p>
+        <ul>
+          <li>If awake: Heimlich</li>
+          <li>If passed out: Call 911 + start CPR</li>
+        </ul>
 
-    <strong>Stimulants (MDMA, meth, coke):</strong>
-    <ul>
-      <li>Overheating, seizure, panic</li>
-      <li>Fast heartbeat, collapse</li>
-    </ul>
-    <p>Cool them down, use ice packs, move to shade, call 911.</p>
+        <p><strong>Allergic reaction:</strong></p>
+        <ul>
+          <li>Swelling, breathing trouble</li>
+          <li>Use EpiPen if available</li>
+          <li>Call 911</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card">
+      <div class="card-header" onclick="toggleCard('resources')">
+        <h3><i class="fas fa-notes-medical"></i> Resources & Preparedness</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="resources-content">
+        <p><strong>What to Carry:</strong></p>
+        <ul>
+          <li>Narcan (get it free <a href="https://www.health.state.mn.us/people/drugs/naloxone.html" target="_blank" style="color: var(--accent-blue);">here</a>)</li>
+          <li>Electrolytes or water</li>
+          <li>Emergency contacts</li>
+          <li>ID & condoms</li>
+          <li>Test strips (fentanyl, xylazine)</li>
+        </ul>
+        
+        <p><strong>Calling 911 in Minnesota:</strong></p>
+        <p>Don't be afraid to call. Minnesota's <a href="https://www.revisor.mn.gov/statutes/cite/604A.05" target="_blank" style="color: var(--accent-blue);">Good Samaritan Law</a> protects you from arrest for drug possession when seeking help during an OD.</p>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="disclaimer">
+        <p><strong>Legal Disclaimer:</strong> This information is for educational purposes only and does not constitute medical advice. While we strive to provide accurate information, always follow guidance from emergency medical professionals. Plurderapolis is not liable for any actions taken based on this information.</p>
+      </div>
+      <p>© 2023 Plurderapolis | Harm Reduction Community</p>
+    </footer>
+  </div>
 
-    <strong>Alcohol poisoning:</strong>
-    <ul>
-      <li>Passed out & vomiting</li>
-      <li>Cold, clammy, blue skin</li>
-      <li>Slow or irregular breathing</li>
-    </ul>
-    <p>Put them in recovery position, monitor breathing, <span class="highlight">do NOT let them sleep it off</span>.</p>
-  </details>
-
-  <details>
-    <summary>☀️ Heatstroke</summary>
-    <ul>
-      <li>Hot, dry, red skin (no sweat)</li>
-      <li>Dizziness, confusion, collapse</li>
-      <li>Very fast pulse</li>
-    </ul>
-    <p>Get them out of heat, use cold water & fans, hydrate if awake. Call 911.</p>
-  </details>
-
-  <details>
-    <summary>🩸 Seizures</summary>
-    <ul>
-      <li>Clear the area, cushion head</li>
-      <li>Turn on side if possible</li>
-      <li><span class="highlight">Don’t put anything in mouth</span></li>
-      <li>If it lasts over 5 mins → call 911</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>❤️‍🔥 Serotonin Syndrome</summary>
-    <ul>
-      <li>High fever, confusion</li>
-      <li>Muscle twitching/rigidity</li>
-      <li>Fast heart rate, sweating</li>
-    </ul>
-    <p>Usually from MDMA + antidepressants or multiple serotonergic drugs. Cool down. <span class="highlight">Call 911 immediately</span>.</p>
-  </details>
-
-  <details>
-    <summary>📞 Calling 911 in Minnesota</summary>
-    <p><strong>Don’t be afraid to call.</strong> Minnesota’s <a href="https://www.revisor.mn.gov/statutes/cite/604A.05" target="_blank">Good Samaritan Law</a> protects you from arrest for drug possession when seeking help during an OD.</p>
-  </details>
-
-  <details>
-    <summary>🧯 Other Emergencies</summary>
-    <strong>Panic attack (not medical emergency):</strong>
-    <ul>
-      <li>Breathe: 4 in – 4 hold – 4 out</li>
-      <li>Reassure, stay calm</li>
-      <li>Cold water helps</li>
-    </ul>
-
-    <strong>Choking:</strong>
-    <ul>
-      <li>If awake: Heimlich</li>
-      <li>If passed out: Call 911 + start CPR</li>
-    </ul>
-
-    <strong>Allergic reaction:</strong>
-    <ul>
-      <li>Swelling, breathing trouble</li>
-      <li>Use EpiPen if available</li>
-      <li>Call 911</li>
-    </ul>
-  </details>
-
-  <details>
-    <summary>🎒 What to Carry</summary>
-    <ul>
-      <li>Narcan (get it free <a href="https://www.health.state.mn.us/people/drugs/naloxone.html" target="_blank">here</a>)</li>
-      <li>Electrolytes or water</li>
-      <li>Emergency contacts</li>
-      <li>ID & condoms</li>
-      <li>Test strips (fentanyl, xylazine)</li>
-    </ul>
-  </details>
-
+  <script>
+    // Toggle card content
+    function toggleCard(cardId) {
+      const content = document.getElementById(`${cardId}-content`);
+      content.classList.toggle('active');
+      
+      // Close other cards when opening a new one
+      document.querySelectorAll('.card-content').forEach(card => {
+        if (card.id !== `${cardId}-content` && card.classList.contains('active')) {
+          card.classList.remove('active');
+        }
+      });
+    }
+    
+    // Quick access buttons
+    document.querySelectorAll('.quick-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-target');
+        
+        // Close all cards first
+        document.querySelectorAll('.card-content').forEach(card => {
+          card.classList.remove('active');
+        });
+        
+        // Open the target card
+        const targetContent = document.getElementById(`${target}-content`);
+        if (targetContent) {
+          targetContent.classList.add('active');
+          targetContent.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+    
+    // Open first card by default
+    window.addEventListener('load', () => {
+      document.getElementById('recovery-content').classList.add('active');
+    });
+  </script>
 </body>
 </html>
