@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community Health & Safety | Plurderapolis</title>
+    <title>Raver Survival Guide | Plurderapolis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-bg-color: #1a0b3b;
@@ -17,6 +18,7 @@
             --muted-pink: #ffb3ff;
             --text-color: #ffffff;
             --border-color: #5a2a86;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
         
         * {
@@ -26,14 +28,16 @@
         }
         
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: var(--main-bg-color);
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--main-bg-color) 0%, #0d051f 100%);
             color: var(--text-color);
             line-height: 1.6;
             padding: 0;
             margin: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            padding-bottom: 70px;
         }
         
         .container {
@@ -44,24 +48,32 @@
         }
         
         header {
-            background-color: rgba(0, 0, 0, 0.8);
+            background: linear-gradient(90deg, rgba(26, 11, 59, 0.95) 0%, rgba(44, 0, 62, 0.95) 100%);
             padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .logo {
-            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
             font-size: 1.5rem;
             color: var(--cyan);
             text-decoration: none;
             display: flex;
             align-items: center;
+            text-shadow: 0 0 10px rgba(0, 240, 240, 0.5);
+        }
+        
+        .logo span {
+            color: var(--pink);
         }
         
         .back-btn {
@@ -70,53 +82,127 @@
             display: flex;
             align-items: center;
             font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-3px);
         }
         
         .back-btn i {
             margin-right: 5px;
+            color: var(--cyan);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 30px 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(75, 0, 130, 0.3) 0%, transparent 70%);
+            z-index: -1;
         }
         
         h1 {
             color: var(--cyan);
-            font-size: 2rem;
-            text-align: center;
-            margin: 20px 0 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            margin: 10px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(0, 240, 240, 0.5);
         }
         
         .subtitle {
             text-align: center;
             color: var(--muted-pink);
-            margin: 0 0 20px;
-            font-size: 1rem;
+            margin: 0 0 25px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+        
+        .category-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0 30px;
+        }
+        
+        .category-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .category-badge:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .category-badge i {
+            margin-right: 5px;
+            color: var(--cyan);
+        }
+        
+        .accordion-container {
+            margin-bottom: 30px;
         }
         
         .accordion-button {
             width: 100%;
-            background: var(--btn-color);
+            background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
             color: var(--cyan);
             border: none;
             border-radius: 14px;
             cursor: pointer;
-            padding: 14px 18px;
-            margin: 10px 0 8px;
-            font-size: 16px;
+            padding: 18px 20px;
+            margin: 0 0 15px;
+            font-size: 18px;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background .2s ease;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            text-align: left;
         }
         
         .accordion-button:hover {
-            background: var(--btn-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .accordion-button[aria-expanded="true"] {
-            background: var(--btn-active);
+            background: linear-gradient(90deg, var(--btn-active) 0%, #a8329c 100%);
             border-radius: 14px 14px 0 0;
             margin-bottom: 0;
+        }
+        
+        .accordion-icon {
+            font-size: 24px;
+            margin-right: 12px;
+            flex-shrink: 0;
         }
         
         .accordion-chevron {
@@ -124,6 +210,11 @@
             font-size: 18px;
             line-height: 1;
             opacity: .9;
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-button[aria-expanded="true"] .accordion-chevron {
+            transform: rotate(180deg);
         }
         
         .accordion-content {
@@ -131,67 +222,102 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0 0 14px 14px;
-            padding: 16px 20px;
-            margin: -2px 0 12px;
+            padding: 20px;
+            margin: -5px 0 25px;
             line-height: 1.6;
-            font-size: 15px;
+            font-size: 16px;
+            box-shadow: var(--card-shadow);
         }
         
         .pocket {
-            margin: 0 0 8px;
-            padding-left: 18px;
+            margin: 0 0 20px;
+            padding-left: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
         }
         
         .pocket li {
-            margin: 6px 0;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .pocket li::before {
+            content: '•';
+            color: var(--cyan);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
         }
         
         .deep h4 {
-            margin: 14px 0 6px;
+            margin: 20px 0 10px;
             color: var(--cyan);
-            font-size: 15.5px;
+            font-size: 17px;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .deep ul {
-            padding-left: 18px;
-            margin: 8px 0;
+            padding-left: 20px;
+            margin: 10px 0;
         }
         
         .deep li {
-            margin: 6px 0;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .deep li::before {
+            content: '•';
+            color: var(--pink);
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
         }
         
         a {
             color: var(--pink);
             text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
         }
         
         a:hover {
+            color: var(--muted-pink);
             text-decoration: underline;
+            transform: translateY(-2px);
         }
         
         .note {
             color: var(--muted-pink);
             font-size: 14px;
+            font-style: italic;
+            margin: 15px 0;
+            padding-left: 15px;
+            border-left: 3px solid var(--cyan);
         }
         
         .btn {
             display: block;
             width: 100%;
-            background-color: var(--btn-color);
+            background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
             color: white;
-            padding: 15px;
-            margin: 25px 0;
+            padding: 16px;
+            margin: 30px 0;
             text-align: center;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 10px;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
         
         .btn:hover {
-            background-color: var(--btn-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             text-decoration: none;
         }
         
@@ -200,53 +326,40 @@
         }
         
         .disclaimer {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #aaa;
             text-align: center;
-            margin-top: 30px;
-            padding: 15px;
+            margin-top: 40px;
+            padding: 20px;
             border-top: 1px solid #333;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
         
         .share-btns {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 20px 0;
+            margin: 30px 0;
         }
         
         .share-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #333;
+            background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
             color: white;
             width: 50px;
             height: 50px;
             border-radius: 50%;
             font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
         
-        .download-section {
-            background-color: #222;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .download-btn {
-            display: inline-block;
-            background-color: #333;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 15px;
-        }
-        
-        .download-btn:hover {
-            background-color: #444;
+        .share-btn:hover {
+            transform: translateY(-5px) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .nav-footer {
@@ -254,11 +367,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.9);
+            background: linear-gradient(90deg, rgba(26, 11, 59, 0.95) 0%, rgba(44, 0, 62, 0.95) 100%);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            padding: 12px 0;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 90;
         }
         
         .nav-item {
@@ -268,264 +384,397 @@
             text-decoration: none;
             color: var(--text-color);
             font-size: 0.8rem;
+            transition: all 0.3s ease;
+            padding: 5px 15px;
+            border-radius: 15px;
         }
         
         .nav-item i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 4px;
             color: var(--cyan);
+            transition: all 0.3s ease;
         }
         
         .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-item.active i {
             color: var(--pink);
         }
         
-        @media (max-width: 600px) {
+        .nav-item span {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover {
+            transform: translateY(-3px);
+        }
+        
+        .nav-item:hover i {
+            color: var(--pink);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .accordion-content {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .container {
-                padding: 16px;
+                padding: 0 12px;
+            }
+            
+            header {
+                padding: 12px 0;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            h1 {
+                font-size: 1.9rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+            
+            .accordion-button {
+                font-size: 16px;
+                padding: 16px 18px;
+            }
+            
+            .accordion-content {
+                padding: 18px;
+            }
+            
+            .category-badges {
+                gap: 8px;
+            }
+            
+            .category-badge {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            .back-btn {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
             }
             
             .accordion-button {
                 font-size: 15px;
-                padding: 12px 14px;
+                padding: 14px 16px;
             }
             
             .accordion-content {
-                padding: 14px;
+                padding: 16px;
+                font-size: 15px;
             }
             
-            h1 {
-                font-size: 1.8rem;
+            .accordion-icon {
+                font-size: 20px;
+                margin-right: 10px;
             }
+            
+            .nav-item {
+                padding: 5px 10px;
+            }
+            
+            .nav-item i {
+                font-size: 1.1rem;
+            }
+            
+            .nav-item span {
+                font-size: 0.7rem;
+            }
+            
+            .share-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--main-bg-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--btn-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--btn-active);
         }
     </style>
 </head>
 <body>
     <header>
-        <a href="https://plurderapolis.org" class="logo">PLURDERAPOLIS</a>
+        <a href="https://plurderapolis.org" class="logo">PLUR<span>DERAPOLIS</span></a>
         <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
     </header>
 
     <div class="container">
-        <h1>Raver Survival Guide 🌈✨</h1>
-        <p class="subtitle">Pocket tips up top. Tap to drop down for the full survival manual. Link-outs go to your existing pages.</p>
-
-        <!-- HYDRATION -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>💧 Hydration</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="Hydration details">
-            <ul class="pocket">
-                <li>Sip, don't chug. Rotate electrolytes with water.</li>
-                <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
-                <li>Headache, dizziness, dry mouth = drink smart.</li>
-                <li><a href="emergency.html">Overheating steps →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Smart Hydration & Temperature</h4>
-                <ul>
-                    <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
-                    <li><b>Pre-hydrate:</b> go in hydrated; you can't "catch up" mid-heatstroke.</li>
-                    <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
-                    <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
-                    <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
-                    <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
-                    <li>More: <a href="emergency.html">Emergency</a></li>
-                </ul>
+        <div class="hero">
+            <h1>Raver Survival Guide 🌈✨</h1>
+            <p class="subtitle">Pocket tips up top. Tap to drop down for the full survival manual. Link-outs go to your existing pages.</p>
+            
+            <div class="category-badges">
+                <div class="category-badge"><i class="fas fa-heartbeat"></i> Health</div>
+                <div class="category-badge"><i class="fas fa-shield-alt"></i> Safety</div>
+                <div class="category-badge"><i class="fas fa-users"></i> Community</div>
             </div>
         </div>
 
-        <!-- PRE-SHOW PREP -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="Pre-show details">
-            <ul class="pocket">
-                <li>Eat carbs + protein. Sleep if you can.</li>
-                <li>Test, label, and pack your stash.</li>
-                <li>Plan your exit + meet spot.</li>
-                <li><a href="polydrug.html">Check combos first →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Tolerances, Allergy Checks, Testing</h4>
-                <ul>
-                    <li><b>Tolerance breaks:</b> Space MDMA (many use months between). Avoid daily benzos. Stims = crash cycles—plan off-days.</li>
-                    <li><b>Allergy test:</b> new batch → microdose test bump/capsule sliver; wait to assess.</li>
-                    <li><b>Test everything:</b> reagents + fent strips (even "trusted" powders). See <a href="polydrug.html">Polydrug Guide</a>.</li>
-                    <li><b>Stash plan:</b> label/color-code; separate look-alikes; no mystery pocket roulette.</li>
+        <div class="accordion-container">
+            <!-- HYDRATION -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-tint"></i> 💧 Hydration</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Hydration details">
+                <ul class="pocket">
+                    <li>Sip, don't chug. Rotate electrolytes with water.</li>
+                    <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
+                    <li>Headache, dizziness, dry mouth = drink smart.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Overheating steps →</a></li>
                 </ul>
-                <h4>Fuel, Sleep, Immunity</h4>
-                <ul>
-                    <li>Pre-meal 1–3h before: carbs + protein + a little salt (rice/pasta + tofu/chicken; pretzels).</li>
-                    <li>Sleep bank: one decent night before reduces crash intensity.</li>
-                    <li>Immunity: hydrate day-of; consider zinc/probiotics before long fests.</li>
-                </ul>
-                <h4>Pack & Plan</h4>
-                <ul>
-                    <li><b>Kit:</b> earplugs, electrolytes, charger, condoms + lube, saline spray, gum, blister pads, bandaids, small trash bag.</li>
-                    <li><b>Safety:</b> share location; set a dead-phone meet spot; confirm ride; screenshot tickets/maps.</li>
-                    <li>Review <a href="consent.html">Consent</a> and <a href="snorting.html">Route/Snorting</a>.</li>
-                </ul>
+                <div class="deep">
+                    <h4>Smart Hydration & Temperature</h4>
+                    <ul>
+                        <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
+                        <li><b>Pre-hydrate:</b> go in hydrated; you can't "catch up" mid-heatstroke.</li>
+                        <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
+                        <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
+                        <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
+                        <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
+                        <li>More: <a href="https://plurderapolis.org/emergency.html">Emergency</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- DURING THE SHOW -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🎶 During the Show</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="During the show details">
-            <ul class="pocket">
-                <li>Start low, go slow. Don't redose out of boredom.</li>
-                <li>Rotate: dance → chill → hydrate → breathe.</li>
-                <li>Own straw/spoon; don't share. Rinse after.</li>
-                <li>Earplugs. Every. Time.</li>
-                <li><a href="snorting.html">Snorting guide →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Pacing & Temp</h4>
-                <ul>
-                    <li>Wait at least an hour before considering more; most mishaps = stacking too soon.</li>
-                    <li>Heat checks: cool-downs each set; fans/airflow; step out if you feel off.</li>
-                    <li>Quick fuel: small salty snack can fix shakiness (low sugar/sodium).</li>
+            <!-- PRE-SHOW PREP -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-utensils"></i> 🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Pre-show details">
+                <ul class="pocket">
+                    <li>Eat carbs + protein. Sleep if you can.</li>
+                    <li>Test, label, and pack your stash.</li>
+                    <li>Plan your exit + meet spot.</li>
+                    <li><a href="https://plurderapolis.org/polydrug.html">Check combos first →</a></li>
                 </ul>
-                <h4>Red-Flag Combos (Why They're Bad)</h4>
-                <ul>
-                    <li><b>MDMA + alcohol</b> → dehydration/overheating.</li>
-                    <li><b>GHB + alcohol/benzos/opioids</b> → respiratory arrest.</li>
-                    <li><b>Cocaine + alcohol</b> → cocaethylene (toxic; heart/liver strain).</li>
-                    <li><b>Multiple depressants</b> (benzos, alcohol, opioids) → blackout + breathing suppression.</li>
-                    <li>Unsure? See <a href="polydrug.html">Polydrug</a>.</li>
-                </ul>
-                <h4>Route Safety</h4>
-                <ul>
-                    <li><b>Snorting:</b> grind fine; your own straw; alternate nostrils; saline rinse after; don't mix uppers.</li>
-                    <li><b>Oral</b> is generally gentler than insufflation. <b>Plugging</b> requires sterile tools + lube; avoid injecting.</li>
-                    <li>Details: <a href="snorting.html">Route/Snorting Guide</a>.</li>
-                </ul>
-                <h4>Psychedelics in Crowds</h4>
-                <ul>
-                    <li><b>Microdose</b> if you want to stay social; avoid "re-upping" in a chaotic crowd.</li>
-                    <li>Shrooms/ket/DMT can disorient: stick with your buddy, find a safe chill zone.</li>
-                </ul>
-                <h4>Grounding, Hearing, Sex</h4>
-                <ul>
-                    <li>Grounding: gum, textured object, splash cold water, breathe 4-in/6-out, sit with back to a wall.</li>
-                    <li>Hearing: foam plugs; tinnitus is permanent.</li>
-                    <li>Safe sex: condoms + lube; get STI testing post-festival. Respect <a href="consent.html">Consent</a>.</li>
-                </ul>
+                <div class="deep">
+                    <h4>Tolerances, Allergy Checks, Testing</h4>
+                    <ul>
+                        <li><b>Tolerance breaks:</b> Space MDMA (many use months between). Avoid daily benzos. Stims = crash cycles—plan off-days.</li>
+                        <li><b>Allergy test:</b> new batch → microdose test bump/capsule sliver; wait to assess.</li>
+                        <li><b>Test everything:</b> reagents + fent strips (even "trusted" powders). See <a href="https://plurderapolis.org/polydrug.html">Polydrug Guide</a>.</li>
+                        <li><b>Stash plan:</b> label/color-code; separate look-alikes; no mystery pocket roulette.</li>
+                    </ul>
+                    <h4>Fuel, Sleep, Immunity</h4>
+                    <ul>
+                        <li>Pre-meal 1–3h before: carbs + protein + a little salt (rice/pasta + tofu/chicken; pretzels).</li>
+                        <li>Sleep bank: one decent night before reduces crash intensity.</li>
+                        <li>Immunity: hydrate day-of; consider zinc/probiotics before long fests.</li>
+                    </ul>
+                    <h4>Pack & Plan</h4>
+                    <ul>
+                        <li><b>Kit:</b> earplugs, electrolytes, charger, condoms + lube, saline spray, gum, blister pads, bandaids, small trash bag.</li>
+                        <li><b>Safety:</b> share location; set a dead-phone meet spot; confirm ride; screenshot tickets/maps.</li>
+                        <li>Review <a href="https://plurderapolis.org/consent.html">Consent</a> and <a href="https://plurderapolis.org/snorting.html">Route/Snorting</a>.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- AFTER THE SHOW -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🛌 After the Show</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="After the show details">
-            <ul class="pocket">
-                <li>Electrolytes, gentle food, shower, sleep.</li>
-                <li>Saline rinse if you railed.</li>
-                <li>Crash kit by bed: water, snack, meds.</li>
-                <li><a href="aftercare.html">Aftercare guide →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Body Reset</h4>
-                <ul>
-                    <li>Electrolytes before bed & on waking; salty/protein snack (eggs, broth, toast, bananas).</li>
-                    <li>Sleep sanctuary: dark/cool room, eye mask, earplugs. Don't stack downers to "force sleep."</li>
-                    <li>Clean up: saline nasal rinse; shower; gentle skincare; moisturize.</li>
+            <!-- DURING THE SHOW -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-music"></i> 🎶 During the Show</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="During the show details">
+                <ul class="pocket">
+                    <li>Start low, go slow. Don't redose out of boredom.</li>
+                    <li>Rotate: dance → chill → hydrate → breathe.</li>
+                    <li>Own straw/spoon; don't share. Rinse after.</li>
+                    <li>Earplugs. Every. Time.</li>
+                    <li><a href="https://plurderapolis.org/snorting.html">Snorting guide →</a></li>
                 </ul>
-                <h4>Serotonin & Supplements</h4>
-                <ul>
-                    <li>Tryptophan foods: turkey, eggs, bananas, nuts.</li>
-                    <li>5-HTP <b>only after</b> rolling (never before MDMA). Avoid if it conflicts with your meds.</li>
-                    <li>Magnesium for jaw/clench; vitamin C for stress recovery.</li>
-                </ul>
-                <h4>Mood & Integration</h4>
-                <ul>
-                    <li>Post-rave crash (low mood, anxiety, derealization) is common and usually passes.</li>
-                    <li>Journal or voice note; sunlight walk; text a friend to debrief.</li>
-                    <li>If it lingers, see <a href="mentalhealth.html">Mental Health</a>.</li>
-                </ul>
+                <div class="deep">
+                    <h4>Pacing & Temp</h4>
+                    <ul>
+                        <li>Wait at least an hour before considering more; most mishaps = stacking too soon.</li>
+                        <li>Heat checks: cool-downs each set; fans/airflow; step out if you feel off.</li>
+                        <li>Quick fuel: small salty snack can fix shakiness (low sugar/sodium).</li>
+                    </ul>
+                    <h4>Red-Flag Combos (Why They're Bad)</h4>
+                    <ul>
+                        <li><b>MDMA + alcohol</b> → dehydration/overheating.</li>
+                        <li><b>GHB + alcohol/benzos/opioids</b> → respiratory arrest.</li>
+                        <li><b>Cocaine + alcohol</b> → cocaethylene (toxic; heart/liver strain).</li>
+                        <li><b>Multiple depressants</b> (benzos, alcohol, opioids) → blackout + breathing suppression.</li>
+                        <li>Unsure? See <a href="https://plurderapolis.org/polydrug.html">Polydrug</a>.</li>
+                    </ul>
+                    <h4>Route Safety</h4>
+                    <ul>
+                        <li><b>Snorting:</b> grind fine; your own straw; alternate nostrils; saline rinse after; don't mix uppers.</li>
+                        <li><b>Oral</b> is generally gentler than insufflation. <b>Plugging</b> requires sterile tools + lube; avoid injecting.</li>
+                        <li>Details: <a href="https://plurderapolis.org/snorting.html">Route/Snorting Guide</a>.</li>
+                    </ul>
+                    <h4>Psychedelics in Crowds</h4>
+                    <ul>
+                        <li><b>Microdose</b> if you want to stay social; avoid "re-upping" in a chaotic crowd.</li>
+                        <li>Shrooms/ket/DMT can disorient: stick with your buddy, find a safe chill zone.</li>
+                    </ul>
+                    <h4>Grounding, Hearing, Sex</h4>
+                    <ul>
+                        <li>Grounding: gum, textured object, splash cold water, breathe 4-in/6-out, sit with back to a wall.</li>
+                        <li>Hearing: foam plugs; tinnitus is permanent.</li>
+                        <li>Safe sex: condoms + lube; get STI testing post-festival. Respect <a href="https://plurderapolis.org/consent.html">Consent</a>.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- EMERGENCY BASICS -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="Emergency details">
-            <ul class="pocket">
-                <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
-                <li>Recovery position if unconscious but breathing.</li>
-                <li>Carry naloxone; test strips save lives.</li>
-                <li><a href="emergency.html">Emergency steps →</a> • <a href="overdose.html">Overdose guide →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Overdose Signs</h4>
-                <ul>
-                    <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
-                    <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
-                    <li><b>Alcohol/benzos/GHB:</b> can't wake, vomit + unresponsive, shallow breathing.</li>
+            <!-- AFTER THE SHOW -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-bed"></i> 🛌 After the Show</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="After the show details">
+                <ul class="pocket">
+                    <li>Electrolytes, gentle food, shower, sleep.</li>
+                    <li>Saline rinse if you railed.</li>
+                    <li>Crash kit by bed: water, snack, meds.</li>
+                    <li><a href="https://plurderapolis.org/aftercare.html">Aftercare guide →</a></li>
                 </ul>
-                <h4>What To Do</h4>
-                <ul>
-                    <li><b>Call 911 now.</b> Say what you see (don't guess substances). MN Good-Samaritan protections apply.</li>
-                    <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
-                    <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
-                    <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
-                    <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
-                </ul>
+                <div class="deep">
+                    <h4>Body Reset</h4>
+                    <ul>
+                        <li>Electrolytes before bed & on waking; salty/protein snack (eggs, broth, toast, bananas).</li>
+                        <li>Sleep sanctuary: dark/cool room, eye mask, earplugs. Don't stack downers to "force sleep."</li>
+                        <li>Clean up: saline nasal rinse; shower; gentle skincare; moisturize.</li>
+                    </ul>
+                    <h4>Serotonin & Supplements</h4>
+                    <ul>
+                        <li>Tryptophan foods: turkey, eggs, bananas, nuts.</li>
+                        <li>5-HTP <b>only after</b> rolling (never before MDMA). Avoid if it conflicts with your meds.</li>
+                        <li>Magnesium for jaw/clench; vitamin C for stress recovery.</li>
+                    </ul>
+                    <h4>Mood & Integration</h4>
+                    <ul>
+                        <li>Post-rave crash (low mood, anxiety, derealization) is common and usually passes.</li>
+                        <li>Journal or voice note; sunlight walk; text a friend to debrief.</li>
+                        <li>If it lingers, see <a href="https://plurderapolis.org/mentalhealth.html">Mental Health</a>.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- LONG-TERM SURVIVAL -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🌿 Long-Term Survival</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="Long-term details">
-            <ul class="pocket">
-                <li>Space your rolls; protect hearing.</li>
-                <li>Rotate party weekends with rest weekends.</li>
-                <li>Therapy & boundaries aren't "uncool."</li>
-                <li><a href="mentalhealth.html">Mental health →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>Make It Sustainable</h4>
-                <ul>
-                    <li><b>Cycle breaks:</b> sober weekends; months between MDMA; avoid daily benzos.</li>
-                    <li><b>Track patterns:</b> sleep/mood/usage/spend—if the graph trends down, change course.</li>
-                    <li><b>Hearing:</b> wear plugs; give your ears rest days; tinnitus is forever.</li>
-                    <li><b>Boundaries:</b> cap nights out; say no to midweek binges; keep non-nightlife hobbies alive.</li>
-                    <li>Normalize therapy + check-ins. See <a href="mentalhealth.html">Mental Health</a>.</li>
+            <!-- EMERGENCY BASICS -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Emergency details">
+                <ul class="pocket">
+                    <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
+                    <li>Recovery position if unconscious but breathing.</li>
+                    <li>Carry naloxone; test strips save lives.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Emergency steps →</a> • <a href="https://plurderapolis.org/overdose.html">Overdose guide →</a></li>
                 </ul>
+                <div class="deep">
+                    <h4>Overdose Signs</h4>
+                    <ul>
+                        <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
+                        <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
+                        <li><b>Alcohol/benzos/GHB:</b> can't wake, vomit + unresponsive, shallow breathing.</li>
+                    </ul>
+                    <h4>What To Do</h4>
+                    <ul>
+                        <li><b>Call 911 now.</b> Say what you see (don't guess substances). MN Good-Samaritan protections apply.</li>
+                        <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
+                        <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
+                        <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
+                        <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <!-- BONUS HACKS -->
-        <button class="accordion-button" aria-expanded="false">
-            <span>🍑 Bonus Hacks / Survival Tips</span><span class="accordion-chevron">▾</span>
-        </button>
-        <div class="accordion-content" role="region" aria-label="Bonus hacks details">
-            <ul class="pocket">
-                <li>Baby Vicks, gum/lollipops, bandana.</li>
-                <li>Portable charger; share location/AirTag.</li>
-                <li>Sunscreen, socks, blister pads, poncho.</li>
-                <li><a href="consent.html">Consent culture →</a></li>
-            </ul>
-            <div class="deep">
-                <h4>"Stupid Little Hacks" That Save Your Night</h4>
-                <ul>
-                    <li><b>Baby Vicks:</b> sniff near (not inside) nostrils for airflow; rinse later with saline.</li>
-                    <li><b>Gum/lollipops:</b> reduces jaw clench & dry mouth; also a grounding tool.</li>
-                    <li><b>Bandana:</b> sweat rag, dust mask, wrap ice for cooling, or eye cover if overstimmed.</li>
-                    <li><b>Portable charger:</b> dead phone = stranded; pack cable + brick.</li>
-                    <li><b>Rideshare safety:</b> match plate/driver; rear passenger seat; share live location.</li>
-                    <li><b>Digital harm reduction:</b> don't post people railing/blacked out; blur faces; ask consent.</li>
-                    <li><b>Women & queer-specific:</b> watch drinks; stick with a buddy; beware predatory "caretakers"; ask staff if uneasy.</li>
-                    <li><b>Eco care:</b> pack in/out; dispose of sharps/test kits correctly; don't trash venues.</li>
-                    <li><b>Festival body:</b> blister pads, dry socks, sunscreen, light layer for MN chills.</li>
-                    <li><b>Cultural literacy:</b> PLUR = respect + care; look out for the vulnerable. See <a href="consent.html">Consent</a>.</li>
+            <!-- LONG-TERM SURVIVAL -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-leaf"></i> 🌿 Long-Term Survival</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Long-term details">
+                <ul class="pocket">
+                    <li>Space your rolls; protect hearing.</li>
+                    <li>Rotate party weekends with rest weekends.</li>
+                    <li>Therapy & boundaries aren't "uncool."</li>
+                    <li><a href="https://plurderapolis.org/mentalhealth.html">Mental health →</a></li>
                 </ul>
+                <div class="deep">
+                    <h4>Make It Sustainable</h4>
+                    <ul>
+                        <li><b>Cycle breaks:</b> sober weekends; months between MDMA; avoid daily benzos.</li>
+                        <li><b>Track patterns:</b> sleep/mood/usage/spend—if the graph trends down, change course.</li>
+                        <li><b>Hearing:</b> wear plugs; give your ears rest days; tinnitus is forever.</li>
+                        <li><b>Boundaries:</b> cap nights out; say no to midweek binges; keep non-nightlife hobbies alive.</li>
+                        <li>Normalize therapy + check-ins. See <a href="https://plurderapolis.org/mentalhealth.html">Mental Health</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BONUS HACKS -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-lightbulb"></i> 🍑 Bonus Hacks / Survival Tips</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Bonus hacks details">
+                <ul class="pocket">
+                    <li>Baby Vicks, gum/lollipops, bandana.</li>
+                    <li>Portable charger; share location/AirTag.</li>
+                    <li>Sunscreen, socks, blister pads, poncho.</li>
+                    <li><a href="https://plurderapolis.org/consent.html">Consent culture →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>"Stupid Little Hacks" That Save Your Night</h4>
+                    <ul>
+                        <li><b>Baby Vicks:</b> sniff near (not inside) nostrils for airflow; rinse later with saline.</li>
+                        <li><b>Gum/lollipops:</b> reduces jaw clench & dry mouth; also a grounding tool.</li>
+                        <li><b>Bandana:</b> sweat rag, dust mask, wrap ice for cooling, or eye cover if overstimmed.</li>
+                        <li><b>Portable charger:</b> dead phone = stranded; pack cable + brick.</li>
+                        <li><b>Rideshare safety:</b> match plate/driver; rear passenger seat; share live location.</li>
+                        <li><b>Digital harm reduction:</b> don't post people railing/blacked out; blur faces; ask consent.</li>
+                        <li><b>Women & queer-specific:</b> watch drinks; stick with a buddy; beware predatory "caretakers"; ask staff if uneasy.</li>
+                        <li><b>Eco care:</b> pack in/out; dispose of sharps/test kits correctly; don't trash venues.</li>
+                        <li><b>Festival body:</b> blister pads, dry socks, sunscreen, light layer for MN chills.</li>
+                        <li><b>Cultural literacy:</b> PLUR = respect + care; look out for the vulnerable. See <a href="https://plurderapolis.org/consent.html">Consent</a>.</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -555,15 +804,15 @@
             <i class="fas fa-home"></i>
             <span>Home</span>
         </a>
-        <a href="health.html" class="nav-item active">
+        <a href="https://plurderapolis.org/health.html" class="nav-item active">
             <i class="fas fa-heartbeat"></i>
             <span>Health</span>
         </a>
-        <a href="resources.html" class="nav-item">
+        <a href="https://plurderapolis.org/resources.html" class="nav-item">
             <i class="fas fa-book"></i>
             <span>Resources</span>
         </a>
-        <a href="community.html" class="nav-item">
+        <a href="https://plurderapolis.org/community.html" class="nav-item">
             <i class="fas fa-users"></i>
             <span>Community</span>
         </a>
@@ -578,9 +827,22 @@
                 btn.setAttribute("aria-expanded", String(!expanded));
                 const panel = btn.nextElementSibling;
                 panel.style.display = expanded ? "none" : "block";
+                
+                // Close other open accordions for better mobile experience
+                if (!expanded) {
+                    buttons.forEach(otherBtn => {
+                        if (otherBtn !== btn && otherBtn.getAttribute("aria-expanded") === "true") {
+                            otherBtn.setAttribute("aria-expanded", "false");
+                            otherBtn.nextElementSibling.style.display = "none";
+                            const otherChev = otherBtn.querySelector(".accordion-chevron");
+                            if (otherChev) otherChev.style.transform = "rotate(0deg)";
+                        }
+                    });
+                }
+                
                 // Rotate chevron
                 const chev = btn.querySelector(".accordion-chevron");
-                if (chev) chev.textContent = expanded ? "▾" : "▴";
+                if (chev) chev.style.transform = expanded ? "rotate(0deg)" : "rotate(180deg)";
             });
         });
 
@@ -614,8 +876,15 @@
                 buttons[0].setAttribute('aria-expanded', 'true');
                 buttons[0].nextElementSibling.style.display = 'block';
                 const chev = buttons[0].querySelector(".accordion-chevron");
-                if (chev) chev.textContent = "▴";
+                if (chev) chev.style.transform = "rotate(180deg)";
             }
+            
+            // Add subtle animation to elements for better engagement
+            const elements = document.querySelectorAll('.accordion-button, .category-badge, .share-btn');
+            elements.forEach((el, index) => {
+                el.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
+                el.style.opacity = '0';
+            });
         });
     </script>
 </body>
