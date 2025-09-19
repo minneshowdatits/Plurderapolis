@@ -3,126 +3,419 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Consent Basics - PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet" />
+  <title>Consent Culture - PLURderapolis 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    body {
-      background-color: #121212;
-      color: #eee;
-      font-family: 'Open Sans', sans-serif;
+    :root {
+      --deep-purple: #1a0025;
+      --mid-purple: #3a0a4a;
+      --accent-purple: #7b2cbf;
+      --hot-pink: #ff1493;
+      --neon-pink: #ff00aa;
+      --plur-cyan: #00f0e0;
+      --plur-cyan-light: #a0ffff;
+      --text-light: #eee;
+      --text-muted: #cccccc;
+      --neon-yellow: #f7f000;
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 1rem;
+      padding: 0;
     }
-
-    section {
+    
+    body {
+      background-color: var(--deep-purple);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(90, 10, 130, 0.4) 0%, transparent 30%),
+        radial-gradient(circle at 85% 30%, rgba(160, 0, 120, 0.3) 0%, transparent 30%),
+        linear-gradient(to bottom, var(--deep-purple), #0d0015);
+      color: var(--text-light);
+      font-family: 'Open Sans', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    
+    .container {
       max-width: 900px;
-      margin: auto;
+      margin: 0 auto;
       padding: 1rem;
     }
-
+    
+    /* Header styles */
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1.5rem;
+      position: relative;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--accent-purple);
+    }
+    
+    .back-button {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(90, 60, 150, 0.3);
+      color: var(--plur-cyan);
+      border: 1px solid var(--accent-purple);
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+    }
+    
+    .back-button:hover {
+      background: rgba(110, 80, 180, 0.5);
+      color: var(--plur-cyan-light);
+      box-shadow: 0 0 10px rgba(123, 91, 228, 0.4);
+    }
+    
     h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
-      color: #bf00bf;
+      font-size: 2.5rem;
+      color: var(--neon-pink);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(255, 0, 170, 0.6);
+      letter-spacing: 1px;
+    }
+    
+    .year-badge {
+      display: inline-block;
+      background: linear-gradient(45deg, var(--hot-pink), var(--neon-yellow));
+      color: var(--deep-purple);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-shadow: none;
+    }
+    
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.2rem;
       margin-bottom: 1rem;
     }
-
-    details {
-      background: #220022;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      box-shadow: 0 0 8px rgba(255, 0, 255, 0.25);
+    
+    /* Content sections */
+    .content-section {
+      background: rgba(40, 5, 60, 0.7);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 1.8rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
     }
-
-    details[open] summary {
-      border-bottom: 1px solid #660066;
+    
+    h2 {
+      color: var(--plur-cyan);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--accent-purple);
+      padding-bottom: 0.5rem;
+    }
+    
+    h3 {
+      color: var(--hot-pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      margin: 1.5rem 0 1rem;
+    }
+    
+    p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+    
+    ul {
+      padding-left: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    li {
       margin-bottom: 0.8rem;
+      position: relative;
     }
-
+    
+    li strong {
+      color: var(--plur-cyan);
+    }
+    
+    /* Details/summary styling */
+    details {
+      background: rgba(50, 15, 70, 0.8);
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      padding: 1.2rem;
+      box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
+      border: 1px solid var(--mid-purple);
+      transition: all 0.3s ease;
+    }
+    
+    details[open] {
+      background: rgba(60, 20, 85, 0.9);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    }
+    
+    details[open] summary {
+      border-bottom: 1px solid var(--accent-purple);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+    }
+    
     summary {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.3rem;
-      color: #ff1493;
+      font-weight: 700;
+      color: var(--hot-pink);
       cursor: pointer;
       outline: none;
+      transition: color 0.2s ease;
     }
-
-    p, li {
-      font-size: 1.05rem;
-      line-height: 1.6;
+    
+    summary:hover {
+      color: var(--neon-pink);
     }
-
-    ul {
-      padding-left: 1.5rem;
-      margin-bottom: 1rem;
+    
+    /* Highlight box */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--accent-purple), var(--hot-pink));
+      color: #fff;
+      padding: 1.8rem;
+      margin: 2.5rem 0;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 20px rgba(160, 0, 120, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    hr {
-      border: none;
-      border-top: 2px solid #bf00bf;
-      margin: 2rem 0;
-    }
-
-    a {
-      color: #00f0e0;
+    
+    .highlight-box a {
+      color: #fff;
+      font-weight: 600;
       text-decoration: underline;
     }
-
-    a:hover {
-      color: #a0ffff;
+    
+    .highlight-box a:hover {
+      color: var(--plur-cyan-light);
     }
-
-    .highlight-box {
-      background-color: #bf00bf;
-      color: #fff;
-      padding: 1rem;
-      margin-top: 2rem;
+    
+    /* Accountability link section */
+    .accountability-section {
+      text-align: center;
+      margin: 3rem 0;
+      padding: 2rem;
+      background: rgba(30, 0, 50, 0.8);
+      border-radius: 12px;
+      border: 2px solid var(--plur-cyan);
+    }
+    
+    .accountability-link {
+      display: inline-block;
+      background: linear-gradient(45deg, var(--accent-purple), var(--hot-pink));
+      color: white;
+      padding: 15px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      margin: 15px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(123, 91, 228, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .accountability-link:hover {
+      background: linear-gradient(45deg, var(--hot-pink), var(--accent-purple));
+      box-shadow: 0 0 20px rgba(255, 0, 170, 0.7);
+      transform: translateY(-3px);
+    }
+    
+    /* Ongoing consent section */
+    .ongoing-consent {
+      background: rgba(60, 0, 30, 0.7);
+      border: 1px solid var(--hot-pink);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 0 20px rgba(255, 0, 100, 0.3);
+    }
+    
+    .ongoing-consent h2 {
+      color: var(--neon-yellow);
+      text-shadow: 0 0 5px rgba(247, 240, 0, 0.5);
+      border-bottom: 1px solid var(--hot-pink);
+    }
+    
+    .consent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .consent-point {
+      background: rgba(80, 0, 40, 0.5);
+      padding: 1.5rem;
       border-radius: 10px;
-      font-size: 1.1rem;
+      border-left: 4px solid var(--neon-yellow);
     }
-
-    @media (max-width: 600px) {
+    
+    .consent-point h4 {
+      color: var(--neon-yellow);
+      margin-bottom: 0.8rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 1px solid var(--mid-purple);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
       h1 {
-        font-size: 1.6rem;
+        font-size: 2rem;
+        padding: 0 2rem;
       }
+      
+      .back-button {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        left: 0;
+        transform: none;
+        top: 0;
+      }
+      
+      header {
+        padding-top: 1.5rem;
+      }
+      
+      .content-section, details {
+        padding: 1.2rem;
+      }
+      
       summary {
         font-size: 1.2rem;
       }
-      p, li {
+      
+      .consent-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      summary {
+        font-size: 1.1rem;
+      }
+      
+      .accountability-link {
+        padding: 12px 25px;
         font-size: 1rem;
       }
+    }
+    
+    /* Animation for details */
+    details {
+      overflow: hidden;
+    }
+    
+    details summary {
+      position: relative;
+    }
+    
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    
+    details summary:after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--plur-cyan);
+      transition: transform 0.3s ease;
+    }
+    
+    details[open] summary:after {
+      content: "-";
+      transform: rotate(0deg);
+    }
+    
+    /* Pulse animation for important elements */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 0, 170, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
     }
   </style>
 </head>
 <body>
-  <section>
-    <h1>🧠 Consent Basics</h1>
-
-    <p><strong>Consent isn’t just sexy—it’s necessary.</strong> Especially in nightlife spaces where people are vulnerable, intoxicated, overstimulated, or all of the above.</p>
-
-    <hr />
+  <div class="container">
+    <header>
+      <a href="javascript:history.back()" class="back-button">← Back</a>
+      <h1>🧠 Consent Culture</h1>
+      <div class="year-badge">2025 EDITION</div>
+      <p class="subtitle">Creating a safer PLUR community together</p>
+    </header>
+    
+    <div class="content-section">
+      <p><strong>Consent isn't just sexy—it's necessary.</strong> Especially in nightlife spaces where people are vulnerable, intoxicated, overstimulated, or all of the above.</p>
+    </div>
 
     <details>
       <summary>✅ Consent is:</summary>
       <ul>
         <li><strong>Freely given</strong> – Not coerced, pressured, or guilt-tripped.</li>
         <li><strong>Reversible</strong> – You can say yes, then change your mind at any time.</li>
-        <li><strong>Informed</strong> – Everyone knows exactly what’s going on.</li>
-        <li><strong>Enthusiastic</strong> – If it’s not a <em>hell yes</em>, it’s a no.</li>
-        <li><strong>Specific</strong> – Saying yes to one thing doesn’t mean yes to everything.</li>
+        <li><strong>Informed</strong> – Everyone knows exactly what's going on.</li>
+        <li><strong>Enthusiastic</strong> – If it's not a <em>hell yes</em>, it's a no.</li>
+        <li><strong>Specific</strong> – Saying yes to one thing doesn't mean yes to everything.</li>
       </ul>
-      <p style="font-style: italic; color: #999;">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
+      <p style="font-style: italic; color: var(--text-muted);">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
     </details>
 
     <details>
       <summary>🚫 Not consent:</summary>
       <ul>
-        <li>“They didn’t say no.”</li>
-        <li>“They were into it earlier.”</li>
-        <li>“They didn’t fight me.”</li>
-        <li>“They were drunk/high.”</li>
-        <li>“They didn’t respond.”</li>
+        <li>"They didn't say no."</li>
+        <li>"They were into it earlier."</li>
+        <li>"They didn't fight me."</li>
+        <li>"They were drunk/high."</li>
+        <li>"They didn't respond."</li>
       </ul>
     </details>
 
@@ -130,36 +423,73 @@
       <summary>🎶 In rave spaces:</summary>
       <ul>
         <li>Loud music + substances + vibes ≠ implied consent.</li>
-        <li>Don’t touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
-        <li>Don’t assume someone’s outfit, flirting, or dancing means anything more than what it is.</li>
-        <li>People who are rolling, drunk, tripping, or otherwise altered can’t legally or ethically give consent.</li>
+        <li>Don't touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
+        <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
+        <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
       </ul>
     </details>
 
     <details>
       <summary>⚠️ Quick check-in phrases:</summary>
       <ul>
-        <li>“Are you good with this?”</li>
-        <li>“Want me to keep going?”</li>
-        <li>“Let me know if you want to stop.”</li>
+        <li>"Are you good with this?"</li>
+        <li>"Want me to keep going?"</li>
+        <li>"Let me know if you want to stop."</li>
       </ul>
-      <p>Keep it <strong>clear, casual, and ongoing</strong>. Consent isn’t one question—it’s a whole-ass <em>conversation</em>.</p>
+      <p>Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
     </details>
 
     <details>
       <summary>🏳️‍🌈 Respect all identities.</summary>
-      <p>Don’t misgender people. Don’t make assumptions. Don’t use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
+      <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
     </details>
 
     <details>
       <summary>🔥 What to do if someone crosses a line:</summary>
       <ul>
-        <li>If it’s happening now, intervene safely or get help.</li>
+        <li>If it's happening now, intervene safely or get help.</li>
         <li>Support the person—not the abuser, not the rumors.</li>
-        <li>Believe survivors. Listen first. Don’t center yourself.</li>
-        <li>Consent violations aren’t just private drama—they’re community safety issues.</li>
+        <li>Believe survivors. Listen first. Don't center yourself.</li>
+        <li>Consent violations aren't just private drama—they're community safety issues.</li>
       </ul>
     </details>
+
+    <div class="ongoing-consent">
+      <h2>🔄 Consent is an Ongoing Process</h2>
+      <p>True consent culture extends far beyond getting a "yes" or respecting a "no." It's about creating environments where everyone feels empowered to communicate their boundaries and have them respected throughout every interaction.</p>
+      
+      <div class="consent-grid">
+        <div class="consent-point">
+          <h4>Continuous Check-ins</h4>
+          <p>Consent isn't a one-time question. Check in regularly with your partners, especially as situations evolve or intensify.</p>
+        </div>
+        
+        <div class="consent-point">
+          <h4>Non-Verbal Cues Matter</h4>
+          <p>Pay attention to body language. Stiffening, pulling away, or avoiding eye contact may indicate discomfort even when words don't.</p>
+        </div>
+        
+        <div class="consent-point">
+          <h4>Enthusiastic Participation</h4>
+          <p>Look for active participation rather than passive acceptance. The absence of a "no" doesn't equal the presence of a "yes."</p>
+        </div>
+        
+        <div class="consent-point">
+          <h4>Changing Minds is Normal</h4>
+          <p>People can withdraw consent at any time, for any reason. Respecting this is fundamental to consent culture.</p>
+        </div>
+      </div>
+      
+      <p class="pulse" style="padding: 1rem; text-align: center; border-radius: 8px; margin-top: 1.5rem;">
+        <strong>Remember:</strong> Consent isn't just about avoiding violation—it's about actively creating safety and respect.
+      </p>
+    </div>
+
+    <div class="accountability-section">
+      <h2>Our Accountability Process</h2>
+      <p>PLURderapolis is committed to maintaining safe spaces. Learn about our accountability process and how we handle violations.</p>
+      <a href="https://plurderapolis.org/accountability.html" class="accountability-link">View Accountability Process</a>
+    </div>
 
     <div class="highlight-box">
       <p><strong>PLURderapolis stands for safe dance floors.</strong><br />
@@ -167,13 +497,27 @@
       <p>If you feel unsafe or unsure what to do, check our <a href="/emergency/response.html">Emergency Resources</a>, or find a trusted peer, medic, or venue staff member.</p>
     </div>
 
-    <p style="margin-top: 2rem;">Want to learn more or help make our scene safer? <a href="/get-involved/">Get Involved</a> and help us hold space for everyone.</p>
-  </section>
-  <hr>
-<section style="margin-top:2rem;">
-  <h2>🚨 Consent Doesn't End at "No"</h2>
-  <p>Sometimes harm begins after you’ve said no. Rejection-based violence is real—and preventable. Learn how to spot it and what to do.</p>
-  <a href="/rejection_based_violence.html" style="color:#ff4c4c; font-weight:bold;">Read more about rejection-based violence ➜</a>
-</section>
+    <footer>
+      <p>PLURderapolis &copy; 2025 | Creating Safer Spaces</p>
+      <p>Peace, Love, Unity, Respect, and Responsibility</p>
+    </footer>
+  </div>
+
+  <script>
+    // Add subtle animations to details elements
+    document.querySelectorAll('details').forEach(detail => {
+      detail.addEventListener('toggle', function() {
+        if (this.open) {
+          this.style.transform = 'translateY(5px)';
+          setTimeout(() => {
+            this.style.transform = 'translateY(0)';
+          }, 300);
+        }
+      });
+    });
+    
+    // Add current year to the badge
+    document.querySelector('.year-badge').textContent = new Date().getFullYear() + ' EDITION';
+  </script>
 </body>
 </html>
