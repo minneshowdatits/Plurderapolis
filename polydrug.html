@@ -16,6 +16,9 @@
     --line:#440044;
     --chip:#550055;
     --shadow:0 0 12px rgba(191,0,191,.25);
+    --danger:#ff4d4d;
+    --caution:#ffb84d;
+    --low-risk:#4dff88;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -24,6 +27,10 @@
   h1,h2,h3{font-family:'Montserrat',sans-serif;letter-spacing:.2px}
   h1{font-size:clamp(1.6rem,2.5vw,2.2rem);color:var(--accent);margin:8px 0 6px}
   p.lede{color:#f0d1ff;margin:.25rem 0 1rem}
+  /* Header branding */
+  .branding{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .logo{font-size:1.8rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .tagline{color:var(--muted);font-size:.9rem}
   /* Top checker card */
   .tool{background:var(--card);border-radius:14px;padding:14px;box-shadow:var(--shadow);position:sticky;top:0.35rem;z-index:5}
   .tool h2{font-size:1.1rem;margin:.2rem 0 .6rem;color:var(--accent-2)}
@@ -37,10 +44,15 @@
   .result{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:10px;background:#170717}
   .result h3{margin:.2rem 0 .4rem;color:#ffd6ff;font-size:1rem}
   .pairs{margin:.4rem 0 0;padding-left:18px}
+  .pair-detail{background:#1f001f;border-radius:8px;padding:12px;margin:8px 0;border-left:4px solid var(--accent)}
+  .pair-detail.risk-low{border-left-color:var(--low-risk)}
+  .pair-detail.risk-caution{border-left-color:var(--caution)}
+  .pair-detail.risk-strong{border-left-color:var(--accent)}
+  .pair-detail.risk-danger{border-left-color:var(--danger)}
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 0;font-size:.95rem;color:var(--muted)}
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem}
   /* Matrix */
-  .controls{display:flex;align-items:center;gap:10px;margin:14px 0 8px}
+  .controls{display:flex;align-items:center;gap:10px;margin:14px 0 8px;flex-wrap:wrap}
   .download{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:.55rem .9rem;font-weight:800;cursor:pointer}
   .share{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;font-weight:700;cursor:pointer}
   .matrix{overflow:auto;border-radius:12px;box-shadow:var(--shadow);border:1px solid var(--line);background:#160616}
@@ -49,12 +61,18 @@
   thead th{position:sticky;top:0;background:#3b0a3b;color:#ffe5ff;z-index:2}
   tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:1}
   td{background:#1f001f}
+  td.risk-low{background:#0a2a14}
+  td.risk-caution{background:#2a200a}
+  td.risk-strong{background:#2a0a2a}
+  td.risk-danger{background:#2a0a0a}
   .chip {display:inline-block;background:var(--chip);border-radius:999px;padding:.18rem .55rem;font-weight:700}
   /* Sections at bottom (accordion) */
   details.info{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.6rem .8rem;margin:.6rem 0}
   details.info summary{cursor:pointer;font-weight:800;list-style:none}
   details.info summary::marker, details.info summary::-webkit-details-marker{display:none}
   details.info summary .tag{margin-left:.5rem;opacity:.85}
+  /* Back to top button */
+  .back-to-top{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;border:0;border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow);z-index:100;display:none}
   /* Footer */
   footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;padding:18px;margin-top:16px;text-align:center}
   .pill{display:inline-block;background:var(--chip);padding:.22rem .6rem;border-radius:999px;font-weight:800}
@@ -63,11 +81,18 @@
     .tool{position:static}
     .legend{font-size:.9rem}
     table{font-size:.86rem;min-width:840px}
+    .controls{flex-direction:column;align-items:flex-start}
   }
 </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- PLURderapolis branding -->
+    <div class="branding">
+      <div class="logo">PLURderapolis</div>
+      <div class="tagline">Harm Reduction & Community Safety</div>
+    </div>
+    
     <h1>Polydrug Interaction Checker <span class="icons">⚡💊💀🌈</span></h1>
     <p class="lede">Mobile-first, harm-reduction focused. Pick up to three substances and see risks & tips. Matrix is downloadable + shareable.</p>
 
@@ -101,13 +126,14 @@
 
       <div class="result" id="resultBox" aria-live="polite">
         <h3>Results will appear here</h3>
-        <p>We’ll show A+B, A+C, B+C and a combined A+B+C overview with quick harm-reduction pointers.</p>
+        <p>We'll show A+B, A+C, B+C and a combined A+B+C overview with detailed harm-reduction pointers.</p>
       </div>
     </section>
 
     <!-- ===== Controls + Matrix ===== -->
     <div class="controls">
       <button class="download" id="dlCsv">Download Matrix (CSV)</button>
+      <button class="download" id="dlJson">Download Matrix (JSON)</button>
       <button class="share" id="shareBtn">Share Page</button>
       <span class="muted" style="color:var(--muted)">Tip: drag left/right to explore the grid on mobile.</span>
     </div>
@@ -123,8 +149,8 @@
         <li>Test what you can. Start low, go slow. Space redoses.</li>
         <li><span class="pill">Never stack depressants</span> (alcohol, benzos, GHB, opioids) — biggest driver of fatal ODs.</li>
         <li>Heat + stimulants = risk. Cool environment, electrolyte sips, rest breaks.</li>
-        <li>Carry naloxone if opioids could be around. Don’t use alone. Recovery position if someone is out.</li>
-        <li>On Rx meds? Avoid chasing “muted” effects by redosing — risk goes up even if euphoria doesn’t.</li>
+        <li>Carry naloxone if opioids could be around. Don't use alone. Recovery position if someone is out.</li>
+        <li>On Rx meds? Avoid chasing "muted" effects by redosing — risk goes up even if euphoria doesn't.</li>
       </ul>
     </details>
 
@@ -142,14 +168,14 @@
     <details class="info"><summary>⚡ Stimulant × Stimulant <span class="tag">MDMA, cocaine, ADHD meds, bupropion</span></summary>
       <p><b>Risk:</b> <b>💊→💀</b> — hypertension, hyperthermia, arrhythmia, panic.</p>
       <ul>
-        <li>Avoid stacking; cool down, hydrate, don’t chase muted highs.</li>
+        <li>Avoid stacking; cool down, hydrate, don't chase muted highs.</li>
       </ul>
     </details>
 
     <details class="info"><summary>⚡ Stimulant × Depressant <span class="tag">e.g., cocaine+alcohol, MDMA+GHB</span></summary>
       <p><b>Risk:</b> <b>💊</b> — masking sedation, dehydration, liver stress (cocaethylene with alcohol+cocaine).</p>
       <ul>
-        <li>Don’t redose to “even it out”. Watch breathing and heat load.</li>
+        <li>Don't redose to "even it out". Watch breathing and heat load.</li>
       </ul>
     </details>
 
@@ -163,10 +189,13 @@
 
     <!-- ===== Legal disclaimer (single) ===== -->
     <footer>
-      <p><strong>Legal & Medical Disclaimer:</strong> Educational content only; not medical advice. No mix is 100% safe. Accuracy is prioritized using established harm-reduction resources (TripSit, DanceSafe, IMPACT SF, TheBody) plus your local notes, but contexts differ. If someone shows trouble breathing, severe chest pain, seizures, or won’t wake, call emergency services.</p>
+      <p><strong>Legal & Medical Disclaimer:</strong> Educational content only; not medical advice. No mix is 100% safe. Accuracy is prioritized using established harm-reduction resources (TripSit, DanceSafe, IMPACT SF, TheBody) plus your local notes, but contexts differ. If someone shows trouble breathing, severe chest pain, seizures, or won't wake, call emergency services.</p>
       <p>© 2025 PLURderapolis • <span class="pill">Stay safe. Stay kind.</span></p>
     </footer>
   </div>
+
+  <!-- Back to top button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
 <script>
 /* ============================================================
@@ -175,8 +204,8 @@
    We will translate to minimalist icons later.
 ============================================================ */
 const originalHeaders = ["Cannabis","Ketamine","MDMA","Cocaine","Alcohol","GHB / Opioids","Benzos","SSRIs","SNRIs","ADHD Meds","Antipsychotics","Mood Stabilizers","Wellbutrin","Trazodone","Gabapentin","LSD","Shrooms","Nitrous","DMT","GHB"];
-// NOTE: Your pasted table had 20 columns; the last header label you included row-wise was “GHB” again.
-// We’re trusting the body rows you posted below (they match 20-wide). The body:
+// NOTE: Your pasted table had 20 columns; the last header label you included row-wise was "GHB" again.
+// We're trusting the body rows you posted below (they match 20-wide). The body:
 const originalRows = [
   ["Cannabis","—","🟡","🔴","🔴","🔴","🔴","🔴","🟡","🟡","🟢","🟡","🟡","🟢","🟢","🟢","🔴","🔴","🟢","🔴","🔴"],
   ["Ketamine","🟡","—","❌","❌","❌","❌","🟡","🟡","🟡","🔴","🟡","🟡","🟡","🟡","🟡","❌","❌","🟡","❌","❌"],
@@ -213,8 +242,8 @@ const toMini = s => {
 };
 
 /* ============================================================
-   Expand “GHB / Opioids” -> split into “GHB” + “Opioids”
-   Then add “Viagra”. Non-specified Viagra cells are conservative.
+   Expand "GHB / Opioids" -> split into "GHB" + "Opioids"
+   Then add "Viagra". Non-specified Viagra cells are conservative.
 ============================================================ */
 function buildExpandedMatrix(){
   // Build base map from original
@@ -314,6 +343,75 @@ function buildExpandedMatrix(){
 const {headers, map:mini} = buildExpandedMatrix();
 
 /* ============================================================
+   Detailed explanations for each interaction
+============================================================ */
+const detailedExplanations = {
+  "🌈": (a, b) => `
+    <p><strong>Low Risk Interaction:</strong> ${a} and ${b} typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
+    <p><strong>Harm Reduction Tips:</strong></p>
+    <ul>
+      <li>Start with lower doses than you would take individually</li>
+      <li>Stay hydrated and in a safe environment</li>
+      <li>Have a sober friend present if trying this combination for the first time</li>
+    </ul>
+  `,
+  "⚡": (a, b) => `
+    <p><strong>Caution Advised:</strong> Combining ${a} and ${b} may increase side effects or intensify experiences beyond comfortable levels. This combination requires careful dosing and monitoring.</p>
+    <p><strong>Potential Concerns:</strong> Increased heart rate, blood pressure changes, anxiety, or unexpected psychological effects.</p>
+    <p><strong>Harm Reduction Tips:</strong></p>
+    <ul>
+      <li>Use significantly lower doses than you would take individually</li>
+      <li>Wait longer between doses to assess effects</li>
+      <li>Have benzodiazepines available if anxiety becomes overwhelming (only if prescribed)</li>
+      <li>Avoid operating vehicles or machinery</li>
+    </ul>
+  `,
+  "💊": (a, b) => `
+    <p><strong>Strong Caution - Significant Interaction Risk:</strong> ${a} and ${b} have known pharmacological interactions that can significantly increase risks. This combination should be approached with extreme caution.</p>
+    <p><strong>Specific Risks:</strong> Potential for serotonin syndrome, respiratory depression, cardiovascular stress, or unpredictable psychological effects.</p>
+    <p><strong>Harm Reduction Tips:</strong></p>
+    <ul>
+      <li>Avoid this combination if possible</li>
+      <li>If combining, use minimal doses and have medical supervision available</li>
+      <li>Be aware of signs of overdose or adverse reactions</li>
+      <li>Have naloxone available if opioids are involved</li>
+      <li>Do not use alone</li>
+    </ul>
+  `,
+  "💀": (a, b) => `
+    <p><strong>DANGEROUS COMBINATION - AVOID:</strong> Combining ${a} and ${b} creates a high risk of fatal overdose, severe medical complications, or permanent harm. This is one of the most dangerous drug combinations known.</p>
+    <p><strong>Specific Life-Threatening Risks:</strong> Profound respiratory depression, cardiac arrest, seizure risk, extreme hyperthermia, or coma.</p>
+    <p><strong>CRITICAL SAFETY INFORMATION:</strong></p>
+    <ul>
+      <li><strong>DO NOT COMBINE THESE SUBSTANCES</strong></li>
+      <li>If accidental exposure occurs, call emergency services immediately</li>
+      <li>Have multiple doses of naloxone available if opioids are involved</li>
+      <li>This combination has resulted in numerous fatal overdoses</li>
+      <li>Consider alternative substances that don't carry this extreme risk</li>
+    </ul>
+  `
+};
+
+const trioExplanations = {
+  "🌈": (a, b, c) => `
+    <p><strong>Three-Way Combination Assessment:</strong> While no major red flags are present for combining ${a}, ${b}, and ${c}, the complexity increases significantly with three substances.</p>
+    <p><strong>Harm Reduction Strategy:</strong> Introduce substances sequentially with ample time between to assess effects. Consider eliminating one substance from the combination to reduce variables.</p>
+  `,
+  "⚡": (a, b, c) => `
+    <p><strong>Three-Way Combination - Elevated Risk:</strong> Combining ${a}, ${b}, and ${c} creates overlapping effects that may be difficult to predict or manage.</p>
+    <p><strong>Harm Reduction Strategy:</strong> Extreme caution advised. Consider eliminating the highest-risk pair from this combination. Have sober supervision and emergency contacts readily available.</p>
+  `,
+  "💊": (a, b, c) => `
+    <p><strong>Three-Way Combination - High Risk:</strong> This combination of ${a}, ${b}, and ${c} includes significant interaction risks that compound when combined.</p>
+    <p><strong>Harm Reduction Strategy:</strong> Strongly consider avoiding this combination entirely. If proceeding, have medical supervision, naloxone if opioids are involved, and clear emergency protocols.</p>
+  `,
+  "💀": (a, b, c) => `
+    <p><strong>THREE-WAY COMBINATION - EXTREME DANGER:</strong> This combination of ${a}, ${b}, and ${c} includes known dangerous pairs that create a potentially fatal scenario.</p>
+    <p><strong>CRITICAL WARNING:</strong> This combination should be avoided under all circumstances. The risk of fatal overdose or severe medical emergency is extremely high.</p>
+  `
+};
+
+/* ============================================================
    UI: Populate selects, render matrix, CSV download, share
 ============================================================ */
 const allSubs = headers.slice(); // 21 including Viagra
@@ -331,6 +429,16 @@ function iconExplain(x){
     case "💊": return "Strong caution — meaningful interaction risk";
     case "💀": return "Danger — avoid / high overdose or medical risk";
     default: return "—";
+  }
+}
+
+function getRiskClass(icon) {
+  switch(icon) {
+    case "🌈": return "risk-low";
+    case "⚡": return "risk-caution";
+    case "💊": return "risk-strong";
+    case "💀": return "risk-danger";
+    default: return "";
   }
 }
 
@@ -353,14 +461,10 @@ function renderPairs(sel){
 function tripleAdvisory(sel, worst){
   if (sel.length<3) return "";
   const [a,b,c]=sel;
-  // Simple combined note anchored to worst symbol
-  const msg = {
-    "🌈":"No notable red flags reported for this trio; still pace yourself and hydrate.",
-    "⚡":"Caution: overlapping effects. Keep doses low, add time between, and monitor heat/heart.",
-    "💊":"Strong caution: interactions likely stack. Avoid redosing to overcome muted effects. Have a sober buddy.",
-    "💀":"Danger: this trio includes a high-risk pair (e.g., depressant stacking or stimulant+depressant with opioids). Avoid."
-  }[worst];
-  return `<p><b>All three:</b> ${a} + ${b} + ${c} → <b>${worst}</b> — ${msg}</p>`;
+  return `<div class="pair-detail ${getRiskClass(worst)}">
+    <h4>Three-Way Combination: ${a} + ${b} + ${c} → ${worst}</h4>
+    ${trioExplanations[worst](a, b, c)}
+  </div>`;
 }
 
 document.getElementById("checkBtn").addEventListener("click", ()=>{
@@ -371,13 +475,30 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
     return;
   }
   const {pairs,worst} = renderPairs(sel);
-  const items = pairs.map(p=>`<li><b>${p.a}</b> + <b>${p.b}</b> → <span class="chip">${p.v}</span> <span style="color:var(--muted)">(${iconExplain(p.v)})</span></li>`).join('');
-  box.innerHTML = `
-    <h3>Results</h3>
-    <ul class="pairs">${items}</ul>
-    ${tripleAdvisory(sel, worst)}
-    <p style="margin-top:.5rem;color:var(--muted)">Icons: 🌈 low • ⚡ caution • 💊 strong caution • 💀 danger. Use the matrix below for more context.</p>
-  `;
+  
+  let content = `<h3>Interaction Analysis</h3>`;
+  
+  // Add detailed explanations for each pair
+  pairs.forEach(pair => {
+    content += `
+      <div class="pair-detail ${getRiskClass(pair.v)}">
+        <h4>${pair.a} + ${pair.b} → ${pair.v}</h4>
+        ${detailedExplanations[pair.v](pair.a, pair.b)}
+      </div>
+    `;
+  });
+  
+  // Add trio advisory if applicable
+  if (sel.length === 3) {
+    content += tripleAdvisory(sel, worst);
+  }
+  
+  content += `<p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">Remember: individual responses vary based on dosage, tolerance, metabolism, and underlying health conditions. This information is for harm reduction purposes only.</p>`;
+  
+  box.innerHTML = content;
+  
+  // Scroll to results
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
 
 // Render matrix table
@@ -397,6 +518,7 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
       td.setAttribute("data-label", c);
       const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
       td.textContent = val;
+      td.className = getRiskClass(val);
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
@@ -418,7 +540,36 @@ document.getElementById("dlCsv").addEventListener("click", ()=>{
   const blob = new Blob([csv],{type:"text/csv"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url; a.download = "plur-polydrug-matrix.csv";
+  a.href = url; a.download = "plurderapolis-polydrug-matrix.csv";
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+});
+
+// JSON download
+document.getElementById("dlJson").addEventListener("click", ()=>{
+  const data = {
+    metadata: {
+      title: "PLURderapolis Polydrug Interaction Matrix",
+      version: "1.0",
+      generated: new Date().toISOString(),
+      source: "PLURderapolis Harm Reduction"
+    },
+    substances: headers,
+    interactions: {}
+  };
+  
+  headers.forEach(r => {
+    data.interactions[r] = {};
+    headers.forEach(c => {
+      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
+      data.interactions[r][c] = val;
+    });
+  });
+  
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "plurderapolis-polydrug-matrix.json";
   document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 });
 
@@ -431,6 +582,20 @@ document.getElementById("shareBtn").addEventListener("click", async ()=>{
       alert("Copy this page URL to share:\n"+location.href);
     }
   }catch(e){ /* user cancelled */ }
+});
+
+// Back to top button functionality
+const backToTopBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.style.display = 'block';
+  } else {
+    backToTopBtn.style.display = 'none';
+  }
+});
+
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
 </body>
