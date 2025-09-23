@@ -5,222 +5,423 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rejection-Based Violence | PLURderapolis</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --plur-pink: #f36ba1;
       --plur-purple: #c06cf0;
       --plur-blue: #75d6ff;
       --plur-yellow: #fff176;
+      --plur-green: #8aff80;
       --text-light: #f0f0f0;
       --bg-dark: #121212;
       --section-dark: #1e1e1e;
+      --section-darker: #171717;
+      --border-radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Open Sans', sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
-      padding: 1rem;
+      padding: 0;
       margin: 0;
       line-height: 1.6;
     }
 
-    h1, h2 {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--plur-pink);
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--section-darker) 0%, var(--section-dark) 100%);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border-left: 5px solid var(--plur-pink);
     }
 
     h1 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--plur-yellow);
       font-size: 1.8rem;
+      margin: 0 0 0.5rem 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--plur-blue);
+      font-size: 1.1rem;
       margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .intro-text {
+      background-color: var(--section-dark);
+      padding: 1.2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--plur-purple);
+    }
+
+    .intro-text p:first-child {
+      margin-top: 0;
+    }
+
+    .intro-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--plur-pink) 0%, var(--plur-purple) 100%);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      text-decoration: none;
+    }
+
+    .btn-back {
+      background: linear-gradient(135deg, var(--section-darker) 0%, var(--section-dark) 100%);
+      border: 1px solid var(--plur-blue);
     }
 
     details {
       background-color: var(--section-dark);
-      padding: 1rem;
-      border-radius: 8px;
+      padding: 0;
+      border-radius: var(--border-radius);
       margin-bottom: 1rem;
-      border-left: 4px solid var(--plur-purple);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     summary {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: bold;
-      color: var(--plur-pink);
+      color: var(--plur-yellow);
       cursor: pointer;
       outline: none;
+      padding: 1.2rem;
+      background: var(--section-darker);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
     }
 
     summary::marker {
-      color: var(--plur-yellow);
+      display: none;
+      content: '';
+    }
+
+    summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--plur-pink);
+      margin-left: auto;
+      transition: transform 0.3s ease;
+    }
+
+    details[open] summary::after {
+      content: '-';
+    }
+
+    .details-content {
+      padding: 1.2rem;
     }
 
     ul {
       padding-left: 1.2rem;
-      margin-top: 0.5rem;
+      margin: 0.5rem 0;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
     }
 
     a {
       color: var(--plur-blue);
       font-weight: bold;
       text-decoration: none;
+      transition: color 0.2s ease;
     }
 
     a:hover {
+      color: var(--plur-green);
       text-decoration: underline;
     }
 
-    .btn {
-      display: inline-block;
-      background: var(--plur-pink);
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border-radius: 5px;
-      text-decoration: none;
+    .memorial-section {
+      background: var(--section-dark);
+      border-left: 5px solid var(--plur-pink);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin: 2rem 0;
+      box-shadow: 0 0 12px rgba(243, 107, 161, 0.25);
+    }
+
+    .memorial-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      color: var(--plur-pink);
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .memorial-section p {
+      font-size: 1rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .memorial-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      color: var(--plur-yellow);
       font-weight: bold;
-      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
     }
 
     @media screen and (max-width: 600px) {
       h1 {
         font-size: 1.5rem;
       }
-
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
       summary {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        padding: 1rem;
+      }
+      
+      .details-content {
+        padding: 1rem;
+      }
+      
+      .nav-buttons {
+        flex-direction: column;
+      }
+      
+      .btn {
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
+      <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
+    </header>
 
-  <h1>🔊 When “No” Isn’t Respected: Recognize, Interrupt, and Prevent Rejection-Based Violence 📢</h1>
+    <div class="nav-buttons">
+      <a href="index.html" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+      <a href="consent.html" class="btn"><i class="fas fa-handshake"></i> Consent</a>
+      <a href="accountability.html" class="btn"><i class="fas fa-balance-scale"></i> Accountability</a>
+      <a href="resources.html" class="btn"><i class="fas fa-life-ring"></i> Resources</a>
+    </div>
 
-  <p>Someone doesn’t have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says “no” to dating, sex, or connection, and the other person refuses to accept it.</p>
+    <div class="intro-text">
+      <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
 
-  <p>This is <strong>rejection-based violence</strong>, and it’s dangerously common. It isn’t just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
+      <p>This is <span class="highlight">rejection-based violence</span>, and it's dangerously common. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
 
-  <p><strong>That’s what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn’t interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
+      <p><strong>That's what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
+    </div>
 
-  <details>
-    <summary>🚩 What Rejection-Based Violence Can Look Like</summary>
-    <ul>
-      <li>They won’t stop messaging, calling, or contacting you after you’ve said no.</li>
-      <li>They show up at your work, home, or events without being invited.</li>
-      <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
-      <li>They talk about you like you’re owed to them: “I did everything for you,” “You led me on.”</li>
-      <li>They try to isolate you from friends, family, or community.</li>
-      <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-flag"></i> What Rejection-Based Violence Can Look Like</summary>
+      <div class="details-content">
+        <ul>
+          <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
+          <li>They show up at your work, home, or events without being invited.</li>
+          <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
+          <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
+          <li>They try to isolate you from friends, family, or community.</li>
+          <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>🧠 Psychological Truths Behind This Pattern</summary>
-    <ul>
-      <li><strong>Narcissistic entitlement:</strong> Believing they “deserve” a relationship, no matter what you want.</li>
-      <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they’ve built. Some react with violence to reassert control.</li>
-      <li><strong>Power + control > love:</strong> This isn’t about romance. It’s about domination.</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-brain"></i> Psychological Truths Behind This Pattern</summary>
+      <div class="details-content">
+        <ul>
+          <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
+          <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
+          <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>👁️‍🗨️ Signs It Might Be Happening To You</summary>
-    <ul>
-      <li>You feel anxious or unsafe around someone who keeps contacting you even after you’ve been clear.</li>
-      <li>You’re changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
-      <li>You second guess whether you were “clear enough” or “mean enough.” (Spoiler: you were.)</li>
-      <li>They make you feel responsible for their emotions or threats.</li>
-      <li>You’ve said no, and they’re still showing up, still texting, still trying to flip the script.</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-user-check"></i> Signs It Might Be Happening To You</summary>
+      <div class="details-content">
+        <ul>
+          <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
+          <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
+          <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
+          <li>They make you feel responsible for their emotions or threats.</li>
+          <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>🔐 What To Do If You Think It’s Happening To You</summary>
-    <ul>
-      <li>Trust your gut. You don’t need a bruise to know something is wrong.</li>
-      <li>Tell someone you trust what’s happening. Don’t do this alone.</li>
-      <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
-      <li>Adjust privacy settings and think about what you’re sharing online.</li>
-      <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
-      <li>Use support resources (listed below).</li>
-      <li>Don’t blame yourself. You didn’t cause this. You’re allowed to be scared. You’re allowed to leave.</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-shield-alt"></i> What To Do If You Think It's Happening To You</summary>
+      <div class="details-content">
+        <ul>
+          <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
+          <li>Tell someone you trust what's happening. Don't do this alone.</li>
+          <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
+          <li>Adjust privacy settings and think about what you're sharing online.</li>
+          <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
+          <li>Use support resources (listed below).</li>
+          <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>👀 Signs It Might Be Happening to Someone You Know</summary>
-    <ul>
-      <li>They suddenly stop going out, posting, or responding.</li>
-      <li>They seem on edge, especially when a certain name comes up.</li>
-      <li>You hear obsessive, bitter talk about someone who rejected them.</li>
-      <li>They have a “friend” who’s always around, even when not invited.</li>
-      <li>You see stalking or control disguised as “romance” or “worry.”</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-eye"></i> Signs It Might Be Happening to Someone You Know</summary>
+      <div class="details-content">
+        <ul>
+          <li>They suddenly stop going out, posting, or responding.</li>
+          <li>They seem on edge, especially when a certain name comes up.</li>
+          <li>You hear obsessive, bitter talk about someone who rejected them.</li>
+          <li>They have a "friend" who's always around, even when not invited.</li>
+          <li>You see stalking or control disguised as "romance" or "worry."</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>✊ What To Do If You Notice It</summary>
-    <ul>
-      <li><strong>If a friend might be targeted:</strong></li>
-      <li>“You seem stressed when [Name] comes up. I’m here if you ever want to talk.”</li>
-      <li>Offer support without judgment or pressure.</li>
-      <li>Respect their pace. Leaving or naming this stuff is hard.</li>
-      <li>Stay consistent. Isolation makes everything worse.</li>
-      <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-hands-helping"></i> What To Do If You Notice It</summary>
+      <div class="details-content">
+        <ul>
+          <li><strong>If a friend might be targeted:</strong></li>
+          <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
+          <li>Offer support without judgment or pressure.</li>
+          <li>Respect their pace. Leaving or naming this stuff is hard.</li>
+          <li>Stay consistent. Isolation makes everything worse.</li>
+          <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary>❓🧍‍♂️ What If It’s Your Friend Crossing the Line?</summary>
-    <ul>
-      <li>“She said she’s not interested. You need to respect that.”</li>
-      <li>“This is getting into obsession, not love. You gotta chill and let it go.”</li>
-      <li>“If someone kept messaging you after you said no, you’d be creeped out too.”</li>
-      <li>“Showing up uninvited isn’t romantic, it’s harassment.”</li>
-      <li>“You’re not owed a relationship because you were ‘nice.’”</li>
-    </ul>
-    <p>Call them in before it turns into something worse. Before they ruin someone’s life, or their own. This is how we keep each other safe.</p>
-  </details>
+    <details>
+      <summary><i class="fas fa-user-friends"></i> What If It's Your Friend Crossing the Line?</summary>
+      <div class="details-content">
+        <ul>
+          <li>"She said she's not interested. You need to respect that."</li>
+          <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
+          <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
+          <li>"Showing up uninvited isn't romantic, it's harassment."</li>
+          <li>"You're not owed a relationship because you were 'nice.'"</li>
+        </ul>
+        <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
+      </div>
+    </details>
 
-  <details>
-    <summary>📞 Support Resources (Minnesota + National)</summary>
-    <ul>
-      <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-      <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank">wmn.org</a></li>
-      <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank">thehotline.org</a></li>
-      <li><strong>If someone is in immediate danger, call 911.</strong></li>
-    </ul>
-  </details>
+    <details>
+      <summary><i class="fas fa-phone-alt"></i> Support Resources (Minnesota + National)</summary>
+      <div class="details-content">
+        <ul>
+          <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
+          <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank">wmn.org</a></li>
+          <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank">thehotline.org</a></li>
+          <li><strong>If someone is in immediate danger, call 911.</strong></li>
+        </ul>
+      </div>
+    </details>
 
-  <details>
-    <summary><section style="background: #1e1e1e; border-left: 5px solid #f36ba1; padding: 1.5rem 1.2rem; border-radius: 10px; margin: 2rem 0; box-shadow: 0 0 12px rgba(243, 107, 161, 0.25);">
-  <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.4rem; color: #f36ba1; margin-top: 0;">🖤 In Memory of Kayli Arseth</h2>
-  <p style="font-size: 1rem; color: #f0f0f0; line-height: 1.6; margin-top: 0.8rem;">
-    <strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn’t interested in.
-  </p>
-  <p style="font-size: 1rem; color: #f0f0f0; line-height: 1.6;">
-    Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.
-  </p>
-  <p style="font-size: 1rem; color: #f0f0f0; line-height: 1.6;">
-    She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment. She was a regular in our scene. Someone who just wanted to live, love, and grow.
-  </p>
-  <p style="font-size: 1rem; color: #f0f0f0; line-height: 1.6;">
-    <strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong>
-  </p>
-</section>
+    <div class="memorial-section">
+      <h2><i class="fas fa-heart"></i> In Memory of Kayli Arseth</h2>
+      <p><strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
+      <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.</p>
+      <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
+      <p><strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong></p>
+    </div>
 
-  <details>
-    <summary>🚫 Bottom Line</summary>
-    <ul>
-      <li>Rejection isn’t cruelty.</li>
-      <li>“No” is not an invitation to negotiate.</li>
-      <li>Harassment isn’t romance.</li>
-      <li>Violence is never a justified response.</li>
-      <li>No one owes you love. Ever.</li>
-    </ul>
-    <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it’s uncomfortable. Keep each other safe.</strong></p>
-    <p>R.I.P Kayli 🖤</p>
-  </details>
+    <details>
+      <summary><i class="fas fa-exclamation-circle"></i> Bottom Line</summary>
+      <div class="details-content">
+        <ul>
+          <li>Rejection isn't cruelty.</li>
+          <li>"No" is not an invitation to negotiate.</li>
+          <li>Harassment isn't romance.</li>
+          <li>Violence is never a justified response.</li>
+          <li>No one owes you love. Ever.</li>
+        </ul>
+        <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
+        <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--plur-pink);"></i></p>
+      </div>
+    </details>
 
+    <footer>
+      <p>PLURderapolis.org | Peace, Love, Unity, Respect</p>
+    </footer>
+  </div>
+
+  <script>
+    // Add smooth opening/closing animation for details
+    document.addEventListener('DOMContentLoaded', function() {
+      const details = document.querySelectorAll('details');
+      
+      details.forEach(detail => {
+        detail.addEventListener('toggle', function() {
+          if (this.open) {
+            this.style.maxHeight = this.scrollHeight + 'px';
+          } else {
+            this.style.maxHeight = null;
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
