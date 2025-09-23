@@ -49,6 +49,10 @@
       padding: 1rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.1);
       margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-dark);
+      z-index: 100;
     }
     
     .logo {
@@ -71,7 +75,7 @@
       justify-content: center;
     }
     
-    .back-btn {
+    .nav-toggle {
       background: rgba(255,255,255,0.1);
       color: var(--text-light);
       border: none;
@@ -84,8 +88,82 @@
       transition: all 0.3s ease;
     }
     
-    .back-btn:hover {
+    .nav-toggle:hover {
       background: rgba(255,255,255,0.2);
+    }
+    
+    /* Navigation Menu */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background: var(--bg-card);
+      padding: 2rem 1.5rem;
+      transition: right 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    }
+    
+    .nav-menu.active {
+      right: 0;
+    }
+    
+    .nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .nav-close {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .nav-links {
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-bottom: 1rem;
+    }
+    
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      display: block;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--accent-blue);
+    }
+    
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    
+    .nav-overlay.active {
+      display: block;
     }
     
     /* Emergency Action Bar */
@@ -205,6 +283,24 @@
       font-weight: 700;
     }
     
+    .sub-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .sub-section h4 {
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+    }
+    
+    a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
     /* Footer */
     footer {
       margin-top: 3rem;
@@ -238,26 +334,56 @@
         font-size: 1.2rem;
         padding: 0.7rem 1.5rem;
       }
+      
+      .card-header h3 {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <a href="#" class="logo">
+      <a href="index.html" class="logo">
         <div class="logo-img">P</div>
         <span>Plurderapolis</span>
       </a>
-      <button class="back-btn" onclick="history.back()">
-        <i class="fas fa-arrow-left"></i> Back
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i> Menu
       </button>
     </header>
     
-    <div class="emergency-bar">
+    <!-- Navigation Menu -->
+    <div class="nav-overlay" id="navOverlay"></div>
+    <nav class="nav-menu" id="navMenu">
+      <div class="nav-header">
+        <h3>Navigation</h3>
+        <button class="nav-close" id="navClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="#emergency-bar">Emergency Action</a></li>
+        <li><a href="#recovery">Recovery Position</a></li>
+        <li><a href="#overdose">Overdose Response</a></li>
+        <li><a href="#narcan">Narcan Info</a></li>
+        <li><a href="#panic">Panic & Anxiety</a></li>
+        <li><a href="#heat">Heat Safety</a></li>
+        <li><a href="#crowd">Crowd Safety</a></li>
+        <li><a href="#seizures">Seizures</a></li>
+        <li><a href="#serotonin">Serotonin Syndrome</a></li>
+        <li><a href="#other">Other Emergencies</a></li>
+        <li><a href="#resources">Resources & Prep</a></li>
+      </ul>
+    </nav>
+    
+    <div class="emergency-bar" id="emergency-bar">
       <h2>🚨 Emergency Situation?</h2>
       <p>If something goes wrong, minutes matter. Trust your instincts.</p>
       <a href="tel:911" class="emergency-call">CALL 911 NOW</a>
-      <p>Minnesota's Good Samaritan Law protects you when seeking help</p>
+      <p>Minnesota's Good Samaritan Law protects you when seeking help during an overdose.</p>
     </div>
     
     <div class="quick-access">
@@ -280,145 +406,247 @@
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="recovery">
       <div class="card-header" onclick="toggleCard('recovery')">
         <h3><i class="fas fa-first-aid"></i> Recovery Position</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="recovery-content">
         <ul>
-          <li>Lay the person on their side.</li>
-          <li>Bend top knee to stabilize.</li>
-          <li>Tilt head back slightly to keep airway open.</li>
-          <li>Make sure mouth is clear.</li>
-          <li>Stay with them and monitor breathing.</li>
+          <li>Lay the person on their side</li>
+          <li>Bend top knee to stabilize</li>
+          <li>Tilt head back slightly to keep airway open</li>
+          <li>Make sure the mouth is clear</li>
+          <li>Stay with them and monitor breathing</li>
         </ul>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="overdose">
       <div class="card-header" onclick="toggleCard('overdose')">
         <h3><i class="fas fa-pills"></i> How to Spot an Overdose</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="overdose-content">
-        <p><strong>Opioids (fentanyl, heroin, oxy):</strong></p>
-        <ul>
-          <li>Pinpoint pupils</li>
-          <li>Blue lips/nails</li>
-          <li>Slow or no breathing</li>
-          <li>Snoring/gurgling sounds</li>
-          <li>Unresponsive</li>
-        </ul>
-        <p><span class="highlight">Use Narcan/Naloxone ASAP</span>. Spray into one nostril. Wait 2–3 minutes, give another if needed. Call 911.</p>
-
-        <p><strong>Stimulants (MDMA, meth, coke):</strong></p>
-        <ul>
-          <li>Overheating, seizure, panic</li>
-          <li>Fast heartbeat, collapse</li>
-        </ul>
-        <p>Cool them down, use ice packs, move to shade, call 911.</p>
-
-        <p><strong>Alcohol poisoning:</strong></p>
-        <ul>
-          <li>Passed out & vomiting</li>
-          <li>Cold, clammy, blue skin</li>
-          <li>Slow or irregular breathing</li>
-        </ul>
-        <p>Put them in recovery position, monitor breathing, <span class="highlight">do NOT let them sleep it off</span>.</p>
+        <div class="sub-section">
+          <h4>Opioids (fentanyl, heroin, oxycodone)</h4>
+          <ul>
+            <li>Pinpoint pupils</li>
+            <li>Slow or no breathing (less than 8 breaths/min)</li>
+            <li>Blue lips or nails</li>
+            <li>Gurgling or snoring sounds</li>
+            <li>Unresponsive or difficult to wake</li>
+            <li>Limp body, clammy or pale skin</li>
+          </ul>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Stimulants (MDMA, meth, cocaine)</h4>
+          <ul>
+            <li>Overheating, agitation, confusion, hallucinations</li>
+            <li>Fast heartbeat, high blood pressure, chest pain</li>
+            <li>Seizures or collapse</li>
+          </ul>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Alcohol Poisoning</h4>
+          <ul>
+            <li>Vomiting while unconscious</li>
+            <li>Cold, pale, or bluish skin</li>
+            <li>Slow or irregular breathing</li>
+            <li>Seizure or unresponsiveness</li>
+          </ul>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Other Drugs / Polydrug Use</h4>
+          <ul>
+            <li>Benzodiazepines: sleepiness, slurred speech, unresponsiveness</li>
+            <li>Combinations can be unpredictable — treat any emergency as serious</li>
+          </ul>
+        </div>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="overdose-response">
+      <div class="card-header" onclick="toggleCard('overdose-response')">
+        <h3><i class="fas fa-hand-holding-medical"></i> How to Respond to an Overdose</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="overdose-response-content">
+        <ol>
+          <li>Call 911 immediately — describe substances if known</li>
+          <li>Check responsiveness and breathing</li>
+          <li>Administer Naloxone / Narcan:
+            <ul>
+              <li>Spray into one nostril (2–4 mg), repeat every 2–3 minutes if no response</li>
+              <li>Follow injector voice instructions if using auto-injector</li>
+              <li>Place person in recovery position</li>
+            </ul>
+          </li>
+          <li>Provide rescue breathing / CPR if not breathing</li>
+          <li>Monitor continuously until EMS arrives</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="info-card" id="narcan">
+      <div class="card-header" onclick="toggleCard('narcan')">
+        <h3><i class="fas fa-syringe"></i> Narcan Distribution & Scene Tips</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="narcan-content">
+        <ul>
+          <li>Carry at least 2 doses per person</li>
+          <li>Store at room temperature, away from sun or cold</li>
+          <li>Check expiration dates regularly</li>
+          <li>Quick demo: spray, call 911, repeat if needed</li>
+          <li>Teach buddies and volunteers recovery position & continuous monitoring</li>
+          <li>Harm reduction booths: free Narcan, instructions, test strips, hydration</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card" id="panic">
+      <div class="card-header" onclick="toggleCard('panic')">
+        <h3><i class="fas fa-heartbeat"></i> Panic & Anxiety</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="panic-content">
+        <ul>
+          <li>Rapid heartbeat, shaking, sweating, shortness of breath</li>
+          <li>Grounding: 5-4-3-2-1 method (notice 5 things you see, 4 you touch, …)</li>
+          <li>Breathing: inhale 4s, hold 4s, exhale 6s</li>
+          <li>Move to calm, quiet area</li>
+          <li>Reassure: "You are safe, this will pass"</li>
+          <li>Minnesota Warmline: 651-288-0400 or text "Support" to 85511</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card" id="heatstroke">
       <div class="card-header" onclick="toggleCard('heatstroke')">
-        <h3><i class="fas fa-temperature-high"></i> Heatstroke</h3>
+        <h3><i class="fas fa-temperature-high"></i> Hydration & Heat Safety</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="heatstroke-content">
         <ul>
-          <li>Hot, dry, red skin (no sweat)</li>
-          <li>Dizziness, confusion, collapse</li>
-          <li>Very fast pulse</li>
+          <li>Sip water steadily; small amounts better than chugging</li>
+          <li>Electrolytes if sweating heavily</li>
+          <li>Move to shade / air-conditioned area</li>
+          <li>Cool with wet towels or ice packs on neck, wrists, armpits</li>
+          <li>Watch for confusion, dizziness, collapse → call 911</li>
         </ul>
-        <p>Get them out of heat, use cold water & fans, hydrate if awake. Call 911.</p>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="crowd">
+      <div class="card-header" onclick="toggleCard('crowd')">
+        <h3><i class="fas fa-users"></i> Crowd & Venue Safety</h3>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="card-content" id="crowd-content">
+        <ul>
+          <li>Use buddy system and set meetup points</li>
+          <li>Stay at edges of dense crowds; avoid pushing forward</li>
+          <li>If someone falls, create space & alert staff</li>
+          <li>Know exits and first aid stations</li>
+          <li>Keep phone charged or bring power bank</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="info-card" id="seizures">
       <div class="card-header" onclick="toggleCard('seizures')">
         <h3><i class="fas fa-head-side-vomit"></i> Seizures</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="seizures-content">
         <ul>
-          <li>Clear the area, cushion head</li>
+          <li>Clear area and cushion head</li>
           <li>Turn on side if possible</li>
-          <li><span class="highlight">Don't put anything in mouth</span></li>
-          <li>If it lasts over 5 mins → call 911</li>
+          <li>Do NOT put anything in mouth</li>
+          <li>Call 911 if seizure lasts over 5 minutes</li>
         </ul>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="serotonin">
       <div class="card-header" onclick="toggleCard('serotonin')">
         <h3><i class="fas fa-brain"></i> Serotonin Syndrome</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="serotonin-content">
         <ul>
-          <li>High fever, confusion</li>
-          <li>Muscle twitching/rigidity</li>
-          <li>Fast heart rate, sweating</li>
+          <li>High fever, confusion, muscle rigidity, sweating, fast heartbeat</li>
+          <li>Often caused by MDMA + antidepressants or multiple serotonergic drugs</li>
+          <li>Cool down; call 911 immediately</li>
         </ul>
-        <p>Usually from MDMA + antidepressants or multiple serotonergic drugs. Cool down. <span class="highlight">Call 911 immediately</span>.</p>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="other">
       <div class="card-header" onclick="toggleCard('other')">
         <h3><i class="fas fa-first-aid"></i> Other Emergencies</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="other-content">
-        <p><strong>Panic attack (not medical emergency):</strong></p>
-        <ul>
-          <li>Breathe: 4 in – 4 hold – 4 out</li>
-          <li>Reassure, stay calm</li>
-          <li>Cold water helps</li>
-        </ul>
-
-        <p><strong>Choking:</strong></p>
-        <ul>
-          <li>If awake: Heimlich</li>
-          <li>If passed out: Call 911 + start CPR</li>
-        </ul>
-
-        <p><strong>Allergic reaction:</strong></p>
-        <ul>
-          <li>Swelling, breathing trouble</li>
-          <li>Use EpiPen if available</li>
-          <li>Call 911</li>
-        </ul>
+        <div class="sub-section">
+          <h4>Panic Attack</h4>
+          <ul>
+            <li>Ground yourself, breathe slowly, move to calm area</li>
+          </ul>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Choking</h4>
+          <ul>
+            <li>Heimlich if awake; if passed out, call 911 & start CPR</li>
+          </ul>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Allergic Reaction</h4>
+          <ul>
+            <li>Swelling, breathing difficulty, use EpiPen, call 911</li>
+          </ul>
+        </div>
       </div>
     </div>
     
-    <div class="info-card">
+    <div class="info-card" id="resources">
       <div class="card-header" onclick="toggleCard('resources')">
         <h3><i class="fas fa-notes-medical"></i> Resources & Preparedness</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
       <div class="card-content" id="resources-content">
-        <p><strong>What to Carry:</strong></p>
-        <ul>
-          <li>Narcan (get it free <a href="https://www.health.state.mn.us/people/drugs/naloxone.html" target="_blank" style="color: var(--accent-blue);">here</a>)</li>
-          <li>Electrolytes or water</li>
-          <li>Emergency contacts</li>
-          <li>ID & condoms</li>
-          <li>Test strips (fentanyl, xylazine)</li>
-        </ul>
+        <div class="sub-section">
+          <h4>What to Carry</h4>
+          <ul>
+            <li>Narcan (free in MN)</li>
+            <li>Electrolytes</li>
+            <li>Emergency contacts</li>
+            <li>ID</li>
+            <li>Condoms</li>
+            <li>Test strips for fentanyl/xylazine</li>
+          </ul>
+        </div>
         
-        <p><strong>Calling 911 in Minnesota:</strong></p>
-        <p>Don't be afraid to call. Minnesota's <a href="https://www.revisor.mn.gov/statutes/cite/604A.05" target="_blank" style="color: var(--accent-blue);">Good Samaritan Law</a> protects you from arrest for drug possession when seeking help during an OD.</p>
+        <div class="sub-section">
+          <h4>Calling 911</h4>
+          <p>Minnesota Good Samaritan Law protects from drug possession charges when seeking help during an overdose. <a href="resources.html">Learn more</a></p>
+        </div>
+        
+        <div class="sub-section">
+          <h4>Optional</h4>
+          <ul>
+            <li>One-page emergency cheat sheet</li>
+            <li>Mini-kit (water, power bank, basic first aid)</li>
+          </ul>
+        </div>
+        
+        <p><a href="resources.html">View all resources</a></p>
       </div>
     </div>
     
@@ -431,12 +659,45 @@
   </div>
 
   <script>
+    // Navigation functionality
+    const navToggle = document.getElementById('navToggle');
+    const navClose = document.getElementById('navClose');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.getElementById('navOverlay');
+    
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.add('active');
+      navOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    navClose.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      navOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navOverlay.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      navOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
     // Toggle card content
     function toggleCard(cardId) {
       const content = document.getElementById(`${cardId}-content`);
       content.classList.toggle('active');
       
-      // Close other cards when opening a new one
+      // Close other cards when opening a new one (optional)
       document.querySelectorAll('.card-content').forEach(card => {
         if (card.id !== `${cardId}-content` && card.classList.contains('active')) {
           card.classList.remove('active');
@@ -458,7 +719,8 @@
         const targetContent = document.getElementById(`${target}-content`);
         if (targetContent) {
           targetContent.classList.add('active');
-          targetContent.scrollIntoView({ behavior: 'smooth' });
+          // Scroll to the target card
+          document.getElementById(target).scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
