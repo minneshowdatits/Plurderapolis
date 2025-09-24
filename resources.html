@@ -100,6 +100,100 @@
       box-shadow: 0 0 15px var(--highlight);
     }
 
+    /* Hamburger Navigation */
+    .hamburger-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 0, 21, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .hamburger-nav.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .hamburger-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--highlight);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .hamburger-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: var(--highlight);
+      text-align: center;
+    }
+
+    .hamburger-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .hamburger-link {
+      background: rgba(28, 0, 42, 0.7);
+      border: 1px solid var(--plurple);
+      border-radius: 0.8rem;
+      padding: 1rem;
+      text-align: center;
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .hamburger-link:hover {
+      background: var(--plurple);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+    }
+
+    .hamburger-btn {
+      background: rgba(28, 0, 42, 0.7);
+      color: var(--highlight);
+      border: 1px solid var(--highlight);
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .hamburger-btn:hover {
+      background: var(--highlight);
+      color: var(--bg);
+      box-shadow: 0 0 15px var(--highlight);
+    }
+
     /* Search Bar */
     .search-container {
       margin: 1.5rem 0;
@@ -219,54 +313,6 @@
     .cta-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 3px 8px rgba(0, 247, 224, 0.4);
-    }
-
-    /* Category Navigation - Improved for mobile */
-    .category-nav {
-      position: sticky;
-      top: 70px;
-      z-index: 90;
-      background: rgba(28, 0, 42, 0.95);
-      backdrop-filter: blur(8px);
-      padding: 0.8rem 0;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--plurple);
-    }
-
-    .category-scroll {
-      display: flex;
-      overflow-x: auto;
-      gap: 0.6rem;
-      padding: 0 0.5rem;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .category-scroll::-webkit-scrollbar {
-      display: none;
-    }
-
-    .category-btn {
-      flex: 0 0 auto;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--plurple);
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      cursor: pointer;
-      transition: var(--transition);
-      white-space: nowrap;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-decoration: none;
-    }
-
-    .category-btn:hover,
-    .category-btn.active {
-      background: var(--plurple);
-      color: white;
-      box-shadow: 0 0 12px rgba(155, 89, 182, 0.4);
     }
 
     /* Collapsible Resource Sections */
@@ -490,6 +536,33 @@
       box-shadow: 0 0 12px rgba(155, 89, 182, 0.4);
     }
 
+    /* Scroll to Top Button */
+    .scroll-top {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: var(--plurple);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 90;
+      border: none;
+      font-size: 1.2rem;
+    }
+
+    .scroll-top:hover {
+      background: var(--highlight);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 247, 224, 0.4);
+    }
+
     /* Footer */
     footer {
       background: linear-gradient(to bottom, var(--card), #0f0015);
@@ -547,6 +620,12 @@
       font-style: italic;
     }
 
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     /* Responsive adjustments */
     @media (max-width: 900px) {
       .resource-grid {
@@ -580,11 +659,6 @@
         gap: 0.6rem;
       }
       
-      .category-nav {
-        top: 130px;
-        padding: 0.6rem 0;
-      }
-      
       .emergency-cta {
         padding: 0.8rem;
         margin-bottom: 1.2rem;
@@ -606,6 +680,13 @@
       .nav-btn {
         justify-content: center;
       }
+
+      .scroll-top {
+        bottom: 100px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -615,11 +696,6 @@
       
       .section-header {
         padding: 0.8rem;
-      }
-      
-      .category-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
       }
       
       .footer-links {
@@ -637,6 +713,10 @@
       
       .resource-description, .contact-info {
         margin-left: 1.5rem;
+      }
+
+      .hamburger-links {
+        max-width: 100%;
       }
     }
 
@@ -672,12 +752,54 @@
         <a href="https://plurderapolis.org" class="logo">
           <i class="fas fa-heart"></i> PLUR<span>derapolis</span>
         </a>
-        <button class="back-btn" onclick="history.back()">
-          <i class="fas fa-arrow-left"></i> Back
-        </button>
+        <div>
+          <button class="hamburger-btn" id="hamburgerToggle">
+            <i class="fas fa-bars"></i> Menu
+          </button>
+          <button class="back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- Hamburger Navigation -->
+  <div class="hamburger-nav" id="hamburgerNav">
+    <button class="hamburger-close" id="hamburgerClose">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 class="hamburger-title">Quick Navigation</h2>
+    <div class="hamburger-links">
+      <a href="#harm" class="hamburger-link" data-section="harm">
+        <i class="fas fa-pills"></i> Harm Reduction
+      </a>
+      <a href="#health" class="hamburger-link" data-section="health">
+        <i class="fas fa-heart"></i> Reproductive Health
+      </a>
+      <a href="#violence" class="hamburger-link" data-section="violence">
+        <i class="fas fa-hands-helping"></i> Violence Support
+      </a>
+      <a href="#lgbtq" class="hamburger-link" data-section="lgbtq">
+        <i class="fas fa-rainbow"></i> LGBTQ+ Support
+      </a>
+      <a href="#mental" class="hamburger-link" data-section="mental">
+        <i class="fas fa-brain"></i> Mental Health
+      </a>
+      <a href="#recovery" class="hamburger-link" data-section="recovery">
+        <i class="fas fa-hands-helping"></i> Peer Recovery
+      </a>
+      <a href="#basic" class="hamburger-link" data-section="basic">
+        <i class="fas fa-utensils"></i> Basic Needs
+      </a>
+      <a href="https://plurderapolis.org/venues" class="hamburger-link">
+        <i class="fas fa-map-marker-alt"></i> Venues Guide
+      </a>
+      <a href="https://plurderapolis.org/sober" class="hamburger-link">
+        <i class="fas fa-hand-holding-heart"></i> Sober Resources
+      </a>
+    </div>
+  </div>
 
   <div class="container">
     <section class="hero">
@@ -706,18 +828,6 @@
       <i class="fas fa-search search-icon"></i>
       <input type="text" id="searchInput" class="search-box" placeholder="Search for resources by name, keyword, or service...">
     </div>
-
-    <nav class="category-nav">
-      <div class="category-scroll">
-        <a href="#harm" class="category-btn">Harm Reduction</a>
-        <a href="#health" class="category-btn">Reproductive Health</a>
-        <a href="#violence" class="category-btn">Violence Support</a>
-        <a href="#lgbtq" class="category-btn">LGBTQ+ Support</a>
-        <a href="#mental" class="category-btn">Mental Health</a>
-        <a href="#recovery" class="category-btn">Peer Recovery</a>
-        <a href="#basic" class="category-btn">Basic Needs</a>
-      </div>
-    </nav>
 
     <div class="resource-grid">
       <div id="harm" class="resource-section active">
@@ -1126,17 +1236,22 @@
     </div>
   </div>
 
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scrollTop">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
   <!-- Bottom Navigation - Updated -->
   <div class="bottom-nav">
     <div class="nav-buttons">
       <a href="https://plurderapolis.org/events" class="nav-btn">
         <i class="fas fa-calendar-alt"></i> Events
       </a>
-      <a href="https://plurderapolis.org/get-involved" class="nav-btn">
-        <i class="fas fa-hands-helping"></i> Get Involved
+      <a href="https://plurderapolis.org/venues" class="nav-btn">
+        <i class="fas fa-map-marker-alt"></i> Venues Guide
       </a>
-      <a href="https://plurderapolis.org/resources" class="nav-btn">
-        <i class="fas fa-book"></i> Resources
+      <a href="https://plurderapolis.org/sober" class="nav-btn">
+        <i class="fas fa-hand-holding-heart"></i> Sober Resources
       </a>
       <a href="https://plurderapolis.org/donate" class="nav-btn">
         <i class="fas fa-donate"></i> Donate
@@ -1161,50 +1276,70 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const sections = document.querySelectorAll('.resource-section');
-      const navLinks = document.querySelectorAll('.category-btn');
       const searchInput = document.getElementById('searchInput');
+      const hamburgerToggle = document.getElementById('hamburgerToggle');
+      const hamburgerNav = document.getElementById('hamburgerNav');
+      const hamburgerClose = document.getElementById('hamburgerClose');
+      const hamburgerLinks = document.querySelectorAll('.hamburger-link');
+      const scrollTopBtn = document.getElementById('scrollTop');
       
-      // Update active nav link based on scroll position
-      function updateActiveNav() {
-        let current = '';
-        
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          
-          if (pageYOffset >= (sectionTop - 150)) {
-            current = section.getAttribute('id');
-          }
-        });
-        
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#' + current) {
-            link.classList.add('active');
-          }
-        });
-      }
+      // Hamburger menu functionality
+      hamburgerToggle.addEventListener('click', function() {
+        hamburgerNav.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
       
-      // Initialize scroll event listener
-      window.addEventListener('scroll', updateActiveNav);
+      hamburgerClose.addEventListener('click', function() {
+        hamburgerNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
       
-      // Smooth scroll for navigation links
-      navLinks.forEach(link => {
+      // Close hamburger menu when clicking on a link
+      hamburgerLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href');
-          const targetSection = document.querySelector(targetId);
-          
-          if (targetSection) {
-            // Expand the target section
-            targetSection.classList.add('active');
+          // If it's a section link, close the menu and scroll to section
+          if (this.getAttribute('href').startsWith('#')) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
             
-            window.scrollTo({
-              top: targetSection.offsetTop - 120,
-              behavior: 'smooth'
-            });
+            if (targetSection) {
+              // Expand the target section
+              targetSection.classList.add('active');
+              
+              // Close the hamburger menu
+              hamburgerNav.classList.remove('active');
+              document.body.style.overflow = '';
+              
+              // Scroll to the section
+              window.scrollTo({
+                top: targetSection.offsetTop - 120,
+                behavior: 'smooth'
+              });
+            }
+          } else {
+            // External link, just close the menu
+            hamburgerNav.classList.remove('active');
+            document.body.style.overflow = '';
           }
         });
+      });
+      
+      // Scroll to top functionality
+      scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Show/hide scroll to top button based on scroll position
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollTopBtn.style.display = 'flex';
+        } else {
+          scrollTopBtn.style.display = 'none';
+        }
       });
       
       // Toggle section content on header click
