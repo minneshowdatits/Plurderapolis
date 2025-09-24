@@ -4,6 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Bad Trip Mode — PLURderapolis</title>
+<meta name="description" content="A safe space for grounding during difficult psychedelic experiences">
+<meta name="theme-color" content="#1c0028">
+<link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
 <style>
   /* Base theme */
@@ -28,6 +31,46 @@
   }
   h2:hover{background:#3a0055}
   main{max-width:780px; margin:0 auto}
+  /* Landing page */
+  #landing {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .landing-message {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--mint);
+  }
+  .landing-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .landing-btn {
+    background: var(--mint);
+    color: #111;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 25px;
+    padding: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 8px #00f7e0aa;
+    font-size: 1.1rem;
+  }
+  .landing-btn:hover {
+    background: #00d6c7;
+  }
+  .landing-btn.secondary {
+    background: var(--accent);
+    box-shadow: 0 0 8px #ff6ec7aa;
+  }
+  .landing-btn.secondary:hover {
+    background: #ff49b2;
+  }
   /* Collapsible */
   .collapsible-content{display:none; padding:1rem; margin:.5rem 0 1.2rem; background:var(--card); border-radius:8px; box-shadow:0 0 15px #00000055}
   .collapsible-content.open{display:block}
@@ -45,6 +88,12 @@
   .breathing-container{display:flex;flex-direction:column;align-items:center;gap:.75rem;margin:0 auto}
   .breathing-shape{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--accent)20%,#2a0040 90%);box-shadow:0 0 20px #ff6ec7aa; animation:breathe 8s infinite}
   @keyframes breathe{0%{transform:scale(1);opacity:.75}40%{transform:scale(1.45);opacity:1}60%{transform:scale(1.45);opacity:1}100%{transform:scale(1);opacity:.75}}
+  .breathing-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
   /* grounding */
   .ground-list{list-style:disc;padding-left:1.1rem}
   .ground-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
@@ -53,11 +102,20 @@
     box-shadow:0 0 8px #00f7e0aa;
   }
   .ground-btn.done{background:#444;color:#ccc;text-decoration:line-through;box-shadow:none;cursor:default}
+  .grounding-alternative {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #444;
+  }
   /* sounds */
   .audio-controls{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
   .audio-btn{padding:.45rem .9rem;border-radius:20px;border:none;background:var(--mint);color:#112;cursor:pointer;font-weight:700;box-shadow:0 0 8px #00f7e0aa}
   .audio-btn.playing{background:var(--accent); color:#111}
   .audio-btn:hover{opacity:.95}
+  .audio-btn.mute {
+    background: #666;
+    box-shadow: 0 0 8px #666;
+  }
   /* mantras */
   .mantra-box{display:flex;flex-direction:column;align-items:center;gap:.6rem}
   .mantra-text{font-weight:700;color:var(--mint);font-size:1.05rem;text-align:center;padding:.6rem 1rem;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer}
@@ -66,157 +124,309 @@
   .timer-display{font-size:2rem;font-weight:800;color:var(--accent);text-align:center;margin:1rem 0;text-shadow:0 0 8px #ff6ec7e0}
   .timer-controls{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
   .timer-btn{padding:.45rem .9rem;border-radius:20px;border:none;background:var(--mint);color:#111;font-weight:700;box-shadow:0 0 8px #00f7e0aa}
+  .timer-message {
+    text-align: center;
+    margin-top: 1rem;
+    font-style: italic;
+    color: var(--mint);
+  }
   /* resources */
   .resource-btn{display:block;width:100%;padding:.6rem 1rem;border-radius:20px;border:none;background:var(--accent);color:#111;font-weight:800;margin:.4rem 0;text-align:center;text-decoration:none;box-shadow:0 0 8px #ff6ec7aa}
   .resource-btn:hover{background:#ff49b2}
   /* encouraging */
   .encouragement{display:none;text-align:center;font-weight:800;color:var(--mint);margin:.6rem 0}
+  /* aftercare */
+  .aftercare-prompt {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+  }
   footer{color:#aaa;text-align:center;margin:2rem 0 1rem;font-size:.9rem}
   /* responsive */
   @media (max-width:520px){
     .ground-grid{grid-template-columns:1fr}
     .breathing-shape{width:88px;height:88px}
+    .landing-buttons {
+      max-width: 100%;
+    }
+  }
+  /* PWA install prompt */
+  .install-prompt {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--card);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #000000aa;
+    z-index: 100;
+    display: none;
+  }
+  .install-prompt button {
+    background: var(--mint);
+    color: #111;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    font-weight: 700;
   }
 </style>
 </head>
 <body>
   <main>
-    <header>
+    <!-- Landing Page -->
+    <section id="landing">
       <h1>🍑 Bad Trip Guide — PLURderapolis</h1>
-      <div class="top-controls" role="toolbar" aria-label="Top controls">
-        <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe</button>
-        <button id="guidedMode" class="mode-btn">➡️ Guided Start</button>
-        <button id="modularMode" class="mode-btn">🔀 Modular Mode</button>
+      <div class="landing-message">
+        <p>You are safe. If you can, take 3 slow breaths now.</p>
       </div>
-      <div id="progressContainer" aria-hidden="true"><div id="progressBar"></div></div>
-    </header>
-
-    <!-- Start Here (intro) -->
-    <section class="step-section" data-step="0">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
-      <div id="intro" class="collapsible-content" aria-hidden="true">
-        <p style="font-weight:700; text-align:center">You are safe. This page will walk you through grounding and calming tools — either step-by-step or pick what helps.</p>
-        <p style="text-align:center">If things feel intense: slow your breath, drink water, and use the emergency links at the bottom.</p>
+      <div class="landing-buttons">
+        <button id="startGuided" class="landing-btn">➡️ Continue Full Guide</button>
+        <button id="startModular" class="landing-btn secondary">🔀 Just Need One Thing Now</button>
       </div>
     </section>
 
-    <!-- Breathing -->
-    <section class="step-section" data-step="1">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">💨 Breathing Exercise</h2>
-      <div id="breathing" class="collapsible-content" aria-hidden="true">
-        <div class="breathing-container" aria-hidden="false">
-          <div id="breathShape" class="breathing-shape" aria-hidden="true"></div>
-          <div style="text-align:center;font-weight:700;color:var(--mint)">Breathe with the circle — inhale as it expands, exhale as it shrinks.</div>
+    <!-- Main Guide Content (initially hidden) -->
+    <div id="guideContent" style="display:none">
+      <header>
+        <h1>🍑 Bad Trip Guide — PLURderapolis</h1>
+        <div class="top-controls" role="toolbar" aria-label="Top controls">
+          <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe</button>
+          <button id="guidedMode" class="mode-btn">➡️ Guided Start</button>
+          <button id="modularMode" class="mode-btn">🔀 Modular Mode</button>
         </div>
-      </div>
-    </section>
+        <div id="progressContainer" aria-hidden="true"><div id="progressBar"></div></div>
+      </header>
 
-    <!-- Grounding -->
-    <section class="step-section" data-step="2">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="grounding">🪨 Ground Yourself — 5-4-3-2-1</h2>
-      <div id="grounding" class="collapsible-content" aria-hidden="true">
-        <p>Click each item as you name it. When all five are done you'll see a completion message.</p>
-        <div class="ground-grid" aria-live="polite">
-          <button class="ground-btn" data-count="5">👀 Name 5 things you can see</button>
-          <button class="ground-btn" data-count="4">✋ Name 4 things you can touch</button>
-          <button class="ground-btn" data-count="3">👂 Name 3 things you can hear</button>
-          <button class="ground-btn" data-count="2">👃 Name 2 things you can smell</button>
-          <button class="ground-btn" data-count="1">👅 Name 1 thing you can taste</button>
+      <!-- Start Here (intro) -->
+      <section class="step-section" data-step="0">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
+        <div id="intro" class="collapsible-content" aria-hidden="true">
+          <p style="font-weight:700; text-align:center">You are safe. This page will walk you through grounding and calming tools — either step-by-step or pick what helps.</p>
+          <p style="text-align:center">If things feel intense: slow your breath, drink water, and use the emergency links at the bottom.</p>
         </div>
-        <p id="groundingComplete" style="display:none;margin-top:1rem;font-weight:900;color:var(--accent);text-align:center">✅ Grounding complete — you're safe.</p>
-      </div>
-    </section>
+      </section>
 
-    <!-- Soothing Sounds -->
-    <section class="step-section" data-step="3">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="sounds">🎶 Soothing Sounds</h2>
-      <div id="sounds" class="collapsible-content" aria-hidden="true">
-        <p style="text-align:center">Tap a sound to toggle play/pause. Only one sound plays at a time. Use Stop All to end every sound.</p>
-        <div class="audio-controls" role="group" aria-label="Sound options">
-          <button class="audio-btn" data-sound="whiteNoise">White Noise</button>
-          <button class="audio-btn" data-sound="ocean">Ocean Waves</button>
-          <button class="audio-btn" data-sound="rain">Rain / Thunder</button>
-          <button class="audio-btn" data-sound="forest">Forest / Birds</button>
-          <button class="audio-btn" id="stopAll">Stop All</button>
+      <!-- Breathing -->
+      <section class="step-section" data-step="1">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">💨 Breathing Exercise</h2>
+        <div id="breathing" class="collapsible-content" aria-hidden="true">
+          <div class="breathing-container" aria-hidden="false">
+            <div id="breathShape" class="breathing-shape" aria-hidden="true"></div>
+            <div style="text-align:center;font-weight:700;color:var(--mint)">Breathe with the circle — inhale as it expands, exhale as it shrinks. Repeat 5–7 cycles.</div>
+            <div class="breathing-controls">
+              <button id="skipBreathing" class="mode-btn">Skip Breathing</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Mantras -->
-    <section class="step-section" data-step="4">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember (tap to change)</h2>
-      <div id="mantras" class="collapsible-content" aria-hidden="true">
-        <div class="mantra-box">
-          <div id="mantraText" class="mantra-text" role="button" tabindex="0" aria-pressed="false">I am safe and this will pass.</div>
-          <button id="nextMantra" class="mantra-next">Next Mantra</button>
+      <!-- Grounding -->
+      <section class="step-section" data-step="2">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="grounding">🪨 Ground Yourself — 5-4-3-2-1</h2>
+        <div id="grounding" class="collapsible-content" aria-hidden="true">
+          <p>Click each item as you name it. When all five are done you'll see a completion message.</p>
+          <div class="ground-grid" aria-live="polite">
+            <button class="ground-btn" data-count="5">👀 Name 5 things you can see</button>
+            <button class="ground-btn" data-count="4">✋ Name 4 things you can touch</button>
+            <button class="ground-btn" data-count="3">👂 Name 3 things you can hear</button>
+            <button class="ground-btn" data-count="2">👃 Name 2 things you can smell</button>
+            <button class="ground-btn" data-count="1">👅 Name 1 thing you can taste</button>
+          </div>
+          <div class="grounding-alternative">
+            <p><strong>Alternative version:</strong> Name 3 things you like, 3 favorite colors, or 3 comforting objects.</p>
+            <button id="startAlternative" class="ground-btn">Start Alternative Grounding</button>
+          </div>
+          <p id="groundingComplete" style="display:none;margin-top:1rem;font-weight:900;color:var(--accent);text-align:center">✅ Grounding complete — you're safe.</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Check-In -->
-    <section class="step-section" data-step="5">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin">🧍 Check-In With Yourself</h2>
-      <div id="checkin" class="collapsible-content" aria-hidden="true">
-        <ul>
-          <li>Am I hydrated? Slowly sip water.</li>
-          <li>Can I talk to a trusted friend or sitter? Call or text them.</li>
-          <li>Can I sit or lie down safely? Slow deep breaths help.</li>
-          <li>Are my clothes comfortable? Remove tight layers if needed.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Wait / Calm Timer -->
-    <section class="step-section" data-step="6">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="wait">⏳ Just Wait — Calm Timer</h2>
-      <div id="wait" class="collapsible-content" aria-hidden="true">
-        <p style="text-align:center">Settle in. Panic often drops after 10–20 minutes. Use the timer below.</p>
-        <div id="timerDisplay" class="timer-display" aria-live="polite">15:00</div>
-        <div class="timer-controls">
-          <button id="startTimer" class="timer-btn">Start</button>
-          <button id="pauseTimer" class="timer-btn">Pause</button>
-          <button id="resetTimer" class="timer-btn">Reset</button>
+      <!-- Soothing Sounds -->
+      <section class="step-section" data-step="3">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="sounds">🎶 Soothing Sounds</h2>
+        <div id="sounds" class="collapsible-content" aria-hidden="true">
+          <p style="text-align:center">Tap a sound to toggle play/pause. Only one sound plays at a time. Use Stop All to end every sound.</p>
+          <div class="audio-controls" role="group" aria-label="Sound options">
+            <button class="audio-btn" data-sound="whiteNoise">White Noise</button>
+            <button class="audio-btn" data-sound="ocean">Ocean Waves</button>
+            <button class="audio-btn" data-sound="rain">Rain / Thunder</button>
+            <button class="audio-btn" data-sound="forest">Forest / Birds</button>
+            <button class="audio-btn mute" id="stopAll">🔇 Mute All</button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Tripping at Shows -->
-    <section class="step-section" data-step="7">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="shows">🎵 Tripping at Shows — Stay Safe</h2>
-      <div id="shows" class="collapsible-content" aria-hidden="true">
-        <ul>
-          <li><strong>Hydrate:</strong> sip water slowly and often. Avoid chugging or sugary drinks.</li>
-          <li><strong>Eat:</strong> light carbs or fruit help; avoid heavy greasy foods if you're nauseous.</li>
-          <li><strong>Environment:</strong> step outside or to a chill zone if overwhelmed — quiet spaces help a lot.</li>
-          <li><strong>Buddy system:</strong> stay with someone you trust; check in every 10 minutes.</li>
-          <li><strong>Avoid:</strong> mixing substances or lots of alcohol; don't push your body (dance breaks are fine).</li>
-          <li><strong>Tools:</strong> sunglasses, earplugs, a small bottle of water, and breathing exercises.</li>
-        </ul>
-      </div>
-    </section>
+      <!-- Check-In -->
+      <section class="step-section" data-step="4">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin">🧍 Check-In With Yourself</h2>
+        <div id="checkin" class="collapsible-content" aria-hidden="true">
+          <ul>
+            <li>Am I hydrated? Slowly sip water.</li>
+            <li>Can I talk to a trusted friend or sitter? Call or text them.</li>
+            <li>Can I sit or lie down safely? Slow deep breaths help.</li>
+            <li>Are my clothes comfortable? Remove tight layers if needed.</li>
+          </ul>
+          <p style="text-align:center;margin-top:1rem;font-style:italic">If you cannot do any of these, that's okay — move to next.</p>
+          <div style="text-align:center;margin-top:1rem;">
+            <button id="skipCheckin" class="mode-btn">Skip Check-in</button>
+          </div>
+        </div>
+      </section>
 
-    <!-- Emergency / Resources -->
-    <section class="step-section" data-step="8">
-      <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="backup">📞 Need Backup?</h2>
-      <div id="backup" class="collapsible-content" aria-hidden="true">
-        <p style="text-align:center">If you need human support right now, these resources are available:</p>
-        <a class="resource-btn" href="https://tripsit.me/" target="_blank" rel="noopener">TripSit — Live Chat & Resources</a>
-        <a class="resource-btn" href="https://firesideproject.org/" target="_blank" rel="noopener">Fireside Project — Support Line</a>
-        <a class="resource-btn" href="https://neverusealone.com/" target="_blank" rel="noopener">Never Use Alone — Phone Check</a>
-        <a class="resource-btn" href="/panic.html">🚨 Panic Button (your site)</a>
-        <a class="resource-btn" href="/emergency.html">🚑 Emergency Help (your site)</a>
-        <a class="resource-btn" href="index.html">🏠 I'm Feeling Better — Back Home</a>
-      </div>
-    </section>
+      <!-- Tripping at Shows -->
+      <section class="step-section" data-step="5">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="shows">🎵 Tripping at Shows — Stay Safe</h2>
+        <div id="shows" class="collapsible-content" aria-hidden="true">
+          <ul>
+            <li><strong>Hydrate:</strong> sip water slowly and often. Avoid chugging or sugary drinks.</li>
+            <li><strong>Eat:</strong> light carbs or fruit help; avoid heavy greasy foods if you're nauseous.</li>
+            <li><strong>Environment:</strong> step outside or to a chill zone if overwhelmed — quiet spaces help a lot.</li>
+            <li><strong>Buddy system:</strong> stay with someone you trust; check in every 10 minutes.</li>
+            <li><strong>Avoid:</strong> mixing substances or lots of alcohol; don't push your body (dance breaks are fine).</li>
+            <li><strong>Tools:</strong> sunglasses, earplugs, a small bottle of water, and breathing exercises.</li>
+          </ul>
+        </div>
+      </section>
 
-    <p id="encouragement" class="encouragement" role="status" aria-live="polite"></p>
+      <!-- Wait / Calm Timer -->
+      <section class="step-section" data-step="6">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="wait">⏳ Just Wait — Calm Timer</h2>
+        <div id="wait" class="collapsible-content" aria-hidden="true">
+          <p style="text-align:center">Settle in. Panic often drops after 10–20 minutes. Use the timer below.</p>
+          <div id="timerDisplay" class="timer-display" aria-live="polite">15:00</div>
+          <div class="timer-controls">
+            <button id="startTimer" class="timer-btn">Start</button>
+            <button id="pauseTimer" class="timer-btn">Pause</button>
+            <button id="resetTimer" class="timer-btn">Reset</button>
+          </div>
+          <div id="timerMessage" class="timer-message">Many people find things stabilize after ~10-20 min</div>
+          <div id="progressMessage" style="display:none;text-align:center;margin-top:1rem;color:var(--mint);font-weight:700">
+            You're doing your part by waiting. This will pass.
+          </div>
+        </div>
+      </section>
+
+      <!-- Mantras -->
+      <section class="step-section" data-step="7">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember (tap to change)</h2>
+        <div id="mantras" class="collapsible-content" aria-hidden="true">
+          <div class="mantra-box">
+            <div id="mantraText" class="mantra-text" role="button" tabindex="0" aria-pressed="false">I am safe and this will pass.</div>
+            <button id="nextMantra" class="mantra-next">Next Mantra</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Aftercare / Reflection -->
+      <section class="step-section" data-step="8">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="aftercare">💭 Aftercare & Reflection</h2>
+        <div id="aftercare" class="collapsible-content" aria-hidden="true">
+          <div class="aftercare-prompt">
+            <p><strong>What helped during this experience?</strong></p>
+            <textarea style="width:100%;min-height:80px;background:rgba(255,255,255,0.1);border:1px solid #444;border-radius:8px;color:var(--text);padding:0.5rem" placeholder="Jot down what worked for you..."></textarea>
+          </div>
+          <div class="aftercare-prompt">
+            <p><strong>What would I try next time?</strong></p>
+            <textarea style="width:100%;min-height:80px;background:rgba(255,255,255,0.1);border:1px solid #444;border-radius:8px;color:var(--text);padding:0.5rem" placeholder="Note any insights..."></textarea>
+          </div>
+          <p style="text-align:center">Remember to rest, practice self-care, and reach out to supportive friends.</p>
+        </div>
+      </section>
+
+      <!-- Emergency / Resources -->
+      <section class="step-section" data-step="9">
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="backup">📞 Need Backup?</h2>
+        <div id="backup" class="collapsible-content" aria-hidden="true">
+          <p style="text-align:center">If you need human support right now, these resources are available:</p>
+          <a class="resource-btn" href="https://tripsit.me/" target="_blank" rel="noopener">TripSit — Live Chat & Resources</a>
+          <a class="resource-btn" href="https://firesideproject.org/" target="_blank" rel="noopener">Fireside Project — Support Line</a>
+          <a class="resource-btn" href="https://neverusealone.com/" target="_blank" rel="noopener">Never Use Alone — Phone Check</a>
+          <a class="resource-btn" href="/panic.html">🚨 Panic Button (your site)</a>
+          <a class="resource-btn" href="/emergency.html">🚑 Emergency Help (your site)</a>
+          <a class="resource-btn" href="index.html">🏠 I'm Feeling Better — Back Home</a>
+        </div>
+      </section>
+
+      <p id="encouragement" class="encouragement" role="status" aria-live="polite"></p>
+    </div>
 
     <footer>
       <small>PLURderapolis • Your partners in shine 🍑</small>
     </footer>
   </main>
 
+  <!-- PWA Install Prompt -->
+  <div class="install-prompt" id="installPrompt">
+    <span>Add to home screen for quick access</span>
+    <button id="installBtn">Add</button>
+    <button id="dismissInstall">Dismiss</button>
+  </div>
+
 <script>
+// PWA Manifest
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+
+// Install prompt
+let deferredPrompt;
+const installPrompt = document.getElementById('installPrompt');
+const installBtn = document.getElementById('installBtn');
+const dismissInstall = document.getElementById('dismissInstall');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installPrompt.style.display = 'block';
+});
+
+installBtn.addEventListener('click', () => {
+  installPrompt.style.display = 'none';
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) => {
+    deferredPrompt = null;
+  });
+});
+
+dismissInstall.addEventListener('click', () => {
+  installPrompt.style.display = 'none';
+});
+
+/* --- Landing Page Logic --- */
+const landing = document.getElementById('landing');
+const guideContent = document.getElementById('guideContent');
+const startGuided = document.getElementById('startGuided');
+const startModular = document.getElementById('startModular');
+
+startGuided.addEventListener('click', () => {
+  landing.style.display = 'none';
+  guideContent.style.display = 'block';
+  // Start guided mode after a brief delay
+  setTimeout(() => {
+    document.getElementById('guidedMode').click();
+  }, 500);
+});
+
+startModular.addEventListener('click', () => {
+  landing.style.display = 'none';
+  guideContent.style.display = 'block';
+  // Start modular mode after a brief delay
+  setTimeout(() => {
+    document.getElementById('modularMode').click();
+  }, 500);
+});
+
 /* --- Helper & State --- */
 const sections = Array.from(document.querySelectorAll('.step-section'));
 const progressBar = document.getElementById('progressBar');
@@ -402,6 +612,13 @@ const breathShape = document.getElementById('breathShape');
 // Set the default to circle
 breathShape.className = 'breathing-shape';
 
+// Skip breathing button
+document.getElementById('skipBreathing').addEventListener('click', () => {
+  document.getElementById('breathing').classList.remove('open');
+  document.querySelector('[aria-controls="breathing"]').setAttribute('aria-expanded', 'false');
+  updateProgress();
+});
+
 /* --- Grounding buttons (interactive) --- */
 const groundButtons = document.querySelectorAll('.ground-btn');
 const groundingCompleteEl = document.getElementById('groundingComplete');
@@ -418,6 +635,35 @@ groundButtons.forEach(btn => {
       groundingCompleteEl.setAttribute('aria-hidden', 'false');
     }
   });
+});
+
+// Alternative grounding
+document.getElementById('startAlternative').addEventListener('click', () => {
+  const alternatives = [
+    "Name 3 things you like",
+    "Name 3 favorite colors",
+    "Name 3 comforting objects",
+    "Name 3 people who care about you",
+    "Name 3 places that feel safe"
+  ];
+  
+  let altIndex = 0;
+  const interval = setInterval(() => {
+    if (altIndex >= alternatives.length) {
+      clearInterval(interval);
+      groundingCompleteEl.style.display = 'block';
+      groundingCompleteEl.setAttribute('aria-hidden', 'false');
+      return;
+    }
+    
+    encouragement.style.display = 'block';
+    encouragement.textContent = alternatives[altIndex];
+    altIndex++;
+    
+    setTimeout(() => {
+      encouragement.style.display = 'none';
+    }, 3000);
+  }, 3500);
 });
 
 /* --- Audio controls (one plays at a time) --- */
@@ -456,6 +702,13 @@ nextMantra.addEventListener('click', showNextMantra);
 mantraText.addEventListener('click', showNextMantra);
 mantraText.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') showNextMantra(); });
 
+/* --- Skip Check-in --- */
+document.getElementById('skipCheckin').addEventListener('click', () => {
+  document.getElementById('checkin').classList.remove('open');
+  document.querySelector('[aria-controls="checkin"]').setAttribute('aria-expanded', 'false');
+  updateProgress();
+});
+
 /* --- Timer logic (15 minutes default) --- */
 let timer = null;
 let timeLeft = 900; // seconds
@@ -463,17 +716,34 @@ const timerDisplay = document.getElementById('timerDisplay');
 const startBtn = document.getElementById('startTimer');
 const pauseBtn = document.getElementById('pauseTimer');
 const resetBtn = document.getElementById('resetTimer');
+const timerMessage = document.getElementById('timerMessage');
+const progressMessage = document.getElementById('progressMessage');
 
 function updateTimerDisplay() {
   const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const s = String(timeLeft % 60).padStart(2, '0');
   timerDisplay.textContent = `${m}:${s}`;
+  
+  // Update messages based on time left
+  if (timeLeft <= 600 && timeLeft > 300) { // 10-5 minutes left
+    timerMessage.textContent = "You're halfway there. Keep breathing.";
+  } else if (timeLeft <= 300) { // 5 minutes or less
+    timerMessage.textContent = "Almost there. This will pass soon.";
+    progressMessage.style.display = 'block';
+  }
 }
 
 startBtn.addEventListener('click', () => {
   if (timer) return; // already running
   timer = setInterval(() => {
-    if (timeLeft <= 0) { clearInterval(timer); timer = null; maybeEncourage(); return; }
+    if (timeLeft <= 0) { 
+      clearInterval(timer); 
+      timer = null; 
+      timerMessage.textContent = "Time's up. How are you feeling now?";
+      progressMessage.style.display = 'none';
+      maybeEncourage(); 
+      return; 
+    }
     timeLeft--;
     updateTimerDisplay();
   }, 1000);
@@ -482,7 +752,14 @@ startBtn.addEventListener('click', () => {
 pauseBtn.addEventListener('click', () => {
   if (timer) { clearInterval(timer); timer = null; }
 });
-resetBtn.addEventListener('click', () => { clearInterval(timer); timer = null; timeLeft = 900; updateTimerDisplay(); });
+resetBtn.addEventListener('click', () => { 
+  clearInterval(timer); 
+  timer = null; 
+  timeLeft = 900; 
+  updateTimerDisplay();
+  timerMessage.textContent = "Many people find things stabilize after ~10-20 min";
+  progressMessage.style.display = 'none';
+});
 
 updateTimerDisplay();
 
@@ -492,6 +769,20 @@ updateTimerDisplay();
   breathShape.className = 'breathing-shape';
   updateProgress();
 })();
+</script>
+
+<!-- PWA Service Worker -->
+<script>
+// Simple service worker for caching
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful');
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>
 </body>
 </html>
