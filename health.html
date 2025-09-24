@@ -8,20 +8,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-bg-color: #0d0d2b;
-            --card-bg: #1a1a3a;
-            --accent-purple: #6b46c1;
-            --accent-pink: #d53f8c;
-            --accent-blue: #3182ce;
-            --accent-cyan: #38b2ac;
-            --btn-color: #553c9a;
-            --btn-hover: #6b46c1;
-            --btn-active: #805ad5;
+            --main-bg-color: #0d051f;
+            --card-bg: #1a0b3b;
+            --btn-color: #4b0082;
+            --btn-hover: #6a0dad;
+            --btn-active: #9400d3;
+            --cyan: #00f0f0;
+            --pink: #ff87ff;
+            --muted-pink: #ffb3ff;
             --text-color: #ffffff;
-            --text-muted: #a0aec0;
-            --border-color: #2d3748;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            --glow-shadow: 0 0 10px rgba(107, 70, 193, 0.5);
+            --border-color: #5a2a86;
+            --card-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            --glow: 0 0 15px rgba(0, 240, 240, 0.5);
         }
         
         * {
@@ -32,7 +30,7 @@
         
         body {
             font-family: 'Open Sans', Arial, sans-serif;
-            background: linear-gradient(135deg, var(--main-bg-color) 0%, #1a202c 100%);
+            background: linear-gradient(135deg, var(--main-bg-color) 0%, #1a0b3b 100%);
             color: var(--text-color);
             line-height: 1.6;
             padding: 0;
@@ -40,117 +38,99 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 70px;
             overflow-x: hidden;
         }
         
         .container {
             width: 100%;
             max-width: 1200px;
-            padding: 0 20px;
+            padding: 0 15px;
             margin: 0 auto;
         }
         
-        /* Header & Navigation */
+        /* Header with Navigation */
         header {
-            background: rgba(13, 13, 43, 0.95);
+            background: linear-gradient(90deg, rgba(26, 11, 59, 0.95) 0%, rgba(44, 0, 62, 0.95) 100%);
             padding: 15px 0;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .header-content {
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         
         .logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            color: var(--cyan);
             text-decoration: none;
             display: flex;
             align-items: center;
-            text-shadow: 0 0 8px rgba(56, 178, 172, 0.4);
+            text-shadow: var(--glow);
             transition: all 0.3s ease;
         }
         
         .logo:hover {
             transform: scale(1.05);
-            text-shadow: 0 0 12px rgba(56, 178, 172, 0.6);
         }
         
         .logo span {
-            color: var(--accent-pink);
+            color: var(--pink);
+        }
+        
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            align-items: center;
         }
         
         .menu-toggle {
             display: none;
             background: none;
             border: none;
-            color: var(--text-color);
+            color: var(--cyan);
             font-size: 1.5rem;
             cursor: pointer;
-            padding: 5px;
             transition: all 0.3s ease;
         }
         
         .menu-toggle:hover {
-            color: var(--accent-cyan);
+            color: var(--pink);
+            transform: scale(1.1);
         }
         
-        .nav-menu {
+        .nav-links {
             display: flex;
             list-style: none;
-            gap: 25px;
+            gap: 20px;
         }
         
-        .nav-menu a {
+        .nav-links a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
-        .nav-menu a:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-cyan);
-            transition: width 0.3s ease;
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--cyan);
+            transform: translateY(-2px);
         }
         
-        .nav-menu a:hover {
-            color: var(--accent-cyan);
-        }
-        
-        .nav-menu a:hover:after {
-            width: 100%;
-        }
-        
-        .nav-menu a.active {
-            color: var(--accent-pink);
-            background: rgba(213, 63, 140, 0.1);
-        }
-        
-        .nav-menu a.active:after {
-            width: 100%;
-            background: var(--accent-pink);
+        .nav-links a.active {
+            color: var(--pink);
         }
         
         /* Hero Section */
@@ -164,132 +144,157 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(107, 70, 193, 0.1) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(75, 0, 130, 0.3) 0%, transparent 70%);
             z-index: -1;
-            animation: pulse 8s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.3; }
-            100% { transform: scale(1.1); opacity: 0.5; }
         }
         
         h1 {
-            color: var(--accent-cyan);
+            color: var(--cyan);
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
-            margin: 15px 0;
+            margin: 10px 0;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 15px rgba(56, 178, 172, 0.4);
-            animation: fadeInUp 0.8s ease;
+            text-shadow: var(--glow);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 15px rgba(0, 240, 240, 0.5); }
+            50% { text-shadow: 0 0 25px rgba(0, 240, 240, 0.8); }
+            100% { text-shadow: 0 0 15px rgba(0, 240, 240, 0.5); }
         }
         
         .subtitle {
             text-align: center;
-            color: var(--text-muted);
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
-            max-width: 700px;
-            line-height: 1.6;
-            animation: fadeInUp 0.8s ease 0.2s both;
+            color: var(--muted-pink);
+            margin: 0 0 25px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
         }
         
-        /* Category Badges */
         .category-badges {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
-            margin: 25px 0 35px;
-            animation: fadeInUp 0.8s ease 0.4s both;
+            gap: 10px;
+            margin: 20px 0 30px;
         }
         
         .category-badge {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
         }
         
         .category-badge:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-            box-shadow: var(--glow-shadow);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .category-badge i {
-            margin-right: 8px;
-            color: var(--accent-cyan);
+            margin-right: 5px;
+            color: var(--cyan);
         }
         
-        /* Accordion */
-        .accordion-container {
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease 0.6s both;
+        /* Like Button */
+        .like-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0 30px;
+            gap: 10px;
         }
         
-        .accordion-item {
-            margin-bottom: 15px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--card-bg);
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-color);
+        .like-btn {
+            background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
         
-        .accordion-item:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transform: translateY(-2px);
+        .like-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .like-btn.liked {
+            background: linear-gradient(90deg, #ff4d94 0%, #ff87ff 100%);
+        }
+        
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--cyan);
+            text-shadow: var(--glow);
+        }
+        
+        /* Accordion Section */
+        .accordion-container {
+            margin-bottom: 30px;
         }
         
         .accordion-button {
             width: 100%;
             background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
-            color: white;
+            color: var(--cyan);
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
-            padding: 20px 25px;
-            font-size: 1.1rem;
+            padding: 18px 20px;
+            margin: 0 0 15px;
+            font-size: 18px;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
             text-align: left;
         }
         
         .accordion-button:hover {
-            background: linear-gradient(90deg, var(--btn-hover) 0%, var(--btn-active) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .accordion-button[aria-expanded="true"] {
-            background: linear-gradient(90deg, var(--accent-pink) 0%, #c53080 100%);
-            border-radius: 12px 12px 0 0;
+            background: linear-gradient(90deg, var(--btn-active) 0%, #a8329c 100%);
+            border-radius: 14px 14px 0 0;
+            margin-bottom: 0;
         }
         
         .accordion-icon {
-            font-size: 1.5rem;
-            margin-right: 15px;
+            font-size: 24px;
+            margin-right: 12px;
             flex-shrink: 0;
         }
         
         .accordion-chevron {
             margin-left: 12px;
-            font-size: 1.2rem;
+            font-size: 18px;
             line-height: 1;
-            opacity: 0.9;
+            opacity: .9;
             transition: transform 0.3s ease;
         }
         
@@ -299,126 +304,108 @@
         
         .accordion-content {
             display: none;
-            padding: 25px;
-            line-height: 1.6;
-            font-size: 1rem;
             background: var(--card-bg);
-            animation: fadeIn 0.4s ease;
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 14px 14px;
+            padding: 20px;
+            margin: -5px 0 25px;
+            line-height: 1.6;
+            font-size: 16px;
+            box-shadow: var(--card-shadow);
+            animation: fadeIn 0.5s ease;
         }
         
         .pocket {
-            margin: 0 0 25px;
+            margin: 0 0 20px;
+            padding-left: 20px;
             background: rgba(0, 0, 0, 0.2);
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            border-left: 4px solid var(--accent-cyan);
+            border-left: 3px solid var(--cyan);
         }
         
         .pocket li {
-            margin: 12px 0;
+            margin: 10px 0;
             position: relative;
-            padding-left: 20px;
         }
         
         .pocket li::before {
             content: '•';
-            color: var(--accent-cyan);
+            color: var(--cyan);
             font-weight: bold;
             position: absolute;
-            left: 0;
+            left: -15px;
         }
         
         .deep h4 {
-            margin: 25px 0 15px;
-            color: var(--accent-cyan);
-            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            color: var(--cyan);
+            font-size: 17px;
             font-family: 'Montserrat', sans-serif;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
         }
         
         .deep ul {
-            padding-left: 0;
-            margin: 15px 0;
+            padding-left: 20px;
+            margin: 10px 0;
         }
         
         .deep li {
-            margin: 12px 0;
+            margin: 10px 0;
             position: relative;
-            padding-left: 25px;
         }
         
         .deep li::before {
-            content: '→';
-            color: var(--accent-pink);
+            content: '•';
+            color: var(--pink);
             font-weight: bold;
             position: absolute;
-            left: 0;
+            left: -15px;
         }
         
         a {
-            color: var(--accent-pink);
+            color: var(--pink);
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             display: inline-block;
-            position: relative;
-        }
-        
-        a:after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-pink);
-            transition: width 0.3s ease;
         }
         
         a:hover {
-            color: var(--accent-cyan);
+            color: var(--muted-pink);
+            text-decoration: underline;
             transform: translateY(-2px);
         }
         
-        a:hover:after {
-            width: 100%;
-        }
-        
         .note {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: var(--muted-pink);
+            font-size: 14px;
             font-style: italic;
-            margin: 20px 0;
-            padding: 15px;
-            border-left: 4px solid var(--accent-blue);
-            background: rgba(49, 130, 206, 0.1);
-            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            padding-left: 15px;
+            border-left: 3px solid var(--cyan);
         }
         
         .btn {
-            display: inline-block;
+            display: block;
+            width: 100%;
             background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
             color: white;
-            padding: 14px 28px;
+            padding: 16px;
             margin: 30px 0;
             text-align: center;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
             box-shadow: var(--card-shadow);
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
         }
         
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(90deg, var(--btn-hover) 0%, var(--btn-active) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
         }
         
         .btn i {
@@ -427,21 +414,20 @@
         
         .disclaimer {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: #aaa;
             text-align: center;
             margin-top: 40px;
-            padding: 25px;
-            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            border-top: 1px solid #333;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
-            line-height: 1.5;
         }
         
         .share-btns {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 40px 0;
+            margin: 30px 0;
         }
         
         .share-btn {
@@ -456,13 +442,43 @@
             font-size: 1.2rem;
             transition: all 0.3s ease;
             box-shadow: var(--card-shadow);
-            text-decoration: none;
         }
         
         .share-btn:hover {
             transform: translateY(-5px) rotate(5deg);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(90deg, var(--btn-hover) 0%, var(--btn-active) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: linear-gradient(90deg, var(--btn-color) 0%, var(--btn-active) 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         /* Bottom Navigation */
@@ -471,15 +487,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(13, 13, 43, 0.95);
+            background: linear-gradient(90deg, rgba(26, 11, 59, 0.95) 0%, rgba(44, 0, 62, 0.95) 100%);
             display: flex;
             justify-content: space-around;
-            padding: 15px 0;
+            padding: 12px 0;
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 90;
-            border-top: 1px solid var(--border-color);
         }
         
         .nav-item {
@@ -490,388 +505,108 @@
             color: var(--text-color);
             font-size: 0.8rem;
             transition: all 0.3s ease;
-            padding: 8px 15px;
+            padding: 5px 15px;
             border-radius: 15px;
-            position: relative;
         }
         
         .nav-item i {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            color: var(--accent-cyan);
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            color: var(--cyan);
             transition: all 0.3s ease;
         }
         
         .nav-item.active {
-            background: rgba(213, 63, 140, 140,  0.0.15);
-15);
-        }
+            background: rgba(255, 255, 255, 0.1);
         }
         
-               
-        .nav .nav-item.active-item.active i {
-            i {
-            color: var(-- color: var(--acaccent-pink);
-        }
-        
-       cent-pink);
+        .nav-item.active i {
+            color: var(--pink);
         }
         
         .nav-item span {
-            transition: all  .nav-item span {
-            transition: all 0.3s ease0.3s ease;
-        }
-        
-        .nav-item:hover {
-            transform: translateY(-3;
+            transition: all 0.3s ease;
         }
         
         .nav-item:hover {
             transform: translateY(-3px);
-        }
-        
-        .navpx);
         }
         
         .nav-item:hover i {
-            color:-item:hover i {
-            color: var(--accent-pink);
+            color: var(--pink);
         }
         
-        /* Scroll to Top Button */
-        .scroll-top {
-            position: fixed;
-            bottom: 80px;
-            right: var(--accent-pink);
-        }
-        
-        /* Scroll to Top Button */
-        .scroll-top {
-            position: fixed;
-            bottom: 80px;
-            20px;
-            background: linear-gradient(90deg, var(--accent-pink) 0%, right: 20px;
-            background: linear-gradient(90deg, var(--accent-pink) 0%, # #c53080 100%);
-            color: white;
-            width: 50px;
-            height: 50px;
-c53080 100%);
-            color: white;
-            width: 50px;
-            height:             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s 0. ease;
-            box3s ease;
-            box-shadow: var-shadow: var(--gl(--glow-shadow);
-ow-shadow);
-            z-index:            z-index: 99 99;
-            opacity;
-            opacity:: 0;
-            0;
-            visibility: hidden;
- visibility: hidden;
-                       transform: translate transform: translateY(Y(20px);
-       20px);
-        }
-        
-        .scroll-top.visible {
-            }
-        
-        .scroll-top.visible opacity: 1;
-            visibility: visible;
-            transform: translateY(0 {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-);
-        }
-        
-        .scroll-top:hover {
-            transform: translate        .scroll-top:hover {
-            transform: translateY(-Y(-5px5px);
-           );
-            box-shadow box-shadow: 0 : 0 10px 2510px 25px rgba(213px rgba(213,, 63, 63, 140, 0. 140, 04);
-        }
-.4);
-        }
-        
-        /* Animations        
         /* Animations */
-        @ */
-        @keyframeskeyframes fadeIn fadeIn {
-            {
-            from { opacity: from { opacity: 0; 0; }
-            to { opacity: }
-            to { opacity: 1; }
- 1; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-               }
-        
-        @keyframes fade @keyframes fadeInUp {
-            fromInUp {
-            from { 
-                opacity: 0; { 
-                opacity: 0; 
-                transform: 
-                transform: translateY(20 translateY(20px); 
-           px); 
-            }
-            to { 
- }
-            to { 
-                               opacity: 1 opacity: 1; 
-                transform; 
-                transform:: translateY( translateY(0);0); 
-            }
- 
-            }
-               }
-        
- }
-        
-               .accordion-content {
-            animation: .accordion-content {
-            animation: fadeIn 0.4s ease;
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
         }
         
-        /* fadeIn 0.4s ease;
-        }
-        
-        /* Like Button */
-        . Like Button */
-        .like-section {
-            textlike-section {
-            text-align: center;
--align: center;
-            margin: 40            margin: 40px 0;
-px 0;
-            padding:             padding: 30px;
-            background: rgba(30px;
-            background: rgba(0, 0,0, 0, 0,  0, 0.2);
-0.2);
-            border            border-radius:-radius: 12 12px;
-px;
-            border            border: 1px: 1px solid var solid var(--border(--border-color);
--color);
-        }
-        }
-        
-               
-        .like-btn {
- .like-btn {
-            background: linear            background: linear-gradient(90deg, var(--ac-gradient(90deg, var(--accent-pink)cent-pink) 0%, 0%, #c53080 #c53080 100%);
-            100%);
-            color: white;
-            color: white;
-            border: none;
- border: none;
-            padding:             padding: 12px 2512px 25px;
-            border-radiuspx;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: var(--card-shadow);
-        }
-        
-        .like-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(213, 63, 140, 0.3);
-        }
-        
-        .like-btn.liked {
-            background: linear-gradient(90deg, var(--accent-cyan) 0: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: var(--card-shadow);
-        }
-        
-        .like-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(213, 63, 140, 0.3);
-        }
-        
-        .like-btn.liked {
-            background: linear-gradient(90deg, var(--accent-cyan) 0%,%, #2c9c94 #2c9c94  100%);
-       100%);
-        }
-        
-        . }
-        
-        .like-count {
-           like-count {
-            margin-top: 15px;
-            font-size margin-top: 15px;
-            font-size: 0.9rem: 0.9rem;
-            color: var(--;
-            color: var(--texttext-muted);
-        }
-        
-       -muted);
-        }
-        
-        /* /* Responsive Design */
-        @media (max-width:  Responsive Design */
-        @media (max-width: 992px) {
-            .nav-menu {
-                gap: 15px;
-            }
-            
-            .nav-menu a {
-                font-size: 0.9rem;
-                padding: 6px 10px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-        }
-        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: rgba(13, 13, 43, 0.98);
-                flex-direction: column;
-                padding: 20px;
-                gap992px) {
-            .nav-menu {
-                gap: 15px;
-            }
-            
-            .nav-menu a {
-                font-size: 0.9rem;
-                padding: 6px 10px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: rgba(13, 13, 43, 0.98);
-                flex-direction: column;
-                padding: 20px: 10px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                border-bottom: ;
-                gap: 10px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                border-bottom: 1px solid var(--1px solid var(--border-color);
-                boxborder-color);
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-menu a {
-               -shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-            }
-            
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .nav-menu padding: a {
-                padding: 12px 15px;
-                border-radius: 8px;
-                text-align: center;
-                font-size:  12px 15px;
-                border-radius: 8px;
-                text-align: center;
-                font1rem;
-                background: rgba(255, -size: 1rem;
-                background: rgba(255, 255,255, 255, 0.05);
-            }
-            
             .container {
- 255, 0.05);
+                padding: 0 12px;
             }
             
-            .container                padding: 0 {
+            header {
+                padding: 12px 0;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: linear-gradient(180deg, rgba(26, 11, 59, 0.98) 0%, rgba(44, 0, 62, 0.98) 100%);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 80px;
+                transition: all 0.5s ease;
+                z-index: 99;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+            }
+            
+            .nav-links.active {
+                right: 0;
+                animation: slideIn 0.5s ease;
+            }
+            
+            .nav-links a {
+                width: 80%;
+                text-align: center;
                 padding: 15px;
+                margin: 10px 0;
+                font-size: 1.1rem;
             }
             
-            header {
-                padding: 12px 0;
-            }
-            
-            .logo {
+            .close-menu {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: none;
+                border: none;
+                color: var(--cyan);
                 font-size: 1.5rem;
-            0 15px;
+                cursor: pointer;
             }
-            
-            header {
-                padding: 12px 0;
-            }
-            
-            .logo {
-                font-size: 1.5rem;
-            }
-            
- }
             
             h1 {
-            h1 {
-                font-size: 2                font-size: rem;
+                font-size: 2rem;
             }
             
             .subtitle {
@@ -880,55 +615,58 @@ px;
             }
             
             .accordion-button {
-                font-size: 1rem;
-                padding: 18px 20px;
+                font-size: 16px;
+                padding: 16px 18px;
             }
             
             .accordion-content {
-                padding: 202rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-                padding: 0 10px;
-            }
-            
-            .accordion-button {
-                font-size: 1rem;
-                padding: 18px 20px;
-            }
-            
-            .accordion-content {
-                padding: 20pxpx;
-            }
-            
-            .category-badges;
+                padding: 18px;
             }
             
             .category-badges {
-                {
-                gap: 10px;
-            }
- gap: 10px;
+                gap: 8px;
             }
             
-            .            
             .category-badge {
-category-badge {
-                font-size:                font-size: 0. 0.99rem;
-               rem;
-                padding: padding: 8px 15px 8px ;
+                font-size: 0.8rem;
+                padding: 6px 12px;
             }
             
-            .nav-footer {
-                padding: 12px 0;
-15px;
+            .scroll-top {
+                bottom: 70px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
             }
             
-            .nav-footer {
-                padding: 12px            }
+            h1 {
+                font-size: 1.7rem;
+            }
             
-            . 0;
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .accordion-button {
+                font-size: 15px;
+                padding: 14px 16px;
+            }
+            
+            .accordion-content {
+                padding: 16px;
+                font-size: 15px;
+            }
+            
+            .accordion-icon {
+                font-size: 20px;
+                margin-right: 10px;
             }
             
             .nav-item {
@@ -936,1099 +674,483 @@ category-badge {
             }
             
             .nav-item i {
-                font-size: 1.nav-item {
-                padding: 5px 10px;
-            }
-            
-            .nav-item i {
-                font-size2rem;
-           : 1.2rem;
-            }
-            
- }
-            
-            .            .nav-itemnav-item span {
-                font-size: 0.75rem;
-            }
-            
- span {
-                font-size: 0.75rem;
-            }
-            
-            .scroll-top {
-            .scroll-top {
-                bottom:                bottom: 70 70px;
-               px;
-                right right: 15px: 15px;
-                width:;
-                width: 45 45px;
-               px;
-                height:  height: 45px;
-                font-size45px;
-                font-size: : 1.1.1rem;
-            }
-       1rem;
-            }
-        
-        @ }
-        }
-        
-media (max        @media (max-width: 480px) {
--width: 480px) {
-            .logo            .logo {
-                font {
-                font-size:-size: 1. 1.3rem;
-            }
-            
-            h13rem;
-            }
-            
- {
-                font-size: 1.8rem;
-            }
-            
-            .subtitle            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .subtitle {
-                font-size {
-                font-size: 0.95: 0.95rem;
-            }
-            
-rem;
-            }
-            
-            .accordion            .accordion-button {
-                font-button {
-                font-size: 0.95rem;
--size: 0.95rem;
-                padding:                 padding: 1616px 18px 18px;
-            }
-            
-            .px;
-            }
-            
-           accordion-content {
-                .accordion-content padding: 18 {
-                padding: px;
-18px;
-                font-size:                font-size: 0 0.95rem.95rem;
-           ;
-            }
-            
- }
-            
-            .accordion-icon {
-            .accordion-icon                font-size:  {
-                font-size:1.3rem;
- 1.3rem;
-                margin                margin-right:-right: 12 12px;
-px;
-            }
-            
-            }
-            
-                       .nav-item {
- .nav-item {
-                padding: 5                padding: 5px 8px;
-            }
-            
-            .nav-item i {
-                font-size: 1.1rem;
-px 8px;
-            }
-            
-            .nav-item i {
                 font-size: 1.1rem;
             }
-            }
-            
             
             .nav-item span {
-            .nav-item span {
-                font               -size: 0. font-size: 0.7rem;
+                font-size: 0.7rem;
             }
-7rem;
-            }
-            
             
             .share-btn {
-            .share-btn {
-                               width: 45 width: 45px;
-                heightpx;
-                height: 45px: 45px;
-                font-size: ;
-                font-size: 1.1.1rem1rem;
-            }
-            
-;
-            }
-            
-            .btn {
-            .btn {
-                padding: 12px                padding: 12px 20px 20px;
-                font-size: 0.9;
-                font-size: 0.9rem;
-            }
-       rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
             }
         }
-        
-        /* Custom }
         
         /* Custom scrollbar */
-        :: scrollbar */
-        ::-webkit-webkit-scroll-scrollbar {
-bar {
-            width            width: : 8px;
-8px;
-               }
-        
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        :: ::-webkit-scroll-webkit-scrollbar-trackbar-track {
-            {
-            background: background: var(-- var(--main-bmain-bg-color);
-g-color);
+        ::-webkit-scrollbar-track {
+            background: var(--main-bg-color);
         }
         
-        }
-        
-               ::-webkit ::-webkit-scroll-scrollbar-thbar-thumb {
-umb {
-            background            background: var: var(--btn-color);
+        ::-webkit-scrollbar-thumb {
+            background: var(--btn-color);
             border-radius: 4px;
-(--btn-color);
-            border-radius: 4px;
-               }
-        
         }
         
-        ::-webkit-scrollbar ::-webkit-scrollbar-thumb:hover-thumb:hover {
- {
-            background: var            background: var(--btn-active(--btn-active);
-);
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--btn-active);
         }
-           }
-    </style </style>
+    </style>
 </head>
-</head>
-<body>
-   >
 <body>
     <header>
-        <header>
-        <div class <div class="container="container">
-           ">
-            <div class="header-content">
- <div class="header-content">
-                               <a href <a href="https="https://pl://plurderapolisurderapolis.org" class.org" class="="logologo">PL">PLUR<span>DERAPUR<span>DERAPOLIS</span></OLIS</span></a>
-                
-                <buttona>
-                
-                <button class=" class="menu-togglemenu-toggle" id" id="menu="menuToggle">
-Toggle">
-                    <                    <i classi class="fas fa="fas fa-bars-bars"></i>
-"></i>
-                </                </button>
-button>
-                
-                               
-                <ul <ul class=" class="nav-menu"nav-menu" id id="navMenu">
-="navMenu">
-                                       <li <li><a href><a href="https="https://plurderapolis.org">Home</a></li>
-                   ://plurderapolis.org">Home</a></li>
-                    <li <li><a><a href="https:// href="https://plurderapolisplurderapolis.org/health.html" class="active.org/health.html" class="active">Health">Health</a></li>
-                   </a></li>
-                    <li><a <li><a href=" href="https://plhttps://plururderapolis.org/resourcesderapolis.org/resources.html">Resources</.html">Resources</a></a></li>
-li>
-                                       <li <li><a href><a href="https://pl="https://plururderapolis.org/community.html">derapolis.org/community.html">Community</Community</a></a></li>
-li>
-                    <                    <lili><a href="https><a href="https://pl://plurderurderapolis.orgapolis.org/so/sober.htmlber.html">S">Sober</ober</a></lia></li>
->
-                    <li                    <li><a><a href="https href="https://plurderapolis.org://plurderapolis.org/emergency.html/emergency.html">Emergency</a></li">Emergency</a></li>
-                </ul>
-                </ul>
-            </div>
-            </div>
+        <a href="https://plurderapolis.org" class="logo">PLUR<span>DERAPOLIS</span></a>
+        
+        <div class="nav-menu">
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <button class="close-menu"><i class="fas fa-times"></i></button>
+                <li><a href="https://plurderapolis.org"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="https://plurderapolis.org/health.html" class="active"><i class="fas fa-heartbeat"></i> Health</a></li>
+                <li><a href="https://plurderapolis.org/resources.html"><i class="fas fa-book"></i> Resources</a></li>
+                <li><a href="https://plurderapolis.org/sober.html"><i class="fas fa-leaf"></i> Sober</a></li>
+                <li><a href="https://plurderapolis.org/emergency.html"><i class="fas fa-ambulance"></i> Emergency</a></li>
+            </ul>
         </div>
-        </div>
-   >
-    </header>
-
     </header>
 
     <div class="container">
-        <div class="container">
-        <div class="hero <div class="hero">
-            <h">
-            <h11>Raver Survival>Raver Survival Guide Guide 🌈✨ 🌈✨</</h1>
-           h1>
-            <p class=" <p class="subsubtitle">Essentialtitle">Essential harm harm reduction tips for safer reduction tips for safer party experiences. party experiences. Pocket tips up top Pocket tips up top, detailed info, detailed info inside inside each each section section.</.</pp>
-            
-           >
+        <div class="hero">
+            <h1>Raver Survival Guide 🌈✨</h1>
+            <p class="subtitle">Pocket tips up top. Tap to drop down for the full survival manual. Link-outs go to your existing pages.</p>
             
             <div class="category-badges">
- <div class="category-badges">
-                <div                <div class=" class="category-bcategory-badge"><iadge"><i class="fas fa-heartbeat"></ class="fas fa-heartbeati> Health</div>
-"></i> Health</                <div class="category-badgediv>
-                <div class="category-badge"><i class="fas fa-shield-alt"></"><i class="fas fa-shield-alt"></i> Safety</divi> Safety</div>
-                <>
-                <div class="category-bdiv class="category-badge"><i class="fas faadge"><i class="fas fa-users"></i> Community-users"></i> Community</div>
-                <div</div>
-                <div class="category-b class="category-badge"><i classadge"><i class="fas fa-first-aid="fas fa-first-aid"></i> Emergency"></i> Emergency</div>
-           </div>
+                <div class="category-badge"><i class="fas fa-heartbeat"></i> Health</div>
+                <div class="category-badge"><i class="fas fa-shield-alt"></i> Safety</div>
+                <div class="category-badge"><i class="fas fa-users"></i> Community</div>
+            </div>
+            
+            <!-- Like Button Section -->
+            <div class="like-section">
+                <button class="like-btn" id="likeButton">
+                    <i class="far fa-heart"></i> Like this Guide
+                </button>
+                <span class="like-count" id="likeCount">0</span>
             </div>
         </div>
-        </div>
 
-        </div>
-
-        <div class="accordion <div class="accordion-container">
-            <!---container">
+        <div class="accordion-container">
             <!-- HYDRATION -->
- HYDRATION -->
-                       <div class=" <div class="accordaccordion-item">
-               ion-item">
-                <button class=" <button class="accordionaccordion-button"-button" aria-exp aria-expanded="anded="falsefalse">
-">
-                    <span><i class                    <span><i class="accord="accordion-icon fas faion-icon fas fa-t-tint"></iint"></i>> 💧 Hydration 💧 Hydration</</span><span classspan><span class="accord="accordion-chevion-chevron">ron">▾▾</span>
-</span>
-                               </button>
-                </button>
-                <div class=" <div class="accordionaccordion-content"-content" role=" role="region"region" aria-label aria-label="Hydration="Hydration details details">
-                    <ul">
-                    <ul class class="pocket="pocket">
-                        <li>Sip, don't chug. Rotate electrolytes">
-                        <li>Sip, don't chug. Rotate electrolytes with water.</li>
-                        <li>MDMA + heat = dehydration with water.</li>
-                        <li>MDMA + heat = dehydration risk risk. Cool down regularly.</. Cool down regularly.</li>
-li>
-                                               <li>Headache, dizziness <li>Headache, dizziness,, dry mouth = dry mouth = drink smart drink smart.</li.</li>
-                       >
-                        <li <li><><a href="a href="https://plhttps://plurderapolisurderapolis.org/.org/emergencyemergency.html">.html">OverheatingOverheating steps →</a></li steps →</a></li>
-                    </>
-                    </ul>
-ul>
-                                       <div class <div class="deep">
-="deep">
-                        <h4>Smart Hydration & Temperature</                        <h4>Smart Hydration & Temperature</h4h4>
-                        <ul>
->
-                                                   <li><b <ul>
-                            <li><b>Rotate:</b>Rotate:</b> steady sips> steady sips + electrolytes (packets + electrolytes (packets). Plain water only). Plain water only can dilute sodium (hypon can dilute sodium (hyponatremiaatremia).).</li</li>
-                            <>
-                            <li><b>Pre-hydrate:</li><b>Pre-hydrate:</b> go inb> go in hydrated; hydrated; you can't "catch you can't "catch up up" mid-heat" mid-heatstroke.</li>
-                           stroke.</li>
-                            <li><b> <li><b>Dehydration signs:</bDehydration signs:</b> dark pee, cramps> dark pee, cramps, dizziness., dizziness. <b>Action:</b <b>Action:</> electrolytes, shade,b> electrolytes, shade rest.</li>
-, rest.</li>
-                            <li                            <li><b>Overhydration><b>Overhydration signs:</b> pounding headache signs:</b> pounding headache, nausea, confusion after chugging, nausea, confusion after chugging. <b>Action. <b>Action:</b>:</b> pause water pause water, sip electrolytes,, sip electrolytes, seek med help if seek med help if worsening.</li>
- worsening.</li>
-                                                       <li <li><b><b>Overhe>Overheating signsating signs:</b> confusion, chills,:</b> confusion, chills, hot/dry hot/dry skin. <b>Action skin. <b>Action:</b> stop:</b> stop dancing, cool core (neck/w dancing, cool core (neck/wrists/grorists/groin), airflow,in), airflow, small small electrolyte sips electrolyte sips.</li.</li>
-                           >
-                            <li <li><b>Dehydration combos:</b> MDMA><b>Dehydration combos:</b> MDMA + alcohol; stim + alcohol; stims + hot roomss + hot rooms. Avoid or limit. Avoid or limit.</li.</li>
-                            <li>More:>
-                            <li>More: <a href="https <a href="https://plurder://plurderapolis.org/emergencyapolis.org/emergency.html">Emergency</.html">Emergency</a></lia></li>
-                        </ul>
-                    </div>
->
-                        </ul>
-                    </div>
-                </div>
-            </                </div>
-            </divdiv>
-
-            <!-- PRE>
-
-            <!-- PRE-SHOW PREP-SHOW PREP -->
-            <div -->
-            <div class="accordion class="accordion-item">
--item                <button class">
-                <button="accordion-button class="accordion-button" aria-expanded" aria-expanded="false">
-                    <="false">
-                    <span><i class="span><i class="accordion-icon fasaccordion-icon fas fa-ut fa-utensils"></i>ensils"></i> 🥗 Pre- 🥗 Pre-Show Prep</spanShow Prep</span><span class="><span class="accordion-chevronaccordion-chevron">▾</span">▾</span>
-                </button>
-                </button>
-                <div class>
-                <div class="accordion="accordion-content"-content" role="region" role="region" aria-label aria-label="Pre="Pre-show details">
--show details">
-                                       <ul class=" <ul class="pocketpocket">
-                       ">
-                        <li <li>E>Eat carbs + protein.at carbs + protein. Sleep if you Sleep if you can.</li>
- can.</li>
-                                               <li> <li>Test,Test, label, and label, and pack your stash pack your stash.</li.</li>
-                       >
-                        <li <li>Plan>Plan your your exit + meet spot exit + meet spot.</li.</li>
-                        <li><>
-                        <li><a href="https://a href="https://plurderapolis.org/polplurderapolis.org/polydrug.html">ydrug.html">Check combCheck combos firstos first →</ →</a></a></li>
-                   li>
-                    </ul </ul>
-                   >
-                    <div class <div class="deep">
-                        <h="deep">
-                        <h4>Tolerances, Allergy Checks, Testing</4>Tolerances, Allergy Checks, Testing</h4>
-                        <ul>
-                            <lih4>
-                        <ul>
-                            <li><b><b>Tolerance>Tolerance breaks:</b> Space MD breaks:</b> Space MDMA (many useMA (many use months between). Avoid months between). Avoid daily benz daily benzos.os. Stims Stims = crash cycles— = crash cycles—planplan off-days off-days.</li.</li>
-                           >
-                            <li <li><b><b>All>Allergy test:</ergy test:</b>b> new batch → new batch → microd microdose testose test bump/c bump/capsuleapsule sliver sliver; wait; wait to assess to assess.</li>
-                           .</li>
-                            < <li><bli><b>>Test everything:</Test everything:</b>b> reagents + reagents + fent fent strips (even " strips (even "trustedtrusted" powders" powders). See). See <a <a href=" href="https://plhttps://plurderurderapolis.org/papolis.org/polydolydrug.htmlrug.html">Pol">Polydrugydrug Guide</a Guide</a>.</li>.</li>
-                           >
-                            <li <li><b><b>St>Stash planash plan:</b:</b> label/> label/color-codecolor-code; separate; separate look-al look-alikes;ikes; no mystery no mystery pocket rou pocket roulette.</lilette.</li>
->
-                        </ul>
-                        <h4>Fuel,                        </ul>
-                        < Sleep, Immunity</h4>
-                        <ulh4>Fuel, Sleep, Immunity</h4>
-                        <ul>
-                           >
-                            <li> <li>Pre-mePre-meal al 1–1–3h before3h before: carbs: carbs + protein + + protein + a little a little salt ( salt (rice/price/pasta +asta + tofu/ch tofu/chicken; preticken; pretzelszels).</li).</li>
-                           >
-                            <li <li>>Sleep bank:Sleep bank: one decent night before reduces one decent night before reduces crash intensity.</ crash intensity.</li>
-li>
-                                                       <li> <li>ImmunityImmunity: hydrate day: hydrate day-of-of; consider zinc/pro; consider zinc/probioticsbiotics before long before long fests fests.</li.</li>
-                       >
-                        </ul>
- </ul>
-                        <h                        <h4>4>PackPack & Plan</ & Plan</h4h4>
-                       >
-                        <ul <ul>
-                            <>
-                            <li><bli><b>Kit>Kit:</b> earplugs:</b> earplugs, electrolytes, electrolytes, charger, charger, condoms, condoms + lube + lube, saline, saline spray, spray, gum, gum, blister pads, bandaids, small trash bag.</li>
- blister pads, bandaids, small trash bag.</li>
-                            <li><b>                            <li><b>Safety:</b> share locationSafety:</b>; set a dead share location; set a dead-phone meet spot-phone meet spot; confirm ride; screenshot; confirm ride; screenshot tickets/maps tickets/maps.</li.</li>
-                            <>
-                            <lili>Review <a>Review <a href="https:// href="https://plplurderapolisurderapolis.org/.org/consent.html">consent.html">Consent</Consent</a> and <a href="https://pla> and <a href="https://plurderurderapolis.org/snorting.htmlapolis.org/snorting.html">Route/S">Route/Snorting</anorting</a>>.</li>
-                        </.</li>
-                        </ul>
-ul>
-                    </div>
-                    </div>
-                               </div>
- </div>
-            </            </div>
-
-div>
-
-            <!--            <!-- DURING THE DURING THE SH SHOW -->
-           OW -->
-            < <div class="accorddiv class="accordion-itemion-item">
-               ">
-                <button <button class=" class="accordionaccordion-button" aria-expanded="false">
-                    <span><i class="-button" aria-expanded="false">
-                    <span><i class="accordionaccordion-icon fas fa-icon fas fa-music-music"></i>"></i> 🎶 During the 🎶 During the Show</span Show</span><span><span class="accord class="accordion-ion-chevronchevron">">▾</span▾</span>
->
-                </button>
-                </button>
-                <                <div class="div class="accordion-contentaccordion-content" role" role="region="region" aria-label="During" aria-label="During the the show details">
- show details">
-                    <ul class="pocket">
-                        <li>Start low, go slow. Don't redose out of boredom.</li>
-                        <li>Rotate: dance → chill → hydrate → breathe.</li>
-                        <li>Own straw/spoon; don't share. Rinse after.</li>
-                        <li>Earplugs. Every. Time.</li>
-                    <ul class="pocket">
-                        <li>Start low, go slow. Don't redose out of boredom.</li>
-                        <li>Rotate: dance → chill → hydrate → breathe.</li>
-                        <li>Own straw/spoon; don't share. Rinse after.</li>
-                        <li>Earplugs. Every. Time.</li>
-                        <li                        <li><a href="https://plur><a href="https://plurderapolis.org/snorting.htmlderapolis.org/snorting.html">Snorting guide →</">Snorting guide →</a></a></li>
-                   li>
-                    </ </ul>
-                   ul>
-                    < <div class="deep">
-                        <hdiv class="deep">
-                        <h4>4>Pacing &Pacing & Temp Temp</h4>
-                        <ul>
-</h4>
-                        <ul>
-                            <                            <li>Wait at least anli>Wait at least an hour before considering more hour before considering more;; most mishaps = stacking too soon.</li most mishaps = stacking too soon.</li>
-                            <li>Heat>
-                            <li>Heat checks: checks: cool-downs each cool-downs each set; fans/ set; fans/airflow; step out ifairflow; step out if you feel off.</ you feel off.</li>
-                           li>
-                            <li>Quick fuel: small <li>Quick fuel salty snack can fix: small salty snack can shakiness ( fix shakiness (low sugar/sodium).</li>
-low sugar/sodium).</li>
-                        </ul>
-                        </ul>
-                                               <h4>Red-Flag Combos ( <h4>Red-Flag Combos (Why They're Bad)</h4>
-                        <Why They're Bad)</h4>
-                        <ul>
-                            <li><bul>
-                            <li><b>MDMA + alcohol</>MDMA + alcohol</b> → dehydrationb> → dehydration/overheating.</li/overheating.</li>
-                           >
-                            <li><b>GHB <li><b + alcohol/benzos>GHB + alcohol//opioids</benzos/opioids</b> → respiratory arrest.</b> → respiratory arrest.</li>
-li>
-                                                       <li>< <li><b>Cocaineb>Cocaine + alcohol</ + alcohol</b>b> → c → cocaethyleneocaethylene (toxic; heart (toxic; heart/liver strain)./liver strain).</li>
-                           </li>
-                            <li><b <li><b>Multiple depressants>Multiple depressants</b> (benz</b> (benzosos, alcohol, opioids, alcohol, opioids) → blackout + breathing suppression.</li>
-) → blackout + breathing suppression.</li>
-                            <                            <li>li>Unsure? SeeUnsure? See <a href=" <a href="https://plurhttps://plurderapolis.org/pderapolis.org/polydrug.html">Pololydrug.html">Polydrug</a>ydrug</a>.</li.</li>
-                        </ul>
->
-                        </ul>
-                                               <h4 <h4>Route Safety</>Route Safety</h4>
-                       h4>
-                        < <ul>
-                           ul>
-                            <li <li><b><b>Sn>Snorting:</borting:</b>> grind fine; your grind fine; your own straw; alternate own straw; alternate nostrils; saline rinse nostrils; saline rinse after; after; don't don't mix uppers.</li>
-                            <li><b> mix uppers.</li>
-                           Oral</b> is generally gentler <li><b>Oral</b> is generally gentler than insufflation than insufflation. <. <b>Plugb>Plugging</bging</b>> requires sterile tools requires sterile tools + l + lube;ube; avoid injecting avoid injecting.</li>
-                           .</li>
-                            <li>Details: <a href <li>Details: <a href="https://="https://plplurderapolis.orgurderapolis.org/snorting.html/snorting.html">">Route/SnRoute/Snorting Guideorting Guide</a>.</li>
-                        </ul</a>.</li>
-                        </ul>
-                        <h4>
-                        <h4>Ps>Psychedychedelicselics in Crow in Crowds</hds</h4>
-                       4>
-                        <ul <ul>
-                           >
-                            <li><b <li><b>Micro>Microdosedose</b</b> if you want to stay social> if you want to stay social; avoid "; avoid "re-ure-upping"pping" in a in a chaotic crowd chaotic crowd.</li>
-                            <li>Shrooms/ket/D.</li>
-                            <li>Shrooms/ket/DMT can disorientMT can disorient: stick with your: stick buddy, with your buddy, find a safe chill zone.</li>
-                        find a safe chill zone.</li>
-                        </ul>
-                        <h4 </ul>
-                        <h4>>Grounding, Hearing, SexGrounding, Hearing, Sex</h4>
-                        <ul>
-                           </h4>
-                        <ul>
-                            <li>Ground <li>Grounding:ing: gum, textured object, gum, textured object splash cold water,, splash cold water, breathe 4 breathe 4-in/-in/6-out6-out, sit, sit with back with back to a to a wall.</li>
- wall.</li>
-                            <li>                            <li>HHearing: foamearing: foam plugs; plugs; tinnitus is tinnitus is permanent.</ permanent.</li>
-li>
-                                                       <li>Safe <li>Safe sex: condoms + sex: condoms + lube; get lube; get STI testing STI testing post-fest post-festival.ival. Respect Respect <a href <a href="https://plurder="https://plurderapolis.org/consent.htmlapolis.org/consent.html">Consent</a>.</li">Consent</a>.</li>
-                        </ul>
-                    </div>
-                </div>
-           >
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-
-            <!-- AFTER THE SH <!-- AFTER THE SHOWOW -->
-            < -->
-            <div class="accordiondiv class="accord-item">
-                <buttonion-item">
-                <button class="accordion class="accordion-button" aria-expanded-button" aria-expanded="false">
-                   ="false">
-                    <span <span><i class="accordion-icon><i class="accordion-icon fas fa-bed"></ fas fa-bed"></i> 🛌 After the Show</span><span class="accordioni> 🛌 After the Show</span><span class="accordion-chevron">-chevron">▾</span>
-               ▾</span>
-                </button </button>
-                <>
-                <div class="div class="accordionaccordion-content"-content" role="region" role="region" aria-label aria-label="After the show details="After the show details">
-">
-                    <ul class                    <ul class="="pocket">
-                       pocket">
-                        <li>Electroly <li>Electrolytes, gentle foodtes, gentle food, shower, sleep.</, shower, sleepli>
-                        <li.</li>
-                       >Sal <li>Saline rinse if you railedine rinse if you railed.</li>
-                       .</li>
-                        <li>Cr <li>Crash kitash kit by bed by bed: water: water, snack, snack,, meds.</ meds.</li>
-li>
-                        <li                        <li><a href="><a href="https://https://plurderplurderapolis.orgapolis.org/after/aftercare.htmlcare.html">After">Aftercare guide →</a></care guide →</a></li>
-li>
-                    </                    </ul>
-                   ul>
-                    <div class="deep">
-                        <h4>Body Reset <div class="deep">
-                        <h4>Body Reset</h4>
-                       </h4>
-                        <ul>
-                            <ul>
-                            <li>Elect <li>Electrolyrolytes before bed &tes before bed & on waking on waking; salty; salty/protein/protein snack ( snack (eggseggs,, broth, toast, bananas).</li>
-                            broth, toast, bananas).</li>
-                            <li <li>>Sleep sanctuary: dark/cool roomSleep sanctuary: dark/cool room, eye mask, earplugs, eye mask, earpl. Don't stackugs. Don't stack downers to "force sleep."</ downers to "force sleep."</li>
-                            <li>Clean upli>
-                            <li>Clean up: saline: saline nasal rinse; shower; gentle nasal rinse; shower; gentle skincare; moisturize skincare; moisturize.</.</li>
-                        </li>
-                        </ulul>
-                        <h>
-                        <h4>Serotonin4>Serotonin & Supplements</h & Supplements</h4>
-                        <ul>
-                            <li4>
-                        <ul>
-                            <li>Trypt>Tryptophan foodsophan foods: turkey: turkey, eggs, bananas, nuts, eggs, bananas, nuts.</li>
-                           .</li>
-                            <li>5-H <li>5-HTP <bTP <b>only>only after</b> after</b> rolling (never before rolling (never before MDMA). Avoid MDMA). Avoid if it conflicts with if it conflicts with your meds.</ your meds.</li>
-                            <li>li>
-                           Magnesium for jaw <li>Magnesium for jaw/clench; vitamin C for stress recovery.</li>
-                        </ul>
-                       /clench; vitamin C for stress recovery.</li>
-                        </ul>
-                        <h <h4>M4>Moodood & Integration</h & Integration</h4>
-                       4>
-                        <ul>
-                            <ul>
-                            <li>Post-rave crash <li>Post-rave crash (low mood, (low mood, anxiety, dereal anxiety, derealizationization) is common and usually passes) is common and usually passes.</li>
-                            <li>Journal or voice.</li>
-                            <li>Journal or note; sunlight walk; text a friend to voice note; sunlight walk; text a friend to debrief.</li>
- debrief.</li>
-                            <li                            <li>If it ling>If it lingers,ers, see see <a href <a href="https://pl="https://plurderapolis.orgurderapolis.org/mentalhealth.html">Mental/mentalhealth.html">Mental Health</a> Health</a>.</li.</li>
-                       >
-                        </ul>
- </ul>
-                    </div>
-                                   </div>
-                </div>
-            </div>
-            </div>
-
-            </div>
-
-            <!-- EM <!-- EMERGENCYERGENCY BASICS BASICS -->
-            <div -->
-            <div class class="accordion="accordion-item-item">
-                <button class">
-                <button class="accord="accordion-button" aria-expandedion-button" aria-expanded="false">
-                    <span="false">
-                    <span><i><i class="accordion-icon fas fa-ambulance class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics"></i> 🚨</span><span Emergency Basics</span><span class=" class="accordion-chevron">accordion-chevron">▾▾</span</span>
-               >
-                </button>
-                </button>
-                <div class=" <div class="accordion-content" roleaccordion-content"="region" aria-label role="region" aria-label="Emergency="Emergency details">
-                    details">
-                    <ul <ul class="p class="pocket">
-                        <li>Unresponsiveocket">
-                        <li>Unresponsive, se, seizing, blue lips,izing, blue lips, or or not breathing right = not breathing right =  911.</li911.</li>
-                       >
-                        <li <li>>Recovery position if unconscious but breathing.</liRecovery position if unconscious but breathing.</li>
-                        <li>Carry naloxone; test strips save lives.</>
-                        <li>Carry naloxone; test strips save lives.</li>
-                        <li>
-                        <li><a href="li><a href="https://https://plurderplurderapolis.org/apolis.org/emergencyemergency.html">Emergency steps.html">Emergency steps → →</a> • <a</a href="https://pl> • <a href="httpsurderapolis.org://plurderapolis.org/over/overdose.htmldose.html">Over">Overdose guidedose guide →</ →</a></a></li>
-li>
-                    </                    </ul>
-                   ul>
-                    <div class="deep">
-                        <h4>Over <div class="deep">
-                        <h4>Overddoseose Signs</h4>
- Signs</h4>
-                        <ul                        <ul>
->
-                            <li><b>Opioids:</b> slow/absent                            <li><b>Opioids:</b> slow breathing, blue/absent lips/nails, pinpoint breathing, blue lips/nails pupils.</li>
-, pinpoint pupils.</li>
-                                                       <li <li><b>Stim><b>Stimulantsulants:</b>:</b> chest pain, overheating chest pain, overheating, seizures, extreme agitation.</, seizures, extremeli>
-                            agitation.</li>
-                            <li><b <li><b>>Alcohol/benzosAlcohol/benzos/GHB/GHB:</b:</b> can> can't wake't wake, vomit + unresponsive, shallow, vomit + unresponsive breathing.</li>
-, shallow breathing.</li>
-                        </                        </ul>
-ul>
-                                               <h4 <h4>What>What To Do To Do</h4</h4>
->
-                                               <ul>
- <ul>
-                            <li><                            <li><b>Call b>Call 911 now.</b>911 now.</b> Say what you see (don Say what you see (don't guess substances). MN't guess substances). MN Good-Samaritan protections apply Good-Samaritan protections apply.</li>
-                            <li.</li>
-                            <li><b><b>Rec>Recoveryovery position:</b> on side, head tilted, clear position:</b> on side, head tilted, clear airway.</li>
-                            airway.</li>
-                            <li <li><b>Naloxone><b>Naloxone:</:</b> give immediately for suspected opioid ODb> give immediately for suspected opioid OD; repeat in 2–; repeat in 2–3 min if3 min if no response.</ no response.</li>
-li>
-                                                       <li <li><b>><b>HeatstrokeHeatstroke:</:</b>b> aggressive cooling—shade/AC, fans, cold aggressive cooling—shade/AC, fans, cold packs to packs to neck/ neck/armparmpits/gits/groin; small electrolyte sips.</roin; small electrolyte sips.</li>
-                           li>
-                            <li <li><b>><b>StimStimulant crisisulant crisis:</b>:</b> stop stop activity, cool down activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
-                        </, hydrate; seek medical help if symptoms escalate.</li>
-                        </ul>
-                    </div>
-ul>
-                    </div>
-                </div>
-                </div>
-            </            </div>
-
-            <!-- LONG-Tdiv>
-
-            <!-- LONG-TERM SURVERM SURVIVIVAL -->
-           AL -->
-            <div <div class=" class="accordionaccordion-item">
--item">
-                               <button class <button class="accordion-button" aria-exp="accordion-button" aria-expanded="falseanded="false">
-">
-                    <span                    <span><i><i class=" class="accordion-icon fas faaccordion-icon fas fa-leaf"></i> 🌿-leaf"></i> 🌿 Long-Term Survival Long-Term Survival</span</span><span class="accordion-><span class="accordion-chevchevron">▾ron">▾</span>
-               </span>
-                </button>
-                </button>
-                <div class=" <div class="accordion-content" roleaccordion-content" role="region" aria-label="region" aria-label="Long-term details="Long-term details">
-                    <ul">
-                    <ul class="pocket">
- class="pocket">
-                        <li>Space                        <li>Space your rolls; protect your rolls; protect hearing.</li>
- hearing.</li>
-                        <li>Rotate party weekends with rest weekends.</li>
-                        <li>Rotate party weekends with rest weekends.</li>
-                                               <li>The <li>Therapy &rapy & boundaries aren boundaries aren't "'t "uncool."</li>
-                        <li><a href="uncool."</li>
-                        <li><a href="https://plurderapolis.org/resources.html">Mental health://plurderapolis.org/mentalhealth.html">Mental health → →</a></li>
-                    </ul>
-                   </a></li>
-                    </ul>
-                    <div class=" <div class="deep">
-                        <h4>Make It Sustainable</h4>
-deep">
-                        <h4>Make It Sustainable</h4>
-                        <ul>
-                                                   <ul>
- <li><                            <lib>Cycle breaks:</b><b>Cycle breaks:</b> sober weekends;> sober weekends; months between MDMA months between MDMA; avoid daily benzos.</li>
-                           ; avoid daily benzos.</li>
-                            <li <li><b>><b>Track patternsTrack patterns:</b:</b> sleep> sleep/mood/usage/spend—if/mood/usage/spend the graph trends down—if the graph trends down, change, change course.</ course.</li>
-li>
-                                                       <li><b>Hearing:</b> wear <li><b>Hearing:</b> wear plugs; plugs; give your give your ears rest ears rest days; days; tinnitus is forever.</li tinnitus is forever.</>
-                            <lili>
-                            <li><b>Boundaries><b>Boundaries:</b> cap nights out:</b> cap nights out; say no to; say no to midweek bing midweek binges; keep nones; keep non-nightlife hobbies alive-nightlife hobbies alive.</li>
-                            <li.</li>
-                            <li>Normalize therapy>Normalize therapy + + check-ins check-ins. See <a href=". See <a href="httpshttps://plurder://plurderapolisapolis.org/mentalhealth.html">Mental.org/mentalhealth.html">Mental Health</a>.</li>
-                        </ Health</a>.</li>
-                       ul>
-                    </div </ul>
-                   >
-                </div>
-            </div </div>
-                </div>
-            </div>
-
-            <!-- BON>
-
-            <!-- BUS HACKS -->
-            <divONUS HACKS -->
-            <div class="accordion-item class="accordion-item">
-                <button">
-                <button class="accord class="accordion-button" aria-expanded="false">
-                   ion-button" aria-expanded="false">
-                    <span><i class="accordion-icon <span><i class="accordion-icon fas fa fas fa-lightbul-lightbulb"></b"></i>i> 🍑 Bonus H 🍑 Bonus Hacksacks / Survival Tips</ / Survival Tips</span><span class="accordspan><span classion-chevron="accordion-chevron">▾">▾</</span>
-                </button>
-               span>
-                </button>
-                <div <div class=" class="accordion-content"accordion-content" role="region" role="region" aria aria-label="Bonus-label="Bonus hacks details">
-                    hacks details">
-                    < <ul classul class="pocket">
-                       ="pocket">
-                        <li>Baby V <li>Baby Vicks, gum/lollipicks, gum/lollipops, bandana.</li>
-                       ops, bandana.</li>
-                        < <li>Portable charger; share locationli>Portable charger; share location/A/AirTag.</liirTag.</li>
-                        <li>Suns>
-                        <li>Sunscreen,creen, socks, socks, blister blister pads, poncho.</li>
- pads, poncho.</li>
-                        <li                        <li><a href="https://><a href="httpsplurderapolis.org://plurderapolis.org/consent.html/consent.html">Consent culture">Consent culture →</a></li →</a></li>
-                    </ul>
->
-                    </ul>
-                    <div class="deep">
-                                           <div class="deep">
-                        <h4>"St <h4>"Stupid Little Hacksupid Little Hacks" That Save Your Night</h4" That Save Your Night</h4>
-                        <ul>
-                        <ul>
-                            <li>
-                            <li><b>Baby V><b>Baby Vicks:</bicks:</b> sniff> sniff near (not inside) nostrils for airflow; rinse later with saline.</li>
-                            <li near (not inside) nostrils for airflow; rinse later with saline.</li>
-                            <li><b>Gum><b>Gum/lollipops:</b/lollipops:</b> reduces jaw cl> reduces jaw clench & dry mouthench & dry mouth; also a grounding tool.</; also a grounding tool.</li>
-                           li>
-                            <li><b>Bandana:</b <li><b>Bandana:</b> sweat rag> sweat rag, dust, dust mask, wrap ice mask, wrap ice for cooling, or eye cover if overstim for cooling, or eye cover if overstimmed.</li>
-                            <med.</li>
-                            <li><b>li><b>Portable chargerPortable charger:</:</b> dead phoneb> dead phone = stranded; pack cable + = stranded; pack brick.</li>
- cable + brick.</li>
-                            <                            <lili><b>Rides><b>Rideshare safety:</bhare safety:</b> match plate/driver;> match plate/driver; rear passenger seat; rear passenger seat; share live share live location.</li location.</li>
-                            <li>
-                            <li><b>Digital harm><b>Digital harm reduction:</ reduction:</b>b> don't don't post people post people railing/blacked out; railing/blacked out; blur faces; blur faces; ask consent ask consent.</li.</li>
-                           >
-                            <li <li><b>Women & queer><b>Women & queer-specific:</b>-specific:</b> watch watch drinks; stick drinks; stick with a with a buddy; buddy; beware predatory "caret beware predatory "caretakers"; ask staffakers"; ask staff if uneasy.</li>
-                            <li if uneasy.</li>
-                            <li><b><b>Eco care:</>Eco care:</b> pack in/out;b> pack in/out; dispose of sharps/test kits dispose of sharps/test kits correctly correctly;; don't trash don't trash venues.</li>
-                            <li><b>Festival body:</b> blister pads venues.</li>
-                            <li><b>Festival body:</b> blister pads, dry socks, sunscreen, light layer for MN, dry socks, sunscreen, light layer for MN chills.</li>
-                            chills.</li>
-                            <li <li><b>Cultural literacy:</b> PL><b>Cultural literacy:</b> PLUR = respect +UR = respect + care; look out for the care; look out for the vulnerable. See vulnerable. See <a href="https <a href="https://plurderapolis.org://plurderapolis.org/consent.html/consent.html">Consent</a>.</li">Consent</a>.</li>
-                        </ul>
-                   >
-                        </ul>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </ </div>
-       div>
-        </div>
-
-        <!-- Like </div>
-
-        <!-- Like Section -->
-        <div class="like Section -->
-        <div class="like-section">
--section">
-            <h3            <h3>Was>Was this guide this guide helpful?</h3 helpful?</h3>
-            <button class=">
-            <button class="like-btn"like-btn" id id="likeBtn">
-="likeBtn">
-                <i class                <i class="far fa-heart"></="far fa-heart"></i> Likei> Like this Guide this Guide
-            </button
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-tint"></i> 💧 Hydration</span><span class="accordion-chevron">▾</span>
             </button>
-            <div class=">
-            <divlike-count" id class="like-count" id="likeCount">="likeCount">0 people found this0 people found this helpful</div>
-        </ helpful</div>
+            <div class="accordion-content" role="region" aria-label="Hydration details">
+                <ul class="pocket">
+                    <li>Sip, don't chug. Rotate electrolytes with water.</li>
+                    <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
+                    <li>Headache, dizziness, dry mouth = drink smart.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Overheating steps →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Smart Hydration & Temperature</h4>
+                    <ul>
+                        <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
+                        <li><b>Pre-hydrate:</b> go in hydrated; you can't "catch up" mid-heatstroke.</li>
+                        <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
+                        <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
+                        <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
+                        <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
+                        <li>More: <a href="https://plurderapolis.org/emergency.html">Emergency</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PRE-SHOW PREP -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-utensils"></i> 🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Pre-show details">
+                <ul class="pocket">
+                    <li>Eat carbs + protein. Sleep if you can.</li>
+                    <li>Test, label, and pack your stash.</li>
+                    <li>Plan your exit + meet spot.</li>
+                    <li><a href="https://plurderapolis.org/polydrug.html">Check combos first →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Tolerances, Allergy Checks, Testing</h4>
+                    <ul>
+                        <li><b>Tolerance breaks:</b> Space MDMA (many use months between). Avoid daily benzos. Stims = crash cycles—plan off-days.</li>
+                        <li><b>Allergy test:</b> new batch → microdose test bump/capsule sliver; wait to assess.</li>
+                        <li><b>Test everything:</b> reagents + fent strips (even "trusted" powders). See <a href="https://plurderapolis.org/polydrug.html">Polydrug Guide</a>.</li>
+                        <li><b>Stash plan:</b> label/color-code; separate look-alikes; no mystery pocket roulette.</li>
+                    </ul>
+                    <h4>Fuel, Sleep, Immunity</h4>
+                    <ul>
+                        <li>Pre-meal 1–3h before: carbs + protein + a little salt (rice/pasta + tofu/chicken; pretzels).</li>
+                        <li>Sleep bank: one decent night before reduces crash intensity.</li>
+                        <li>Immunity: hydrate day-of; consider zinc/probiotics before long fests.</li>
+                    </ul>
+                    <h4>Pack & Plan</h4>
+                    <ul>
+                        <li><b>Kit:</b> earplugs, electrolytes, charger, condoms + lube, saline spray, gum, blister pads, bandaids, small trash bag.</li>
+                        <li><b>Safety:</b> share location; set a dead-phone meet spot; confirm ride; screenshot tickets/maps.</li>
+                        <li>Review <a href="https://plurderapolis.org/consent.html">Consent</a> and <a href="https://plurderapolis.org/snorting.html">Route/Snorting</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DURING THE SHOW -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-music"></i> 🎶 During the Show</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="During the show details">
+                <ul class="pocket">
+                    <li>Start low, go slow. Don't redose out of boredom.</li>
+                    <li>Rotate: dance → chill → hydrate → breathe.</li>
+                    <li>Own straw/spoon; don't share. Rinse after.</li>
+                    <li>Earplugs. Every. Time.</li>
+                    <li><a href="https://plurderapolis.org/snorting.html">Snorting guide →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Pacing & Temp</h4>
+                    <ul>
+                        <li>Wait at least an hour before considering more; most mishaps = stacking too soon.</li>
+                        <li>Heat checks: cool-downs each set; fans/airflow; step out if you feel off.</li>
+                        <li>Quick fuel: small salty snack can fix shakiness (low sugar/sodium).</li>
+                    </ul>
+                    <h4>Red-Flag Combos (Why They're Bad)</h4>
+                    <ul>
+                        <li><b>MDMA + alcohol</b> → dehydration/overheating.</li>
+                        <li><b>GHB + alcohol/benzos/opioids</b> → respiratory arrest.</li>
+                        <li><b>Cocaine + alcohol</b> → cocaethylene (toxic; heart/liver strain).</li>
+                        <li><b>Multiple depressants</b> (benzos, alcohol, opioids) → blackout + breathing suppression.</li>
+                        <li>Unsure? See <a href="https://plurderapolis.org/polydrug.html">Polydrug</a>.</li>
+                    </ul>
+                    <h4>Route Safety</h4>
+                    <ul>
+                        <li><b>Snorting:</b> grind fine; your own straw; alternate nostrils; saline rinse after; don't mix uppers.</li>
+                        <li><b>Oral</b> is generally gentler than insufflation. <b>Plugging</b> requires sterile tools + lube; avoid injecting.</li>
+                        <li>Details: <a href="https://plurderapolis.org/snorting.html">Route/Snorting Guide</a>.</li>
+                    </ul>
+                    <h4>Psychedelics in Crowds</h4>
+                    <ul>
+                        <li><b>Microdose</b> if you want to stay social; avoid "re-upping" in a chaotic crowd.</li>
+                        <li>Shrooms/ket/DMT can disorient: stick with your buddy, find a safe chill zone.</li>
+                    </ul>
+                    <h4>Grounding, Hearing, Sex</h4>
+                    <ul>
+                        <li>Grounding: gum, textured object, splash cold water, breathe 4-in/6-out, sit with back to a wall.</li>
+                        <li>Hearing: foam plugs; tinnitus is permanent.</li>
+                        <li>Safe sex: condoms + lube; get STI testing post-festival. Respect <a href="https://plurderapolis.org/consent.html">Consent</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AFTER THE SHOW -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-bed"></i> 🛌 After the Show</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="After the show details">
+                <ul class="pocket">
+                    <li>Electrolytes, gentle food, shower, sleep.</li>
+                    <li>Saline rinse if you railed.</li>
+                    <li>Crash kit by bed: water, snack, meds.</li>
+                    <li><a href="https://plurderapolis.org/aftercare.html">Aftercare guide →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Body Reset</h4>
+                    <ul>
+                        <li>Electrolytes before bed & on waking; salty/protein snack (eggs, broth, toast, bananas).</li>
+                        <li>Sleep sanctuary: dark/cool room, eye mask, earplugs. Don't stack downers to "force sleep."</li>
+                        <li>Clean up: saline nasal rinse; shower; gentle skincare; moisturize.</li>
+                    </ul>
+                    <h4>Serotonin & Supplements</h4>
+                    <ul>
+                        <li>Tryptophan foods: turkey, eggs, bananas, nuts.</li>
+                        <li>5-HTP <b>only after</b> rolling (never before MDMA). Avoid if it conflicts with your meds.</li>
+                        <li>Magnesium for jaw/clench; vitamin C for stress recovery.</li>
+                    </ul>
+                    <h4>Mood & Integration</h4>
+                    <ul>
+                        <li>Post-rave crash (low mood, anxiety, derealization) is common and usually passes.</li>
+                        <li>Journal or voice note; sunlight walk; text a friend to debrief.</li>
+                        <li>If it lingers, see <a href="https://plurderapolis.org/mentalhealth.html">Mental Health</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- EMERGENCY BASICS -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Emergency details">
+                <ul class="pocket">
+                    <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
+                    <li>Recovery position if unconscious but breathing.</li>
+                    <li>Carry naloxone; test strips save lives.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Emergency steps →</a> • <a href="https://plurderapolis.org/overdose.html">Overdose guide →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Overdose Signs</h4>
+                    <ul>
+                        <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
+                        <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
+                        <li><b>Alcohol/benzos/GHB:</b> can't wake, vomit + unresponsive, shallow breathing.</li>
+                    </ul>
+                    <h4>What To Do</h4>
+                    <ul>
+                        <li><b>Call 911 now.</b> Say what you see (don't guess substances). MN Good-Samaritan protections apply.</li>
+                        <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
+                        <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
+                        <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
+                        <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- LONG-TERM SURVIVAL -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-leaf"></i> 🌿 Long-Term Survival</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Long-term details">
+                <ul class="pocket">
+                    <li>Space your rolls; protect hearing.</li>
+                    <li>Rotate party weekends with rest weekends.</li>
+                    <li>Therapy & boundaries aren't "uncool."</li>
+                    <li><a href="https://plurderapolis.org/mentalhealth.html">Mental health →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Make It Sustainable</h4>
+                    <ul>
+                        <li><b>Cycle breaks:</b> sober weekends; months between MDMA; avoid daily benzos.</li>
+                        <li><b>Track patterns:</b> sleep/mood/usage/spend—if the graph trends down, change course.</li>
+                        <li><b>Hearing:</b> wear plugs; give your ears rest days; tinnitus is forever.</li>
+                        <li><b>Boundaries:</b> cap nights out; say no to midweek binges; keep non-nightlife hobbies alive.</li>
+                        <li>Normalize therapy + check-ins. See <a href="https://plurderapolis.org/mentalhealth.html">Mental Health</a>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BONUS HACKS -->
+            <button class="accordion-button" aria-expanded="false">
+                <span><i class="accordion-icon fas fa-lightbulb"></i> 🍑 Bonus Hacks / Survival Tips</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Bonus hacks details">
+                <ul class="pocket">
+                    <li>Baby Vicks, gum/lollipops, bandana.</li>
+                    <li>Portable charger; share location/AirTag.</li>
+                    <li>Sunscreen, socks, blister pads, poncho.</li>
+                    <li><a href="https://plurderapolis.org/consent.html">Consent culture →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>"Stupid Little Hacks" That Save Your Night</h4>
+                    <ul>
+                        <li><b>Baby Vicks:</b> sniff near (not inside) nostrils for airflow; rinse later with saline.</li>
+                        <li><b>Gum/lollipops:</b> reduces jaw clench & dry mouth; also a grounding tool.</li>
+                        <li><b>Bandana:</b> sweat rag, dust mask, wrap ice for cooling, or eye cover if overstimmed.</li>
+                        <li><b>Portable charger:</b> dead phone = stranded; pack cable + brick.</li>
+                        <li><b>Rideshare safety:</b> match plate/driver; rear passenger seat; share live location.</li>
+                        <li><b>Digital harm reduction:</b> don't post people railing/blacked out; blur faces; ask consent.</li>
+                        <li><b>Women & queer-specific:</b> watch drinks; stick with a buddy; beware predatory "caretakers"; ask staff if uneasy.</li>
+                        <li><b>Eco care:</b> pack in/out; dispose of sharps/test kits correctly; don't trash venues.</li>
+                        <li><b>Festival body:</b> blister pads, dry socks, sunscreen, light layer for MN chills.</li>
+                        <li><b>Cultural literacy:</b> PLUR = respect + care; look out for the vulnerable. See <a href="https://plurderapolis.org/consent.html">Consent</a>.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-       div>
-
-        <!-- <!-- Share Section -->
-        Share Section -->
-        <div class=" <div class="share-btnsshare">
+        <!-- Share Section -->
+        <div class="share-btns">
             <a href="#" class="share-btn" onclick="sharePage()">
--btns">
-            <a href="#" class="share-btn" onclick="sharePage()">
-                <i class="fas                <i class="fas fa-share-alt"></ fa-sharei>
+                <i class="fas fa-share-alt"></i>
             </a>
-            <a href="#" class-alt"></i>
+            <a href="#" class="share-btn" onclick="printPage()">
+                <i class="fas fa-print"></i>
             </a>
-            <a href="#" class="share-btn"="share-btn" onclick="printPage()">
-                onclick="printPage()">
-                <i class=" <i class="fasfas fa fa-print"></i>
+            <a href="#" class="share-btn" onclick="emailPage()">
+                <i class="fas fa-envelope"></i>
             </a>
-           -print"></i>
-            </a>
-            < <a href="#" classa href="#" class="share="share-btn" onclick="emailPage-btn" onclick="()">
-               emailPage()">
-                <i class="fas <i class="fas fa-envelope"></ fa-envelope"></i>
-            </a>
-i>
-            </a>
-        </div        </div>
+        </div>
 
->
-
-        <!--        <!-- Legal Disclaimer -->
-        <div Legal Disclaimer -->
+        <!-- Legal Disclaimer -->
         <div class="disclaimer">
-            class="disclaimer">
-            <p>< <p><strongstrong>Legal Disclaimer:</>Legal Disclaimer:</strong>strong> This information This information is for harm reduction purposes only is for harm reduction purposes only and does not constitute and does not constitute medical advice. Always medical advice. Always seek professional seek professional medical help in emergencies. The medical help in emergencies. The authors and authors and publishers are publishers are not liable not liable for any actions taken based on this information for any actions taken based on this information. Please obey all. Please obey all applicable laws applicable laws and regulations and regulations.</p>
-            <p>.</p>
-            <© 2023 Plp>© 2023 Plurderurderapolis.orgapolis.org. All. All rights reserved.</p>
-        </ rights reserved.</p>
+            <p><strong>Legal Disclaimer:</strong> This information is for harm reduction purposes only and does not constitute medical advice. Always seek professional medical help in emergencies. The authors and publishers are not liable for any actions taken based on this information. Please obey all applicable laws and regulations.</p>
+            <p>© 2023 Plurderapolis.org. All rights reserved.</p>
         </div>
-   div>
-    </div </div>
-
-   >
-
-    <!-- Scroll to Top <!-- Scroll to Top Button -->
- Button -->
-       <div class="scroll-top" <div class="scroll-top" id="scrollTop">
-        <i class="fas fa-chevron-up"></ id="scrollTop">
-        <i class="fas fa-chevron-up"></i>
     </div>
 
-i>
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
     <!-- Bottom Navigation -->
-    <div class="nav    <!-- Bottom Navigation -->
-    <div class="-footer">
-        <a href="https://plurnav-footer">
-        <a href="https://plurderapolis.org" classderapolis.org" class="nav-item">
+    <div class="nav-footer">
+        <a href="https://plurderapolis.org" class="nav-item">
             <i class="fas fa-home"></i>
-            <span="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>Home</span>
+            <span>Home</span>
         </a>
+        <a href="https://plurderapolis.org/health.html" class="nav-item active">
+            <i class="fas fa-heartbeat"></i>
+            <span>Health</span>
         </a>
-        <a>
-        <a href=" href="https://plurhttps://plurderapolis.org/healthderapolis.org/health.html" class.html" class="nav="nav-item active-item active">
-            <i class="fas">
-            <i class fa-heartbeat"></="fas fa-heartbeat"></i>
-           i>
-            <span>Health</ <span>Health</span>
-        </span>
-        </a>
-       a>
-        <a href="https://pl <a href="https://plurderapolis.orgurderapolis.org/resources.html" class/resources.html" class="nav-item">
-           ="nav-item">
-            <i class="fas fa-book"></i <i class="fas fa-book"></i>
-            <span>
+        <a href="https://plurderapolis.org/resources.html" class="nav-item">
+            <i class="fas fa-book"></i>
             <span>Resources</span>
->Resources</span>
         </a>
-        <a href="https        </a>
-        <a href="https://plurderapolis.org/community://plurderapolis.org/community.html.html" class="nav" class="nav-item">
-            <i class="fas-item">
-            <i class="fas fa-users fa-users"></i>
-           "></i>
-            <span>Community <span>Community</span>
-        </a</span>
+        <a href="https://plurderapolis.org/sober.html" class="nav-item">
+            <i class="fas fa-leaf"></i>
+            <span>Sober</span>
         </a>
     </div>
-    </div>
 
->
-
-    <script    <script>
-       >
-        // Mobile menu toggle
- // Mobile menu toggle
-        const        const menuToggle = document.getElementById('menuToggle menuToggle = document.getElementById('menuToggle');
-       ');
-        const navMenu = const navMenu = document.getElementById('navMenu');
-        
-        menu document.getElementById('navMenu');
-        
-        menuToggle.addEventListener('Toggle.addEventListener('click', () =>click', () => {
-            navMenu.classList {
-            navMenu.classList.t.toggle('active');
-oggle('active');
-            menuToggle.innerHTML = nav            menuToggle.innerHTMLMenu.classList.contains(' = navMenu.classList.contains('active') ?active') ? 
- 
-                '<i                '<i class="fas fa-times"></ class="fas fa-times"></i>' : '<i>' : '<i class="fas fa-bi class="fas fa-bars"></i>';
-ars"></i>';
-        });
-        
-               });
-        
-        // Close menu when // Close menu when clicking outside
-        document.addEventListener('click clicking outside
-        document.addEventListener('click', (e) => {
-            if', (e) => {
-            if (!menuToggle.contains(e.target) && (!menuToggle.contains(e.target) && !navMenu.contains !navMenu.contains(e.target)) {
-(e.target)) {
-                navMenu.classList.remove('                navMenu.classList.remove('active');
-                menuactive');
-                menuToggle.innerHTML =Toggle.innerHTML = '<i class="fas fa-b '<i class="fas faars"></i>';
--bars"></i>';
-            }
-        });
-        
-        // Accessible            }
-        });
-        
+    <script>
         // Accessible accordion toggles
-        const buttons = document.querySelectorAll(".accordion-button accordion toggles
         const buttons = document.querySelectorAll(".accordion-button");
-        buttons.forEach");
         buttons.forEach(btn => {
-           (btn => {
- btn.addEventListener("click",            btn.addEventListener("click", () => {
-                () => {
-                const expanded = btn.getAttribute("aria const expanded = btn.getAttribute("aria-expanded") === "-expanded") === "true";
-                btn.settrue";
-                btn.setAttribute("aria-expAttribute("aria-expanded", String(!expanded));
-               anded", String(!expanded));
-                const panel = btn.parent const panel = btn.parentElementElement.querySelector("..querySelector(".accordion-content");
-accordion-content");
-                panel                panel.style.style.display = expanded ? ".display = expanded ? "none" : "block";
+            btn.addEventListener("click", () => {
+                const expanded = btn.getAttribute("aria-expanded") === "true";
+                btn.setAttribute("aria-expanded", String(!expanded));
+                const panel = btn.nextElementSibling;
+                panel.style.display = expanded ? "none" : "block";
                 
-                // Closenone" : "block";
-                
-                // Close other open accordions other open accordions for better mobile experience
-                for better mobile experience
-                if (!expanded if (!expanded) {
-                    buttons) {
-                    buttons.forEach(otherBtn =>.forEach(otherBtn => {
- {
-                                               if (otherBtn !== btn && if (otherBtn !== btn && otherBtn.getAttribute("aria-exp otherBtn.getAttribute("aria-expanded") === "true")anded") === "true") {
-                            otherBtn.setAttribute {
-                            otherBtn.setAttribute("aria-expanded("aria-expanded", "false");
-                           ", "false");
-                            const otherPanel const otherPanel = otherBtn.parentElement.querySelector = otherBtn.parentElement.querySelector(".accordion-content(".accordion-content");
-                            otherPanel.style");
-                            otherPanel.display = "none";
-                            const.style.display = "none";
- otherChev = otherBtn                            const otherChev = otherBtn.querySelector(".accordion.querySelector(".accordion-chevron");
-                            if-chevron");
-                            if (otherChe (otherChevv) otherChev) otherChev.style.transform = ".style.transform = "rotate(0deg)";
-rotate(0deg)";
+                // Close other open accordions for better mobile experience
+                if (!expanded) {
+                    buttons.forEach(otherBtn => {
+                        if (otherBtn !== btn && otherBtn.getAttribute("aria-expanded") === "true") {
+                            otherBtn.setAttribute("aria-expanded", "false");
+                            otherBtn.nextElementSibling.style.display = "none";
+                            const otherChev = otherBtn.querySelector(".accordion-chevron");
+                            if (otherChev) otherChev.style.transform = "rotate(0deg)";
                         }
-                        }
-                    });
                     });
                 }
                 
-                }
-                
-                // Rotate che                // Rotate chevronvron
-                const che
-                const chev =v = btn.querySelector(".accordion-chevron");
-                if (chev) chev btn.querySelector(".accordion-chevron");
-                if (chev) chev.style.transform =.style.transform = expanded expanded ? "rotate(0deg)" : "rotate(180deg)";
+                // Rotate chevron
+                const chev = btn.querySelector(".accordion-chevron");
+                if (chev) chev.style.transform = expanded ? "rotate(0deg)" : "rotate(180deg)";
             });
-        ? "rotate(0deg)" : "rotate(180deg)";
-            });
-
-        // Scroll });
         });
 
-        // Scroll to top functionality
- to top functionality
-        const scrollTop        const scrollTopBtn = document.getElementByIdBtn = document.getElementById('scroll('scrollTop');
+        // Like Button Functionality
+        const likeButton = document.getElementById('likeButton');
+        const likeCount = document.getElementById('likeCount');
+        let likes = localStorage.getItem('guideLikes') ? parseInt(localStorage.getItem('guideLikes')) : 0;
+        let liked = localStorage.getItem('guideLiked') === 'true';
         
-        window.addEventListener('scrollTop');
+        likeCount.textContent = likes;
         
-       ', () => window.addEventListener('scroll', () => {
-            if (window.page {
-            if (window.pageYOffset > YOffset > 300300) {
-                scroll) {
-                scrollTopBtn.classList.add('visibleTopBtn.classList.add('visible');
-           ');
-            } else } else {
- {
-                scroll               TopBtn.classList.remove('visible');
-            scrollTopBtn.classList.remove('visible');
+        if (liked) {
+            likeButton.classList.add('liked');
+            likeButton.innerHTML = '<i class="fas fa-heart"></i> Liked!';
+        }
+        
+        likeButton.addEventListener('click', () => {
+            if (!liked) {
+                likes++;
+                liked = true;
+                likeButton.classList.add('liked');
+                likeButton.innerHTML = '<i class="fas fa-heart"></i> Liked!';
+                likeCount.textContent = likes;
+                
+                // Animation effect
+                likeCount.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    likeCount.style.transform = 'scale(1)';
+                }, 300);
+                
+                // Save to localStorage
+                localStorage.setItem('guideLikes', likes);
+                localStorage.setItem('guideLiked', true);
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const closeMenu = document.querySelector('.close-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Scroll to Top Button
+        const scrollTop = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('show');
+            } else {
+                scrollTop.classList.remove('show');
             }
         });
         
-        scrollTopBtn.addEventListener('click', () => {
- }
-        });
-        
-        scrollTopBtn.addEventListener('click', () => {
-            window.scroll            window.scrollTo({
-                top: 0,
-                behavior: 'smoothTo({
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
-'
-            });
-               
-        // Like button functionality
-        const });
-        
-        // Like button functionality
-        const likeBtn = document likeBtn = document.getElementById.getElementById('likeBtn('likeBtn');
-        const likeCount = document.getElementById('');
-        const likeCount = document.getElementById('likelikeCount');
-        letCount');
-        let likes = localStorage likes = localStorage.getItem('guideL.getItem('guideLikesikes') ? parseInt') ? parseInt(localStorage.getItem('guide(localStorage.getItem('guideLikes')) :Likes')) : 0;
-        0;
-        let hasLiked = let hasLiked localStorage.getItem('hasL = localStorage.getItem('hasLiked')iked') === 'true';
-        
-        === 'true';
-        
-        likeCount likeCount.textContent = `${likes}.textContent = `${likes} people found this helpful`;
-        
-        people found this helpful`;
-        
-        if (hasLiked) {
-            likeBtn if (hasLiked) {
-            likeBtn.classList.classList.add('liked');
-           .add('liked');
- likeBtn.innerHTML = '<            likeBtn.innerHTML = '<i class="i class="fas fafas fa-heart"></i> Liked!';
-       -heart"></i> Liked!';
-        }
-        
- }
-        
-        likeBtn.addEventListener        likeBtn.addEventListener('click', () => {
-('click', ()            if (!has => {
-            ifLiked) {
-                likes (!hasLiked) {
-                likes++;
-                hasLiked++;
-                hasLiked = true;
-                = true;
-                likeBtn likeBtn.classList.add('liked');
-                like.classList.add('liked');
-                likeBtn.innerHTML = '<i classBtn.innerHTML = '<i class="fas fa-he="fas fa-heart"></i> Likedart"></i> Liked!';
-                likeCount.text!';
-                likeCount.textContent =Content = `${likes} people found `${likes} people found this helpful`;
-                
- this helpful`;
-                
-                localStorage.setItem('guide                localStorage.setItem('guideLikesLikes', likes);
-                localStorage.set', likes);
-                localStorage.setItem('hasLItem('hasLiked', trueiked', true);
-);
-            }
-                   }
-        });
-        
-        // Share });
-        
+
         // Share functionality
-        function functionality
         function sharePage() {
- sharePage() {
-            if (n            if (navigator.share) {
-avigator.share) {
-                navigator.sh                navigator.share({
-                    title: 'are({
-                    title: 'PlurPlurderapolisderapolis Raver Survival Guide',
-                    text: Raver Survival Guide',
-                    text: 'Check 'Check out this out this harm reduction guide harm reduction guide for ravers and for ravers and party-goers',
- party-goers',
-                                       url: window url: window.location.href
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Plurderapolis Health & Safety Guide',
+                    text: 'Check out this harm reduction guide for ravers and party-goers',
+                    url: window.location.href
                 })
-.location.href
-                })
-                .catch                .catch(error(error => {
-                    console.log('Error sharing => {
-                    console:', error);
-               .log('Error sharing:', error);
+                .catch(error => {
+                    console.log('Error sharing:', error);
                 });
-            });
             } else {
-                alert('Web } else {
-                alert('Web Share API not supported in your browser. You can copy Share API not supported in your browser. You can copy the URL to share the URL to share.');
+                alert('Web Share API not supported in your browser. You can copy the URL to share.');
             }
         }
 
-       .');
-            }
-        }
-
-        function function printPage() {
+        function printPage() {
             window.print();
- printPage() {
-            window.print();
-        }
-
         }
 
         function emailPage() {
-                   function emailPage() {
-            window.location.href = 'mail window.location.href = 'to:?subject=mailto:?subject=PlurderapolisPlurderapolis Raver Survival Guide&body=Check out this harm reduction guide Raver Survival Guide&body=Check out this harm reduction guide: ' + window.location.href;
+            window.location.href = 'mailto:?subject=Plurderapolis Health Guide&body=Check out this harm reduction guide: ' + window.location.href;
         }
 
-        // Initialize: ' + window.location.href;
-        }
-
-        // Initialize first accord first accordion asion as open on page load
-        open on page load
-        window.addEventListener window.addEventListener('DOMContentLoaded', (event)('DOMContentLoaded', (event) => {
-            if => {
-            if (buttons.length > (buttons.length > 0) 0) {
-                buttons {
-                buttons[0].setAttribute('[0].setAttribute('aria-expanded', 'aria-expanded', 'true');
-                consttrue');
-                const firstPanel = firstPanel = buttons[0].parent buttons[0].parentElement.querySelector(".Element.querySelector(".accordionaccordion-content");
-                first-content");
-                firstPanel.style.display =Panel.style.display = 'block';
-                'block';
-                const chev = buttons const chev = buttons[0].[0].querySelector(".accordquerySelector(".accordion-chevron");
-               ion-chevron");
-                if (chev) if (chev) chev.style.transform = " chev.style.transform = "rotate(180degrotate(180deg)";
+        // Initialize first accordion as open on page load
+        window.addEventListener('DOMContentLoaded', (event) => {
+            if (buttons.length > 0) {
+                buttons[0].setAttribute('aria-expanded', 'true');
+                buttons[0].nextElementSibling.style.display = 'block';
+                const chev = buttons[0].querySelector(".accordion-chevron");
+                if (chev) chev.style.transform = "rotate(180deg)";
             }
             
-)";
-            }
-            
-            // Add            // Add subtle animation subtle animation to elements to elements for better engagement
-            const for better engagement
-            const elements = document.querySelector elements = document.querySelectorAll('.accordionAll('.accordion-item-item, .category-badge, .category-badge, .share-btn');
+            // Add subtle animation to elements for better engagement
+            const elements = document.querySelectorAll('.accordion-button, .category-badge, .share-btn');
             elements.forEach((el, index) => {
-                el, .share-btn');
-            elements.forEach((el, index) => {
-                el.style.animation = `fade.style.animation = `fadeInUpInUp  0.5s ease ${index * 00.5s ease ${index * 0.1}s forwards`.1}s forwards`;
-                el.style.op;
-                el.style.opacity = '0acity = '0';
-            });
-        });
-    </script';
+                el.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
+                el.style.opacity = '0';
             });
         });
     </script>
 </body>
-</>
-</body>
-html>
+</html>
