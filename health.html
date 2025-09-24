@@ -249,6 +249,108 @@
             text-shadow: var(--glow);
         }
         
+        /* Interactive Map Section */
+        .map-container {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-title {
+            text-align: center;
+            color: var(--cyan);
+            margin-bottom: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            text-shadow: var(--glow);
+        }
+        
+        .journey-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
+        }
+        
+        .map-item {
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.7) 0%, rgba(106, 13, 173, 0.7) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .map-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .map-item:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--cyan);
+        }
+        
+        .map-item:hover::before {
+            opacity: 1;
+        }
+        
+        .map-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--cyan);
+            text-shadow: var(--glow);
+            transition: all 0.3s ease;
+        }
+        
+        .map-item:hover .map-icon {
+            transform: scale(1.2) rotate(5deg);
+            color: var(--pink);
+        }
+        
+        .map-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        
+        .map-item p {
+            font-size: 0.9rem;
+            color: var(--muted-pink);
+            margin-bottom: 15px;
+        }
+        
+        .map-connector {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%);
+            top: 50%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
         /* Accordion Section */
         .accordion-container {
             margin-bottom: 30px;
@@ -449,6 +551,24 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(26, 11, 59, 0.5);
+            z-index: 101;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(90deg, var(--cyan) 0%, var(--pink) 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
         /* Scroll to Top Button */
         .scroll-top {
             position: fixed;
@@ -547,6 +667,18 @@
             to { transform: translateX(0); }
         }
         
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(0, 240, 240, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(0, 240, 240, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(0, 240, 240, 0.5); }
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -632,6 +764,14 @@
                 padding: 6px 12px;
             }
             
+            .journey-map {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-connector {
+                display: none;
+            }
+            
             .scroll-top {
                 bottom: 70px;
                 right: 15px;
@@ -686,6 +826,15 @@
                 height: 45px;
                 font-size: 1.1rem;
             }
+            
+            .map-item {
+                min-height: 120px;
+                padding: 15px;
+            }
+            
+            .map-icon {
+                font-size: 2rem;
+            }
         }
         
         /* Custom scrollbar */
@@ -705,9 +854,34 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--btn-active);
         }
+        
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .glow-animation {
+            animation: glow 3s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
     <header>
         <a href="https://plurderapolis.org" class="logo">PLUR<span>DERAPOLIS</span></a>
         
@@ -746,9 +920,66 @@
             </div>
         </div>
 
+        <!-- Interactive Map Section -->
+        <div class="map-container">
+            <h2 class="map-title">Your Raver Journey Map</h2>
+            <div class="journey-map">
+                <div class="map-connector"></div>
+                
+                <div class="map-item" data-section="hydration">
+                    <div class="map-icon"><i class="fas fa-tint"></i></div>
+                    <h3>💧 Hydration</h3>
+                    <p>Smart hydration & temperature control</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="prep">
+                    <div class="map-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>🥗 Pre-Show Prep</h3>
+                    <p>Testing, fueling, and planning</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="during">
+                    <div class="map-icon"><i class="fas fa-music"></i></div>
+                    <h3>🎶 During the Show</h3>
+                    <p>Pacing, combos, and safety</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="after">
+                    <div class="map-icon"><i class="fas fa-bed"></i></div>
+                    <h3>🛌 After the Show</h3>
+                    <p>Recovery and integration</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="emergency">
+                    <div class="map-icon"><i class="fas fa-ambulance"></i></div>
+                    <h3>🚨 Emergency Basics</h3>
+                    <p>Overdose signs and response</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="longterm">
+                    <div class="map-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>🌿 Long-Term Survival</h3>
+                    <p>Sustainable raving practices</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="bonus">
+                    <div class="map-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>🍑 Bonus Hacks</h3>
+                    <p>Pro tips for a better experience</p>
+                    <span class="map-hint">Click to jump to section</span>
+                </div>
+            </div>
+        </div>
+
         <div class="accordion-container">
             <!-- HYDRATION -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="hydration">
                 <span><i class="accordion-icon fas fa-tint"></i> 💧 Hydration</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="Hydration details">
@@ -773,7 +1004,7 @@
             </div>
 
             <!-- PRE-SHOW PREP -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="prep">
                 <span><i class="accordion-icon fas fa-utensils"></i> 🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="Pre-show details">
@@ -807,7 +1038,7 @@
             </div>
 
             <!-- DURING THE SHOW -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="during">
                 <span><i class="accordion-icon fas fa-music"></i> 🎶 During the Show</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="During the show details">
@@ -854,7 +1085,7 @@
             </div>
 
             <!-- AFTER THE SHOW -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="after">
                 <span><i class="accordion-icon fas fa-bed"></i> 🛌 After the Show</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="After the show details">
@@ -887,7 +1118,7 @@
             </div>
 
             <!-- EMERGENCY BASICS -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="emergency">
                 <span><i class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="Emergency details">
@@ -916,7 +1147,7 @@
             </div>
 
             <!-- LONG-TERM SURVIVAL -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="longterm">
                 <span><i class="accordion-icon fas fa-leaf"></i> 🌿 Long-Term Survival</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="Long-term details">
@@ -939,7 +1170,7 @@
             </div>
 
             <!-- BONUS HACKS -->
-            <button class="accordion-button" aria-expanded="false">
+            <button class="accordion-button" aria-expanded="false" id="bonus">
                 <span><i class="accordion-icon fas fa-lightbulb"></i> 🍑 Bonus Hacks / Survival Tips</span><span class="accordion-chevron">▾</span>
             </button>
             <div class="accordion-content" role="region" aria-label="Bonus hacks details">
@@ -1037,6 +1268,55 @@
                 // Rotate chevron
                 const chev = btn.querySelector(".accordion-chevron");
                 if (chev) chev.style.transform = expanded ? "rotate(0deg)" : "rotate(180deg)";
+                
+                // Add animation to content
+                if (!expanded) {
+                    const content = panel.querySelectorAll('.pocket, .deep');
+                    content.forEach((item, index) => {
+                        item.classList.add('fade-in');
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, index * 100);
+                    });
+                }
+            });
+        });
+
+        // Interactive Map Navigation
+        const mapItems = document.querySelectorAll('.map-item');
+        mapItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                const targetSection = document.getElementById(sectionId);
+                
+                if (targetSection) {
+                    // Close all accordions first
+                    buttons.forEach(btn => {
+                        btn.setAttribute("aria-expanded", "false");
+                        btn.nextElementSibling.style.display = "none";
+                        const chev = btn.querySelector(".accordion-chevron");
+                        if (chev) chev.style.transform = "rotate(0deg)";
+                    });
+                    
+                    // Open the target section
+                    targetSection.setAttribute("aria-expanded", "true");
+                    const panel = targetSection.nextElementSibling;
+                    panel.style.display = "block";
+                    const chev = targetSection.querySelector(".accordion-chevron");
+                    if (chev) chev.style.transform = "rotate(180deg)";
+                    
+                    // Scroll to the section
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Add animation to content
+                    const content = panel.querySelectorAll('.pocket, .deep');
+                    content.forEach((item, index) => {
+                        item.classList.add('fade-in');
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, index * 100);
+                    });
+                }
             });
         });
 
@@ -1111,6 +1391,17 @@
             });
         });
 
+        // Progress Bar
+        const progressBar = document.getElementById('progressBar');
+        
+        window.addEventListener('scroll', () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+            progressBar.style.width = scrollPercent + '%';
+        });
+
         // Share functionality
         function sharePage() {
             if (navigator.share) {
@@ -1142,14 +1433,33 @@
                 buttons[0].nextElementSibling.style.display = 'block';
                 const chev = buttons[0].querySelector(".accordion-chevron");
                 if (chev) chev.style.transform = "rotate(180deg)";
+                
+                // Add animation to content
+                const content = buttons[0].nextElementSibling.querySelectorAll('.pocket, .deep');
+                content.forEach((item, index) => {
+                    item.classList.add('fade-in');
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 100);
+                });
             }
             
             // Add subtle animation to elements for better engagement
-            const elements = document.querySelectorAll('.accordion-button, .category-badge, .share-btn');
+            const elements = document.querySelectorAll('.accordion-button, .category-badge, .share-btn, .map-item');
             elements.forEach((el, index) => {
                 el.style.animation = `fadeIn 0.5s ease ${index * 0.1}s forwards`;
                 el.style.opacity = '0';
             });
+            
+            // Add floating animation to map icons
+            const mapIcons = document.querySelectorAll('.map-icon');
+            mapIcons.forEach((icon, index) => {
+                icon.classList.add('float-animation');
+                icon.style.animationDelay = `${index * 0.5}s`;
+            });
+            
+            // Add glow animation to progress bar
+            progressBar.classList.add('glow-animation');
         });
     </script>
 </body>
