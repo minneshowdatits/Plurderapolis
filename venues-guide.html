@@ -51,13 +51,12 @@
             padding: 20px;
         }
         
-        /* Header - Fixed but not sticky */
+        /* Header - Full width */
         header {
             background: var(--header-bg);
             color: white;
             padding: 20px;
             text-align: center;
-            border-radius: 0 0 15px 15px;
             margin-bottom: 30px;
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(138, 43, 226, 0.3);
@@ -65,6 +64,8 @@
             z-index: 100;
             backdrop-filter: blur(10px);
             animation: fadeInDown 0.8s ease-out;
+            width: 100%;
+            border-radius: 0;
         }
         
         .logo {
@@ -92,6 +93,41 @@
             margin-bottom: 20px;
             color: var(--text-gray);
             font-weight: 300;
+        }
+        
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-purple);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+        
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top:hover {
+            background: #9a4dff;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
         }
         
         /* Navigation */
@@ -269,8 +305,8 @@
             box-shadow: 0 0 10px var(--glow-purple);
         }
         
-        /* Sober Section */
-        .sober-section {
+        /* Health Section (formerly Sober Section) */
+        .health-section {
             background: linear-gradient(45deg, rgba(71, 117, 255, 0.15), rgba(138, 43, 226, 0.25));
             border: 1px solid rgba(71, 117, 255, 0.3);
             border-radius: 15px;
@@ -281,14 +317,14 @@
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
         
-        .sober-title {
+        .health-title {
             color: #9ad0ff;
             margin-bottom: 15px;
             font-size: 1.4rem;
             font-weight: 600;
         }
         
-        .sober-link {
+        .health-link {
             display: inline-block;
             background: rgba(71, 117, 255, 0.2);
             color: #9ad0ff;
@@ -300,7 +336,7 @@
             font-weight: 500;
         }
         
-        .sober-link:hover {
+        .health-link:hover {
             background: rgba(71, 117, 255, 0.3);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(71, 117, 255, 0.3);
@@ -623,6 +659,14 @@
             .venue-accordion {
                 animation: fadeInUp 0.6s ease-out;
             }
+            
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
         }
         
         .active .accordion-icon {
@@ -652,12 +696,12 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="back-btn" onclick="history.back()">
-            <i class="fas fa-arrow-left"></i> Back
-        </button>
-        
-        <header>
+    <header>
+        <div class="container">
+            <button class="back-btn" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            
             <div class="logo">PLURderapolis</div>
             <h1>Venue Guide</h1>
             <p class="subtitle">Find the perfect spot for your night out in the Twin Cities</p>
@@ -683,8 +727,10 @@
                 <a href="/contact.html" class="nav-link">Contact</a>
                 <a href="https://plurderapolis.org/anon-tip" class="nav-link anon-tip-link" target="_blank">Anon Tip</a>
             </nav>
-        </header>
-        
+        </div>
+    </header>
+    
+    <div class="container">
         <div class="search-section">
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Search by venue name, neighborhood, or features...">
@@ -714,10 +760,10 @@
             </div>
         </div>
         
-        <div class="sober-section">
-            <h2 class="sober-title">Sober Resources & NA Options</h2>
-            <a href="/sober.html" class="sober-link">
-                <i class="fas fa-tint"></i> Explore Sober-Friendly Resources
+        <div class="health-section">
+            <h2 class="health-title">Raver Health & Safety</h2>
+            <a href="health.HTML" class="health-link">
+                <i class="fas fa-heartbeat"></i> Raver Health Guide
             </a>
         </div>
         
@@ -741,6 +787,11 @@
                 <p>Have a venue to suggest or information to update? <a href="mailto:info@plurderapolis.org" class="footer-link">Let us know</a>!</p>
             </div>
         </footer>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <script>
@@ -972,6 +1023,24 @@
             mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
                 ? '<i class="fas fa-times"></i> Close' 
                 : '<i class="fas fa-bars"></i> Menu';
+        });
+
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
 
         // Function to render venues with staggered animation
