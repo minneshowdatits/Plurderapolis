@@ -19,6 +19,9 @@
       --card-bg: rgba(58, 0, 82, 0.85);
       --glow-teal: 0 0 10px rgba(0, 247, 224, 0.7);
       --glow-pink: 0 0 10px rgba(255, 42, 146, 0.7);
+      --section-blue: rgba(0, 100, 255, 0.1);
+      --section-green: rgba(0, 200, 100, 0.1);
+      --section-orange: rgba(255, 150, 0, 0.1);
     }
     
     * {
@@ -45,6 +48,42 @@
       max-width: 1000px;
       margin: 0 auto;
       padding: 0.5rem 1rem;
+    }
+    
+    /* Search Bar */
+    .search-container {
+      position: relative;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .search-bar {
+      width: 100%;
+      max-width: 500px;
+      padding: 0.8rem 1rem 0.8rem 2.5rem;
+      border-radius: 30px;
+      border: 2px solid var(--accent-teal);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      font-size: 1rem;
+      box-shadow: var(--glow-teal);
+      transition: all 0.3s ease;
+    }
+    
+    .search-bar:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(0, 247, 224, 0.8);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-teal);
+      z-index: 1;
     }
     
     /* Navigation Menu */
@@ -103,6 +142,32 @@
     .nav-link:hover {
       background-color: rgba(0, 247, 224, 0.1);
       color: var(--accent-teal);
+    }
+    
+    /* Section Navigation */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      justify-content: center;
+    }
+    
+    .section-nav-item {
+      background: var(--card-bg);
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .section-nav-item:hover {
+      background: rgba(0, 247, 224, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 247, 224, 0.2);
     }
     
     /* Header */
@@ -688,6 +753,30 @@
       flex-wrap: wrap;
     }
     
+    /* Color-coded sections */
+    .emergency-section {
+      border-left: 4px solid var(--bright-pink);
+    }
+    
+    .communication-section {
+      border-left: 4px solid var(--neon-blue);
+    }
+    
+    .resources-section {
+      border-left: 4px solid var(--accent-teal);
+    }
+    
+    .local-section {
+      border-left: 4px solid #ffaa00;
+    }
+    
+    /* Search results highlighting */
+    .highlight {
+      background-color: rgba(255, 255, 0, 0.3);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -729,6 +818,16 @@
       .container {
         padding: 0.3rem 0.8rem;
       }
+      
+      .section-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+      
+      .section-nav-item {
+        white-space: nowrap;
+      }
     }
   </style>
 </head>
@@ -758,12 +857,26 @@
       </div>
     </header>
 
+    <!-- Search Bar -->
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" class="search-bar" id="searchInput" placeholder="Search for help topics, resources, or contacts...">
+    </div>
+
     <div class="emergency-alert" id="emergency">
       <strong>EMERGENCY ASSISTANCE:</strong> If you're in immediate danger, <a href="tel:911" style="color:white; text-decoration:underline; font-weight:bold;">call 911</a> now.
     </div>
 
+    <!-- Section Navigation -->
+    <div class="section-nav">
+      <a href="#quick-help" class="section-nav-item">Quick Help</a>
+      <a href="#communication" class="section-nav-item">Communication Tools</a>
+      <a href="#resources" class="section-nav-item">Resources</a>
+      <a href="#local-support" class="section-nav-item">Local Twin Cities Support</a>
+    </div>
+
     <!-- Quick Links Section -->
-    <div class="quick-links">
+    <div class="quick-links" id="quick-help">
       <a href="https://plurderapolis.org/spiking" class="quick-link-item">
         <div class="quick-link-icon">🚫</div>
         <h3>Drink Spiking Info</h3>
@@ -803,8 +916,8 @@
       </div>
     </div>
 
-    <div class="card-grid">
-      <div class="card">
+    <div class="card-grid" id="communication">
+      <div class="card communication-section">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">📲</span>
           <h3>Text or Call Trusted Contact</h3>
@@ -821,7 +934,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card communication-section">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">📍</span>
           <h3>Send My Location</h3>
@@ -835,7 +948,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card communication-section">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">✅</span>
           <h3>I'm Safe</h3>
@@ -849,7 +962,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card emergency-section">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">🖐</span>
           <h3>Help Message (Silent)</h3>
@@ -863,7 +976,7 @@
         </div>
       </div>
 
-      <div class="card" id="resources">
+      <div class="card resources-section" id="resources">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">🔗</span>
           <h3>PLURderapolis Resources</h3>
@@ -892,7 +1005,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card resources-section">
         <div class="card-header" onclick="toggleCard(this.parentNode)">
           <span class="card-icon">📝</span>
           <h3>Remember Everything</h3>
@@ -908,7 +1021,7 @@
       </div>
     </div>
 
-    <div class="collapsible-section" id="local-support">
+    <div class="collapsible-section local-section" id="local-support">
       <div class="section-header" onclick="toggleSection(this.parentNode)">
         <h2><i class="fas fa-map-marker-alt"></i> Local Twin Cities Support & Venue Contacts</h2>
         <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
@@ -1011,6 +1124,46 @@
       alert('Your notes have been saved locally on this device.');
     }
     
+    // Search functionality
+    function performSearch() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      if (searchTerm.trim() === '') {
+        clearHighlights();
+        return;
+      }
+      
+      clearHighlights();
+      
+      // Search in all text content
+      const elements = document.querySelectorAll('h1, h2, h3, h4, p, a, .card, .resource-item, .quick-link-item');
+      elements.forEach(element => {
+        const text = element.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+          highlightElement(element, searchTerm);
+        }
+      });
+      
+      // Scroll to first highlighted element
+      const firstHighlight = document.querySelector('.highlight');
+      if (firstHighlight) {
+        firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+    
+    function highlightElement(element, searchTerm) {
+      const regex = new RegExp(`(${searchTerm})`, 'gi');
+      const html = element.innerHTML;
+      element.innerHTML = html.replace(regex, '<span class="highlight">$1</span>');
+    }
+    
+    function clearHighlights() {
+      const highlights = document.querySelectorAll('.highlight');
+      highlights.forEach(highlight => {
+        const parent = highlight.parentNode;
+        parent.innerHTML = parent.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/g, '$1');
+      });
+    }
+    
     // Load notes when page loads
     window.addEventListener('DOMContentLoaded', (event) => {
       const savedNotes = localStorage.getItem('panicPageNotes');
@@ -1029,6 +1182,9 @@
       sections.forEach(section => {
         section.classList.remove('collapsed');
       });
+      
+      // Add search functionality
+      document.getElementById('searchInput').addEventListener('input', performSearch);
     });
     
     // Scroll to top button functionality
