@@ -5,6 +5,7 @@
   <title>Panic Center | PLURderapolis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Color scheme & fonts */
     :root {
@@ -26,7 +27,7 @@
     
     body {
       margin: 0;
-      padding: 1rem;
+      padding: 0;
       min-height: 100vh;
       font-family: 'Roboto', sans-serif;
       background-color: var(--primary-purple);
@@ -37,6 +38,7 @@
         linear-gradient(to bottom, var(--dark-purple), var(--primary-purple));
       color: var(--text-light);
       line-height: 1.6;
+      scroll-behavior: smooth;
     }
     
     .container {
@@ -45,6 +47,63 @@
       padding: 1rem;
     }
     
+    /* Navigation Menu */
+    .nav-menu {
+      position: sticky;
+      top: 0;
+      background-color: var(--dark-purple);
+      z-index: 100;
+      padding: 0.5rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-bottom: 2px solid var(--accent-teal);
+    }
+    
+    .nav-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .nav-link:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 247, 224, 0.4), transparent);
+      transition: left 0.5s;
+    }
+    
+    .nav-link:hover:before {
+      left: 100%;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(0, 247, 224, 0.1);
+      color: var(--accent-teal);
+    }
+    
+    /* Header */
     header {
       display: flex;
       align-items: center;
@@ -52,6 +111,18 @@
       margin-bottom: 1.5rem;
       padding-bottom: 0.5rem;
       border-bottom: 2px solid var(--accent-teal);
+      animation: fadeInDown 0.8s ease-out;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .logo {
@@ -61,6 +132,11 @@
       color: var(--accent-teal);
       text-decoration: none;
       text-shadow: var(--glow-teal);
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
     }
     
     h1 {
@@ -73,27 +149,36 @@
       align-items: center;
     }
     
+    /* Emergency Alert - Made more compact */
     .emergency-alert {
       background: linear-gradient(135deg, var(--bright-pink), #ff0066);
       border-radius: 12px;
-      padding: 1.2rem;
+      padding: 0.8rem;
       margin-bottom: 2rem;
       text-align: center;
-      box-shadow: 0 4px 20px rgba(255, 42, 146, 0.4);
+      box-shadow: 0 4px 15px rgba(255, 42, 146, 0.4);
       animation: pulse 2s infinite;
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 0.9rem;
+      animation: fadeIn 0.8s ease-out, pulse 2s infinite;
     }
     
     @keyframes pulse {
       0% { box-shadow: 0 0 0 0 rgba(255, 42, 146, 0.5); }
-      70% { box-shadow: 0 0 0 15px rgba(255, 42, 146, 0); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 42, 146, 0); }
       100% { box-shadow: 0 0 0 0 rgba(255, 42, 146, 0); }
     }
     
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    /* Card Grid */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -112,6 +197,26 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      animation: slideInUp 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .card:hover {
@@ -123,6 +228,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 1rem;
+      cursor: pointer;
     }
     
     .card-icon {
@@ -135,6 +241,11 @@
       justify-content: center;
       border-radius: 50%;
       background: rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .card-header:hover .card-icon {
+      transform: scale(1.1);
     }
     
     .card h3 {
@@ -146,6 +257,30 @@
     
     .card p {
       flex-grow: 1;
+    }
+    
+    .card-content {
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+    }
+    
+    .card.collapsed .card-content {
+      max-height: 0;
+      opacity: 0;
+    }
+    
+    .card:not(.collapsed) .card-content {
+      max-height: 500px;
+      opacity: 1;
+    }
+    
+    .toggle-icon {
+      margin-left: auto;
+      transition: transform 0.3s ease;
+    }
+    
+    .card.collapsed .toggle-icon {
+      transform: rotate(-90deg);
     }
     
     a.button-link {
@@ -161,6 +296,23 @@
       background-color: var(--accent-teal);
       transition: all 0.2s ease;
       box-shadow: 0 4px 10px rgba(0, 247, 224, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    a.button-link:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+    
+    a.button-link:hover:before {
+      left: 100%;
     }
     
     a.button-link:hover {
@@ -194,6 +346,23 @@
       cursor: pointer;
       transition: all 0.2s ease;
       box-shadow: 0 4px 10px rgba(93, 58, 125, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button.action-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    button.action-btn:hover:before {
+      left: 100%;
     }
     
     button.action-btn:hover {
@@ -202,23 +371,55 @@
       box-shadow: 0 6px 15px rgba(93, 58, 125, 0.4);
     }
     
-    .resource-section {
+    /* Collapsible Sections */
+    .collapsible-section {
       margin-top: 3rem;
       background: var(--dark-purple);
       border-radius: 15px;
-      padding: 2rem;
+      padding: 0;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
     }
     
-    .resource-section h2 {
+    .section-header {
+      background: var(--light-purple);
+      padding: 1.5rem 2rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .section-header:hover {
+      background: rgba(58, 0, 82, 0.9);
+    }
+    
+    .section-header h2 {
       font-family: 'Montserrat', sans-serif;
       color: var(--accent-teal);
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 2rem;
+      margin: 0;
       text-shadow: var(--glow-teal);
       font-size: 1.8rem;
+    }
+    
+    .section-content {
+      padding: 2rem;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+    }
+    
+    .collapsible-section.collapsed .section-content {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 2rem;
+      overflow: hidden;
+    }
+    
+    .collapsible-section:not(.collapsed) .section-content {
+      max-height: 1000px;
+      opacity: 1;
     }
     
     .resource-grid {
@@ -234,6 +435,11 @@
       margin-bottom: 0;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .resource-item:hover {
+      transform: translateY(-5px);
     }
     
     .resource-item h4 {
@@ -259,25 +465,6 @@
     .resource-item a:hover {
       color: var(--accent-teal);
       text-decoration: underline;
-    }
-    
-    .what-happened-section {
-      margin-top: 3rem;
-      background: var(--dark-purple);
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .what-happened-section h2 {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--accent-teal);
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 2rem;
-      text-shadow: var(--glow-teal);
-      font-size: 1.8rem;
     }
     
     .footer {
@@ -371,6 +558,61 @@
       margin-bottom: 1rem;
     }
     
+    /* Back Button */
+    .back-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--bright-pink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(255, 42, 146, 0.4);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+    
+    .back-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(255, 42, 146, 0.6);
+    }
+    
+    /* Scroll to Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--accent-teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-purple);
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 247, 224, 0.4);
+      transition: all 0.3s ease;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .scroll-to-top:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0, 247, 224, 0.6);
+    }
+    
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -393,9 +635,224 @@
       h1 {
         font-size: 1.5rem;
       }
+      
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
   </style>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav class="nav-menu">
+    <div class="nav-container">
+      <a href="/" class="logo">PLURderapolis</a>
+      <div class="nav-links">
+        <a href="#emergency" class="nav-link">Emergency</a>
+        <a href="#resources" class="nav-link">Resources</a>
+        <a href="#local-support" class="nav-link">Local Support</a>
+        <a href="bad-trip.html" class="nav-link">Bad Trip Help</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>🚨 Panic Center</h1>
+      <div>
+        <a class="button-link pink-button" href="https://plurderapolis.org/emergency" style="display: inline-block; margin-left: 1rem;">
+          Emergency Resources <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </header>
+
+    <div class="emergency-alert" id="emergency">
+      <strong>EMERGENCY ASSISTANCE:</strong> If you're in immediate danger, <a href="tel:911" style="color:white; text-decoration:underline; font-weight:bold;">call 911</a> now.
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">📲</span>
+          <h3>Text or Call Trusted Contact</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Send a message or place a call to someone you trust.</p>
+          <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">
+            <i class="fas fa-comment-alt"></i> Text a Trusted Contact
+          </a>
+          <a class="button-link" href="tel:">
+            <i class="fas fa-phone"></i> Call Someone
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">📍</span>
+          <h3>Send My Location</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Share where you are via text message.</p>
+          <button class="action-btn" onclick="shareLocation()">
+            <i class="fas fa-map-marker-alt"></i> Send My Location via Text
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">✅</span>
+          <h3>I'm Safe</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Let people know when you're okay.</p>
+          <a class="button-link" href="sms:?&body=I'm safe now. Thank you for checking on me 💚">
+            <i class="fas fa-check-circle"></i> Send "I'm Safe" Message
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">🖐</span>
+          <h3>Help Message (Silent)</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Show a message silently asking nearby for help.</p>
+          <button class="action-btn" onclick="openHelpCard()">
+            <i class="fas fa-hand-paper"></i> Show Help Message
+          </button>
+        </div>
+      </div>
+
+      <div class="card" id="resources">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">🔗</span>
+          <h3>PLURderapolis Resources</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Quick links to helpful resources from our community.</p>
+          <div class="link-grid">
+            <a href="https://plurderapolis.org/spiking" class="link-item">
+              <h4>Drink Spiking Info</h4>
+              <p>Learn about prevention and response</p>
+            </a>
+            <a href="https://plurderapolis.org/consent" class="link-item">
+              <h4>Consent & Boundaries</h4>
+              <p>Understanding and maintaining healthy boundaries</p>
+            </a>
+            <a href="bad-trip.html" class="link-item">
+              <h4>Bad Trip Assistance</h4>
+              <p>Resources for managing difficult experiences</p>
+            </a>
+            <a href="https://plurderapolis.org/mental-health" class="link-item">
+              <h4>Mental Health Resources</h4>
+              <p>Local and national support options</p>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggleCard(this.parentNode)">
+          <span class="card-icon">📝</span>
+          <h3>Remember Everything</h3>
+          <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="card-content">
+          <p>Jot down what happened. This stays only on your device.</p>
+          <textarea id="incidentNotes" placeholder="Who, what, where, when... Type anything important while it's fresh."></textarea>
+          <button class="action-btn" onclick="saveNote()">
+            <i class="fas fa-save"></i> Save Notes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible-section" id="local-support">
+      <div class="section-header" onclick="toggleSection(this.parentNode)">
+        <h2><i class="fas fa-map-marker-alt"></i> Local Twin Cities Support & Venue Contacts</h2>
+        <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="section-content">
+        <div class="resource-grid">
+          <div class="resource-item">
+            <h4>Sexual Violence / Assault Support</h4>
+            <p>Sexual Violence Center (24-hour crisis): <a href="tel:6128715111">612-871-5111</a></p>
+            <p>Hennepin Assault Response Team: <a href="tel:6128735832">612-873-5832</a></p>
+          </div>
+
+          <div class="resource-item">
+            <h4>Law Enforcement & Crisis Hotlines</h4>
+            <p>Emergency: <a href="tel:911">911</a></p>
+            <p>Minneapolis non-emergency: <a href="tel:311">311</a></p>
+            <p>Hennepin County Sheriff: <a href="tel:9522585321">952-258-5321</a></p>
+          </div>
+
+          <div class="resource-item">
+            <h4>Crisis / Domestic Abuse Support</h4>
+            <p>Domestic Abuse Service Center: <a href="tel:6123485073">612-348-5073</a></p>
+            <p>After-hours crisis line (Day One): <a href="tel:18662231111">1-866-223-1111</a></p>
+            <p>COPE Mobile Crisis (24/7): <a href="tel:6125961223">612-596-1223</a></p>
+          </div>
+
+          <div class="resource-item">
+            <h4>Venue Safety Contacts</h4>
+            <p>The Armory: <a href="tel:6123153965">612-315-3965</a></p>
+            <p>Skyway Theatre: <a href="tel:6123336100">612-333-6100</a></p>
+            <p>First Avenue: <a href="tel:6123388388">612-338-8388</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>PLURderapolis.org | Promoting safety in the electronic music community</p>
+      <p>Need help? Contact us: <a href="mailto:support@plurderapolis.org">support@plurderapolis.org</a></p>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="javascript:history.back()" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+  </a>
+
+  <!-- Scroll to Top Button -->
+  <a href="#" class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+
+  <div id="helpCard" class="help-card">
+    <div class="help-content">
+      <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
+      <button class="action-btn" onclick="closeHelpCard()">Close</button>
+    </div>
+  </div>
+
   <script>
+    // Toggle card collapse/expand
+    function toggleCard(card) {
+      card.classList.toggle('collapsed');
+    }
+    
+    // Toggle section collapse/expand
+    function toggleSection(section) {
+      section.classList.toggle('collapsed');
+    }
+    
+    // Share location function
     function shareLocation() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -411,6 +868,7 @@
       }
     }
     
+    // Help card functions
     function openHelpCard() {
       document.getElementById('helpCard').style.display = 'flex';
     }
@@ -432,147 +890,47 @@
       if (savedNotes) {
         document.getElementById('incidentNotes').value = savedNotes;
       }
+      
+      // Initialize all cards as expanded by default
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.classList.remove('collapsed');
+      });
+      
+      // Initialize all sections as expanded by default
+      const sections = document.querySelectorAll('.collapsible-section');
+      sections.forEach(section => {
+        section.classList.remove('collapsed');
+      });
+    });
+    
+    // Scroll to top button functionality
+    window.addEventListener('scroll', function() {
+      const scrollToTopButton = document.querySelector('.scroll-to-top');
+      if (window.pageYOffset > 300) {
+        scrollToTopButton.classList.add('visible');
+      } else {
+        scrollToTopButton.classList.remove('visible');
+      }
+    });
+    
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   </script>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <a href="/" class="logo">PLURderapolis</a>
-      <h1>🚨 Panic Center</h1>
-    </header>
-
-    <div class="emergency-alert">
-      <strong>EMERGENCY ASSISTANCE</strong><br>
-      If you're in immediate danger, <a href="tel:911" style="color:white; text-decoration:underline; font-weight:bold;">call 911</a> now.
-    </div>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">📲</span>
-          <h3>Text or Call Trusted Contact</h3>
-        </div>
-        <p>Send a message or place a call to someone you trust.</p>
-        <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">Text a Trusted Contact</a>
-        <a class="button-link" href="tel:">Call Someone</a>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">📍</span>
-          <h3>Send My Location</h3>
-        </div>
-        <p>Share where you are via text message.</p>
-        <button class="action-btn" onclick="shareLocation()">Send My Location via Text</button>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">✅</span>
-          <h3>I'm Safe</h3>
-        </div>
-        <p>Let people know when you're okay.</p>
-        <a class="button-link" href="sms:?&body=I'm safe now. Thank you for checking on me 💚">Send "I'm Safe" Message</a>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">🖐</span>
-          <h3>Help Message (Silent)</h3>
-        </div>
-        <p>Show a message silently asking nearby for help.</p>
-        <button class="action-btn" onclick="openHelpCard()">Show Help Message</button>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">🔗</span>
-          <h3>PLURderapolis Resources</h3>
-        </div>
-        <p>Quick links to helpful resources from our community.</p>
-        <div class="link-grid">
-          <a href="https://plurderapolis.org/spiking" class="link-item">
-            <h4>Drink Spiking Info</h4>
-            <p>Learn about prevention and response</p>
-          </a>
-          <a href="https://plurderapolis.org/consent" class="link-item">
-            <h4>Consent & Boundaries</h4>
-            <p>Understanding and maintaining healthy boundaries</p>
-          </a>
-          <a href="https://plurderapolis.org/bad-trip-mode" class="link-item">
-            <h4>Bad Trip Assistance</h4>
-            <p>Resources for managing difficult experiences</p>
-          </a>
-          <a href="https://plurderapolis.org/mental-health" class="link-item">
-            <h4>Mental Health Resources</h4>
-            <p>Local and national support options</p>
-          </a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-icon">📝</span>
-          <h3>Remember Everything</h3>
-        </div>
-        <p>Jot down what happened. This stays only on your device.</p>
-        <textarea id="incidentNotes" placeholder="Who, what, where, when... Type anything important while it's fresh."></textarea>
-        <button class="action-btn" onclick="saveNote()">Save Notes</button>
-      </div>
-    </div>
-
-      
-      <div style="text-align: center; margin-top: 2rem;">
-        <a class="button-link pink-button" href="https://plurderapolis.org/emergency">Emergency Resources</a>
-        <a class="button-link" href="https://plurderapolis.org/resources">Full Resource Directory</a>
-      </div>
-    </div>
-
-    <div class="resource-section">
-      <h2>🧭 Local Twin Cities Support & Venue Contacts</h2>
-      
-      <div class="resource-grid">
-        <div class="resource-item">
-          <h4>Sexual Violence / Assault Support</h4>
-          <p>Sexual Violence Center (24-hour crisis): <a href="tel:6128715111">612-871-5111</a></p>
-          <p>Hennepin Assault Response Team: <a href="tel:6128735832">612-873-5832</a></p>
-        </div>
-
-        <div class="resource-item">
-          <h4>Law Enforcement & Crisis Hotlines</h4>
-          <p>Emergency: <a href="tel:911">911</a></p>
-          <p>Minneapolis non-emergency: <a href="tel:311">311</a></p>
-          <p>Hennepin County Sheriff: <a href="tel:9522585321">952-258-5321</a></p>
-        </div>
-
-        <div class="resource-item">
-          <h4>Crisis / Domestic Abuse Support</h4>
-          <p>Domestic Abuse Service Center: <a href="tel:6123485073">612-348-5073</a></p>
-          <p>After-hours crisis line (Day One): <a href="tel:18662231111">1-866-223-1111</a></p>
-          <p>COPE Mobile Crisis (24/7): <a href="tel:6125961223">612-596-1223</a></p>
-        </div>
-
-        <div class="resource-item">
-          <h4>Venue Safety Contacts</h4>
-          <p>The Armory: <a href="tel:6123153965">612-315-3965</a></p>
-          <p>Skyway Theatre: <a href="tel:6123336100">612-333-6100</a></p>
-          <p>First Avenue: <a href="tel:6123388388">612-338-8388</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <p>PLURderapolis.org | Promoting safety in the electronic music community</p>
-      <p>Need help? Contact us: <a href="mailto:support@plurderapolis.org">support@plurderapolis.org</a></p>
-    </div>
-  </div>
-
-  <div id="helpCard" class="help-card">
-    <div class="help-content">
-      <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
-      <button class="action-btn" onclick="closeHelpCard()">Close</button>
-    </div>
-  </div>
 </body>
 </html>
