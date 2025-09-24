@@ -4,201 +4,281 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rejection-Based Violence | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --plur-pink: #ff4d8d;
-      --plur-purple: #9b59b6;
-      --plur-blue: #3498db;
-      --plur-peach: #ff9966;
-      --plur-green: #2ecc71;
-      --plur-yellow: #f1c40f;
-      --text-light: #f0f0f0;
-      --bg-dark: #0d0d1a;
-      --section-dark: #1a1a2e;
-      --section-darker: #121226;
-      --section-light: #2d2d4d;
-      --border-radius: 10px;
-      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      --glow-effect: 0 0 10px rgba(255, 77, 141, 0.5);
+      --plur-pink: #d81b60;
+      --plur-purple: #8e24aa;
+      --plur-blue: #1976d2;
+      --plur-peach: #ff8a65;
+      --plur-green: #388e3c;
+      --plur-yellow: #fbc02d;
+      --text-light: #f5f5f5;
+      --text-muted: #b0b0b0;
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --bg-card-hover: #252525;
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+      --section-spacing: 2rem;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       font-family: 'Open Sans', sans-serif;
       background: var(--bg-dark);
       color: var(--text-light);
-      padding: 0;
-      margin: 0;
       line-height: 1.6;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255, 77, 141, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(155, 89, 182, 0.1) 0%, transparent 20%);
+      padding-top: 70px; /* Space for fixed header */
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    header {
-      background: linear-gradient(135deg, var(--section-darker) 0%, var(--section-dark) 100%);
-      padding: 2.5rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
-      box-shadow: var(--card-shadow), var(--glow-effect);
-      border-left: 5px solid var(--plur-pink);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
+    /* Fixed Navigation */
+    .navbar {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, transparent 30%, rgba(255, 77, 141, 0.05) 50%, transparent 70%);
-      animation: shimmer 8s infinite linear;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 0;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
     }
 
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+    .navbar.scrolled {
+      padding: 0.7rem 0;
+      background: rgba(30, 30, 30, 0.98);
     }
 
-    h1 {
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
       font-family: 'Montserrat', sans-serif;
-      color: var(--plur-peach);
-      font-size: 2.5rem;
-      margin: 0 0 0.5rem 0;
-      text-shadow: 0 0 10px rgba(255, 153, 102, 0.5);
-      animation: fadeInDown 1s ease;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--plur-pink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .subtitle {
+    .nav-menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .nav-link:hover {
       color: var(--plur-blue);
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      animation: fadeInUp 1s ease 0.2s both;
     }
 
-    .intro-text {
-      background-color: var(--section-dark);
-      padding: 2rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 2rem;
-      box-shadow: var(--card-shadow);
-      border-left: 4px solid var(--plur-purple);
-      animation: fadeIn 1.5s ease;
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--plur-blue);
+      transition: var(--transition);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: var(--plur-blue);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 0;
+      margin-bottom: var(--section-spacing);
       position: relative;
       overflow: hidden;
     }
 
-    .intro-text::before {
+    .hero::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: linear-gradient(to bottom, var(--plur-pink), var(--plur-purple));
-      animation: borderPulse 3s infinite;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(216, 27, 96, 0.1) 0%, transparent 70%);
+      z-index: -1;
+      animation: pulse 8s infinite alternate;
     }
 
-    @keyframes borderPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.1); opacity: 0.8; }
     }
 
-    .card-grid {
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--plur-peach);
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero .subtitle {
+      font-size: 1.2rem;
+      color: var(--plur-blue);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    /* Intro Section */
+    .intro {
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin-bottom: var(--section-spacing);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid var(--plur-purple);
+      animation: fadeIn 1s ease;
+    }
+
+    .intro p {
+      margin-bottom: 1.5rem;
+    }
+
+    .intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight {
+      color: var(--plur-peach);
+      font-weight: 600;
+    }
+
+    /* Cards Section */
+    .cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: var(--section-spacing);
     }
 
-    .dropdown-section {
-      background: var(--section-dark);
+    .card {
+      background: var(--bg-card);
       border-radius: var(--border-radius);
-      margin-bottom: 1.5rem;
-      box-shadow: var(--card-shadow);
       overflow: hidden;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease;
     }
 
-    .dropdown-section:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      background: var(--bg-card-hover);
     }
 
-    .dropdown-header {
+    .card-header {
       padding: 1.5rem;
-      background: linear-gradient(135deg, var(--section-darker) 0%, var(--section-dark) 100%);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .dropdown-header:hover {
-      background: linear-gradient(135deg, var(--section-dark) 0%, var(--section-light) 100%);
-    }
-
-    .dropdown-header h3 {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      color: var(--plur-yellow);
-      font-size: 1.3rem;
+      background: rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       gap: 0.7rem;
+      cursor: pointer;
+      transition: var(--transition);
     }
 
-    .dropdown-icon {
-      transition: transform 0.3s ease;
+    .card-header h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--plur-yellow);
+    }
+
+    .card-icon {
       color: var(--plur-blue);
+      transition: var(--transition);
     }
 
-    .dropdown-content {
-      padding: 0;
+    .card-content {
+      padding: 0 1.5rem;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.5s ease, padding 0.3s ease;
     }
 
-    .dropdown-section.active .dropdown-content {
-      padding: 1.5rem;
-      max-height: 2000px;
+    .card.active .card-content {
+      padding: 0 1.5rem 1.5rem;
+      max-height: 1000px;
     }
 
-    .dropdown-section.active .dropdown-icon {
+    .card.active .card-icon {
       transform: rotate(180deg);
     }
 
-    ul {
+    .card ul {
       padding-left: 1.2rem;
-      margin: 0.5rem 0;
     }
 
-    li {
-      margin-bottom: 0.8rem;
+    .card li {
+      margin-bottom: 0.7rem;
       position: relative;
       padding-left: 0.5rem;
     }
 
-    li::before {
+    .card li::before {
       content: "•";
       color: var(--plur-pink);
       font-weight: bold;
@@ -207,173 +287,140 @@
       margin-left: -1em;
     }
 
-    a {
-      color: var(--plur-blue);
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.2s ease, text-shadow 0.2s ease;
-    }
-
-    a:hover {
-      color: var(--plur-green);
-      text-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
-    }
-
-    .nav-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: linear-gradient(135deg, var(--plur-pink) 0%, var(--plur-purple) 100%);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn:hover::before {
-      left: 100%;
-    }
-
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    }
-
-    .btn-back {
-      background: linear-gradient(135deg, var(--section-darker) 0%, var(--section-dark) 100%);
-      border: 1px solid var(--plur-blue);
-    }
-
-    .memorial-section {
-      background: linear-gradient(135deg, var(--section-dark) 0%, var(--section-darker) 100%);
-      border-left: 5px solid var(--plur-peach);
-      padding: 2rem;
+    /* Memorial Section */
+    .memorial {
+      background: linear-gradient(135deg, var(--bg-card) 0%, #2a1a2a 100%);
       border-radius: var(--border-radius);
-      margin: 2rem 0;
-      box-shadow: 0 0 20px rgba(255, 153, 102, 0.4);
+      padding: 2.5rem;
+      margin-bottom: var(--section-spacing);
       position: relative;
       overflow: hidden;
-      animation: pulseGlow 4s infinite;
+      box-shadow: 0 5px 20px rgba(142, 36, 170, 0.2);
+      animation: fadeIn 1s ease;
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 0 20px rgba(255, 153, 102, 0.4); }
-      50% { box-shadow: 0 0 30px rgba(255, 153, 102, 0.7); }
-    }
-
-    .memorial-section::before {
+    .memorial::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C35 20 20 35 20 50s15 30 30 30 30-15 30-30S65 20 50 20zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%23ff9966' fill-opacity='0.05'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C35 20 20 35 20 50s15 30 30 30 30-15 30-30S65 20 50 20zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%23ff8a65' fill-opacity='0.05'/%3E%3C/svg%3E");
       background-repeat: repeat;
       z-index: 0;
     }
 
-    .memorial-section h2 {
+    .memorial h2 {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.8rem;
       color: var(--plur-peach);
-      margin-top: 0;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.7rem;
       position: relative;
       z-index: 1;
-      text-shadow: 0 0 10px rgba(255, 153, 102, 0.5);
     }
 
-    .memorial-section p {
-      font-size: 1rem;
-      color: var(--text-light);
-      line-height: 1.6;
+    .memorial p {
+      margin-bottom: 1.2rem;
       position: relative;
       z-index: 1;
     }
 
-    .memorial-section p:last-child {
+    .memorial p:last-child {
       margin-bottom: 0;
     }
 
-    .highlight {
-      color: var(--plur-peach);
-      font-weight: 600;
-      text-shadow: 0 0 5px rgba(255, 153, 102, 0.5);
-    }
-
+    /* Bottom Line Section */
     .bottom-line {
-      background: var(--section-dark);
-      padding: 2rem;
+      background: var(--bg-card);
       border-radius: var(--border-radius);
-      margin: 2rem 0;
-      box-shadow: var(--card-shadow);
+      padding: 2rem;
+      margin-bottom: var(--section-spacing);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       border-left: 4px solid var(--plur-green);
-      animation: fadeInUp 1s ease;
+      animation: fadeIn 1s ease;
     }
 
     .bottom-line h3 {
       font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
       color: var(--plur-green);
-      margin-top: 0;
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
     }
 
+    .bottom-line ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.2rem;
+    }
+
+    .bottom-line li {
+      margin-bottom: 0.7rem;
+      position: relative;
+      padding-left: 0.5rem;
+    }
+
+    .bottom-line li::before {
+      content: "•";
+      color: var(--plur-green);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
       padding: 2rem 0;
-      margin-top: 2rem;
+      margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--text-muted);
       font-size: 0.9rem;
-      animation: fadeIn 1.5s ease;
     }
 
-    /* Animation keyframes */
+    /* Scroll to Top Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--plur-blue);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 999;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      background: var(--plur-pink);
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @keyframes fadeInUp {
@@ -387,208 +434,255 @@
       }
     }
 
+    /* Responsive Design */
     @media screen and (max-width: 768px) {
-      .card-grid {
-        grid-template-columns: 1fr;
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--bg-card);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
       }
-      
-      h1 {
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero h1 {
         font-size: 2rem;
       }
-      
-      .subtitle {
-        font-size: 1.1rem;
+
+      .hero .subtitle {
+        font-size: 1rem;
       }
-      
-      .nav-buttons {
-        flex-direction: column;
+
+      .cards-container {
+        grid-template-columns: 1fr;
       }
-      
-      .btn {
-        justify-content: center;
+
+      .memorial, .intro, .bottom-line {
+        padding: 1.5rem;
       }
     }
 
     @media screen and (max-width: 480px) {
-      h1 {
+      .hero {
+        padding: 2rem 0;
+      }
+
+      .hero h1 {
         font-size: 1.7rem;
       }
-      
-      .subtitle {
-        font-size: 1rem;
-      }
-      
-      .dropdown-header, .dropdown-content {
+
+      .card-header, .card-content {
         padding: 1rem;
       }
-      
-      .memorial-section {
-        padding: 1.5rem;
+
+      .scroll-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Fixed Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-heart"></i> PLURderapolis
+      </a>
+      
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="consent.html" class="nav-link">Consent</a>
+        <a href="accountability.html" class="nav-link">Accountability</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="#memorial" class="nav-link">Memorial</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
   <div class="container">
-    <header>
+    <!-- Hero Section -->
+    <section class="hero">
       <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
       <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
-    </header>
+    </section>
 
-    <div class="nav-buttons">
-      <a href="index.html" class="btn btn-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
-      <a href="consent.html" class="btn"><i class="fas fa-handshake"></i> Consent</a>
-      <a href="accountability.html" class="btn"><i class="fas fa-balance-scale"></i> Accountability</a>
-      <a href="resources.html" class="btn"><i class="fas fa-life-ring"></i> Resources</a>
-    </div>
-
-    <div class="intro-text">
+    <!-- Intro Section -->
+    <section class="intro">
       <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
 
       <p>This is <span class="highlight">rejection-based violence</span>, and it's dangerously common. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
 
       <p><strong>That's what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
+    </section>
+
+    <!-- Cards Section -->
+    <div class="cards-container">
+      <div class="card active">
+        <div class="card-header">
+          <i class="fas fa-flag card-icon"></i>
+          <h3>What Rejection-Based Violence Can Look Like</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
+            <li>They show up at your work, home, or events without being invited.</li>
+            <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
+            <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
+            <li>They try to isolate you from friends, family, or community.</li>
+            <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-brain card-icon"></i>
+          <h3>Psychological Truths Behind This Pattern</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
+            <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
+            <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-user-check card-icon"></i>
+          <h3>Signs It Might Be Happening To You</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
+            <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
+            <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
+            <li>They make you feel responsible for their emotions or threats.</li>
+            <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-shield-alt card-icon"></i>
+          <h3>What To Do If You Think It's Happening To You</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
+            <li>Tell someone you trust what's happening. Don't do this alone.</li>
+            <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
+            <li>Adjust privacy settings and think about what you're sharing online.</li>
+            <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
+            <li>Use support resources (listed below).</li>
+            <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-eye card-icon"></i>
+          <h3>Signs It Might Be Happening to Someone You Know</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>They suddenly stop going out, posting, or responding.</li>
+            <li>They seem on edge, especially when a certain name comes up.</li>
+            <li>You hear obsessive, bitter talk about someone who rejected them.</li>
+            <li>They have a "friend" who's always around, even when not invited.</li>
+            <li>You see stalking or control disguised as "romance" or "worry."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-hands-helping card-icon"></i>
+          <h3>What To Do If You Notice It</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li><strong>If a friend might be targeted:</strong></li>
+            <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
+            <li>Offer support without judgment or pressure.</li>
+            <li>Respect their pace. Leaving or naming this stuff is hard.</li>
+            <li>Stay consistent. Isolation makes everything worse.</li>
+            <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-user-friends card-icon"></i>
+          <h3>What If It's Your Friend Crossing the Line?</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li>"She said she's not interested. You need to respect that."</li>
+            <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
+            <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
+            <li>"Showing up uninvited isn't romantic, it's harassment."</li>
+            <li>"You're not owed a relationship because you were 'nice.'"</li>
+          </ul>
+          <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-phone-alt card-icon"></i>
+          <h3>Support Resources (Minnesota + National)</h3>
+        </div>
+        <div class="card-content">
+          <ul>
+            <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
+            <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank">wmn.org</a></li>
+            <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank">thehotline.org</a></li>
+            <li><strong>If someone is in immediate danger, call 911.</strong></li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="dropdown-section active">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-flag"></i> What Rejection-Based Violence Can Look Like</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
-          <li>They show up at your work, home, or events without being invited.</li>
-          <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
-          <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
-          <li>They try to isolate you from friends, family, or community.</li>
-          <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-brain"></i> Psychological Truths Behind This Pattern</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
-          <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
-          <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-user-check"></i> Signs It Might Be Happening To You</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
-          <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
-          <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
-          <li>They make you feel responsible for their emotions or threats.</li>
-          <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-shield-alt"></i> What To Do If You Think It's Happening To You</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
-          <li>Tell someone you trust what's happening. Don't do this alone.</li>
-          <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
-          <li>Adjust privacy settings and think about what you're sharing online.</li>
-          <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
-          <li>Use support resources (listed below).</li>
-          <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-eye"></i> Signs It Might Be Happening to Someone You Know</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li>They suddenly stop going out, posting, or responding.</li>
-          <li>They seem on edge, especially when a certain name comes up.</li>
-          <li>You hear obsessive, bitter talk about someone who rejected them.</li>
-          <li>They have a "friend" who's always around, even when not invited.</li>
-          <li>You see stalking or control disguised as "romance" or "worry."</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-hands-helping"></i> What To Do If You Notice It</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li><strong>If a friend might be targeted:</strong></li>
-          <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
-          <li>Offer support without judgment or pressure.</li>
-          <li>Respect their pace. Leaving or naming this stuff is hard.</li>
-          <li>Stay consistent. Isolation makes everything worse.</li>
-          <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-user-friends"></i> What If It's Your Friend Crossing the Line?</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li>"She said she's not interested. You need to respect that."</li>
-          <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
-          <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
-          <li>"Showing up uninvited isn't romantic, it's harassment."</li>
-          <li>"You're not owed a relationship because you were 'nice.'"</li>
-        </ul>
-        <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
-      </div>
-    </div>
-
-    <div class="dropdown-section">
-      <div class="dropdown-header">
-        <h3><i class="fas fa-phone-alt"></i> Support Resources (Minnesota + National)</h3>
-        <i class="fas fa-chevron-down dropdown-icon"></i>
-      </div>
-      <div class="dropdown-content">
-        <ul>
-          <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-          <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank">wmn.org</a></li>
-          <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank">thehotline.org</a></li>
-          <li><strong>If someone is in immediate danger, call 911.</strong></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="memorial-section">
+    <!-- Memorial Section -->
+    <section id="memorial" class="memorial">
       <h2><i class="fas fa-heart"></i> In Memory of Kayli Arseth</h2>
       <p><strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
       <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.</p>
       <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
       <p><strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong></p>
-    </div>
+    </section>
 
-    <div class="bottom-line">
+    <!-- Bottom Line Section -->
+    <section class="bottom-line">
       <h3><i class="fas fa-exclamation-circle"></i> Bottom Line</h3>
       <ul>
         <li>Rejection isn't cruelty.</li>
@@ -599,46 +693,79 @@
       </ul>
       <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
       <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--plur-peach);"></i></p>
-    </div>
+    </section>
 
+    <!-- Footer -->
     <footer>
       <p>PLURderapolis.org | Peace, Love, Unity, Respect</p>
     </footer>
   </div>
 
   <script>
-    // Dropdown functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const dropdownHeaders = document.querySelectorAll('.dropdown-header');
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Card toggle functionality
+    const cardHeaders = document.querySelectorAll('.card-header');
+    
+    cardHeaders.forEach(header => {
+      header.addEventListener('click', function() {
+        const card = this.parentElement;
+        card.classList.toggle('active');
+      });
+    });
+
+    // Scroll to top button
+    const scrollToTopBtn = document.querySelector('.scroll-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
       
-      dropdownHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-          const section = this.parentElement;
-          section.classList.toggle('active');
-        });
+      // Navbar scroll effect
+      const navbar = document.querySelector('.navbar');
+      if (window.pageYOffset > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
+    });
 
-      // Animate elements on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
+    // Animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-          }
-        });
-      }, observerOptions);
-
-      // Observe elements that should animate on scroll
-      const animatedElements = document.querySelectorAll('.dropdown-section, .memorial-section, .bottom-line');
-      animatedElements.forEach(el => {
-        el.style.animation = 'fadeInUp 1s ease forwards';
-        el.style.animationPlayState = 'paused';
-        observer.observe(el);
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
       });
+    }, observerOptions);
+
+    // Observe elements that should animate on scroll
+    const animatedElements = document.querySelectorAll('.card, .memorial, .bottom-line');
+    animatedElements.forEach(el => {
+      el.style.animation = 'fadeInUp 0.8s ease forwards';
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
     });
   </script>
 </body>
