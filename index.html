@@ -49,8 +49,8 @@
         body{font-family:'Roboto',sans-serif;background:radial-gradient(circle at bottom,var(--dark-bg) 0%,#1a001a 100%);color:var(--light-text);line-height:1.6;overflow-x:hidden;padding-bottom:70px}
         
         /* Enhanced Minneapolis Skyline */
-        .skyline-container{position:fixed;bottom:0;left:0;width:100%;height:100px;z-index:0;overflow:hidden}
-        .skyline{position:absolute;bottom:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(0,247,224,0.3) 0%,transparent 20%,transparent 80%,rgba(255,105,180,0.2) 100%);clip-path:polygon(0% 100%,2% 70%,4% 80%,6% 60%,8% 90%,10% 50%,12% 70%,14% 85%,16% 65%,18% 95%,20% 55%,22% 75%,24% 85%,26% 60%,28% 80%,30% 90%,32% 65%,34% 75%,36% 100%,38% 70%,40% 85%,42% 60%,44% 95%,46% 50%,48% 80%,50% 70%,52% 90%,54% 60%,56% 85%,58% 75%,60% 100%,62% 65%,64% 90%,66% 55%,68% 80%,70% 70%,72% 95%,74% 60%,76% 85%,78% 75%,80% 100%,82% 65%,84% 90%,86% 50%,88% 80%,90% 70%,92% 95%,94% 60%,96% 85%,98% 75%,100% 100%);filter:drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 16px var(--secondary));animation:skylineGlow 4s infinite alternate,glitch 5s infinite}
+        .skyline-container{position:fixed;bottom:0;left:0;width:100%;height:150px;z-index:0;overflow:hidden}
+        .skyline{position:absolute;bottom:0;left:0;width:100%;height:100%;background:linear-gradient(to top,rgba(0,247,224,0.4) 0%,transparent 20%,transparent 80%,rgba(255,105,180,0.3) 100%);clip-path:polygon(0% 100%,2% 70%,4% 80%,6% 60%,8% 90%,10% 50%,12% 70%,14% 85%,16% 65%,18% 95%,20% 55%,22% 75%,24% 85%,26% 60%,28% 80%,30% 90%,32% 65%,34% 75%,36% 100%,38% 70%,40% 85%,42% 60%,44% 95%,46% 50%,48% 80%,50% 70%,52% 90%,54% 60%,56% 85%,58% 75%,60% 100%,62% 65%,64% 90%,66% 55%,68% 80%,70% 70%,72% 95%,74% 60%,76% 85%,78% 75%,80% 100%,82% 65%,84% 90%,86% 50%,88% 80%,90% 70%,92% 95%,94% 60%,96% 85%,98% 75%,100% 100%);filter:drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 16px var(--secondary));animation:skylineGlow 4s infinite alternate,glitch 5s infinite}
         @keyframes skylineGlow{0%{filter:drop-shadow(0 0 8px var(--primary)) drop-shadow(0 0 16px var(--secondary));opacity:0.8}100%{filter:drop-shadow(0 0 12px var(--primary)) drop-shadow(0 0 24px var(--secondary));opacity:1}}
         @keyframes glitch{0%,100%{transform:translateX(0)}5%{transform:translateX(-2px)}10%{transform:translateX(2px)}15%{transform:translateX(-1px)}20%{transform:translateX(1px)}50%{transform:translateX(0)}}
 
@@ -82,7 +82,7 @@
 
         /* Grid Layout with Spacing */
         .sections-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;padding:1.5rem;max-width:1200px;margin:0 auto}
-        .section-card{background-color:var(--card-bg);border-radius:12px;padding:1.5rem;box-shadow:0 0 15px rgba(0,255,255,0.1);position:relative;z-index:1;transition:all 0.3s ease;border-left:4px solid;display:flex;flex-direction:column;height:100%;animation:fadeInUp 0.6s ease-out}
+        .section-card{background-color:var(--card-bg);border-radius:12px;padding:1.5rem;box-shadow:0 0 15px rgba(0,255,255,0.1);position:relative;z-index:1;transition:all 0.3s ease;border-left:4px solid;display:flex;flex-direction:column;height:100%;animation:fadeInUp 0.6s ease-out;overflow:hidden}
         @keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
         
         /* Color assignments for each section */
@@ -93,8 +93,9 @@
         .section-card:nth-child(5){border-left-color:var(--accent5);animation-delay:0.5s}
         .section-card:nth-child(6){border-left-color:var(--accent6);animation-delay:0.6s}
         .section-card:nth-child(7){border-left-color:var(--accent1);animation-delay:0.7s}
+        .section-card:nth-child(8){border-left-color:var(--accent2);animation-delay:0.8s}
         
-        .card-header{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;margin-bottom:1rem}
+        .card-header{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;margin-bottom:1rem;cursor:pointer}
         .section-card h2{font-family:'Montserrat',sans-serif;margin:0;font-size:1.3rem}
         
         /* Different header colors for each section */
@@ -105,6 +106,13 @@
         .section-card:nth-child(5) h2{color:var(--accent5)}
         .section-card:nth-child(6) h2{color:var(--accent6)}
         .section-card:nth-child(7) h2{color:var(--accent1)}
+        .section-card:nth-child(8) h2{color:var(--accent2)}
+        
+        .section-content{transition:all 0.3s ease;max-height:1000px;opacity:1}
+        .section-content.collapsed{max-height:0;opacity:0;overflow:hidden}
+        
+        .toggle-btn{background:none;border:none;color:var(--light-text);font-size:1.2rem;cursor:pointer;transition:transform 0.3s}
+        .toggle-btn.collapsed{transform:rotate(-90deg)}
         
         .section-links{display:grid;grid-template-columns:1fr;gap:10px}
         .section-link{display:flex;align-items:center;padding:12px 15px;background:rgba(0,0,0,0.2);border-radius:8px;text-decoration:none;color:var(--light-text);transition:all 0.3s ease;border-left:3px solid}
@@ -122,6 +130,7 @@
         .section-card:nth-child(5) .section-link{border-left-color:var(--accent5)}
         .section-card:nth-child(6) .section-link{border-left-color:var(--accent6)}
         .section-card:nth-child(7) .section-link{border-left-color:var(--accent1)}
+        .section-card:nth-child(8) .section-link{border-left-color:var(--accent2)}
         
         .cta-button{display:inline-block;margin-top:0.8rem;background:var(--primary);color:#2e003e;padding:0.7rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.9rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);text-align:center}
         .cta-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 6px 12px rgba(0,0,0,0.4)}
@@ -215,6 +224,15 @@
         @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,247,224,0.4)}70%{box-shadow:0 0 0 10px rgba(0,247,224,0)}100%{box-shadow:0 0 0 0 rgba(0,247,224,0)}}
         .pulse{animation:pulse 2s infinite}
 
+        /* Scroll to top button */
+        #scrollToTop{position:fixed;bottom:90px;right:20px;z-index:1001;width:50px;height:50px;border-radius:50%;background:var(--primary);color:#2e003e;border:none;font-size:1.5rem;cursor:pointer;box-shadow:0 0 15px rgba(0,247,224,0.5);transition:all 0.3s;display:none}
+        #scrollToTop:hover{transform:translateY(-5px);box-shadow:0 0 20px rgba(0,247,224,0.8)}
+
+        /* Special styling for the booth section */
+        .booth-section{position:relative;overflow:hidden}
+        .booth-section::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(45deg,transparent 0%,rgba(255,105,180,0.1) 50%,transparent 100%);z-index:0;pointer-events:none}
+        .booth-section .card-header h2{color:var(--secondary);text-shadow:0 0 10px rgba(255,105,180,0.5)}
+
         @media (min-width:768px){
             .sections-grid{grid-template-columns:repeat(2,1fr)}
             .section-links{grid-template-columns:repeat(2,1fr)}
@@ -226,6 +244,7 @@
             .mocktail-grid{display:grid;grid-template-columns:repeat(3,1fr);width:100%}
             .mocktail-card{min-width:auto}
             .mobile-nav-links{grid-template-columns:repeat(2,1fr)}
+            #scrollToTop{bottom:100px}
         }
         @media (min-width:1024px){
             .sections-grid{grid-template-columns:repeat(3,1fr)}
@@ -288,9 +307,13 @@
             <a href="seasonal.html" class="mobile-nav-link"><span class="icon">🌞</span>Seasonal Tips</a>
             <a href="sober.html" class="mobile-nav-link"><span class="icon">🚫</span>Sober Ravers</a>
             <a href="resources.html" class="mobile-nav-link"><span class="icon">📚</span>MN Resources</a>
+            <a href="guides.html" class="mobile-nav-link"><span class="icon">📖</span>Guides</a>
         </div>
     </div>
 </nav>
+
+<!-- Scroll to top button -->
+<button id="scrollToTop" title="Scroll to top">↑</button>
 
 <!-- Less obtrusive alert banner -->
 <div class="rave-alert-wrapper">
@@ -325,228 +348,317 @@
 <div class="sections-grid">
     <!-- What We Do Section -->
     <div class="section-card floating">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>💡 What We Do</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
-        <div class="section-links">
-            <a href="resources.html" class="section-link">
-                <span class="icon">💊</span>
-                <span class="text">Harm Reduction Resources</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="emergency.html" class="section-link">
-                <span class="icon">🧠</span>
-                <span class="text">Mental Health & Crisis Support</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="consent.html" class="section-link">
-                <span class="icon">🕊️</span>
-                <span class="text">Consent & Community Culture</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="booth.html" class="section-link">
-                <span class="icon">🎉</span>
-                <span class="text">Our Harm Reduction Booth</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
+            <div class="section-links">
+                <a href="resources.html" class="section-link">
+                    <span class="icon">💊</span>
+                    <span class="text">Harm Reduction Resources</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="emergency.html" class="section-link">
+                    <span class="icon">🧠</span>
+                    <span class="text">Mental Health & Crisis Support</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="consent.html" class="section-link">
+                    <span class="icon">🕊️</span>
+                    <span class="text">Consent & Community Culture</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="booth.html" class="section-link">
+                    <span class="icon">🎉</span>
+                    <span class="text">Our Harm Reduction Booth</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="resources.html" class="cta-button pulse">Explore All Resources</a>
         </div>
-        <a href="resources.html" class="cta-button pulse">Explore All Resources</a>
     </div>
 
     <!-- Drug Interactions Section -->
     <div class="section-card floating floating-delay-1">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>🔬 Drug Interactions</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>Check how different substances interact with each other to stay safe.</p>
-        <div class="section-links">
-            <a href="polydrug.html" class="section-link">
-                <span class="icon">⚡</span>
-                <span class="text">Polydrug Interaction Tool</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="rx-combos.html" class="section-link">
-                <span class="icon">💊</span>
-                <span class="text">RX + Party Drug Combos</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="fake.html" class="section-link">
-                <span class="icon">⚠️</span>
-                <span class="text">Fake Drugs & Alerts</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="health.html" class="section-link">
-                <span class="icon">💚</span>
-                <span class="text">Raver Health Guide</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>Check how different substances interact with each other to stay safe.</p>
+            <div class="section-links">
+                <a href="polydrug.html" class="section-link">
+                    <span class="icon">⚡</span>
+                    <span class="text">Polydrug Interaction Tool</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="rx-combos.html" class="section-link">
+                    <span class="icon">💊</span>
+                    <span class="text">RX + Party Drug Combos</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="fake.html" class="section-link">
+                    <span class="icon">⚠️</span>
+                    <span class="text">Fake Drugs & Alerts</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="health.html" class="section-link">
+                    <span class="icon">💚</span>
+                    <span class="text">Raver Health Guide</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="polydrug.html" class="cta-button pulse">Use Interaction Tool</a>
         </div>
-        <a href="polydrug.html" class="cta-button pulse">Use Interaction Tool</a>
     </div>
 
     <!-- Mocktail Preview Section -->
     <div class="section-card floating floating-delay-2">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>🍹 Sober Ravers</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>Enjoy the scene without substances with these refreshing mocktail recipes.</p>
-        <div class="mocktail-preview">
-            <div class="mocktail-scroll-container">
-                <div class="mocktail-grid">
-                    <div class="mocktail-card">
-                        <h3>🌙 Midnight Mule</h3>
-                        <ul class="mocktail-ingredients">
-                            <li>• Ginger beer</li>
-                            <li>• Fresh lime juice</li>
-                            <li>• Mint leaves</li>
-                            <li>• Cucumber slices</li>
-                        </ul>
-                    </div>
-                    <div class="mocktail-card">
-                        <h3>🌈 PLUR Punch</h3>
-                        <ul class="mocktail-ingredients">
-                            <li>• Cranberry juice</li>
-                            <li>• Orange juice</li>
-                            <li>• Club soda</li>
-                            <li>• Fresh berries</li>
-                        </ul>
-                    </div>
-                    <div class="mocktail-card">
-                        <h3>💫 Bassline Breeze</h3>
-                        <ul class="mocktail-ingredients">
-                            <li>• Coconut water</li>
-                            <li>• Pineapple juice</li>
-                            <li>• Lime wedge</li>
-                            <li>• Fresh basil</li>
-                        </ul>
+        <div class="section-content">
+            <p>Enjoy the scene without substances with these refreshing mocktail recipes.</p>
+            <div class="mocktail-preview">
+                <div class="mocktail-scroll-container">
+                    <div class="mocktail-grid">
+                        <div class="mocktail-card">
+                            <h3>🌙 Midnight Mule</h3>
+                            <ul class="mocktail-ingredients">
+                                <li>• Ginger beer</li>
+                                <li>• Fresh lime juice</li>
+                                <li>• Mint leaves</li>
+                                <li>• Cucumber slices</li>
+                            </ul>
+                        </div>
+                        <div class="mocktail-card">
+                            <h3>🌈 PLUR Punch</h3>
+                            <ul class="mocktail-ingredients">
+                                <li>• Cranberry juice</li>
+                                <li>• Orange juice</li>
+                                <li>• Club soda</li>
+                                <li>• Fresh berries</li>
+                            </ul>
+                        </div>
+                        <div class="mocktail-card">
+                            <h3>💫 Bassline Breeze</h3>
+                            <ul class="mocktail-ingredients">
+                                <li>• Coconut water</li>
+                                <li>• Pineapple juice</li>
+                                <li>• Lime wedge</li>
+                                <li>• Fresh basil</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <div class="view-all">
+                    <a href="sober.html" class="cta-button">View All Mocktail Recipes</a>
+                </div>
             </div>
-            <div class="view-all">
-                <a href="sober.html" class="cta-button">View All Mocktail Recipes</a>
-            </div>
+            <a href="sober.html" class="cta-button pulse">More Sober Resources</a>
         </div>
-        <a href="sober.html" class="cta-button pulse">More Sober Resources</a>
     </div>
 
     <!-- Emergency Tools Section -->
     <div class="section-card floating floating-delay-3">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>🚨 Emergency Tools</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>Quick access to emergency resources when you need them most.</p>
-        <div class="section-links">
-            <a href="panic.html" class="section-link">
-                <span class="icon">🚨</span>
-                <span class="text">Panic Button</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="emergency.html" class="section-link">
-                <span class="icon">🆘</span>
-                <span class="text">Emergency Guides</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="badtrip.html" class="section-link">
-                <span class="icon">🌈</span>
-                <span class="text">Bad Trip Mode</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="spiking.html" class="section-link">
-                <span class="icon">🚫</span>
-                <span class="text">Drink Spiking Info</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>Quick access to emergency resources when you need them most.</p>
+            <div class="section-links">
+                <a href="panic.html" class="section-link">
+                    <span class="icon">🚨</span>
+                    <span class="text">Panic Button</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="emergency.html" class="section-link">
+                    <span class="icon">🆘</span>
+                    <span class="text">Emergency Guides</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="badtrip.html" class="section-link">
+                    <span class="icon">🌈</span>
+                    <span class="text">Bad Trip Mode</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="spiking.html" class="section-link">
+                    <span class="icon">🚫</span>
+                    <span class="text">Drink Spiking Info</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="panic.html" class="cta-button pulse">Emergency Resources</a>
         </div>
-        <a href="panic.html" class="cta-button pulse">Emergency Resources</a>
     </div>
 
     <!-- Resources Section -->
     <div class="section-card floating">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>📚 Resources</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>Comprehensive resources for harm reduction and mental health support.</p>
-        <div class="section-links">
-            <a href="resources.html" class="section-link">
-                <span class="icon">📍</span>
-                <span class="text">MN Resources Directory</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="sober.html" class="section-link">
-                <span class="icon">🚫</span>
-                <span class="text">Sober Ravers Support</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="seasonal.html" class="section-link">
-                <span class="icon">🌞</span>
-                <span class="text">Seasonal Safety Tips</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="venues-guide.html" class="section-link">
-                <span class="icon">🏢</span>
-                <span class="text">Venue Safety Guides</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>Comprehensive resources for harm reduction and mental health support.</p>
+            <div class="section-links">
+                <a href="resources.html" class="section-link">
+                    <span class="icon">📍</span>
+                    <span class="text">MN Resources Directory</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="sober.html" class="section-link">
+                    <span class="icon">🚫</span>
+                    <span class="text">Sober Ravers Support</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="seasonal.html" class="section-link">
+                    <span class="icon">🌞</span>
+                    <span class="text">Seasonal Safety Tips</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="venues-guide.html" class="section-link">
+                    <span class="icon">🏢</span>
+                    <span class="text">Venue Safety Guides</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="resources.html" class="cta-button pulse">View All Resources</a>
         </div>
-        <a href="resources.html" class="cta-button pulse">View All Resources</a>
     </div>
 
     <!-- Violence Prevention Section -->
     <div class="section-card glow-section floating floating-delay-1">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>🛡️ Violence Prevention</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p>Resources for preventing violence when someone says 'no' or sets boundaries.</p>
-        <div class="section-links">
-            <a href="rejection-based-violence.html" class="section-link">
-                <span class="icon">🛡️</span>
-                <span class="text">Rejection Violence Prevention</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="consent.html" class="section-link">
-                <span class="icon">✅</span>
-                <span class="text">Consent Basics</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="accountability.html" class="section-link">
-                <span class="icon">⚖️</span>
-                <span class="text">Community Accountability</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="spiking.html" class="section-link">
-                <span class="icon">🚫</span>
-                <span class="text">Drink Spiking Prevention</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>Resources for preventing violence when someone says 'no' or sets boundaries.</p>
+            <div class="section-links">
+                <a href="rejection-based-violence.html" class="section-link">
+                    <span class="icon">🛡️</span>
+                    <span class="text">Rejection Violence Prevention</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="consent.html" class="section-link">
+                    <span class="icon">✅</span>
+                    <span class="text">Consent Basics</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="accountability.html" class="section-link">
+                    <span class="icon">⚖️</span>
+                    <span class="text">Community Accountability</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="spiking.html" class="section-link">
+                    <span class="icon">🚫</span>
+                    <span class="text">Drink Spiking Prevention</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="rejection-based-violence.html" class="cta-button pulse">Learn More</a>
         </div>
-        <a href="rejection-based-violence.html" class="cta-button pulse">Learn More</a>
     </div>
 
     <!-- Our Story Section -->
     <div class="section-card floating floating-delay-2">
-        <div class="card-header">
+        <div class="card-header" onclick="toggleSection(this)">
             <h2>📖 Our Story</h2>
+            <button class="toggle-btn">▼</button>
         </div>
-        <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong></p>
-        <div class="section-links">
-            <a href="booth.html" class="section-link">
-                <span class="icon">🎉</span>
-                <span class="text">Our Booth History</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="venues-guide.html" class="section-link">
-                <span class="icon">🏢</span>
-                <span class="text">Venues We've Worked With</span>
-                <span class="arrow">→</span>
-            </a>
-            <a href="resources.html" class="section-link">
-                <span class="icon">🤝</span>
-                <span class="text">Community Partners</span>
-                <span class="arrow">→</span>
-            </a>
+        <div class="section-content">
+            <p>PLURderapolis was born from the Minnesota rave community's need for accessible, non-judgmental harm reduction resources. We've been operating since 2018, providing education, supplies, and support at events across the state.</p>
+            <div class="section-links">
+                <a href="booth.html" class="section-link">
+                    <span class="icon">🎉</span>
+                    <span class="text">Our Harm Reduction Booth</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="venues-guide.html" class="section-link">
+                    <span class="icon">🏢</span>
+                    <span class="text">Venues We've Worked With</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="resources.html" class="section-link">
+                    <span class="icon">🤝</span>
+                    <span class="text">Community Partners</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="booth.html" class="cta-button pulse">Learn About Our Work</a>
         </div>
-        <a href="booth.html" class="cta-button pulse">Learn About Our Booth</a>
+    </div>
+
+    <!-- Guides Section -->
+    <div class="section-card floating floating-delay-3">
+        <div class="card-header" onclick="toggleSection(this)">
+            <h2>📖 Guides</h2>
+            <button class="toggle-btn">▼</button>
+        </div>
+        <div class="section-content">
+            <p>Comprehensive guides on harm reduction, safety, and community resources.</p>
+            <div class="section-links">
+                <a href="guides/harm-reduction-basics.html" class="section-link">
+                    <span class="icon">🛡️</span>
+                    <span class="text">Harm Reduction Basics</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="guides/narcan-training.html" class="section-link">
+                    <span class="icon">💊</span>
+                    <span class="text">Narcan Training Guide</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="guides/festival-safety.html" class="section-link">
+                    <span class="icon">🎪</span>
+                    <span class="text">Festival Safety Guide</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="guides/consent-101.html" class="section-link">
+                    <span class="icon">✅</span>
+                    <span class="text">Consent 101</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="guides.html" class="cta-button pulse">View All Guides</a>
+        </div>
+    </div>
+
+    <!-- Booth Section -->
+    <div class="section-card booth-section floating">
+        <div class="card-header" onclick="toggleSection(this)">
+            <h2>🎉 Our Harm Reduction Booth</h2>
+            <button class="toggle-btn">▼</button>
+        </div>
+        <div class="section-content">
+            <p>Visit our physical harm reduction booth at events across Minnesota. We provide Narcan, fentanyl test strips, ear plugs, water, and non-judgmental support.</p>
+            <div class="section-links">
+                <a href="booth.html" class="section-link">
+                    <span class="icon">📍</span>
+                    <span class="text">Find Our Booth</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="booth.html#schedule" class="section-link">
+                    <span class="icon">📅</span>
+                    <span class="text">Event Schedule</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="booth.html#services" class="section-link">
+                    <span class="icon">🛠️</span>
+                    <span class="text">Our Services</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="booth.html#volunteer" class="section-link">
+                    <span class="icon">🤝</span>
+                    <span class="text">Volunteer With Us</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="booth.html" class="cta-button pulse">Learn More About Our Booth</a>
+        </div>
     </div>
 </div>
 
@@ -615,6 +727,7 @@
         <li><a href="resources.html">Resources</a></li>
         <li><a href="rejection-based-violence.html">Violence Prevention</a></li>
         <li><a href="badtrip.html">Bad Trip Mode</a></li>
+        <li><a href="guides.html">Guides</a></li>
     </ul>
 </footer>
 
@@ -634,6 +747,29 @@ document.addEventListener('click', (e) => {
         mobileNavBtn.classList.remove('active');
         mobileNav.classList.remove('active');
     }
+});
+
+// Collapsible sections functionality
+function toggleSection(header) {
+    const sectionCard = header.parentElement;
+    const content = sectionCard.querySelector('.section-content');
+    const toggleBtn = header.querySelector('.toggle-btn');
+    
+    content.classList.toggle('collapsed');
+    toggleBtn.classList.toggle('collapsed');
+}
+
+// Initially collapse all sections except the first one
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelectorAll('.section-card');
+    sections.forEach((section, index) => {
+        if (index > 0) { // Keep first section expanded
+            const content = section.querySelector('.section-content');
+            const toggleBtn = section.querySelector('.toggle-btn');
+            content.classList.add('collapsed');
+            toggleBtn.classList.add('collapsed');
+        }
+    });
 });
 
 // Peach panic button functionality with drag
@@ -697,6 +833,24 @@ panicButton.addEventListener('click', function() {
     }
 });
 
+// Scroll to top button functionality
+const scrollToTopBtn = document.getElementById('scrollToTop');
+
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+        scrollToTopBtn.style.display = 'block';
+    } else {
+        scrollToTopBtn.style.display = 'none';
+    }
+});
+
+scrollToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
 // Emergency Modal functions
 function showEmergencyModal() {
     document.getElementById('emergencyModal').style.display = 'flex';
@@ -757,7 +911,14 @@ const siteContent = [
     {title: "Seasonal Tips", url: "seasonal.html", category: "Resources", content: "Tips for staying safe during hot summer raves or cold Minnesota winters."},
     {title: "Sober Ravers", url: "sober.html", category: "Resources", content: "Support and advice for enjoying raves without substances including mocktail recipes."},
     {title: "MN Resources", url: "resources.html", category: "Resources", content: "Directory of Minnesota resources including Plan B, clinics, DV support, recovery, mental health."},
-    {title: "Bad Trip Mode", url: "badtrip.html", category: "Resources", content: "Calming visuals, grounding exercises, and support for difficult psychedelic experiences."}
+    {title: "Bad Trip Mode", url: "badtrip.html", category: "Resources", content: "Calming visuals, grounding exercises, and support for difficult psychedelic experiences."},
+    
+    // Guides
+    {title: "Guides", url: "guides.html", category: "Resources", content: "Comprehensive guides on harm reduction, safety, and community resources."},
+    {title: "Harm Reduction Basics", url: "guides/harm-reduction-basics.html", category: "Guides", content: "Fundamental principles and practices of harm reduction."},
+    {title: "Narcan Training", url: "guides/narcan-training.html", category: "Guides", content: "Step-by-step instructions for administering Narcan in overdose situations."},
+    {title: "Festival Safety", url: "guides/festival-safety.html", category: "Guides", content: "Comprehensive safety tips for festival attendees."},
+    {title: "Consent 101", url: "guides/consent-101.html", category: "Guides", content: "Basic principles of consent and boundary setting."}
 ];
 
 const searchInput = document.getElementById('searchInput');
@@ -816,6 +977,7 @@ function getIconForCategory(category) {
         case 'Local': return '📍';
         case 'Resources': return '📚';
         case 'Main': return '🏠';
+        case 'Guides': return '📖';
         default: return '📄';
     }
 }
