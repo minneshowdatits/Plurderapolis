@@ -241,21 +241,10 @@
         @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,247,224,0.4)}70%{box-shadow:0 0 0 10px rgba(0,247,224,0)}100%{box-shadow:0 0 0 0 rgba(0,247,224,0)}}
         .pulse{animation:pulse 2s infinite}
 
-        /* Cute bottom buttons */
-        .cute-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:2rem auto;max-width:1000px;padding:0 1.5rem}
-        .cute-button{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;background:var(--card-bg);border-radius:12px;text-decoration:none;color:var(--light-text);transition:all 0.3s ease;border:2px solid;position:relative;overflow:hidden;text-align:center;min-height:120px}
-        .cute-button::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);transform:translateX(-100%);transition:transform 0.6s}
-        .cute-button:hover::before{transform:translateX(100%)}
-        .cute-button:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.3)}
-        .cute-button .icon{font-size:2.5rem;margin-bottom:0.8rem;filter:drop-shadow(0 0 5px currentColor)}
-        .cute-button .text{font-family:'Montserrat',sans-serif;font-weight:600;font-size:1.1rem}
-        .cute-button:nth-child(1){border-color:var(--accent1);color:var(--accent1)}
-        .cute-button:nth-child(2){border-color:var(--accent2);color:var(--accent2)}
-        .cute-button:nth-child(3){border-color:var(--accent3);color:var(--accent3)}
-        .cute-button:nth-child(4){border-color:var(--accent4);color:var(--accent4)}
-        .cute-button:nth-child(5){border-color:var(--accent5);color:var(--accent5)}
+        /* Cute bottom buttons - REMOVED */
+        .cute-buttons{display:none}
 
-        /* Collapsible Section Styles */
+        /* Improved Collapsible Section Styles with smooth animation [citation:1] */
         .collapsible-toggle {
             background: none;
             border: none;
@@ -269,90 +258,74 @@
             justify-content: center;
             border-radius: 50%;
             transition: all 0.3s ease;
+            position: relative;
         }
         .collapsible-toggle:hover {
             background: rgba(0, 247, 224, 0.1);
+            transform: scale(1.1);
+        }
+        .collapsible-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: rgba(0, 247, 224, 0.2);
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+        .collapsible-toggle:hover::before {
+            transform: scale(1);
         }
         .collapsible-content {
             overflow: hidden;
-            transition: max-height 0.3s ease-out, opacity 0.3s ease;
-        }
-        .collapsible-content.collapsed {
             max-height: 0;
             opacity: 0;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.4s ease,
+                        padding 0.3s ease;
+            padding: 0;
         }
         .collapsible-content.expanded {
             max-height: 2000px;
             opacity: 1;
+            padding-top: 1rem;
         }
 
-        /* Social Media & Share Styles */
-        .social-share-container {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        .social-button, .share-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.7rem 1.2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-        .social-button {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light-text);
-            border: 1px solid var(--primary);
-        }
-        .social-button:hover {
-            background: var(--primary);
-            color: var(--dark-bg);
-            transform: translateY(-2px);
-        }
-        .share-button {
-            background: var(--secondary);
-            color: white;
+        /* Scroll to Top Button [citation:8] */
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1001;
             border: none;
+            outline: none;
+            background-color: var(--primary);
+            color: #2e003e;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 247, 224, 0.4);
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
         }
-        .share-button:hover {
-            background: #ff4da6;
-            transform: translateY(-2px);
+        #scrollTopBtn:hover {
+            background-color: #00e6cc;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 247, 224, 0.6);
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
         }
 
-        /* Homescreen Installation Prompt */
-        .install-prompt {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1.5rem auto;
-            max-width: 500px;
-            text-align: center;
-            border-left: 4px solid var(--accent5);
-        }
-        .install-prompt p {
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-        .install-button {
-            display: inline-block;
-            background: var(--accent5);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .install-button:hover {
-            background: #00b383;
-            transform: scale(1.05);
-        }
+        /* Remove Social Media from top - already removed from HTML */
+        /* Remove Add to Homescreen button - already removed from HTML */
 
         @media (min-width:768px){
             .sections-grid{grid-template-columns:repeat(2,1fr)}
@@ -365,27 +338,25 @@
             .mocktail-grid{display:grid;grid-template-columns:repeat(3,1fr);width:100%}
             .mocktail-card{min-width:auto}
             .mobile-nav-links{grid-template-columns:repeat(2,1fr)}
-            .cute-buttons{grid-template-columns:repeat(3,1fr)}
         }
         @media (min-width:1024px){
             .sections-grid{grid-template-columns:repeat(3,1fr)}
             .mobile-hud{display:none}
-            .cute-buttons{grid-template-columns:repeat(5,1fr)}
         }
         @media (max-width:480px){
             .section-card{padding:1.5rem}
             .section-card h2{font-size:1.4rem}
-            .cute-buttons{grid-template-columns:1fr}
-            .social-share-container {
-                flex-direction: column;
-                align-items: center;
-            }
+            .search-container{width:95%}
+            .search-bar input{font-size:1rem}
         }
     </style>
 </head>
 <body>
 
 <div class="skyline-container"><div class="skyline"></div></div>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
 
 <!-- Enhanced Mobile Navigation -->
 <div class="mobile-nav-btn" id="mobileNavBtn">
@@ -410,7 +381,8 @@
         <div class="mobile-nav-links">
             <a href="polydrug.html" class="mobile-nav-link"><span class="icon">💊</span>Polydrug Tool</a>
             <a href="rx-combos.html" class="mobile-nav-link"><span class="icon">💊</span>RX + Party Combos</a>
-            <a href="health.html" class="mobile-nav-link"><span class="icon">💚</span>Raver Health</a>
+            <!-- Health.html removed and replaced with booth.html -->
+            <a href="booth.html" class="mobile-nav-link"><span class="icon">🎉</span>Our Booth</a>
             <a href="fake.html" class="mobile-nav-link"><span class="icon">⚠️</span>Fake Drugs & Alerts</a>
         </div>
     </div>
@@ -467,38 +439,54 @@
     <a href="panic.html" class="hud-btn"><span>🚨</span>Panic</a>
     <a href="polydrug.html" class="hud-btn"><span>💊</span>Tool</a>
     <a href="resources.html" class="hud-btn"><span>📚</span>Resources</a>
-    <a href="health.html" class="hud-btn"><span>💚</span>Health</a>
+    <!-- Health.html replaced with booth.html -->
+    <a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a>
     <a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a>
 </div>
 
-<!-- Share and Social Media Section -->
-<div class="social-share-container">
-    <a href="https://www.facebook.com/plurderapolis" class="social-button" target="_blank">
-        <span>📘</span> Facebook
-    </a>
-    <a href="https://www.instagram.com/plurderapolis" class="social-button" target="_blank">
-        <span>📷</span> Instagram
-    </a>
-    <button class="share-button" id="shareButton">
-        <span>📤</span> Share This Page
-    </button>
-</div>
-
-<!-- Homescreen Installation Prompt -->
-<div class="install-prompt">
-    <p>💫 <strong>Add PLURderapolis to your homescreen</strong> for quick access to harm reduction resources anytime, anywhere.</p>
-    <a href="#" class="install-button" id="installButton">Add to Homescreen</a>
-</div>
-
-<!-- Grid layout for sections - NOW COLLAPSIBLE -->
+<!-- Grid layout for sections - NOW COLLAPSIBLE with Emergency Tools FIRST -->
 <div class="sections-grid">
-    <!-- What We Do Section -->
+    <!-- Emergency Tools Section - NOW FIRST -->
     <div class="section-card floating">
         <div class="card-header">
-            <h2>💡 What We Do</h2>
+            <h2>🚨 Emergency Tools</h2>
             <button class="collapsible-toggle">−</button>
         </div>
         <div class="collapsible-content expanded">
+            <p>Quick access to emergency resources when you need them most.</p>
+            <div class="section-links">
+                <a href="panic.html" class="section-link">
+                    <span class="icon">🚨</span>
+                    <span class="text">Panic Button</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="emergency.html" class="section-link">
+                    <span class="icon">🆘</span>
+                    <span class="text">Emergency Guides</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="badtrip.html" class="section-link">
+                    <span class="icon">🌈</span>
+                    <span class="text">Bad Trip Mode</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="spiking.html" class="section-link">
+                    <span class="icon">🚫</span>
+                    <span class="text">Drink Spiking Info</span>
+                    <span class="arrow">→</span>
+                </a>
+            </div>
+            <a href="panic.html" class="cta-button pulse">Emergency Resources</a>
+        </div>
+    </div>
+
+    <!-- What We Do Section -->
+    <div class="section-card floating floating-delay-1">
+        <div class="card-header">
+            <h2>💡 What We Do</h2>
+            <button class="collapsible-toggle">+</button>
+        </div>
+        <div class="collapsible-content collapsed">
             <p>PLURderapolis provides essential harm reduction resources, education, and support for Minnesota's electronic music community.</p>
             <div class="section-links">
                 <a href="resources.html" class="section-link">
@@ -527,7 +515,7 @@
     </div>
 
     <!-- Drug Interactions Section -->
-    <div class="section-card floating floating-delay-1">
+    <div class="section-card floating floating-delay-2">
         <div class="card-header">
             <h2>🔬 Drug Interactions</h2>
             <button class="collapsible-toggle">+</button>
@@ -561,7 +549,7 @@
     </div>
 
     <!-- Mocktail Preview Section -->
-    <div class="section-card floating floating-delay-2">
+    <div class="section-card floating floating-delay-3">
         <div class="card-header">
             <h2>🍹 Sober Ravers</h2>
             <button class="collapsible-toggle">+</button>
@@ -605,40 +593,6 @@
                 </div>
             </div>
             <a href="sober.html" class="cta-button pulse">More Sober Resources</a>
-        </div>
-    </div>
-
-    <!-- Emergency Tools Section -->
-    <div class="section-card floating floating-delay-3">
-        <div class="card-header">
-            <h2>🚨 Emergency Tools</h2>
-            <button class="collapsible-toggle">+</button>
-        </div>
-        <div class="collapsible-content collapsed">
-            <p>Quick access to emergency resources when you need them most.</p>
-            <div class="section-links">
-                <a href="panic.html" class="section-link">
-                    <span class="icon">🚨</span>
-                    <span class="text">Panic Button</span>
-                    <span class="arrow">→</span>
-                </a>
-                <a href="emergency.html" class="section-link">
-                    <span class="icon">🆘</span>
-                    <span class="text">Emergency Guides</span>
-                    <span class="arrow">→</span>
-                </a>
-                <a href="badtrip.html" class="section-link">
-                    <span class="icon">🌈</span>
-                    <span class="text">Bad Trip Mode</span>
-                    <span class="arrow">→</span>
-                </a>
-                <a href="spiking.html" class="section-link">
-                    <span class="icon">🚫</span>
-                    <span class="text">Drink Spiking Info</span>
-                    <span class="arrow">→</span>
-                </a>
-            </div>
-            <a href="panic.html" class="cta-button pulse">Emergency Resources</a>
         </div>
     </div>
 
@@ -710,7 +664,7 @@
         </div>
     </div>
 
-    <!-- About Us Section (Replaced with old content) -->
+    <!-- About Us Section -->
     <div class="section-card floating floating-delay-2">
         <div class="card-header">
             <h2>📖 About Us</h2>
@@ -730,30 +684,6 @@
             <a href="booth.html" class="cta-button pulse">See Our Booth Schedule</a>
         </div>
     </div>
-</div>
-
-<!-- Cute Bottom Buttons - NOW INCLUDES OUR BOOTH -->
-<div class="cute-buttons">
-    <a href="panic.html" class="cute-button">
-        <span class="icon">🚨</span>
-        <span class="text">Panic Help</span>
-    </a>
-    <a href="polydrug.html" class="cute-button">
-        <span class="icon">💊</span>
-        <span class="text">Drug Safety</span>
-    </a>
-    <a href="booth.html" class="cute-button">
-        <span class="icon">🎉</span>
-        <span class="text">Our Booth</span>
-    </a>
-    <a href="consent.html" class="cute-button">
-        <span class="icon">✅</span>
-        <span class="text">Consent Info</span>
-    </a>
-    <a href="sober.html" class="cute-button">
-        <span class="icon">🍹</span>
-        <span class="text">Sober Fun</span>
-    </a>
 </div>
 
 <!-- Anonymous Tip Link -->
@@ -951,7 +881,7 @@ window.addEventListener('popstate', function() {
     }
 });
 
-// Enhanced Search functionality
+// Enhanced Search functionality - now searches ALL content
 const siteContent = [
     // Home page content
     {title: "Home", url: "index.html", category: "Main", content: "PLURderapolis: Harm reduction for Minnesota ravers, mental health, consent, safer partying."},
@@ -1050,7 +980,7 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// Collapsible Sections Functionality
+// Improved Collapsible Sections with smooth animation [citation:1]
 document.addEventListener('DOMContentLoaded', function() {
     const collapsibleToggles = document.querySelectorAll('.collapsible-toggle');
     
@@ -1059,7 +989,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const content = this.parentElement.nextElementSibling;
             const isExpanded = content.classList.contains('expanded');
             
-            // Toggle the content
+            // Toggle the content with smooth animation
             if (isExpanded) {
                 content.classList.remove('expanded');
                 content.classList.add('collapsed');
@@ -1073,38 +1003,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Share Page Functionality
-document.getElementById('shareButton').addEventListener('click', function() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'PLURderapolis — Harm Reduction for Minnesota Ravers',
-            text: 'Check out PLURderapolis, Minnesota\'s premier harm reduction resource for the electronic music community.',
-            url: window.location.href
-        })
-        .catch(err => console.log('Error sharing:', err));
+// Scroll to Top Button Functionality [citation:4][citation:8]
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+window.addEventListener('scroll', function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = 'block';
     } else {
-        // Fallback for browsers that don't support the Web Share API
-        navigator.clipboard.writeText(window.location.href)
-            .then(() => {
-                alert('Link copied to clipboard! Share it with your friends.');
-            })
-            .catch(err => {
-                // Fallback if clipboard API is not available
-                prompt('Copy this link to share:', window.location.href);
-            });
+        scrollTopBtn.style.display = 'none';
     }
 });
 
-// Add to Homescreen Functionality
-document.getElementById('installButton').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    // For mobile devices, show instructions
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        alert('To add this site to your homescreen:\n\n1. Tap the share button in your browser\n2. Scroll down and tap "Add to Home Screen"\n3. Confirm the addition');
-    } else {
-        alert('To add this site to your homescreen, use your browser\'s "Install" or "Add to Home Screen" feature, usually found in the menu or address bar.');
-    }
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 });
 
 // Add floating animation to section cards
