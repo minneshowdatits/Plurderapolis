@@ -8,17 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary-teal: #1a9c8f;
-      --secondary-purple: #6a4c9c;
+      --primary-purple: #6a4c9c;
+      --secondary-purple: #8b6bc5;
+      --light-purple: #9c8cbf;
+      --dark-purple: #4a3a6b;
+      --accent-teal: #1a9c8f;
       --accent-coral: #ff6b6b;
-      --light-teal: #4db6ac;
-      --dark-teal: #00796b;
       --text-light: #f5f5f5;
       --text-muted: #b0b0b0;
-      --bg-dark: #121212;
-      --bg-card: #1e1e1e;
-      --bg-card-hover: #252525;
-      --border-radius: 8px;
+      --bg-dark: #1a102b;
+      --bg-card: #2d1b4e;
+      --bg-card-hover: #3a2463;
+      --border-radius: 10px;
       --transition: all 0.3s ease;
       --section-spacing: 2rem;
     }
@@ -38,27 +39,27 @@
       background: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.6;
-      padding-top: 60px; /* Reduced space for fixed header */
+      padding-top: 70px;
     }
 
-    /* Fixed Navigation - Slimmer */
+    /* Fixed Navigation */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(30, 30, 30, 0.98);
+      background: rgba(42, 28, 63, 0.95);
       backdrop-filter: blur(10px);
-      padding: 0.7rem 0;
+      padding: 0.8rem 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
       transition: var(--transition);
     }
 
     .nav-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -67,8 +68,11 @@
     .logo {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      font-size: 1.3rem; /* Slightly smaller */
-      color: var(--light-teal);
+      font-size: 1.4rem;
+      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -77,21 +81,21 @@
 
     .nav-menu {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.8rem;
     }
 
     .nav-link {
       color: var(--text-light);
       text-decoration: none;
       font-weight: 500;
-      font-size: 0.9rem; /* Smaller font */
+      font-size: 0.95rem;
       transition: var(--transition);
-      padding: 0.3rem 0; /* Reduced padding */
+      padding: 0.4rem 0;
       position: relative;
     }
 
     .nav-link:hover {
-      color: var(--light-teal);
+      color: var(--light-purple);
     }
 
     .nav-link::after {
@@ -101,7 +105,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--light-teal);
+      background: var(--light-purple);
       transition: var(--transition);
     }
 
@@ -110,7 +114,7 @@
     }
 
     .nav-link.active {
-      color: var(--light-teal);
+      color: var(--light-purple);
     }
 
     .nav-link.active::after {
@@ -122,7 +126,7 @@
       background: none;
       border: none;
       color: var(--text-light);
-      font-size: 1.3rem; /* Slightly smaller */
+      font-size: 1.3rem;
       cursor: pointer;
     }
 
@@ -132,17 +136,22 @@
     }
 
     .hamburger-btn {
-      background: none;
+      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
       border: none;
-      color: var(--text-light);
-      font-size: 1.3rem;
+      color: white;
+      font-size: 0.9rem;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .hamburger-btn:hover {
-      color: var(--light-teal);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(106, 76, 156, 0.4);
     }
 
     .hamburger-content {
@@ -153,99 +162,124 @@
       border-radius: var(--border-radius);
       padding: 1rem;
       min-width: 250px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       display: none;
       z-index: 1001;
+      border: 1px solid rgba(106, 76, 156, 0.3);
     }
 
     .hamburger-content.active {
       display: block;
+      animation: fadeInDown 0.3s ease;
     }
 
     .hamburger-content a {
-      display: block;
+      display: flex;
+      align-items: center;
       color: var(--text-light);
       text-decoration: none;
-      padding: 0.7rem 1rem;
-      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
       transition: var(--transition);
       margin-bottom: 0.3rem;
     }
 
     .hamburger-content a:hover {
       background: var(--bg-card-hover);
-      color: var(--light-teal);
+      color: var(--light-purple);
+      transform: translateX(5px);
     }
 
     .hamburger-content a i {
-      margin-right: 0.5rem;
+      margin-right: 0.8rem;
       width: 20px;
       text-align: center;
+      color: var(--secondary-purple);
     }
 
     /* Main Content */
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
 
-    /* Hero Section - Less Bulky */
+    /* Hero Section */
     .hero {
       text-align: center;
-      padding: 2rem 0; /* Reduced padding */
+      padding: 3rem 0;
       margin-bottom: var(--section-spacing);
       position: relative;
       overflow: hidden;
+      border-radius: var(--border-radius);
+      background: linear-gradient(135deg, var(--dark-purple) 0%, var(--bg-card) 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     .hero::before {
       content: "";
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(26, 156, 143, 0.1) 0%, transparent 70%);
-      z-index: -1;
-      animation: pulse 8s infinite alternate;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%236a4c9c' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: 0;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.5; }
-      100% { transform: scale(1.1); opacity: 0.8; }
+    .hero-content {
+      position: relative;
+      z-index: 1;
     }
 
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem; /* Smaller font */
+      font-size: 2.5rem;
       font-weight: 700;
-      margin-bottom: 0.8rem; /* Reduced margin */
-      color: var(--accent-coral);
-      animation: fadeInUp 1s ease;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInUp 0.8s ease;
     }
 
     .hero .subtitle {
-      font-size: 1rem; /* Smaller font */
-      color: var(--light-teal);
+      font-size: 1.2rem;
+      color: var(--light-purple);
       max-width: 700px;
-      margin: 0 auto 1.5rem; /* Reduced margin */
-      animation: fadeInUp 1s ease 0.2s both;
+      margin: 0 auto 1.5rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
     }
 
     /* Intro Section */
     .intro {
       background: var(--bg-card);
       border-radius: var(--border-radius);
-      padding: 1.5rem; /* Reduced padding */
+      padding: 2rem;
       margin-bottom: var(--section-spacing);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid var(--secondary-purple);
-      animation: fadeIn 1s ease;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      border-left: 5px solid var(--secondary-purple);
+      animation: fadeIn 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 0%, rgba(106, 76, 156, 0.05) 100%);
+      z-index: 0;
     }
 
     .intro p {
-      margin-bottom: 1.2rem; /* Reduced margin */
+      margin-bottom: 1.2rem;
+      position: relative;
+      z-index: 1;
     }
 
     .intro p:last-child {
@@ -253,11 +287,11 @@
     }
 
     .highlight {
-      color: var(--accent-coral);
+      color: var(--accent-teal);
       font-weight: 600;
     }
 
-    /* Cards Section - Collapsible */
+    /* Cards Section - Improved Dropdowns */
     .cards-container {
       margin-bottom: var(--section-spacing);
     }
@@ -267,9 +301,10 @@
       border-radius: var(--border-radius);
       overflow: hidden;
       transition: var(--transition);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.2rem;
       animation: fadeInUp 0.8s ease;
+      border: 1px solid rgba(106, 76, 156, 0.2);
     }
 
     .card:last-child {
@@ -277,62 +312,80 @@
     }
 
     .card:hover {
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border-color: rgba(106, 76, 156, 0.4);
     }
 
     .card-header {
-      padding: 1.2rem; /* Reduced padding */
-      background: rgba(0, 0, 0, 0.2);
+      padding: 1.5rem;
+      background: linear-gradient(90deg, rgba(106, 76, 156, 0.2) 0%, transparent 100%);
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
       transition: var(--transition);
+      position: relative;
     }
 
     .card-header:hover {
-      background: rgba(0, 0, 0, 0.3);
+      background: linear-gradient(90deg, rgba(106, 76, 156, 0.3) 0%, transparent 100%);
     }
 
     .card-title {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 1rem;
     }
 
     .card-header h3 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1rem; /* Smaller font */
+      font-size: 1.2rem;
       font-weight: 600;
       margin: 0;
-      color: var(--light-teal);
+      color: var(--light-purple);
     }
 
     .card-icon {
-      color: var(--light-teal);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(106, 76, 156, 0.2);
+      border-radius: 50%;
+      color: var(--secondary-purple);
       transition: var(--transition);
+    }
+
+    .card.active .card-icon {
+      background: var(--secondary-purple);
+      color: white;
+      transform: rotate(360deg);
     }
 
     .card-arrow {
       color: var(--text-muted);
       transition: var(--transition);
+      font-size: 1.2rem;
     }
 
     .card-content {
-      padding: 0 1.2rem; /* Reduced padding */
+      padding: 0 1.5rem;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.5s ease, padding 0.3s ease;
+      background: rgba(0, 0, 0, 0.1);
     }
 
     .card.active .card-content {
-      padding: 0 1.2rem 1.2rem; /* Reduced padding */
-      max-height: 1000px;
+      padding: 1.5rem;
+      max-height: 2000px;
     }
 
     .card.active .card-arrow {
       transform: rotate(180deg);
-      color: var(--light-teal);
+      color: var(--secondary-purple);
     }
 
     .card ul {
@@ -340,14 +393,19 @@
     }
 
     .card li {
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.8rem;
       position: relative;
       padding-left: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .card li:hover {
+      transform: translateX(5px);
     }
 
     .card li::before {
       content: "•";
-      color: var(--accent-coral);
+      color: var(--accent-teal);
       font-weight: bold;
       display: inline-block;
       width: 1em;
@@ -356,47 +414,55 @@
 
     /* Special highlight for "Friend Crossing Line" card */
     #friend-crossing-line {
-      border: 2px solid var(--accent-coral);
+      border: 2px solid var(--accent-teal);
       position: relative;
+      overflow: hidden;
     }
 
     #friend-crossing-line::before {
       content: "Featured";
       position: absolute;
-      top: -10px;
-      right: 20px;
-      background: var(--accent-coral);
+      top: 15px;
+      right: -30px;
+      background: var(--accent-teal);
       color: white;
       font-size: 0.7rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
+      padding: 0.3rem 2rem;
+      transform: rotate(45deg);
       font-weight: bold;
       z-index: 1;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     #friend-crossing-line .card-header {
-      background: rgba(255, 107, 107, 0.1);
+      background: linear-gradient(90deg, rgba(26, 156, 143, 0.2) 0%, transparent 100%);
     }
 
     #friend-crossing-line .card-header h3 {
-      color: var(--accent-coral);
+      color: var(--accent-teal);
     }
 
     #friend-crossing-line .card-icon {
-      color: var(--accent-coral);
+      background: rgba(26, 156, 143, 0.2);
+      color: var(--accent-teal);
+    }
+
+    #friend-crossing-line .card.active .card-icon {
+      background: var(--accent-teal);
+      color: white;
     }
 
     /* Memorial Section */
     .memorial {
-      background: linear-gradient(135deg, var(--bg-card) 0%, #2a1a2a 100%);
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--dark-purple) 100%);
       border-radius: var(--border-radius);
-      padding: 2.5rem; /* Increased padding for better appearance */
+      padding: 2.5rem;
       margin-bottom: var(--section-spacing);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 5px 20px rgba(106, 76, 156, 0.3);
-      animation: fadeIn 1s ease;
-      border: 1px solid rgba(255, 107, 107, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.8s ease;
+      border: 1px solid rgba(106, 76, 156, 0.3);
     }
 
     .memorial::before {
@@ -406,15 +472,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C35 20 20 35 20 50s15 30 30 30 30-15 30-30S65 20 50 20zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%23ff6b6b' fill-opacity='0.05'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C35 20 20 35 20 50s15 30 30 30 30-15 30-30S65 20 50 20zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%231a9c8f' fill-opacity='0.05'/%3E%3C/svg%3E");
       background-repeat: repeat;
       z-index: 0;
     }
 
     .memorial h2 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem; /* Slightly larger for emphasis */
-      color: var(--accent-coral);
+      font-size: 1.8rem;
+      color: var(--accent-teal);
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
@@ -443,7 +509,7 @@
     }
 
     .memorial strong {
-      color: var(--light-teal);
+      color: var(--light-purple);
     }
 
     .memorial-quote {
@@ -451,60 +517,101 @@
       text-align: center;
       padding: 1.5rem;
       margin: 1.5rem 0;
-      border-left: 3px solid var(--accent-coral);
-      background: rgba(255, 107, 107, 0.05);
+      border-left: 3px solid var(--accent-teal);
+      background: rgba(26, 156, 143, 0.05);
       border-radius: var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .memorial-quote::before {
+      content: """;
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-size: 4rem;
+      color: rgba(26, 156, 143, 0.1);
+      font-family: serif;
     }
 
     /* Bottom Line Section */
     .bottom-line {
       background: var(--bg-card);
       border-radius: var(--border-radius);
-      padding: 1.5rem; /* Reduced padding */
+      padding: 2rem;
       margin-bottom: var(--section-spacing);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid var(--primary-teal);
-      animation: fadeIn 1s ease;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      border-left: 5px solid var(--secondary-purple);
+      animation: fadeIn 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bottom-line::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 0%, rgba(106, 76, 156, 0.05) 100%);
+      z-index: 0;
     }
 
     .bottom-line h3 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.3rem; /* Smaller font */
-      color: var(--primary-teal);
-      margin-bottom: 1rem; /* Reduced margin */
+      font-size: 1.5rem;
+      color: var(--secondary-purple);
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
       gap: 0.7rem;
+      position: relative;
+      z-index: 1;
     }
 
     .bottom-line ul {
-      margin-bottom: 1.2rem; /* Reduced margin */
+      margin-bottom: 1.5rem;
       padding-left: 1.2rem;
+      position: relative;
+      z-index: 1;
     }
 
     .bottom-line li {
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.8rem;
       position: relative;
       padding-left: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .bottom-line li:hover {
+      transform: translateX(5px);
     }
 
     .bottom-line li::before {
       content: "•";
-      color: var(--primary-teal);
+      color: var(--secondary-purple);
       font-weight: bold;
       display: inline-block;
       width: 1em;
       margin-left: -1em;
     }
 
+    .bottom-line p {
+      position: relative;
+      z-index: 1;
+    }
+
     /* Footer */
     footer {
       text-align: center;
-      padding: 1.5rem 0; /* Reduced padding */
-      margin-top: 2rem; /* Reduced margin */
+      padding: 2rem 0;
+      margin-top: 3rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text-muted);
       font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: var(--border-radius);
     }
 
     /* Scroll to Top Button */
@@ -514,7 +621,7 @@
       right: 2rem;
       width: 50px;
       height: 50px;
-      background: var(--primary-teal);
+      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
       color: white;
       border: none;
       border-radius: 50%;
@@ -523,7 +630,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px rgba(106, 76, 156, 0.4);
       transition: var(--transition);
       opacity: 0;
       visibility: hidden;
@@ -536,8 +643,8 @@
     }
 
     .scroll-to-top:hover {
-      background: var(--secondary-purple);
       transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(106, 76, 156, 0.6);
     }
 
     /* Animations */
@@ -549,7 +656,18 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
       }
       to {
         opacity: 1;
@@ -558,9 +676,9 @@
     }
 
     @keyframes pulse-glow {
-      0% { box-shadow: 0 0 5px rgba(26, 156, 143, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(26, 156, 143, 0.8); }
-      100% { box-shadow: 0 0 5px rgba(26, 156, 143, 0.5); }
+      0% { box-shadow: 0 0 5px rgba(106, 76, 156, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(106, 76, 156, 0.8); }
+      100% { box-shadow: 0 0 5px rgba(106, 76, 156, 0.5); }
     }
 
     /* Responsive Design */
@@ -586,49 +704,55 @@
       }
 
       .hero h1 {
-        font-size: 1.7rem;
+        font-size: 2rem;
       }
 
       .hero .subtitle {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       .memorial, .intro, .bottom-line {
-        padding: 1.2rem;
+        padding: 1.5rem;
       }
 
       .memorial h2 {
         font-size: 1.5rem;
       }
+      
+      .hamburger-content {
+        right: auto;
+        left: 0;
+        min-width: 200px;
+      }
     }
 
     @media screen and (max-width: 480px) {
       body {
-        padding-top: 55px;
+        padding-top: 60px;
       }
       
       .navbar {
-        padding: 0.5rem 0;
+        padding: 0.6rem 0;
       }
 
       .hero {
-        padding: 1.5rem 0;
+        padding: 2rem 0;
       }
 
       .hero h1 {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
       }
 
       .card-header, .card-content {
-        padding: 1rem;
+        padding: 1.2rem;
       }
 
       .scroll-to-top {
         bottom: 1rem;
         right: 1rem;
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
       }
     }
   </style>
@@ -680,8 +804,10 @@
   <div class="container">
     <!-- Hero Section -->
     <section class="hero">
-      <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
-      <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
+      <div class="hero-content">
+        <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
+        <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
+      </div>
     </section>
 
     <!-- Intro Section -->
@@ -698,7 +824,9 @@
       <div class="card" id="violence-looks-like">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-flag card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-flag"></i>
+            </div>
             <h3>What Rejection-Based Violence Can Look Like</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -718,7 +846,9 @@
       <div class="card" id="psychological-truths">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-brain card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-brain"></i>
+            </div>
             <h3>Psychological Truths Behind This Pattern</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -735,7 +865,9 @@
       <div class="card" id="signs-you">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-user-check card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-user-check"></i>
+            </div>
             <h3>Signs It Might Be Happening To You</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -754,7 +886,9 @@
       <div class="card" id="what-to-do">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-shield-alt card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
             <h3>What To Do If You Think It's Happening To You</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -775,7 +909,9 @@
       <div class="card" id="signs-others">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-eye card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-eye"></i>
+            </div>
             <h3>Signs It Might Be Happening to Someone You Know</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -794,7 +930,9 @@
       <div class="card" id="help-others">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-hands-helping card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-hands-helping"></i>
+            </div>
             <h3>What To Do If You Notice It</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -814,7 +952,9 @@
       <div class="card" id="friend-crossing-line">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-user-friends card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-user-friends"></i>
+            </div>
             <h3>What If It's Your Friend Crossing the Line?</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -828,14 +968,16 @@
             <li>"You're not owed a relationship because you were 'nice.'"</li>
           </ul>
           <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
-          <p><a href="accountability.html" style="color: var(--accent-coral); font-weight: bold;">Learn more about accountability in our community →</a></p>
+          <p><a href="accountability.html" style="color: var(--accent-teal); font-weight: bold;">Learn more about accountability in our community →</a></p>
         </div>
       </div>
 
       <div class="card" id="resources">
         <div class="card-header">
           <div class="card-title">
-            <i class="fas fa-phone-alt card-icon"></i>
+            <div class="card-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
             <h3>Support Resources (Minnesota + National)</h3>
           </div>
           <i class="fas fa-chevron-down card-arrow"></i>
@@ -843,8 +985,8 @@
         <div class="card-content">
           <ul>
             <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-            <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank">wmn.org</a></li>
-            <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank">thehotline.org</a></li>
+            <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank" style="color: var(--accent-teal);">wmn.org</a></li>
+            <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank" style="color: var(--accent-teal);">thehotline.org</a></li>
             <li><strong>If someone is in immediate danger, call 911.</strong></li>
           </ul>
         </div>
@@ -880,7 +1022,7 @@
         <li>No one owes you love. Ever.</li>
       </ul>
       <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
-      <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--accent-coral);"></i></p>
+      <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--accent-teal);"></i></p>
     </section>
 
     <!-- Footer -->
@@ -914,13 +1056,40 @@
       }
     });
 
-    // Card toggle functionality
+    // Card toggle functionality with improved animations
     const cardHeaders = document.querySelectorAll('.card-header');
     
     cardHeaders.forEach(header => {
       header.addEventListener('click', function() {
         const card = this.parentElement;
+        const isActive = card.classList.contains('active');
+        
+        // Close all other cards
+        document.querySelectorAll('.card.active').forEach(activeCard => {
+          if (activeCard !== card) {
+            activeCard.classList.remove('active');
+          }
+        });
+        
+        // Toggle current card
         card.classList.toggle('active');
+        
+        // If we're opening this card, scroll to it with offset
+        if (!isActive) {
+          const headerHeight = document.querySelector('.navbar').offsetHeight;
+          const cardPosition = card.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: cardPosition,
+            behavior: 'smooth'
+          });
+          
+          // Add a visual highlight
+          card.style.boxShadow = '0 0 20px rgba(106, 76, 156, 0.7)';
+          setTimeout(() => {
+            card.style.boxShadow = '';
+          }, 1000);
+        }
       });
     });
 
@@ -956,10 +1125,10 @@
           });
           
           // Add a visual highlight to the section
-          targetSection.style.animation = 'pulse-glow 2s ease';
+          targetSection.style.boxShadow = '0 0 20px rgba(106, 76, 156, 0.7)';
           setTimeout(() => {
-            targetSection.style.animation = '';
-          }, 2000);
+            targetSection.style.boxShadow = '';
+          }, 1000);
         }
       });
     });
@@ -997,11 +1166,22 @@
     }, observerOptions);
 
     // Observe elements that should animate on scroll
-    const animatedElements = document.querySelectorAll('.card, .memorial, .bottom-line');
+    const animatedElements = document.querySelectorAll('.card, .memorial, .bottom-line, .intro');
     animatedElements.forEach(el => {
       el.style.animation = 'fadeInUp 0.8s ease forwards';
       el.style.animationPlayState = 'paused';
       observer.observe(el);
+    });
+
+    // Add hover effects to list items
+    document.querySelectorAll('.card li, .bottom-line li').forEach(li => {
+      li.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(5px)';
+      });
+      
+      li.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+      });
     });
   </script>
 </body>
