@@ -100,26 +100,27 @@
       box-shadow: 0 0 15px var(--highlight);
     }
 
-    /* Hamburger Navigation */
+    /* Improved Hamburger Navigation with Animation */
     .hamburger-nav {
       position: fixed;
       top: 0;
-      left: 0;
+      left: -100%;
       width: 100%;
       height: 100%;
-      background: rgba(15, 0, 21, 0.95);
+      background: rgba(15, 0, 21, 0.98);
       backdrop-filter: blur(10px);
       z-index: 200;
-      display: none;
+      display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      padding: 2rem;
+      padding: 4rem 2rem 2rem;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
     }
 
     .hamburger-nav.active {
-      display: flex;
-      animation: fadeIn 0.3s ease;
+      left: 0;
     }
 
     .hamburger-close {
@@ -131,6 +132,11 @@
       color: var(--highlight);
       font-size: 1.5rem;
       cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .hamburger-close:hover {
+      transform: scale(1.1);
     }
 
     .hamburger-title {
@@ -139,6 +145,7 @@
       margin-bottom: 2rem;
       color: var(--highlight);
       text-align: center;
+      text-shadow: 0 0 10px rgba(0, 247, 224, 0.5);
     }
 
     .hamburger-links {
@@ -162,13 +169,30 @@
       transition: var(--transition);
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+      justify-content: flex-start;
+      gap: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hamburger-link:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .hamburger-link:hover:before {
+      left: 100%;
     }
 
     .hamburger-link:hover {
       background: var(--plurple);
-      transform: translateY(-2px);
+      transform: translateX(5px);
       box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
     }
 
@@ -192,6 +216,7 @@
       background: var(--highlight);
       color: var(--bg);
       box-shadow: 0 0 15px var(--highlight);
+      transform: scale(1.05);
     }
 
     /* Search Bar */
@@ -244,6 +269,16 @@
       color: transparent;
       font-weight: 800;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% {
+        text-shadow: 0 0 10px rgba(0, 247, 224, 0.3);
+      }
+      100% {
+        text-shadow: 0 0 20px rgba(255, 110, 199, 0.5);
+      }
     }
 
     .hero p {
@@ -265,6 +300,19 @@
       box-shadow: 0 0 10px rgba(255, 110, 199, 0.1);
       position: relative;
       overflow: hidden;
+      animation: pulse 4s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 10px rgba(255, 110, 199, 0.1);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 110, 199, 0.3);
+      }
+      100% {
+        box-shadow: 0 0 10px rgba(255, 110, 199, 0.1);
+      }
     }
 
     .emergency-cta h2 {
@@ -315,7 +363,7 @@
       box-shadow: 0 3px 8px rgba(0, 247, 224, 0.4);
     }
 
-    /* Collapsible Resource Sections */
+    /* Enhanced Collapsible Resource Sections with Animation */
     .resource-section {
       background: linear-gradient(145deg, var(--card), #220233);
       border-radius: 1rem;
@@ -326,7 +374,25 @@
       overflow: hidden;
       scroll-margin-top: 120px;
       position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
     }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .resource-section:nth-child(1) { animation-delay: 0.1s; }
+    .resource-section:nth-child(2) { animation-delay: 0.2s; }
+    .resource-section:nth-child(3) { animation-delay: 0.3s; }
+    .resource-section:nth-child(4) { animation-delay: 0.4s; }
+    .resource-section:nth-child(5) { animation-delay: 0.5s; }
+    .resource-section:nth-child(6) { animation-delay: 0.6s; }
+    .resource-section:nth-child(7) { animation-delay: 0.7s; }
 
     .resource-section::before {
       content: "";
@@ -345,6 +411,11 @@
       justify-content: space-between;
       align-items: center;
       position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    .section-header:hover {
+      background-color: rgba(255, 255, 255, 0.05);
     }
 
     .section-header h2 {
@@ -366,12 +437,12 @@
       padding: 0 1.5rem;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
+      transition: max-height 0.5s ease, padding 0.3s ease;
     }
 
     .resource-section.active .section-content {
       padding: 0 1.5rem 1.5rem;
-      max-height: 1000px;
+      max-height: 2000px;
     }
 
     .resource-section.active .section-toggle {
@@ -387,7 +458,21 @@
       margin-bottom: 0.8rem;
       position: relative;
       padding-left: 1.8rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
+
+    .resource-section.active li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .resource-section li:nth-child(1) { transition-delay: 0.1s; }
+    .resource-section li:nth-child(2) { transition-delay: 0.2s; }
+    .resource-section li:nth-child(3) { transition-delay: 0.3s; }
+    .resource-section li:nth-child(4) { transition-delay: 0.4s; }
+    .resource-section li:nth-child(5) { transition-delay: 0.5s; }
 
     .resource-section li::before {
       content: "";
@@ -398,6 +483,11 @@
       height: 6px;
       background: var(--accent);
       border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .resource-section li:hover::before {
+      transform: scale(1.5);
     }
 
     .resource-item {
@@ -418,6 +508,11 @@
       font-size: 0.9rem;
       width: 16px;
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .resource-link:hover .resource-icon {
+      transform: scale(1.2);
     }
 
     a {
@@ -465,6 +560,11 @@
       margin-top: 0.8rem;
       border-radius: 0 6px 6px 0;
       font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .clinic-info:hover {
+      transform: translateX(5px);
     }
 
     .clinic-info p {
@@ -493,60 +593,17 @@
       color: rgba(248, 248, 248, 0.7);
     }
 
-    /* Bottom Navigation - Updated */
-    .bottom-nav {
-      display: flex;
-      justify-content: center;
-      background: linear-gradient(to bottom, var(--card), #0f0015);
-      padding: 1.5rem;
-      margin-top: 2rem;
-      border-top: 1px solid var(--plurple);
-      position: sticky;
-      bottom: 0;
-      z-index: 80;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-btn {
-      background: rgba(28, 0, 42, 0.7);
-      color: var(--text);
-      border: 1px solid var(--plurple);
-      padding: 0.7rem 1.2rem;
-      border-radius: 2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: var(--transition);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .nav-btn:hover {
-      background: var(--plurple);
-      color: white;
-      box-shadow: 0 0 12px rgba(155, 89, 182, 0.4);
-    }
-
-    /* Scroll to Top Button */
+    /* Enhanced Scroll to Top Button */
     .scroll-top {
       position: fixed;
-      bottom: 90px;
+      bottom: 20px;
       right: 20px;
       background: var(--plurple);
       color: white;
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       cursor: pointer;
@@ -559,7 +616,7 @@
 
     .scroll-top:hover {
       background: var(--highlight);
-      transform: translateY(-3px);
+      transform: translateY(-3px) scale(1.1);
       box-shadow: 0 6px 15px rgba(0, 247, 224, 0.4);
     }
 
@@ -672,20 +729,19 @@
         font-size: 1.1rem;
       }
       
-      .nav-buttons {
-        flex-direction: column;
-        width: 100%;
-      }
-      
-      .nav-btn {
-        justify-content: center;
-      }
-
       .scroll-top {
-        bottom: 100px;
+        bottom: 15px;
         right: 15px;
         width: 45px;
         height: 45px;
+      }
+
+      .hamburger-nav {
+        padding: 5rem 1rem 2rem;
+      }
+
+      .hamburger-links {
+        max-width: 100%;
       }
     }
 
@@ -742,6 +798,7 @@
       font-weight: bold;
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
+      animation: pulse 2s infinite;
     }
   </style>
 </head>
@@ -764,7 +821,7 @@
     </div>
   </header>
 
-  <!-- Hamburger Navigation -->
+  <!-- Enhanced Hamburger Navigation -->
   <div class="hamburger-nav" id="hamburgerNav">
     <button class="hamburger-close" id="hamburgerClose">
       <i class="fas fa-times"></i>
@@ -1241,24 +1298,6 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- Bottom Navigation - Updated -->
-  <div class="bottom-nav">
-    <div class="nav-buttons">
-      <a href="https://plurderapolis.org/events" class="nav-btn">
-        <i class="fas fa-calendar-alt"></i> Events
-      </a>
-      <a href="https://plurderapolis.org/venues" class="nav-btn">
-        <i class="fas fa-map-marker-alt"></i> Venues Guide
-      </a>
-      <a href="https://plurderapolis.org/sober" class="nav-btn">
-        <i class="fas fa-hand-holding-heart"></i> Sober Resources
-      </a>
-      <a href="https://plurderapolis.org/donate" class="nav-btn">
-        <i class="fas fa-donate"></i> Donate
-      </a>
-    </div>
-  </div>
-
   <footer>
     <div class="footer-content">
       <div class="footer-logo">PLUR<span>derapolis</span></div>
@@ -1283,7 +1322,7 @@
       const hamburgerLinks = document.querySelectorAll('.hamburger-link');
       const scrollTopBtn = document.getElementById('scrollTop');
       
-      // Hamburger menu functionality
+      // Hamburger menu functionality with improved animation
       hamburgerToggle.addEventListener('click', function() {
         hamburgerNav.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -1342,7 +1381,7 @@
         }
       });
       
-      // Toggle section content on header click
+      // Toggle section content on header click with improved animation
       const sectionHeaders = document.querySelectorAll('.section-header');
       sectionHeaders.forEach(header => {
         header.addEventListener('click', function() {
