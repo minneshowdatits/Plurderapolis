@@ -100,6 +100,40 @@
       box-shadow: 0 0 15px var(--highlight);
     }
 
+    /* Search Bar */
+    .search-container {
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--plurple);
+      border-radius: 2rem;
+      color: var(--text);
+      font-size: 1rem;
+      padding-left: 3rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--highlight);
+      box-shadow: 0 0 15px rgba(0, 247, 224, 0.3);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--plurple);
+      font-size: 1.2rem;
+    }
+
     /* Hero section */
     .hero {
       text-align: center;
@@ -245,6 +279,7 @@
       border: 1px solid transparent;
       overflow: hidden;
       scroll-margin-top: 120px;
+      position: relative;
     }
 
     .resource-section::before {
@@ -305,15 +340,38 @@
     .resource-section li {
       margin-bottom: 0.8rem;
       position: relative;
+      padding-left: 1.8rem;
     }
 
     .resource-section li::before {
-      content: "•";
-      color: var(--accent);
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .resource-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .resource-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .resource-icon {
+      color: var(--highlight);
+      font-size: 0.9rem;
+      width: 16px;
+      text-align: center;
     }
 
     a {
@@ -367,12 +425,76 @@
       margin-bottom: 0.4rem;
     }
 
+    .resource-description {
+      font-size: 0.9rem;
+      color: rgba(248, 248, 248, 0.8);
+      margin-left: 1.8rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+      margin-left: 1.8rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      color: rgba(248, 248, 248, 0.7);
+    }
+
+    /* Bottom Navigation - Updated */
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      background: linear-gradient(to bottom, var(--card), #0f0015);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-top: 1px solid var(--plurple);
+      position: sticky;
+      bottom: 0;
+      z-index: 80;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      background: rgba(28, 0, 42, 0.7);
+      color: var(--text);
+      border: 1px solid var(--plurple);
+      padding: 0.7rem 1.2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      background: var(--plurple);
+      color: white;
+      box-shadow: 0 0 12px rgba(155, 89, 182, 0.4);
+    }
+
     /* Footer */
     footer {
       background: linear-gradient(to bottom, var(--card), #0f0015);
       padding: 2rem 1rem;
       text-align: center;
-      margin-top: 2rem;
       border-top: 1px solid var(--plurple);
     }
 
@@ -409,6 +531,20 @@
 
     .footer-link:hover {
       color: var(--highlight);
+    }
+
+    /* Search results styling */
+    .search-highlight {
+      background-color: rgba(0, 247, 224, 0.2);
+      border-radius: 4px;
+      padding: 0 2px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(248, 248, 248, 0.6);
+      font-style: italic;
     }
 
     /* Responsive adjustments */
@@ -461,6 +597,15 @@
       .section-header h2 {
         font-size: 1.1rem;
       }
+      
+      .nav-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .nav-btn {
+        justify-content: center;
+      }
     }
 
     @media (max-width: 480px) {
@@ -485,10 +630,18 @@
       .footer-logo {
         font-size: 1.5rem;
       }
+      
+      .resource-section li {
+        padding-left: 1.5rem;
+      }
+      
+      .resource-description, .contact-info {
+        margin-left: 1.5rem;
+      }
     }
 
     /* Focus styles for accessibility */
-    button:focus, a:focus {
+    button:focus, a:focus, input:focus {
       outline: 2px solid var(--highlight);
       outline-offset: 2px;
     }
@@ -548,6 +701,12 @@
       </div>
     </section>
 
+    <!-- Search Functionality -->
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="searchInput" class="search-box" placeholder="Search for resources by name, keyword, or service...">
+    </div>
+
     <nav class="category-nav">
       <div class="category-scroll">
         <a href="#harm" class="category-btn">Harm Reduction</a>
@@ -568,11 +727,63 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://www.steverummlerhopenetwork.org/" target="_blank">Steve Rummler HOPE Network</a> – Free Narcan & fentanyl test strips</li>
-            <li><a href="https://southsideharmreduction.org" target="_blank">Southside Harm Reduction</a> – Syringes, Narcan, testing, safe use supplies</li>
-            <li><a href="https://harmreductionsisters.org/" target="_blank">Harm Reduction Sisters</a> – Northern MN delivery & drop-in harm reduction</li>
-            <li><a href="https://aliveness.org/syringe-service-program/" target="_blank">Aliveness Project</a> – Mobile syringe exchange van in the Twin Cities</li>
-            <li><a href="https://www.northpointhealth.org/en/helping-our-neighbors/help-with-addiction/harm-reduction-testing" target="_blank">NorthPoint Health</a> – Testing, supplies, overdose education</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-syringe resource-icon"></i>
+                  <a href="https://www.steverummlerhopenetwork.org/" target="_blank">Steve Rummler HOPE Network</a>
+                </div>
+                <div class="resource-description">Free Narcan & fentanyl test strips by mail or pickup locations</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:7637468565">(763) 746-8565</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-exchange-alt resource-icon"></i>
+                  <a href="https://southsideharmreduction.org" target="_blank">Southside Harm Reduction</a>
+                </div>
+                <div class="resource-description">Syringes, Narcan, testing, safe use supplies, and community care</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-map-marker-alt"></i> Minneapolis, MN</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-truck resource-icon"></i>
+                  <a href="https://harmreductionsisters.org/" target="_blank">Harm Reduction Sisters</a>
+                </div>
+                <div class="resource-description">Northern MN delivery & drop-in harm reduction services</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-shuttle-van resource-icon"></i>
+                  <a href="https://aliveness.org/syringe-service-program/" target="_blank">Aliveness Project</a>
+                </div>
+                <div class="resource-description">Mobile syringe exchange van in the Twin Cities</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6128227946">(612) 822-7946</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-clinic-medical resource-icon"></i>
+                  <a href="https://www.northpointhealth.org/en/helping-our-neighbors/help-with-addiction/harm-reduction-testing" target="_blank">NorthPoint Health</a>
+                </div>
+                <div class="resource-description">Testing, supplies, overdose education, and medical care</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6125432500">(612) 543-2500</a></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -584,16 +795,58 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://www.justthepill.com/" target="_blank">Just The Pill</a> – Free/low-cost Plan B and abortion-by-mail (MN-based)</li>
-            <li><a href="https://ourjustice.net/" target="_blank">Our Justice</a> – Abortion funding, Plan B, and clinic support</li>
-            <li><a href="https://www.ppncs.org/" target="_blank">Planned Parenthood North Central States</a> – Emergency contraception, STI testing, more</li>
-            <li><a href="https://www.reclaim.care/" target="_blank">RECLAIM</a> – Queer-affirming mental & sexual health support</li>
-            <li class="new-resource"><a href="https://www.hennepinhealthcare.org/specialty-care/red-door-clinic/" target="_blank">Red Door Clinic</a> – Confidential, inclusive sexual health clinic
-              <div class="clinic-info">
-                <p><strong>Address:</strong> 525 Portland Ave S, 4th Floor, Minneapolis, MN 55415</p>
-                <p><strong>Phone:</strong> <a href="tel:6125435555">(612) 543-5555</a></p>
-                <p><strong>Hours:</strong> Mon/Tue/Wed/Fri 8-4; Thurs 10-4</p>
-                <p><strong>Eligibility:</strong> Age 12+; all insurance accepted; walk-ins limited — best to call ahead.</p>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-pills resource-icon"></i>
+                  <a href="https://www.justthepill.com/" target="_blank">Just The Pill</a>
+                </div>
+                <div class="resource-description">Free/low-cost Plan B and abortion-by-mail (MN-based)</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-balance-scale resource-icon"></i>
+                  <a href="https://ourjustice.net/" target="_blank">Our Justice</a>
+                </div>
+                <div class="resource-description">Abortion funding, Plan B, and clinic support services</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6128745575">(612) 874-5575</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-stethoscope resource-icon"></i>
+                  <a href="https://www.ppncs.org/" target="_blank">Planned Parenthood North Central States</a>
+                </div>
+                <div class="resource-description">Emergency contraception, STI testing, reproductive healthcare</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-rainbow resource-icon"></i>
+                  <a href="https://www.reclaim.care/" target="_blank">RECLAIM</a>
+                </div>
+                <div class="resource-description">Queer-affirming mental & sexual health support services</div>
+              </div>
+            </li>
+            <li class="new-resource">
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-door-open resource-icon"></i>
+                  <a href="https://www.hennepinhealthcare.org/specialty-care/red-door-clinic/" target="_blank">Red Door Clinic</a>
+                </div>
+                <div class="resource-description">Confidential, inclusive sexual health clinic</div>
+                <div class="clinic-info">
+                  <p><strong>Address:</strong> 525 Portland Ave S, 4th Floor, Minneapolis, MN 55415</p>
+                  <p><strong>Phone:</strong> <a href="tel:6125435555">(612) 543-5555</a></p>
+                  <p><strong>Hours:</strong> Mon/Tue/Wed/Fri 8-4; Thurs 10-4</p>
+                  <p><strong>Eligibility:</strong> Age 12+; all insurance accepted; walk-ins limited — best to call ahead.</p>
+                </div>
               </div>
             </li>
           </ul>
@@ -607,10 +860,48 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://cornerstonemn.org/" target="_blank">Cornerstone</a> – 24/7 crisis line, shelter, legal help: 1-866-223-1111</li>
-            <li><a href="https://www.violencefreemn.org/" target="_blank">Violence Free Minnesota</a> – Statewide help & shelter locator</li>
-            <li><a href="https://www.thebridgemn.org/" target="_blank">The Bridge for Youth</a> – Emergency housing and support for youth</li>
-            <li><a href="https://www.sexualviolencecenter.org/" target="_blank">Sexual Violence Center</a> – Support groups, crisis lines, and advocacy</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-shield-alt resource-icon"></i>
+                  <a href="https://cornerstonemn.org/" target="_blank">Cornerstone</a>
+                </div>
+                <div class="resource-description">24/7 crisis line, shelter, legal help: 1-866-223-1111</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-home resource-icon"></i>
+                  <a href="https://www.violencefreemn.org/" target="_blank">Violence Free Minnesota</a>
+                </div>
+                <div class="resource-description">Statewide help & shelter locator for domestic violence survivors</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-users resource-icon"></i>
+                  <a href="https://www.thebridgemn.org/" target="_blank">The Bridge for Youth</a>
+                </div>
+                <div class="resource-description">Emergency housing and support for youth in crisis</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6123778800">(612) 377-8800</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-heart resource-icon"></i>
+                  <a href="https://www.sexualviolencecenter.org/" target="_blank">Sexual Violence Center</a>
+                </div>
+                <div class="resource-description">Support groups, crisis lines, and advocacy services</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6128715100">(612) 871-5100</a></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -622,10 +913,48 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://www.reclaim.care/" target="_blank">RECLAIM</a> – Therapy and healing for queer and trans youth</li>
-            <li><a href="https://transformingfamilies.org/" target="_blank">Transforming Families MN</a> – Support for trans people and their loved ones</li>
-            <li><a href="https://www.thealivenessproject.org/" target="_blank">The Aliveness Project</a> – LGBTQ+ friendly HIV resources and holistic care</li>
-            <li><a href="https://familytreeclinic.org/" target="_blank">Family Tree Clinic</a> – Sliding scale trans-inclusive reproductive health</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-hands resource-icon"></i>
+                  <a href="https://www.reclaim.care/" target="_blank">RECLAIM</a>
+                </div>
+                <div class="resource-description">Therapy and healing for queer and trans youth</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-user-friends resource-icon"></i>
+                  <a href="https://transformingfamilies.org/" target="_blank">Transforming Families MN</a>
+                </div>
+                <div class="resource-description">Support for trans people and their loved ones</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-heartbeat resource-icon"></i>
+                  <a href="https://www.thealivenessproject.org/" target="_blank">The Aliveness Project</a>
+                </div>
+                <div class="resource-description">LGBTQ+ friendly HIV resources and holistic care</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6128227946">(612) 822-7946</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-clinic-medical resource-icon"></i>
+                  <a href="https://familytreeclinic.org/" target="_blank">Family Tree Clinic</a>
+                </div>
+                <div class="resource-description">Sliding scale trans-inclusive reproductive health services</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6516450478">(651) 645-0478</a></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -637,11 +966,57 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><strong>Crisis Text Line:</strong> Text <code>HOME</code> to <code>741741</code></li>
-            <li><strong>Suicide & Crisis Lifeline:</strong> Call or text <code>988</code></li>
-            <li><a href="https://www.hennepin.us/mentalhealthresponse" target="_blank">COPE (Hennepin County)</a> – 612-596-1223</li>
-            <li><a href="https://fasttrackermn.org/" target="_blank">Fast Tracker</a> – Mental health + substance use provider search tool</li>
-            <li><a href="https://www.nami.org/Support-Education/NAMI-HelpLine" target="_blank">NAMI HelpLine</a> – Peer mental health guidance</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-comment-dots resource-icon"></i>
+                  <strong>Crisis Text Line:</strong> Text <code>HOME</code> to <code>741741</code>
+                </div>
+                <div class="resource-description">Free 24/7 crisis support via text message</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-phone resource-icon"></i>
+                  <strong>Suicide & Crisis Lifeline:</strong> Call or text <code>988</code>
+                </div>
+                <div class="resource-description">National mental health crisis hotline</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-headset resource-icon"></i>
+                  <a href="https://www.hennepin.us/mentalhealthresponse" target="_blank">COPE (Hennepin County)</a>
+                </div>
+                <div class="resource-description">Mobile mental health crisis response team</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6125961223">(612) 596-1223</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-search resource-icon"></i>
+                  <a href="https://fasttrackermn.org/" target="_blank">Fast Tracker</a>
+                </div>
+                <div class="resource-description">Mental health + substance use provider search tool</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-hand-holding-heart resource-icon"></i>
+                  <a href="https://www.nami.org/Support-Education/NAMI-HelpLine" target="_blank">NAMI HelpLine</a>
+                </div>
+                <div class="resource-description">Peer mental health guidance and support</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:8009506264">1-800-950-6264</a></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -653,11 +1028,54 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://www.mnrecovery.org/" target="_blank">Minnesota Recovery Connection</a> – Peer coaching, recovery community center, statewide events</li>
-            <li><a href="https://www.peersupportalliance.org/" target="_blank">Peer Support Alliance</a> – Advocacy and training for peer recovery specialists in MN</li>
-            <li><a href="https://www.familiesanonymous.org/" target="_blank">Families Anonymous</a> – Peer support for loved ones of people struggling with substance use</li>
-            <li><a href="https://unityrecovery.org/" target="_blank">Unity Recovery (Virtual)</a> – Free, online, peer-led recovery groups multiple times a day</li>
-            <li><a href="https://www.southsideharmreduction.org/" target="_blank">Southside Harm Reduction</a> – Community care, no abstinence required</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-handshake resource-icon"></i>
+                  <a href="https://www.mnrecovery.org/" target="_blank">Minnesota Recovery Connection</a>
+                </div>
+                <div class="resource-description">Peer coaching, recovery community center, statewide events</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6125844158">(612) 584-4158</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-user-graduate resource-icon"></i>
+                  <a href="https://www.peersupportalliance.org/" target="_blank">Peer Support Alliance</a>
+                </div>
+                <div class="resource-description">Advocacy and training for peer recovery specialists in MN</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-user-friends resource-icon"></i>
+                  <a href="https://www.familiesanonymous.org/" target="_blank">Families Anonymous</a>
+                </div>
+                <div class="resource-description">Peer support for loved ones of people struggling with substance use</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-laptop-house resource-icon"></i>
+                  <a href="https://unityrecovery.org/" target="_blank">Unity Recovery (Virtual)</a>
+                </div>
+                <div class="resource-description">Free, online, peer-led recovery groups multiple times a day</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-heart resource-icon"></i>
+                  <a href="https://www.southsideharmreduction.org/" target="_blank">Southside Harm Reduction</a>
+                </div>
+                <div class="resource-description">Community care, no abstinence required</div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -669,12 +1087,60 @@
         </div>
         <div class="section-content">
           <ul>
-            <li><a href="https://www.211unitedway.org/" target="_blank">United Way 211</a> – Call/text 211 for emergency food, housing, and resources</li>
-            <li><a href="https://www.thebridgemn.org/" target="_blank">The Bridge for Youth</a> – Youth shelter and housing support</li>
-            <li><a href="https://www.hennepin.us/coordinated-entry" target="_blank">Coordinated Entry (Hennepin)</a> – Housing support system</li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-info-circle resource-icon"></i>
+                  <a href="https://www.211unitedway.org/" target="_blank">United Way 211</a>
+                </div>
+                <div class="resource-description">Call/text 211 for emergency food, housing, and resources</div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-home resource-icon"></i>
+                  <a href="https://www.thebridgemn.org/" target="_blank">The Bridge for Youth</a>
+                </div>
+                <div class="resource-description">Youth shelter and housing support services</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6123778800">(612) 377-8800</a></span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="resource-item">
+                <div class="resource-link">
+                  <i class="fas fa-building resource-icon"></i>
+                  <a href="https://www.hennepin.us/coordinated-entry" target="_blank">Coordinated Entry (Hennepin)</a>
+                </div>
+                <div class="resource-description">Housing support system for those experiencing homelessness</div>
+                <div class="contact-info">
+                  <span class="contact-item"><i class="fas fa-phone"></i> <a href="tel:6122482350">(612) 248-2350</a></span>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation - Updated -->
+  <div class="bottom-nav">
+    <div class="nav-buttons">
+      <a href="https://plurderapolis.org/events" class="nav-btn">
+        <i class="fas fa-calendar-alt"></i> Events
+      </a>
+      <a href="https://plurderapolis.org/get-involved" class="nav-btn">
+        <i class="fas fa-hands-helping"></i> Get Involved
+      </a>
+      <a href="https://plurderapolis.org/resources" class="nav-btn">
+        <i class="fas fa-book"></i> Resources
+      </a>
+      <a href="https://plurderapolis.org/donate" class="nav-btn">
+        <i class="fas fa-donate"></i> Donate
+      </a>
     </div>
   </div>
 
@@ -693,10 +1159,10 @@
   </footer>
 
   <script>
-    // Add active class to current category when scrolling
     document.addEventListener('DOMContentLoaded', function() {
       const sections = document.querySelectorAll('.resource-section');
       const navLinks = document.querySelectorAll('.category-btn');
+      const searchInput = document.getElementById('searchInput');
       
       // Update active nav link based on scroll position
       function updateActiveNav() {
@@ -749,6 +1215,105 @@
           section.classList.toggle('active');
         });
       });
+      
+      // Search functionality
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        if (searchTerm.length < 2) {
+          // Show all sections and items if search term is too short
+          sections.forEach(section => {
+            section.style.display = 'block';
+            const items = section.querySelectorAll('li');
+            items.forEach(item => {
+              item.style.display = 'block';
+              // Remove any existing highlights
+              const highlights = item.querySelectorAll('.search-highlight');
+              highlights.forEach(highlight => {
+                const text = highlight.textContent;
+                highlight.replaceWith(text);
+              });
+            });
+          });
+          return;
+        }
+        
+        let hasResults = false;
+        
+        sections.forEach(section => {
+          const sectionTitle = section.querySelector('h2').textContent.toLowerCase();
+          const items = section.querySelectorAll('li');
+          let sectionHasMatches = false;
+          
+          items.forEach(item => {
+            const itemText = item.textContent.toLowerCase();
+            const links = item.querySelectorAll('a');
+            let itemHasMatches = itemText.includes(searchTerm);
+            
+            // Check if any link text matches
+            links.forEach(link => {
+              if (link.textContent.toLowerCase().includes(searchTerm)) {
+                itemHasMatches = true;
+              }
+            });
+            
+            if (itemHasMatches || sectionTitle.includes(searchTerm)) {
+              item.style.display = 'block';
+              sectionHasMatches = true;
+              hasResults = true;
+              
+              // Highlight matching text
+              const textNodes = getTextNodes(item);
+              textNodes.forEach(node => {
+                const nodeText = node.textContent;
+                if (nodeText.toLowerCase().includes(searchTerm)) {
+                  const regex = new RegExp(`(${searchTerm})`, 'gi');
+                  const newText = nodeText.replace(regex, '<span class="search-highlight">$1</span>');
+                  const newElement = document.createElement('span');
+                  newElement.innerHTML = newText;
+                  node.parentNode.replaceChild(newElement, node);
+                }
+              });
+            } else {
+              item.style.display = 'none';
+            }
+          });
+          
+          // Show/hide section based on matches
+          section.style.display = sectionHasMatches ? 'block' : 'none';
+        });
+        
+        // Show "no results" message if needed
+        let noResultsMsg = document.querySelector('.no-results');
+        if (!hasResults && searchTerm.length >= 2) {
+          if (!noResultsMsg) {
+            noResultsMsg = document.createElement('div');
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.textContent = 'No resources found matching your search.';
+            document.querySelector('.resource-grid').appendChild(noResultsMsg);
+          }
+        } else if (noResultsMsg) {
+          noResultsMsg.remove();
+        }
+      });
+      
+      // Helper function to get text nodes
+      function getTextNodes(element) {
+        const textNodes = [];
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        );
+        
+        let node;
+        while (node = walker.nextNode()) {
+          textNodes.push(node);
+        }
+        
+        return textNodes;
+      }
     });
   </script>
 </body>
