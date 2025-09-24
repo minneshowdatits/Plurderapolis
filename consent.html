@@ -17,6 +17,7 @@
       --text-light: #eee;
       --text-muted: #cccccc;
       --neon-yellow: #f7f000;
+      --plur-green: #00ff88;
     }
     
     * {
@@ -53,6 +54,10 @@
       position: relative;
       margin-bottom: 1rem;
       border-bottom: 2px solid var(--accent-purple);
+      background: rgba(30, 0, 45, 0.8);
+      border-radius: 12px;
+      margin-top: 1rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
     
     .back-button {
@@ -88,6 +93,10 @@
       margin-bottom: 0.5rem;
       text-shadow: 0 0 10px rgba(255, 0, 170, 0.6);
       letter-spacing: 1px;
+      background: linear-gradient(45deg, var(--neon-pink), var(--plur-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     
     .subtitle {
@@ -103,6 +112,14 @@
       flex-wrap: wrap;
       gap: 0.5rem;
       margin: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(40, 5, 60, 0.9);
+      padding: 1rem;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--accent-purple);
     }
     
     .nav-button {
@@ -115,11 +132,15 @@
       font-size: 0.9rem;
       transition: all 0.3s ease;
       font-weight: 600;
+      flex: 1;
+      text-align: center;
+      min-width: 150px;
     }
     
     .nav-button:hover {
       background: rgba(80, 40, 110, 0.9);
       box-shadow: 0 0 8px rgba(123, 91, 228, 0.4);
+      transform: translateY(-2px);
     }
     
     /* Content sections */
@@ -131,6 +152,11 @@
       margin-bottom: 1.5rem;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(5px);
+      transition: transform 0.3s ease;
+    }
+    
+    .content-section:hover {
+      transform: translateY(-3px);
     }
     
     h2 {
@@ -177,6 +203,7 @@
       box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
       border: 1px solid var(--mid-purple);
       transition: all 0.3s ease;
+      overflow: hidden;
     }
     
     details[open] {
@@ -199,6 +226,8 @@
       outline: none;
       transition: color 0.2s ease;
       padding: 0.5rem 0;
+      position: relative;
+      padding-right: 2rem;
     }
     
     summary:hover {
@@ -215,6 +244,7 @@
       font-size: 1rem;
       box-shadow: 0 5px 20px rgba(160, 0, 120, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: pulse 3s infinite;
     }
     
     .highlight-box a {
@@ -248,6 +278,23 @@
       transition: all 0.3s ease;
       box-shadow: 0 0 15px rgba(123, 91, 228, 0.5);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .resource-link:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .resource-link:hover:before {
+      left: 100%;
     }
     
     .resource-link:hover {
@@ -284,6 +331,11 @@
       padding: 1.2rem;
       border-radius: 10px;
       border-left: 4px solid var(--neon-yellow);
+      transition: transform 0.3s ease;
+    }
+    
+    .consent-point:hover {
+      transform: translateX(5px);
     }
     
     .consent-point h4 {
@@ -301,6 +353,63 @@
       border-top: 1px solid var(--mid-purple);
       font-size: 0.9rem;
       color: var(--text-muted);
+    }
+    
+    /* Animation for details */
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    
+    details summary:after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--plur-cyan);
+      transition: transform 0.3s ease;
+    }
+    
+    details[open] summary:after {
+      content: "-";
+      transform: translateY(-50%) rotate(0deg);
+    }
+    
+    /* Pulse animation for important elements */
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 0, 170, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Fade-in animation for sections */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Scroll progress indicator */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(to right, var(--neon-pink), var(--plur-cyan));
+      z-index: 1000;
+      transition: width 0.2s ease;
     }
     
     /* Responsive adjustments */
@@ -334,6 +443,7 @@
       .quick-nav {
         flex-direction: column;
         align-items: center;
+        position: relative;
       }
       
       .nav-button {
@@ -366,48 +476,28 @@
       }
     }
     
-    /* Animation for details */
-    details {
-      overflow: hidden;
-    }
-    
-    details summary {
-      position: relative;
-    }
-    
-    details summary::-webkit-details-marker {
-      display: none;
-    }
-    
-    details summary:after {
-      content: "+";
-      position: absolute;
-      right: 0;
-      top: 0;
+    /* PLUR badge styling */
+    .plur-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(123, 44, 191, 0.2);
+      border: 1px solid var(--accent-purple);
+      border-radius: 20px;
+      padding: 5px 12px;
+      margin: 0 5px;
+      font-size: 0.8rem;
       font-weight: bold;
-      font-size: 1.5rem;
-      color: var(--plur-cyan);
-      transition: transform 0.3s ease;
     }
     
-    details[open] summary:after {
-      content: "-";
-      transform: rotate(0deg);
-    }
-    
-    /* Pulse animation for important elements */
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(255, 0, 170, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 0, 170, 0); }
-    }
-    
-    .pulse {
-      animation: pulse 2s infinite;
-    }
+    .plur-badge.peace { color: var(--plur-cyan); border-color: var(--plur-cyan); }
+    .plur-badge.love { color: var(--hot-pink); border-color: var(--hot-pink); }
+    .plur-badge.unity { color: var(--neon-yellow); border-color: var(--neon-yellow); }
+    .plur-badge.respect { color: var(--plur-green); border-color: var(--plur-green); }
   </style>
 </head>
 <body>
+  <div class="scroll-progress"></div>
+  
   <div class="container">
     <header>
       <a href="javascript:history.back()" class="back-button">← Back</a>
@@ -415,18 +505,21 @@
       <p class="subtitle">Creating a safer PLUR community together</p>
     </header>
     
-    <!-- Quick navigation for mobile -->
+    <!-- Quick navigation -->
     <div class="quick-nav">
       <a href="#what-is-consent" class="nav-button">What is Consent?</a>
       <a href="#ongoing-process" class="nav-button">Ongoing Process</a>
       <a href="#resources" class="nav-button">Resources</a>
     </div>
     
-    <div class="content-section">
+    <div class="content-section fade-in">
       <p><strong>Consent isn't just sexy—it's necessary.</strong> Especially in nightlife spaces where people are vulnerable, intoxicated, overstimulated, or all of the above.</p>
+      <p>At PLURderapolis, we believe in creating spaces where everyone feels safe, respected, and empowered. That's why consent culture is at the heart of everything we do.</p>
     </div>
 
-    <div id="what-is-consent">
+    <div id="what-is-consent" class="fade-in">
+      <h2>Understanding Consent</h2>
+      
       <details>
         <summary>✅ Consent is:</summary>
         <ul>
@@ -448,6 +541,7 @@
           <li>"They were drunk/high."</li>
           <li>"They didn't respond."</li>
         </ul>
+        <p>Silence or lack of resistance does not equal consent. Only an enthusiastic, ongoing "yes" means yes.</p>
       </details>
 
       <details>
@@ -458,6 +552,7 @@
           <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
           <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
         </ul>
+        <p>Remember: PLUR means <span class="plur-badge peace">Peace</span>, <span class="plur-badge love">Love</span>, <span class="plur-badge unity">Unity</span>, and <span class="plur-badge respect">Respect</span> for all.</p>
       </details>
 
       <details>
@@ -466,6 +561,8 @@
           <li>"Are you good with this?"</li>
           <li>"Want me to keep going?"</li>
           <li>"Let me know if you want to stop."</li>
+          <li>"Is this okay?"</li>
+          <li>"How are you feeling?"</li>
         </ul>
         <p>Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
       </details>
@@ -473,6 +570,7 @@
       <details>
         <summary>🏳️‍🌈 Respect all identities.</summary>
         <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
+        <p>Our community celebrates diversity and expects everyone to respect each other's identities and boundaries.</p>
       </details>
 
       <details>
@@ -483,10 +581,11 @@
           <li>Believe survivors. Listen first. Don't center yourself.</li>
           <li>Consent violations aren't just private drama—they're community safety issues.</li>
         </ul>
+        <p>If you witness or experience a consent violation, report it to event staff or use our <a href="accountability.html">accountability process</a>.</p>
       </details>
     </div>
 
-    <div id="ongoing-process" class="ongoing-consent">
+    <div id="ongoing-process" class="ongoing-consent fade-in">
       <h2>🔄 Consent is an Ongoing Process</h2>
       <p>True consent culture extends far beyond getting a "yes" or respecting a "no." It's about creating environments where everyone feels empowered to communicate their boundaries and have them respected throughout every interaction.</p>
       
@@ -517,7 +616,8 @@
       </p>
     </div>
 
-    <div id="resources">
+    <div id="resources" class="fade-in">
+      <h2>Resources & Support</h2>
       <div class="resource-links">
         <a href="accountability.html" class="resource-link">View Accountability Process</a>
         <a href="rejection-based-violence.html" class="resource-link">Learn About Rejection-Based Violence</a>
@@ -525,7 +625,7 @@
       </div>
     </div>
 
-    <div class="highlight-box">
+    <div class="highlight-box fade-in">
       <p><strong>PLURderapolis stands for safe dance floors.</strong><br />
       If someone tells you a person made them uncomfortable or violated consent, take it seriously.</p>
       <p>If you feel unsafe or unsure what to do, check our <a href="resources.html">Emergency Resources</a>, or find a trusted peer, medic, or venue staff member.</p>
@@ -559,6 +659,42 @@
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth' });
         }
+      });
+    });
+    
+    // Scroll progress indicator
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.querySelector('.scroll-progress').style.width = scrolled + '%';
+    });
+    
+    // Fade-in animation for sections
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const fadeInOnScroll = () => {
+      fadeElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('visible');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', fadeInOnScroll);
+    fadeInOnScroll(); // Check on page load
+    
+    // Add animation to resource links
+    document.querySelectorAll('.resource-link').forEach(link => {
+      link.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      
+      link.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
       });
     });
   </script>
