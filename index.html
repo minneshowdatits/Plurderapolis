@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,6 +44,11 @@
         .site-title h1{font-family:Montserrat,sans-serif;font-weight:700;font-size:clamp(1.8rem,5vw,2.5rem);color:#00f7e0;letter-spacing:0.15em;text-transform:uppercase;background:linear-gradient(90deg,#00f7e0 0%,#a3f7ff 50%,#00f7e0 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 6s linear infinite;filter:drop-shadow(0 0 6px #00f7e0aa);margin:0}
         .site-title .tagline{font-family:Roboto,sans-serif;color:#88e9e3;font-size:0.9rem;letter-spacing:0.1em;margin-top:0.25rem;font-weight:600;text-transform:uppercase;opacity:0.8}
         @keyframes shineMove{0%{background-position:100% 0}100%{background-position:0 0}}
+
+        /* About Plurderapolis Blurb */
+        .about-blurb{text-align:center;max-width:800px;margin:0 auto 1.5rem;padding:0 1rem;font-size:0.95rem;color:#ccc;line-height:1.5}
+        .about-blurb a{color:#00f7e0;text-decoration:none;font-weight:bold}
+        .about-blurb a:hover{text-decoration:underline}
 
         .menu-btn{position:fixed;top:12px;left:12px;z-index:1100;cursor:pointer;width:30px;height:25px;display:flex;flex-direction:column;justify-content:space-between}
         .menu-btn div{height:4px;background:#00f7e0;border-radius:3px;transition:all 0.3s ease}
@@ -107,6 +113,7 @@
         .card h3{color:#ff69b4;font-family:Montserrat,sans-serif;margin-top:0;font-size:1.1rem;border-bottom:1px solid #ff69b4;padding-bottom:0.5rem}
         .card p{font-size:0.9rem;flex-grow:1}
 
+        /* Enhanced Search with Filtering */
         .search-container{position:relative;width:90%;margin:1rem auto;z-index:100}
         .search-bar{display:flex;position:relative}
         .search-bar input{flex:1;padding:10px;border:none;border-radius:5px 0 0 5px;background:rgba(255,255,255,0.1);color:white;border:1px solid #00f7e0;font-size:0.9rem}
@@ -119,6 +126,27 @@
         #searchResults li:hover{background:#5d3a7d}
         #searchResults li:last-child{border-bottom:none}
 
+        /* Filterable Resource List */
+        .resource-filters{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0;justify-content:center}
+        .filter-btn{padding:8px 16px;border:1px solid #5d3a7d;background:#2a0036;color:#ccc;border-radius:20px;cursor:pointer;font-size:0.85rem;transition:all 0.2s}
+        .filter-btn:hover{background:#3a0052}
+        .filter-btn.active{background:#00f7e0;color:#2e003e;border-color:#00f7e0}
+        
+        .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:15px}
+        .resource-item{background:#2a0036;border-radius:8px;padding:15px;border-left:3px solid;transition:all 0.2s}
+        .resource-item.emergency{border-left-color:#ff5252}
+        .resource-item.testing{border-left-color:#00f7e0}
+        .resource-item.community{border-left-color:#ff69b4}
+        .resource-item.legal{border-left-color:#ffb300}
+        .resource-item.hidden{display:none}
+        .resource-item h4{margin:0 0 8px;color:#fff;font-size:1rem}
+        .resource-item p{margin:0;font-size:0.85rem;color:#ccc}
+        .resource-item .resource-type{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-top:8px;background:rgba(255,255,255,0.1)}
+        .resource-item.emergency .resource-type{background:rgba(255,82,82,0.2);color:#ff5252}
+        .resource-item.testing .resource-type{background:rgba(0,247,224,0.2);color:#00f7e0}
+        .resource-item.community .resource-type{background:rgba(255,105,180,0.2);color:#ff69b4}
+        .resource-item.legal .resource-type{background:rgba(255,179,0,0.2);color:#ffb300}
+
         /* Enhanced peach button with "HELP!" text */
         #peachWrap{position:fixed;bottom:20px;right:20px;z-index:1002;display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;cursor:move}
         #panicButton{width:60px;height:60px;font-size:2.5rem;background:radial-gradient(circle at 35% 35%,#ffb07c,#ff6f91);border-radius:50% 50% 45% 55%/60% 55% 45% 50%;position:relative;display:flex;justify-content:center;align-items:center;cursor:pointer;text-decoration:none;color:#fff;box-shadow:0 0 15px #ff69b4,0 0 30px #00f7e0;animation:emojiPulse 2s infinite;user-select:none}
@@ -128,12 +156,42 @@
         @keyframes emojiPulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.7}}
 
+        /* Back to Top Button */
+        #backToTop{position:fixed;bottom:90px;right:20px;width:50px;height:50px;background:#00f7e0;color:#2e003e;border:none;border-radius:50%;font-size:1.5rem;cursor:pointer;z-index:1001;box-shadow:0 0 15px rgba(0,247,224,0.5);transition:all 0.3s;opacity:0;visibility:hidden;display:flex;align-items:center;justify-content:center}
+        #backToTop.show{opacity:1;visibility:visible}
+        #backToTop:hover{transform:translateY(-3px);box-shadow:0 0 20px rgba(0,247,224,0.7)}
+
         footer{margin-top:2rem;font-size:0.8rem;color:#aaa;text-align:center;position:relative;z-index:2;padding:1rem;background:rgba(0,0,0,0.5);border-top:1px solid #444}
         footer hr{border-color:#444;margin-bottom:0.8rem}
         footer p{max-width:800px;margin:0.5rem auto;line-height:1.5}
         footer ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;margin:0.8rem 0;gap:8px}
         footer ul li a{color:#00f7e0;padding:0 8px;text-decoration:none;transition:color 0.2s;font-size:0.8rem}
         footer ul li a:hover{color:#ff69b4;text-decoration:underline}
+
+        /* Enhanced disclaimer */
+        .disclaimer-box{background:rgba(58,0,82,0.7);border:1px solid #5d3a7d;border-radius:8px;padding:15px;margin:20px auto;max-width:800px;font-size:0.8rem;color:#ccc;line-height:1.5}
+
+        /* Social Share Buttons */
+        .social-share{margin:15px 0;display:flex;justify-content:center;gap:10px}
+        .share-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#3a0052;color:white;text-decoration:none;font-size:1.2rem;transition:all 0.2s}
+        .share-btn:hover{transform:scale(1.1);background:#5d3a7d}
+        .share-label{font-size:0.9rem;margin-bottom:10px;color:#ccc}
+
+        /* Related Reading Section */
+        .related-reading{max-width:1200px;margin:2rem auto;padding:0 1.5rem}
+        .related-reading h3{text-align:center;margin-bottom:1rem;color:#00f7e0;font-family:Montserrat,sans-serif}
+        .related-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+        .related-link{background:#3a0052;color:#ff69b4;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:0.9rem;transition:all 0.2s;border:1px solid #5d3a7d}
+        .related-link:hover{background:#5d3a7d;transform:translateY(-2px)}
+
+        /* Community Section */
+        .community-section{background:#2a0036;border-radius:12px;padding:1.5rem;margin:1.5rem auto;max-width:1200px;border-left:4px solid #ff69b4}
+        .community-section h3{color:#ff69b4;margin-top:0;font-family:Montserrat,sans-serif}
+        .community-links{display:flex;flex-wrap:wrap;gap:15px;margin-top:15px}
+        .community-link{flex:1;min-width:200px;background:#3a0052;padding:15px;border-radius:8px;text-decoration:none;color:#fff;transition:all 0.2s;border:1px solid #5d3a7d}
+        .community-link:hover{background:#5d3a7d;transform:translateY(-3px)}
+        .community-link h4{color:#00f7e0;margin:0 0 8px;font-size:1rem}
+        .community-link p{margin:0;font-size:0.9rem;color:#ccc}
 
         /* Raver Health Guide Styles - Horizontal Scroll */
         .health-guide{background:#2a0036;border-radius:10px;padding:15px;margin:15px 0;border:1px solid #5d3a7d}
@@ -267,6 +325,11 @@
 <!-- Site title -->
 <div class="site-title"><h1>PLURderapolis</h1><div class="tagline">Harm Reduction for Minnesota Ravers</div></div>
 
+<!-- About Blurb -->
+<div class="about-blurb">
+    <p>PLURderapolis is a community-built harm reduction resource serving Minnesota's electronic music scene. We provide education, support, and tools to help ravers stay safe while celebrating our shared love of music and community. <a href="#our-story">Learn more about our mission</a>.</p>
+</div>
+
 <!-- Search -->
 <div class="search-container"><div class="search-bar"><input type="text" id="searchInput" placeholder="Search the site..."><button onclick="performSearch()">🔍</button></div><div id="searchResults"></div></div>
 
@@ -335,18 +398,108 @@
                 <div class="card"><h3>Bad Trip Mode</h3><p>Calming resources for difficult experiences.</p><a class="cta-button" href="badtrip.html">Help</a></div>
             </div></div></div>
 
-    <!-- Resources Section -->
-    <div class="section-card"><div class="card-header" onclick="toggleCard(this)"><h2>📚 Resources</h2><span class="toggle-icon">▼</span></div><div class="card-content"><p>Comprehensive resources for harm reduction and mental health support.</p><div class="card-container">
-                <div class="card"><h3>MN Resources</h3><p>Plan B, clinics, DV support, and recovery help.</p><a class="cta-button" href="resources.html">View</a></div>
-                <div class="card"><h3>Sober Ravers</h3><p>Tips & support for enjoying the scene sober.</p><a class="cta-button" href="sober.html">View</a></div>
-                <div class="card"><h3>Seasonal Tips</h3><p>Stay safe in Minnesota's extreme weather.</p><a class="cta-button" href="seasonal.html">View</a></div>
+    <!-- Resources Section with Filterable List -->
+    <div class="section-card"><div class="card-header" onclick="toggleCard(this)"><h2>📚 Resources</h2><span class="toggle-icon">▼</span></div><div class="card-content"><p>Comprehensive resources for harm reduction and mental health support.</p>
+                
+                <!-- Resource Filters -->
+                <div class="resource-filters">
+                    <button class="filter-btn active" data-filter="all">All Resources</button>
+                    <button class="filter-btn" data-filter="emergency">🚨 Emergency</button>
+                    <button class="filter-btn" data-filter="testing">🧪 Testing</button>
+                    <button class="filter-btn" data-filter="community">🤝 Community</button>
+                    <button class="filter-btn" data-filter="legal">⚖️ Legal</button>
+                </div>
+                
+                <!-- Resource Grid -->
+                <div class="resource-grid">
+                    <div class="resource-item emergency">
+                        <h4>Overdose Response Guide</h4>
+                        <p>Step-by-step instructions for responding to potential overdoses.</p>
+                        <span class="resource-type">Emergency</span>
+                    </div>
+                    <div class="resource-item testing">
+                        <h4>Fentanyl Test Strips</h4>
+                        <p>Information on obtaining and using fentanyl test strips.</p>
+                        <span class="resource-type">Testing</span>
+                    </div>
+                    <div class="resource-item community">
+                        <h4>Sober Raving Support</h4>
+                        <p>Resources for enjoying events without substances.</p>
+                        <span class="resource-type">Community</span>
+                    </div>
+                    <div class="resource-item legal">
+                        <h4>Good Samaritan Laws</h4>
+                        <p>Understanding legal protections when seeking help.</p>
+                        <span class="resource-type">Legal</span>
+                    </div>
+                    <div class="resource-item emergency">
+                        <h4>Bad Trip Support</h4>
+                        <p>Guidance for helping someone through a difficult experience.</p>
+                        <span class="resource-type">Emergency</span>
+                    </div>
+                    <div class="resource-item testing">
+                        <h4>Reagent Testing Kits</h4>
+                        <p>How to test substances for purity and identification.</p>
+                        <span class="resource-type">Testing</span>
+                    </div>
+                    <div class="resource-item community">
+                        <h4>Peer Support Network</h4>
+                        <p>Connect with others in the harm reduction community.</p>
+                        <span class="resource-type">Community</span>
+                    </div>
+                    <div class="resource-item legal">
+                        <h4>Know Your Rights</h4>
+                        <p>Information on your rights at events and with law enforcement.</p>
+                        <span class="resource-type">Legal</span>
+                    </div>
+                </div>
+                
+                <div class="card-container">
+                    <div class="card"><h3>MN Resources</h3><p>Plan B, clinics, DV support, and recovery help.</p><a class="cta-button" href="resources.html">View</a></div>
+                    <div class="card"><h3>Sober Ravers</h3><p>Tips & support for enjoying the scene sober.</p><a class="cta-button" href="sober.html">View</a></div>
+                    <div class="card"><h3>Seasonal Tips</h3><p>Stay safe in Minnesota's extreme weather.</p><a class="cta-button" href="seasonal.html">View</a></div>
+                </div>
             </div></div></div>
 
     <!-- Rejection-Based Violence Prevention Section -->
     <div class="section-card glow-section"><div class="card-header" onclick="toggleCard(this)"><h2>🛡️ Violence Prevention</h2><span class="toggle-icon">▼</span></div><div class="card-content"><p>Resources for preventing violence when someone says 'no' or sets boundaries.</p><a class="cta-button" href="rejection-based-violence.html">Learn More</a></div></div>
 
     <!-- Our Story Section -->
-    <div class="section-card"><div class="card-header" onclick="toggleCard(this)"><h2>📖 Our Story</h2><span class="toggle-icon">▼</span></div><div class="card-content"><p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p><p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p><p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p><div style="text-align:center;margin-top:25px"><a href="booth.html" class="cta-button">Learn About Our Booth</a></div></div></div>
+    <div class="section-card" id="our-story"><div class="card-header" onclick="toggleCard(this)"><h2>📖 Our Story</h2><span class="toggle-icon">▼</span></div><div class="card-content"><p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p><p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p><p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p><div style="text-align:center;margin-top:25px"><a href="booth.html" class="cta-button">Learn About Our Booth</a></div></div></div>
+</div>
+
+<!-- Community Section -->
+<div class="community-section">
+    <h3>🤝 Join Our Community</h3>
+    <p>PLURderapolis is community-built. Here's how you can connect with us and contribute to making Minnesota's electronic music scene safer for everyone.</p>
+    
+    <div class="community-links">
+        <a href="volunteer.html" class="community-link">
+            <h4>👥 Volunteer</h4>
+            <p>Join our team and help distribute resources at events.</p>
+        </a>
+        <a href="https://discord.gg/example" target="_blank" class="community-link">
+            <h4>💬 Online Spaces</h4>
+            <p>Connect with our community in our Discord server.</p>
+        </a>
+        <a href="booth.html" class="community-link">
+            <h4>🎉 Events & Booths</h4>
+            <p>Find us at local events and festivals throughout MN.</p>
+        </a>
+    </div>
+</div>
+
+<!-- Related Reading Section -->
+<div class="related-reading">
+    <h3>📖 People often also look for:</h3>
+    <div class="related-links">
+        <a href="spiking.html" class="related-link">🛡️ Spiking Prevention</a>
+        <a href="testing.html" class="related-link">🧪 Testing Kits</a>
+        <a href="badtrip.html" class="related-link">🌈 Bad Trip Guide</a>
+        <a href="consent.html" class="related-link">✅ Consent Basics</a>
+        <a href="sober.html" class="related-link">🚫 Sober Raving</a>
+        <a href="seasonal.html" class="related-link">🌡️ Seasonal Safety</a>
+    </div>
 </div>
 
 <!-- Anonymous Tip Link -->
@@ -358,8 +511,39 @@
 <!-- Enhanced peach panic button with "HELP!" text -->
 <div id="peachWrap"><div id="panicButton">🍑</div><div class="help-text">HELP!</div></div>
 
+<!-- Back to Top Button -->
+<button id="backToTop" title="Back to top">↑</button>
+
 <!-- Footer -->
-<footer><hr/><p>&copy; 2025 PLURderapolis — Community Harm Reduction</p><p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:#00f7e0">plurderapolis@gmail.com</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0">@plurderapolis</a></p><p style="font-size:0.8rem;color:#ccc">Disclaimer: PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p><ul><li><a href="index.html">Home</a></li><li><a href="panic.html">Panic</a></li><li><a href="emergency.html">Emergency</a></li><li><a href="polydrug.html">Polydrug</a></li><li><a href="resources.html">Resources</a></li><li><a href="rejection-based-violence.html">Violence Prevention</a></li><li><a href="badtrip.html">Bad Trip Mode</a></li></ul></footer>
+<footer>
+    <!-- Social Share Buttons -->
+    <div class="social-share">
+        <div class="share-label">Share PLURderapolis with a friend:</div>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://plurderapolis.org" target="_blank" class="share-btn">f</a>
+        <a href="https://twitter.com/intent/tweet?text=Check%20out%20PLURderapolis%20-%20Harm%20Reduction%20for%20Minnesota%20Ravers&url=https://plurderapolis.org" target="_blank" class="share-btn">t</a>
+        <a href="https://www.instagram.com/" target="_blank" class="share-btn">📷</a>
+        <a href="mailto:?subject=Check%20out%20PLURderapolis&body=PLURderapolis%20is%20a%20great%20resource%20for%20harm%20reduction%20in%20Minnesota's%20electronic%20music%20community.%20https://plurderapolis.org" class="share-btn">✉️</a>
+    </div>
+    
+    <hr/>
+    <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+    <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:#00f7e0">plurderapolis@gmail.com</a> | Instagram: <a href="https://www.instagram.com/plurderapolis" target="_blank" style="color:#00f7e0">@plurderapolis</a></p>
+    
+    <!-- Enhanced Disclaimer -->
+    <div class="disclaimer-box">
+        <p><strong>Disclaimer:</strong> PLURderapolis is a peer-run harm reduction resource for Minnesota ravers. The information provided is for educational purposes only and is not intended as medical or legal advice. Always consult with a qualified professional for concerns related to health, safety, or legal matters.</p>
+    </div>
+    
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="panic.html">Panic</a></li>
+        <li><a href="emergency.html">Emergency</a></li>
+        <li><a href="polydrug.html">Polydrug</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="rejection-based-violence.html">Violence Prevention</a></li>
+        <li><a href="badtrip.html">Bad Trip Mode</a></li>
+    </ul>
+</footer>
 
 <script>
 // Hamburger toggle
@@ -404,6 +588,42 @@ document.addEventListener('click',function(e){e.target.closest('.search-containe
 
 // Auto-expand first card on page load
 document.addEventListener('DOMContentLoaded',function(){const e=document.querySelector('.section-card');e&&(e.classList.add('expanded'),e.querySelector('.card-content').classList.add('expanded'))});
+
+// Back to Top Button
+const backToTopBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Resource Filtering
+const filterButtons = document.querySelectorAll('.filter-btn');
+const resourceItems = document.querySelectorAll('.resource-item');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        const filter = this.getAttribute('data-filter');
+        
+        resourceItems.forEach(item => {
+            if (filter === 'all' || item.classList.contains(filter)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    });
+});
 </script>
 
 </body>
