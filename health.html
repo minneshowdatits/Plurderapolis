@@ -88,6 +88,7 @@
         .nav-menu {
             display: flex;
             align-items: center;
+            gap: 15px;
         }
         
         .menu-toggle {
@@ -100,7 +101,17 @@
             transition: all 0.3s ease;
         }
         
-        .menu-toggle:hover {
+        .guide-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cyan);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:hover, .guide-menu-toggle:hover {
             color: var(--pink);
             transform: scale(1.1);
         }
@@ -111,7 +122,13 @@
             gap: 20px;
         }
         
-        .nav-links a {
+        .guide-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        .nav-links a, .guide-links a {
             color: var(--text-color);
             text-decoration: none;
             font-weight: 600;
@@ -123,13 +140,14 @@
             gap: 5px;
         }
         
-        .nav-links a:hover, .nav-links a.active {
+        .nav-links a:hover, .nav-links a.active,
+        .guide-links a:hover, .guide-links a.active {
             background: rgba(255, 255, 255, 0.1);
             color: var(--cyan);
             transform: translateY(-2px);
         }
         
-        .nav-links a.active {
+        .nav-links a.active, .guide-links a.active {
             color: var(--pink);
         }
         
@@ -667,6 +685,11 @@
             to { transform: translateX(0); }
         }
         
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -693,14 +716,13 @@
                 font-size: 1.3rem;
             }
             
-            .menu-toggle {
+            .menu-toggle, .guide-menu-toggle {
                 display: block;
             }
             
-            .nav-links {
+            .nav-links, .guide-links {
                 position: fixed;
                 top: 0;
-                right: -100%;
                 width: 70%;
                 height: 100vh;
                 background: linear-gradient(180deg, rgba(26, 11, 59, 0.98) 0%, rgba(44, 0, 62, 0.98) 100%);
@@ -713,12 +735,25 @@
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
             }
             
+            .nav-links {
+                right: -100%;
+            }
+            
+            .guide-links {
+                left: -100%;
+            }
+            
             .nav-links.active {
                 right: 0;
                 animation: slideIn 0.5s ease;
             }
             
-            .nav-links a {
+            .guide-links.active {
+                left: 0;
+                animation: slideInRight 0.5s ease;
+            }
+            
+            .nav-links a, .guide-links a {
                 width: 80%;
                 text-align: center;
                 padding: 15px;
@@ -726,7 +761,7 @@
                 font-size: 1.1rem;
             }
             
-            .close-menu {
+            .close-menu, .close-guide-menu {
                 position: absolute;
                 top: 20px;
                 right: 20px;
@@ -886,17 +921,33 @@
         <a href="https://plurderapolis.org" class="logo">PLUR<span>DERAPOLIS</span></a>
         
         <div class="nav-menu">
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <!-- Guide Navigation (visible on desktop) -->
+            <ul class="guide-links">
+                <li><a href="#hydration"><i class="fas fa-tint"></i> Hydration</a></li>
+                <li><a href="#prep"><i class="fas fa-utensils"></i> Prep</a></li>
+                <li><a href="#during"><i class="fas fa-music"></i> During</a></li>
+                <li><a href="#after"><i class="fas fa-bed"></i> After</a></li>
+                <li><a href="#emergency"><i class="fas fa-ambulance"></i> Emergency</a></li>
+                <li><a href="#longterm"><i class="fas fa-leaf"></i> Long-Term</a></li>
+                <li><a href="#bonus"><i class="fas fa-lightbulb"></i> Bonus</a></li>
+            </ul>
+            
+            <!-- Main Site Navigation (visible on desktop) -->
             <ul class="nav-links">
-                <button class="close-menu"><i class="fas fa-times"></i></button>
                 <li><a href="https://plurderapolis.org"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="https://plurderapolis.org/health.html" class="active"><i class="fas fa-heartbeat"></i> Health</a></li>
                 <li><a href="https://plurderapolis.org/resources.html"><i class="fas fa-book"></i> Resources</a></li>
                 <li><a href="https://plurderapolis.org/sober.html"><i class="fas fa-leaf"></i> Sober</a></li>
                 <li><a href="https://plurderapolis.org/emergency.html"><i class="fas fa-ambulance"></i> Emergency</a></li>
             </ul>
+            
+            <!-- Hamburger Menu Toggles (visible on mobile) -->
+            <button class="guide-menu-toggle">
+                <i class="fas fa-book"></i>
+            </button>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
@@ -1353,24 +1404,72 @@
             }
         });
 
-        // Mobile Menu Toggle
+        // Mobile Menu Toggles
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-        const closeMenu = document.querySelector('.close-menu');
+        const guideMenuToggle = document.querySelector('.guide-menu-toggle');
+        const guideLinks = document.querySelector('.guide-links');
         
         menuToggle.addEventListener('click', () => {
             navLinks.classList.add('active');
+            guideLinks.classList.remove('active');
         });
         
-        closeMenu.addEventListener('click', () => {
+        guideMenuToggle.addEventListener('click', () => {
+            guideLinks.classList.add('active');
             navLinks.classList.remove('active');
         });
         
-        // Close menu when clicking outside
+        // Close menus when clicking outside
         document.addEventListener('click', (e) => {
             if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
                 navLinks.classList.remove('active');
             }
+            if (!guideLinks.contains(e.target) && !guideMenuToggle.contains(e.target)) {
+                guideLinks.classList.remove('active');
+            }
+        });
+
+        // Guide navigation links functionality
+        const guideNavLinks = document.querySelectorAll('.guide-links a');
+        guideNavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    // Close all accordions first
+                    buttons.forEach(btn => {
+                        btn.setAttribute("aria-expanded", "false");
+                        btn.nextElementSibling.style.display = "none";
+                        const chev = btn.querySelector(".accordion-chevron");
+                        if (chev) chev.style.transform = "rotate(0deg)";
+                    });
+                    
+                    // Open the target section
+                    targetSection.setAttribute("aria-expanded", "true");
+                    const panel = targetSection.nextElementSibling;
+                    panel.style.display = "block";
+                    const chev = targetSection.querySelector(".accordion-chevron");
+                    if (chev) chev.style.transform = "rotate(180deg)";
+                    
+                    // Scroll to the section
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // Add animation to content
+                    const content = panel.querySelectorAll('.pocket, .deep');
+                    content.forEach((item, index) => {
+                        item.classList.add('fade-in');
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, index * 100);
+                    });
+                    
+                    // Close the guide menu on mobile
+                    guideLinks.classList.remove('active');
+                }
+            });
         });
 
         // Scroll to Top Button
