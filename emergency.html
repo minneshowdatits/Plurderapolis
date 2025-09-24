@@ -12,11 +12,13 @@
       --accent-pink: #ff2b9e;
       --accent-blue: #2bd6ff;
       --accent-purple: #b967ff;
+      --accent-green: #2effa7;
       --text-light: #f0f0ff;
       --text-gray: #a0a0c0;
       --danger: #ff4757;
       --warning: #ff9f43;
       --success: #2ed573;
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
     * {
@@ -33,10 +35,11 @@
       min-height: 100vh;
       padding: 0;
       margin: 0;
+      overflow-x: hidden;
     }
     
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 1rem;
     }
@@ -53,6 +56,7 @@
       top: 0;
       background: var(--bg-dark);
       z-index: 100;
+      backdrop-filter: blur(10px);
     }
     
     .logo {
@@ -63,6 +67,12 @@
       font-size: 1.5rem;
       color: var(--accent-pink);
       text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .logo:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 5px 15px rgba(255, 43, 158, 0.4);
     }
     
     .logo-img {
@@ -73,39 +83,84 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: pulse 3s infinite;
     }
     
-    .nav-toggle {
-      background: rgba(255,255,255,0.1);
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Search Bar */
+    .search-container {
+      position: relative;
+      max-width: 300px;
+      width: 100%;
+      margin: 0 auto 1.5rem;
+    }
+    
+    .search-bar {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.5rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
       color: var(--text-light);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .search-bar:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(43, 214, 255, 0.3);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-gray);
+    }
+    
+    /* Navigation Menu */
+    .nav-toggle {
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+      color: white;
       border: none;
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 50px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(183, 103, 255, 0.3);
     }
     
     .nav-toggle:hover {
-      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(183, 103, 255, 0.4);
     }
     
-    /* Navigation Menu */
     .nav-menu {
       position: fixed;
       top: 0;
       right: -100%;
-      width: 80%;
-      max-width: 300px;
+      width: 85%;
+      max-width: 350px;
       height: 100vh;
-      background: var(--bg-card);
+      background: rgba(22, 22, 37, 0.95);
+      backdrop-filter: blur(10px);
       padding: 2rem 1.5rem;
-      transition: right 0.3s ease;
+      transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       z-index: 1000;
       overflow-y: auto;
-      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      box-shadow: -5px 0 25px rgba(0,0,0,0.5);
+      border-left: 1px solid rgba(255,255,255,0.1);
     }
     
     .nav-menu.active {
@@ -127,6 +182,12 @@
       color: var(--text-light);
       font-size: 1.5rem;
       cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .nav-close:hover {
+      color: var(--accent-pink);
+      transform: rotate(90deg);
     }
     
     .nav-links {
@@ -134,21 +195,47 @@
     }
     
     .nav-links li {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.3s ease;
     }
+    
+    .nav-menu.active .nav-links li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .nav-links li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links li:nth-child(2) { transition-delay: 0.15s; }
+    .nav-links li:nth-child(3) { transition-delay: 0.2s; }
+    .nav-links li:nth-child(4) { transition-delay: 0.25s; }
+    .nav-links li:nth-child(5) { transition-delay: 0.3s; }
+    .nav-links li:nth-child(6) { transition-delay: 0.35s; }
+    .nav-links li:nth-child(7) { transition-delay: 0.4s; }
+    .nav-links li:nth-child(8) { transition-delay: 0.45s; }
+    .nav-links li:nth-child(9) { transition-delay: 0.5s; }
+    .nav-links li:nth-child(10) { transition-delay: 0.55s; }
+    .nav-links li:nth-child(11) { transition-delay: 0.6s; }
+    .nav-links li:nth-child(12) { transition-delay: 0.65s; }
+    .nav-links li:nth-child(13) { transition-delay: 0.7s; }
     
     .nav-links a {
       color: var(--text-light);
       text-decoration: none;
       display: block;
-      padding: 0.7rem 1rem;
+      padding: 0.8rem 1rem;
       border-radius: 8px;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      font-size: 1.1rem;
+      border-left: 3px solid transparent;
     }
     
     .nav-links a:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
       color: var(--accent-blue);
+      border-left-color: var(--accent-blue);
+      transform: translateX(5px);
     }
     
     .nav-overlay {
@@ -157,29 +244,43 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       z-index: 999;
-      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
     }
     
     .nav-overlay.active {
-      display: block;
+      opacity: 1;
+      visibility: visible;
     }
     
-    /* Emergency Action Bar - Updated to be less prominent */
+    /* Emergency Action Bar - Less Prominent */
     .emergency-bar {
-      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+      background: linear-gradient(135deg, rgba(183, 103, 255, 0.9) 0%, rgba(255, 43, 158, 0.9) 100%);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1rem 1.5rem;
       margin-bottom: 1.5rem;
       text-align: center;
-      box-shadow: 0 5px 15px rgba(183, 103, 255, 0.3);
+      box-shadow: 0 5px 15px rgba(183, 103, 255, 0.2);
       border: 1px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+      animation: glow 3s infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { box-shadow: 0 5px 15px rgba(183, 103, 255, 0.2); }
+      to { box-shadow: 0 5px 20px rgba(183, 103, 255, 0.4); }
     }
     
     .emergency-bar h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
     }
     
     .emergency-call {
@@ -188,52 +289,95 @@
       color: var(--accent-pink);
       text-decoration: none;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       padding: 0.5rem 1.5rem;
       border-radius: 50px;
       margin: 0.5rem 0;
       box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
+      transition: var(--transition);
     }
     
     .emergency-call:hover {
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.05);
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     
-    /* Quick Access Grid */
-    .quick-access {
+    /* Call to Action Grid */
+    .cta-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1rem;
       margin-bottom: 2rem;
     }
     
-    .quick-btn {
+    .cta-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
       padding: 1.5rem;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
     }
     
-    .quick-btn:hover {
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .cta-card:hover::before {
+      left: 100%;
+    }
+    
+    .cta-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       border-color: var(--accent-blue);
     }
     
-    .quick-btn i {
+    .cta-card i {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: var(--accent-blue);
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     
-    .quick-btn h3 {
+    .cta-card h3 {
       color: var(--accent-pink);
       margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .cta-card p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(183, 103, 255, 0.4);
     }
     
     /* Info Cards */
@@ -243,6 +387,18 @@
       padding: 1.5rem;
       margin-bottom: 1.5rem;
       border-left: 4px solid var(--accent-purple);
+      transition: var(--transition);
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .info-card.hidden {
+      display: none;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
     .card-header {
@@ -251,6 +407,11 @@
       align-items: center;
       margin-bottom: 1rem;
       cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .card-header:hover h3 {
+      color: var(--accent-blue);
     }
     
     .card-header h3 {
@@ -258,12 +419,19 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      transition: var(--transition);
     }
     
     .card-content {
       display: none;
       padding-top: 1rem;
       border-top: 1px solid rgba(255,255,255,0.1);
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .card-content.active {
@@ -277,6 +445,12 @@
     
     li {
       margin-bottom: 0.5rem;
+      transition: var(--transition);
+    }
+    
+    li:hover {
+      color: var(--text-light);
+      transform: translateX(5px);
     }
     
     .highlight {
@@ -286,20 +460,106 @@
     
     .sub-section {
       margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    
+    .sub-section:hover {
+      background: rgba(255,255,255,0.05);
     }
     
     .sub-section h4 {
       color: var(--accent-blue);
       margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
     a {
       color: var(--accent-blue);
       text-decoration: none;
+      transition: var(--transition);
     }
     
     a:hover {
+      color: var(--accent-green);
       text-decoration: underline;
+    }
+    
+    /* Floating Action Buttons */
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(183, 103, 255, 0.4);
+      cursor: pointer;
+      z-index: 99;
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .fab.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .fab:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 6px 20px rgba(183, 103, 255, 0.6);
+    }
+    
+    .fab.back {
+      right: 80px;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
+    }
+    
+    /* Downloadable Card */
+    .download-card {
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      text-align: center;
+      color: white;
+      box-shadow: 0 5px 15px rgba(183, 103, 255, 0.3);
+    }
+    
+    .download-card h3 {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .download-btn {
+      display: inline-block;
+      background: white;
+      color: var(--accent-pink);
+      text-decoration: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+    }
+    
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
     
     /* Footer */
@@ -323,21 +583,44 @@
     
     /* Responsive Design */
     @media (max-width: 768px) {
-      .quick-access {
+      .cta-grid {
         grid-template-columns: 1fr;
       }
       
       .emergency-bar h2 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       
       .emergency-call {
-        font-size: 1rem;
+        font-size: 0.9rem;
         padding: 0.5rem 1.2rem;
       }
       
       .card-header h3 {
         font-size: 1.1rem;
+      }
+      
+      .nav-menu {
+        width: 90%;
+      }
+      
+      .fab {
+        bottom: 15px;
+        right: 15px;
+      }
+      
+      .fab.back {
+        right: 70px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .logo span {
+        display: none;
+      }
+      
+      .search-container {
+        max-width: 100%;
       }
     }
   </style>
@@ -354,57 +637,72 @@
       </button>
     </header>
     
+    <!-- Search Bar -->
+    <div class="search-container">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" class="search-bar" id="searchBar" placeholder="Search emergency info...">
+    </div>
+    
     <!-- Navigation Menu -->
     <div class="nav-overlay" id="navOverlay"></div>
     <nav class="nav-menu" id="navMenu">
       <div class="nav-header">
-        <h3>Navigation</h3>
+        <h3>Emergency Navigation</h3>
         <button class="nav-close" id="navClose">
           <i class="fas fa-times"></i>
         </button>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="resources.html">Resources</a></li>
-        <li><a href="#emergency-bar">Emergency Action</a></li>
-        <li><a href="#recovery">Recovery Position</a></li>
-        <li><a href="#overdose">Overdose Response</a></li>
-        <li><a href="#narcan">Narcan Info</a></li>
-        <li><a href="#panic">Panic & Anxiety</a></li>
-        <li><a href="#heat">Heat Safety</a></li>
-        <li><a href="#crowd">Crowd Safety</a></li>
-        <li><a href="#seizures">Seizures</a></li>
-        <li><a href="#serotonin">Serotonin Syndrome</a></li>
-        <li><a href="#other">Other Emergencies</a></li>
-        <li><a href="#resources">Resources & Prep</a></li>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="resources.html"><i class="fas fa-book"></i> Resources</a></li>
+        <li><a href="#emergency-bar"><i class="fas fa-phone-alt"></i> Emergency Action</a></li>
+        <li><a href="#recovery"><i class="fas fa-first-aid"></i> Recovery Position</a></li>
+        <li><a href="#overdose"><i class="fas fa-pills"></i> Overdose Response</a></li>
+        <li><a href="#narcan"><i class="fas fa-syringe"></i> Narcan Info</a></li>
+        <li><a href="#panic"><i class="fas fa-heartbeat"></i> Panic & Anxiety</a></li>
+        <li><a href="#heat"><i class="fas fa-temperature-high"></i> Heat Safety</a></li>
+        <li><a href="#crowd"><i class="fas fa-users"></i> Crowd Safety</a></li>
+        <li><a href="#seizures"><i class="fas fa-head-side-vomit"></i> Seizures</a></li>
+        <li><a href="#serotonin"><i class="fas fa-brain"></i> Serotonin Syndrome</a></li>
+        <li><a href="#other"><i class="fas fa-first-aid"></i> Other Emergencies</a></li>
+        <li><a href="#resources"><i class="fas fa-notes-medical"></i> Resources & Prep</a></li>
       </ul>
     </nav>
     
     <div class="emergency-bar" id="emergency-bar">
-      <h2>🚨 Emergency Situation?</h2>
+      <h2><i class="fas fa-exclamation-triangle"></i> Emergency Situation?</h2>
       <p>If something goes wrong, minutes matter. Trust your instincts.</p>
-      <a href="tel:911" class="emergency-call">CALL 911 NOW</a>
+      <a href="tel:911" class="emergency-call"><i class="fas fa-phone"></i> CALL 911 NOW</a>
       <p>Minnesota's Good Samaritan Law protects you when seeking help during an overdose.</p>
     </div>
     
-    <div class="quick-access">
-      <div class="quick-btn" data-target="overdose">
+    <div class="cta-grid">
+      <div class="cta-card" data-target="overdose">
         <i class="fas fa-pills"></i>
         <h3>Overdose Response</h3>
         <p>Recognize and respond to drug-related emergencies</p>
+        <a href="#overdose" class="cta-btn">Learn More</a>
       </div>
       
-      <div class="quick-btn" data-target="recovery">
+      <div class="cta-card" data-target="recovery">
         <i class="fas fa-first-aid"></i>
         <h3>Recovery Position</h3>
         <p>How to position someone to keep airways clear</p>
+        <a href="#recovery" class="cta-btn">Learn More</a>
       </div>
       
-      <div class="quick-btn" data-target="heatstroke">
+      <div class="cta-card" data-target="heatstroke">
         <i class="fas fa-temperature-high"></i>
         <h3>Heatstroke</h3>
         <p>Recognize and respond to overheating emergencies</p>
+        <a href="#heat" class="cta-btn">Learn More</a>
       </div>
+    </div>
+    
+    <div class="download-card">
+      <h3><i class="fas fa-download"></i> Emergency Quick Reference</h3>
+      <p>Download a printable card with essential emergency steps to keep with you</p>
+      <a href="#" class="download-btn" id="downloadBtn"><i class="fas fa-file-pdf"></i> Download PDF</a>
     </div>
     
     <div class="info-card" id="recovery">
@@ -430,7 +728,7 @@
       </div>
       <div class="card-content" id="overdose-content">
         <div class="sub-section">
-          <h4>Opioids (fentanyl, heroin, oxycodone)</h4>
+          <h4><i class="fas fa-capsules"></i> Opioids (fentanyl, heroin, oxycodone)</h4>
           <ul>
             <li>Pinpoint pupils</li>
             <li>Slow or no breathing (less than 8 breaths/min)</li>
@@ -442,7 +740,7 @@
         </div>
         
         <div class="sub-section">
-          <h4>Stimulants (MDMA, meth, cocaine)</h4>
+          <h4><i class="fas fa-bolt"></i> Stimulants (MDMA, meth, cocaine)</h4>
           <ul>
             <li>Overheating, agitation, confusion, hallucinations</li>
             <li>Fast heartbeat, high blood pressure, chest pain</li>
@@ -451,7 +749,7 @@
         </div>
         
         <div class="sub-section">
-          <h4>Alcohol Poisoning</h4>
+          <h4><i class="fas fa-wine-bottle"></i> Alcohol Poisoning</h4>
           <ul>
             <li>Vomiting while unconscious</li>
             <li>Cold, pale, or bluish skin</li>
@@ -461,7 +759,7 @@
         </div>
         
         <div class="sub-section">
-          <h4>Other Drugs / Polydrug Use</h4>
+          <h4><i class="fas fa-exclamation-triangle"></i> Other Drugs / Polydrug Use</h4>
           <ul>
             <li>Benzodiazepines: sleepiness, slurred speech, unresponsiveness</li>
             <li>Combinations can be unpredictable — treat any emergency as serious</li>
@@ -526,12 +824,12 @@
       </div>
     </div>
     
-    <div class="info-card" id="heatstroke">
-      <div class="card-header" onclick="toggleCard('heatstroke')">
+    <div class="info-card" id="heat">
+      <div class="card-header" onclick="toggleCard('heat')">
         <h3><i class="fas fa-temperature-high"></i> Hydration & Heat Safety</h3>
         <i class="fas fa-chevron-down"></i>
       </div>
-      <div class="card-content" id="heatstroke-content">
+      <div class="card-content" id="heat-content">
         <ul>
           <li>Sip water steadily; small amounts better than chugging</li>
           <li>Electrolytes if sweating heavily</li>
@@ -594,21 +892,21 @@
       </div>
       <div class="card-content" id="other-content">
         <div class="sub-section">
-          <h4>Panic Attack</h4>
+          <h4><i class="fas fa-exclamation-circle"></i> Panic Attack</h4>
           <ul>
             <li>Ground yourself, breathe slowly, move to calm area</li>
           </ul>
         </div>
         
         <div class="sub-section">
-          <h4>Choking</h4>
+          <h4><i class="fas fa-lungs"></i> Choking</h4>
           <ul>
             <li>Heimlich if awake; if passed out, call 911 & start CPR</li>
           </ul>
         </div>
         
         <div class="sub-section">
-          <h4>Allergic Reaction</h4>
+          <h4><i class="fas fa-allergies"></i> Allergic Reaction</h4>
           <ul>
             <li>Swelling, breathing difficulty, use EpiPen, call 911</li>
           </ul>
@@ -623,7 +921,7 @@
       </div>
       <div class="card-content" id="resources-content">
         <div class="sub-section">
-          <h4>What to Carry</h4>
+          <h4><i class="fas fa-briefcase-medical"></i> What to Carry</h4>
           <ul>
             <li>Narcan (free in MN)</li>
             <li>Electrolytes</li>
@@ -635,12 +933,12 @@
         </div>
         
         <div class="sub-section">
-          <h4>Calling 911</h4>
+          <h4><i class="fas fa-phone-alt"></i> Calling 911</h4>
           <p>Minnesota Good Samaritan Law protects from drug possession charges when seeking help during an overdose. <a href="resources.html">Learn more</a></p>
         </div>
         
         <div class="sub-section">
-          <h4>Optional</h4>
+          <h4><i class="fas fa-plus-circle"></i> Optional</h4>
           <ul>
             <li>One-page emergency cheat sheet</li>
             <li>Mini-kit (water, power bank, basic first aid)</li>
@@ -657,6 +955,15 @@
       </div>
       <p>© 2023 Plurderapolis | Harm Reduction Community</p>
     </footer>
+  </div>
+
+  <!-- Floating Action Buttons -->
+  <div class="fab back" id="backBtn" title="Go Back">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  
+  <div class="fab" id="scrollTopBtn" title="Scroll to Top">
+    <i class="fas fa-arrow-up"></i>
   </div>
 
   <script>
@@ -696,20 +1003,23 @@
     // Toggle card content
     function toggleCard(cardId) {
       const content = document.getElementById(`${cardId}-content`);
-      content.classList.toggle('active');
+      const isActive = content.classList.contains('active');
       
-      // Close other cards when opening a new one (optional)
+      // Close all cards first
       document.querySelectorAll('.card-content').forEach(card => {
-        if (card.id !== `${cardId}-content` && card.classList.contains('active')) {
-          card.classList.remove('active');
-        }
+        card.classList.remove('active');
       });
+      
+      // Open the clicked card if it wasn't already active
+      if (!isActive) {
+        content.classList.add('active');
+      }
     }
     
-    // Quick access buttons
-    document.querySelectorAll('.quick-btn').forEach(button => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-target');
+    // CTA cards
+    document.querySelectorAll('.cta-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const target = card.getAttribute('data-target');
         
         // Close all cards first
         document.querySelectorAll('.card-content').forEach(card => {
@@ -726,9 +1036,92 @@
       });
     });
     
+    // Search functionality
+    const searchBar = document.getElementById('searchBar');
+    const infoCards = document.querySelectorAll('.info-card');
+    
+    searchBar.addEventListener('input', () => {
+      const searchTerm = searchBar.value.toLowerCase();
+      
+      infoCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        if (cardText.includes(searchTerm)) {
+          card.classList.remove('hidden');
+          // Add a subtle highlight effect
+          card.style.animation = 'pulse 0.5s ease';
+          setTimeout(() => {
+            card.style.animation = '';
+          }, 500);
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+    
+    // Back button functionality
+    const backBtn = document.getElementById('backBtn');
+    backBtn.addEventListener('click', () => {
+      window.history.back();
+    });
+    
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollTopBtn.classList.add('active');
+        backBtn.classList.add('active');
+      } else {
+        scrollTopBtn.classList.remove('active');
+        backBtn.classList.remove('active');
+      }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Download button functionality
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // In a real implementation, this would link to an actual PDF
+      alert('In a full implementation, this would download a printable emergency reference card.');
+    });
+    
     // Open first card by default
     window.addEventListener('load', () => {
       document.getElementById('recovery-content').classList.add('active');
+      
+      // Add slight delay to show floating buttons after page load
+      setTimeout(() => {
+        scrollTopBtn.classList.add('active');
+        backBtn.classList.add('active');
+      }, 1000);
+    });
+    
+    // Add entrance animations to cards on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all info cards for scroll animations
+    infoCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(card);
     });
   </script>
 </body>
