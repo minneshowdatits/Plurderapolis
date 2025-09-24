@@ -5,36 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLURderapolis Venue Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         :root {
+            --primary-purple: #8a2be2;
             --accent-pink: #ff2d93;
-            --accent-purple: #8a2be2;
             --accent-blue: #4775ff;
             --accent-cyan: #2dd4ff;
-            --bg-dark: #0b0b0f;
-            --card-bg: #121218;
+            --bg-dark: #0a0a14;
+            --card-bg: #121225;
+            --header-bg: rgba(18, 18, 37, 0.98);
             --text-light: #e2e2e2;
             --text-gray: #a0a0a0;
-            --header-bg: rgba(20, 20, 30, 0.95);
+            --glow-purple: rgba(138, 43, 226, 0.5);
+            --glow-pink: rgba(255, 45, 147, 0.4);
+            --glow-blue: rgba(71, 117, 255, 0.4);
         }
         
         body {
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(41, 10, 69, 0.3) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(69, 10, 55, 0.3) 0%, transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(41, 10, 69, 0.4) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(69, 10, 55, 0.4) 0%, transparent 25%),
+                linear-gradient(135deg, rgba(10, 10, 20, 0.9) 0%, rgba(20, 10, 40, 0.8) 100%);
             color: var(--text-light);
             line-height: 1.6;
             min-height: 100vh;
             padding-bottom: 60px;
             position: relative;
+            font-family: 'Exo 2', sans-serif;
+            overflow-x: hidden;
         }
         
         .container {
@@ -43,31 +51,39 @@
             padding: 20px;
         }
         
+        /* Header - Fixed but not sticky */
         header {
             background: var(--header-bg);
             color: white;
             padding: 20px;
             text-align: center;
-            border-radius: 10px;
+            border-radius: 0 0 15px 15px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 45, 147, 0.2);
-            position: sticky;
-            top: 20px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
             z-index: 100;
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.8s ease-out;
         }
         
         .logo {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
-            color: var(--accent-pink);
-            text-shadow: 0 0 10px rgba(255, 45, 147, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, var(--accent-pink), var(--primary-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px var(--glow-purple);
+            letter-spacing: 1px;
         }
         
         h1 {
             font-size: 2.2rem;
             margin-bottom: 10px;
             color: var(--text-light);
+            font-weight: 600;
         }
         
         .subtitle {
@@ -75,14 +91,98 @@
             opacity: 0.9;
             margin-bottom: 20px;
             color: var(--text-gray);
+            font-weight: 300;
         }
         
-        .search-section {
-            background: rgba(25, 25, 35, 0.7);
+        /* Navigation */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: white;
+            background: rgba(138, 43, 226, 0.2);
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 10px var(--glow-purple);
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            margin: 10px auto;
+        }
+        
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background: var(--card-bg);
             border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .mobile-nav.active {
+            display: flex;
+        }
+        
+        .mobile-nav .nav-link {
+            border-radius: 0;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none;
+        }
+        
+        /* Search Section */
+        .search-section {
+            background: rgba(25, 25, 45, 0.7);
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 45, 147, 0.2);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            backdrop-filter: blur(5px);
         }
         
         .search-box {
@@ -96,17 +196,19 @@
             padding: 12px 20px;
             flex: 1;
             min-width: 200px;
-            border: 1px solid rgba(255, 45, 147, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             border-radius: 50px;
             font-size: 1rem;
-            background: rgba(15, 15, 25, 0.8);
+            background: rgba(15, 15, 30, 0.8);
             color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-family: 'Exo 2', sans-serif;
         }
         
         .search-box input:focus, .search-box select:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(255, 45, 147, 0.3);
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3), 0 0 15px var(--glow-purple);
         }
         
         .filters {
@@ -118,8 +220,8 @@
         }
         
         .filter-btn {
-            background: rgba(25, 25, 35, 0.5);
-            border: 1px solid rgba(255, 45, 147, 0.3);
+            background: rgba(25, 25, 45, 0.5);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             color: var(--text-light);
             padding: 8px 16px;
             border-radius: 50px;
@@ -129,20 +231,24 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-family: 'Exo 2', sans-serif;
         }
         
         .filter-btn:hover, .filter-btn.active {
-            background: rgba(255, 45, 147, 0.2);
-            color: #ffd0e6;
+            background: rgba(138, 43, 226, 0.2);
+            color: #d4b3ff;
+            box-shadow: 0 0 10px var(--glow-purple);
+            transform: translateY(-2px);
         }
         
+        /* Back Button */
         .back-btn {
             position: absolute;
             top: 30px;
             left: 30px;
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-light);
-            border: 1px solid rgba(255, 45, 147, 0.3);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             padding: 10px 15px;
             border-radius: 50px;
             cursor: pointer;
@@ -154,32 +260,75 @@
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             z-index: 101;
+            font-family: 'Exo 2', sans-serif;
         }
         
         .back-btn:hover {
-            background: rgba(255, 45, 147, 0.2);
+            background: rgba(138, 43, 226, 0.2);
             transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--glow-purple);
         }
         
+        /* Sober Section */
+        .sober-section {
+            background: linear-gradient(45deg, rgba(71, 117, 255, 0.15), rgba(138, 43, 226, 0.25));
+            border: 1px solid rgba(71, 117, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .sober-title {
+            color: #9ad0ff;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .sober-link {
+            display: inline-block;
+            background: rgba(71, 117, 255, 0.2);
+            color: #9ad0ff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(71, 117, 255, 0.3);
+            font-weight: 500;
+        }
+        
+        .sober-link:hover {
+            background: rgba(71, 117, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(71, 117, 255, 0.3);
+        }
+        
+        /* Venues Container */
         .venues-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
         }
         
         .venue-accordion {
-            background: linear-gradient(145deg, #121218, #0d0d12);
-            border-radius: 12px;
+            background: linear-gradient(145deg, #121225, #0d0d1a);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 45, 147, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.1);
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
         }
         
         .venue-accordion:hover {
-            box-shadow: 0 10px 25px rgba(255, 45, 147, 0.1);
-            border-color: rgba(255, 45, 147, 0.3);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.2);
+            border-color: rgba(138, 43, 226, 0.4);
+            transform: translateY(-5px);
         }
         
         .accordion-header {
@@ -192,43 +341,48 @@
         }
         
         .accordion-header:hover {
-            background: rgba(255, 45, 147, 0.05);
+            background: rgba(138, 43, 226, 0.05);
         }
         
         .venue-title {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
         }
         
         .venue-name {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--text-light);
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .venue-neighborhood {
             font-size: 1rem;
             color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .venue-badges {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            margin-top: 5px;
         }
         
         .badge {
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
         
         .badge-accessible {
@@ -258,13 +412,13 @@
         .accordion-icon {
             transition: transform 0.3s ease;
             font-size: 1.2rem;
-            color: var(--accent-pink);
+            color: var(--primary-purple);
         }
         
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.5s ease;
         }
         
         .accordion-content-inner {
@@ -278,15 +432,22 @@
         }
         
         .detail-group {
-            background: rgba(20, 20, 30, 0.5);
+            background: rgba(20, 20, 40, 0.5);
             padding: 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 45, 147, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .detail-group:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.1);
+            border-color: rgba(138, 43, 226, 0.3);
         }
         
         .detail-title {
             font-weight: 600;
-            color: var(--accent-pink);
+            color: var(--primary-purple);
             margin-bottom: 8px;
             font-size: 1.1rem;
             display: flex;
@@ -306,11 +467,11 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
         }
         
         .map-link {
-            color: var(--accent-pink);
+            color: var(--primary-purple);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -320,50 +481,20 @@
         }
         
         .map-link:hover {
-            color: #ff83bd;
+            color: #b98af9;
             text-decoration: underline;
         }
         
-        .sober-section {
-            background: linear-gradient(45deg, rgba(71, 171, 255, 0.15), rgba(71, 171, 255, 0.25));
-            border: 1px solid rgba(71, 171, 255, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .sober-title {
-            color: #9ad0ff;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-        
-        .sober-link {
-            display: inline-block;
-            background: rgba(71, 171, 255, 0.2);
-            color: #9ad0ff;
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(71, 171, 255, 0.3);
-            font-weight: 500;
-        }
-        
-        .sober-link:hover {
-            background: rgba(71, 171, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        
+        /* Footer */
         footer {
-            background: rgba(20, 20, 30, 0.9);
+            background: rgba(20, 20, 40, 0.9);
             color: var(--text-gray);
             text-align: center;
             padding: 30px 20px;
             margin-top: 50px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 45, 147, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .footer-content {
@@ -380,24 +511,25 @@
         }
         
         .footer-link {
-            color: var(--accent-pink);
+            color: var(--primary-purple);
             text-decoration: none;
             transition: color 0.3s ease;
             font-weight: 500;
         }
         
         .footer-link:hover {
-            color: #ff83bd;
+            color: #b98af9;
             text-decoration: underline;
         }
         
+        /* Results */
         .no-results {
             text-align: center;
             padding: 40px;
             grid-column: 1 / -1;
-            background: rgba(20, 20, 30, 0.5);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 45, 147, 0.2);
+            background: rgba(20, 20, 40, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
         }
         
         .no-results i {
@@ -413,12 +545,49 @@
             font-style: italic;
         }
         
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             .back-btn {
                 position: relative;
                 top: 0;
                 left: 0;
                 margin-bottom: 20px;
+                width: 100%;
+                justify-content: center;
             }
             
             .venue-details {
@@ -440,7 +609,19 @@
             }
             
             .venue-name {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+            }
+            
+            .main-nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .venue-accordion {
+                animation: fadeInUp 0.6s ease-out;
             }
         }
         
@@ -450,6 +631,23 @@
         
         .active .accordion-content {
             max-height: 2000px;
+        }
+        
+        /* Anon Tip Link Styling */
+        .anon-tip-link {
+            background: linear-gradient(45deg, var(--accent-pink), var(--primary-purple));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--glow-pink);
+        }
+        
+        .anon-tip-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--glow-pink);
         }
     </style>
 </head>
@@ -463,6 +661,28 @@
             <div class="logo">PLURderapolis</div>
             <h1>Venue Guide</h1>
             <p class="subtitle">Find the perfect spot for your night out in the Twin Cities</p>
+            
+            <nav class="main-nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/venues.html" class="nav-link active">Venues</a>
+                <a href="/events.html" class="nav-link">Events</a>
+                <a href="/resources.html" class="nav-link">Resources</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+                <a href="https://plurderapolis.org/anon-tip" class="nav-link anon-tip-link" target="_blank">Anon Tip</a>
+            </nav>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i> Menu
+            </button>
+            
+            <nav class="mobile-nav" id="mobileNav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/venues.html" class="nav-link active">Venues</a>
+                <a href="/events.html" class="nav-link">Events</a>
+                <a href="/resources.html" class="nav-link">Resources</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+                <a href="https://plurderapolis.org/anon-tip" class="nav-link anon-tip-link" target="_blank">Anon Tip</a>
+            </nav>
         </header>
         
         <div class="search-section">
@@ -509,13 +729,14 @@
         
         <footer>
             <div class="footer-content">
-                <p>PLURderapolis &copy; 2023. Built with ❤️ for the Twin Cities music community.</p>
+                <p>PLURderapolis &copy; 2025. Built with ❤️ for the Twin Cities music community.</p>
                 <div class="footer-links">
                     <a href="/" class="footer-link">Home</a>
                     <a href="/venues.html" class="footer-link">Venues</a>
                     <a href="/events.html" class="footer-link">Events</a>
                     <a href="/resources.html" class="footer-link">Resources</a>
                     <a href="/contact.html" class="footer-link">Contact</a>
+                    <a href="https://plurderapolis.org/anon-tip" class="footer-link" target="_blank">Anon Tip</a>
                 </div>
                 <p>Have a venue to suggest or information to update? <a href="mailto:info@plurderapolis.org" class="footer-link">Let us know</a>!</p>
             </div>
@@ -742,7 +963,18 @@
             }
         ];
 
-        // Function to render venues
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mobileNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i> Close' 
+                : '<i class="fas fa-bars"></i> Menu';
+        });
+
+        // Function to render venues with staggered animation
         function renderVenues(filteredVenues) {
             const venuesContainer = document.getElementById('venues-container');
             const resultsCount = document.getElementById('results-count');
@@ -760,9 +992,12 @@
                 return;
             }
             
-            venuesContainer.innerHTML = filteredVenues.map(venue => {
+            venuesContainer.innerHTML = filteredVenues.map((venue, index) => {
+                // Stagger animation delay
+                const delay = index * 0.1;
+                
                 return `
-                    <div class="venue-accordion">
+                    <div class="venue-accordion" style="animation-delay: ${delay}s">
                         <div class="accordion-header">
                             <div class="venue-title">
                                 <div class="venue-name">
