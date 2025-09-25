@@ -21,7 +21,7 @@
             --accent-pink: #ff2d93;
             --accent-blue: #4775ff;
             --accent-cyan: #2dd4ff;
-            --accent-green: #4CAF50; /* Added for harm reduction theme */
+            --accent-green: #4CAF50;
             --bg-dark: #0a0a14;
             --card-bg: #121225;
             --header-bg: rgba(18, 18, 37, 0.98);
@@ -30,7 +30,7 @@
             --glow-purple: rgba(138, 43, 226, 0.5);
             --glow-pink: rgba(255, 45, 147, 0.4);
             --glow-blue: rgba(71, 117, 255, 0.4);
-            --glow-green: rgba(76, 175, 80, 0.3); /* For harm reduction elements */
+            --glow-green: rgba(76, 175, 80, 0.3);
         }
         
         body {
@@ -161,6 +161,34 @@
             margin-bottom: 20px;
             color: var(--text-gray);
             font-weight: 300;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 101;
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .back-btn:hover {
+            background: rgba(138, 43, 226, 0.2);
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--glow-purple);
         }
         
         /* PLURderapolis themed buttons */
@@ -848,6 +876,15 @@
         
         /* Responsive Design - Mobile Optimization */
         @media (max-width: 768px) {
+            .back-btn {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+                width: 100%;
+                justify-content: center;
+            }
+            
             .logo {
                 font-size: 2.2rem;
             }
@@ -1076,6 +1113,10 @@
     
     <header>
         <div class="container">
+            <button class="back-btn" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            
             <div class="logo">PLURderapolis</div>
             <p class="mission-statement">Bringing <span class="mission-highlight">harm reduction education</span> and essential resources to Minnesota's music community since 2019</p>
             <h1>Venue Guide</h1>
@@ -1133,9 +1174,6 @@
                 </button>
                 <button class="filter-btn" data-filter="large">
                     <i class="fas fa-building"></i> Large Venues
-                </button>
-                <button class="filter-btn" data-filter="harmReduction">
-                    <i class="fas fa-heartbeat"></i> Harm Reduction
                 </button>
             </div>
         </div>
@@ -1232,7 +1270,7 @@
                 const left = Math.random() * 100;
                 const animationDuration = Math.random() * 20 + 10;
                 const animationDelay = Math.random() * 10;
-                const color = Math.random() > 0.5 ? var(--accent-cyan) : var(--accent-pink);
+                const color = Math.random() > 0.5 ? 'var(--accent-cyan)' : 'var(--accent-pink)';
                 
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
@@ -1245,7 +1283,7 @@
             }
         }
         
-        // Venue data - enhanced with harm reduction info
+        // Venue data - KEEPING ALL ORIGINAL INFORMATION
         const venues = [
             {
                 name: "The Armory",
@@ -1258,13 +1296,11 @@
                 door: "Magnetometers & bag check",
                 access: "Fully accessible; elevators to balcony, ADA seating",
                 sober: "Water stations; NA drinks available",
-                harmReduction: "PLURderapolis booth at major events",
                 tips: "Large venue; arrive early for best experience",
                 map: "https://maps.google.com/?q=The%20Armory%20Minneapolis",
                 largeVenue: true,
                 accessible: true,
-                soberFriendly: true,
-                harmReductionPartner: true
+                soberFriendly: true
             },
             {
                 name: "First Avenue",
@@ -1277,13 +1313,11 @@
                 door: "Magnetometers & bag check",
                 access: "Accessible sections; elevator to balcony",
                 sober: "Water available; NA options",
-                harmReduction: "Regular harm reduction collaborations",
                 tips: "Arrive early for ADA seating",
                 map: "https://maps.google.com/?q=First%20Avenue%20Minneapolis",
                 group: "First Avenue",
                 accessible: true,
-                soberFriendly: true,
-                harmReductionPartner: true
+                soberFriendly: true
             },
             {
                 name: "Fine Line",
@@ -1313,7 +1347,6 @@
                 door: "Security screening",
                 access: "Accessible seating & elevator",
                 sober: "Water; NA at bar",
-                harmReduction: "Open to harm reduction initiatives",
                 tips: "ADA balcony has great sightlines",
                 map: "https://maps.google.com/?q=The%20Fillmore%20Minneapolis",
                 largeVenue: true,
@@ -1380,7 +1413,6 @@
                 door: "Security & ID",
                 access: "Accessible areas in complex",
                 sober: "Water; NA options",
-                harmReduction: "Occasional harm reduction presence",
                 tips: "Check which room event uses",
                 map: "https://maps.google.com/?q=Skyway%20Theatre%20Minneapolis",
                 group: "Skyway Complex",
@@ -1567,7 +1599,6 @@
                                         ${venue.soberFriendly ? '<span class="badge badge-sober"><i class="fas fa-tint"></i> Sober-Friendly</span>' : ''}
                                         ${venue.largeVenue ? '<span class="badge badge-large"><i class="fas fa-building"></i> Large Venue</span>' : ''}
                                         ${venue.group ? `<span class="badge badge-group"><i class="fas fa-users"></i> ${venue.group}</span>` : ''}
-                                        ${venue.harmReductionPartner ? '<span class="badge badge-harm-reduction"><i class="fas fa-heartbeat"></i> Harm Reduction</span>' : ''}
                                     </div>
                                 </div>
                                 <div class="venue-neighborhood">
@@ -1635,12 +1666,6 @@
                                         <div class="detail-content">${venue.sober}</div>
                                     </div>` : ''}
                                     
-                                    ${venue.harmReduction ? `
-                                    <div class="detail-group">
-                                        <div class="detail-title"><i class="fas fa-first-aid"></i> Harm Reduction</div>
-                                        <div class="detail-content">${venue.harmReduction}</div>
-                                    </div>` : ''}
-                                    
                                     ${venue.tips ? `
                                     <div class="detail-group">
                                         <div class="detail-title"><i class="fas fa-lightbulb"></i> Tips</div>
@@ -1652,10 +1677,6 @@
                                     <a href="${venue.map}" target="_blank" class="map-link">
                                         <i class="fas fa-map-marker-alt"></i> View on Google Maps
                                     </a>
-                                    ${venue.harmReductionPartner ? `
-                                    <span class="harm-reduction-note">
-                                        <i class="fas fa-heartbeat"></i> PLURderapolis Partner Venue
-                                    </span>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -1708,7 +1729,6 @@
                     (venue.group && venue.group.toLowerCase().includes(searchTerm)) ||
                     (venue.access && venue.access.toLowerCase().includes(searchTerm)) ||
                     (venue.sober && venue.sober.toLowerCase().includes(searchTerm)) ||
-                    (venue.harmReduction && venue.harmReduction.toLowerCase().includes(searchTerm)) ||
                     (venue.tips && venue.tips.toLowerCase().includes(searchTerm));
                 
                 // Neighborhood filter
@@ -1723,8 +1743,6 @@
                     matchesFilter = venue.soberFriendly;
                 } else if (activeFilter === 'large') {
                     matchesFilter = venue.largeVenue;
-                } else if (activeFilter === 'harmReduction') {
-                    matchesFilter = venue.harmReductionPartner;
                 }
                 
                 return matchesSearch && matchesFilter && matchesNeighborhood;
