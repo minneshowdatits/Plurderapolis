@@ -138,52 +138,51 @@
       cursor: pointer;
     }
 
-    /* Hamburger Menu */
-    .hamburger-menu {
-      position: relative;
-    }
-
-    .hamburger-btn {
-      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
-      border: none;
-      color: white;
-      font-size: 0.9rem;
-      cursor: pointer;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      transition: var(--transition);
+    /* Main Content Layout with Topics Sidebar */
+    .main-container {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: var(--glow);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      gap: 2rem;
     }
 
-    .hamburger-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(155, 77, 255, 0.6);
-    }
-
-    .hamburger-content {
-      position: absolute;
-      top: 100%;
-      right: 0;
+    /* Topics Sidebar */
+    .topics-sidebar {
+      flex: 0 0 280px;
+      position: sticky;
+      top: 100px;
+      height: calc(100vh - 120px);
+      overflow-y: auto;
       background: var(--bg-card);
       border-radius: var(--border-radius);
-      padding: 1rem;
-      min-width: 280px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      display: none;
-      z-index: 1001;
+      padding: 1.5rem;
+      box-shadow: var(--glow);
       border: 1px solid rgba(155, 77, 255, 0.3);
-      backdrop-filter: blur(10px);
+      transition: var(--transition);
     }
 
-    .hamburger-content.active {
-      display: block;
-      animation: fadeInDown 0.3s ease;
+    .topics-sidebar h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      color: var(--accent-teal);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(155, 77, 255, 0.3);
     }
 
-    .hamburger-content a {
+    .topics-list {
+      list-style: none;
+    }
+
+    .topics-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .topics-list a {
       display: flex;
       align-items: center;
       color: var(--text-light);
@@ -191,29 +190,28 @@
       padding: 0.8rem 1rem;
       border-radius: 8px;
       transition: var(--transition);
-      margin-bottom: 0.3rem;
       font-size: 0.95rem;
+      background: rgba(0, 0, 0, 0.1);
     }
 
-    .hamburger-content a:hover {
+    .topics-list a:hover, .topics-list a.active {
       background: var(--bg-card-hover);
       color: var(--light-purple);
       transform: translateX(5px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .hamburger-content a i {
+    .topics-list a i {
       margin-right: 0.8rem;
       width: 20px;
       text-align: center;
       color: var(--accent-teal);
     }
 
-    /* Main Content */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      min-width: 0; /* Prevents flexbox overflow issues */
     }
 
     /* Hero Section */
@@ -733,6 +731,36 @@
     }
 
     /* Responsive Design */
+    @media screen and (max-width: 1024px) {
+      .topics-sidebar {
+        flex: 0 0 240px;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .topics-sidebar {
+        position: static;
+        height: auto;
+        margin-bottom: 2rem;
+        flex: 0 0 auto;
+      }
+      
+      .topics-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.5rem;
+      }
+      
+      .topics-list a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+
     @media screen and (max-width: 768px) {
       .nav-menu {
         display: none;
@@ -776,15 +804,8 @@
         font-size: 1.8rem;
       }
       
-      .hamburger-content {
-        right: auto;
-        left: 0;
-        min-width: 250px;
-      }
-      
-      .footer-links {
-        flex-direction: column;
-        gap: 1rem;
+      .topics-list {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -820,6 +841,14 @@
       .memorial {
         padding: 1.5rem;
       }
+      
+      .topics-sidebar {
+        padding: 1rem;
+      }
+      
+      .topics-sidebar h3 {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
@@ -840,23 +869,6 @@
         <a href="#memorial" class="nav-link">Memorial</a>
       </div>
       
-      <!-- Hamburger Menu for Topics -->
-      <div class="hamburger-menu">
-        <button class="hamburger-btn">
-          <i class="fas fa-bars"></i> Topics
-        </button>
-        <div class="hamburger-content">
-          <a href="#violence-looks-like"><i class="fas fa-flag"></i> What It Looks Like</a>
-          <a href="#psychological-truths"><i class="fas fa-brain"></i> Psychological Truths</a>
-          <a href="#signs-you"><i class="fas fa-user-check"></i> Signs: You</a>
-          <a href="#what-to-do"><i class="fas fa-shield-alt"></i> What To Do</a>
-          <a href="#signs-others"><i class="fas fa-eye"></i> Signs: Others</a>
-          <a href="#help-others"><i class="fas fa-hands-helping"></i> Help Others</a>
-          <a href="#friend-crossing-line"><i class="fas fa-user-friends"></i> Friend Crossing Line</a>
-          <a href="#resources"><i class="fas fa-phone-alt"></i> Resources</a>
-        </div>
-      </div>
-      
       <button class="mobile-menu-btn">
         <i class="fas fa-bars"></i>
       </button>
@@ -868,243 +880,262 @@
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <div class="container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
-        <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
-      </div>
-    </section>
-
-    <!-- Intro Section -->
-    <section class="intro">
-      <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
-
-      <p>This is <span class="highlight">rejection-based violence</span>, and it's dangerously common. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
-
-      <p><strong>That's what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
-    </section>
-
-    <!-- Cards Section -->
-    <div class="cards-container">
-      <div class="card" id="violence-looks-like">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-flag"></i>
-            </div>
-            <h3>What Rejection-Based Violence Can Look Like</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
-            <li>They show up at your work, home, or events without being invited.</li>
-            <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
-            <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
-            <li>They try to isolate you from friends, family, or community.</li>
-            <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="psychological-truths">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-brain"></i>
-            </div>
-            <h3>Psychological Truths Behind This Pattern</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
-            <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
-            <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="signs-you">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-user-check"></i>
-            </div>
-            <h3>Signs It Might Be Happening To You</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
-            <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
-            <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
-            <li>They make you feel responsible for their emotions or threats.</li>
-            <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="what-to-do">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>What To Do If You Think It's Happening To You</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
-            <li>Tell someone you trust what's happening. Don't do this alone.</li>
-            <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
-            <li>Adjust privacy settings and think about what you're sharing online.</li>
-            <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
-            <li>Use support resources (listed below).</li>
-            <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="signs-others">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-eye"></i>
-            </div>
-            <h3>Signs It Might Be Happening to Someone You Know</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>They suddenly stop going out, posting, or responding.</li>
-            <li>They seem on edge, especially when a certain name comes up.</li>
-            <li>You hear obsessive, bitter talk about someone who rejected them.</li>
-            <li>They have a "friend" who's always around, even when not invited.</li>
-            <li>You see stalking or control disguised as "romance" or "worry."</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="help-others">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-hands-helping"></i>
-            </div>
-            <h3>What To Do If You Notice It</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li><strong>If a friend might be targeted:</strong></li>
-            <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
-            <li>Offer support without judgment or pressure.</li>
-            <li>Respect their pace. Leaving or naming this stuff is hard.</li>
-            <li>Stay consistent. Isolation makes everything worse.</li>
-            <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" id="friend-crossing-line">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-user-friends"></i>
-            </div>
-            <h3>What If It's Your Friend Crossing the Line?</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li>"She said she's not interested. You need to respect that."</li>
-            <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
-            <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
-            <li>"Showing up uninvited isn't romantic, it's harassment."</li>
-            <li>"You're not owed a relationship because you were 'nice.'"</li>
-          </ul>
-          <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
-          <p><a href="accountability.html" style="color: var(--accent-teal); font-weight: bold;">Learn more about accountability in our community →</a></p>
-        </div>
-      </div>
-
-      <div class="card" id="resources">
-        <div class="card-header">
-          <div class="card-title">
-            <div class="card-icon">
-              <i class="fas fa-phone-alt"></i>
-            </div>
-            <h3>Support Resources (Minnesota + National)</h3>
-          </div>
-          <i class="fas fa-chevron-down card-arrow"></i>
-        </div>
-        <div class="card-content">
-          <ul>
-            <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-            <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank" style="color: var(--accent-teal);">wmn.org</a></li>
-            <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank" style="color: var(--accent-teal);">thehotline.org</a></li>
-            <li><strong>If someone is in immediate danger, call 911.</strong></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Memorial Section -->
-    <section id="memorial" class="memorial">
-      <h2><i class="fas fa-heart"></i> In Memory of Kayli Arseth</h2>
-      <div class="memorial-content">
-        <p><strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
-        
-        <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.</p>
-        
-        <div class="memorial-quote">
-          "She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment."
-        </div>
-        
-        <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
-        
-        <p><strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong></p>
-      </div>
-    </section>
-
-    <!-- Bottom Line Section -->
-    <section class="bottom-line">
-      <h3><i class="fas fa-exclamation-circle"></i> Bottom Line</h3>
-      <ul>
-        <li>Rejection isn't cruelty.</li>
-        <li>"No" is not an invitation to negotiate.</li>
-        <li>Harassment isn't romance.</li>
-        <li>Violence is never a justified response.</li>
-        <li>No one owes you love. Ever.</li>
+  <!-- Main Content with Topics Sidebar -->
+  <div class="main-container">
+    <!-- Topics Sidebar -->
+    <aside class="topics-sidebar">
+      <h3><i class="fas fa-bookmark"></i> Topics</h3>
+      <ul class="topics-list">
+        <li><a href="#violence-looks-like" class="topic-link"><i class="fas fa-flag"></i> What It Looks Like</a></li>
+        <li><a href="#psychological-truths" class="topic-link"><i class="fas fa-brain"></i> Psychological Truths</a></li>
+        <li><a href="#signs-you" class="topic-link"><i class="fas fa-user-check"></i> Signs: You</a></li>
+        <li><a href="#what-to-do" class="topic-link"><i class="fas fa-shield-alt"></i> What To Do</a></li>
+        <li><a href="#signs-others" class="topic-link"><i class="fas fa-eye"></i> Signs: Others</a></li>
+        <li><a href="#help-others" class="topic-link"><i class="fas fa-hands-helping"></i> Help Others</a></li>
+        <li><a href="#friend-crossing-line" class="topic-link"><i class="fas fa-user-friends"></i> Friend Crossing Line</a></li>
+        <li><a href="#resources" class="topic-link"><i class="fas fa-phone-alt"></i> Resources</a></li>
       </ul>
-      <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
-      <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--accent-teal);"></i></p>
-    </section>
+    </aside>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-links">
-        <a href="index.html">Home</a>
-        <a href="consent.html">Consent</a>
-        <a href="accountability.html">Accountability</a>
-        <a href="resources.html">Resources</a>
-        <a href="#memorial">Memorial</a>
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
+          <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
+        </div>
+      </section>
+
+      <!-- Intro Section -->
+      <section class="intro">
+        <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
+
+        <p>This is <span class="highlight">rejection-based violence</span>, and it's dangerously common. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
+
+        <p><strong>That's what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
+      </section>
+
+      <!-- Cards Section -->
+      <div class="cards-container">
+        <div class="card" id="violence-looks-like">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-flag"></i>
+              </div>
+              <h3>What Rejection-Based Violence Can Look Like</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
+              <li>They show up at your work, home, or events without being invited.</li>
+              <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
+              <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
+              <li>They try to isolate you from friends, family, or community.</li>
+              <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="psychological-truths">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3>Psychological Truths Behind This Pattern</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
+              <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
+              <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="signs-you">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <h3>Signs It Might Be Happening To You</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
+              <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
+              <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
+              <li>They make you feel responsible for their emotions or threats.</li>
+              <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="what-to-do">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <h3>What To Do If You Think It's Happening To You</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
+              <li>Tell someone you trust what's happening. Don't do this alone.</li>
+              <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
+              <li>Adjust privacy settings and think about what you're sharing online.</li>
+              <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
+              <li>Use support resources (listed below).</li>
+              <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="signs-others">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-eye"></i>
+              </div>
+              <h3>Signs It Might Be Happening to Someone You Know</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li>They suddenly stop going out, posting, or responding.</li>
+              <li>They seem on edge, especially when a certain name comes up.</li>
+              <li>You hear obsessive, bitter talk about someone who rejected them.</li>
+              <li>They have a "friend" who's always around, even when not invited.</li>
+              <li>You see stalking or control disguised as "romance" or "worry."</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="help-others">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-hands-helping"></i>
+              </div>
+              <h3>What To Do If You Notice It</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li><strong>If a friend might be targeted:</strong></li>
+              <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
+              <li>Offer support without judgment or pressure.</li>
+              <li>Respect their pace. Leaving or naming this stuff is hard.</li>
+              <li>Stay consistent. Isolation makes everything worse.</li>
+              <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" id="friend-crossing-line">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-user-friends"></i>
+              </div>
+              <h3>What If It's Your Friend Crossing the Line?</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li>"She said she's not interested. You need to respect that."</li>
+              <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
+              <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
+              <li>"Showing up uninvited isn't romantic, it's harassment."</li>
+              <li>"You're not owed a relationship because you were 'nice.'"</li>
+            </ul>
+            <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
+            <p><a href="accountability.html" style="color: var(--accent-teal); font-weight: bold;">Learn more about accountability in our community →</a></p>
+          </div>
+        </div>
+
+        <div class="card" id="resources">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <h3>Support Resources (Minnesota + National)</h3>
+            </div>
+            <i class="fas fa-chevron-down card-arrow"></i>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
+              <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank" style="color: var(--accent-teal);">wmn.org</a></li>
+              <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank" style="color: var(--accent-teal);">thehotline.org</a></li>
+              <li><strong>If someone is in immediate danger, call 911.</strong></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="footer-text">
-        <p>PLURderapolis.org | Peace, Love, Unity, Respect</p>
-      </div>
-    </footer>
+
+      <!-- Memorial Section -->
+      <section id="memorial" class="memorial">
+        <h2><i class="fas fa-heart"></i> In Memory of Kayli Arseth</h2>
+        <div class="memorial-content">
+          <p><strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
+          
+          <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.</p>
+          
+          <div class="memorial-quote">
+            "She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment."
+          </div>
+          
+          <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
+          
+          <p><strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong></p>
+        </div>
+      </section>
+
+      <!-- Bottom Line Section -->
+      <section class="bottom-line">
+        <h3><i class="fas fa-exclamation-circle"></i> Bottom Line</h3>
+        <ul>
+          <li>Rejection isn't cruelty.</li>
+          <li>"No" is not an invitation to negotiate.</li>
+          <li>Harassment isn't romance.</li>
+          <li>Violence is never a justified response.</li>
+          <li>No one owes you love. Ever.</li>
+        </ul>
+        <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
+        <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--accent-teal);"></i></p>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="consent.html">Consent</a>
+          <a href="accountability.html">Accountability</a>
+          <a href="resources.html">Resources</a>
+          <a href="#memorial">Memorial</a>
+        </div>
+        <div class="footer-text">
+          <p>PLURderapolis.org | Peace, Love, Unity, Respect</p>
+        </div>
+      </footer>
+    </main>
   </div>
 
   <script>
@@ -1114,22 +1145,6 @@
     
     mobileMenuBtn.addEventListener('click', () => {
       navMenu.classList.toggle('active');
-    });
-
-    // Hamburger menu toggle
-    const hamburgerBtn = document.querySelector('.hamburger-btn');
-    const hamburgerContent = document.querySelector('.hamburger-content');
-    
-    hamburgerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hamburgerContent.classList.toggle('active');
-    });
-
-    // Close hamburger menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!hamburgerContent.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-        hamburgerContent.classList.remove('active');
-      }
     });
 
     // Card toggle functionality with improved animations
@@ -1169,16 +1184,14 @@
       });
     });
 
-    // Hamburger menu links functionality
-    const hamburgerLinks = document.querySelectorAll('.hamburger-content a');
+    // Topics navigation functionality
+    const topicLinks = document.querySelectorAll('.topic-link');
     
-    hamburgerLinks.forEach(link => {
+    topicLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const targetId = this.getAttribute('href').substring(1);
         const targetSection = document.getElementById(targetId);
-        
-        hamburgerContent.classList.remove('active');
         
         if (targetSection) {
           // Close all other sections
@@ -1205,6 +1218,10 @@
           setTimeout(() => {
             targetSection.style.boxShadow = '';
           }, 1000);
+          
+          // Update active state in topics sidebar
+          topicLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
         }
       });
     });
@@ -1218,6 +1235,9 @@
       } else {
         scrollToTopBtn.classList.remove('visible');
       }
+      
+      // Update active topic based on scroll position
+      updateActiveTopic();
     });
     
     scrollToTopBtn.addEventListener('click', () => {
@@ -1226,6 +1246,29 @@
         behavior: 'smooth'
       });
     });
+
+    // Update active topic based on scroll position
+    function updateActiveTopic() {
+      const cards = document.querySelectorAll('.card');
+      const headerHeight = document.querySelector('.navbar').offsetHeight;
+      let currentActive = null;
+      
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top <= headerHeight + 100 && rect.bottom >= headerHeight + 100) {
+          currentActive = card.id;
+        }
+      });
+      
+      if (currentActive) {
+        topicLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${currentActive}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    }
 
     // Animation on scroll
     const observerOptions = {
