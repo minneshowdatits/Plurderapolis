@@ -777,6 +777,93 @@
       border-radius: 4px;
     }
     
+    /* Trusted Contacts Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--accent-teal);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .contact-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    
+    .contact-item {
+      padding: 0.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .contact-name {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    
+    .contact-number {
+      font-size: 0.9rem;
+      color: #d8d8d8;
+    }
+    
+    /* Status Indicator */
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .status-safe {
+      background-color: #4CAF50;
+    }
+    
+    .status-help {
+      background-color: #FF9800;
+    }
+    
+    .status-emergency {
+      background-color: #F44336;
+    }
+    
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -872,7 +959,7 @@
       <a href="#quick-help" class="section-nav-item">Quick Help</a>
       <a href="#communication" class="section-nav-item">Communication Tools</a>
       <a href="#resources" class="section-nav-item">Resources</a>
-      
+      <a href="#local-support" class="section-nav-item">Local Support</a>
     </div>
 
     <!-- Quick Links Section -->
@@ -892,7 +979,10 @@
         <h3>Bad Trip Help</h3>
         <p>Managing difficult experiences</p>
       </a>
-   
+      <a href="https://plurderapolis.org/resources" class="quick-link-item">
+        <div class="quick-link-icon">💊</div>
+        <h3>Harm Reduction</h3>
+        <p>Safety information and resources</p>
       </a>
     </div>
 
@@ -922,11 +1012,11 @@
         </div>
         <div class="card-content">
           <p>Send a message or place a call to someone you trust.</p>
+          <button class="action-btn" onclick="openContactModal()">
+            <i class="fas fa-address-book"></i> Choose from Trusted Contacts
+          </button>
           <a class="button-link" href="sms:?&body=I don't feel safe. Can you help me?">
             <i class="fas fa-comment-alt"></i> Text a Trusted Contact
-          </a>
-          <a class="button-link" href="tel:">
-            <i class="fas fa-phone"></i> Call Someone
           </a>
         </div>
       </div>
@@ -1014,6 +1104,9 @@
           <button class="action-btn" onclick="saveNote()">
             <i class="fas fa-save"></i> Save Notes
           </button>
+          <button class="action-btn" onclick="exportNote()">
+            <i class="fas fa-download"></i> Export Notes
+          </button>
         </div>
       </div>
     </div>
@@ -1071,10 +1164,29 @@
     <i class="fas fa-arrow-up"></i>
   </a>
 
+  <!-- Help Card -->
   <div id="helpCard" class="help-card">
     <div class="help-content">
       <p><strong>Hi. I need help.</strong><br>Please stay with me or help me get to safety.</p>
       <button class="action-btn" onclick="closeHelpCard()">Close</button>
+    </div>
+  </div>
+
+  <!-- Trusted Contacts Modal -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Choose a Trusted Contact</h3>
+        <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      </div>
+      <div class="contact-list" id="contactList">
+        <!-- Contacts will be populated by JavaScript -->
+      </div>
+      <div>
+        <button class="action-btn" onclick="addNewContact()">
+          <i class="fas fa-plus"></i> Add New Contact
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1121,6 +1233,25 @@
       alert('Your notes have been saved locally on this device.');
     }
     
+    // Export notes as text file
+    function exportNote() {
+      const noteText = document.getElementById('incidentNotes').value;
+      if (!noteText.trim()) {
+        alert('No notes to export.');
+        return;
+      }
+      
+      const blob = new Blob([noteText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'panic-center-notes.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+    
     // Search functionality
     function performSearch() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -1159,6 +1290,56 @@
         const parent = highlight.parentNode;
         parent.innerHTML = parent.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/g, '$1');
       });
+    }
+    
+    // Trusted Contacts functionality
+    function openContactModal() {
+      document.getElementById('contactModal').style.display = 'flex';
+      loadContacts();
+    }
+    
+    function closeContactModal() {
+      document.getElementById('contactModal').style.display = 'none';
+    }
+    
+    function loadContacts() {
+      const contactList = document.getElementById('contactList');
+      const contacts = JSON.parse(localStorage.getItem('trustedContacts') || '[]');
+      
+      if (contacts.length === 0) {
+        contactList.innerHTML = '<p>No contacts saved yet. Add some trusted contacts.</p>';
+        return;
+      }
+      
+      contactList.innerHTML = '';
+      contacts.forEach((contact, index) => {
+        const contactItem = document.createElement('div');
+        contactItem.className = 'contact-item';
+        contactItem.innerHTML = `
+          <div class="contact-name">${contact.name}</div>
+          <div class="contact-number">${contact.number}</div>
+        `;
+        contactItem.onclick = () => {
+          window.location.href = `tel:${contact.number}`;
+          closeContactModal();
+        };
+        contactList.appendChild(contactItem);
+      });
+    }
+    
+    function addNewContact() {
+      const name = prompt('Enter contact name:');
+      if (!name) return;
+      
+      const number = prompt('Enter phone number:');
+      if (!number) return;
+      
+      const contacts = JSON.parse(localStorage.getItem('trustedContacts') || '[]');
+      contacts.push({ name, number });
+      localStorage.setItem('trustedContacts', JSON.stringify(contacts));
+      
+      loadContacts();
+      alert('Contact added successfully!');
     }
     
     // Load notes when page loads
