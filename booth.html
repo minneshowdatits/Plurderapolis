@@ -11,6 +11,7 @@
     :root {
       --primary: #E040FB;
       --primary-dark: #C2185B;
+      --primary-light: #F48FB1;
       --secondary: #FFB48F;
       --dark: #1C1C1C;
       --dark-light: #2A2A2A;
@@ -75,7 +76,7 @@
     .logo-icon {
       font-size: 2.5rem;
       color: var(--primary);
-      animation: pulse 2s infinite;
+      animation: pulse 2s infinite, rotate 10s linear infinite;
     }
     
     @keyframes pulse {
@@ -84,11 +85,17 @@
       100% { transform: scale(1); }
     }
     
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
     .logo-text {
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
       font-size: 1.8rem;
       color: var(--text);
+      text-shadow: 0 0 10px rgba(224, 64, 251, 0.5);
     }
     
     .nav-links {
@@ -286,22 +293,36 @@
       margin: 20px auto 0;
     }
     
-    /* Services Section */
+    /* Services Section - Made Smaller */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
     
     .service-card {
       background: var(--dark-light);
       border-radius: 15px;
-      padding: 30px;
+      padding: 20px;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       position: relative;
       overflow: hidden;
+      animation: fadeInScale 0.5s ease-out forwards;
+      animation-delay: calc(var(--animation-order) * 0.1s);
+      opacity: 0;
+    }
+    
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
     
     .service-card:before {
@@ -327,9 +348,9 @@
     }
     
     .service-icon {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: var(--primary);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       display: inline-block;
       animation: float 3s ease-in-out infinite;
     }
@@ -342,16 +363,17 @@
     
     .service-card h3 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 15px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
       color: var(--text);
     }
     
     .service-card p {
       color: var(--text-muted);
+      font-size: 0.9rem;
     }
     
-    /* Booking Form Section */
+    /* Booking Section */
     .booking-section {
       background: var(--dark-light);
     }
@@ -374,21 +396,55 @@
       color: var(--primary);
     }
     
-    .booking-info ul {
-      list-style: none;
+    /* Improved Why Book PLURderapolis Section */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
       margin-bottom: 30px;
     }
     
-    .booking-info li {
-      margin-bottom: 15px;
+    .benefit-item {
       display: flex;
       align-items: flex-start;
+      padding: 15px;
+      background: rgba(224, 64, 251, 0.05);
+      border-radius: 10px;
+      transition: transform 0.3s, background 0.3s;
+      animation: slideInFromLeft 0.5s ease-out forwards;
+      animation-delay: calc(var(--animation-order) * 0.1s);
+      opacity: 0;
     }
     
-    .booking-info li i {
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .benefit-item:hover {
+      transform: translateY(-5px);
+      background: rgba(224, 64, 251, 0.1);
+    }
+    
+    .benefit-item i {
       color: var(--primary);
       margin-right: 10px;
-      margin-top: 5px;
+      margin-top: 2px;
+      font-size: 1.2rem;
+    }
+    
+    .benefit-text {
+      flex: 1;
+    }
+    
+    .benefit-text strong {
+      color: var(--primary-light);
     }
     
     .form-container {
@@ -396,6 +452,18 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: slideInFromRight 0.8s ease-out;
+    }
+    
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
     
     .form-group {
@@ -443,6 +511,23 @@
       font-size: 1.1rem;
       cursor: pointer;
       transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-submit:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .form-submit:hover:before {
+      left: 100%;
     }
     
     .form-submit:hover {
@@ -485,6 +570,7 @@
       width: 200px;
       transition: transform 0.3s;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      animation: fadeInScale 0.5s ease-out;
     }
     
     .social-card:hover {
@@ -523,6 +609,9 @@
       overflow: hidden;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s;
+      animation: fadeInUp 0.5s ease-out forwards;
+      animation-delay: calc(var(--animation-order) * 0.1s);
+      opacity: 0;
     }
     
     .event-card:hover {
@@ -561,6 +650,9 @@
       max-width: 500px;
       width: 100%;
       transition: transform 0.3s;
+      animation: fadeInScale 0.5s ease-out forwards;
+      animation-delay: calc(var(--animation-order) * 0.1s);
+      opacity: 0;
     }
     
     .instagram-post:hover {
@@ -595,6 +687,7 @@
       background: linear-gradient(135deg, var(--dark-light) 0%, var(--dark) 100%);
       border-radius: 15px;
       margin-top: 30px;
+      animation: pulse 3s infinite;
     }
     
     .volunteer-coming-soon h3 {
@@ -627,6 +720,7 @@
       font-size: 2.5rem;
       color: var(--primary);
       margin-bottom: 20px;
+      animation: rotate 10s linear infinite;
     }
     
     .footer-text {
@@ -729,6 +823,10 @@
         padding-right: 0;
         text-align: center;
       }
+      
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
     }
     
     @media (max-width: 768px) {
@@ -809,7 +907,7 @@
       }
       
       .service-card, .event-card {
-        padding: 20px;
+        padding: 15px;
       }
       
       .form-container {
@@ -865,32 +963,32 @@
         <p>Comprehensive harm reduction services to ensure your event is safe and supportive for all attendees</p>
       </div>
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 0;">
           <div class="service-icon">💊</div>
           <h3>Overdose Prevention</h3>
           <p>We provide free naloxone (Narcan) kits, fentanyl test strips, and overdose response training to prevent tragedies.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 1;">
           <div class="service-icon">💧</div>
           <h3>Hydration Support</h3>
           <p>Water stations, electrolyte supplements, and cooling areas to prevent dehydration and heat-related issues.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 2;">
           <div class="service-icon">🛋️</div>
           <h3>Safe Spaces</h3>
           <p>Chill-out areas with seating, ear protection, and calming resources for attendees feeling overwhelmed.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 3;">
           <div class="service-icon">📚</div>
           <h3>Education & Resources</h3>
           <p>Honest information about substance safety, consent culture, mental health resources, and community care.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 4;">
           <div class="service-icon">🛡️</div>
           <h3>Safety Resources</h3>
           <p>Basic first aid, safe escorts to vehicles, and connections to medical or additional support services when needed.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card" style="--animation-order: 5;">
           <div class="service-icon">❤️</div>
           <h3>Peer Support</h3>
           <p>Trained volunteers offering non-judgmental support, active listening, and de-escalation techniques.</p>
@@ -909,15 +1007,59 @@
       <div class="booking-container">
         <div class="booking-info">
           <h3>Why Book PLURderapolis?</h3>
-          <ul>
-            <li><i class="fas fa-check-circle"></i> <strong>Experienced Team:</strong> Trained volunteers with years of event experience</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Comprehensive Supplies:</strong> We bring all necessary harm reduction materials</li>
-            <li><i class="fas fa-check-circle"></i> <strong>Customizable Setup:</strong> We adapt to your event's specific needs and space</li>
-            <li><i class="fas fa-check-circle"></i> <strong>DanceSafe Volunteer Trained</strong></li>
-            <li><i class="fas fa-check-circle"></i> <strong>Basic First Aid Trained</strong></li>
-            <li><i class="fas fa-check-circle"></i> <strong>Narcan Trained</strong></li>
-            <li><i class="fas fa-check-circle"></i> <strong>Bar Trained and Experienced</strong></li>
-          </ul>
+          
+          <!-- Improved Benefits Section -->
+          <div class="benefits-grid">
+            <div class="benefit-item" style="--animation-order: 0;">
+              <i class="fas fa-users"></i>
+              <div class="benefit-text">
+                <strong>Experienced Team:</strong> Trained volunteers with years of event experience
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 1;">
+              <i class="fas fa-toolbox"></i>
+              <div class="benefit-text">
+                <strong>Comprehensive Supplies:</strong> We bring all necessary harm reduction materials
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 2;">
+              <i class="fas fa-cogs"></i>
+              <div class="benefit-text">
+                <strong>Customizable Setup:</strong> We adapt to your event's specific needs and space
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 3;">
+              <i class="fas fa-certificate"></i>
+              <div class="benefit-text">
+                <strong>DanceSafe Volunteer Trained</strong>
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 4;">
+              <i class="fas fa-first-aid"></i>
+              <div class="benefit-text">
+                <strong>Basic First Aid Trained</strong>
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 5;">
+              <i class="fas fa-syringe"></i>
+              <div class="benefit-text">
+                <strong>Narcan Trained</strong>
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 6;">
+              <i class="fas fa-glass-cheers"></i>
+              <div class="benefit-text">
+                <strong>Bar Trained and Experienced</strong>
+              </div>
+            </div>
+            <div class="benefit-item" style="--animation-order: 7;">
+              <i class="fas fa-heart"></i>
+              <div class="benefit-text">
+                <strong>PLUR Values:</strong> Peace, Love, Unity, Respect in everything we do
+              </div>
+            </div>
+          </div>
+          
           <p>Have questions before booking? Email us directly at <a href="mailto:plurderapolis@gmail.com" style="color: var(--primary);">plurderapolis@gmail.com</a></p>
         </div>
         <div class="form-container">
@@ -1034,7 +1176,7 @@
       <!-- Instagram Posts -->
       <div class="instagram-embed-container">
         <!-- Post 1 -->
-        <div class="instagram-post">
+        <div class="instagram-post" style="--animation-order: 0;">
           <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Event photo">
           <div class="instagram-post-caption">
             <p>Check out this post from one of our recent events!</p>
@@ -1043,7 +1185,7 @@
         </div>
         
         <!-- Post 2 -->
-        <div class="instagram-post">
+        <div class="instagram-post" style="--animation-order: 1;">
           <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Event photo">
           <div class="instagram-post-caption">
             <p>Another great event with our harm reduction booth!</p>
@@ -1174,6 +1316,24 @@
     
     sections.forEach(section => {
       observer.observe(section);
+    });
+    
+    // Add animation delay for service cards
+    document.addEventListener('DOMContentLoaded', function() {
+      const serviceCards = document.querySelectorAll('.service-card');
+      serviceCards.forEach((card, index) => {
+        card.style.setProperty('--animation-order', index);
+      });
+      
+      const benefitItems = document.querySelectorAll('.benefit-item');
+      benefitItems.forEach((item, index) => {
+        item.style.setProperty('--animation-order', index);
+      });
+      
+      const instagramPosts = document.querySelectorAll('.instagram-post');
+      instagramPosts.forEach((post, index) => {
+        post.style.setProperty('--animation-order', index);
+      });
     });
   </script>
 </body>
