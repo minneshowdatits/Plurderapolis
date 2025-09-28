@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Detective | PLURderapolis</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --bg: #1C1C1C;
+            --fg: #F5F5F5;
+            --plum: #5D3A7D;
+            --accent: #E040FB;
+            --card: #262626;
+            --muted: #bdbdbd;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --pulse: #E040FB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.5;
+            padding: 16px;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(93, 58, 125, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(224, 64, 251, 0.1) 0%, transparent 20%);
+        }
+
+        #plur-game {
+            max-width: 760px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .pg-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: rgba(38, 38, 38, 0.8);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(93, 58, 125, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .pg-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--plum), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(93, 58, 125, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .pg-title {
+            font-weight: 800;
+            font-size: 20px;
+            background: linear-gradient(to right, var(--plum), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .pg-subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 16px 0;
+            border: 1px solid rgba(93, 58, 125, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.5s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .question {
+            font-weight: 700;
+            color: var(--plum);
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question-icon {
+            font-size: 24px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opt {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(to right, #111, #1a1a1a);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opt::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(93, 58, 125, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .opt:hover::before {
+            left: 100%;
+        }
+
+        .opt:hover {
+            border-color: var(--plum);
+            transform: translateX(5px);
+        }
+
+        .opt:active {
+            transform: scale(0.98);
+        }
+
+        .opt-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .opt-text {
+            flex: 1;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 0;
+            background: linear-gradient(135deg, var(--plum), var(--accent));
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(93, 58, 125, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(93, 58, 125, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .small {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffe4f8;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, var(--plum), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .chips-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #111;
+            padding: 10px 14px;
+            border-radius: 20px;
+            border: 1px solid #2a2a2a;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chip:hover {
+            transform: scale(1.05);
+            border-color: var(--plum);
+        }
+
+        .chip.selected {
+            background: linear-gradient(135deg, var(--plum), var(--accent));
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .chip-icon {
+            font-size: 16px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #111;
+            color: var(--fg);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--plum);
+        }
+
+        .emergency-alert {
+            animation: pulseEmergency 1.5s infinite;
+            border: 2px solid var(--danger);
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: #111;
+            border-radius: 3px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--plum), var(--accent));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .foot-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 20px;
+            padding: 12px;
+            border-top: 1px solid rgba(93, 58, 125, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(93, 58, 125, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(93, 58, 125, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(93, 58, 125, 0); }
+        }
+
+        @keyframes pulseEmergency {
+            0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .bounce {
+            animation: bounce 1s;
+        }
+
+        @media (min-width: 720px) {
+            #plur-game {
+                padding: 24px;
+            }
+            
+            .card {
+                padding: 24px;
+            }
+            
+            .pg-header {
+                padding: 20px;
+            }
+        }
+
+        /* Legal disclaimer styling */
+        .legal-disclaimer {
+            background: rgba(38, 38, 38, 0.9);
+            border-left: 4px solid var(--plum);
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div id="plur-game">
+        <div class="pg-header">
+            <div class="pg-logo">PL</div>
+            <div>
+                <div class="pg-title">Symptom Detective — Quick Triage Game</div>
+                <div class="pg-subtitle">Tap through 6-10 fast questions. If at any time the person is not breathing or unresponsive — CALL 911.</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div class="card" id="screen"></div>
+
+        <div class="legal-disclaimer">
+            <strong>Disclaimer:</strong> This tool is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of qualified health providers with any questions you may have regarding a medical condition. In case of emergency, call 911 immediately.
+        </div>
+
+        <div class="foot-note" id="foot-note" style="display:none">
+            <strong>Sources:</strong> CDC naloxone & overdose guidance; Hunter criteria for serotonin syndrome; CDC/NIOSH heat guidance; NIAAA/Mayo Clinic on alcohol poisoning; Poison Help (1-800-222-1222). Use as field guidance — not a substitute for EMS.
+        </div>
+    </div>
+
+    <script>
+        /* PLURderapolis Symptom Detective - Enhanced Version
+           - One-question-per-screen interactive "game"
+           - Hard emergency checks first
+           - Pattern scoring + clear "why" + action steps
+           - With PLURderapolis branding and animations
+        */
+
+        (function(){
+            const screen = document.getElementById('screen');
+            const foot = document.getElementById('foot-note');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // Question flow with progress tracking
+            const questionFlow = [
+                'start',
+                'conscious',
+                'breathing',
+                'pupils',
+                'temp',
+                'signs',
+                'result'
+            ];
+            
+            let currentQuestionIndex = 0;
+
+            // state
+            const state = {
+                flags: {},
+                score: {opioid:0, stimulant:0, alcohol:0, serotonin:0, heat:0, dehydration:0, benzo:0},
+                path: []
+            };
+
+            // Update progress bar
+            function updateProgress() {
+                const progress = (currentQuestionIndex / (questionFlow.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            // utility: render html with animation
+            function render(html){ 
+                screen.style.opacity = 0;
+                setTimeout(() => {
+                    screen.innerHTML = html;
+                    screen.style.opacity = 1;
+                    window.scrollTo({top:0,behavior:'smooth'});
+                }, 200);
+            }
+
+            // emergency screen
+            function emergencyView(reason){
+                render(`<div class="question emergency-alert">
+                    <span class="question-icon">🚨</span>
+                    EMERGENCY — CALL 911
+                </div>
+                <div style="margin-top:16px; font-size: 16px;">${reason}</div>
+                <div style="margin-top:20px;">
+                    <strong>Immediate actions</strong>
+                    <ul style="margin-top:8px; padding-left:20px;">
+                        <li>Call 911 now (one-tap on mobile from your phone).</li>
+                        <li>If breathing is <strong>very slow</strong> or <strong>stopped</strong> — start rescue breaths/CPR if trained.</li>
+                        <li>If opioid suspected — give naloxone (intranasal/IM) immediately; repeat per instructions.</li>
+                        <li>If vomiting and unconscious — put on side (recovery position) to protect airway unless spinal injury suspected.</li>
+                    </ul>
+                </div>
+                <div style="margin-top:20px;">
+                    <button class="btn" onclick="window.location.reload()">
+                        <span class="opt-icon">🔄</span> Start Over
+                    </button>
+                </div>`);
+                foot.style.display='block';
+                currentQuestionIndex = questionFlow.length - 1;
+                updateProgress();
+            }
+
+            // start screen
+            function start(){
+                currentQuestionIndex = 0;
+                updateProgress();
+                render(`<div class="question">
+                    <span class="question-icon">👀</span>
+                    Ready to play detective?
+                </div>
+                <div class="small" style="margin-bottom: 20px;">Answer the quick prompts — it narrows down the most likely emergency and tells you exactly what to do.</div>
+                <div class="options-container">
+                    <div class="opt" onclick="next('conscious')">
+                        <span class="opt-icon">🔍</span>
+                        <span class="opt-text">Start Investigation</span>
+                    </div>
+                </div>`);
+                foot.style.display='none';
+            }
+
+            // branching screens
+            function q_conscious(){
+                currentQuestionIndex = 1;
+                updateProgress();
+                state.path.push('conscious');
+                render(`<div class="question">
+                    <span class="question-icon">🧠</span>
+                    Is the person awake / responding?
+                </div>
+                <div class="options-container">
+                    <div class="opt" onclick="pick('awake')">
+                        <span class="opt-icon">✅</span>
+                        <span class="opt-text">Yes — awake & responsive</span>
+                    </div>
+                    <div class="opt" onclick="pick('slow')">
+                        <span class="opt-icon">😴</span>
+                        <span class="opt-text">Very drowsy / slow to respond</span>
+                    </div>
+                    <div class="opt" onclick="pick('unresponsive')">
+                        <span class="opt-icon">🚫</span>
+                        <span class="opt-text">Unresponsive / can't wake</span>
+                    </div>
+                </div>
+                <div class="small" style="margin-top:16px">If unresponsive — this is an emergency.</div>`);
+            }
+
+            function q_breathing(){
+                currentQuestionIndex = 2;
+                updateProgress();
+                state.path.push('breathing');
+                render(`<div class="question">
+                    <span class="question-icon">🌬️</span>
+                    How is their breathing?
+                </div>
+                <div class="options-container">
+                    <div class="opt" onclick="pick('breath_normal')">
+                        <span class="opt-icon">😊</span>
+                        <span class="opt-text">Normal</span>
+                    </div>
+                    <div class="opt" onclick="showRR()">
+                        <span class="opt-icon">🔢</span>
+                        <span class="opt-text">Count breaths / enter number</span>
+                    </div>
+                    <div class="opt" onclick="pick('breath_gasp')">
+                        <span class="opt-icon">😫</span>
+                        <span class="opt-text">Gasping, very slow, or irregular</span>
+                    </div>
+                </div>
+                <div class="small" style="margin-top:16px">If breathing is &lt;8 breaths/min or gasping → emergency.</div>`);
+            }
+
+            function showRR(){
+                render(`<div class="question">
+                    <span class="question-icon">⏱️</span>
+                    Count breaths for 15 seconds, then multiply by 4
+                </div>
+                <div style="margin-top:16px">
+                    <input id="rr" type="number" placeholder="Enter breaths per minute (e.g. 6 or 16)" min="0" />
+                </div>
+                <div style="display:flex; gap:12px; margin-top:20px">
+                    <button class="btn" onclick="submitRR()">
+                        <span class="opt-icon">📤</span> Submit
+                    </button>
+                    <div class="opt" onclick="pick('breath_gasp')">
+                        <span class="opt-icon">❓</span>
+                        <span class="opt-text">Can't count / gasping</span>
+                    </div>
+                </div>
+                <div class="small" style="margin-top:16px">If &lt;8 → emergency. If unsure, choose "Can't count / gasping".</div>`);
+            }
+
+            window.submitRR = function(){
+                const rr = Number(document.getElementById('rr').value);
+                if(!rr && rr !== 0){ 
+                    alert('Enter a number or choose "Can\'t count / gasping"'); 
+                    return; 
+                }
+                state.flags.rr = rr;
+                if(rr < 8){ 
+                    emergencyView('Breathing is less than 8 breaths per minute — life-threatening.'); 
+                    return; 
+                }
+                pick('breath_normal');
+            };
+
+            function q_pupils(){
+                currentQuestionIndex = 3;
+                updateProgress();
+                state.path.push('pupils');
+                render(`<div class="question">
+                    <span class="question-icon">👁️</span>
+                    How do the pupils look?
+                </div>
+                <div class="options-container">
+                    <div class="opt" onclick="pick('pup_pin')">
+                        <span class="opt-icon">●</span>
+                        <span class="opt-text">Pinpoint (very small)</span>
+                    </div>
+                    <div class="opt" onclick="pick('pup_dil')">
+                        <span class="opt-icon">○</span>
+                        <span class="opt-text">Dilated / wide</span>
+                    </div>
+                    <div class="opt" onclick="pick('pup_norm')">
+                        <span class="opt-icon">◎</span>
+                        <span class="opt-text">Normal</span>
+                    </div>
+                </div>
+                <div class="small" style="margin-top:16px">Pinpoint suggests opioids; dilated suggests stimulants/serotonin/other.</div>`);
+            }
+
+            function q_temp(){
+                currentQuestionIndex = 4;
+                updateProgress();
+                state.path.push('temp');
+                render(`<div class="question">
+                    <span class="question-icon">🌡️</span>
+                    Do they show signs of overheating or cold/blue skin?
+                </div>
+                <div class="options-container">
+                    <div class="opt" onclick="pick('hot_sweat')">
+                        <span class="opt-icon">🔥</span>
+                        <span class="opt-text">Overheated, very sweaty, or collapsed in hot area</span>
+                    </div>
+                    <div class="opt" onclick="pick('cold_blue')">
+                        <span class="opt-icon">❄️</span>
+                        <span class="opt-text">Cold, pale, or bluish skin</span>
+                    </div>
+                    <div class="opt" onclick="pick('temp_normal')">
+                        <span class="opt-icon">😐</span>
+                        <span class="opt-text">Neither / not sure</span>
+                    </div>
+                </div>
+                <div class="small" style="margin-top:16px">Heat stroke often has very high temp + altered mental status. Cold/blue can indicate poor oxygenation (opioid/alcohol).</div>`);
+            }
+
+            function q_signs(){
+                currentQuestionIndex = 5;
+                updateProgress();
+                state.path.push('signs');
+                // game-style big tappable chips for the specific list the user provided
+                render(`<div class="question">
+                    <span class="question-icon">🔎</span>
+                    Which of these do you see? (tap all that apply)
+                </div>
+                <div class="chips-container" id="chips-container">
+                    <div class="chip" data-key="pinpoint" onclick="toggleChip(this)">
+                        <span class="chip-icon">👁</span> Pinpoint pupils
+                    </div>
+                    <div class="chip" data-key="blue_lips" onclick="toggleChip(this)">
+                        <span class="chip-icon">💙</span> Blue lips / nails
+                    </div>
+                    <div class="chip" data-key="gurgle" onclick="toggleChip(this)">
+                        <span class="chip-icon">💤</span> Gurgling / snoring sounds
+                    </div>
+                    <div class="chip" data-key="limp" onclick="toggleChip(this)">
+                        <span class="chip-icon">🫠</span> Limp body / clammy or pale skin
+                    </div>
+                    <div class="chip" data-key="overheat" onclick="toggleChip(this)">
+                        <span class="chip-icon">🌡</span> Overheating / hot
+                    </div>
+                    <div class="chip" data-key="agitation" onclick="toggleChip(this)">
+                        <span class="chip-icon">🤯</span> Agitation / confusion / hallucinations
+                    </div>
+                    <div class="chip" data-key="fast_hr" onclick="toggleChip(this)">
+                        <span class="chip-icon">❤️‍🔥</span> Fast heartbeat
+                    </div>
+                    <div class="chip" data-key="chest_pain" onclick="toggleChip(this)">
+                        <span class="chip-icon">💔</span> Chest pain
+                    </div>
+                    <div class="chip" data-key="seizure" onclick="toggleChip(this)">
+                        <span class="chip-icon">⚡</span> Seizure / collapse
+                    </div>
+                    <div class="chip" data-key="vomit_uncon" onclick="toggleChip(this)">
+                        <span class="chip-icon">🤮</span> Vomiting while unconscious
+                    </div>
+                    <div class="chip" data-key="cold_skin" onclick="toggleChip(this)">
+                        <span class="chip-icon">❄️</span> Cold / bluish skin
+                    </div>
+                    <div class="chip" data-key="slurred" onclick="toggleChip(this)">
+                        <span class="chip-icon">🗣</span> Slurred speech
+                    </div>
+                    <div class="chip" data-key="sleepy" onclick="toggleChip(this)">
+                        <span class="chip-icon">😴</span> Extreme sleepiness / very drowsy
+                    </div>
+                </div>
+                <div style="margin-top:20px">
+                    <button class="btn" onclick="finalize()">
+                        <span class="opt-icon">🔬</span> Analyze — show result
+                    </button>
+                </div>
+                <div class="small" style="margin-top:16px">Tip: Tap multiple chips if you see several signs. If unsure, choose the closest option.</div>`);
+            }
+
+            // toggle chip and visual feedback
+            window.toggleChip = function(element){
+                const key = element.getAttribute('data-key');
+                state.flags[key] = !state.flags[key];
+                element.classList.toggle('selected');
+                
+                // Add bounce animation
+                element.classList.add('bounce');
+                setTimeout(() => {
+                    element.classList.remove('bounce');
+                }, 1000);
+            };
+
+            // pick short-option handler
+            window.pick = function(opt){
+                switch(opt){
+                    case 'awake': state.flags.awake=true; q_breathing(); break;
+                    case 'slow': state.flags.very_drowsy=true; q_breathing(); break;
+                    case 'unresponsive': state.flags.unresponsive=true; emergencyView('Unresponsive / cannot be woken.'); break;
+                    case 'breath_normal': state.flags.breath_normal=true; q_pupils(); break;
+                    case 'breath_gasp': emergencyView('Gasping, very slow, or irregular breathing — life-threatening.'); break;
+                    case 'pup_pin': state.flags.pinpoint_pupils=true; q_temp(); break;
+                    case 'pup_dil': state.flags.dilated_pupils=true; q_temp(); break;
+                    case 'pup_norm': q_temp(); break;
+                    case 'hot_sweat': state.flags.hot_env=true; q_signs(); break;
+                    case 'cold_blue': state.flags.cold_blue=true; q_signs(); break;
+                    case 'temp_normal': q_signs(); break;
+                    case 'hot_temp': state.flags.hot_temp=true; q_signs(); break;
+                }
+            };
+
+            // final logic engine — patterns & emergency rules
+            function finalize(){
+                currentQuestionIndex = 6;
+                updateProgress();
+                
+                // emergency rule: unresponsive or rr<8 or seizure + not breathing = 911
+                if(state.flags.unresponsive){ emergencyView('Unresponsive — call 911'); return; }
+                if(state.flags.rr !== undefined && state.flags.rr < 8){ emergencyView('Very slow breathing (<8/min) — call 911'); return; }
+
+                // map the specific chips (user-facing names to engine flags)
+                const f = state.flags;
+
+                // Score heuristics (weights tuned to be conservative)
+                if(f.pinpoint_pupils || f.pinpoint) state.score.opioid += 3;
+                if(f.gurgle) state.score.opioid += 2;
+                if(f.limp || f.blue_lips || f.cold_blue) state.score.opioid += 2;
+                if(f.sleepy || state.flags.very_drowsy) state.score.opioid += 1;
+                if(f.rr !== undefined && f.rr < 12) state.score.opioid += 2;
+
+                if(f.overheat || f.hot_env || f.hot_temp) state.score.heat += 3;
+                if(f.seizure) state.score.heat += 1;
+                if(f.fast_hr) state.score.stimulant += 2;
+                if(f.agitation) state.score.stimulant += 2;
+                if(f.chest_pain) state.score.stimulant += 1;
+                if(f.seizure) state.score.stimulant += 2;
+
+                if(f.vomit_uncon || (f.sleepy && f.vomit_uncon) || (f.rr !== undefined && f.rr < 10 && f.sleepy)){
+                    state.score.alcohol += 4;
+                }
+
+                if(f.slurred || f.sleepy) state.score.benzo += 2;
+
+                // serotonin signals: dilated pupils + agitation + clonus/seizure (we approximate with seizure/twitch)
+                if(f.dilated_pupils && f.agitation && (f.seizure || f.overheat || f.fast_hr)) state.score.serotonin += 3;
+
+                // dehydration: repeated vomiting + high temp + lightheadedness (mapped from sleepy/limp)
+                if(f.vomit_uncon && (f.hot_env || f.overheat || f.sleepy)) state.score.dehydration += 2;
+
+                // Emergency hard-stop: seizure + unresponsive or prolonged seizure
+                if(f.seizure && (f.unresponsive || f.sleepy)) { emergencyView('Seizure or repeated seizures — call 911'); return; }
+
+                // Now choose best score
+                const sorted = Object.entries(state.score).sort((a,b) => b[1] - a[1]);
+                const top = sorted[0];
+
+                // If the top score is zero or too close, show "mixed/unclear"
+                if(top[1] === 0 || (sorted[0][1] === sorted[1][1] && sorted[0][1] < 3)){
+                    // fallback checks for clear signals: pinpoint+slow breathing => opioid
+                    if((f.pinpoint_pupils || f.pinpoint) && (f.rr !== undefined && f.rr < 12 || f.gurgle || f.limp)) {
+                        showResult('Likely opioid overdose', [
+                            'Pinpoint pupils and depressed breathing / gurgling or limp body are classic opioid signs.'
+                        ], ['Give naloxone if available (intranasal or IM) and call 911. Support breathing; recovery position if breathing but unconscious.']);
+                        return;
+                    }
+                    showResult('Unclear / Mixed signs', ['Symptoms are mixed or not decisive.'], ['Stay with person, monitor breathing, call Poison Control (1-800-222-1222) or 911 if concerned.']);
+                    return;
+                }
+
+                const winner = top[0];
+                // Map winner to friendly output
+                if(winner === 'opioid'){
+                    showResult('Likely Opioid Overdose', [
+                        f.pinpoint_pupils ? 'Pinpoint pupils' : null,
+                        (f.rr !== undefined && f.rr < 12) ? `Slow breathing (${f.rr} breaths/min)` : null,
+                        f.gurgle ? 'Gurgling/snoring sounds' : null,
+                        f.limp ? 'Limp body / clammy or pale' : null
+                    ].filter(Boolean), [
+                        'Give naloxone immediately if available and follow device instructions. Repeat if no response per naloxone instructions.',
+                        'Call 911. If breathing is absent or very slow, start rescue breaths/CPR if trained.',
+                        'If breathing but unconscious, put in recovery position to protect airway.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'stimulant'){
+                    showResult('Possible Stimulant Toxicity (MDMA / cocaine / meth)', [
+                        f.overheat || f.hot_env ? 'Overheating or collapsed in hot area' : null,
+                        f.fast_hr ? 'Fast heartbeat' : null,
+                        f.agitation ? 'Agitation / confusion / hallucinations' : null,
+                        f.seizure ? 'Seizure / collapse' : null
+                    ].filter(Boolean), [
+                        'Call 911 for severe agitation, chest pain, seizure, or hyperthermia.',
+                        'Move to shade, cool with water, remove excess clothes, give sips of water if alert.',
+                        'Do NOT give stimulants. EMS may use benzodiazepines to control severe agitation or seizures.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'heat'){
+                    showResult('Possible Heat Stroke / Severe Heat Illness', [
+                        'Overheated or collapsed in hot environment',
+                        f.seizure ? 'Seizure' : null,
+                        f.sleepy ? 'Drowsiness or confusion' : null
+                    ].filter(Boolean), [
+                        'Call 911 immediately for suspected heat stroke (especially if temp high or altered mental status).',
+                        'Cool aggressively: wet towels, fanning, move to shade; give small sips if alert.',
+                        'Do not give alcohol or sedatives.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'alcohol'){
+                    showResult('Possible Alcohol Poisoning', [
+                        f.vomit_uncon ? 'Vomiting while unconscious' : null,
+                        f.cold_skin || f.cold_blue ? 'Cold / pale / bluish skin' : null,
+                        (f.rr !== undefined && f.rr < 10) ? `Slow breathing (${f.rr} bpm)` : null
+                    ].filter(Boolean), [
+                        'Call 911 if unconscious, vomiting while drowsy, or breathing slowly/irregularly.',
+                        'Protect airway: if vomiting and breathing, place on side (recovery position).',
+                        'Do not leave them alone; monitor breathing continuously.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'serotonin'){
+                    showResult('Possible Serotonin Syndrome', [
+                        f.dilated_pupils ? 'Dilated pupils' : null,
+                        f.agitation ? 'Agitation / confusion' : null,
+                        f.seizure ? 'Seizure/tremor' : null,
+                        f.overheat ? 'High temperature / overheating' : null
+                    ].filter(Boolean), [
+                        'Call 911 — serotonin syndrome can progress rapidly and needs hospital care.',
+                        'Cooling, IV fluids, and medication management (including benzodiazepines) may be needed.',
+                        'Tell EMS about any recent MDMA, SSRIs, or serotonergic medications the person used.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'dehydration'){
+                    showResult('Likely Severe Dehydration', [
+                        f.vomit_uncon ? 'Repeated vomiting' : null,
+                        f.hot_env ? 'Heat exposure' : null,
+                        f.sleepy ? 'Weakness / drowsiness' : null
+                    ].filter(Boolean), [
+                        'If alert: give oral rehydration (electrolyte solution, small sips often).',
+                        'If confused, very weak, or low urine output → seek medical care or call 911.'
+                    ]);
+                    return;
+                }
+
+                if(winner === 'benzo'){
+                    showResult('Possible Sedative / Benzodiazepine Effect', [
+                        f.slurred ? 'Slurred speech' : null,
+                        f.sleepy ? 'Very drowsy / heavy sleepiness' : null
+                    ].filter(Boolean), [
+                        'If unresponsive or breathing poorly → call 911.',
+                        'If responsive, keep them awake and sitting, monitor breathing; if mixed with opioids, naloxone may help for the opioid component.'
+                    ]);
+                    return;
+                }
+
+                // fallback
+                showResult('Unclear / Mixed signs', ['Symptoms are mixed.'], ['Stay with person, monitor breathing, call Poison Control (1-800-222-1222) or 911 if worried.']);
+            }
+
+            // show final result with explanation and 911 script + copy button
+            function showResult(title, clues, actions){
+                const cluesHtml = clues.length ? `<div style="margin-top:16px"><strong>Key clues:</strong><ul style="margin-top:8px; padding-left:20px;">${clues.map(c=>`<li>${c}</li>`).join('')}</ul></div>` : '';
+                const actionsHtml = `<div style="margin-top:16px"><strong>What to do now:</strong><ul style="margin-top:8px; padding-left:20px;">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
+                // build 911 script from state flags concisely
+                const rrTxt = state.flags.rr !== undefined ? `${state.flags.rr} breaths/min` : (state.flags.breath_normal ? 'normal' : 'unknown');
+                const signsList = Object.keys(state.flags).filter(k => state.flags[k] === true).join(', ') || 'none obvious';
+                const script = `I need an ambulance. Person is ${state.flags.unresponsive ? 'unresponsive' : (state.flags.very_drowsy ? 'very drowsy' : 'responsive')}. Breathing: ${rrTxt}. Key signs: ${signsList}. Location: [your location].`;
+
+                render(`<div class="result-title">${title}</div>
+                    <div class="small" style="margin-top:8px">This is the tool's best match based on observed signs — it's conservative: when in doubt call 911.</div>
+                    ${cluesHtml}
+                    ${actionsHtml}
+                    <div style="margin-top:20px">
+                        <div class="small"><strong>What to say to 911 (quick script):</strong></div>
+                        <div style="background:#111;padding:12px;border-radius:8px;margin-top:8px;color:var(--muted);font-size:14px; border-left: 3px solid var(--plum);" id="script-box">${script}</div>
+                        <div style="margin-top:16px;display:flex;gap:12px">
+                            <button class="btn" onclick="copyScript()">
+                                <span class="opt-icon">📋</span> Copy 911 script
+                            </button>
+                            <div class="opt" onclick="start()">
+                                <span class="opt-icon">🔄</span>
+                                <span class="opt-text">Play Again</span>
+                            </div>
+                        </div>
+                    </div>`);
+                foot.style.display='block';
+            }
+
+            window.copyScript = function(){
+                const txt = document.getElementById('script-box').innerText;
+                navigator.clipboard?.writeText(txt).then(()=>{
+                    alert('911 script copied to clipboard — paste into phone call or show to EMS.');
+                }, ()=>alert('Unable to copy — please long-press the script to copy manually.'));
+            };
+
+            // glue: start app
+            start();
+
+            // expose next to global so inline onclicks in HTML can call
+            window.next = function(step){
+                switch(step){
+                    case 'conscious': q_conscious(); break;
+                    default: start();
+                }
+            };
+            window.pick = window.pick || function(){};
+            window.finalize = finalize;
+
+            // small UX: if user selects some chips that imply immediate danger (pinpoint + gurgle + rr slow)
+            // we included hard-emergency checks in finalize and earlier branches.
+        })();
+    </script>
+</body>
+</html>
