@@ -118,6 +118,36 @@
             color: var(--cyan);
         }
         
+        /* Search Predictions */
+        .search-predictions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 101;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .search-prediction {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .search-prediction:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .search-prediction:last-child {
+            border-bottom: none;
+        }
+        
         /* Navigation Menu */
         .nav-menu {
             display: flex;
@@ -324,7 +354,7 @@
         
         .journey-map {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             position: relative;
         }
@@ -391,16 +421,6 @@
             font-size: 0.8rem;
             color: var(--muted-pink);
             margin-bottom: 10px;
-        }
-        
-        .map-connector {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, var(--cyan) 50%, transparent 100%);
-            top: 50%;
-            z-index: -1;
-            opacity: 0.5;
         }
         
         /* Save Tips Section */
@@ -850,6 +870,7 @@
             
             header {
                 padding: 12px 0;
+                flex-wrap: wrap;
             }
             
             .logo {
@@ -857,8 +878,10 @@
             }
             
             .search-container {
-                margin: 0 10px;
-                max-width: 200px;
+                order: 3;
+                margin: 15px 0 0;
+                max-width: 100%;
+                flex: 0 0 100%;
             }
             
             .menu-toggle, .guide-menu-toggle {
@@ -945,11 +968,7 @@
             }
             
             .journey-map {
-                grid-template-columns: 1fr;
-            }
-            
-            .map-connector {
-                display: none;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             }
             
             .scroll-top {
@@ -963,6 +982,17 @@
             .cta-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .save-tips {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .save-btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
         }
         
         @media (max-width: 480px) {
@@ -971,7 +1001,7 @@
             }
             
             .search-container {
-                max-width: 150px;
+                max-width: 100%;
             }
             
             .search-bar {
@@ -1036,6 +1066,11 @@
             
             .map-item p {
                 font-size: 0.75rem;
+            }
+            
+            .journey-map {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 10px;
             }
         }
         
@@ -1149,6 +1184,40 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
+        
+        /* Improved Map Legend */
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-prep {
+            background: linear-gradient(135deg, #4b0082 0%, #6a0dad 100%);
+        }
+        
+        .legend-during {
+            background: linear-gradient(135deg, #6a0dad 0%, #9400d3 100%);
+        }
+        
+        .legend-after {
+            background: linear-gradient(135deg, #9400d3 0%, #a8329c 100%);
+        }
     </style>
 </head>
 <body>
@@ -1164,6 +1233,7 @@
         <div class="search-container">
             <i class="fas fa-search search-icon"></i>
             <input type="text" class="search-bar" id="searchInput" placeholder="Search the guide...">
+            <div class="search-predictions" id="searchPredictions"></div>
         </div>
         
         <div class="nav-menu">
@@ -1182,7 +1252,7 @@
             <ul class="nav-links">
                 <li><a href="https://plurderapolis.org"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="https://plurderapolis.org/health.html" class="active"><i class="fas fa-heartbeat"></i> Health</a></li>
-                <li><a href="https://plurderapolis.org/venues.html"><i class="fas fa-map-marker-alt"></i> Venues</a></li>
+                <li><a href="venues-guide.html"><i class="fas fa-map-marker-alt"></i> Local Venues</a></li>
                 <li><a href="https://plurderapolis.org/resources.html"><i class="fas fa-book"></i> Resources</a></li>
                 <li><a href="https://plurderapolis.org/sober.html"><i class="fas fa-leaf"></i> Sober</a></li>
                 <li><a href="https://plurderapolis.org/emergency.html"><i class="fas fa-ambulance"></i> Emergency</a></li>
@@ -1232,104 +1302,78 @@
         <!-- Interactive Map Section -->
         <div class="map-container">
             <h2 class="map-title">Your Raver Journey Map</h2>
+            
+            <!-- Map Legend -->
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-color legend-prep"></div>
+                    <span>Preparation</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-during"></div>
+                    <span>During Event</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color legend-after"></div>
+                    <span>Aftercare</span>
+                </div>
+            </div>
+            
             <div class="journey-map">
-                <div class="map-connector"></div>
+                <div class="map-item" data-section="prep">
+                    <div class="map-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>🥗 Pre-Show Prep</h3>
+                    <p>Testing, fueling, and planning</p>
+                </div>
                 
                 <div class="map-item" data-section="hydration">
                     <div class="map-icon"><i class="fas fa-tint"></i></div>
                     <h3>💧 Hydration</h3>
                     <p>Smart hydration & temperature control</p>
-                    <span class="map-hint">Click to jump to section</span>
-                </div>
-                
-                <div class="map-item" data-section="prep">
-                    <div class="map-icon"><i class="fas fa-utensils"></i></div>
-                    <h3>🥗 Pre-Show Prep</h3>
-                    <p>Testing, fueling, and planning</p>
-                    <span class="map-hint">Click to jump to section</span>
                 </div>
                 
                 <div class="map-item" data-section="during">
                     <div class="map-icon"><i class="fas fa-music"></i></div>
                     <h3>🎶 During the Show</h3>
                     <p>Pacing, combos, and safety</p>
-                    <span class="map-hint">Click to jump to section</span>
-                </div>
-                
-                <div class="map-item" data-section="after">
-                    <div class="map-icon"><i class="fas fa-bed"></i></div>
-                    <h3>🛌 After the Show</h3>
-                    <p>Recovery and integration</p>
-                    <span class="map-hint">Click to jump to section</span>
                 </div>
                 
                 <div class="map-item" data-section="emergency">
                     <div class="map-icon"><i class="fas fa-ambulance"></i></div>
                     <h3>🚨 Emergency Basics</h3>
                     <p>Overdose signs and response</p>
-                    <span class="map-hint">Click to jump to section</span>
+                </div>
+                
+                <div class="map-item" data-section="after">
+                    <div class="map-icon"><i class="fas fa-bed"></i></div>
+                    <h3>🛌 After the Show</h3>
+                    <p>Recovery and integration</p>
                 </div>
                 
                 <div class="map-item" data-section="longterm">
                     <div class="map-icon"><i class="fas fa-leaf"></i></div>
                     <h3>🌿 Long-Term Survival</h3>
                     <p>Sustainable raving practices</p>
-                    <span class="map-hint">Click to jump to section</span>
                 </div>
                 
                 <div class="map-item" data-section="bonus">
                     <div class="map-icon"><i class="fas fa-lightbulb"></i></div>
                     <h3>🍑 Bonus Hacks</h3>
                     <p>Pro tips for a better experience</p>
-                    <span class="map-hint">Click to jump to section</span>
                 </div>
             </div>
         </div>
 
         <!-- Call to Action: Venues -->
         <div class="cta-section">
-            <h2 class="cta-title">Find Safe Venues</h2>
-            <p>Check out our curated list of venues with harm reduction policies, safe spaces, and medical support.</p>
-            <a href="https://plurderapolis.org/venues.html" class="cta-btn">
+            <h2 class="cta-title">Explore Local Venues</h2>
+            <p>Check out our guide to venues with information about policies, facilities, and community insights.</p>
+            <a href="venues-guide.html" class="cta-btn">
                 <i class="fas fa-map-marker-alt"></i> Explore Venues
             </a>
         </div>
 
         <div class="accordion-container">
-            <!-- HYDRATION -->
-            <button class="accordion-button" aria-expanded="false" id="hydration">
-                <span><i class="accordion-icon fas fa-tint"></i> 💧 Hydration</span><span class="accordion-chevron">▾</span>
-            </button>
-            <div class="accordion-content" role="region" aria-label="Hydration details">
-                <ul class="pocket">
-                    <li>Sip, don't chug. Rotate electrolytes with water.</li>
-                    <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
-                    <li>Headache, dizziness, dry mouth = drink smart.</li>
-                    <li><a href="https://plurderapolis.org/emergency.html">Overheating steps →</a></li>
-                </ul>
-                <div class="deep">
-                    <h4>Smart Hydration & Temperature</h4>
-                    <ul>
-                        <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
-                        <li><b>Pre-hydrate:</b> go in hydrated; you can't "catch up" mid-heatstroke.</li>
-                        <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
-                        <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
-                        <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
-                        <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
-                        <li>More: <a href="https://plurderapolis.org/emergency.html">Emergency</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Call to Action: Emergency -->
-                <div class="cta-section">
-                    <h3 class="cta-title">Know Emergency Signs</h3>
-                    <p>Recognize the difference between normal side effects and actual emergencies that need immediate medical attention.</p>
-                    <a href="https://plurderapolis.org/emergency.html" class="cta-btn">
-                        <i class="fas fa-ambulance"></i> Emergency Guide
-                    </a>
-                </div>
-            </div>
-
             <!-- PRE-SHOW PREP -->
             <button class="accordion-button" aria-expanded="false" id="prep">
                 <span><i class="accordion-icon fas fa-utensils"></i> 🥗 Pre-Show Prep</span><span class="accordion-chevron">▾</span>
@@ -1369,6 +1413,40 @@
                     <p>Ensure you're using quality testing kits to identify substances and check for dangerous adulterants.</p>
                     <a href="https://plurderapolis.org/resources.html" class="cta-btn">
                         <i class="fas fa-vial"></i> Find Test Kits
+                    </a>
+                </div>
+            </div>
+
+            <!-- HYDRATION -->
+            <button class="accordion-button" aria-expanded="false" id="hydration">
+                <span><i class="accordion-icon fas fa-tint"></i> 💧 Hydration</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Hydration details">
+                <ul class="pocket">
+                    <li>Sip, don't chug. Rotate electrolytes with water.</li>
+                    <li>MDMA + heat = dehydration risk. Cool down regularly.</li>
+                    <li>Headache, dizziness, dry mouth = drink smart.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Overheating steps →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Smart Hydration & Temperature</h4>
+                    <ul>
+                        <li><b>Rotate:</b> steady sips + electrolytes (packets). Plain water only can dilute sodium (hyponatremia).</li>
+                        <li><b>Pre-hydrate:</b> go in hydrated; you can't "catch up" mid-heatstroke.</li>
+                        <li><b>Dehydration signs:</b> dark pee, cramps, dizziness. <b>Action:</b> electrolytes, shade, rest.</li>
+                        <li><b>Overhydration signs:</b> pounding headache, nausea, confusion after chugging. <b>Action:</b> pause water, sip electrolytes, seek med help if worsening.</li>
+                        <li><b>Overheating signs:</b> confusion, chills, hot/dry skin. <b>Action:</b> stop dancing, cool core (neck/wrists/groin), airflow, small electrolyte sips.</li>
+                        <li><b>Dehydration combos:</b> MDMA + alcohol; stims + hot rooms. Avoid or limit.</li>
+                        <li>More: <a href="https://plurderapolis.org/emergency.html">Emergency</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Call to Action: Emergency -->
+                <div class="cta-section">
+                    <h3 class="cta-title">Know Emergency Signs</h3>
+                    <p>Recognize the difference between normal side effects and actual emergencies that need immediate medical attention.</p>
+                    <a href="https://plurderapolis.org/emergency.html" class="cta-btn">
+                        <i class="fas fa-ambulance"></i> Emergency Guide
                     </a>
                 </div>
             </div>
@@ -1429,6 +1507,44 @@
                 </div>
             </div>
 
+            <!-- EMERGENCY BASICS -->
+            <button class="accordion-button" aria-expanded="false" id="emergency">
+                <span><i class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
+            </button>
+            <div class="accordion-content" role="region" aria-label="Emergency details">
+                <ul class="pocket">
+                    <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
+                    <li>Recovery position if unconscious but breathing.</li>
+                    <li>Carry naloxone; test strips save lives.</li>
+                    <li><a href="https://plurderapolis.org/emergency.html">Emergency steps →</a> • <a href="https://plurderapolis.org/overdose.html">Overdose guide →</a></li>
+                </ul>
+                <div class="deep">
+                    <h4>Overdose Signs</h4>
+                    <ul>
+                        <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
+                        <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
+                        <li><b>Alcohol/benzos/GHB:</b> can't wake, vomit + unresponsive, shallow breathing.</li>
+                    </ul>
+                    <h4>What To Do</h4>
+                    <ul>
+                        <li><b>Call 911 now.</b> Say what you see (don't guess substances). MN Good-Samaritan protections apply.</li>
+                        <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
+                        <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
+                        <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
+                        <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
+                    </ul>
+                </div>
+                
+                <!-- Call to Action: Naloxone -->
+                <div class="cta-section">
+                    <h3 class="cta-title">Get Naloxone</h3>
+                    <p>Learn where to get naloxone (Narcan) and how to use it to reverse opioid overdoses.</p>
+                    <a href="https://plurderapolis.org/emergency.html" class="cta-btn">
+                        <i class="fas fa-syringe"></i> Naloxone Guide
+                    </a>
+                </div>
+            </div>
+
             <!-- AFTER THE SHOW -->
             <button class="accordion-button" aria-expanded="false" id="after">
                 <span><i class="accordion-icon fas fa-bed"></i> 🛌 After the Show</span><span class="accordion-chevron">▾</span>
@@ -1467,44 +1583,6 @@
                     <p>Find supplements, mental health support, and community resources for post-event recovery.</p>
                     <a href="https://plurderapolis.org/aftercare.html" class="cta-btn">
                         <i class="fas fa-heart"></i> Aftercare Guide
-                    </a>
-                </div>
-            </div>
-
-            <!-- EMERGENCY BASICS -->
-            <button class="accordion-button" aria-expanded="false" id="emergency">
-                <span><i class="accordion-icon fas fa-ambulance"></i> 🚨 Emergency Basics</span><span class="accordion-chevron">▾</span>
-            </button>
-            <div class="accordion-content" role="region" aria-label="Emergency details">
-                <ul class="pocket">
-                    <li>Unresponsive, seizing, blue lips, or not breathing right = 911.</li>
-                    <li>Recovery position if unconscious but breathing.</li>
-                    <li>Carry naloxone; test strips save lives.</li>
-                    <li><a href="https://plurderapolis.org/emergency.html">Emergency steps →</a> • <a href="https://plurderapolis.org/overdose.html">Overdose guide →</a></li>
-                </ul>
-                <div class="deep">
-                    <h4>Overdose Signs</h4>
-                    <ul>
-                        <li><b>Opioids:</b> slow/absent breathing, blue lips/nails, pinpoint pupils.</li>
-                        <li><b>Stimulants:</b> chest pain, overheating, seizures, extreme agitation.</li>
-                        <li><b>Alcohol/benzos/GHB:</b> can't wake, vomit + unresponsive, shallow breathing.</li>
-                    </ul>
-                    <h4>What To Do</h4>
-                    <ul>
-                        <li><b>Call 911 now.</b> Say what you see (don't guess substances). MN Good-Samaritan protections apply.</li>
-                        <li><b>Recovery position:</b> on side, head tilted, clear airway.</li>
-                        <li><b>Naloxone:</b> give immediately for suspected opioid OD; repeat in 2–3 min if no response.</li>
-                        <li><b>Heatstroke:</b> aggressive cooling—shade/AC, fans, cold packs to neck/armpits/groin; small electrolyte sips.</li>
-                        <li><b>Stimulant crisis:</b> stop activity, cool down, hydrate; seek medical help if symptoms escalate.</li>
-                    </ul>
-                </div>
-                
-                <!-- Call to Action: Naloxone -->
-                <div class="cta-section">
-                    <h3 class="cta-title">Get Naloxone</h3>
-                    <p>Learn where to get naloxone (Narcan) and how to use it to reverse opioid overdoses.</p>
-                    <a href="https://plurderapolis.org/emergency.html" class="cta-btn">
-                        <i class="fas fa-syringe"></i> Naloxone Guide
                     </a>
                 </div>
             </div>
@@ -1597,9 +1675,9 @@
                 </div>
                 <div class="cta-card">
                     <div class="cta-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h3>Safe Venues</h3>
-                    <p>Find venues with harm reduction policies and medical support on site.</p>
-                    <a href="https://plurderapolis.org/venues.html" class="cta-btn">Discover</a>
+                    <h3>Local Venues</h3>
+                    <p>Find venue information and community insights for your next event.</p>
+                    <a href="venues-guide.html" class="cta-btn">Discover</a>
                 </div>
             </div>
         </div>
@@ -1652,7 +1730,7 @@
             <i class="fas fa-heartbeat"></i>
             <span>Health</span>
         </a>
-        <a href="https://plurderapolis.org/venues.html" class="nav-item">
+        <a href="venues-guide.html" class="nav-item">
             <i class="fas fa-map-marker-alt"></i>
             <span>Venues</span>
         </a>
@@ -1893,57 +1971,108 @@
             window.location.href = 'mailto:?subject=Plurderapolis Health Guide&body=Check out this harm reduction guide: ' + window.location.href;
         }
 
-        // Search functionality
+        // Search functionality with predictions
         const searchInput = document.getElementById('searchInput');
+        const searchPredictions = document.getElementById('searchPredictions');
+        
+        // Define search terms and their corresponding sections
+        const searchTerms = [
+            { term: "hydration", section: "hydration", display: "💧 Hydration Tips" },
+            { term: "water", section: "hydration", display: "💧 Hydration & Water" },
+            { term: "electrolytes", section: "hydration", display: "💧 Electrolytes" },
+            { term: "dehydration", section: "hydration", display: "💧 Dehydration Signs" },
+            { term: "preparation", section: "prep", display: "🥗 Pre-Show Prep" },
+            { term: "testing", section: "prep", display: "🥗 Substance Testing" },
+            { term: "test kits", section: "prep", display: "🥗 Test Kits" },
+            { term: "planning", section: "prep", display: "🥗 Event Planning" },
+            { term: "during", section: "during", display: "🎶 During the Show" },
+            { term: "pacing", section: "during", display: "🎶 Pacing Yourself" },
+            { term: "combos", section: "during", display: "🎶 Substance Combinations" },
+            { term: "safety", section: "during", display: "🎶 Safety During Events" },
+            { term: "emergency", section: "emergency", display: "🚨 Emergency Basics" },
+            { term: "overdose", section: "emergency", display: "🚨 Overdose Signs" },
+            { term: "naloxone", section: "emergency", display: "🚨 Naloxone" },
+            { term: "recovery", section: "after", display: "🛌 After the Show" },
+            { term: "aftercare", section: "after", display: "🛌 Aftercare" },
+            { term: "recovery", section: "after", display: "🛌 Recovery Tips" },
+            { term: "long-term", section: "longterm", display: "🌿 Long-Term Survival" },
+            { term: "sustainable", section: "longterm", display: "🌿 Sustainable Raving" },
+            { term: "mental health", section: "longterm", display: "🌿 Mental Health" },
+            { term: "bonus", section: "bonus", display: "🍑 Bonus Hacks" },
+            { term: "tips", section: "bonus", display: "🍑 Helpful Tips" },
+            { term: "hacks", section: "bonus", display: "🍑 Survival Hacks" }
+        ];
+        
         searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
+            const searchTerm = this.value.toLowerCase().trim();
+            searchPredictions.innerHTML = '';
+            
             if (searchTerm.length < 2) {
-                // Remove highlights if search term is too short
-                document.querySelectorAll('.search-highlight').forEach(el => {
-                    el.outerHTML = el.innerHTML;
-                });
+                searchPredictions.style.display = 'none';
                 return;
             }
             
-            // Search through all accordion content
-            const contentElements = document.querySelectorAll('.accordion-content');
-            let foundMatches = false;
+            // Filter matching terms
+            const matches = searchTerms.filter(item => 
+                item.term.includes(searchTerm) || item.display.toLowerCase().includes(searchTerm)
+            ).slice(0, 5); // Limit to 5 results
             
-            contentElements.forEach(content => {
-                const text = content.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    // Expand the accordion if it contains matches
-                    const accordionButton = content.previousElementSibling;
-                    if (accordionButton.getAttribute('aria-expanded') === 'false') {
-                        accordionButton.click();
-                    }
-                    
-                    // Highlight the text
-                    highlightText(content, searchTerm);
-                    foundMatches = true;
-                }
-            });
-            
-            if (!foundMatches && searchTerm.length >= 2) {
-                // Show message if no matches found
-                alert('No matches found for "' + searchTerm + '"');
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const prediction = document.createElement('div');
+                    prediction.className = 'search-prediction';
+                    prediction.textContent = match.display;
+                    prediction.addEventListener('click', () => {
+                        navigateToSection(match.section);
+                        searchInput.value = '';
+                        searchPredictions.style.display = 'none';
+                    });
+                    searchPredictions.appendChild(prediction);
+                });
+                searchPredictions.style.display = 'block';
+            } else {
+                searchPredictions.style.display = 'none';
             }
         });
         
-        function highlightText(element, searchTerm) {
-            // Remove existing highlights
-            element.querySelectorAll('.search-highlight').forEach(el => {
-                el.outerHTML = el.innerHTML;
-            });
+        // Close predictions when clicking elsewhere
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchPredictions.contains(e.target)) {
+                searchPredictions.style.display = 'none';
+            }
+        });
+        
+        function navigateToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
             
-            // Create a regex to match the search term
-            const regex = new RegExp(searchTerm, 'gi');
-            const text = element.innerHTML;
-            
-            // Replace matches with highlighted version
-            element.innerHTML = text.replace(regex, match => 
-                `<span class="search-highlight">${match}</span>`
-            );
+            if (targetSection) {
+                // Close all accordions first
+                buttons.forEach(btn => {
+                    btn.setAttribute("aria-expanded", "false");
+                    btn.nextElementSibling.style.display = "none";
+                    const chev = btn.querySelector(".accordion-chevron");
+                    if (chev) chev.style.transform = "rotate(0deg)";
+                });
+                
+                // Open the target section
+                targetSection.setAttribute("aria-expanded", "true");
+                const panel = targetSection.nextElementSibling;
+                panel.style.display = "block";
+                const chev = targetSection.querySelector(".accordion-chevron");
+                if (chev) chev.style.transform = "rotate(180deg)";
+                
+                // Scroll to the section
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Add animation to content
+                const content = panel.querySelectorAll('.pocket, .deep');
+                content.forEach((item, index) => {
+                    item.classList.add('fade-in');
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 100);
+                });
+            }
         }
 
         // Save Tips functionality
