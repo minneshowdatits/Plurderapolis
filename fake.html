@@ -10,7 +10,8 @@
     :root {
       --plum: #5D3A7D;
       --pink: #E040FB;
-      --teal: #00CED1;
+      --teal: #26F0F1;
+      --electric-blue: #4A90E2;
       --charcoal: #1C1C1C;
       --offwhite: #F5F5F5;
       --warning-red: #FF4444;
@@ -20,7 +21,7 @@
       --animation-timing: 0.3s ease;
       --section-testing: #E040FB;
       --section-response: #FF4444;
-      --section-resources: #00CED1;
+      --section-resources: #26F0F1;
       --section-tips: #FF9800;
     }
     
@@ -42,6 +43,12 @@
       line-height: 1.7;
       font-size: 1.05rem;
       overflow-x: hidden;
+      animation: fadeInBody 1.2s ease;
+    }
+    
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .container { 
@@ -58,6 +65,12 @@
       border-radius: 0 0 12px 12px;
       position: relative;
       overflow: hidden;
+      animation: headerSlideDown 0.8s ease;
+    }
+    
+    @keyframes headerSlideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
     }
     
     header::after {
@@ -76,10 +89,28 @@
       100% { left: 100%; }
     }
     
-    .logo {
+    .logo-container {
+      display: block;
       max-width: 200px;
       margin: 0 auto 10px;
-      display: block;
+      transition: all 0.3s ease;
+      animation: logoPopIn 1s ease;
+    }
+    
+    @keyframes logoPopIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      70% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .logo-container:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
     
     h1, h2, h3 { 
@@ -112,6 +143,7 @@
     
     h2:hover {
       color: var(--teal);
+      transform: translateX(5px);
     }
     
     h2 i {
@@ -152,11 +184,23 @@
       border-top: 4px solid var(--pink);
       transition: all var(--animation-timing);
       overflow: hidden;
+      animation: cardFloatIn 0.6s ease;
+    }
+    
+    @keyframes cardFloatIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
     }
     
     .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(93, 58, 125, 0.4);
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 12px 25px rgba(93, 58, 125, 0.4);
     }
     
     .card-header { 
@@ -181,9 +225,9 @@
     }
     
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 64, 251, 0.4); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(224, 64, 251, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 64, 251, 0); }
     }
     
     @keyframes fadeIn {
@@ -197,10 +241,13 @@
       overflow: hidden;
       animation: fadeIn 0.5s ease;
       border-left: 4px solid var(--plum);
+      transition: all 0.4s ease;
     }
     
     details[open] {
       background-color: rgba(58, 58, 58, 0.5);
+      transform: scale(1.01);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
     }
     
     summary {
@@ -212,6 +259,23 @@
       font-size: 1.2rem;
       color: var(--offwhite);
       background: linear-gradient(to right, rgba(93, 58, 125, 0.2), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    summary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    summary:hover::after {
+      left: 100%;
     }
     
     summary:hover {
@@ -233,6 +297,12 @@
     
     .card-content {
       padding: 0 15px 15px 15px;
+      animation: contentSlideDown 0.4s ease;
+    }
+    
+    @keyframes contentSlideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     ul, ol { 
@@ -243,6 +313,12 @@
     ul li, ol li { 
       margin-bottom: 0.8rem; 
       padding-left: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    ul li:hover, ol li:hover {
+      transform: translateX(5px);
+      color: var(--teal);
     }
     
     ul li::marker {
@@ -257,6 +333,12 @@
       border-radius: 10px; 
       overflow: hidden; 
       box-shadow: 0 4px 10px rgba(0,0,0,.2);
+      animation: tableFadeIn 0.6s ease;
+    }
+    
+    @keyframes tableFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
     }
     
     th, td { 
@@ -264,6 +346,11 @@
       border: 1px solid rgba(93,58,125,.2); 
       text-align: left; 
       color: var(--offwhite); 
+      transition: all 0.3s ease;
+    }
+    
+    tr:hover td {
+      background-color: rgba(93, 58, 125, 0.2);
     }
     
     th { 
@@ -283,7 +370,18 @@
       border-radius: 0 10px 10px 0; 
       margin: 15px 0; 
       font-weight: 600;
-      animation: pulse 2s infinite;
+      animation: warningPulse 3s infinite, shake 0.5s ease;
+    }
+    
+    @keyframes warningPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
     }
     
     .resource-grid { 
@@ -303,11 +401,34 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      animation: resourceCardAppear 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes resourceCardAppear {
+      0% { opacity: 0; transform: translateY(20px) rotateX(10deg); }
+      100% { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+    
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .resource-card:hover::before {
+      left: 100%;
     }
     
     .resource-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,.4);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 25px rgba(0,0,0,.4);
     }
     
     .resource-card i { 
@@ -318,6 +439,12 @@
       background: rgba(0, 206, 209, 0.1);
       padding: 12px;
       border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .resource-card:hover i {
+      transform: rotate(15deg) scale(1.1);
+      background: rgba(0, 206, 209, 0.2);
     }
     
     .btn { 
@@ -334,11 +461,29 @@
       transition: all 0.2s ease;
       text-align: center;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 20%;
+      height: 200%;
+      background: rgba(255,255,255,0.3);
+      transform: rotate(30deg);
+      transition: all 0.5s;
+    }
+    
+    .btn:hover::after {
+      left: 120%;
     }
     
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(224, 64, 251, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(224, 64, 251, 0.5);
       text-decoration: none;
     }
     
@@ -356,6 +501,7 @@
     
     .btn-outline:hover {
       background: var(--plum);
+      transform: translateY(-2px);
     }
     
     .nav-container {
@@ -368,6 +514,12 @@
       padding: 15px;
       border-radius: 12px;
       text-align: center;
+      animation: navSlideIn 0.8s ease;
+    }
+    
+    @keyframes navSlideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .nav-buttons {
@@ -392,6 +544,12 @@
       margin-top: 30px; 
       background: var(--dark-bg); 
       border-radius: 12px; 
+      animation: footerFadeIn 1s ease;
+    }
+    
+    @keyframes footerFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     strong {
@@ -501,6 +659,12 @@
       top: 100%;
       left: 0;
       margin-top: 5px;
+      animation: dropdownSlide 0.3s ease;
+    }
+    
+    @keyframes dropdownSlide {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .dropdown-content a {
@@ -520,7 +684,6 @@
     
     .dropdown:hover .dropdown-content {
       display: block;
-      animation: fadeIn 0.3s ease;
     }
     
     .dropdown:hover .dropbtn {
@@ -562,6 +725,12 @@
       gap: 8px;
       margin-bottom: 20px;
       justify-content: center;
+      animation: quickNavFadeIn 0.8s ease;
+    }
+    
+    @keyframes quickNavFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .quick-nav-btn {
@@ -577,7 +746,42 @@
     
     .quick-nav-btn:hover {
       background: rgba(93, 58, 125, 0.3);
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.05);
+    }
+    
+    /* Floating particles background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(93, 58, 125, 0.1);
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+      }
     }
     
     /* Mobile responsiveness */
@@ -682,10 +886,24 @@
   </style>
 </head>
 <body>
+  <!-- Floating particles background -->
+  <div class="particles" id="particles"></div>
+  
   <header>
     <div class="container">
-      <!-- Logo placeholder - replace with actual PLURderapolis logo -->
-      <div class="logo-placeholder" style="color: white; font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;">PLURderapolis</div>
+      <!-- PLURderapolis logo that links to home -->
+      <a href="index.html" class="logo-container">
+        <svg class="logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#5D3A7D" />
+              <stop offset="100%" stop-color="#E040FB" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#logoGradient)" />
+          <text x="100" y="35" text-anchor="middle" fill="white" font-family="Montserrat, sans-serif" font-weight="700" font-size="24">PLURderapolis</text>
+        </svg>
+      </a>
       <h1>Is Your Shit Real?</h1>
       <p style="color:#fff; margin-top:8px; font-size: 1rem;">Updated guidance & verified resources for testing, naloxone access, and safer use — Minnesota & national.</p>
     </div>
@@ -1046,6 +1264,34 @@
     document.querySelectorAll('details').forEach(detail => {
       observer.observe(detail);
     });
+    
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random size, position, and animation delay
+        const size = Math.random() * 20 + 5;
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 20 + 10;
+        const animationDelay = Math.random() * 5;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${left}%`;
+        particle.style.animationDuration = `${animationDuration}s`;
+        particle.style.animationDelay = `${animationDelay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Initialize particles when page loads
+    window.addEventListener('load', createParticles);
   </script>
 </body>
 </html>
