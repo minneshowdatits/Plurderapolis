@@ -67,97 +67,9 @@
             --light-text: #ffffff;
             --medium-text: #cccccc;
         }
+        body{font-family:'Roboto',sans-serif;background:radial-gradient(circle at bottom,var(--dark-bg) 0%,#1a001a 100%);color:var(--light-text);line-height:1.7;overflow-x:hidden;padding-bottom:70px}
         
-        /* Enhanced Animated Background */
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .bg-gradient {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(58, 0, 82, 0.3) 0%, transparent 50%),
-                       radial-gradient(circle at 80% 20%, rgba(0, 247, 224, 0.2) 0%, transparent 50%),
-                       radial-gradient(circle at 40% 40%, rgba(255, 105, 180, 0.15) 0%, transparent 50%);
-            animation: gradientShift 15s ease infinite;
-        }
-        
-        .bg-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 20s infinite linear;
-        }
-        
-        .pulse-dot {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--primary);
-            animation: pulse 4s infinite ease-in-out;
-        }
-        
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent, rgba(0, 247, 224, 0.1), transparent);
-            animation: waveMove 20s infinite linear;
-            transform-origin: center bottom;
-        }
-        
-        .wave:nth-child(2) {
-            animation-delay: -5s;
-            opacity: 0.5;
-            height: 8%;
-        }
-        
-        .wave:nth-child(3) {
-            animation-delay: -10s;
-            opacity: 0.3;
-            height: 6%;
-        }
-        
-        @keyframes gradientShift {
-            0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.7; }
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(2); opacity: 0.3; }
-        }
-        
-        @keyframes waveMove {
-            0% { transform: translateX(0) skew(0, 3deg); }
-            100% { transform: translateX(-50%) skew(0, 3deg); }
-        }
-        
-        body{font-family:'Roboto',sans-serif;background:var(--dark-bg);color:var(--light-text);line-height:1.7;overflow-x:hidden;padding-bottom:70px;position:relative}
+        /* Removed skyline */
         
         /* Enhanced Site Title */
         .site-title{text-align:center;padding:1.5rem 1rem 0.5rem;position:relative;z-index:2;margin-top:0.5rem}
@@ -547,15 +459,6 @@
     </style>
 </head>
 <body>
-
-<!-- Enhanced Animated Background -->
-<div class="animated-background">
-    <div class="bg-gradient"></div>
-    <div class="bg-particles" id="particles"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-</div>
 
 <!-- Scroll to Top Button -->
 <button id="scrollTopBtn" title="Go to top">↑</button>
@@ -1046,46 +949,6 @@
 </footer>
 
 <script>
-// Enhanced Animated Background
-function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    const colors = [
-        'rgba(0, 247, 224, 0.3)',
-        'rgba(255, 105, 180, 0.2)',
-        'rgba(191, 0, 191, 0.2)',
-        'rgba(224, 81, 255, 0.2)',
-        'rgba(0, 183, 255, 0.2)'
-    ];
-    
-    // Create floating particles
-    for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        const size = Math.random() * 6 + 2;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${Math.random() * 100}%`;
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.animationDelay = `${Math.random() * 20}s`;
-        particle.style.animationDuration = `${15 + Math.random() * 15}s`;
-        
-        particlesContainer.appendChild(particle);
-    }
-    
-    // Create pulse dots
-    for (let i = 0; i < 15; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('pulse-dot');
-        
-        dot.style.left = `${Math.random() * 100}%`;
-        dot.style.top = `${Math.random() * 100}%`;
-        dot.style.animationDelay = `${Math.random() * 4}s`;
-        
-        particlesContainer.appendChild(dot);
-    }
-}
-
 // Enhanced Mobile Navigation
 const mobileNavBtn = document.getElementById('mobileNavBtn');
 const mobileNav = document.getElementById('mobileNav');
@@ -1357,9 +1220,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
-    // Create background particles
-    createParticles();
 });
 
 // Scroll to Top Button Functionality
