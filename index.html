@@ -63,44 +63,18 @@
             --accent5: #00c896;
             --accent6: #ffb300;
             --dark-bg: #0d0d0d;
-            --card-bg: rgba(58, 0, 82, 0.7);
+            --card-bg: #3a0052;
             --light-text: #ffffff;
             --medium-text: #cccccc;
         }
         body{font-family:'Roboto',sans-serif;background:radial-gradient(circle at bottom,var(--dark-bg) 0%,#1a001a 100%);color:var(--light-text);line-height:1.7;overflow-x:hidden;padding-bottom:70px}
         
-        /* EDM-inspired background animation */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 247, 224, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(191, 0, 191, 0.05) 0%, transparent 50%);
-            animation: pulseBackground 15s ease-in-out infinite;
-        }
-        @keyframes pulseBackground {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
+        /* Site title with EDM-inspired animation */
         .site-title{text-align:center;padding:1.5rem 1rem 0.5rem;position:relative;z-index:2;margin-top:0.5rem}
-        .site-title h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3rem);letter-spacing:0.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--primary) 0%,#a3f7ff 50%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 6s linear infinite;filter:drop-shadow(0 0 6px rgba(0,247,224,0.7));margin:0}
+        .site-title h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3rem);letter-spacing:0.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--primary) 0%,#a3f7ff 50%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 6s linear infinite, beatPulse 2s infinite;filter:drop-shadow(0 0 6px rgba(0,247,224,0.7));margin:0}
         .site-title .tagline{font-family:'Roboto',sans-serif;color:#88e9e3;font-size:1rem;letter-spacing:0.1em;margin-top:0.5rem;font-weight:600;text-transform:uppercase;opacity:0.9}
         @keyframes shineMove{0%{background-position:100% 0}100%{background-position:0 0}}
+        @keyframes beatPulse{0%, 100%{transform: scale(1)}50%{transform: scale(1.02)}}
 
         /* Enhanced Mobile Navigation */
         .mobile-nav-btn{position:fixed;top:12px;left:12px;z-index:1100;cursor:pointer;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(58,0,82,0.8);border-radius:8px;border:1px solid var(--primary);backdrop-filter:blur(5px)}
@@ -120,23 +94,30 @@
         .mobile-nav-link{display:flex;align-items:center;padding:12px 15px;background:rgba(58,0,82,0.6);border-radius:8px;text-decoration:none;color:var(--light-text);transition:all 0.3s ease;border-left:4px solid var(--primary)}
         .mobile-nav-link:hover{background:rgba(58,0,82,0.9);transform:translateX(5px)}
         .mobile-nav-link .icon{font-size:1.3rem;margin-right:12px;width:24px;text-align:center}
-        
+
+        /* Donate button styles */
         .donate-button {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            background: linear-gradient(135deg, #00c896, #00f7e0);
+            gap: 8px;
+            background: linear-gradient(135deg, #3D8BFD, #6F42C1);
+            color: white;
+            padding: 10px 15px;
             border-radius: 8px;
             text-decoration: none;
-            color: #2e003e;
             font-weight: bold;
-            margin: 15px 0;
             transition: all 0.3s ease;
-            justify-content: center;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: pulseGlow 3s infinite;
         }
         .donate-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 200, 150, 0.4);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+            50% { box-shadow: 0 4px 15px rgba(61, 139, 253, 0.5); }
         }
 
         /* Less obtrusive alert banner */
@@ -144,9 +125,9 @@
         .rave-alert-link{display:inline-block;white-space:nowrap;color:var(--secondary);font-size:0.8rem;text-decoration:none;padding-left:100%;animation:scroll-left 20s linear infinite}
         @keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-        /* Grid Layout with Spacing */
-        .sections-grid{display:grid;grid-template-columns:1fr;gap:1rem;padding:1rem;max-width:1200px;margin:0 auto}
-        .section-card{background-color:var(--card-bg);border-radius:12px;padding:1.2rem;box-shadow:0 4px 12px rgba(0,255,255,0.1);position:relative;z-index:1;transition:all 0.3s ease;border-left:4px solid;display:flex;flex-direction:column;height:100%;animation:fadeInUp 0.6s ease-out;margin-bottom:0.5rem;backdrop-filter:blur(10px)}
+        /* Compact Grid Layout */
+        .sections-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;padding:1.5rem;max-width:1200px;margin:0 auto}
+        .section-card{background-color:var(--card-bg);border-radius:12px;padding:1.2rem;box-shadow:0 0 15px rgba(0,255,255,0.1);position:relative;z-index:1;transition:all 0.3s ease;border-left:4px solid;display:flex;flex-direction:column;height:100%;animation:fadeInUp 0.6s ease-out;margin-bottom:1rem;overflow:hidden}
         @keyframes fadeInUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
         
         /* Color assignments for each section */
@@ -158,8 +139,8 @@
         .section-card:nth-child(6){border-left-color:var(--accent6);animation-delay:0.6s}
         .section-card:nth-child(7){border-left-color:var(--accent1);animation-delay:0.7s}
         
-        .card-header{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;margin-bottom:0.8rem;cursor:pointer;position:relative}
-        .section-card h2{font-family:'Montserrat',sans-serif;margin:0;font-size:1.3rem;font-weight:700;flex:1;padding-right:10px}
+        .card-header{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;margin-bottom:0.5rem;cursor:pointer;position:relative}
+        .section-card h2{font-family:'Montserrat',sans-serif;margin:0;font-size:1.2rem;font-weight:700;flex:1;padding-right:10px}
         
         /* Different header colors for each section */
         .section-card:nth-child(1) h2{color:var(--accent1)}
@@ -174,7 +155,7 @@
         .section-summary {
             color: var(--medium-text);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             line-height: 1.5;
             transition: all 0.3s ease;
             max-height: 3rem;
@@ -190,14 +171,14 @@
             margin-bottom: 0;
         }
         
-        .section-card p{line-height:1.7;margin-bottom:1.2rem;font-size:1rem}
+        .section-card p{line-height:1.7;margin-bottom:1rem;font-size:1rem}
         
         .section-links{display:grid;grid-template-columns:1fr;gap:10px}
         .section-link{display:flex;align-items:center;padding:12px 14px;background:rgba(0,0,0,0.2);border-radius:8px;text-decoration:none;color:var(--light-text);transition:all 0.3s ease;border-left:3px solid}
         .section-link:hover{background:rgba(0,0,0,0.4);transform:translateX(5px)}
-        .section-link .icon{font-size:1.2rem;margin-right:10px;width:22px;text-align:center}
+        .section-link .icon{font-size:1.2rem;margin-right:10px;width:24px;text-align:center}
         .section-link .text{flex:1;font-size:0.95rem}
-        .section-link .arrow{color:var(--medium-text);font-size:0.9rem;transition:transform 0.3s}
+        .section-link .arrow{color:var(--medium-text);font-size:1rem;transition:transform 0.3s}
         .section-link:hover .arrow{transform:translateX(3px)}
         
         /* Color assignments for section links */
@@ -209,24 +190,30 @@
         .section-card:nth-child(6) .section-link{border-left-color:var(--accent6)}
         .section-card:nth-child(7) .section-link{border-left-color:var(--accent1)}
         
-        .cta-button{display:inline-block;margin-top:1rem;background:var(--primary);color:#2e003e;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.95rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);text-align:center;width:100%}
+        .cta-button{display:inline-block;margin-top:0.8rem;background:var(--primary);color:#2e003e;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.95rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);text-align:center;width:100%}
         .cta-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 6px 12px rgba(0,0,0,0.4)}
+
+        .card-container{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-top:1.5rem}
+        .card{background:#2a0036;border-radius:10px;padding:1.2rem;width:100%;max-width:280px;box-shadow:0 0 15px rgba(255,111,145,0.3);transition:all 0.2s;border:1px solid #5d3a7d;display:flex;flex-direction:column}
+        .card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(255,111,145,0.6)}
+        .card h3{color:var(--secondary);font-family:'Montserrat',sans-serif;margin-top:0;font-size:1.2rem;border-bottom:1px solid var(--secondary);padding-bottom:0.5rem}
+        .card p{font-size:0.95rem;flex-grow:1}
 
         /* Enhanced Search */
         .search-container{position:relative;width:90%;max-width:600px;margin:1.5rem auto;z-index:100}
         .search-bar{display:flex;position:relative;box-shadow:0 0 15px rgba(0,247,224,0.2);border-radius:30px;overflow:hidden}
-        .search-bar input{flex:1;padding:14px 20px;border:none;background:rgba(255,255,255,0.1);color:white;font-size:1.1rem;outline:none}
+        .search-bar input{flex:1;padding:12px 18px;border:none;background:rgba(255,255,255,0.1);color:white;font-size:1rem;outline:none}
         .search-bar input::placeholder{color:rgba(255,255,255,0.7)}
-        .search-bar button{padding:14px 20px;border:none;background:var(--primary);color:#2e003e;cursor:pointer;font-weight:bold;transition:all 0.3s}
+        .search-bar button{padding:12px 18px;border:none;background:var(--primary);color:#2e003e;cursor:pointer;font-weight:bold;transition:all 0.3s}
         .search-bar button:hover{background:#00e6cc}
         
         #searchResults{position:absolute;top:100%;left:0;right:0;background:var(--card-bg);max-height:300px;overflow-y:auto;border-radius:0 0 10px 10px;display:none;z-index:1004;box-shadow:0 5px 15px rgba(0,0,0,0.3);border:1px solid var(--primary);border-top:none}
         #searchResults ul{list-style:none;padding:0;margin:0}
-        #searchResults li{padding:12px 15px;border-bottom:1px solid #5d3a7d;cursor:pointer;font-size:1rem;display:flex;align-items:center}
+        #searchResults li{padding:10px 12px;border-bottom:1px solid #5d3a7d;cursor:pointer;font-size:0.95rem;display:flex;align-items:center}
         #searchResults li:hover{background:#5d3a7d}
         #searchResults li:last-child{border-bottom:none}
-        #searchResults li .icon{margin-right:10px;font-size:1.1rem}
-        #searchResults li .category{font-size:0.8rem;color:var(--medium-text);margin-left:auto;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px}
+        #searchResults li .icon{margin-right:8px;font-size:1rem}
+        #searchResults li .category{font-size:0.75rem;color:var(--medium-text);margin-left:auto;background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px}
 
         /* Enhanced peach button with "HELP!" text */
         #peachWrap{position:fixed;bottom:20px;right:20px;z-index:1002;display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;cursor:move}
@@ -241,7 +228,7 @@
         footer{margin-top:3rem;font-size:0.9rem;color:#aaa;text-align:center;position:relative;z-index:2;padding:1.5rem;background:rgba(0,0,0,0.5);border-top:1px solid #444}
         footer hr{border-color:#444;margin-bottom:1rem}
         footer p{max-width:800px;margin:0.8rem auto;line-height:1.6}
-        .social-links{display:flex;justify-content:center;gap:15px;margin:1.5rem 0;flex-wrap: wrap;}
+        .social-links{display:flex;justify-content:center;gap:15px;margin:1.5rem 0;flex-wrap:wrap}
         .social-link{display:flex;align-items:center;gap:8px;color:var(--primary);text-decoration:none;padding:10px 15px;border-radius:8px;transition:all 0.3s ease;background:rgba(58,0,82,0.3);border:1px solid rgba(0,247,224,0.3)}
         .social-link:hover{background:rgba(58,0,82,0.6);transform:translateY(-2px);box-shadow:0 4px 8px rgba(0,247,224,0.2)}
         .social-link span{font-size:1.2rem}
@@ -249,49 +236,19 @@
         footer ul li a{color:var(--primary);padding:0 10px;text-decoration:none;transition:color 0.2s;font-size:0.9rem}
         footer ul li a:hover{color:var(--secondary);text-decoration:underline}
 
-        /* Sitemap in footer */
-        .sitemap {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            text-align: left;
-        }
-        .sitemap-category h3 {
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(0,247,224,0.3);
-            padding-bottom: 0.5rem;
-        }
-        .sitemap-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .sitemap-links a {
-            color: var(--medium-text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .sitemap-links a:hover {
-            color: var(--primary);
-        }
-
         /* Mocktail Preview Section */
-        .mocktail-preview{background:#2a0036;border-radius:10px;padding:18px;margin:18px 0;border:1px solid #5d3a7d}
-        .mocktail-scroll-container{overflow-x:auto;padding-bottom:10px;margin-top:18px;scrollbar-width:thin;scrollbar-color:var(--primary) #2a0036}
+        .mocktail-preview{background:#2a0036;border-radius:10px;padding:15px;margin:15px 0;border:1px solid #5d3a7d}
+        .mocktail-scroll-container{overflow-x:auto;padding-bottom:10px;margin-top:15px;scrollbar-width:thin;scrollbar-color:var(--primary) #2a0036}
         .mocktail-scroll-container::-webkit-scrollbar{height:6px}
         .mocktail-scroll-container::-webkit-scrollbar-track{background:#2a0036;border-radius:3px}
         .mocktail-scroll-container::-webkit-scrollbar-thumb{background:var(--primary);border-radius:3px}
-        .mocktail-grid{display:flex;gap:18px;padding:5px;width:max-content}
-        .mocktail-card{background:var(--card-bg);border-radius:8px;padding:15px;border:1px solid var(--primary);transition:transform 0.2s;min-width:280px;flex-shrink:0}
+        .mocktail-grid{display:flex;gap:15px;padding:5px;width:max-content}
+        .mocktail-card{background:var(--card-bg);border-radius:8px;padding:12px;border:1px solid var(--primary);transition:transform 0.2s;min-width:250px;flex-shrink:0}
         .mocktail-card:hover{transform:translateY(-5px);box-shadow:0 5px 15px rgba(0,247,224,0.3)}
-        .mocktail-card h3{color:var(--secondary);margin-top:0;border-bottom:1px solid var(--secondary);padding-bottom:8px;font-size:1.2rem}
-        .mocktail-ingredients{margin:10px 0;font-size:1rem}
-        .mocktail-ingredients li{margin-bottom:6px;display:flex;align-items:center}
-        .view-all{text-align:center;margin-top:18px}
+        .mocktail-card h3{color:var(--secondary);margin-top:0;border-bottom:1px solid var(--secondary);padding-bottom:6px;font-size:1.1rem}
+        .mocktail-ingredients{margin:8px 0;font-size:0.95rem}
+        .mocktail-ingredients li{margin-bottom:5px;display:flex;align-items:center}
+        .view-all{text-align:center;margin-top:15px}
 
         /* Mobile HUD Navigation */
         .mobile-hud{position:fixed;bottom:0;left:0;width:100%;background-color:rgba(58,0,82,0.95);display:flex;justify-content:space-around;padding:10px 0;z-index:1001;backdrop-filter:blur(5px);border-top:1px solid var(--primary)}
@@ -301,14 +258,14 @@
 
         /* Emergency Modal */
         .emergency-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.9);z-index:2000;justify-content:center;align-items:center;padding:1.5rem}
-        .modal-content{background-color:var(--card-bg);padding:25px;border-radius:10px;max-width:100%;max-height:90%;overflow-y:auto;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,247,224,0.5);position:relative}
-        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;border-bottom:1px solid var(--primary);padding-bottom:12px}
+        .modal-content{background-color:var(--card-bg);padding:20px;border-radius:10px;max-width:100%;max-height:90%;overflow-y:auto;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,247,224,0.5);position:relative}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;border-bottom:1px solid var(--primary);padding-bottom:10px}
         .close-modal{background:none;border:none;color:var(--primary);font-size:1.8rem;cursor:pointer}
-        .emergency-steps{margin:18px 0}
+        .emergency-steps{margin:15px 0}
         .emergency-steps ol{padding-left:25px}
-        .emergency-steps li{margin-bottom:12px;line-height:1.6;font-size:1rem}
-        .emergency-contact{background:rgba(0,0,0,0.3);padding:15px;border-radius:8px;margin-top:18px;font-size:1rem}
-        .emergency-contact h4{color:var(--secondary);margin-bottom:10px;font-size:1.1rem}
+        .emergency-steps li{margin-bottom:10px;line-height:1.6;font-size:1rem}
+        .emergency-contact{background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;margin-top:15px;font-size:1rem}
+        .emergency-contact h4{color:var(--secondary);margin-bottom:8px;font-size:1.1rem}
 
         /* New style for the glowing section */
         .glow-section{position:relative;overflow:hidden}
@@ -316,11 +273,11 @@
         @keyframes glowing{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
         /* Bad Trip Button */
-        .bad-trip-button{display:inline-block;background:linear-gradient(135deg,var(--secondary),var(--primary));color:white;padding:0.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:1rem;font-size:0.9rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);transition:all 0.2s}
+        .bad-trip-button{display:inline-block;background:linear-gradient(135deg,var(--secondary),var(--primary));color:white;padding:0.7rem 1rem;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:0.8rem;font-size:0.9rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);transition:all 0.2s}
         .bad-trip-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 6px 12px rgba(0,0,0,0.4)}
 
         /* Floating Animation for Cards */
-        @keyframes float{0%{transform:translateY(0px)}50%{transform:translateY(-10px)}100%{transform:translateY(0px)}}
+        @keyframes float{0%{transform:translateY(0px)}50%{transform:translateY(-8px)}100%{transform:translateY(0px)}}
         .floating{animation:float 6s ease-in-out infinite}
         .floating-delay-1{animation-delay:1s}
         .floating-delay-2{animation-delay:2s}
@@ -335,10 +292,10 @@
             background: none;
             border: none;
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -378,7 +335,7 @@
         /* Make entire header clickable on mobile */
         @media (max-width: 768px) {
             .card-header {
-                padding: 1rem 0;
+                padding: 0.8rem 0;
                 margin-bottom: 0.5rem;
             }
             .card-header::after {
@@ -405,7 +362,7 @@
         .collapsible-content.expanded {
             max-height: 2000px;
             opacity: 1;
-            padding-top: 1rem;
+            padding-top: 0.8rem;
             transform: translateY(0);
         }
 
@@ -439,54 +396,41 @@
             60% {transform: translateY(-3px);}
         }
 
-        /* Where Should I Go section */
-        .where-to-go {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-top: 1.5rem;
+        /* EDM-style background animation */
+        .edm-bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
         }
-        .where-card {
-            background: rgba(58, 0, 82, 0.5);
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 247, 224, 0.2);
+        .pulse-dot {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulseDot 3s infinite;
         }
-        .where-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 247, 224, 0.3);
-        }
-        .where-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        .where-card p {
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            color: var(--medium-text);
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(3); opacity: 0; }
         }
 
         @media (min-width:768px){
-            .sections-grid{grid-template-columns:repeat(2,1fr); gap: 1.5rem;}
+            .sections-grid{grid-template-columns:repeat(2,1fr)}
             .section-links{grid-template-columns:repeat(2,1fr)}
             .card-container{gap:1.5rem}
-            .card{width:300px;padding:1.5rem}
+            .card{width:280px;padding:1.2rem}
             #panicButton{width:70px;height:70px;font-size:3rem}
             .help-text{font-size:1rem}
             .mocktail-grid{display:grid;grid-template-columns:repeat(3,1fr);width:100%}
             .mocktail-card{min-width:auto}
             .mobile-nav-links{grid-template-columns:repeat(2,1fr)}
             .section-card {
-                padding: 1.5rem;
-            }
-            .where-to-go {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .sitemap {
-                grid-template-columns: repeat(4, 1fr);
+                padding: 1.2rem;
             }
         }
         @media (min-width:1024px){
@@ -498,9 +442,9 @@
         }
         @media (max-width:480px){
             .section-card{padding:1rem}
-            .section-card h2{font-size:1.2rem}
+            .section-card h2{font-size:1.1rem}
             .search-container{width:95%}
-            .search-bar input{font-size:1rem}
+            .search-bar input{font-size:0.95rem}
             .social-links {
                 flex-direction: column;
                 align-items: center;
@@ -510,18 +454,16 @@
                 width: 200px;
                 justify-content: center;
             }
-            .where-to-go {
-                grid-template-columns: 1fr;
-            }
-            .sitemap {
-                grid-template-columns: 1fr;
+            .section-summary {
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="bg-animation"></div>
+<!-- EDM Background Animation -->
+<div class="edm-bg-animation" id="edmBgAnimation"></div>
 
 <!-- Scroll to Top Button -->
 <button id="scrollTopBtn" title="Go to top">↑</button>
@@ -534,6 +476,11 @@
 </div>
 
 <nav class="mobile-nav" id="mobileNav">
+    <!-- Donate Button in Mobile Menu -->
+    <a href="https://www.venmo.com/u/plurderdapolis" class="donate-button" target="_blank">
+        <span>💜</span> Donate via Venmo
+    </a>
+    
     <div class="mobile-nav-category active">
         <h3>Safety & Emergency <span class="toggle-icon">▼</span></h3>
         <div class="mobile-nav-links">
@@ -549,6 +496,7 @@
         <div class="mobile-nav-links">
             <a href="polydrug.html" class="mobile-nav-link"><span class="icon">💊</span>Polydrug Tool</a>
             <a href="rx-combos.html" class="mobile-nav-link"><span class="icon">💊</span>RX + Party Combos</a>
+            <!-- Health.html removed and replaced with booth.html -->
             <a href="booth.html" class="mobile-nav-link"><span class="icon">🎉</span>Our Booth</a>
             <a href="fake.html" class="mobile-nav-link"><span class="icon">⚠️</span>Fake Drugs & Alerts</a>
         </div>
@@ -580,8 +528,8 @@
         </div>
     </div>
     
-    <!-- Social Media and Donate Links in Mobile Menu -->
-    <div class="social-links" style="margin-top: 2rem;">
+    <!-- Social Media Links in Mobile Menu -->
+    <div class="social-links" style="margin-top: 20px;">
         <a href="https://www.facebook.com/plurderapolis" class="social-link" target="_blank">
             <span>📘</span> Facebook
         </a>
@@ -589,10 +537,6 @@
             <span>📷</span> Instagram
         </a>
     </div>
-    
-    <a href="https://www.venmo.com/u/plurderdapolis" class="donate-button" target="_blank">
-        <span style="margin-right: 8px;">💜</span> Donate via Venmo
-    </a>
 </nav>
 
 <!-- Less obtrusive alert banner -->
@@ -609,45 +553,10 @@
 <!-- Enhanced Search -->
 <div class="search-container">
     <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search for Narcan, drink spiking, emergency...">
+        <input type="text" id="searchInput" placeholder="Search the site... (e.g. Narcan, drink spiking)">
         <button onclick="performSearch()">🔍</button>
     </div>
     <div id="searchResults"></div>
-</div>
-
-<!-- Where Should I Go Section -->
-<div class="sections-grid">
-    <div class="section-card floating expanded">
-        <div class="card-header">
-            <h2>🚨 Quick Access</h2>
-            <button class="collapsible-toggle">−</button>
-        </div>
-        <div class="section-summary">Find what you need quickly with these common paths</div>
-        <div class="collapsible-content expanded">
-            <div class="where-to-go">
-                <div class="where-card">
-                    <h3>🚨 Emergency</h3>
-                    <p>Immediate help for overdoses or medical emergencies</p>
-                    <a href="panic.html" class="cta-button" style="font-size: 0.8rem; padding: 0.6rem 1rem;">Get Help</a>
-                </div>
-                <div class="where-card">
-                    <h3>💊 Narcan</h3>
-                    <p>Learn about Narcan and overdose prevention</p>
-                    <a href="emergency.html" class="cta-button" style="font-size: 0.8rem; padding: 0.6rem 1rem;">Learn More</a>
-                </div>
-                <div class="where-card">
-                    <h3>🚫 Drink Spiking</h3>
-                    <p>Prevention and response to drink spiking</p>
-                    <a href="spiking.html" class="cta-button" style="font-size: 0.8rem; padding: 0.6rem 1rem;">Stay Safe</a>
-                </div>
-                <div class="where-card">
-                    <h3>🌈 Bad Trip</h3>
-                    <p>Resources for difficult psychedelic experiences</p>
-                    <a href="badtrip.html" class="cta-button" style="font-size: 0.8rem; padding: 0.6rem 1rem;">Get Support</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- Mobile HUD Navigation -->
@@ -655,6 +564,7 @@
     <a href="panic.html" class="hud-btn"><span>🚨</span>Panic</a>
     <a href="polydrug.html" class="hud-btn"><span>💊</span>Tool</a>
     <a href="resources.html" class="hud-btn"><span>📚</span>Resources</a>
+    <!-- Health.html replaced with booth.html -->
     <a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a>
     <a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a>
 </div>
@@ -740,7 +650,7 @@
             <div class="section-links">
                 <a href="polydrug.html" class="section-link">
                     <span class="icon">⚡</span>
-                    <span class="text">Polydrug Interaction Tool</span>
+                    <span class="text">Polydrug Interaction Tool →</span>
                     <span class="arrow">→</span>
                 </a>
                 <a href="rx-combos.html" class="section-link">
@@ -750,7 +660,7 @@
                 </a>
                 <a href="fake.html" class="section-link">
                     <span class="icon">⚠️</span>
-                    <span class="text">Fake Drugs & Alerts</span>
+                    <span class="text">Fake Drugs Alert →</span>
                     <span class="arrow">→</span>
                 </a>
                 <a href="health.html" class="section-link">
@@ -811,37 +721,37 @@
         </div>
     </div>
 
-    <!-- Resources Section -->
+    <!-- Consent Section -->
     <div class="section-card floating collapsed">
         <div class="card-header">
-            <h2>📚 Resources</h2>
+            <h2>✅ Consent Basics</h2>
             <button class="collapsible-toggle">+</button>
         </div>
-        <div class="section-summary">Comprehensive resources for harm reduction and mental health support.</div>
+        <div class="section-summary">Learn about consent and creating safer spaces in the electronic music community.</div>
         <div class="collapsible-content">
             <div class="section-links">
-                <a href="resources.html" class="section-link">
-                    <span class="icon">📍</span>
-                    <span class="text">MN Resources Directory</span>
+                <a href="consent.html" class="section-link">
+                    <span class="icon">✅</span>
+                    <span class="text">Consent Basics →</span>
                     <span class="arrow">→</span>
                 </a>
-                <a href="sober.html" class="section-link">
+                <a href="accountability.html" class="section-link">
+                    <span class="icon">⚖️</span>
+                    <span class="text">Community Accountability</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="rejection-based-violence.html" class="section-link">
+                    <span class="icon">🛡️</span>
+                    <span class="text">Violence Prevention</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="spiking.html" class="section-link">
                     <span class="icon">🚫</span>
-                    <span class="text">Sober Ravers Support</span>
-                    <span class="arrow">→</span>
-                </a>
-                <a href="seasonal.html" class="section-link">
-                    <span class="icon">🌞</span>
-                    <span class="text">Seasonal Safety Tips</span>
-                    <span class="arrow">→</span>
-                </a>
-                <a href="venues-guide.html" class="section-link">
-                    <span class="icon">🏢</span>
-                    <span class="text">Venue Safety Guides</span>
+                    <span class="text">Drink Spiking Prevention</span>
                     <span class="arrow">→</span>
                 </a>
             </div>
-            <a href="resources.html" class="cta-button pulse">View All Resources</a>
+            <a href="consent.html" class="cta-button pulse">Learn More</a>
         </div>
     </div>
 
@@ -900,6 +810,13 @@
             <a href="booth.html" class="cta-button pulse">See Our Booth Schedule</a>
         </div>
     </div>
+</div>
+
+<!-- Donate Button -->
+<div style="text-align:center;margin:2rem">
+    <a href="https://www.venmo.com/u/plurderdapolis" class="donate-button" target="_blank" style="display:inline-flex;align-items:center;gap:8px;font-size:1.1rem;">
+        <span>💜</span> Support Our Work via Venmo
+    </a>
 </div>
 
 <!-- Anonymous Tip Link -->
@@ -967,51 +884,21 @@
         <a href="https://www.instagram.com/plurderapolis" class="social-link" target="_blank">
             <span>📷</span> Instagram
         </a>
-        <a href="https://www.venmo.com/u/plurderdapolis" class="social-link" target="_blank" style="background: linear-gradient(135deg, #00c896, #00f7e0); color: #2e003e;">
-            <span>💜</span> Donate
+        <a href="https://www.venmo.com/u/plurderdapolis" class="donate-button" target="_blank" style="margin:0;">
+            <span>💜</span> Donate via Venmo
         </a>
     </div>
     
-    <!-- Sitemap -->
-    <div class="sitemap">
-        <div class="sitemap-category">
-            <h3>Safety & Emergency</h3>
-            <div class="sitemap-links">
-                <a href="panic.html">Panic Button</a>
-                <a href="emergency.html">Emergency Guides</a>
-                <a href="spiking.html">Drink Spiking</a>
-                <a href="badtrip.html">Bad Trip Mode</a>
-            </div>
-        </div>
-        <div class="sitemap-category">
-            <h3>Drug Information</h3>
-            <div class="sitemap-links">
-                <a href="polydrug.html">Polydrug Tool</a>
-                <a href="rx-combos.html">RX + Party Combos</a>
-                <a href="booth.html">Our Booth</a>
-                <a href="fake.html">Fake Drugs & Alerts</a>
-            </div>
-        </div>
-        <div class="sitemap-category">
-            <h3>Consent & Community</h3>
-            <div class="sitemap-links">
-                <a href="consent.html">Consent Basics</a>
-                <a href="accountability.html">Accountability</a>
-                <a href="rejection-based-violence.html">Violence Prevention</a>
-            </div>
-        </div>
-        <div class="sitemap-category">
-            <h3>Resources</h3>
-            <div class="sitemap-links">
-                <a href="resources.html">MN Resources</a>
-                <a href="sober.html">Sober Ravers</a>
-                <a href="seasonal.html">Seasonal Tips</a>
-                <a href="venues-guide.html">Venues Guide</a>
-            </div>
-        </div>
-    </div>
-    
     <p style="font-size:0.8rem;color:#ccc;margin-top:1rem;">Disclaimer: PLURderapolis provides harm reduction education. This is not medical or legal advice. Always consult professionals for health or legal concerns.</p>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="panic.html">Panic</a></li>
+        <li><a href="emergency.html">Emergency</a></li>
+        <li><a href="polydrug.html">Polydrug</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="booth.html">Our Booth</a></li>
+        <li><a href="badtrip.html">Bad Trip Mode</a></li>
+    </ul>
 </footer>
 
 <script>
@@ -1040,6 +927,23 @@ document.addEventListener('click', (e) => {
         mobileNav.classList.remove('active');
     }
 });
+
+// EDM Background Animation
+function createPulseDots() {
+    const container = document.getElementById('edmBgAnimation');
+    const colors = ['#00f7e0', '#ff69b4', '#bf00bf', '#e051ff', '#00b7ff', '#ff9a7a'];
+    
+    for (let i = 0; i < 20; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'pulse-dot';
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(dot);
+    }
+}
+createPulseDots();
 
 // Peach panic button functionality with drag
 const peachWrap = document.getElementById('peachWrap');
@@ -1142,7 +1046,6 @@ const siteContent = [
     {title: "Panic Button", url: "panic.html", category: "Safety", content: "Emergency panic button for instant access to help in crisis situations."},
     {title: "Emergency Guides", url: "emergency.html", category: "Safety", content: "Step-by-step instructions for medical and crisis situations including overdose response."},
     {title: "Drink Spiking", url: "spiking.html", category: "Safety", content: "Information on preventing and responding to drink spiking incidents at events."},
-    {title: "Narcan", url: "emergency.html", category: "Safety", content: "Information about Narcan (naloxone) for opioid overdose reversal and how to use it."},
     
     // Drug Information
     {title: "Polydrug Tool", url: "polydrug.html", category: "Drug Info", content: "Interactive tool to check dangerous drug interactions and polydrug risks."},
