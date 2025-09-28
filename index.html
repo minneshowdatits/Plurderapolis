@@ -67,15 +67,252 @@
             --light-text: #ffffff;
             --medium-text: #cccccc;
         }
-        body{font-family:'Roboto',sans-serif;background:radial-gradient(circle at bottom,var(--dark-bg) 0%,#1a001a 100%);color:var(--light-text);line-height:1.7;overflow-x:hidden;padding-bottom:70px}
         
-        /* Removed skyline */
+        /* Enhanced Animated Background with Minneapolis Skyline */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
         
-        /* Enhanced Site Title */
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(58, 0, 82, 0.3) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(0, 247, 224, 0.2) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 40%, rgba(255, 105, 180, 0.15) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        .bg-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite linear;
+        }
+        
+        .pulse-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 10%;
+            background: linear-gradient(90deg, transparent, rgba(0, 247, 224, 0.1), transparent);
+            animation: waveMove 20s infinite linear;
+            transform-origin: center bottom;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.5;
+            height: 8%;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: -10s;
+            opacity: 0.3;
+            height: 6%;
+        }
+        
+        /* Minneapolis Skyline */
+        .minneapolis-skyline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .skyline-buildings {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        
+        .building {
+            background: linear-gradient(to top, #1a003a, #3a0052);
+            margin: 0 1px;
+            position: relative;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 247, 224, 0.2);
+            animation: buildingGlow 8s infinite alternate;
+        }
+        
+        /* Specific building shapes for Minneapolis skyline */
+        .building-1 { width: 40px; height: 120px; animation-delay: 0s; }
+        .building-2 { width: 30px; height: 90px; animation-delay: 0.5s; }
+        .building-3 { width: 60px; height: 180px; animation-delay: 1s; } /* IDS Center */
+        .building-4 { width: 35px; height: 100px; animation-delay: 1.5s; }
+        .building-5 { width: 50px; height: 150px; animation-delay: 2s; } /* Capella Tower */
+        .building-6 { width: 45px; height: 130px; animation-delay: 2.5s; }
+        .building-7 { width: 55px; height: 160px; animation-delay: 3s; } /* Wells Fargo Center */
+        .building-8 { width: 25px; height: 80px; animation-delay: 3.5s; }
+        .building-9 { width: 65px; height: 200px; animation-delay: 4s; } /* Foshay Tower */
+        .building-10 { width: 30px; height: 110px; animation-delay: 4.5s; }
+        
+        /* Building windows */
+        .building::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 5px;
+            right: 5px;
+            bottom: 0;
+            background-image: 
+                linear-gradient(90deg, transparent 10%, rgba(0, 247, 224, 0.1) 10%, rgba(0, 247, 224, 0.1) 20%, transparent 20%),
+                linear-gradient(180deg, transparent 10%, rgba(0, 247, 224, 0.1) 10%, rgba(0, 247, 224, 0.1) 20%, transparent 20%);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+        
+        /* Special building features */
+        .building-3::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 10px var(--primary);
+            animation: antennaGlow 3s infinite alternate;
+        }
+        
+        .building-5::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            background: var(--secondary);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 15px var(--secondary);
+            animation: antennaGlow 4s infinite alternate;
+        }
+        
+        .building-9::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 20px;
+            background: var(--accent3);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 20px var(--accent3);
+            animation: antennaGlow 5s infinite alternate;
+        }
+        
+        /* Mississippi River */
+        .river {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to bottom, rgba(0, 183, 255, 0.3), rgba(0, 247, 224, 0.1));
+            border-top: 1px solid rgba(0, 247, 224, 0.3);
+        }
+        
+        /* Minneapolis Bridge */
+        .bridge {
+            position: absolute;
+            bottom: 20px;
+            left: 30%;
+            width: 40%;
+            height: 10px;
+            background: linear-gradient(to bottom, #5d3a7d, #3a0052);
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 0 15px rgba(0, 247, 224, 0.3);
+        }
+        
+        .bridge::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: linear-gradient(90deg, transparent 10%, rgba(0, 247, 224, 0.2) 10%, rgba(0, 247, 224, 0.2) 20%, transparent 20%);
+            background-size: 20px 15px;
+        }
+        
+        @keyframes gradientShift {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(2); opacity: 0.3; }
+        }
+        
+        @keyframes waveMove {
+            0% { transform: translateX(0) skew(0, 3deg); }
+            100% { transform: translateX(-50%) skew(0, 3deg); }
+        }
+        
+        @keyframes buildingGlow {
+            0% { box-shadow: 0 0 10px rgba(0, 247, 224, 0.2); }
+            100% { box-shadow: 0 0 20px rgba(0, 247, 224, 0.5); }
+        }
+        
+        @keyframes antennaGlow {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        body{font-family:'Roboto',sans-serif;background:var(--dark-bg);color:var(--light-text);line-height:1.7;overflow-x:hidden;padding-bottom:70px;position:relative}
+        
+        /* Enhanced Site Title with Minneapolis Theme */
         .site-title{text-align:center;padding:1.5rem 1rem 0.5rem;position:relative;z-index:2;margin-top:0.5rem}
         .site-title h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3rem);letter-spacing:0.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--primary) 0%,#a3f7ff 50%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 6s linear infinite;filter:drop-shadow(0 0 6px rgba(0,247,224,0.7));margin:0}
         .site-title .tagline{font-family:'Roboto',sans-serif;color:#88e9e3;font-size:1rem;letter-spacing:0.1em;margin-top:0.5rem;font-weight:600;text-transform:uppercase;opacity:0.9}
+        .site-title .minneapolis-badge{display:inline-block;margin-top:0.5rem;padding:4px 12px;background:rgba(58,0,82,0.7);border-radius:20px;font-size:0.8rem;color:var(--primary);border:1px solid var(--primary);animation:minneapolisPulse 3s infinite}
+        
         @keyframes shineMove{0%{background-position:100% 0}100%{background-position:0 0}}
+        @keyframes minneapolisPulse{0%,100%{transform:scale(1);opacity:0.8}50%{transform:scale(1.05);opacity:1}}
 
         /* Enhanced Mobile Navigation */
         .mobile-nav-btn{position:fixed;top:12px;left:12px;z-index:1100;cursor:pointer;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(58,0,82,0.8);border-radius:8px;border:1px solid var(--primary);backdrop-filter:blur(5px)}
@@ -172,12 +409,6 @@
         
         .cta-button{display:inline-block;margin-top:1rem;background:var(--primary);color:#2e003e;padding:0.8rem 1.2rem;border-radius:6px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.95rem;box-shadow:0 4px 8px rgba(0,0,0,0.3);text-align:center;width:100%}
         .cta-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 6px 12px rgba(0,0,0,0.4)}
-
-        .card-container{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-top:1.2rem}
-        .card{background:#2a0036;border-radius:8px;padding:1.2rem;width:100%;max-width:280px;box-shadow:0 0 12px rgba(255,111,145,0.3);transition:all 0.2s;border:1px solid #5d3a7d;display:flex;flex-direction:column}
-        .card:hover{transform:translateY(-5px);box-shadow:0 0 20px rgba(255,111,145,0.6)}
-        .card h3{color:var(--secondary);font-family:'Montserrat',sans-serif;margin-top:0;font-size:1.2rem;border-bottom:1px solid var(--secondary);padding-bottom:0.5rem}
-        .card p{font-size:0.95rem;flex-grow:1}
 
         /* Enhanced Search - More prominent */
         .search-container{position:relative;width:90%;max-width:600px;margin:1.5rem auto;z-index:100}
@@ -387,17 +618,6 @@
             60% {transform: translateY(-3px);}
         }
 
-        /* New "Where Should I Go" section */
-        .path-guide{background:var(--card-bg);border-radius:10px;padding:1.5rem;margin:1.5rem auto;max-width:800px;border-left:4px solid var(--primary)}
-        .path-guide h2{color:var(--primary);margin-bottom:1rem;font-size:1.5rem}
-        .path-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
-        .path-option{background:rgba(0,0,0,0.2);border-radius:8px;padding:1.2rem;transition:all 0.3s ease;border:1px solid rgba(0,247,224,0.2)}
-        .path-option:hover{background:rgba(0,0,0,0.3);transform:translateY(-5px)}
-        .path-option h3{color:var(--secondary);margin-bottom:0.8rem;font-size:1.2rem}
-        .path-option p{font-size:0.95rem;margin-bottom:1rem}
-        .path-link{display:inline-block;background:var(--primary);color:#2e003e;padding:0.7rem 1.2rem;border-radius:6px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.9rem}
-        .path-link:hover{opacity:0.85;transform:scale(1.03)}
-
         /* New subtle animations */
         @keyframes subtleGlow {
             0%, 100% { box-shadow: 0 0 5px rgba(0,247,224,0.3); }
@@ -420,8 +640,6 @@
         @media (min-width:768px){
             .sections-grid{grid-template-columns:repeat(2,1fr)}
             .section-links{grid-template-columns:repeat(2,1fr)}
-            .card-container{gap:1.5rem}
-            .card{width:280px;padding:1.2rem}
             #panicButton{width:70px;height:70px;font-size:3rem}
             .help-text{font-size:1rem}
             .mocktail-grid{display:grid;grid-template-columns:repeat(3,1fr);width:100%}
@@ -452,13 +670,37 @@
                 width: 200px;
                 justify-content: center;
             }
-            .path-options {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
+
+<!-- Enhanced Animated Background with Minneapolis Skyline -->
+<div class="animated-background">
+    <div class="bg-gradient"></div>
+    <div class="bg-particles" id="particles"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    
+    <!-- Minneapolis Skyline -->
+    <div class="minneapolis-skyline">
+        <div class="skyline-buildings">
+            <div class="building building-1"></div>
+            <div class="building building-2"></div>
+            <div class="building building-3"></div> <!-- IDS Center -->
+            <div class="building building-4"></div>
+            <div class="building building-5"></div> <!-- Capella Tower -->
+            <div class="building building-6"></div>
+            <div class="building building-7"></div> <!-- Wells Fargo Center -->
+            <div class="building building-8"></div>
+            <div class="building building-9"></div> <!-- Foshay Tower -->
+            <div class="building building-10"></div>
+        </div>
+        <div class="bridge"></div>
+        <div class="river"></div>
+    </div>
+</div>
 
 <!-- Scroll to Top Button -->
 <button id="scrollTopBtn" title="Go to top">↑</button>
@@ -538,6 +780,7 @@
 <div class="site-title">
     <h1>PLURderapolis</h1>
     <div class="tagline">Harm Reduction for Minnesota Ravers</div>
+    <div class="minneapolis-badge">Minneapolis • St. Paul</div>
 </div>
 
 <!-- Enhanced Search -->
@@ -547,33 +790,6 @@
         <button onclick="performSearch()">🔍</button>
     </div>
     <div id="searchResults"></div>
-</div>
-
-<!-- New "Where Should I Go" section -->
-<div class="path-guide">
-    <h2>Where Should I Go?</h2>
-    <div class="path-options">
-        <div class="path-option">
-            <h3>🚨 Emergency Help</h3>
-            <p>Need immediate assistance for an overdose, bad trip, or medical emergency?</p>
-            <a href="panic.html" class="path-link">Get Help Now</a>
-        </div>
-        <div class="path-option">
-            <h3>💊 Drug Safety</h3>
-            <p>Check interactions, learn about fake drugs, or understand risks?</p>
-            <a href="polydrug.html" class="path-link">Safety Resources</a>
-        </div>
-        <div class="path-option">
-            <h3>🛡️ Consent & Safety</h3>
-            <p>Learn about consent, preventing violence, or drink spiking?</p>
-            <a href="consent.html" class="path-link">Learn More</a>
-        </div>
-        <div class="path-option">
-            <h3>🎉 Local Scene</h3>
-            <p>Find venue info, our booth schedule, or local resources?</p>
-            <a href="booth.html" class="path-link">Explore Local</a>
-        </div>
-    </div>
 </div>
 
 <!-- Mobile HUD Navigation -->
@@ -949,6 +1165,46 @@
 </footer>
 
 <script>
+// Enhanced Animated Background
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const colors = [
+        'rgba(0, 247, 224, 0.3)',
+        'rgba(255, 105, 180, 0.2)',
+        'rgba(191, 0, 191, 0.2)',
+        'rgba(224, 81, 255, 0.2)',
+        'rgba(0, 183, 255, 0.2)'
+    ];
+    
+    // Create floating particles
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        const size = Math.random() * 6 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.animationDelay = `${Math.random() * 20}s`;
+        particle.style.animationDuration = `${15 + Math.random() * 15}s`;
+        
+        particlesContainer.appendChild(particle);
+    }
+    
+    // Create pulse dots
+    for (let i = 0; i < 15; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('pulse-dot');
+        
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.animationDelay = `${Math.random() * 4}s`;
+        
+        particlesContainer.appendChild(dot);
+    }
+}
+
 // Enhanced Mobile Navigation
 const mobileNavBtn = document.getElementById('mobileNavBtn');
 const mobileNav = document.getElementById('mobileNav');
@@ -1220,6 +1476,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Create background particles
+    createParticles();
 });
 
 // Scroll to Top Button Functionality
