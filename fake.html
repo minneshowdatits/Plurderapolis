@@ -10,8 +10,7 @@
     :root {
       --plum: #5D3A7D;
       --pink: #E040FB;
-      --teal: #26F0F1;
-      --electric-blue: #4A90E2;
+      --teal: #00CED1;
       --charcoal: #1C1C1C;
       --offwhite: #F5F5F5;
       --warning-red: #FF4444;
@@ -21,8 +20,11 @@
       --animation-timing: 0.3s ease;
       --section-testing: #E040FB;
       --section-response: #FF4444;
-      --section-resources: #26F0F1;
+      --section-resources: #00CED1;
       --section-tips: #FF9800;
+      --neon-purple: #B026FF;
+      --neon-blue: #00F7FF;
+      --neon-pink: #FF2A9C;
     }
     
     * { 
@@ -43,12 +45,7 @@
       line-height: 1.7;
       font-size: 1.05rem;
       overflow-x: hidden;
-      animation: fadeInBody 1.2s ease;
-    }
-    
-    @keyframes fadeInBody {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      background: linear-gradient(135deg, var(--charcoal) 0%, #2a2a2a 100%);
     }
     
     .container { 
@@ -65,52 +62,60 @@
       border-radius: 0 0 12px 12px;
       position: relative;
       overflow: hidden;
-      animation: headerSlideDown 0.8s ease;
+      box-shadow: 0 5px 25px rgba(93, 58, 125, 0.5);
     }
     
-    @keyframes headerSlideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
-    
-    header::after {
+    header::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      animation: shimmer 3s infinite;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shimmer 6s infinite linear;
     }
     
     @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
     
     .logo-container {
-      display: block;
-      max-width: 200px;
-      margin: 0 auto 10px;
-      transition: all 0.3s ease;
-      animation: logoPopIn 1s ease;
+      position: relative;
+      margin: 0 auto 15px;
+      display: inline-block;
+      transition: all 0.4s ease;
     }
     
-    @keyframes logoPopIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      70% { transform: scale(1.05); }
-      100% { transform: scale(1); opacity: 1; }
+    .logo {
+      max-width: 220px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 0 10px rgba(224, 64, 251, 0.5));
+      animation: logoGlow 3s ease-in-out infinite alternate;
+      transition: all 0.3s ease;
+    }
+    
+    @keyframes logoGlow {
+      0% { filter: drop-shadow(0 0 5px rgba(224, 64, 251, 0.5)); }
+      100% { filter: drop-shadow(0 0 15px rgba(224, 64, 251, 0.8)); }
     }
     
     .logo-container:hover {
       transform: scale(1.05);
     }
     
-    .logo {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    .logo-container:hover .logo {
+      animation: logoPulse 0.5s ease;
+      filter: drop-shadow(0 0 20px rgba(224, 64, 251, 0.9));
+    }
+    
+    @keyframes logoPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
     
     h1, h2, h3 { 
@@ -125,7 +130,12 @@
       color: white; 
       margin-bottom: 0.5rem;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1s ease;
+      animation: fadeIn 1s ease, titleGlow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+      100% { text-shadow: 0 0 15px rgba(255,255,255,0.8), 0 0 20px rgba(224, 64, 251, 0.6); }
     }
     
     h2 { 
@@ -139,6 +149,22 @@
       justify-content: space-between;
       align-items: center;
       transition: all var(--animation-timing);
+      position: relative;
+    }
+    
+    h2::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--teal), var(--pink));
+      transition: width 0.5s ease;
+    }
+    
+    h2:hover::before {
+      width: 100%;
     }
     
     h2:hover {
@@ -155,6 +181,20 @@
       color: var(--teal); 
       margin-bottom: 0.8rem; 
       margin-top: 1.8rem;
+      position: relative;
+      padding-left: 15px;
+    }
+    
+    h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 20px;
+      background: linear-gradient(to bottom, var(--pink), var(--teal));
+      border-radius: 3px;
     }
     
     p { 
@@ -167,11 +207,27 @@
       text-decoration: none; 
       font-weight: 600; 
       transition: all 0.2s ease;
+      position: relative;
+    }
+    
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--pink);
+      transition: width 0.3s ease;
+    }
+    
+    a:hover::after, a:focus::after {
+      width: 100%;
     }
     
     a:hover, a:focus { 
       color: var(--pink); 
-      text-decoration: underline;
+      text-decoration: none;
     }
     
     .card { 
@@ -184,23 +240,27 @@
       border-top: 4px solid var(--pink);
       transition: all var(--animation-timing);
       overflow: hidden;
-      animation: cardFloatIn 0.6s ease;
+      position: relative;
     }
     
-    @keyframes cardFloatIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(20px) scale(0.95); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-      }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.7s ease;
+    }
+    
+    .card:hover::before {
+      left: 100%;
     }
     
     .card:hover {
-      transform: translateY(-5px) scale(1.01);
-      box-shadow: 0 12px 25px rgba(93, 58, 125, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(93, 58, 125, 0.5);
     }
     
     .card-header { 
@@ -222,12 +282,23 @@
       align-items: center;
       justify-content: center;
       animation: pulse 2s infinite;
+      position: relative;
+      z-index: 1;
     }
     
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 64, 251, 0.4); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(224, 64, 251, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(224, 64, 251, 0); }
+      0% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 0 rgba(224, 64, 251, 0.4);
+      }
+      70% { 
+        transform: scale(1.05); 
+        box-shadow: 0 0 0 10px rgba(224, 64, 251, 0);
+      }
+      100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 0 rgba(224, 64, 251, 0);
+      }
     }
     
     @keyframes fadeIn {
@@ -244,10 +315,13 @@
       transition: all 0.4s ease;
     }
     
+    details:hover {
+      border-left-color: var(--pink);
+    }
+    
     details[open] {
       background-color: rgba(58, 58, 58, 0.5);
-      transform: scale(1.01);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      transform: translateX(5px);
     }
     
     summary {
@@ -260,22 +334,6 @@
       color: var(--offwhite);
       background: linear-gradient(to right, rgba(93, 58, 125, 0.2), transparent);
       position: relative;
-      overflow: hidden;
-    }
-    
-    summary::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.5s;
-    }
-    
-    summary:hover::after {
-      left: 100%;
     }
     
     summary:hover {
@@ -297,10 +355,10 @@
     
     .card-content {
       padding: 0 15px 15px 15px;
-      animation: contentSlideDown 0.4s ease;
+      animation: slideDown 0.5s ease;
     }
     
-    @keyframes contentSlideDown {
+    @keyframes slideDown {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -313,12 +371,15 @@
     ul li, ol li { 
       margin-bottom: 0.8rem; 
       padding-left: 0.5rem;
-      transition: all 0.3s ease;
+      position: relative;
     }
     
-    ul li:hover, ol li:hover {
-      transform: translateX(5px);
-      color: var(--teal);
+    ul li::before {
+      content: '•';
+      color: var(--pink);
+      font-weight: bold;
+      position: absolute;
+      left: -15px;
     }
     
     ul li::marker {
@@ -333,12 +394,7 @@
       border-radius: 10px; 
       overflow: hidden; 
       box-shadow: 0 4px 10px rgba(0,0,0,.2);
-      animation: tableFadeIn 0.6s ease;
-    }
-    
-    @keyframes tableFadeIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
+      animation: fadeIn 0.8s ease;
     }
     
     th, td { 
@@ -370,18 +426,24 @@
       border-radius: 0 10px 10px 0; 
       margin: 15px 0; 
       font-weight: 600;
-      animation: warningPulse 3s infinite, shake 0.5s ease;
-    }
-    
-    @keyframes warningPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4); }
-      50% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+      animation: pulse 2s infinite, shake 0.5s ease-in-out 3;
+      position: relative;
+      overflow: hidden;
     }
     
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-      20%, 40%, 60%, 80% { transform: translateX(5px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    .warning::before {
+      content: '⚠️';
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
     }
     
     .resource-grid { 
@@ -401,34 +463,29 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      animation: resourceCardAppear 0.6s ease;
       position: relative;
       overflow: hidden;
-    }
-    
-    @keyframes resourceCardAppear {
-      0% { opacity: 0; transform: translateY(20px) rotateX(10deg); }
-      100% { opacity: 1; transform: translateY(0) rotateX(0); }
     }
     
     .resource-card::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(135deg, rgba(93,58,125,0.1) 0%, rgba(224,64,251,0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
     .resource-card:hover::before {
-      left: 100%;
+      opacity: 1;
     }
     
     .resource-card:hover {
       transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 12px 25px rgba(0,0,0,.4);
+      box-shadow: 0 10px 20px rgba(0,0,0,.4);
     }
     
     .resource-card i { 
@@ -439,12 +496,14 @@
       background: rgba(0, 206, 209, 0.1);
       padding: 12px;
       border-radius: 12px;
+      position: relative;
+      z-index: 1;
       transition: all 0.3s ease;
     }
     
     .resource-card:hover i {
-      transform: rotate(15deg) scale(1.1);
-      background: rgba(0, 206, 209, 0.2);
+      transform: rotate(10deg) scale(1.1);
+      color: var(--pink);
     }
     
     .btn { 
@@ -463,27 +522,27 @@
       font-size: 0.9rem;
       position: relative;
       overflow: hidden;
+      z-index: 1;
     }
     
-    .btn::after {
+    .btn::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 20%;
-      height: 200%;
-      background: rgba(255,255,255,0.3);
-      transform: rotate(30deg);
-      transition: all 0.5s;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
     }
     
-    .btn:hover::after {
-      left: 120%;
+    .btn:hover::before {
+      left: 100%;
     }
     
     .btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(224, 64, 251, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(224, 64, 251, 0.5);
       text-decoration: none;
     }
     
@@ -497,6 +556,24 @@
       font-weight: 700; 
       transition: all 0.2s ease;
       font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--plum);
+      transition: width 0.3s ease;
+      z-index: -1;
+    }
+    
+    .btn-outline:hover::before {
+      width: 100%;
     }
     
     .btn-outline:hover {
@@ -514,12 +591,8 @@
       padding: 15px;
       border-radius: 12px;
       text-align: center;
-      animation: navSlideIn 0.8s ease;
-    }
-    
-    @keyframes navSlideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      box-shadow: 0 5px 15px rgba(0,0,0,.2);
+      animation: fadeIn 0.8s ease;
     }
     
     .nav-buttons {
@@ -536,6 +609,7 @@
       padding-top: 15px; 
       border-top: 1px solid rgba(93,58,125,.3); 
       line-height: 1.6;
+      animation: fadeIn 1s ease;
     }
     
     footer { 
@@ -544,12 +618,8 @@
       margin-top: 30px; 
       background: var(--dark-bg); 
       border-radius: 12px; 
-      animation: footerFadeIn 1s ease;
-    }
-    
-    @keyframes footerFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      box-shadow: 0 -5px 15px rgba(0,0,0,.2);
+      animation: fadeIn 1.2s ease;
     }
     
     strong {
@@ -617,8 +687,8 @@
     }
     
     #scrollToTopBtn:hover {
-      transform: translateY(-3px) scale(1.1);
-      box-shadow: 0 6px 20px rgba(224, 64, 251, 0.5);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 20px rgba(224, 64, 251, 0.5);
     }
     
     /* Dropdown navigation */
@@ -640,6 +710,23 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .dropbtn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .dropbtn:hover::before {
+      left: 100%;
     }
     
     .dropbtn:hover {
@@ -659,10 +746,10 @@
       top: 100%;
       left: 0;
       margin-top: 5px;
-      animation: dropdownSlide 0.3s ease;
+      animation: dropdownFade 0.3s ease;
     }
     
-    @keyframes dropdownSlide {
+    @keyframes dropdownFade {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
@@ -725,12 +812,7 @@
       gap: 8px;
       margin-bottom: 20px;
       justify-content: center;
-      animation: quickNavFadeIn 0.8s ease;
-    }
-    
-    @keyframes quickNavFadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+      animation: fadeIn 0.8s ease;
     }
     
     .quick-nav-btn {
@@ -746,40 +828,43 @@
     
     .quick-nav-btn:hover {
       background: rgba(93, 58, 125, 0.3);
-      transform: translateY(-2px) scale(1.05);
+      transform: translateY(-2px);
     }
     
-    /* Floating particles background */
+    /* Floating particles */
     .particles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
       pointer-events: none;
+      z-index: -1;
     }
     
     .particle {
       position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--pink);
       border-radius: 50%;
-      background: rgba(93, 58, 125, 0.1);
       animation: float 15s infinite linear;
+      opacity: 0.3;
     }
     
     @keyframes float {
       0% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(100vh) translateX(0);
         opacity: 0;
       }
       10% {
-        opacity: 1;
+        opacity: 0.3;
       }
       90% {
-        opacity: 1;
+        opacity: 0.3;
       }
       100% {
-        transform: translateY(-1000px) rotate(720deg);
+        transform: translateY(-100px) translateX(100px);
         opacity: 0;
       }
     }
@@ -886,22 +971,25 @@
   </style>
 </head>
 <body>
-  <!-- Floating particles background -->
+  <!-- Floating particles -->
   <div class="particles" id="particles"></div>
-  
+
   <header>
     <div class="container">
-      <!-- PLURderapolis logo that links to home -->
+      <!-- PLURderapolis Logo -->
       <a href="index.html" class="logo-container">
         <svg class="logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#5D3A7D" />
-              <stop offset="100%" stop-color="#E040FB" />
+              <stop offset="0%" stop-color="#E040FB" />
+              <stop offset="100%" stop-color="#00CED1" />
             </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
           </defs>
-          <rect x="0" y="0" width="200" height="60" rx="10" fill="url(#logoGradient)" />
-          <text x="100" y="35" text-anchor="middle" fill="white" font-family="Montserrat, sans-serif" font-weight="700" font-size="24">PLURderapolis</text>
+          <text x="20" y="40" font-family="Montserrat, sans-serif" font-weight="700" font-size="36" fill="url(#logoGradient)" filter="url(#glow)">PLURderapolis</text>
         </svg>
       </a>
       <h1>Is Your Shit Real?</h1>
@@ -1268,30 +1356,41 @@
     // Create floating particles
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
-      const particleCount = 20;
+      const particleCount = 30;
       
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         
-        // Random size, position, and animation delay
-        const size = Math.random() * 20 + 5;
-        const left = Math.random() * 100;
-        const animationDuration = Math.random() * 20 + 10;
-        const animationDelay = Math.random() * 5;
+        // Random position
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
         
+        // Random size
+        const size = Math.random() * 3 + 1;
+        
+        // Random animation delay and duration
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 10;
+        
+        // Random color
+        const colors = ['#E040FB', '#00CED1', '#5D3A7D', '#FF2A9C'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
-        particle.style.left = `${left}%`;
-        particle.style.animationDuration = `${animationDuration}s`;
-        particle.style.animationDelay = `${animationDelay}s`;
+        particle.style.background = color;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
         
         particlesContainer.appendChild(particle);
       }
     }
     
-    // Initialize particles when page loads
-    window.addEventListener('load', createParticles);
+    // Initialize particles
+    createParticles();
   </script>
 </body>
 </html>
