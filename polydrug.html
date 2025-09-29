@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Polydrug Risks & Interaction Checker | PLURderapolis</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root{
     --bg:#121212;
@@ -19,9 +20,11 @@
     --danger:#ff4d4d;
     --caution:#ffb84d;
     --low-risk:#4dff88;
+    --card-gradient: linear-gradient(135deg, #1b0b1b 0%, #2a0a2a 100%);
+    --glow: 0 0 15px rgba(191, 0, 191, 0.5);
   }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; scroll-behavior: smooth;}
   a{color:var(--accent); text-decoration: none; transition: all 0.3s ease;}
   a:hover {color: var(--accent-2); text-shadow: 0 0 8px rgba(224, 81, 255, 0.5);}
   .wrap{max-width:1000px;margin:auto;padding:16px}
@@ -33,18 +36,19 @@
   .navigation {display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;}
   .nav-links {display: flex; gap: 15px; flex-wrap: wrap;}
   .nav-button {background: var(--chip); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;}
-  .nav-button:hover {background: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(191, 0, 191, 0.3);}
+  .nav-button:hover {background: var(--accent); transform: translateY(-2px); box-shadow: var(--glow);}
   
   /* Header branding */
   .branding{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .logo{font-size:1.8rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent; animation: logoPulse 4s infinite ease-in-out;}
+  .logo{font-size:1.8rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent; animation: logoPulse 4s infinite ease-in-out; text-shadow: 0 0 10px rgba(191, 0, 191, 0.3);}
   @keyframes logoPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
   }
   .tagline{color:var(--muted);font-size:.9rem}
+  
   /* Top checker card */
-  .tool{background:var(--card);border-radius:14px;padding:14px;box-shadow:var(--shadow);position:sticky;top:0.35rem;z-index:5; animation: fadeIn 0.8s ease-out;}
+  .tool{background:var(--card-gradient);border-radius:14px;padding:14px;box-shadow:var(--shadow);position:sticky;top:0.35rem;z-index:5; animation: fadeIn 0.8s ease-out; border: 1px solid var(--line);}
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -55,22 +59,25 @@
   label{font-weight:700;color:var(--accent);font-size:.9rem}
   select{width:100%;padding:.6rem .7rem;border:1px solid var(--line);border-radius:10px;background:#220022;color:var(--ink);appearance:none; transition: all 0.3s ease;}
   select:focus {outline: none; border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(224, 81, 255, 0.3);}
-  button.primary{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:.7rem 1rem;font-weight:800;cursor:pointer; transition: all 0.3s ease;}
+  button.primary{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:.7rem 1rem;font-weight:800;cursor:pointer; transition: all 0.3s ease; position: relative; overflow: hidden;}
   button.primary:hover {background: var(--accent-2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(191, 0, 191, 0.4);}
   button.primary:active{transform:translateY(1px)}
+  button.primary::after {content: ''; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; background: rgba(255, 255, 255, 0.5); opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%); transform-origin: 50% 50%;}
+  button.primary:focus:not(:active)::after {animation: ripple 1s ease-out;}
+  @keyframes ripple {0% {transform: scale(0, 0); opacity: 0.5;} 100% {transform: scale(20, 20); opacity: 0;}}
   .icons{font-size:1.05rem;opacity:.95; animation: iconGlow 2s infinite alternate;}
   @keyframes iconGlow {
     from { text-shadow: 0 0 5px rgba(191, 0, 191, 0.5); }
     to { text-shadow: 0 0 10px rgba(224, 81, 255, 0.8); }
   }
-  .result{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:10px;background:#170717; animation: slideIn 0.5s ease-out;}
+  .result{margin-top:10px;border:1px dashed var(--line);border-radius:12px;padding:10px;background:#170717; animation: slideIn 0.5s ease-out; max-height: 500px; overflow-y: auto;}
   @keyframes slideIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .result h3{margin:.2rem 0 .4rem;color:#ffd6ff;font-size:1rem}
   .pairs{margin:.4rem 0 0;padding-left:18px}
-  .pair-detail{background:#1f001f;border-radius:8px;padding:12px;margin:8px 0;border-left:4px solid var(--accent); animation: fadeInUp 0.5s ease-out;}
+  .pair-detail{background:#1f001f;border-radius:8px;padding:12px;margin:8px 0;border-left:4px solid var(--accent); animation: fadeInUp 0.5s ease-out; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -82,18 +89,19 @@
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 0;font-size:.95rem;color:var(--muted)}
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem; transition: all 0.3s ease;}
   .legend span:hover {transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
+  
   /* Matrix */
   .controls{display:flex;align-items:center;gap:10px;margin:14px 0 8px;flex-wrap:wrap}
-  .download{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:.55rem .9rem;font-weight:800;cursor:pointer; transition: all 0.3s ease;}
+  .download{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:.55rem .9rem;font-weight:800;cursor:pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;}
   .download:hover {background: var(--accent-2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(191, 0, 191, 0.4);}
-  .share{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;font-weight:700;cursor:pointer; transition: all 0.3s ease;}
+  .share{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;font-weight:700;cursor:pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;}
   .share:hover {background: #3a003a; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);}
   .matrix{overflow:auto;border-radius:12px;box-shadow:var(--shadow);border:1px solid var(--line);background:#160616; animation: fadeIn 0.8s ease-out 0.2s both;}
   table{border-collapse:collapse;width:100%;min-width:980px;font-size:.92rem}
-  th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:center;vertical-align:middle; transition: all 0.3s ease;}
-  thead th{position:sticky;top:0;background:#3b0a3b;color:#ffe5ff;z-index:2}
-  tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:1}
-  td{background:#1f001f; transition: all 0.3s ease;}
+  th,td{border:1px solid var(--line);padding:.45rem .55rem;text-align:center;vertical-align:middle; transition: all 0.3s ease; position: relative;}
+  thead th{position:sticky;top:0;background:#3b0a3b;color:#ffe5ff;z-index:2; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+  tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:1; box-shadow: 2px 0 5px rgba(0,0,0,0.2);}
+  td{background:#1f001f; transition: all 0.3s ease; cursor: pointer;}
   td:hover {transform: scale(1.05); z-index: 3; box-shadow: 0 0 10px rgba(191, 0, 191, 0.5);}
   td.risk-low{background:#0a2a14}
   td.risk-caution{background:#2a200a}
@@ -101,25 +109,29 @@
   td.risk-danger{background:#2a0a0a}
   .chip {display:inline-block;background:var(--chip);border-radius:999px;padding:.18rem .55rem;font-weight:700; transition: all 0.3s ease;}
   .chip:hover {transform: scale(1.05); background: var(--accent);}
+  
   /* Sections at bottom (accordion) */
-  details.info{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.6rem .8rem;margin:.6rem 0; transition: all 0.3s ease;}
-  details.info:hover {border-color: var(--accent);}
-  details.info summary{cursor:pointer;font-weight:800;list-style:none; transition: all 0.3s ease;}
+  details.info{background:var(--card-gradient);border:1px solid var(--line);border-radius:12px;padding:.6rem .8rem;margin:.6rem 0; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+  details.info:hover {border-color: var(--accent); transform: translateY(-2px);}
+  details.info summary{cursor:pointer;font-weight:800;list-style:none; transition: all 0.3s ease; display: flex; align-items: center; padding: 5px 0;}
   details.info summary:hover {color: var(--accent-2);}
   details.info summary::marker, details.info summary::-webkit-details-marker{display:none}
-  details.info summary .tag{margin-left:.5rem;opacity:.85}
+  details.info summary .tag{margin-left:.5rem;opacity:.85; font-size: 0.8rem; background: var(--chip); padding: 2px 8px; border-radius: 10px;}
   details.info[open] {animation: accordionOpen 0.5s ease-out;}
   @keyframes accordionOpen {
     from { opacity: 0; max-height: 0; }
     to { opacity: 1; max-height: 500px; }
   }
+  
   /* Back to top button */
   .back-to-top{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;border:0;border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow);z-index:100;display:none; transition: all 0.3s ease;}
   .back-to-top:hover {background: var(--accent-2); transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 15px rgba(191, 0, 191, 0.5);}
+  
   /* Footer */
   footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;padding:18px;margin-top:16px;text-align:center; animation: fadeIn 0.8s ease-out 0.4s both;}
   .pill{display:inline-block;background:var(--chip);padding:.22rem .6rem;border-radius:999px;font-weight:800; transition: all 0.3s ease;}
   .pill:hover {transform: scale(1.05); background: var(--accent);}
+  
   /* Mobile niceties */
   @media (max-width:640px){
     .tool{position:static}
@@ -128,6 +140,97 @@
     .controls{flex-direction:column;align-items:flex-start}
     .navigation {flex-direction: column; align-items: flex-start;}
     .nav-links {margin-top: 10px;}
+    .branding {flex-direction: column; align-items: flex-start; gap: 5px;}
+  }
+  
+  /* Save page modal */
+  .save-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .save-modal-content {
+    background: var(--card-gradient);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  .save-modal h3 {
+    margin-top: 0;
+    color: var(--accent-2);
+  }
+  
+  .save-options {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+  
+  .save-option {
+    flex: 1;
+    min-width: 120px;
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .save-option:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+  }
+  
+  .modal-close {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .modal-close:hover {
+    background: var(--accent-2);
+  }
+  
+  /* Mobile swipe indicators */
+  .swipe-indicator {
+    display: none;
+    text-align: center;
+    margin: 10px 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  
+  @media (max-width: 768px) {
+    .swipe-indicator {
+      display: block;
+    }
   }
 </style>
 </head>
@@ -135,12 +238,12 @@
   <div class="wrap">
     <!-- Navigation -->
     <div class="navigation">
-      <button class="nav-button" id="backButton" onclick="history.back()">← Back</button>
+      <button class="nav-button" id="backButton" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
       <div class="nav-links">
-        <a href="resources.html" class="nav-button">📚 Resources</a>
-        <a href="emergency.html" class="nav-button">🚨 Emergency</a>
-        <a href="spiking.html" class="nav-button">⚠️ Spiking</a>
-        <a href="fake.html" class="nav-button">🔍 Fake Drugs</a>
+        <a href="resources.html" class="nav-button"><i class="fas fa-book"></i> Resources</a>
+        <a href="emergency.html" class="nav-button"><i class="fas fa-exclamation-triangle"></i> Emergency</a>
+        <a href="spiking.html" class="nav-button"><i class="fas fa-skull-crossbones"></i> Spiking</a>
+        <a href="fake.html" class="nav-button"><i class="fas fa-search"></i> Fake Drugs</a>
       </div>
     </div>
     
@@ -188,11 +291,13 @@
     </section>
 
     <!-- ===== Controls + Matrix ===== -->
+    <div class="swipe-indicator">
+      <i class="fas fa-arrows-left-right"></i> Swipe left/right to explore the full matrix
+    </div>
+    
     <div class="controls">
-      <button class="download" id="dlCsv">Download Matrix (CSV)</button>
-      <button class="download" id="dlJson">Download Matrix (JSON)</button>
-      <button class="share" id="shareBtn">Share Page</button>
-      <span class="muted" style="color:var(--muted)">Tip: drag left/right to explore the grid on mobile.</span>
+      <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
+      <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
     </div>
 
     <div class="matrix" role="region" aria-label="Combo Risk Matrix">
@@ -251,8 +356,31 @@
     </footer>
   </div>
 
+  <!-- Save Page Modal -->
+  <div class="save-modal" id="saveModal">
+    <div class="save-modal-content">
+      <h3>Save Page</h3>
+      <p>Choose how you'd like to save this information:</p>
+      <div class="save-options">
+        <div class="save-option" id="savePdf">
+          <i class="fas fa-file-pdf"></i>
+          <div>PDF</div>
+        </div>
+        <div class="save-option" id="saveHtml">
+          <i class="fas fa-code"></i>
+          <div>HTML</div>
+        </div>
+        <div class="save-option" id="saveImage">
+          <i class="fas fa-image"></i>
+          <div>Image</div>
+        </div>
+      </div>
+      <button class="modal-close" id="closeModal">Close</button>
+    </div>
+  </div>
+
   <!-- Back to top button -->
-  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
 <script>
 /* ============================================================
@@ -469,7 +597,7 @@ const trioExplanations = {
 };
 
 /* ============================================================
-   UI: Populate selects, render matrix, CSV download, share
+   UI: Populate selects, render matrix, save functionality, share
 ============================================================ */
 const allSubs = headers.slice(); // 21 including Viagra
 
@@ -576,6 +704,7 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
       const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
       td.textContent = val;
       td.className = getRiskClass(val);
+      td.title = `${r} + ${c}: ${iconExplain(val)}`;
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
@@ -583,51 +712,75 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
   tbl.appendChild(thead); tbl.appendChild(tbody);
 })();
 
-// CSV download (minimalist icons)
-document.getElementById("dlCsv").addEventListener("click", ()=>{
-  let csv = "Substance," + headers.join(",") + "\n";
-  headers.forEach(r=>{
-    let line = [r];
-    headers.forEach(c=>{
-      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
-      line.push(val);
-    });
-    csv += line.join(",") + "\n";
-  });
-  const blob = new Blob([csv],{type:"text/csv"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "plurderapolis-polydrug-matrix.csv";
-  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+// Save page functionality
+const saveModal = document.getElementById("saveModal");
+const savePageBtn = document.getElementById("savePageBtn");
+const closeModal = document.getElementById("closeModal");
+
+savePageBtn.addEventListener("click", () => {
+  saveModal.style.display = "flex";
 });
 
-// JSON download
-document.getElementById("dlJson").addEventListener("click", ()=>{
-  const data = {
-    metadata: {
-      title: "PLURderapolis Polydrug Interaction Matrix",
-      version: "1.0",
-      generated: new Date().toISOString(),
-      source: "PLURderapolis Harm Reduction"
-    },
-    substances: headers,
-    interactions: {}
-  };
+closeModal.addEventListener("click", () => {
+  saveModal.style.display = "none";
+});
+
+// Save options
+document.getElementById("savePdf").addEventListener("click", () => {
+  alert("PDF generation would be implemented here with a library like jsPDF");
+  saveModal.style.display = "none";
+});
+
+document.getElementById("saveHtml").addEventListener("click", () => {
+  // Create a clone of the page content
+  const content = document.querySelector('.wrap').cloneNode(true);
   
-  headers.forEach(r => {
-    data.interactions[r] = {};
-    headers.forEach(c => {
-      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
-      data.interactions[r][c] = val;
-    });
+  // Remove interactive elements that won't work in a saved HTML
+  const buttons = content.querySelectorAll('button');
+  buttons.forEach(btn => {
+    if (btn.id !== 'backButton') {
+      btn.remove();
+    }
   });
   
-  const jsonStr = JSON.stringify(data, null, 2);
-  const blob = new Blob([jsonStr], {type: "application/json"});
+  // Remove selects
+  const selects = content.querySelectorAll('select');
+  selects.forEach(select => select.remove());
+  
+  // Create a new HTML document
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>PLURderapolis Polydrug Interaction Checker</title>
+      <meta charset="utf-8">
+      <style>
+        ${document.querySelector('style').innerHTML}
+      </style>
+    </head>
+    <body>
+      ${content.outerHTML}
+    </body>
+    </html>
+  `;
+  
+  // Create and download the file
+  const blob = new Blob([htmlContent], {type: 'text/html'});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "plurderapolis-polydrug-matrix.json";
-  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'plurderapolis-drug-interactions.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  saveModal.style.display = "none";
+});
+
+document.getElementById("saveImage").addEventListener("click", () => {
+  alert("Image capture would be implemented here with a library like html2canvas");
+  saveModal.style.display = "none";
 });
 
 // Share button (Web Share API)
@@ -653,6 +806,13 @@ window.addEventListener('scroll', () => {
 
 backToTopBtn.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+  if (e.target === saveModal) {
+    saveModal.style.display = 'none';
+  }
 });
 </script>
 </body>
