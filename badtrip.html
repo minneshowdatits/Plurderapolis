@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bad Trip Mode — PLURderapolis</title>
+<title>Bad Trip Guide — PLURderapolis</title>
 <meta name="description" content="A safe space for grounding during difficult psychedelic experiences">
 <meta name="theme-color" content="#1c0028">
 <link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   /* Base theme */
   :root{
@@ -16,32 +16,108 @@
     --accent:#ff6ec7;
     --mint:#00f7e0;
     --text:#eee;
+    --soft-purple:#3a0055;
+    --light-purple:#4a0066;
   }
-  html,body{height:100%}
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  html,body{
+    height:100%;
+    scroll-behavior: smooth;
+  }
+  
   body{
-    margin:0; padding:1rem; font-family:'Roboto',sans-serif;
-    background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+    margin:0; 
+    padding:0; 
+    font-family:'Roboto',sans-serif;
+    background:var(--bg); 
+    color:var(--text); 
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+    overflow-x: hidden;
+    background: radial-gradient(ellipse at top, #2a0040 0%, #1c0028 100%);
   }
-  h1,h2{font-family:'Montserrat',sans-serif; text-align:center; margin:1rem 0}
-  h1{font-size:2rem; color:var(--accent); text-shadow:0 0 8px #ff6ec7aa;}
+  
+  h1,h2,h3{
+    font-family:'Montserrat',sans-serif; 
+    margin:0;
+  }
+  
+  h1{
+    font-size:1.8rem; 
+    color:var(--mint); 
+    text-shadow:0 0 8px #00f7e0aa;
+    font-weight:700;
+    margin-bottom:1rem;
+  }
+  
   h2{
-    background:var(--card); color:var(--mint);
-    padding:.8rem; border-radius:8px; cursor:pointer;
-    box-shadow:0 0 10px #00f7e055; transition:background .2s;
+    font-size:1.3rem;
+    color:var(--text);
+    font-weight:600;
+    padding:1rem;
+    border-radius:12px;
+    background:var(--soft-purple);
+    margin:0.5rem 0;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    position:relative;
+    display:flex;
+    align-items:center;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
   }
-  h2:hover{background:#3a0055}
-  main{max-width:780px; margin:0 auto}
+  
+  h2:after {
+    content: '+';
+    position:absolute;
+    right:1rem;
+    font-size:1.5rem;
+    transition:transform 0.3s ease;
+  }
+  
+  h2.open:after {
+    transform:rotate(45deg);
+  }
+  
+  h2:hover{
+    background:var(--light-purple);
+    transform:translateY(-2px);
+  }
+  
+  main{
+    max-width:780px; 
+    margin:0 auto;
+    padding:1rem;
+  }
+  
   /* Landing page */
   #landing {
     text-align: center;
-    padding: 2rem 0;
+    padding: 2rem 1rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-height:100vh;
+    background: radial-gradient(ellipse at center, rgba(42,0,64,0.4) 0%, rgba(28,0,40,0) 70%);
   }
+  
+  .landing-icon {
+    font-size:4rem;
+    margin-bottom:1rem;
+    filter: drop-shadow(0 0 10px rgba(0,247,224,0.5));
+  }
+  
   .landing-message {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--mint);
+    line-height:1.5;
   }
+  
   .landing-buttons {
     display: flex;
     flex-direction: column;
@@ -49,120 +125,535 @@
     max-width: 300px;
     margin: 0 auto;
   }
+  
   .landing-btn {
     background: var(--mint);
     color: #111;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     border: none;
-    border-radius: 25px;
-    padding: 1rem;
+    border-radius: 50px;
+    padding: 1rem 1.5rem;
     cursor: pointer;
-    box-shadow: 0 0 8px #00f7e0aa;
+    box-shadow: 0 4px 8px rgba(0,247,224,0.3);
     font-size: 1.1rem;
+    transition: all 0.3s ease;
   }
+  
   .landing-btn:hover {
     background: #00d6c7;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,247,224,0.4);
   }
+  
   .landing-btn.secondary {
     background: var(--accent);
-    box-shadow: 0 0 8px #ff6ec7aa;
+    box-shadow: 0 4px 8px rgba(255,110,199,0.3);
   }
+  
   .landing-btn.secondary:hover {
     background: #ff49b2;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255,110,199,0.4);
   }
+  
+  /* Main Guide Content */
+  #guideContent {
+    display:none;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
   /* Collapsible */
-  .collapsible-content{display:none; padding:1rem; margin:.5rem 0 1.2rem; background:var(--card); border-radius:8px; box-shadow:0 0 15px #00000055}
-  .collapsible-content.open{display:block}
-  /* Controls */
-  .top-controls{display:flex;gap:1rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
-  .mode-btn{
-    background:var(--mint); color:#111; font-family:'Montserrat',sans-serif; font-weight:700;
-    border:none;border-radius:25px;padding:.6rem 1rem;cursor:pointer;box-shadow:0 0 8px #00f7e0aa;
+  .collapsible-content{
+    display:none; 
+    padding:1.5rem; 
+    margin:.5rem 0 1.2rem; 
+    background:var(--card); 
+    border-radius:12px; 
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    animation: slideDown 0.3s ease;
   }
-  .mode-btn:hover{background:#00d6c7}
+  
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .collapsible-content.open{
+    display:block;
+  }
+  
+  /* Controls */
+  .top-controls{
+    display:flex;
+    gap:1rem;
+    justify-content:center;
+    margin:1.5rem 0;
+    flex-wrap:wrap;
+  }
+  
+  .mode-btn{
+    background:var(--mint); 
+    color:#111; 
+    font-family:'Montserrat',sans-serif; 
+    font-weight:600;
+    border:none;
+    border-radius:25px;
+    padding:.7rem 1.2rem;
+    cursor:pointer;
+    box-shadow:0 4px 8px rgba(0,247,224,0.3);
+    transition:all 0.3s ease;
+  }
+  
+  .mode-btn:hover{
+    background:#00d6c7;
+    transform:translateY(-2px);
+    box-shadow:0 6px 12px rgba(0,247,224,0.4);
+  }
+  
   /* progress */
-  #progressContainer{width:100%;background:#222;border-radius:8px;height:12px;margin:1rem 0}
-  #progressBar{width:0;height:100%;background:var(--accent);border-radius:8px;transition:width .4s ease}
+  #progressContainer{
+    width:100%;
+    background:rgba(255,255,255,0.1);
+    border-radius:50px;
+    height:10px;
+    margin:1.5rem 0;
+    overflow:hidden;
+  }
+  
+  #progressBar{
+    width:0;
+    height:100%;
+    background:linear-gradient(90deg, var(--mint), var(--accent));
+    border-radius:50px;
+    transition:width .6s ease;
+  }
+  
   /* breathing */
-  .breathing-container{display:flex;flex-direction:column;align-items:center;gap:.75rem;margin:0 auto}
-  .breathing-shape{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--accent)20%,#2a0040 90%);box-shadow:0 0 20px #ff6ec7aa; animation:breathe 8s infinite}
-  @keyframes breathe{0%{transform:scale(1);opacity:.75}40%{transform:scale(1.45);opacity:1}60%{transform:scale(1.45);opacity:1}100%{transform:scale(1);opacity:.75}}
+  .breathing-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1.5rem;
+    margin:0 auto;
+  }
+  
+  .breathing-shape{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--accent) 0%, var(--soft-purple) 70%);
+    box-shadow:0 0 30px rgba(255,110,199,0.6);
+    animation:breathe 8s infinite ease-in-out;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:700;
+    font-size:1.2rem;
+  }
+  
+  @keyframes breathe{
+    0%{transform:scale(1); opacity:0.7}
+    40%{transform:scale(1.4); opacity:1}
+    60%{transform:scale(1.4); opacity:1}
+    100%{transform:scale(1); opacity:0.7}
+  }
+  
   .breathing-controls {
     display: flex;
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
   }
+  
   /* grounding */
-  .ground-list{list-style:disc;padding-left:1.1rem}
-  .ground-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+  .ground-list{
+    list-style:disc;
+    padding-left:1.1rem;
+  }
+  
+  .ground-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:.8rem;
+  }
+  
   .ground-btn{
-    background:var(--mint); color:#111; padding:.6rem .8rem; border-radius:18px; border:none; cursor:pointer; font-weight:700;
-    box-shadow:0 0 8px #00f7e0aa;
+    background:var(--mint); 
+    color:#111; 
+    padding:.8rem 1rem; 
+    border-radius:20px; 
+    border:none; 
+    cursor:pointer; 
+    font-weight:600;
+    box-shadow:0 4px 8px rgba(0,247,224,0.3);
+    transition:all 0.3s ease;
+    text-align:left;
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
   }
-  .ground-btn.done{background:#444;color:#ccc;text-decoration:line-through;box-shadow:none;cursor:default}
+  
+  .ground-btn:before {
+    content: '';
+    display:inline-block;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.3);
+    flex-shrink:0;
+  }
+  
+  .ground-btn.done{
+    background:#444;
+    color:#ccc;
+    text-decoration:line-through;
+    box-shadow:none;
+    cursor:default;
+  }
+  
+  .ground-btn.done:before {
+    content: '✓';
+    background:var(--mint);
+    color:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.8rem;
+    font-weight:bold;
+  }
+  
   .grounding-alternative {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #444;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
+  
   /* sounds */
-  .audio-controls{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
-  .audio-btn{padding:.45rem .9rem;border-radius:20px;border:none;background:var(--mint);color:#112;cursor:pointer;font-weight:700;box-shadow:0 0 8px #00f7e0aa}
-  .audio-btn.playing{background:var(--accent); color:#111}
-  .audio-btn:hover{opacity:.95}
+  .audio-controls{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:.8rem;
+    margin-top:.5rem;
+  }
+  
+  .audio-btn{
+    padding:.7rem .8rem;
+    border-radius:20px;
+    border:none;
+    background:var(--mint);
+    color:#112;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 4px 8px rgba(0,247,224,0.3);
+    transition:all 0.3s ease;
+  }
+  
+  .audio-btn.playing{
+    background:var(--accent); 
+    color:#111;
+    transform:scale(0.98);
+  }
+  
+  .audio-btn:hover{
+    transform:translateY(-2px);
+  }
+  
   .audio-btn.mute {
     background: #666;
-    box-shadow: 0 0 8px #666;
+    box-shadow: 0 4px 8px rgba(102,102,102,0.3);
+    grid-column: 1 / -1;
+    margin-top:0.5rem;
   }
+  
   /* mantras */
-  .mantra-box{display:flex;flex-direction:column;align-items:center;gap:.6rem}
-  .mantra-text{font-weight:700;color:var(--mint);font-size:1.05rem;text-align:center;padding:.6rem 1rem;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer}
-  .mantra-next{padding:.45rem .9rem;border-radius:20px;border:none;background:var(--accent);color:#111;font-weight:800;box-shadow:0 0 8px #ff6ec7aa;cursor:pointer}
+  .mantra-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1rem;
+  }
+  
+  .mantra-text{
+    font-weight:600;
+    color:var(--mint);
+    font-size:1.2rem;
+    text-align:center;
+    padding:1.5rem;
+    border-radius:12px;
+    background:rgba(255,255,255,0.05);
+    cursor:pointer;
+    width:100%;
+    transition:all 0.3s ease;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .mantra-text:hover{
+    background:rgba(255,255,255,0.08);
+    transform:translateY(-3px);
+  }
+  
+  .mantra-next{
+    padding:.7rem 1.5rem;
+    border-radius:50px;
+    border:none;
+    background:var(--accent);
+    color:#111;
+    font-weight:700;
+    box-shadow:0 4px 8px rgba(255,110,199,0.3);
+    cursor:pointer;
+    transition:all 0.3s ease;
+  }
+  
+  .mantra-next:hover{
+    background:#ff49b2;
+    transform:translateY(-3px);
+    box-shadow:0 6px 12px rgba(255,110,199,0.4);
+  }
+  
   /* timer */
-  .timer-display{font-size:2rem;font-weight:800;color:var(--accent);text-align:center;margin:1rem 0;text-shadow:0 0 8px #ff6ec7e0}
-  .timer-controls{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-  .timer-btn{padding:.45rem .9rem;border-radius:20px;border:none;background:var(--mint);color:#111;font-weight:700;box-shadow:0 0 8px #00f7e0aa}
+  .timer-display{
+    font-size:3rem;
+    font-weight:800;
+    color:var(--accent);
+    text-align:center;
+    margin:1.5rem 0;
+    text-shadow:0 0 15px rgba(255,110,199,0.7);
+    font-family:'Montserrat', sans-serif;
+  }
+  
+  .timer-controls{
+    display:flex;
+    gap:.8rem;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  
+  .timer-btn{
+    padding:.7rem 1.2rem;
+    border-radius:50px;
+    border:none;
+    background:var(--mint);
+    color:#111;
+    font-weight:600;
+    box-shadow:0 4px 8px rgba(0,247,224,0.3);
+    transition:all 0.3s ease;
+  }
+  
+  .timer-btn:hover{
+    background:#00d6c7;
+    transform:translateY(-2px);
+    box-shadow:0 6px 12px rgba(0,247,224,0.4);
+  }
+  
   .timer-message {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     font-style: italic;
     color: var(--mint);
+    font-size:1.1rem;
   }
+  
   /* resources */
-  .resource-btn{display:block;width:100%;padding:.6rem 1rem;border-radius:20px;border:none;background:var(--accent);color:#111;font-weight:800;margin:.4rem 0;text-align:center;text-decoration:none;box-shadow:0 0 8px #ff6ec7aa}
-  .resource-btn:hover{background:#ff49b2}
+  .resource-btn{
+    display:block;
+    width:100%;
+    padding:.8rem 1rem;
+    border-radius:20px;
+    border:none;
+    background:var(--accent);
+    color:#111;
+    font-weight:700;
+    margin:.5rem 0;
+    text-align:center;
+    text-decoration:none;
+    box-shadow:0 4px 8px rgba(255,110,199,0.3);
+    transition:all 0.3s ease;
+  }
+  
+  .resource-btn:hover{
+    background:#ff49b2;
+    transform:translateY(-3px);
+    box-shadow:0 6px 12px rgba(255,110,199,0.4);
+  }
+  
   /* encouraging */
-  .encouragement{display:none;text-align:center;font-weight:800;color:var(--mint);margin:.6rem 0}
+  .encouragement{
+    display:none;
+    text-align:center;
+    font-weight:700;
+    color:var(--mint);
+    margin:1rem 0;
+    padding:1rem;
+    background:rgba(0,247,224,0.1);
+    border-radius:12px;
+    animation:pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,247,224,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0,247,224,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,247,224,0); }
+  }
+  
   /* aftercare */
   .aftercare-prompt {
-    margin: 1rem 0;
-    padding: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
     background: rgba(255,255,255,0.05);
-    border-radius: 8px;
+    border-radius: 12px;
   }
-  footer{color:#aaa;text-align:center;margin:2rem 0 1rem;font-size:.9rem}
+  
+  textarea {
+    width:100%;
+    min-height:100px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:12px;
+    color:var(--text);
+    padding:1rem;
+    font-family:'Roboto', sans-serif;
+    font-size:1rem;
+    resize:vertical;
+    margin-top:0.5rem;
+  }
+  
+  textarea:focus {
+    outline:none;
+    border-color:var(--mint);
+    box-shadow:0 0 0 2px rgba(0,247,224,0.2);
+  }
+  
+  footer{
+    color:#aaa;
+    text-align:center;
+    margin:3rem 0 1rem;
+    font-size:.9rem;
+    padding:1rem;
+  }
+  
+  /* Floating action button for mobile */
+  .fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255,110,199,0.4);
+    cursor: pointer;
+    z-index: 100;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255,110,199,0.5);
+  }
+  
+  /* Sensory safe mode */
+  .sensory-safe {
+    --bg: #0a0014;
+    --card: #150020;
+    --accent: #cc5aa3;
+    --mint: #00c4b3;
+    --text: #ddd;
+    --soft-purple: #200030;
+    --light-purple: #2a003a;
+  }
+  
+  .sensory-safe .breathing-shape {
+    animation-duration: 12s;
+    box-shadow: 0 0 15px rgba(204,90,163,0.4);
+  }
+  
+  .sensory-safe h2 {
+    box-shadow: none;
+  }
+  
   /* responsive */
-  @media (max-width:520px){
-    .ground-grid{grid-template-columns:1fr}
-    .breathing-shape{width:88px;height:88px}
+  @media (min-width: 520px){
+    .ground-grid{
+      grid-template-columns:1fr 1fr;
+    }
+    
+    .audio-controls{
+      grid-template-columns:1fr 1fr 1fr;
+    }
+    
+    .audio-btn.mute {
+      grid-column: auto;
+      margin-top:0;
+    }
+  }
+  
+  @media (max-width: 520px){
+    h1 {
+      font-size: 1.5rem;
+    }
+    
+    h2 {
+      font-size: 1.1rem;
+      padding: 0.8rem 1rem;
+    }
+    
+    .breathing-shape{
+      width:120px;
+      height:120px;
+      font-size:1rem;
+    }
+    
     .landing-buttons {
       max-width: 100%;
     }
+    
+    .top-controls {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .mode-btn {
+      width: 100%;
+      max-width: 250px;
+    }
+    
+    .timer-display {
+      font-size: 2.5rem;
+    }
   }
+  
   /* PWA install prompt */
   .install-prompt {
     position: fixed;
     bottom: 1rem;
+    left: 1rem;
     right: 1rem;
     background: var(--card);
     padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 15px #000000aa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     z-index: 100;
     display: none;
+    animation: slideUp 0.3s ease;
   }
+  
+  @keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
   .install-prompt button {
     background: var(--mint);
     color: #111;
@@ -171,7 +662,36 @@
     padding: 0.5rem 1rem;
     margin-left: 0.5rem;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
+  }
+  
+  /* Back to top button */
+  .back-to-top {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--mint);
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,247,224,0.4);
+    cursor: pointer;
+    z-index: 99;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .back-to-top.visible {
+    opacity: 1;
+  }
+  
+  .back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,247,224,0.5);
   }
 </style>
 </head>
@@ -179,24 +699,26 @@
   <main>
     <!-- Landing Page -->
     <section id="landing">
-      <h1>🍑 Bad Trip Guide — PLURderapolis</h1>
+      <div class="landing-icon">🍑</div>
+      <h1>Bad Trip Guide — PLURderapolis</h1>
       <div class="landing-message">
         <p>You are safe. If you can, take 3 slow breaths now.</p>
+        <p>This space is designed to help you through difficult moments.</p>
       </div>
       <div class="landing-buttons">
-        <button id="startGuided" class="landing-btn">➡️ Continue Full Guide</button>
-        <button id="startModular" class="landing-btn secondary">🔀 Just Need One Thing Now</button>
+        <button id="startGuided" class="landing-btn">➡️ Guided Experience</button>
+        <button id="startModular" class="landing-btn secondary">🔀 Choose What I Need</button>
       </div>
     </section>
 
     <!-- Main Guide Content (initially hidden) -->
-    <div id="guideContent" style="display:none">
+    <div id="guideContent">
       <header>
         <h1>🍑 Bad Trip Guide — PLURderapolis</h1>
         <div class="top-controls" role="toolbar" aria-label="Top controls">
-          <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe</button>
-          <button id="guidedMode" class="mode-btn">➡️ Guided Start</button>
-          <button id="modularMode" class="mode-btn">🔀 Modular Mode</button>
+          <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe Mode</button>
+          <button id="guidedMode" class="mode-btn">➡️ Guided Experience</button>
+          <button id="modularMode" class="mode-btn">🔀 Choose Tools</button>
         </div>
         <div id="progressContainer" aria-hidden="true"><div id="progressBar"></div></div>
       </header>
@@ -205,8 +727,11 @@
       <section class="step-section" data-step="0">
         <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
         <div id="intro" class="collapsible-content" aria-hidden="true">
-          <p style="font-weight:700; text-align:center">You are safe. This page will walk you through grounding and calming tools — either step-by-step or pick what helps.</p>
+          <p style="font-weight:600; text-align:center; font-size:1.1rem;">You are safe. This page will walk you through grounding and calming tools — either step-by-step or pick what helps.</p>
           <p style="text-align:center">If things feel intense: slow your breath, drink water, and use the emergency links at the bottom.</p>
+          <div style="text-align:center; margin-top:1.5rem;">
+            <button class="mode-btn" id="startFromHere">Start Here</button>
+          </div>
         </div>
       </section>
 
@@ -215,8 +740,8 @@
         <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">💨 Breathing Exercise</h2>
         <div id="breathing" class="collapsible-content" aria-hidden="true">
           <div class="breathing-container" aria-hidden="false">
-            <div id="breathShape" class="breathing-shape" aria-hidden="true"></div>
-            <div style="text-align:center;font-weight:700;color:var(--mint)">Breathe with the circle — inhale as it expands, exhale as it shrinks. Repeat 5–7 cycles.</div>
+            <div id="breathShape" class="breathing-shape">Breathe</div>
+            <div style="text-align:center;font-weight:600;color:var(--mint); font-size:1.1rem;">Breathe with the circle — inhale as it expands, exhale as it shrinks. Repeat 5–7 cycles.</div>
             <div class="breathing-controls">
               <button id="skipBreathing" class="mode-btn">Skip Breathing</button>
             </div>
@@ -240,7 +765,7 @@
             <p><strong>Alternative version:</strong> Name 3 things you like, 3 favorite colors, or 3 comforting objects.</p>
             <button id="startAlternative" class="ground-btn">Start Alternative Grounding</button>
           </div>
-          <p id="groundingComplete" style="display:none;margin-top:1rem;font-weight:900;color:var(--accent);text-align:center">✅ Grounding complete — you're safe.</p>
+          <p id="groundingComplete" style="display:none;margin-top:1.5rem;font-weight:900;color:var(--accent);text-align:center; font-size:1.2rem;">✅ Grounding complete — you're safe.</p>
         </div>
       </section>
 
@@ -248,11 +773,10 @@
       <section class="step-section" data-step="3">
         <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="sounds">🎶 Soothing Sounds</h2>
         <div id="sounds" class="collapsible-content" aria-hidden="true">
-          <p style="text-align:center">Tap a sound to toggle play/pause. Only one sound plays at a time. Use Stop All to end every sound.</p>
+          <p style="text-align:center">Tap a sound to toggle play/pause. Only one sound plays at a time. Use Mute All to end every sound.</p>
           <div class="audio-controls" role="group" aria-label="Sound options">
             <button class="audio-btn" data-sound="whiteNoise">White Noise</button>
             <button class="audio-btn" data-sound="ocean">Ocean Waves</button>
-            <button class="audio-btn" data-sound="rain">Rain / Thunder</button>
             <button class="audio-btn" data-sound="forest">Forest / Birds</button>
             <button class="audio-btn mute" id="stopAll">🔇 Mute All</button>
           </div>
@@ -263,15 +787,15 @@
       <section class="step-section" data-step="4">
         <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin">🧍 Check-In With Yourself</h2>
         <div id="checkin" class="collapsible-content" aria-hidden="true">
-          <ul>
+          <ul class="ground-list">
             <li>Am I hydrated? Slowly sip water.</li>
             <li>Can I talk to a trusted friend or sitter? Call or text them.</li>
             <li>Can I sit or lie down safely? Slow deep breaths help.</li>
             <li>Are my clothes comfortable? Remove tight layers if needed.</li>
           </ul>
-          <p style="text-align:center;margin-top:1rem;font-style:italic">If you cannot do any of these, that's okay — move to next.</p>
-          <div style="text-align:center;margin-top:1rem;">
-            <button id="skipCheckin" class="mode-btn">Skip Check-in</button>
+          <p style="text-align:center;margin-top:1.5rem;font-style:italic">If you cannot do any of these, that's okay — move to next.</p>
+          <div style="text-align:center;margin-top:1.5rem;">
+            <button id="skipCheckin" class="mode-btn">Continue</button>
           </div>
         </div>
       </section>
@@ -280,7 +804,7 @@
       <section class="step-section" data-step="5">
         <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="shows">🎵 Tripping at Shows — Stay Safe</h2>
         <div id="shows" class="collapsible-content" aria-hidden="true">
-          <ul>
+          <ul class="ground-list">
             <li><strong>Hydrate:</strong> sip water slowly and often. Avoid chugging or sugary drinks.</li>
             <li><strong>Eat:</strong> light carbs or fruit help; avoid heavy greasy foods if you're nauseous.</li>
             <li><strong>Environment:</strong> step outside or to a chill zone if overwhelmed — quiet spaces help a lot.</li>
@@ -303,7 +827,7 @@
             <button id="resetTimer" class="timer-btn">Reset</button>
           </div>
           <div id="timerMessage" class="timer-message">Many people find things stabilize after ~10-20 min</div>
-          <div id="progressMessage" style="display:none;text-align:center;margin-top:1rem;color:var(--mint);font-weight:700">
+          <div id="progressMessage" style="display:none;text-align:center;margin-top:1.5rem;color:var(--mint);font-weight:700; font-size:1.1rem;">
             You're doing your part by waiting. This will pass.
           </div>
         </div>
@@ -311,7 +835,7 @@
 
       <!-- Mantras -->
       <section class="step-section" data-step="7">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember (tap to change)</h2>
+        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember</h2>
         <div id="mantras" class="collapsible-content" aria-hidden="true">
           <div class="mantra-box">
             <div id="mantraText" class="mantra-text" role="button" tabindex="0" aria-pressed="false">I am safe and this will pass.</div>
@@ -326,11 +850,11 @@
         <div id="aftercare" class="collapsible-content" aria-hidden="true">
           <div class="aftercare-prompt">
             <p><strong>What helped during this experience?</strong></p>
-            <textarea style="width:100%;min-height:80px;background:rgba(255,255,255,0.1);border:1px solid #444;border-radius:8px;color:var(--text);padding:0.5rem" placeholder="Jot down what worked for you..."></textarea>
+            <textarea placeholder="Jot down what worked for you..."></textarea>
           </div>
           <div class="aftercare-prompt">
             <p><strong>What would I try next time?</strong></p>
-            <textarea style="width:100%;min-height:80px;background:rgba(255,255,255,0.1);border:1px solid #444;border-radius:8px;color:var(--text);padding:0.5rem" placeholder="Note any insights..."></textarea>
+            <textarea placeholder="Note any insights..."></textarea>
           </div>
           <p style="text-align:center">Remember to rest, practice self-care, and reach out to supportive friends.</p>
         </div>
@@ -357,6 +881,16 @@
       <small>PLURderapolis • Your partners in shine 🍑</small>
     </footer>
   </main>
+
+  <!-- Floating Action Button -->
+  <div class="fab" id="fab" style="display:none">
+    🍑
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    ↑
+  </div>
 
   <!-- PWA Install Prompt -->
   <div class="install-prompt" id="installPrompt">
@@ -408,10 +942,12 @@ const landing = document.getElementById('landing');
 const guideContent = document.getElementById('guideContent');
 const startGuided = document.getElementById('startGuided');
 const startModular = document.getElementById('startModular');
+const fab = document.getElementById('fab');
 
 startGuided.addEventListener('click', () => {
   landing.style.display = 'none';
   guideContent.style.display = 'block';
+  fab.style.display = 'flex';
   // Start guided mode after a brief delay
   setTimeout(() => {
     document.getElementById('guidedMode').click();
@@ -421,10 +957,16 @@ startGuided.addEventListener('click', () => {
 startModular.addEventListener('click', () => {
   landing.style.display = 'none';
   guideContent.style.display = 'block';
+  fab.style.display = 'flex';
   // Start modular mode after a brief delay
   setTimeout(() => {
     document.getElementById('modularMode').click();
   }, 500);
+});
+
+// FAB functionality
+fab.addEventListener('click', () => {
+  document.getElementById('backup').scrollIntoView({ behavior: 'smooth' });
 });
 
 /* --- Helper & State --- */
@@ -437,7 +979,12 @@ const mantras = [
   "This feeling is temporary — I can wait.",
   "I can breathe. I can slow down.",
   "I have survived this before. I will again.",
-  "Small steps. One breath at a time."
+  "Small steps. One breath at a time.",
+  "I am not my thoughts. I am the observer.",
+  "This too shall pass. Everything changes.",
+  "I am exactly where I need to be.",
+  "I release what I cannot control.",
+  "I am supported by the universe."
 ];
 
 /* --- Audio Context and Frequency Generators --- */
@@ -478,10 +1025,6 @@ function createFrequencySound(type) {
       lfo.connect(lfoGain);
       lfoGain.connect(currentOscillator.frequency);
       lfo.start();
-      break;
-    case 'rain':
-      currentOscillator.type = 'sawtooth';
-      currentOscillator.frequency.value = 300;
       break;
     case 'forest':
       currentOscillator.type = 'sine';
@@ -539,22 +1082,73 @@ document.querySelectorAll('section h2').forEach(header => {
     const id = header.getAttribute('aria-controls');
     const content = document.getElementById(id);
     if (!content) return;
+    
+    // Close all other sections
+    document.querySelectorAll('.collapsible-content').forEach(c => {
+      if (c !== content) {
+        c.classList.remove('open');
+        c.setAttribute('aria-hidden', 'true');
+        c.previousElementSibling.classList.remove('open');
+        c.previousElementSibling.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Toggle current section
     const opened = content.classList.toggle('open');
+    header.classList.toggle('open', opened);
     header.setAttribute('aria-expanded', opened);
     content.setAttribute('aria-hidden', !opened);
+    
     updateProgress();
     maybeEncourage();
+    
+    // Scroll to the opened section
+    if (opened) {
+      setTimeout(() => {
+        header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
   });
+  
   header.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' || e.key === ' ') header.click();
   });
 });
 
+/* --- Start from here button --- */
+document.getElementById('startFromHere').addEventListener('click', () => {
+  document.querySelectorAll('.collapsible-content').forEach(c => {
+    c.classList.remove('open');
+    c.setAttribute('aria-hidden', 'true');
+    c.previousElementSibling.classList.remove('open');
+    c.previousElementSibling.setAttribute('aria-expanded', 'false');
+  });
+  
+  // Open the first section (Breathing)
+  const firstSection = document.querySelector('[data-step="1"]');
+  const firstHeader = firstSection.querySelector('h2');
+  const firstContent = firstSection.querySelector('.collapsible-content');
+  
+  firstContent.classList.add('open');
+  firstHeader.classList.add('open');
+  firstHeader.setAttribute('aria-expanded', 'true');
+  firstContent.setAttribute('aria-hidden', 'false');
+  
+  updateProgress();
+  maybeEncourage();
+  
+  // Scroll to the first section
+  setTimeout(() => {
+    firstHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+});
+
 /* --- Sensory Safe Mode --- */
 const safeBtn = document.getElementById('toggleSafe');
 safeBtn.addEventListener('click', () => {
-  const on = document.body.classList.toggle('safe-mode');
+  const on = document.body.classList.toggle('sensory-safe');
   safeBtn.setAttribute('aria-pressed', on);
+  safeBtn.textContent = on ? '🌙 Sensory Safe Mode (On)' : '🌙 Sensory Safe Mode';
   // stop all audio on safe mode on
   if (on) stopAllAudio();
 });
@@ -562,27 +1156,50 @@ safeBtn.addEventListener('click', () => {
 /* --- Guided / Modular Modes --- */
 document.getElementById('guidedMode').addEventListener('click', () => {
   // close all first
-  document.querySelectorAll('.collapsible-content').forEach(c => { c.classList.remove('open'); c.setAttribute('aria-hidden','true'); });
-  document.querySelectorAll('section h2').forEach(h=>h.setAttribute('aria-expanded','false'));
+  document.querySelectorAll('.collapsible-content').forEach(c => { 
+    c.classList.remove('open'); 
+    c.setAttribute('aria-hidden','true'); 
+  });
+  document.querySelectorAll('section h2').forEach(h => {
+    h.classList.remove('open');
+    h.setAttribute('aria-expanded','false');
+  });
+  
   let i = 0;
   function openStep() {
     if (i >= sections.length) return;
     const sec = sections[i];
     const content = sec.querySelector('.collapsible-content');
+    const header = sec.querySelector('h2');
+    
     content.classList.add('open');
     content.setAttribute('aria-hidden','false');
-    sec.querySelector('h2').setAttribute('aria-expanded','true');
+    header.classList.add('open');
+    header.setAttribute('aria-expanded','true');
+    
     updateProgress();
     maybeEncourage();
+    
+    // Scroll to the current section
+    setTimeout(() => {
+      header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+    
     i++;
-    setTimeout(openStep, 900); // short pause between steps
+    setTimeout(openStep, 3000); // 3 second pause between steps
   }
   openStep();
 });
 
 document.getElementById('modularMode').addEventListener('click', () => {
-  document.querySelectorAll('.collapsible-content').forEach(c => { c.classList.remove('open'); c.setAttribute('aria-hidden','true'); });
-  document.querySelectorAll('section h2').forEach(h=>h.setAttribute('aria-expanded','false'));
+  document.querySelectorAll('.collapsible-content').forEach(c => { 
+    c.classList.remove('open'); 
+    c.setAttribute('aria-hidden','true'); 
+  });
+  document.querySelectorAll('section h2').forEach(h => {
+    h.classList.remove('open');
+    h.setAttribute('aria-expanded','false');
+  });
   updateProgress();
 });
 
@@ -601,10 +1218,13 @@ function maybeEncourage() {
     "🌟 Keep going — you're doing great.",
     "✅ Small steps. You're safe.",
     "💛 Breathe. You got this.",
-    "✨ Nice work — keep using the tools."
+    "✨ Nice work — keep using the tools.",
+    "🪷 You are exactly where you need to be.",
+    "🌊 This will pass like a wave.",
+    "🕊️ Peace is available in this moment."
   ];
   encouragement.textContent = msgs[Math.floor(Math.random() * msgs.length)];
-  setTimeout(()=> encouragement.style.display = 'none', 3200);
+  setTimeout(()=> encouragement.style.display = 'none', 4000);
 }
 
 /* --- Breathing visuals - only circle remains --- */
@@ -615,6 +1235,7 @@ breathShape.className = 'breathing-shape';
 // Skip breathing button
 document.getElementById('skipBreathing').addEventListener('click', () => {
   document.getElementById('breathing').classList.remove('open');
+  document.querySelector('[aria-controls="breathing"]').classList.remove('open');
   document.querySelector('[aria-controls="breathing"]').setAttribute('aria-expanded', 'false');
   updateProgress();
 });
@@ -644,7 +1265,9 @@ document.getElementById('startAlternative').addEventListener('click', () => {
     "Name 3 favorite colors",
     "Name 3 comforting objects",
     "Name 3 people who care about you",
-    "Name 3 places that feel safe"
+    "Name 3 places that feel safe",
+    "Name 3 songs that calm you",
+    "Name 3 things you're grateful for"
   ];
   
   let altIndex = 0;
@@ -697,6 +1320,11 @@ const nextMantra = document.getElementById('nextMantra');
 function showNextMantra() {
   mantraIndex = (mantraIndex + 1) % mantras.length;
   mantraText.textContent = mantras[mantraIndex];
+  // Add a subtle animation
+  mantraText.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    mantraText.style.transform = 'scale(1)';
+  }, 150);
 }
 nextMantra.addEventListener('click', showNextMantra);
 mantraText.addEventListener('click', showNextMantra);
@@ -705,6 +1333,7 @@ mantraText.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key 
 /* --- Skip Check-in --- */
 document.getElementById('skipCheckin').addEventListener('click', () => {
   document.getElementById('checkin').classList.remove('open');
+  document.querySelector('[aria-controls="checkin"]').classList.remove('open');
   document.querySelector('[aria-controls="checkin"]').setAttribute('aria-expanded', 'false');
   updateProgress();
 });
@@ -762,6 +1391,21 @@ resetBtn.addEventListener('click', () => {
 });
 
 updateTimerDisplay();
+
+/* --- Back to top button --- */
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    backToTop.classList.add('visible');
+  } else {
+    backToTop.classList.remove('visible');
+  }
+});
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 /* --- Initialize --- */
 (function init(){
