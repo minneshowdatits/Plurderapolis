@@ -4,28 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RX + Party Drug Combos | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg: #0a0a1a;
-      --card: #1a0930;
-      --text: #f0e6ff;
-      --accent1: #ff00aa;
-      --accent2: #00d0ff;
-      --accent3: #a355ff;
-      --danger: #ff2a6d;
-      --warning: #ffcc00;
-      --safe: #00ffaa;
-      --muted: #9d8fb3;
-      --border: #34294f;
-      --shadow: 0 4px 20px rgba(160, 0, 255, 0.15);
+      --primary: #8B5FBF;
+      --primary-dark: #6A3093;
+      --primary-light: #A47CC6;
+      --secondary: #00D0FF;
+      --secondary-dark: #00A3CC;
+      --accent: #FF00AA;
+      --accent-light: #FF4DC7;
+      --bg: #0F0F23;
+      --card: #1A1A3A;
+      --card-light: #25254D;
+      --text: #F0E6FF;
+      --text-muted: #B8B5C9;
+      --danger: #FF2A6D;
+      --warning: #FFCC00;
+      --safe: #00FFAA;
+      --border: #34294F;
+      --shadow: 0 4px 20px rgba(139, 95, 191, 0.15);
+      --glow: 0 0 15px rgba(139, 95, 191, 0.5);
+      --risk-high: #FF2A6D;
+      --risk-medium: #FFCC00;
+      --risk-low: #00FFAA;
+      --risk-unknown: #A355FF;
     }
     
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+    
+    html {
+      scroll-behavior: smooth;
     }
     
     body {
@@ -36,8 +50,10 @@
       padding: 0;
       margin: 0;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(160, 0, 255, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 208, 255, 0.1) 0%, transparent 20%);
+        radial-gradient(circle at 10% 20%, rgba(139, 95, 191, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(0, 208, 255, 0.1) 0%, transparent 25%),
+        linear-gradient(135deg, #0F0F23 0%, #1A1A3A 100%);
+      min-height: 100vh;
     }
     
     .container {
@@ -48,30 +64,85 @@
     
     /* Header */
     header {
-      background: linear-gradient(135deg, var(--card) 0%, #25074d 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
       padding: 1.5rem;
-      border-radius: 0 0 16px 16px;
+      border-radius: 0 0 20px 20px;
       box-shadow: var(--shadow);
       margin-bottom: 2rem;
       text-align: center;
       position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary-light));
+      animation: headerShine 3s infinite;
+    }
+    
+    @keyframes headerShine {
+      0% { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
     }
     
     .logo {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       font-weight: 800;
-      background: linear-gradient(45deg, var(--accent1), var(--accent2));
+      background: linear-gradient(45deg, #FFFFFF, var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       margin-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+      text-shadow: 0 0 10px rgba(0, 208, 255, 0.3);
+    }
+    
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+      transition: width 0.5s ease;
+    }
+    
+    .logo:hover::after {
+      width: 100%;
     }
     
     .tagline {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 1.1rem;
       margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    
+    /* Mobile Hamburger Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s;
+      backdrop-filter: blur(5px);
+    }
+    
+    .mobile-menu-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
     }
     
     /* Navigation */
@@ -85,8 +156,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.7rem 1.2rem;
-      background: linear-gradient(135deg, var(--accent3) 0%, #7a3dcc 100%);
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
       border: none;
       border-radius: 50px;
@@ -95,20 +166,43 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
     }
     
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(160, 0, 255, 0.3);
+      box-shadow: 0 6px 15px rgba(139, 95, 191, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
     }
     
     .btn-secondary {
-      background: rgba(163, 85, 255, 0.2);
-      border: 1px solid var(--accent3);
+      background: rgba(139, 95, 191, 0.2);
+      border: 1px solid var(--primary);
+      backdrop-filter: blur(5px);
     }
     
     .btn-interaction {
-      background: linear-gradient(135deg, var(--accent1) 0%, var(--accent3) 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
       padding: 1.2rem 2rem;
       font-size: 1.2rem;
       margin: 1.5rem auto;
@@ -121,14 +215,15 @@
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(160, 0, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(139, 95, 191, 0.4);
       text-align: center;
+      font-family: 'Montserrat', sans-serif;
     }
     
     .btn-interaction:hover {
       transform: translateY(-3px);
-      box-shadow: 0 6px 25px rgba(160, 0, 255, 0.5);
-      background: linear-gradient(135deg, var(--accent1) 0%, #8a45e6 100%);
+      box-shadow: 0 6px 25px rgba(139, 95, 191, 0.6);
+      background: linear-gradient(135deg, var(--accent-light) 0%, var(--primary-light) 100%);
     }
     
     /* Content Sections */
@@ -140,18 +235,43 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
       scroll-margin-top: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      opacity: 0.7;
+    }
+    
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(139, 95, 191, 0.25);
     }
     
     .section-title {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.6rem;
       margin-bottom: 1.5rem;
-      color: var(--accent2);
+      color: var(--secondary);
       display: flex;
       align-items: center;
       gap: 0.8rem;
       cursor: pointer;
       justify-content: space-between;
+      transition: color 0.3s ease;
+      padding-right: 2rem;
+    }
+    
+    .section-title:hover {
+      color: var(--accent);
     }
     
     .section-title::after {
@@ -173,7 +293,49 @@
     }
     
     .section-content.active {
-      max-height: 5000px; /* Large enough to contain all content */
+      max-height: 5000px;
+    }
+    
+    /* Risk Level Indicators */
+    .risk-indicator {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      animation: pulse 2s infinite;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .risk-high {
+      background-color: var(--risk-high);
+      color: white;
+      box-shadow: 0 0 10px rgba(255, 42, 109, 0.3);
+    }
+    
+    .risk-medium {
+      background-color: var(--risk-medium);
+      color: #333;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    }
+    
+    .risk-low {
+      background-color: var(--risk-low);
+      color: #333;
+      box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+    }
+    
+    .risk-unknown {
+      background-color: var(--risk-unknown);
+      color: white;
+      box-shadow: 0 0 10px rgba(163, 85, 255, 0.3);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
     
     /* Combo Cards */
@@ -185,30 +347,60 @@
     }
     
     .combo-card {
-      background: rgba(42, 15, 74, 0.6);
+      background: var(--card-light);
       border-radius: 12px;
       padding: 1.2rem;
-      border-left: 4px solid var(--accent3);
-      transition: transform 0.3s ease;
+      border-left: 4px solid var(--primary);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .combo-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(139, 95, 191, 0.1) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .combo-card:hover::before {
+      opacity: 1;
     }
     
     .combo-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(139, 95, 191, 0.3);
     }
     
     .combo-card h3 {
       font-size: 1.2rem;
       margin-bottom: 0.8rem;
-      color: var(--accent1);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Montserrat', sans-serif;
     }
     
     .combo-card ul {
       padding-left: 1.2rem;
-      color: var(--muted);
+      color: var(--text-muted);
     }
     
     .combo-card li {
       margin-bottom: 0.5rem;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    .combo-card li:hover {
+      color: var(--text);
     }
     
     /* Info Cards */
@@ -220,19 +412,27 @@
     }
     
     .info-card {
-      background: rgba(42, 15, 74, 0.6);
+      background: var(--card-light);
       border-radius: 12px;
       padding: 1.5rem;
       border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    
+    .info-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(139, 95, 191, 0.3);
     }
     
     .info-card h3 {
       font-size: 1.2rem;
       margin-bottom: 1rem;
-      color: var(--accent2);
+      color: var(--secondary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-family: 'Montserrat', sans-serif;
     }
     
     /* Warning boxes */
@@ -242,14 +442,20 @@
       border-radius: 12px;
       padding: 1.2rem;
       margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+      animation: subtlePulse 3s infinite;
+      box-shadow: 0 0 10px rgba(255, 42, 109, 0.1);
     }
     
-    .warning-box h4 {
-      color: var(--danger);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .warning-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--danger);
     }
     
     .tip-box {
@@ -258,14 +464,25 @@
       border-radius: 12px;
       padding: 1.2rem;
       margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 255, 170, 0.1);
     }
     
-    .tip-box h4 {
-      color: var(--safe);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .tip-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--safe);
+    }
+    
+    @keyframes subtlePulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 42, 109, 0.2); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 42, 109, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 42, 109, 0); }
     }
     
     /* Page Map Navigation */
@@ -276,22 +493,29 @@
       margin-bottom: 2rem;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      position: relative;
+    }
+    
+    .page-map.collapsed .map-links {
+      display: none;
     }
     
     .page-map h2 {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.5rem;
       margin-bottom: 1.2rem;
-      color: var(--accent2);
+      color: var(--secondary);
       display: flex;
       align-items: center;
       gap: 0.8rem;
+      cursor: pointer;
     }
     
     .map-links {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 1rem;
+      transition: all 0.3s ease;
     }
     
     .map-link {
@@ -299,21 +523,46 @@
       align-items: center;
       gap: 0.7rem;
       padding: 0.8rem;
-      background: rgba(42, 15, 74, 0.6);
+      background: var(--card-light);
       border-radius: 10px;
       color: var(--text);
       text-decoration: none;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid transparent;
+    }
+    
+    .map-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(139, 95, 191, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .map-link:hover::before {
+      left: 100%;
     }
     
     .map-link:hover {
-      background: rgba(163, 85, 255, 0.3);
+      background: rgba(139, 95, 191, 0.2);
       transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(139, 95, 191, 0.2);
+      border-color: var(--primary);
     }
     
     .map-link i {
-      color: var(--accent2);
+      color: var(--secondary);
       font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .map-link:hover i {
+      transform: scale(1.2);
     }
     
     /* Footer */
@@ -321,8 +570,10 @@
       text-align: center;
       padding: 2rem 1rem;
       margin-top: 3rem;
-      color: var(--muted);
+      color: var(--text-muted);
       border-top: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 20px 20px 0 0;
     }
     
     /* Back to top button */
@@ -333,21 +584,29 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent1) 0%, #d1007f 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
       box-shadow: var(--shadow);
-      opacity: 0.8;
-      transition: opacity 0.3s;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
       z-index: 1000;
-      display: none;
+      transform: translateY(20px);
+      font-size: 1.2rem;
+    }
+    
+    .back-to-top.visible {
+      opacity: 0.8;
+      transform: translateY(0);
     }
     
     .back-to-top:hover {
       opacity: 1;
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
     }
     
     /* Share buttons */
@@ -363,17 +622,244 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.7rem 1.5rem;
-      background: rgba(163, 85, 255, 0.2);
+      background: rgba(139, 95, 191, 0.2);
       color: var(--text);
-      border: 1px solid var(--accent3);
+      border: 1px solid var(--primary);
       border-radius: 50px;
       text-decoration: none;
       transition: all 0.3s ease;
       cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
     }
     
     .share-btn:hover {
-      background: rgba(163, 85, 255, 0.4);
+      background: rgba(139, 95, 191, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(139, 95, 191, 0.2);
+    }
+    
+    /* Progress Bar */
+    .reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      z-index: 1001;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(139, 95, 191, 0.5);
+    }
+    
+    /* Quick Risk Reference */
+    .risk-reference {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      justify-content: center;
+    }
+    
+    .risk-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 26, 0.85);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .modal-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    
+    .close-modal:hover {
+      color: var(--accent);
+    }
+    
+    .share-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .share-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--card-light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .share-option:hover {
+      background: rgba(139, 95, 191, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(139, 95, 191, 0.2);
+    }
+    
+    .share-option i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .share-twitter { color: #1DA1F2; }
+    .share-facebook { color: #4267B2; }
+    .share-whatsapp { color: #25D366; }
+    .share-telegram { color: #0088cc; }
+    .share-email { color: var(--accent); }
+    
+    .copy-link {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .copy-link input {
+      flex: 1;
+      padding: 0.8rem;
+      background: var(--card-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    .copy-link button {
+      padding: 0.8rem 1.2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+    }
+    
+    .copy-link button:hover {
+      background: var(--primary-dark);
+    }
+    
+    /* Save options */
+    .save-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .save-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 1rem;
+      background: var(--card-light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .save-option:hover {
+      background: rgba(139, 95, 191, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(139, 95, 191, 0.2);
+    }
+    
+    .save-option i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      box-shadow: var(--shadow);
+      z-index: 3000;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
     }
     
     /* Mobile adjustments */
@@ -383,7 +869,7 @@
       }
       
       .logo {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
       
       .combo-grid,
@@ -394,6 +880,7 @@
       
       .section {
         padding: 1.2rem;
+        margin-bottom: 1.5rem;
       }
       
       .nav-buttons {
@@ -403,6 +890,8 @@
       
       .btn {
         justify-content: center;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
       }
       
       .section-title {
@@ -412,25 +901,84 @@
       .btn-interaction {
         padding: 1rem 1.5rem;
         font-size: 1.1rem;
+        width: 100%;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+      }
+      
+      .share-section {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .share-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .risk-reference {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .risk-item {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .share-options,
+      .save-options {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Larger touch targets for mobile */
+      .map-link,
+      .combo-card,
+      .info-card {
+        padding: 1.2rem;
+      }
+      
+      .btn, .share-btn {
+        min-height: 44px;
       }
     }
     
     /* Animation */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
     .animate {
+      animation: fadeIn 0.6s ease forwards;
+    }
+    
+    .stagger-animate > * {
+      opacity: 0;
+      transform: translateY(20px);
       animation: fadeIn 0.5s ease forwards;
     }
+    
+    .stagger-animate > *:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-animate > *:nth-child(2) { animation-delay: 0.2s; }
+    .stagger-animate > *:nth-child(3) { animation-delay: 0.3s; }
+    .stagger-animate > *:nth-child(4) { animation-delay: 0.4s; }
+    .stagger-animate > *:nth-child(5) { animation-delay: 0.5s; }
     
     /* Print styles */
     @media print {
       .nav-buttons,
       .back-to-top,
       .share-section,
-      .page-map {
+      .page-map,
+      .reading-progress,
+      .risk-reference,
+      .modal {
         display: none;
       }
       
@@ -449,12 +997,93 @@
         max-height: none !important;
         display: block !important;
       }
+      
+      .risk-indicator {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        animation: none;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="reading-progress" id="readingProgress"></div>
+  
+  <!-- Share Modal -->
+  <div class="modal" id="shareModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fas fa-share-alt"></i> Share This Guide</h2>
+        <button class="close-modal" id="closeShareModal">&times;</button>
+      </div>
+      <div class="share-options">
+        <div class="share-option share-twitter" data-platform="twitter">
+          <i class="fab fa-twitter"></i>
+          <span>Twitter</span>
+        </div>
+        <div class="share-option share-facebook" data-platform="facebook">
+          <i class="fab fa-facebook"></i>
+          <span>Facebook</span>
+        </div>
+        <div class="share-option share-whatsapp" data-platform="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </div>
+        <div class="share-option share-telegram" data-platform="telegram">
+          <i class="fab fa-telegram"></i>
+          <span>Telegram</span>
+        </div>
+        <div class="share-option share-email" data-platform="email">
+          <i class="fas fa-envelope"></i>
+          <span>Email</span>
+        </div>
+      </div>
+      <div class="copy-link">
+        <input type="text" id="shareableLink" value="https://plurderapolis.org/drug-interaction-guide" readonly>
+        <button id="copyLinkBtn">Copy</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Save Modal -->
+  <div class="modal" id="saveModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fas fa-save"></i> Save This Guide</h2>
+        <button class="close-modal" id="closeSaveModal">&times;</button>
+      </div>
+      <div class="save-options">
+        <div class="save-option" data-format="pdf">
+          <i class="fas fa-file-pdf"></i>
+          <span>Save as PDF</span>
+          <small>Best for printing</small>
+        </div>
+        <div class="save-option" data-format="html">
+          <i class="fas fa-file-code"></i>
+          <span>Save as HTML</span>
+          <small>Offline viewing</small>
+        </div>
+        <div class="save-option" data-format="image">
+          <i class="fas fa-file-image"></i>
+          <span>Save as Image</span>
+          <small>Quick sharing</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Action completed successfully!</span>
+  </div>
+  
   <div class="container">
     <header>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
       <h1 class="logo">PLURderapolis</h1>
       <p class="tagline">Harm Reduction & Community Safety</p>
       
@@ -462,17 +1091,33 @@
         <a href="javascript:history.back()" class="btn">
           <i class="fas fa-arrow-left"></i> Back
         </a>
-        <button id="print-btn" class="btn btn-secondary">
-          <i class="fas fa-download"></i> Download Guide
+        <button id="save-btn" class="btn btn-secondary">
+          <i class="fas fa-save"></i> Save Guide
+        </button>
+        <button id="share-btn" class="btn">
+          <i class="fas fa-share-alt"></i> Share Guide
         </button>
       </div>
     </header>
 
     <main>
+      <!-- Risk Level Reference -->
+      <section class="section animate">
+        <h2 class="section-title"><i class="fas fa-exclamation-triangle"></i> Risk Level Reference</h2>
+        <div class="section-content active">
+          <div class="risk-reference">
+            <div class="risk-item risk-high">High Risk</div>
+            <div class="risk-item risk-medium">Medium Risk</div>
+            <div class="risk-item risk-low">Low Risk</div>
+            <div class="risk-item risk-unknown">Unknown Risk</div>
+          </div>
+        </div>
+      </section>
+
       <!-- Page Map Navigation -->
-      <section class="page-map animate">
-        <h2><i class="fas fa-map"></i> Page Navigation</h2>
-        <div class="map-links">
+      <section class="page-map animate" id="pageMap">
+        <h2 class="section-title"><i class="fas fa-map"></i> Page Navigation</h2>
+        <div class="map-links stagger-animate">
           <a href="#rx-party" class="map-link">
             <i class="fas fa-pills"></i> RX + Party Drug Combos
           </a>
@@ -512,14 +1157,15 @@
         </div>
       </section>
 
+      <!-- RX + Party Drug Combos -->
       <section id="rx-party" class="section animate">
-        <h2 class="section-title"><i class="fas fa-pills"></i> RX + Party Drug Combos</h2>
+        <h2 class="section-title"><i class="fas fa-pills"></i> RX + Party Drug Combos <span class="risk-indicator risk-high">High Risk</span></h2>
         <div class="section-content">
           <p>Understanding polydrug risks that aren't discussed enough in the community.</p>
           
-          <div class="combo-grid">
+          <div class="combo-grid stagger-animate">
             <div class="combo-card">
-              <h3><i class="fas fa-capsules"></i> SSRI/SNRI + Party Drugs</h3>
+              <h3><i class="fas fa-capsules"></i> SSRI/SNRI + Party Drugs <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li><strong>+ MDMA/Molly:</strong> Dulls the high → redosing → serotonin syndrome</li>
                 <li><strong>+ LSD/Shrooms:</strong> Flat visuals or erratic tripping</li>
@@ -528,7 +1174,7 @@
             </div>
             
             <div class="combo-card">
-              <h3><i class="fas fa-bolt"></i> Wellbutrin + Stimulants</h3>
+              <h3><i class="fas fa-bolt"></i> Wellbutrin + Stimulants <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li><strong>+ MDMA/Coke:</strong> Lowers seizure threshold</li>
                 <li><strong>+ Alcohol:</strong> Blackouts, impulsivity, seizures</li>
@@ -536,7 +1182,7 @@
             </div>
             
             <div class="combo-card">
-              <h3><i class="fas fa-bed"></i> Benzos + Depressants</h3>
+              <h3><i class="fas fa-bed"></i> Benzos + Depressants <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li><strong>+ Opiates:</strong> Breathing stops → fatal risk</li>
                 <li><strong>+ Alcohol:</strong> Respiratory depression</li>
@@ -545,7 +1191,7 @@
             </div>
             
             <div class="combo-card">
-              <h3><i class="fas fa-brain"></i> ADHD Meds + Stimulants</h3>
+              <h3><i class="fas fa-brain"></i> ADHD Meds + Stimulants <span class="risk-indicator risk-medium">Medium Risk</span></h3>
               <ul>
                 <li><strong>+ MDMA/Coke/Meth:</strong> Overheating, heart stress</li>
                 <li><strong>+ Alcohol:</strong> Blackouts, impaired judgment</li>
@@ -556,146 +1202,15 @@
         </div>
       </section>
 
-      <section id="hormones" class="section animate">
-        <h2 class="section-title"><i class="fas fa-heart"></i> Hormones, Birth Control & Club Drugs</h2>
-        <div class="section-content">
-          <p>Why it matters: Most rave drug info isn't made with AFAB folks in mind.</p>
-          
-          <div class="info-cards">
-            <div class="info-card">
-              <h3><i class="fas fa-venus"></i> Estrogen + Stimulants</h3>
-              <p>Higher estrogen levels can intensify effects of MDMA and other stimulants, increasing risk of overheating, serotonin syndrome, or comedown crash.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-cloud-sun"></i> Hormones + Psychedelics</h3>
-              <p>Hormonal shifts can change how you experience shrooms, LSD, or DMT. Some report stronger visuals or more emotional depth around ovulation or during PMS.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-liver"></i> Birth Control + Liver Enzymes</h3>
-              <p>Some substances compete for liver enzymes. Hormonal BC can slow or intensify metabolization—meaning unpredictable roll length or strength.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-flask"></i> Research Gap</h3>
-              <p>Clinical drug trials often exclude AFAB folks or don't study interactions with HRT/BC. That means DIY harm reduction matters more than ever.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="mental-health" class="section animate">
-        <h2 class="section-title"><i class="fas fa-brain"></i> Mental Health Meds + Party Drugs</h2>
-        <div class="section-content">
-          <p>Mixing psychiatric medications with recreational substances requires special caution.</p>
-          
-          <div class="info-cards">
-            <div class="info-card">
-              <h3><i class="fas fa-exclamation-triangle"></i> SSRIs + Stimulants</h3>
-              <p>Increased risk of serotonin syndrome — symptoms include agitation, rapid heart rate, sweating, confusion, and in severe cases, seizures or death.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-skull-crossbones"></i> Benzos + Depressants</h3>
-              <p>Combining benzos with alcohol or opioids causes compounded sedation and respiratory depression, potentially leading to unconsciousness or fatal overdose.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-balance-scale"></i> Mood Stabilizers & Antipsychotics</h3>
-              <p>Many of these meds alter metabolism of party drugs, making effects unpredictable. Can cause heart issues or severe anxiety when mixed with stimulants.</p>
-            </div>
-            
-            <div class="info-card">
-              <h3><i class="fas fa-tips"></i> Harm Reduction Tips</h3>
-              <ul>
-                <li>Talk with your prescriber about your drug use</li>
-                <li>Avoid mixing stimulants and SSRIs</li>
-                <li>Carry naloxone if using opioids or benzos</li>
-                <li>Have a trusted sober friend aware of your meds</li>
-                <li>Test your substances whenever possible</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="ssri" class="section animate">
-        <h2 class="section-title"><i class="fas fa-exclamation-circle"></i> SSRI / SNRI + Party Drugs</h2>
-        <div class="section-content">
-          <p>(Lexapro, Zoloft, Prozac, Effexor, Cymbalta)</p>
-          
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-tablets"></i> + MDMA / Molly / Ecstasy</h3>
-              <ul>
-                <li>Dulls the high</li>
-                <li>People redose = serotonin syndrome</li>
-                <li>Can still overheat or seize, even if you "don't roll hard"</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-cloud"></i> + LSD / Shrooms / DMT</h3>
-              <ul>
-                <li>Often flattens visuals/emotion</li>
-                <li>Some people feel nothing; others trip hard anyway</li>
-                <li>Risk of redosing or combining more drugs to "feel something"</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-heartbeat"></i> + Cocaine or Adderall</h3>
-              <ul>
-                <li>Increased anxiety, overstimulation</li>
-                <li>High blood pressure, heart risk</li>
-                <li>May worsen depression long-term</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="wellbutrin" class="section animate">
-        <h2 class="section-title"><i class="fas fa-bolt"></i> Wellbutrin (Bupropion) + Stimulants</h2>
-        <div class="section-content">
-          <p>(Adderall, Vyvanse, Ritalin, Coke, MDMA)</p>
-          
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-tablets"></i> + MDMA or Coke</h3>
-              <ul>
-                <li>Seizure threshold drops</li>
-                <li>Anxiety, paranoia spike</li>
-                <li>Risk of panic attacks, overstimulation</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-wine-glass"></i> + Alcohol</h3>
-              <ul>
-                <li>Lowers seizure threshold further</li>
-                <li>May increase aggression or impulsivity</li>
-                <li>Blackout risk is higher than usual</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="warning-box">
-            <h4><i class="fas fa-exclamation-triangle"></i> Warning</h4>
-            <p>Avoid this combo if you've ever had a seizure—even once.</p>
-          </div>
-        </div>
-      </section>
-
+      <!-- Benzos Section -->
       <section id="benzos" class="section animate">
-        <h2 class="section-title"><i class="fas fa-bed"></i> Benzos (Xanax, Klonopin, Ativan) + Depressants</h2>
+        <h2 class="section-title"><i class="fas fa-bed"></i> Benzos (Xanax, Klonopin, Ativan) + Depressants <span class="risk-indicator risk-high">High Risk</span></h2>
         <div class="section-content">
           <p>(Opiates, Alcohol, Ketamine, GHB)</p>
           
-          <div class="combo-grid">
+          <div class="combo-grid stagger-animate">
             <div class="combo-card">
-              <h3><i class="fas fa-pills"></i> + Opiates (Percocet, Fentanyl, Heroin)</h3>
+              <h3><i class="fas fa-pills"></i> + Opiates (Percocet, Fentanyl, Heroin) <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li>One of the deadliest combos</li>
                 <li>Slows or stops breathing</li>
@@ -704,7 +1219,7 @@
             </div>
             
             <div class="combo-card">
-              <h3><i class="fas fa-wine-glass"></i> + Alcohol</h3>
+              <h3><i class="fas fa-wine-glass"></i> + Alcohol <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li>Common, normalized, but incredibly dangerous</li>
                 <li>Both slow your nervous system</li>
@@ -713,7 +1228,7 @@
             </div>
             
             <div class="combo-card">
-              <h3><i class="fas fa-syringe"></i> + Ketamine or GHB</h3>
+              <h3><i class="fas fa-syringe"></i> + Ketamine or GHB <span class="risk-indicator risk-high">High Risk</span></h3>
               <ul>
                 <li>Complete disassociation, memory loss</li>
                 <li>Loss of control, high assault risk</li>
@@ -734,194 +1249,10 @@
         </div>
       </section>
 
-      <section id="adhd" class="section animate">
-        <h2 class="section-title"><i class="fas fa-brain"></i> ADHD Meds (Adderall, Vyvanse, Ritalin) + Stimulants</h2>
-        <div class="section-content">
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-bolt"></i> + MDMA / Coke / Meth</h3>
-              <ul>
-                <li>Triple stacking dopamine and norepinephrine</li>
-                <li>Heart stress, overheating, stroke risk</li>
-                <li>Emotional crash can be severe</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-wine-glass"></i> + Alcohol</h3>
-              <ul>
-                <li>Alcohol feels lighter than it is</li>
-                <li>High blackout risk</li>
-                <li>Risky behavior, aggression, impulsivity</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-cloud"></i> + Psychedelics</h3>
-              <ul>
-                <li>May intensify or destabilize trip</li>
-                <li>Increased anxiety, agitation, confusion</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="warning-box">
-            <h4><i class="fas fa-exclamation-triangle"></i> Adderall + MDMA</h4>
-            <p>Stacking uppers floods your brain with chemicals until it can't keep up. The high may be short, but the damage can be long.</p>
-            <ul>
-              <li>Serotonin syndrome</li>
-              <li>Neurotoxicity</li>
-              <li>Major comedown depression</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="antipsychotics" class="section animate">
-        <h2 class="section-title"><i class="fas fa-capsules"></i> Antipsychotics + Mood Stabilizers Combos</h2>
-        <div class="section-content">
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-brain"></i> Antipsychotics (Seroquel, Abilify, Risperdal) + Psychedelics</h3>
-              <ul>
-                <li>Can mute or completely block the trip</li>
-                <li>May cause rebound confusion or panic</li>
-                <li>Higher risk of emotional instability or psychotic episode afterward</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-tablets"></i> Antipsychotics + MDMA</h3>
-              <ul>
-                <li>Dulls empathy/euphoria</li>
-                <li>People redose to chase the high</li>
-                <li>Risk of serotonin overload or heart issues</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-balance-scale"></i> Mood Stabilizers (Lamictal, Lithium) + Psychedelics</h3>
-              <ul>
-                <li>Lamictal can make trips feel emotionally numb or panicky</li>
-                <li>Lithium + psychedelics = NOPE
-                  <ul>
-                    <li>Risk of seizures</li>
-                    <li>Documented deaths</li>
-                    <li>Completely unpredictable</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="warning-box">
-            <h4><i class="fas fa-skull-crossbones"></i> Lithium + Psychedelics (LSD, mushrooms, DMT)</h4>
-            <p>No sugarcoating this: it's a hard no. People have died or ended up in seizures or psychiatric holds from this combo. Lithium + psychedelics is one of the most dangerous interactions out there.</p>
-            <ul>
-              <li>Toxic reactions</li>
-              <li>Uncontrollable seizures</li>
-              <li>Long-term psychological effects</li>
-            </ul>
-            <p><strong>❌ Just don't. This combo kills.</strong></p>
-          </div>
-        </div>
-      </section>
-
-      <section id="sleep-aids" class="section animate">
-        <h2 class="section-title"><i class="fas fa-bed"></i> Sleep Aids & Other Medication Combos</h2>
-        <div class="section-content">
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-capsules"></i> Trazodone / Hydroxyzine / Sleep Aids + Alcohol or Downers</h3>
-              <ul>
-                <li>Super common mix to "relax" or "sleep better"</li>
-                <li>Reality: respiratory suppression, blackout, disorientation</li>
-                <li>Hydroxyzine especially can stack with opiates and increase OD risk</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-syringe"></i> + Ketamine or GHB</h3>
-              <ul>
-                <li>Slows reflexes, sedation</li>
-                <li>Can enter full blackouts</li>
-                <li>Vomit and fall risk</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-pills"></i> Gabapentin / Lyrica + Alcohol or Opiates</h3>
-              <ul>
-                <li>Often misused to "boost" opiate high</li>
-                <li>Stacks sedation and euphoria</li>
-                <li>High overdose risk especially if tolerance is low</li>
-                <li>Motor control and memory go fast</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="recreational" class="section animate">
-        <h2 class="section-title"><i class="fas fa-syringe"></i> Recreational Drug Combinations</h2>
-        <div class="section-content">
-          <div class="combo-grid">
-            <div class="combo-card">
-              <h3><i class="fas fa-syringe"></i> Coke + Opiates (Speedballs)</h3>
-              <ul>
-                <li>Cocaine hides how sedated you are, so you use more opiates than your body can handle</li>
-                <li>Cardiac arrest risk</li>
-                <li>OD feels like it "comes out of nowhere"</li>
-                <li>Extremely high fatality rate</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-cloud"></i> MDMA + LSD (Candyflipping)</h3>
-              <ul>
-                <li>Can be incredible if you're experienced and safe</li>
-                <li>Increased risk of bad trip</li>
-                <li>Can trigger psychosis</li>
-                <li>Trip sitter, water, and grounding tools = non-negotiable</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-bed"></i> Ketamine + Benzos</h3>
-              <ul>
-                <li>Heavy sedation. You might forget how to move—or breathe</li>
-                <li>Risk of unconscious vomiting = very real</li>
-                <li>Extreme memory loss</li>
-                <li>Dangerous CNS depression</li>
-              </ul>
-            </div>
-            
-            <div class="combo-card">
-              <h3><i class="fas fa-cannabis"></i> Weed + Psychedelics</h3>
-              <ul>
-                <li>Weed can make visuals stronger, but also crank up anxiety and nausea</li>
-                <li>Paranoia and panic</li>
-                <li>Derealization</li>
-                <li>Many bad trips start with one too-big hit</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="interaction-tool" class="section animate">
-        <h2 class="section-title"><i class="fas fa-search"></i> Interaction Checker</h2>
-        <div class="section-content">
-          <p>For a detailed polydrug interaction checker and additional safety information:</p>
-          <a href="polydrug.html" class="btn-interaction">
-            <i class="fas fa-external-link-alt"></i> Visit Polydrug Interaction Checker
-          </a>
-        </div>
-      </section>
-
+      <!-- Golden Rules Section -->
       <section id="golden-rules" class="section animate">
         <h2 class="section-title"><i class="fas fa-key"></i> Golden Rules of Harm Reduction</h2>
-        <div class="section-content">
+        <div class="section-content active">
           <div class="tip-box">
             <h4><i class="fas fa-gem"></i> Essential Guidelines</h4>
             <ul>
@@ -950,11 +1281,11 @@
       </section>
 
       <div class="share-section">
-        <button id="share-btn" class="share-btn">
+        <button id="share-btn-bottom" class="share-btn">
           <i class="fas fa-share-alt"></i> Share this Page
         </button>
-        <button id="print-btn-bottom" class="share-btn">
-          <i class="fas fa-file-pdf"></i> Save as PDF
+        <button id="save-btn-bottom" class="share-btn">
+          <i class="fas fa-save"></i> Save this Guide
         </button>
       </div>
     </main>
@@ -970,11 +1301,149 @@
   </div>
 
   <script>
-    // Toggle section content
+    // Enhanced toggle section function
     function toggleSection(element) {
       const content = element.nextElementSibling;
       element.classList.toggle('active');
       content.classList.toggle('active');
+      
+      // Add animation to content when opening
+      if (content.classList.contains('active')) {
+        content.querySelectorAll('.stagger-animate > *').forEach((el, index) => {
+          el.style.animationDelay = `${index * 0.1}s`;
+        });
+      }
+    }
+    
+    // Toggle page map collapse
+    function togglePageMap() {
+      const pageMap = document.getElementById('pageMap');
+      pageMap.classList.toggle('collapsed');
+    }
+    
+    // Modal functionality
+    const shareModal = document.getElementById('shareModal');
+    const saveModal = document.getElementById('saveModal');
+    const toast = document.getElementById('toast');
+    
+    function openModal(modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal(modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    
+    function showToast(message) {
+      const toastMessage = document.getElementById('toastMessage');
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Share functionality
+    function sharePage() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'PLURderapolis Polydrug Safety Guide',
+          text: 'Check out this harm reduction resource about drug combinations and interactions',
+          url: window.location.href
+        })
+        .catch(error => {
+          console.log('Error sharing:', error);
+        });
+      } else {
+        openModal(shareModal);
+      }
+    }
+    
+    // Copy link functionality
+    function copyLink() {
+      const linkInput = document.getElementById('shareableLink');
+      linkInput.select();
+      linkInput.setSelectionRange(0, 99999); // For mobile devices
+      
+      navigator.clipboard.writeText(linkInput.value)
+        .then(() => {
+          showToast('Link copied to clipboard!');
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+          showToast('Failed to copy link');
+        });
+    }
+    
+    // Share to specific platforms
+    function shareToPlatform(platform) {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent('PLURderapolis Polydrug Safety Guide');
+      const text = encodeURIComponent('Check out this harm reduction resource about drug combinations and interactions');
+      
+      let shareUrl;
+      
+      switch(platform) {
+        case 'twitter':
+          shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+          break;
+        case 'facebook':
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+          break;
+        case 'whatsapp':
+          shareUrl = `https://wa.me/?text=${text}%20${url}`;
+          break;
+        case 'telegram':
+          shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+          break;
+        case 'email':
+          shareUrl = `mailto:?subject=${title}&body=${text}%0A%0A${url}`;
+          break;
+        default:
+          return;
+      }
+      
+      window.open(shareUrl, '_blank');
+      closeModal(shareModal);
+    }
+    
+    // Save functionality
+    function saveAsPDF() {
+      window.print();
+      closeModal(saveModal);
+      showToast('Preparing PDF for download...');
+    }
+    
+    function saveAsHTML() {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'plurderapolis-drug-interaction-guide.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      closeModal(saveModal);
+      showToast('HTML file downloaded!');
+    }
+    
+    function saveAsImage() {
+      html2canvas(document.body).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'plurderapolis-drug-interaction-guide.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        closeModal(saveModal);
+        showToast('Image saved successfully!');
+      }).catch(err => {
+        console.error('Error generating image:', err);
+        showToast('Error saving image');
+      });
     }
     
     // Add click event listeners to all section titles
@@ -986,18 +1455,33 @@
         });
       });
       
-      // Open first section by default on mobile
+      // Add click event to page map title
+      const pageMapTitle = document.querySelector('#pageMap .section-title');
+      if (pageMapTitle) {
+        pageMapTitle.addEventListener('click', togglePageMap);
+      }
+      
+      // Set initial state - close all sections on mobile, open on desktop
       if (window.innerWidth <= 768) {
-        // Close all sections on mobile
+        // Close all content sections on mobile
         const allSections = document.querySelectorAll('.section-content');
         allSections.forEach(section => {
-          section.classList.remove('active');
+          if (!section.closest('.section').id.includes('golden-rules') && 
+              !section.closest('.section').querySelector('.risk-reference')) {
+            section.classList.remove('active');
+          }
         });
         
         const allTitles = document.querySelectorAll('.section-title');
         allTitles.forEach(title => {
-          title.classList.remove('active');
+          if (!title.closest('.section').id.includes('golden-rules') && 
+              !title.closest('.section').querySelector('.risk-reference')) {
+            title.classList.remove('active');
+          }
         });
+        
+        // Collapse page map on mobile
+        document.getElementById('pageMap').classList.add('collapsed');
       } else {
         // Open all sections on desktop
         const allSections = document.querySelectorAll('.section-content');
@@ -1011,30 +1495,89 @@
         });
       }
       
-      // Set up print buttons
-      const printButtons = document.querySelectorAll('#print-btn, #print-btn-bottom');
-      printButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          window.print();
+      // Set up share buttons
+      const shareButtons = document.querySelectorAll('#share-btn, #share-btn-bottom');
+      shareButtons.forEach(button => {
+        button.addEventListener('click', sharePage);
+      });
+      
+      // Set up save buttons
+      const saveButtons = document.querySelectorAll('#save-btn, #save-btn-bottom');
+      saveButtons.forEach(button => {
+        button.addEventListener('click', () => openModal(saveModal));
+      });
+      
+      // Set up modal close buttons
+      document.getElementById('closeShareModal').addEventListener('click', () => closeModal(shareModal));
+      document.getElementById('closeSaveModal').addEventListener('click', () => closeModal(saveModal));
+      
+      // Close modals when clicking outside
+      [shareModal, saveModal].forEach(modal => {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal(modal);
+          }
         });
       });
       
-      // Set up share button
-      const shareButton = document.getElementById('share-btn');
-      if (shareButton) {
-        shareButton.addEventListener('click', sharePage);
+      // Set up share platform buttons
+      document.querySelectorAll('.share-option').forEach(option => {
+        option.addEventListener('click', () => {
+          const platform = option.getAttribute('data-platform');
+          shareToPlatform(platform);
+        });
+      });
+      
+      // Set up copy link button
+      document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
+      
+      // Set up save format buttons
+      document.querySelectorAll('.save-option').forEach(option => {
+        option.addEventListener('click', () => {
+          const format = option.getAttribute('data-format');
+          switch(format) {
+            case 'pdf':
+              saveAsPDF();
+              break;
+            case 'html':
+              saveAsHTML();
+              break;
+            case 'image':
+              saveAsImage();
+              break;
+          }
+        });
+      });
+      
+      // Mobile menu button functionality
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+          const navButtons = document.querySelector('.nav-buttons');
+          navButtons.classList.toggle('mobile-open');
+        });
       }
     });
 
-    // Back to top button
+    // Back to top button with enhanced behavior
     const backToTopButton = document.querySelector('.back-to-top');
     
     window.addEventListener('scroll', () => {
+      // Show/hide back to top button
       if (window.pageYOffset > 300) {
-        backToTopButton.style.display = 'flex';
+        backToTopButton.classList.add('visible');
       } else {
-        backToTopButton.style.display = 'none';
+        backToTopButton.classList.remove('visible');
       }
+      
+      // Update reading progress
+      const winHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.pageYOffset;
+      const trackLength = docHeight - winHeight;
+      const progress = Math.floor((scrollTop / trackLength) * 100);
+      
+      document.getElementById('readingProgress').style.width = progress + '%';
     });
     
     backToTopButton.addEventListener('click', (e) => {
@@ -1042,40 +1585,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Share page function
-    function sharePage() {
-      if (navigator.share) {
-        navigator.share({
-          title: 'PLURderapolis Polydrug Safety Guide',
-          text: 'Check out this harm reduction resource about drug combinations and interactions',
-          url: window.location.href
-        })
-        .catch(error => {
-          console.log('Error sharing:', error);
-        });
-      } else {
-        // Fallback for browsers that don't support the Web Share API
-        const shareText = 'Check out this harm reduction resource about drug combinations and interactions';
-        const shareUrl = window.location.href;
-        
-        // Try to copy to clipboard
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(`${shareText} - ${shareUrl}`)
-            .then(() => {
-              alert('Link copied to clipboard!');
-            })
-            .catch(err => {
-              // If clipboard fails, just show the URL
-              alert(`Share this page using: ${shareUrl}`);
-            });
-        } else {
-          // Fallback if clipboard API is not available
-          alert(`Share this page using: ${shareUrl}`);
-        }
-      }
-    }
-
-    // Add animations when scrolling
+    // Add enhanced animations when scrolling
     document.addEventListener('DOMContentLoaded', function() {
       const animatedElements = document.querySelectorAll('.animate');
       
@@ -1083,18 +1593,28 @@
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
+            
+            // Add staggered animation to children if they have the class
+            const staggerChildren = entry.target.querySelectorAll('.stagger-animate > *');
+            if (staggerChildren.length > 0) {
+              staggerChildren.forEach((child, index) => {
+                child.style.animationDelay = `${index * 0.1}s`;
+              });
+            }
           }
         });
       }, { threshold: 0.1 });
       
       animatedElements.forEach(element => {
         element.style.opacity = 0;
-        element.style.transition = 'opacity 0.5s ease-in-out';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(element);
       });
     });
 
-    // Smooth scrolling for navigation
+    // Enhanced smooth scrolling for navigation
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1121,6 +1641,25 @@
         }
       });
     });
+    
+    // Add keyboard navigation support
+    document.addEventListener('keydown', function(e) {
+      // ESC key to collapse all sections
+      if (e.key === 'Escape') {
+        const allSections = document.querySelectorAll('.section-content');
+        const allTitles = document.querySelectorAll('.section-title');
+        
+        allSections.forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        allTitles.forEach(title => {
+          title.classList.remove('active');
+        });
+      }
+    });
   </script>
+  <!-- Include html2canvas for image saving functionality -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
