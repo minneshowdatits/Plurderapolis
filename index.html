@@ -50,6 +50,9 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap"></noscript>
     
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <style>
         /* Base styles */
         *{box-sizing:border-box;margin:0;padding:0}
@@ -357,6 +360,7 @@
         .section-card:nth-child(5){border-left-color:var(--accent5);animation-delay:0.5s}
         .section-card:nth-child(6){border-left-color:var(--accent6);animation-delay:0.6s}
         .section-card:nth-child(7){border-left-color:var(--accent1);animation-delay:0.7s}
+        .section-card:nth-child(8){border-left-color:var(--accent2);animation-delay:0.8s}
         
         .card-header{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;margin-bottom:0.6rem;cursor:pointer;position:relative}
         .section-card h2{font-family:'Montserrat',sans-serif;margin:0;font-size:1.1rem;font-weight:700;flex:1;padding-right:10px}
@@ -369,6 +373,7 @@
         .section-card:nth-child(5) h2{color:var(--accent5)}
         .section-card:nth-child(6) h2{color:var(--accent6)}
         .section-card:nth-child(7) h2{color:var(--accent1)}
+        .section-card:nth-child(8) h2{color:var(--accent2)}
         
         /* Section summary that shows when collapsed */
         .section-summary {
@@ -408,6 +413,7 @@
         .section-card:nth-child(5) .section-link{border-left-color:var(--accent5)}
         .section-card:nth-child(6) .section-link{border-left-color:var(--accent6)}
         .section-card:nth-child(7) .section-link{border-left-color:var(--accent1)}
+        .section-card:nth-child(8) .section-link{border-left-color:var(--accent2)}
         
         .cta-button{display:inline-block;margin-top:0.8rem;background:var(--primary);color:#2e003e;padding:0.7rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;transition:all 0.2s;font-size:0.9rem;box-shadow:0 3px 6px rgba(0,0,0,0.2);text-align:center;width:100%}
         .cta-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 4px 8px rgba(0,0,0,0.3)}
@@ -498,8 +504,8 @@
         .bad-trip-button:hover{opacity:0.85;transform:scale(1.03);box-shadow:0 4px 8px rgba(0,0,0,0.3)}
 
         /* Floating Animation for Cards */
-        @keyframes float{0%{transform:translateY(0px)}50%{transform:translateY(-5px)}100%{transform:translateY(0px)}}
-        .floating{animation:float 8s ease-in-out infinite}
+        @keyframes float-card{0%{transform:translateY(0px)}50%{transform:translateY(-5px)}100%{transform:translateY(0px)}}
+        .floating{animation:float-card 8s ease-in-out infinite}
         .floating-delay-1{animation-delay:1.5s}
         .floating-delay-2{animation-delay:3s}
         .floating-delay-3{animation-delay:4.5s}
@@ -507,9 +513,6 @@
         /* Pulse Animation for CTAs */
         @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,247,224,0.3)}70%{box-shadow:0 0 0 8px rgba(0,247,224,0)}100%{box-shadow:0 0 0 0 rgba(0,247,224,0)}}
         .pulse{animation:pulse 2.5s infinite}
-
-        /* Cute bottom buttons - REMOVED */
-        .cute-buttons{display:none}
 
         /* Improved Collapsible Section Styles with cool animations */
         .collapsible-toggle {
@@ -639,6 +642,130 @@
             animation: textShimmer 4s infinite;
         }
 
+        /* Hydration Timer Widget Styles */
+        .timer-widget {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 3px solid var(--accent3);
+            box-shadow: 0 0 8px rgba(0,255,255,0.05);
+        }
+
+        .timer-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .timer-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .timer-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-start {
+            background-color: var(--accent5);
+            color: white;
+        }
+
+        .btn-start:hover {
+            background-color: #00b383;
+        }
+
+        .btn-snooze {
+            background-color: var(--accent6);
+            color: white;
+        }
+
+        .btn-snooze:hover {
+            background-color: #e6a200;
+        }
+
+        .btn-settings {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+        }
+
+        .btn-settings:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .customization-panel {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .customization-panel h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--light-text);
+        }
+
+        .btn-save {
+            background-color: var(--primary);
+            color: #2e003e;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save:hover {
+            background-color: #00e6cc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         @media (min-width:768px){
             .sections-grid{grid-template-columns:repeat(2,1fr)}
             .section-links{grid-template-columns:repeat(2,1fr)}
@@ -671,6 +798,9 @@
             .social-link {
                 width: 180px;
                 justify-content: center;
+            }
+            .timer-controls {
+                flex-direction: column;
             }
         }
     </style>
@@ -730,8 +860,8 @@
         <div class="mobile-nav-links">
             <a href="polydrug.html" class="mobile-nav-link"><span class="icon">💊</span>Polydrug Tool</a>
             <a href="rx-combos.html" class="mobile-nav-link"><span class="icon">💊</span>RX + Party Combos</a>
-            <!-- Health.html removed and replaced with booth.html -->
-            <a href="booth.html" class="mobile-nav-link"><span class="icon">🎉</span>Our Booth</a>
+            <a href="health.html" class="mobile-nav-link"><span class="icon">💚</span>Raver Health</a>
+            <a href="symptom.html" class="mobile-nav-link"><span class="icon">🤒</span>Symptom Checker</a>
             <a href="fake.html" class="mobile-nav-link"><span class="icon">⚠️</span>Fake Drugs & Alerts</a>
         </div>
     </div>
@@ -798,8 +928,7 @@
     <a href="panic.html" class="hud-btn"><span>🚨</span>Panic</a>
     <a href="polydrug.html" class="hud-btn"><span>💊</span>Tool</a>
     <a href="resources.html" class="hud-btn"><span>📚</span>Resources</a>
-    <!-- Health.html replaced with booth.html -->
-    <a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a>
+    <a href="health.html" class="hud-btn"><span>💚</span>Health</a>
     <a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a>
 </div>
 
@@ -839,8 +968,81 @@
         </div>
     </div>
 
+    <!-- Hydration & Check-in Timer Widget -->
+    <div class="section-card floating floating-delay-1 expanded">
+        <div class="card-header">
+            <h2>💧 Hydration & Check-in</h2>
+            <button class="collapsible-toggle">−</button>
+        </div>
+        <div class="section-summary">Set reminders to stay hydrated and check in with your buddies.</div>
+        <div class="collapsible-content expanded">
+            <div class="timer-widget">
+                <div class="timer-card" id="water-timer">
+                    <div class="timer-title">
+                        <span>💧 Drink Water</span>
+                        <span id="water-status">--:--</span>
+                    </div>
+                    <p>Time for a hydrating break. Your body will thank you!</p>
+                    <div class="timer-controls">
+                        <button class="timer-btn btn-start" onclick="startTimer('water')">Start Timer</button>
+                        <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('water')">Snooze (10m)</button>
+                    </div>
+                </div>
+
+                <div class="timer-card" id="buddy-timer">
+                    <div class="timer-title">
+                        <span>👥 Check in with Buddy</span>
+                        <span id="buddy-status">--:--</span>
+                    </div>
+                    <p>Reach out to your buddy. A quick chat can make a big difference.</p>
+                    <div class="timer-controls">
+                        <button class="timer-btn btn-start" onclick="startTimer('buddy')">Start Timer</button>
+                        <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('buddy')">Snooze (30m)</button>
+                    </div>
+                </div>
+
+                <div class="timer-card" id="eat-timer">
+                    <div class="timer-title">
+                        <span>🍎 Eat Something</span>
+                        <span id="eat-status">--:--</span>
+                    </div>
+                    <p>Fuel your body with a healthy snack or meal.</p>
+                    <div class="timer-controls">
+                        <button class="timer-btn btn-start" onclick="startTimer('eat')">Start Timer</button>
+                        <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('eat')">Snooze (20m)</button>
+                    </div>
+                </div>
+
+                <button class="timer-btn btn-settings" onclick="toggleCustomization()">Customize Reminders</button>
+
+                <div class="customization-panel hidden" id="customization-panel">
+                    <h3>Customize Your Reminders</h3>
+                    <form id="customization-form">
+                        <div class="form-group">
+                            <label for="water-interval">Water Reminder Interval (minutes)</label>
+                            <input type="number" id="water-interval" min="15" max="180" value="60">
+                        </div>
+                        <div class="form-group">
+                            <label for="buddy-interval">Buddy Check-in Interval (minutes)</label>
+                            <input type="number" id="buddy-interval" min="30" max="480" value="120">
+                        </div>
+                        <div class="form-group">
+                            <label for="eat-interval">Eat Something Interval (minutes)</label>
+                            <input type="number" id="eat-interval" min="30" max="360" value="180">
+                        </div>
+                        <div class="form-group">
+                            <label for="snooze-duration">Default Snooze Time (minutes)</label>
+                            <input type="number" id="snooze-duration" min="5" max="60" value="10">
+                        </div>
+                    </form>
+                    <button type="button" class="btn-save" onclick="saveCustomizations()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- What We Do Section -->
-    <div class="section-card floating floating-delay-1 collapsed">
+    <div class="section-card floating floating-delay-2 collapsed">
         <div class="card-header">
             <h2>💡 What We Do</h2>
             <button class="collapsible-toggle">+</button>
@@ -874,7 +1076,7 @@
     </div>
 
     <!-- Drug Interactions Section -->
-    <div class="section-card floating floating-delay-2 collapsed">
+    <div class="section-card floating floating-delay-3 collapsed">
         <div class="card-header">
             <h2>🔬 Drug Interactions</h2>
             <button class="collapsible-toggle">+</button>
@@ -892,14 +1094,19 @@
                     <span class="text">RX + Party Drug Combos</span>
                     <span class="arrow">→</span>
                 </a>
-                <a href="fake.html" class="section-link">
-                    <span class="icon">⚠️</span>
-                    <span class="text">Fake Drugs & Alerts</span>
-                    <span class="arrow">→</span>
-                </a>
                 <a href="health.html" class="section-link">
                     <span class="icon">💚</span>
                     <span class="text">Raver Health Guide</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="symptom.html" class="section-link">
+                    <span class="icon">🤒</span>
+                    <span class="text">Symptom Checker</span>
+                    <span class="arrow">→</span>
+                </a>
+                <a href="fake.html" class="section-link">
+                    <span class="icon">⚠️</span>
+                    <span class="text">Fake Drugs & Alerts</span>
                     <span class="arrow">→</span>
                 </a>
             </div>
@@ -908,7 +1115,7 @@
     </div>
 
     <!-- Mocktail Preview Section -->
-    <div class="section-card floating floating-delay-3 collapsed">
+    <div class="section-card floating collapsed">
         <div class="card-header">
             <h2>🍹 Sober Ravers</h2>
             <button class="collapsible-toggle">+</button>
@@ -956,7 +1163,7 @@
     </div>
 
     <!-- Resources Section -->
-    <div class="section-card floating collapsed">
+    <div class="section-card floating floating-delay-1 collapsed">
         <div class="card-header">
             <h2>📚 Resources</h2>
             <button class="collapsible-toggle">+</button>
@@ -990,7 +1197,7 @@
     </div>
 
     <!-- Violence Prevention Section -->
-    <div class="section-card glow-section floating floating-delay-1 collapsed">
+    <div class="section-card glow-section floating floating-delay-2 collapsed">
         <div class="card-header">
             <h2>🛡️ Violence Prevention</h2>
             <button class="collapsible-toggle">+</button>
@@ -1024,7 +1231,7 @@
     </div>
 
     <!-- About Us Section -->
-    <div class="section-card floating floating-delay-2 collapsed">
+    <div class="section-card floating floating-delay-3 collapsed">
         <div class="card-header">
             <h2>📖 About Us</h2>
             <button class="collapsible-toggle">+</button>
@@ -1132,7 +1339,8 @@
             <div class="sitemap-links">
                 <a href="polydrug.html" class="sitemap-link">Polydrug Tool</a>
                 <a href="rx-combos.html" class="sitemap-link">RX + Party Combos</a>
-                <a href="booth.html" class="sitemap-link">Our Booth</a>
+                <a href="health.html" class="sitemap-link">Raver Health</a>
+                <a href="symptom.html" class="sitemap-link">Symptom Checker</a>
                 <a href="fake.html" class="sitemap-link">Fake Drugs & Alerts</a>
             </div>
         </div>
@@ -1166,6 +1374,168 @@
 </footer>
 
 <script>
+// Hydration Timer Widget Functionality
+// State for each timer
+const timers = {
+    water: { interval: 60, endTime: null, timeoutId: null, display: 'water-status', snooze: 10 },
+    buddy: { interval: 120, endTime: null, timeoutId: null, display: 'buddy-status', snooze: 30 },
+    eat: { interval: 180, endTime: null, timeoutId: null, display: 'eat-status', snooze: 20 }
+};
+
+// Load saved settings from localStorage
+function loadSettings() {
+    const saved = localStorage.getItem('plurderapolisTimerSettings');
+    if (saved) {
+        const settings = JSON.parse(saved);
+        for (const timer in timers) {
+            if (settings[timer]) {
+                timers[timer].interval = settings[timer].interval;
+                timers[timer].snooze = settings[timer].snooze;
+            }
+        }
+        // Update form values
+        document.getElementById('water-interval').value = timers.water.interval;
+        document.getElementById('buddy-interval').value = timers.buddy.interval;
+        document.getElementById('eat-interval').value = timers.eat.interval;
+        document.getElementById('snooze-duration').value = timers.water.snooze;
+    }
+}
+
+// Save settings to localStorage
+function saveCustomizations() {
+    const settings = {};
+    settings.water = { 
+        interval: parseInt(document.getElementById('water-interval').value), 
+        snooze: parseInt(document.getElementById('snooze-duration').value) 
+    };
+    settings.buddy = { 
+        interval: parseInt(document.getElementById('buddy-interval').value), 
+        snooze: 30 
+    };
+    settings.eat = { 
+        interval: parseInt(document.getElementById('eat-interval').value), 
+        snooze: 20 
+    };
+    
+    localStorage.setItem('plurderapolisTimerSettings', JSON.stringify(settings));
+    
+    // Update current timer intervals
+    timers.water.interval = settings.water.interval;
+    timers.buddy.interval = settings.buddy.interval;
+    timers.eat.interval = settings.eat.interval;
+    timers.water.snooze = settings.water.snooze;
+    
+    alert('Settings saved! New intervals will be used for future timers.');
+    toggleCustomization();
+}
+
+// Toggle customization panel visibility
+function toggleCustomization() {
+    const panel = document.getElementById('customization-panel');
+    panel.classList.toggle('hidden');
+}
+
+// Start a timer
+function startTimer(timerType) {
+    const timer = timers[timerType];
+    const startTime = new Date();
+    timer.endTime = new Date(startTime.getTime() + timer.interval * 60000);
+    
+    // Update button states
+    const card = document.getElementById(`${timerType}-timer`);
+    card.querySelector('.btn-start').classList.add('hidden');
+    card.querySelector('.btn-snooze').classList.remove('hidden');
+    
+    // Start the countdown display
+    updateTimerDisplay(timerType);
+    
+    // Set the actual timeout
+    timer.timeoutId = setTimeout(() => {
+        alert(`Time to ${getTimerAction(timerType)}!`);
+        resetTimer(timerType);
+    }, timer.interval * 60000);
+}
+
+// Snooze a timer
+function snoozeTimer(timerType) {
+    const timer = timers[timerType];
+    
+    // Clear existing timeout
+    if (timer.timeoutId) {
+        clearTimeout(timer.timeoutId);
+    }
+    
+    // Set a new end time for snooze duration
+    const startTime = new Date();
+    timer.endTime = new Date(startTime.getTime() + timer.snooze * 60000);
+    
+    // Update the display
+    updateTimerDisplay(timerType);
+    
+    // Set new timeout
+    timer.timeoutId = setTimeout(() => {
+        alert(`Time to ${getTimerAction(timerType)}!`);
+        resetTimer(timerType);
+    }, timer.snooze * 60000);
+}
+
+// Reset a timer to its initial state
+function resetTimer(timerType) {
+    const timer = timers[timerType];
+    timer.endTime = null;
+    
+    if (timer.timeoutId) {
+        clearTimeout(timer.timeoutId);
+        timer.timeoutId = null;
+    }
+    
+    // Update button states
+    const card = document.getElementById(`${timerType}-timer`);
+    card.querySelector('.btn-start').classList.remove('hidden');
+    card.querySelector('.btn-snooze').classList.add('hidden');
+    
+    // Reset display
+    document.getElementById(timer.display).textContent = '--:--';
+}
+
+// Update the countdown display for a timer
+function updateTimerDisplay(timerType) {
+    const timer = timers[timerType];
+    if (!timer.endTime) return;
+    
+    const now = new Date();
+    const diff = timer.endTime - now;
+    
+    if (diff <= 0) {
+        resetTimer(timerType);
+        return;
+    }
+    
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    
+    document.getElementById(timer.display).textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update every second
+    setTimeout(() => updateTimerDisplay(timerType), 1000);
+}
+
+// Helper function to get action text for alerts
+function getTimerAction(timerType) {
+    const actions = {
+        water: 'drink water',
+        buddy: 'check in with your buddy', 
+        eat: 'eat something'
+    };
+    return actions[timerType];
+}
+
+// Initialize the timer widget
+window.addEventListener('DOMContentLoaded', function() {
+    loadSettings();
+});
+
 // Subtle Animated Background
 function createParticles() {
     const particlesContainer = document.getElementById('particles');
@@ -1373,6 +1743,7 @@ const siteContent = [
     {title: "Polydrug Tool", url: "polydrug.html", category: "Drug Info", content: "Interactive tool to check dangerous drug interactions and polydrug risks."},
     {title: "RX + Party Combos", url: "rx-combos.html", category: "Drug Info", content: "Risks of combining prescription medications with party drugs."},
     {title: "Raver Health", url: "health.html", category: "Drug Info", content: "Hydration, cooling, safety tips for events and raves to prevent harm."},
+    {title: "Symptom Checker", url: "symptom.html", category: "Drug Info", content: "Tool to help identify symptoms and potential drug interactions."},
     {title: "Fake Drugs & Alerts", url: "fake.html", category: "Drug Info", content: "Information about counterfeit drugs circulating in Minnesota and harm reduction alerts."},
     
     // Consent & Community
