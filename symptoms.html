@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symptom Detective | PLURderapolis</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&display=swap">
+    <!-- Animate.css for pre-built animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
-            --bg: #1A1A2E;
-            --fg: #F0F4FF;
-            --plum: #7B68EE;
-            --accent: #FF6BCB;
-            --card: #2D2B55;
-            --muted: #A0A0C0;
-            --success: #6FCF97;
+            /* Enhanced PLURderapolis Color Palette */
+            --plur-peace: #6A8DE0;      /* Soft Blue */
+            --plur-love: #FF6BCB;       /* Vibrant Pink */
+            --plur-unity: #7B68EE;      /* Unity Plum */
+            --plur-respect: #6FCF97;    /* Respect Green */
+            --plur-dark: #1A1A2E;       /* Deep Space */
+            --plur-card: #2D2B55;       /* Card Background */
+            --plur-light: #F0F4FF;      /* Soft Text */
+            --plur-muted: #A0A0C0;      /* Muted Text */
+
+            --bg: var(--plur-dark);
+            --fg: var(--plur-light);
+            --plum: var(--plur-unity);
+            --accent: var(--plur-love);
+            --card: var(--plur-card);
+            --muted: var(--plur-muted);
+            --success: var(--plur-respect);
             --warning: #FFB347;
             --danger: #FF8A8A;
-            --pulse: #FF6BCB;
-            --soft-blue: #6A8DE0;
-            --soft-green: #6FCF97;
-            --soft-yellow: #FFD166;
+            --pulse: var(--plur-love);
         }
 
         * {
@@ -40,6 +48,7 @@
             overflow-x: hidden;
         }
 
+        /* PLUR-themed Animated Background */
         body::before {
             content: '';
             position: fixed;
@@ -48,47 +57,32 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(107, 104, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 107, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 10% 20%, rgba(106, 141, 224, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 203, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 50% 50%, rgba(111, 207, 151, 0.05) 0%, transparent 30%);
             pointer-events: none;
             z-index: -1;
         }
 
-        .floating-element {
+        .plur-particle {
             position: fixed;
-            width: 30px;
-            height: 30px;
             border-radius: 50%;
-            background: rgba(255, 107, 203, 0.2);
-            animation: float 15s infinite linear;
+            background: var(--plur-love);
+            opacity: 0.3;
+            animation: float-particle 20s infinite linear;
             z-index: -1;
         }
 
-        .floating-element:nth-child(2) {
-            width: 20px;
-            height: 20px;
-            background: rgba(107, 104, 255, 0.2);
-            animation-duration: 12s;
-            animation-delay: 2s;
-            top: 20%;
-            left: 10%;
+        .plur-particle:nth-child(odd) {
+            background: var(--plur-peace);
         }
-
-        .floating-element:nth-child(3) {
-            width: 25px;
-            height: 25px;
-            background: rgba(111, 207, 151, 0.2);
-            animation-duration: 18s;
-            animation-delay: 5s;
-            top: 70%;
-            left: 80%;
+        .plur-particle:nth-child(3n) {
+            background: var(--plur-respect);
         }
 
         #plur-game {
             max-width: 760px;
             margin: 0 auto;
-            animation: fadeIn 0.8s ease-out;
         }
 
         .pg-header {
@@ -102,7 +96,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(123, 104, 238, 0.4);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            animation: slideInDown 0.6s ease-out;
             position: relative;
             overflow: hidden;
         }
@@ -114,7 +107,8 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--plum), var(--accent), var(--soft-green));
+            background: linear-gradient(90deg, var(--plur-peace), var(--plur-love), var(--plur-unity), var(--plur-respect));
+            background-size: 200% 100%;
             animation: shimmer 3s infinite linear;
         }
 
@@ -122,7 +116,7 @@
             width: 70px;
             height: 70px;
             border-radius: 18px;
-            background: linear-gradient(135deg, var(--plum), var(--accent));
+            background: linear-gradient(135deg, var(--plur-unity), var(--plur-love));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -130,7 +124,7 @@
             font-size: 28px;
             color: white;
             box-shadow: 0 6px 20px rgba(123, 104, 238, 0.4);
-            animation: pulse 2.5s infinite, bounce 3s infinite;
+            animation: pulse-plur 3s infinite;
             font-family: 'Comic Neue', cursive;
             position: relative;
         }
@@ -149,12 +143,13 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
         }
 
         .pg-title {
             font-weight: 800;
             font-size: 22px;
-            background: linear-gradient(to right, var(--plum), var(--accent));
+            background: linear-gradient(to right, var(--plur-peace), var(--plur-love), var(--plur-unity));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -174,7 +169,6 @@
             margin: 20px 0;
             border: 1px solid rgba(123, 104, 238, 0.3);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.6s ease-out;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -187,7 +181,7 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--plum), var(--accent));
+            background: linear-gradient(90deg, var(--plur-peace), var(--plur-love), var(--plur-unity));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.5s ease;
@@ -204,7 +198,7 @@
 
         .question {
             font-weight: 700;
-            color: var(--plum);
+            color: var(--plur-unity);
             font-size: 20px;
             margin-bottom: 20px;
             display: flex;
@@ -215,7 +209,6 @@
 
         .question-icon {
             font-size: 28px;
-            animation: wiggle 2s infinite;
         }
 
         .options-container {
@@ -254,7 +247,7 @@
         }
 
         .opt:hover {
-            border-color: var(--plum);
+            border-color: var(--plur-unity);
             transform: translateX(8px) scale(1.02);
             box-shadow: 0 5px 15px rgba(123, 104, 238, 0.2);
         }
@@ -287,7 +280,7 @@
             padding: 14px 24px;
             border-radius: 16px;
             border: 0;
-            background: linear-gradient(135deg, var(--plum), var(--accent));
+            background: linear-gradient(135deg, var(--plur-unity), var(--plur-love));
             color: white;
             font-weight: 700;
             cursor: pointer;
@@ -322,29 +315,17 @@
             transform: translateY(0);
         }
 
-        .small {
-            font-size: 14px;
-            color: var(--muted);
-        }
-
         .result-title {
             font-size: 26px;
             font-weight: 800;
             margin-bottom: 16px;
-            background: linear-gradient(to right, var(--plum), var(--accent), var(--soft-green));
+            background: linear-gradient(to right, var(--plur-peace), var(--plur-love), var(--plur-unity), var(--plur-respect));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-family: 'Comic Neue', cursive;
             text-align: center;
             animation: colorShift 4s infinite alternate;
-        }
-
-        .chips-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 20px 0;
         }
 
         .chip {
@@ -362,37 +343,16 @@
 
         .chip:hover {
             transform: scale(1.08);
-            border-color: var(--plum);
+            border-color: var(--plur-unity);
             box-shadow: 0 4px 10px rgba(123, 104, 238, 0.3);
         }
 
         .chip.selected {
-            background: linear-gradient(135deg, var(--plum), var(--accent));
+            background: linear-gradient(135deg, var(--plur-unity), var(--plur-love));
             color: white;
-            border-color: var(--accent);
+            border-color: var(--plur-love);
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
-        }
-
-        .chip-icon {
-            font-size: 16px;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #3A3A5D;
-            background: #1E1E3F;
-            color: var(--fg);
-            font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--plum);
-            box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.3);
         }
 
         .emergency-alert {
@@ -413,7 +373,7 @@
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--plum), var(--accent), var(--soft-green));
+            background: linear-gradient(90deg, var(--plur-peace), var(--plur-love), var(--plur-unity), var(--plur-respect));
             border-radius: 4px;
             transition: width 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 0%;
@@ -432,141 +392,14 @@
             animation: shimmer 2s infinite;
         }
 
-        .foot-note {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 24px;
-            padding: 16px;
-            border-top: 1px solid rgba(123, 104, 238, 0.3);
-            background: rgba(45, 43, 85, 0.5);
-            border-radius: 12px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInDown {
-            from { 
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0.7); }
-            50% { transform: scale(1.05); }
-            70% { box-shadow: 0 0 0 12px rgba(123, 104, 238, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0); }
-        }
-
-        @keyframes pulseEmergency {
-            0% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 138, 138, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(3deg); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        @keyframes colorShift {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(30deg); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        .bounce {
-            animation: bounce 0.6s;
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            opacity: 0;
-            z-index: 1000;
-        }
-
-        @media (min-width: 720px) {
-            #plur-game {
-                padding: 24px;
-            }
-            
-            .card {
-                padding: 28px;
-            }
-            
-            .pg-header {
-                padding: 24px;
-            }
-            
-            .question {
-                font-size: 22px;
-            }
-        }
-
-        /* Legal disclaimer styling */
-        .legal-disclaimer {
-            background: rgba(45, 43, 85, 0.9);
-            border-left: 4px solid var(--plum);
-            padding: 16px;
-            margin: 24px 0;
-            border-radius: 0 12px 12px 0;
-            font-size: 12px;
-            color: var(--muted);
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Cute mascot */
-        .mascot {
+        /* PLUR Mascot */
+        .plur-mascot {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--plum), var(--accent));
+            background: linear-gradient(135deg, var(--plur-unity), var(--plur-love));
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -579,19 +412,87 @@
             animation: bounce 3s infinite;
         }
 
-        .mascot:hover {
+        .plur-mascot:hover {
             transform: scale(1.1);
         }
 
         /* Celebration animation */
+        .plur-celebration {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--plur-love);
+            opacity: 0;
+            z-index: 1000;
+            border-radius: 50%;
+        }
+
+        .plur-celebration:nth-child(odd) {
+            background: var(--plur-peace);
+        }
+        .plur-celebration:nth-child(3n) {
+            background: var(--plur-respect);
+        }
+
+        /* Enhanced Animations */
+        @keyframes pulse-plur {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0.7); }
+            50% { transform: scale(1.05); }
+            70% { box-shadow: 0 0 0 15px rgba(123, 104, 238, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0); }
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes colorShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        @keyframes pulseEmergency {
+            0% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 138, 138, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
         @keyframes celebrate {
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-100px) scale(0); opacity: 0; }
         }
 
-        /* Responsive adjustments */
+        .bounce {
+            animation: bounce 0.6s;
+        }
+
+        /* Staggered animation for options */
+        .opt.stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
         @media (max-width: 600px) {
-            .mascot {
+            .plur-mascot {
                 width: 60px;
                 height: 60px;
                 font-size: 30px;
@@ -604,26 +505,22 @@
                 text-align: center;
                 gap: 12px;
             }
-            
-            .pg-logo {
-                width: 60px;
-                height: 60px;
-                font-size: 24px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Floating background elements -->
-    <div class="floating-element" style="top: 10%; left: 5%;"></div>
-    <div class="floating-element" style="top: 20%; left: 10%;"></div>
-    <div class="floating-element" style="top: 70%; left: 80%;"></div>
+    <!-- PLUR-themed Background Particles -->
+    <div class="plur-particle" style="top: 10%; left: 5%; width: 15px; height: 15px; animation-delay: 0s;"></div>
+    <div class="plur-particle" style="top: 20%; left: 10%; width: 10px; height: 10px; animation-delay: 2s;"></div>
+    <div class="plur-particle" style="top: 70%; left: 80%; width: 12px; height: 12px; animation-delay: 5s;"></div>
+    <div class="plur-particle" style="top: 40%; left: 90%; width: 8px; height: 8px; animation-delay: 7s;"></div>
+    <div class="plur-particle" style="top: 80%; left: 15%; width: 14px; height: 14px; animation-delay: 10s;"></div>
     
-    <!-- Cute mascot -->
-    <div class="mascot" onclick="celebrate()">🩺</div>
+    <!-- PLUR Mascot -->
+    <div class="plur-mascot" onclick="plurCelebrate()">❤️</div>
     
     <div id="plur-game">
-        <div class="pg-header">
+        <div class="pg-header animate__animated animate__fadeInDown">
             <div class="pg-logo">PL</div>
             <div>
                 <div class="pg-title">Symptom Detective — Quick Triage Game</div>
@@ -635,7 +532,7 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
 
-        <div class="card" id="screen"></div>
+        <div class="card animate__animated" id="screen"></div>
 
         <div class="legal-disclaimer">
             <strong>Disclaimer:</strong> This tool is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of qualified health providers with any questions you may have regarding a medical condition. In case of emergency, call 911 immediately.
@@ -647,13 +544,7 @@
     </div>
 
     <script>
-        /* PLURderapolis Symptom Detective - Cute & Animated Version
-           - One-question-per-screen interactive "game"
-           - Hard emergency checks first
-           - Pattern scoring + clear "why" + action steps
-           - With PLURderapolis branding and animations
-        */
-
+        /* PLURderapolis Symptom Detective - Enhanced Branding & Animations */
         (function(){
             const screen = document.getElementById('screen');
             const foot = document.getElementById('foot-note');
@@ -679,6 +570,28 @@
                 path: []
             };
 
+            // Create PLUR background particles
+            function createParticles() {
+                const container = document.body;
+                for (let i = 0; i < 15; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'plur-particle';
+                    const size = Math.random() * 10 + 5;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    const delay = Math.random() * 15;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.top = `${posY}%`;
+                    particle.style.left = `${posX}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${15 + Math.random() * 15}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+
             // Update progress bar
             function updateProgress() {
                 const progress = (currentQuestionIndex / (questionFlow.length - 1)) * 100;
@@ -686,31 +599,48 @@
             }
 
             // utility: render html with animation
-            function render(html){ 
+            function render(html, animation = 'animate__fadeIn'){ 
                 screen.style.opacity = 0;
                 setTimeout(() => {
                     screen.innerHTML = html;
+                    screen.className = `card animate__animated ${animation}`;
                     screen.style.opacity = 1;
+                    
+                    // Add staggered animation to options
+                    setTimeout(() => {
+                        const options = screen.querySelectorAll('.opt, .chip');
+                        options.forEach((opt, index) => {
+                            opt.classList.add('stagger-item');
+                            setTimeout(() => {
+                                opt.style.opacity = 1;
+                                opt.style.transform = 'translateY(0)';
+                                opt.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            }, index * 100);
+                        });
+                    }, 50);
+                    
                     window.scrollTo({top:0,behavior:'smooth'});
                 }, 300);
             }
 
-            // Create confetti celebration
-            function celebrate() {
-                const colors = ['#FF6BCB', '#7B68EE', '#6FCF97', '#FFD166', '#6A8DE0'];
-                for (let i = 0; i < 50; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animation = `celebrate ${Math.random() * 1 + 0.5}s ease-out forwards`;
-                    document.body.appendChild(confetti);
+            // PLUR Celebration
+            window.plurCelebrate = function() {
+                const colors = ['var(--plur-love)', 'var(--plur-peace)', 'var(--plur-unity)', 'var(--plur-respect)'];
+                for (let i = 0; i < 30; i++) {
+                    const celeb = document.createElement('div');
+                    celeb.className = 'plur-celebration';
+                    celeb.style.left = Math.random() * 100 + 'vw';
+                    celeb.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    celeb.style.animation = `celebrate ${Math.random() * 1 + 0.5}s ease-out forwards`;
+                    document.body.appendChild(celeb);
                     
                     setTimeout(() => {
-                        document.body.removeChild(confetti);
+                        if (document.body.contains(celeb)) {
+                            document.body.removeChild(celeb);
+                        }
                     }, 1500);
                 }
-            }
+            };
 
             // emergency screen
             function emergencyView(reason){
@@ -732,7 +662,7 @@
                     <button class="btn" onclick="window.location.reload()">
                         <span class="opt-icon">🔄</span> Start Over
                     </button>
-                </div>`);
+                </div>`, 'animate__headShake');
                 foot.style.display='block';
                 currentQuestionIndex = questionFlow.length - 1;
                 updateProgress();
@@ -752,7 +682,7 @@
                         <span class="opt-icon">🕵️</span>
                         <span class="opt-text">Start Investigation</span>
                     </div>
-                </div>`);
+                </div>`, 'animate__zoomIn');
                 foot.style.display='none';
             }
 
@@ -779,7 +709,7 @@
                         <span class="opt-text">Unresponsive / can't wake</span>
                     </div>
                 </div>
-                <div class="small" style="margin-top:16px">If unresponsive — this is an emergency.</div>`);
+                <div class="small" style="margin-top:16px">If unresponsive — this is an emergency.</div>`, 'animate__fadeInUp');
             }
 
             function q_breathing(){
@@ -804,7 +734,7 @@
                         <span class="opt-text">Gasping, very slow, or irregular</span>
                     </div>
                 </div>
-                <div class="small" style="margin-top:16px">If breathing is &lt;8 breaths/min or gasping → emergency.</div>`);
+                <div class="small" style="margin-top:16px">If breathing is &lt;8 breaths/min or gasping → emergency.</div>`, 'animate__fadeInUp');
             }
 
             function showRR(){
@@ -824,7 +754,7 @@
                         <span class="opt-text">Can't count / gasping</span>
                     </div>
                 </div>
-                <div class="small" style="margin-top:16px">If &lt;8 → emergency. If unsure, choose "Can't count / gasping".</div>`);
+                <div class="small" style="margin-top:16px">If &lt;8 → emergency. If unsure, choose "Can't count / gasping".</div>`, 'animate__flipInX');
             }
 
             window.submitRR = function(){
@@ -863,7 +793,7 @@
                         <span class="opt-text">Normal</span>
                     </div>
                 </div>
-                <div class="small" style="margin-top:16px">Pinpoint suggests opioids; dilated suggests stimulants/serotonin/other.</div>`);
+                <div class="small" style="margin-top:16px">Pinpoint suggests opioids; dilated suggests stimulants/serotonin/other.</div>`, 'animate__fadeInUp');
             }
 
             function q_temp(){
@@ -888,14 +818,13 @@
                         <span class="opt-text">Neither / not sure</span>
                     </div>
                 </div>
-                <div class="small" style="margin-top:16px">Heat stroke often has very high temp + altered mental status. Cold/blue can indicate poor oxygenation (opioid/alcohol).</div>`);
+                <div class="small" style="margin-top:16px">Heat stroke often has very high temp + altered mental status. Cold/blue can indicate poor oxygenation (opioid/alcohol).</div>`, 'animate__fadeInUp');
             }
 
             function q_signs(){
                 currentQuestionIndex = 5;
                 updateProgress();
                 state.path.push('signs');
-                // game-style big tappable chips for the specific list the user provided
                 render(`<div class="question">
                     <span class="question-icon">🔎</span>
                     Which of these do you see? (tap all that apply)
@@ -946,7 +875,7 @@
                         <span class="opt-icon">🔬</span> Analyze — show result
                     </button>
                 </div>
-                <div class="small" style="margin-top:16px">Tip: Tap multiple chips if you see several signs. If unsure, choose the closest option.</div>`);
+                <div class="small" style="margin-top:16px">Tip: Tap multiple chips if you see several signs. If unsure, choose the closest option.</div>`, 'animate__zoomIn');
             }
 
             // toggle chip and visual feedback
@@ -956,28 +885,32 @@
                 element.classList.toggle('selected');
                 
                 // Add bounce animation
-                element.classList.add('bounce');
+                element.classList.add('animate__animated', 'animate__pulse');
                 setTimeout(() => {
-                    element.classList.remove('bounce');
+                    element.classList.remove('animate__animated', 'animate__pulse');
                 }, 1000);
             };
 
             // pick short-option handler
             window.pick = function(opt){
-                switch(opt){
-                    case 'awake': state.flags.awake=true; q_breathing(); break;
-                    case 'slow': state.flags.very_drowsy=true; q_breathing(); break;
-                    case 'unresponsive': state.flags.unresponsive=true; emergencyView('Unresponsive / cannot be woken.'); break;
-                    case 'breath_normal': state.flags.breath_normal=true; q_pupils(); break;
-                    case 'breath_gasp': emergencyView('Gasping, very slow, or irregular breathing — life-threatening.'); break;
-                    case 'pup_pin': state.flags.pinpoint_pupils=true; q_temp(); break;
-                    case 'pup_dil': state.flags.dilated_pupils=true; q_temp(); break;
-                    case 'pup_norm': q_temp(); break;
-                    case 'hot_sweat': state.flags.hot_env=true; q_signs(); break;
-                    case 'cold_blue': state.flags.cold_blue=true; q_signs(); break;
-                    case 'temp_normal': q_signs(); break;
-                    case 'hot_temp': state.flags.hot_temp=true; q_signs(); break;
-                }
+                // Add transition animation before proceeding
+                screen.classList.add('animate__fadeOut');
+                setTimeout(() => {
+                    switch(opt){
+                        case 'awake': state.flags.awake=true; q_breathing(); break;
+                        case 'slow': state.flags.very_drowsy=true; q_breathing(); break;
+                        case 'unresponsive': state.flags.unresponsive=true; emergencyView('Unresponsive / cannot be woken.'); break;
+                        case 'breath_normal': state.flags.breath_normal=true; q_pupils(); break;
+                        case 'breath_gasp': emergencyView('Gasping, very slow, or irregular breathing — life-threatening.'); break;
+                        case 'pup_pin': state.flags.pinpoint_pupils=true; q_temp(); break;
+                        case 'pup_dil': state.flags.dilated_pupils=true; q_temp(); break;
+                        case 'pup_norm': q_temp(); break;
+                        case 'hot_sweat': state.flags.hot_env=true; q_signs(); break;
+                        case 'cold_blue': state.flags.cold_blue=true; q_signs(); break;
+                        case 'temp_normal': q_signs(); break;
+                        case 'hot_temp': state.flags.hot_temp=true; q_signs(); break;
+                    }
+                }, 300);
             };
 
             // final logic engine — patterns & emergency rules
@@ -1137,7 +1070,7 @@
 
             // show final result with explanation and 911 script + copy button
             function showResult(title, clues, actions){
-                celebrate(); // Trigger celebration when showing results
+                plurCelebrate(); // Trigger PLUR celebration when showing results
                 
                 const cluesHtml = clues.length ? `<div style="margin-top:20px"><strong>Key clues:</strong><ul style="margin-top:12px; padding-left:24px;">${clues.map(c=>`<li>${c}</li>`).join('')}</ul></div>` : '';
                 const actionsHtml = `<div style="margin-top:20px"><strong>What to do now:</strong><ul style="margin-top:12px; padding-left:24px;">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
@@ -1152,7 +1085,7 @@
                     ${actionsHtml}
                     <div style="margin-top:24px">
                         <div class="small"><strong>What to say to 911 (quick script):</strong></div>
-                        <div style="background:#1E1E3F;padding:16px;border-radius:12px;margin-top:12px;color:var(--muted);font-size:14px; border-left: 4px solid var(--plum);" id="script-box">${script}</div>
+                        <div style="background:#1E1E3F;padding:16px;border-radius:12px;margin-top:12px;color:var(--muted);font-size:14px; border-left: 4px solid var(--plur-unity);" id="script-box">${script}</div>
                         <div style="margin-top:20px;display:flex;gap:12px">
                             <button class="btn" onclick="copyScript()">
                                 <span class="opt-icon">📋</span> Copy 911 script
@@ -1162,7 +1095,7 @@
                                 <span class="opt-text">Play Again</span>
                             </div>
                         </div>
-                    </div>`);
+                    </div>`, 'animate__zoomIn');
                 foot.style.display='block';
             }
 
@@ -1173,7 +1106,8 @@
                 }, ()=>alert('Unable to copy — please long-press the script to copy manually.'));
             };
 
-            // glue: start app
+            // Initialize the app
+            createParticles();
             start();
 
             // expose next to global so inline onclicks in HTML can call
@@ -1185,10 +1119,6 @@
             };
             window.pick = window.pick || function(){};
             window.finalize = finalize;
-            window.celebrate = celebrate;
-
-            // small UX: if user selects some chips that imply immediate danger (pinpoint + gurgle + rr slow)
-            // we included hard-emergency checks in finalize and earlier branches.
         })();
     </script>
 </body>
