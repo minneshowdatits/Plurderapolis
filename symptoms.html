@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symptom Detective | PLURderapolis</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         :root {
-            --bg: #1C1C1C;
-            --fg: #F5F5F5;
-            --plum: #5D3A7D;
-            --accent: #E040FB;
-            --card: #262626;
-            --muted: #bdbdbd;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --danger: #F44336;
-            --pulse: #E040FB;
+            --bg: #1A1A2E;
+            --fg: #F0F4FF;
+            --plum: #7B68EE;
+            --accent: #FF6BCB;
+            --card: #2D2B55;
+            --muted: #A0A0C0;
+            --success: #6FCF97;
+            --warning: #FFB347;
+            --danger: #FF8A8A;
+            --pulse: #FF6BCB;
+            --soft-blue: #6A8DE0;
+            --soft-green: #6FCF97;
+            --soft-yellow: #FFD166;
         }
 
         * {
@@ -32,15 +36,59 @@
             line-height: 1.5;
             padding: 16px;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(93, 58, 125, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(224, 64, 251, 0.1) 0%, transparent 20%);
+                radial-gradient(circle at 10% 20%, rgba(107, 104, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 203, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(111, 207, 151, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 107, 203, 0.2);
+            animation: float 15s infinite linear;
+            z-index: -1;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            background: rgba(107, 104, 255, 0.2);
+            animation-duration: 12s;
+            animation-delay: 2s;
+            top: 20%;
+            left: 10%;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            background: rgba(111, 207, 151, 0.2);
+            animation-duration: 18s;
+            animation-delay: 5s;
+            top: 70%;
+            left: 80%;
         }
 
         #plur-game {
             max-width: 760px;
             margin: 0 auto;
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .pg-header {
@@ -48,91 +96,144 @@
             gap: 16px;
             align-items: center;
             margin-bottom: 20px;
-            padding: 16px;
-            background: rgba(38, 38, 38, 0.8);
-            border-radius: 16px;
+            padding: 20px;
+            background: rgba(45, 43, 85, 0.85);
+            border-radius: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(93, 58, 125, 0.3);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            animation: slideInDown 0.5s ease-out;
+            border: 1px solid rgba(123, 104, 238, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: slideInDown 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pg-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--plum), var(--accent), var(--soft-green));
+            animation: shimmer 3s infinite linear;
         }
 
         .pg-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
             background: linear-gradient(135deg, var(--plum), var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 24px;
+            font-size: 28px;
             color: white;
-            box-shadow: 0 4px 15px rgba(93, 58, 125, 0.4);
-            animation: pulse 2s infinite;
+            box-shadow: 0 6px 20px rgba(123, 104, 238, 0.4);
+            animation: pulse 2.5s infinite, bounce 3s infinite;
+            font-family: 'Comic Neue', cursive;
+            position: relative;
+        }
+
+        .pg-logo::after {
+            content: '🔍';
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            font-size: 20px;
+            background: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .pg-title {
             font-weight: 800;
-            font-size: 20px;
+            font-size: 22px;
             background: linear-gradient(to right, var(--plum), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-family: 'Comic Neue', cursive;
         }
 
         .pg-subtitle {
             font-size: 14px;
             color: var(--muted);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .card {
             background: var(--card);
-            padding: 20px;
-            border-radius: 16px;
-            margin: 16px 0;
-            border: 1px solid rgba(93, 58, 125, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.5s ease-out;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 24px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(123, 104, 238, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--plum), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
         }
 
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
         }
 
         .question {
             font-weight: 700;
             color: var(--plum);
-            font-size: 18px;
-            margin-bottom: 16px;
+            font-size: 20px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-family: 'Comic Neue', cursive;
         }
 
         .question-icon {
-            font-size: 24px;
+            font-size: 28px;
+            animation: wiggle 2s infinite;
         }
 
         .options-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .opt {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: linear-gradient(to right, #111, #1a1a1a);
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid #2a2a2a;
+            gap: 14px;
+            background: linear-gradient(to right, #1E1E3F, #252450);
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid #3A3A5D;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
         }
@@ -144,8 +245,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(93, 58, 125, 0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(123, 104, 238, 0.3), transparent);
+            transition: left 0.7s;
         }
 
         .opt:hover::before {
@@ -154,7 +255,8 @@
 
         .opt:hover {
             border-color: var(--plum);
-            transform: translateX(5px);
+            transform: translateX(8px) scale(1.02);
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.2);
         }
 
         .opt:active {
@@ -162,34 +264,58 @@
         }
 
         .opt-icon {
-            font-size: 20px;
-            width: 24px;
+            font-size: 24px;
+            width: 30px;
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .opt:hover .opt-icon {
+            transform: scale(1.2);
         }
 
         .opt-text {
             flex: 1;
+            font-size: 16px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: 12px;
+            gap: 10px;
+            padding: 14px 24px;
+            border-radius: 16px;
             border: 0;
             background: linear-gradient(135deg, var(--plum), var(--accent));
             color: white;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(93, 58, 125, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 15px rgba(123, 104, 238, 0.4);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(93, 58, 125, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(123, 104, 238, 0.5);
         }
 
         .btn:active {
@@ -202,45 +328,50 @@
         }
 
         .result-title {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
-            color: #ffe4f8;
-            margin-bottom: 12px;
-            background: linear-gradient(to right, var(--plum), var(--accent));
+            margin-bottom: 16px;
+            background: linear-gradient(to right, var(--plum), var(--accent), var(--soft-green));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-family: 'Comic Neue', cursive;
+            text-align: center;
+            animation: colorShift 4s infinite alternate;
         }
 
         .chips-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 16px 0;
+            gap: 12px;
+            margin: 20px 0;
         }
 
         .chip {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: #111;
-            padding: 10px 14px;
-            border-radius: 20px;
-            border: 1px solid #2a2a2a;
+            gap: 8px;
+            background: #1E1E3F;
+            padding: 12px 16px;
+            border-radius: 24px;
+            border: 1px solid #3A3A5D;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .chip:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
             border-color: var(--plum);
+            box-shadow: 0 4px 10px rgba(123, 104, 238, 0.3);
         }
 
         .chip.selected {
             background: linear-gradient(135deg, var(--plum), var(--accent));
             color: white;
             border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(123, 104, 238, 0.4);
         }
 
         .chip-icon {
@@ -249,49 +380,66 @@
 
         input[type="number"] {
             width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #333;
-            background: #111;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #3A3A5D;
+            background: #1E1E3F;
             color: var(--fg);
             font-size: 16px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         input[type="number"]:focus {
             outline: none;
             border-color: var(--plum);
+            box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.3);
         }
 
         .emergency-alert {
-            animation: pulseEmergency 1.5s infinite;
+            animation: pulseEmergency 1.5s infinite, shake 0.5s ease-in-out;
             border: 2px solid var(--danger);
-            background: rgba(244, 67, 54, 0.1);
+            background: rgba(255, 138, 138, 0.15);
         }
 
         .progress-container {
             width: 100%;
-            height: 6px;
-            background: #111;
-            border-radius: 3px;
-            margin: 16px 0;
+            height: 8px;
+            background: #1E1E3F;
+            border-radius: 4px;
+            margin: 20px 0;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
         }
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(to right, var(--plum), var(--accent));
-            border-radius: 3px;
-            transition: width 0.5s ease;
+            background: linear-gradient(90deg, var(--plum), var(--accent), var(--soft-green));
+            border-radius: 4px;
+            transition: width 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 0%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
         }
 
         .foot-note {
             font-size: 12px;
             color: var(--muted);
-            margin-top: 20px;
-            padding: 12px;
-            border-top: 1px solid rgba(93, 58, 125, 0.3);
+            margin-top: 24px;
+            padding: 16px;
+            border-top: 1px solid rgba(123, 104, 238, 0.3);
+            background: rgba(45, 43, 85, 0.5);
+            border-radius: 12px;
         }
 
         /* Animations */
@@ -303,7 +451,7 @@
         @keyframes fadeInUp {
             from { 
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to { 
                 opacity: 1;
@@ -314,7 +462,7 @@
         @keyframes slideInDown {
             from { 
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to { 
                 opacity: 1;
@@ -323,25 +471,62 @@
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(93, 58, 125, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(93, 58, 125, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(93, 58, 125, 0); }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0.7); }
+            50% { transform: scale(1.05); }
+            70% { box-shadow: 0 0 0 12px rgba(123, 104, 238, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0); }
         }
 
         @keyframes pulseEmergency {
-            0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 138, 138, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 138, 138, 0); }
         }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes colorShift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
         .bounce {
-            animation: bounce 1s;
+            animation: bounce 0.6s;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            opacity: 0;
+            z-index: 1000;
         }
 
         @media (min-width: 720px) {
@@ -350,27 +535,93 @@
             }
             
             .card {
-                padding: 24px;
+                padding: 28px;
             }
             
             .pg-header {
-                padding: 20px;
+                padding: 24px;
+            }
+            
+            .question {
+                font-size: 22px;
             }
         }
 
         /* Legal disclaimer styling */
         .legal-disclaimer {
-            background: rgba(38, 38, 38, 0.9);
+            background: rgba(45, 43, 85, 0.9);
             border-left: 4px solid var(--plum);
-            padding: 12px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
             font-size: 12px;
             color: var(--muted);
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Cute mascot */
+        .mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--plum), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            animation: bounce 3s infinite;
+        }
+
+        .mascot:hover {
+            transform: scale(1.1);
+        }
+
+        /* Celebration animation */
+        @keyframes celebrate {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .mascot {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .pg-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .pg-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating background elements -->
+    <div class="floating-element" style="top: 10%; left: 5%;"></div>
+    <div class="floating-element" style="top: 20%; left: 10%;"></div>
+    <div class="floating-element" style="top: 70%; left: 80%;"></div>
+    
+    <!-- Cute mascot -->
+    <div class="mascot" onclick="celebrate()">🩺</div>
+    
     <div id="plur-game">
         <div class="pg-header">
             <div class="pg-logo">PL</div>
@@ -396,7 +647,7 @@
     </div>
 
     <script>
-        /* PLURderapolis Symptom Detective - Enhanced Version
+        /* PLURderapolis Symptom Detective - Cute & Animated Version
            - One-question-per-screen interactive "game"
            - Hard emergency checks first
            - Pattern scoring + clear "why" + action steps
@@ -441,7 +692,24 @@
                     screen.innerHTML = html;
                     screen.style.opacity = 1;
                     window.scrollTo({top:0,behavior:'smooth'});
-                }, 200);
+                }, 300);
+            }
+
+            // Create confetti celebration
+            function celebrate() {
+                const colors = ['#FF6BCB', '#7B68EE', '#6FCF97', '#FFD166', '#6A8DE0'];
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `celebrate ${Math.random() * 1 + 0.5}s ease-out forwards`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(confetti);
+                    }, 1500);
+                }
             }
 
             // emergency screen
@@ -450,17 +718,17 @@
                     <span class="question-icon">🚨</span>
                     EMERGENCY — CALL 911
                 </div>
-                <div style="margin-top:16px; font-size: 16px;">${reason}</div>
-                <div style="margin-top:20px;">
+                <div style="margin-top:20px; font-size: 16px;">${reason}</div>
+                <div style="margin-top:24px;">
                     <strong>Immediate actions</strong>
-                    <ul style="margin-top:8px; padding-left:20px;">
+                    <ul style="margin-top:12px; padding-left:24px;">
                         <li>Call 911 now (one-tap on mobile from your phone).</li>
                         <li>If breathing is <strong>very slow</strong> or <strong>stopped</strong> — start rescue breaths/CPR if trained.</li>
                         <li>If opioid suspected — give naloxone (intranasal/IM) immediately; repeat per instructions.</li>
                         <li>If vomiting and unconscious — put on side (recovery position) to protect airway unless spinal injury suspected.</li>
                     </ul>
                 </div>
-                <div style="margin-top:20px;">
+                <div style="margin-top:24px;">
                     <button class="btn" onclick="window.location.reload()">
                         <span class="opt-icon">🔄</span> Start Over
                     </button>
@@ -475,13 +743,13 @@
                 currentQuestionIndex = 0;
                 updateProgress();
                 render(`<div class="question">
-                    <span class="question-icon">👀</span>
+                    <span class="question-icon">🔍</span>
                     Ready to play detective?
                 </div>
-                <div class="small" style="margin-bottom: 20px;">Answer the quick prompts — it narrows down the most likely emergency and tells you exactly what to do.</div>
+                <div class="small" style="margin-bottom: 24px;">Answer the quick prompts — it narrows down the most likely emergency and tells you exactly what to do.</div>
                 <div class="options-container">
                     <div class="opt" onclick="next('conscious')">
-                        <span class="opt-icon">🔍</span>
+                        <span class="opt-icon">🕵️</span>
                         <span class="opt-text">Start Investigation</span>
                     </div>
                 </div>`);
@@ -673,7 +941,7 @@
                         <span class="chip-icon">😴</span> Extreme sleepiness / very drowsy
                     </div>
                 </div>
-                <div style="margin-top:20px">
+                <div style="margin-top:24px">
                     <button class="btn" onclick="finalize()">
                         <span class="opt-icon">🔬</span> Analyze — show result
                     </button>
@@ -869,21 +1137,23 @@
 
             // show final result with explanation and 911 script + copy button
             function showResult(title, clues, actions){
-                const cluesHtml = clues.length ? `<div style="margin-top:16px"><strong>Key clues:</strong><ul style="margin-top:8px; padding-left:20px;">${clues.map(c=>`<li>${c}</li>`).join('')}</ul></div>` : '';
-                const actionsHtml = `<div style="margin-top:16px"><strong>What to do now:</strong><ul style="margin-top:8px; padding-left:20px;">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
+                celebrate(); // Trigger celebration when showing results
+                
+                const cluesHtml = clues.length ? `<div style="margin-top:20px"><strong>Key clues:</strong><ul style="margin-top:12px; padding-left:24px;">${clues.map(c=>`<li>${c}</li>`).join('')}</ul></div>` : '';
+                const actionsHtml = `<div style="margin-top:20px"><strong>What to do now:</strong><ul style="margin-top:12px; padding-left:24px;">${actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
                 // build 911 script from state flags concisely
                 const rrTxt = state.flags.rr !== undefined ? `${state.flags.rr} breaths/min` : (state.flags.breath_normal ? 'normal' : 'unknown');
                 const signsList = Object.keys(state.flags).filter(k => state.flags[k] === true).join(', ') || 'none obvious';
                 const script = `I need an ambulance. Person is ${state.flags.unresponsive ? 'unresponsive' : (state.flags.very_drowsy ? 'very drowsy' : 'responsive')}. Breathing: ${rrTxt}. Key signs: ${signsList}. Location: [your location].`;
 
                 render(`<div class="result-title">${title}</div>
-                    <div class="small" style="margin-top:8px">This is the tool's best match based on observed signs — it's conservative: when in doubt call 911.</div>
+                    <div class="small" style="margin-top:12px">This is the tool's best match based on observed signs — it's conservative: when in doubt call 911.</div>
                     ${cluesHtml}
                     ${actionsHtml}
-                    <div style="margin-top:20px">
+                    <div style="margin-top:24px">
                         <div class="small"><strong>What to say to 911 (quick script):</strong></div>
-                        <div style="background:#111;padding:12px;border-radius:8px;margin-top:8px;color:var(--muted);font-size:14px; border-left: 3px solid var(--plum);" id="script-box">${script}</div>
-                        <div style="margin-top:16px;display:flex;gap:12px">
+                        <div style="background:#1E1E3F;padding:16px;border-radius:12px;margin-top:12px;color:var(--muted);font-size:14px; border-left: 4px solid var(--plum);" id="script-box">${script}</div>
+                        <div style="margin-top:20px;display:flex;gap:12px">
                             <button class="btn" onclick="copyScript()">
                                 <span class="opt-icon">📋</span> Copy 911 script
                             </button>
@@ -915,6 +1185,7 @@
             };
             window.pick = window.pick || function(){};
             window.finalize = finalize;
+            window.celebrate = celebrate;
 
             // small UX: if user selects some chips that imply immediate danger (pinpoint + gurgle + rr slow)
             // we included hard-emergency checks in finalize and earlier branches.
