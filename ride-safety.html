@@ -6,74 +6,133 @@
     <title>Ride Safety & Bystander Basics | PLURderapolis</title>
     <style>
         :root {
-            --primary: #8A2BE2; /* Electric purple */
-            --secondary: #00FFFF; /* Cyan */
-            --accent: #FF00FF; /* Magenta */
-            --dark: #1A0033; /* Deep purple */
-            --light: #F5F5F5; /* Light background */
-            --text: #FFFFFF; /* White text */
-            --text-dark: #333333; /* Dark text */
+            --primary: #8A2BE2;
+            --secondary: #00FFFF;
+            --accent: #FF00FF;
+            --dark: #1A0033;
+            --light: #F5F5F5;
+            --text: #FFFFFF;
+            --text-dark: #333333;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, var(--dark) 0%, #2D004D 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
-        /* Header Styles */
+
+        /* Header & Navigation */
         header {
-            background: rgba(26, 0, 51, 0.9);
+            background: rgba(26, 0, 51, 0.95);
             backdrop-filter: blur(10px);
-            padding: 20px 0;
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 10px;
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
         .logo a {
             color: var(--secondary);
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--secondary);
             transition: all 0.3s ease;
         }
-        
+
         .logo a:hover {
             color: var(--accent);
-            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+            text-shadow: 0 0 10px var(--accent);
         }
-        
-        .tagline {
+
+        .topnav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .topnav a {
+            color: var(--text);
             text-align: center;
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
-        
+
+        .topnav a:hover, .topnav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background: rgba(26, 0, 51, 0.95);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 999;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            color: var(--text);
+            padding: 15px 20px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background-color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--secondary);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
         /* Hero Section */
         .hero {
             text-align: center;
@@ -83,27 +142,27 @@
             border-radius: 0 0 20px 20px;
             animation: fadeIn 1s ease;
         }
-        
+
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--secondary);
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
-        
+
         .hero p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 30px;
         }
-        
+
         .cta-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
-        
+
         .btn {
             padding: 12px 25px;
             border-radius: 30px;
@@ -113,37 +172,91 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
         }
-        
+
         .btn-primary {
             background: var(--primary);
             color: white;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
         }
-        
+
         .btn-primary:hover {
             background: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(255, 0, 255, 0.5);
         }
-        
+
         .btn-secondary {
             background: transparent;
             color: var(--secondary);
             border: 2px solid var(--secondary);
         }
-        
+
         .btn-secondary:hover {
             background: rgba(0, 255, 255, 0.1);
             transform: translateY(-3px);
         }
-        
-        /* Content Sections */
+
+        /* Collapsible Sections */
+        .collapsible {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: var(--text);
+            cursor: pointer;
+            padding: 20px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .active, .collapsible:hover {
+            background-color: rgba(138, 43, 226, 0.4);
+        }
+
+        .collapsible:after {
+            content: '\002B'; /* Plus sign */
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .active:after {
+            content: "\2212"; /* Minus sign */
+            transform: rotate(180deg);
+        }
+
+        .content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 20px;
+        }
+
+        .content-inner {
+            padding: 20px 0;
+        }
+
+        /* Section Styles */
         section {
             margin-bottom: 60px;
             animation: fadeInUp 1s ease;
         }
-        
+
         .section-header {
             display: flex;
             align-items: center;
@@ -151,17 +264,17 @@
             padding-bottom: 15px;
             border-bottom: 2px solid var(--primary);
         }
-        
+
         .section-icon {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-right: 15px;
         }
-        
+
         .section-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--secondary);
         }
-        
+
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -172,39 +285,39 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-        
+
         .card-header {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
         }
-        
+
         .card-icon {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-right: 10px;
         }
-        
+
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--accent);
         }
-        
+
         .card-content ul {
             list-style-type: none;
             padding-left: 0;
         }
-        
+
         .card-content li {
             margin-bottom: 10px;
             padding-left: 25px;
             position: relative;
         }
-        
+
         .card-content li:before {
             content: "•";
             color: var(--secondary);
@@ -213,7 +326,7 @@
             left: 0;
             top: -5px;
         }
-        
+
         .highlight {
             background: rgba(0, 255, 255, 0.1);
             padding: 20px;
@@ -221,31 +334,55 @@
             margin: 20px 0;
             border-left: 4px solid var(--secondary);
         }
-        
+
         .resources {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-        
+
         .resource-card {
             background: rgba(138, 43, 226, 0.1);
             border-radius: 10px;
             padding: 20px;
             transition: all 0.3s ease;
         }
-        
+
         .resource-card:hover {
             background: rgba(138, 43, 226, 0.2);
             transform: scale(1.03);
         }
-        
+
         .resource-title {
             font-weight: 600;
             margin-bottom: 10px;
             color: var(--accent);
         }
-        
+
+        /* Quick Nav */
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-nav a {
+            background: rgba(138, 43, 226, 0.2);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quick-nav a:hover {
+            background: rgba(138, 43, 226, 0.4);
+            transform: translateY(-3px);
+        }
+
         /* Scroll to Top Button */
         .scroll-top {
             position: fixed;
@@ -267,17 +404,17 @@
             opacity: 0;
             visibility: hidden;
         }
-        
+
         .scroll-top.active {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .scroll-top:hover {
             background: var(--accent);
             transform: translateY(-5px);
         }
-        
+
         /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.5);
@@ -285,7 +422,7 @@
             margin-top: 60px;
             text-align: center;
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
@@ -293,96 +430,120 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-        
+
         .footer-links a {
             color: var(--secondary);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        
+
         .footer-links a:hover {
             color: var(--accent);
         }
-        
+
         .copyright {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
-        
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
         @keyframes fadeInUp {
-            from { 
+            from {
                 opacity: 0;
                 transform: translateY(30px);
             }
-            to { 
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
+
         .pulse {
             animation: pulse 2s infinite;
         }
-        
+
         /* Responsive Styles */
         @media (max-width: 768px) {
+            .topnav {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
-            
+
             .section-title {
-                font-size: 1.7rem;
+                font-size: 1.5rem;
             }
-            
+
             .card {
                 padding: 20px;
             }
-            
+
             .resources {
                 grid-template-columns: 1fr;
             }
-            
+
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn {
                 width: 100%;
                 max-width: 300px;
                 justify-content: center;
             }
+
+            .quick-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quick-nav a {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
         }
-        
+
         @media (max-width: 480px) {
             .hero {
                 padding: 40px 15px;
             }
-            
+
             .hero h1 {
                 font-size: 1.8rem;
             }
-            
+
             .section-header {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .section-icon {
                 margin-right: 0;
                 margin-bottom: 10px;
+            }
+
+            .collapsible {
+                padding: 15px;
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -390,14 +551,34 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="container">
+        <div class="container nav-container">
             <div class="logo">
                 <a href="index.html">PLURderapolis</a>
             </div>
-            <div class="tagline">
-                Community Safety & Harm Reduction
+            
+            <!-- Desktop Navigation -->
+            <nav class="topnav">
+                <a href="#rideshare" class="active">Rideshare Safety</a>
+                <a href="#bystander">Bystander Basics</a>
+                <a href="#resources">Local Resources</a>
+                <a href="venues-guide.html">Venues Guide</a>
+            </nav>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="#rideshare">Rideshare Safety</a>
+            <a href="#bystander">Bystander Basics</a>
+            <a href="#resources">Local Resources</a>
+            <a href="venues-guide.html">Venues Guide</a>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -405,19 +586,30 @@
         <div class="container">
             <h1>Ride Safety & Bystander Basics</h1>
             <p>Essential safety tips for rideshares, parking situations, and how to step in when you see something concerning. Stay safe, look out for each other.</p>
+            
+            <!-- Quick Navigation -->
+            <div class="quick-nav">
+                <a href="#rideshare">🚗 Rideshare Safety</a>
+                <a href="#bystander">🚨 Bystander Basics</a>
+                <a href="#resources">📍 Local Resources</a>
+            </div>
+            
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary" id="downloadBtn">
-                    <i class="icon-download"></i> Download Safety Guide
-                </a>
-                <a href="#" class="btn btn-secondary" id="shareBtn">
-                    <i class="icon-share"></i> Share This Resource
-                </a>
+                <button class="btn btn-primary" id="downloadBtn">
+                    📄 Save as PDF
+                </button>
+                <button class="btn btn-secondary" id="shareBtn">
+                    📤 Share Guide
+                </button>
             </div>
         </div>
     </section>
 
     <!-- Main Content -->
     <div class="container">
+        <!-- Quick Navigation -->
+        
+
         <!-- Rideshare Safety Section -->
         <section id="rideshare">
             <div class="section-header">
@@ -425,48 +617,51 @@
                 <h2 class="section-title">Rideshare + Personal Safety Tips (MN Edition)</h2>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🔍</div>
-                    <h3 class="card-title">Before the Ride</h3>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li>Verify the car, license plate, and driver in the app before you get in. Don't just trust that they "look like the photo."</li>
-                        <li>Sit in the back seat, preferably behind the passenger seat — it gives you more visibility and exits.</li>
-                        <li>Leave fingerprints on the windows. Sounds weird, but it can help ID a vehicle later if needed.</li>
-                        <li>Don't share personal info — lie if you have to. You don't owe anyone the truth about where you live, work, or who you're seeing.</li>
-                        <li>Say things like "my friend's tracking me" or "my roommate's expecting me." Make yourself sound known and expected.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🚘</div>
-                    <h3 class="card-title">During the Ride</h3>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li>Keep your phone out and location sharing on (try "Share My Ride" in the app).</li>
-                        <li>Stay alert to route changes — especially if they deviate from what's in the app.</li>
-                        <li>Trust your gut. If something feels off, ask to get out in a safe, public area.</li>
-                    </ul>
+            <button class="collapsible">Before the Ride</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul>
+                                <li>Verify the car, license plate, and driver in the app before you get in. Don't just trust that they "look like the photo."</li>
+                                <li>Sit in the back seat, preferably behind the passenger seat — it gives you more visibility and exits.</li>
+                                <li>Leave fingerprints on the windows. Sounds weird, but it can help ID a vehicle later if needed.</li>
+                                <li>Don't share personal info — lie if you have to. You don't owe anyone the truth about where you live, work, or who you're seeing.</li>
+                                <li>Say things like "my friend's tracking me" or "my roommate's expecting me." Make yourself sound known and expected.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🅿️</div>
-                    <h3 class="card-title">After the Ride or When Walking to Your Car</h3>
+            <button class="collapsible">During the Ride</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul>
+                                <li>Keep your phone out and location sharing on (try "Share My Ride" in the app).</li>
+                                <li>Stay alert to route changes — especially if they deviate from what's in the app.</li>
+                                <li>Trust your gut. If something feels off, ask to get out in a safe, public area.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <ul>
-                        <li>Avoid getting gas late at night when possible.</li>
-                        <li>When parking, always try to park in the same section or side of parking lots — that way, you never have to wander or guess where your car is.</li>
-                        <li>Before you leave a building, make sure your keys are in your hand. You'll get into your car faster and can lock it behind you right away.</li>
-                        <li>If you feel uneasy or someone approaches you, hit your car alarm — it's loud, draws attention, and signals "back off."</li>
-                    </ul>
+            </div>
+            
+            <button class="collapsible">After the Ride or When Walking to Your Car</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul>
+                                <li>Avoid getting gas late at night when possible.</li>
+                                <li>When parking, always try to park in the same section or side of parking lots — that way, you never have to wander or guess where your car is.</li>
+                                <li>Before you leave a building, make sure your keys are in your hand. You'll get into your car faster and can lock it behind you right away.</li>
+                                <li>If you feel uneasy or someone approaches you, hit your car alarm — it's loud, draws attention, and signals "back off."</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -483,121 +678,128 @@
                 <p>We've all seen it — someone looks cornered at a bar, uncomfortable in a car, or being followed at a festival. Most people freeze because they "don't know what to do." Here's the truth: you don't need to be a hero. You just need to interrupt the pattern.</p>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">👀</div>
-                    <h3 class="card-title">Step 1: Trust Your Gut</h3>
-                </div>
-                <div class="card-content">
-                    <p>If something feels off, it probably is. You don't need proof — your instinct is enough to act. It's always better to look "weird" for stepping in than to regret doing nothing.</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">💬</div>
-                    <h3 class="card-title">Step 2: Use the Social Interrupt</h3>
-                </div>
-                <div class="card-content">
-                    <p>Be a distraction. Interrupt the tension in a way that gives the person an exit.</p>
-                    <p><strong>Some go-to moves:</strong></p>
-                    <ul>
-                        <li>"Hey! I think I dropped something near you — can you help me look?"</li>
-                        <li>"Aren't you the one I met at XYZ show?" (even if you've never met them)</li>
-                        <li>"Hey, your friends are looking for you."</li>
-                        <li>Accidentally "spill" your drink or bump the table.</li>
-                        <li>"Hey! Someone said your Uber's here."</li>
-                    </ul>
-                    <p class="pulse">It doesn't have to be smooth — awkward saves lives.</p>
+            <button class="collapsible">Step 1: Trust Your Gut</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>If something feels off, it probably is. You don't need proof — your instinct is enough to act. It's always better to look "weird" for stepping in than to regret doing nothing.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🫶</div>
-                    <h3 class="card-title">Step 3: Give the Person an Out</h3>
-                </div>
-                <div class="card-content">
-                    <p>Once you've interrupted, talk to the potential victim directly, not the person making them uncomfortable.</p>
-                    <ul>
-                        <li>Ask: "Hey, you good?" or "Want to walk with me to the bathroom?"</li>
-                        <li>If they look panicked or can't speak, just say, "Come on, I'll go with you."</li>
-                        <li>Don't wait for permission to help — people often freeze when scared.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🚷</div>
-                    <h3 class="card-title">Step 4: Team Up</h3>
-                </div>
-                <div class="card-content">
-                    <p>If you're not sure what to do, grab a bartender, security, or another bystander.</p>
-                    <ul>
-                        <li>"Hey, can you help me check on them?" works way better than yelling "That's creepy!"</li>
-                        <li>At raves, find a medic booth, harm reduction tent, or venue staff — they'll help you intervene safely.</li>
-                    </ul>
+            <button class="collapsible">Step 2: Use the Social Interrupt</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>Be a distraction. Interrupt the tension in a way that gives the person an exit.</p>
+                            <p><strong>Some go-to moves:</strong></p>
+                            <ul>
+                                <li>"Hey! I think I dropped something near you — can you help me look?"</li>
+                                <li>"Aren't you the one I met at XYZ show?" (even if you've never met them)</li>
+                                <li>"Hey, your friends are looking for you."</li>
+                                <li>Accidentally "spill" your drink or bump the table.</li>
+                                <li>"Hey! Someone said your Uber's here."</li>
+                            </ul>
+                            <p class="pulse">It doesn't have to be smooth — awkward saves lives.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">📱</div>
-                    <h3 class="card-title">Step 5: Document or Report</h3>
-                </div>
-                <div class="card-content">
-                    <p>If things escalate, discreetly record or take note of:</p>
-                    <ul>
-                        <li>Time, location, and what's happening</li>
-                        <li>Description of people involved</li>
-                        <li>License plate or rideshare info if relevant</li>
-                    </ul>
-                    <p>If it's a rideshare or parking lot situation — you can call security, the bar manager, or even 911 if someone's actively in danger.</p>
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🎭</div>
-                    <h3 class="card-title">Step 6: Use Strategic Lies</h3>
-                </div>
-                <div class="card-content">
-                    <p>If you're helping someone get away:</p>
-                    <ul>
-                        <li>"Hey, your friend's waiting outside."</li>
-                        <li>"Your ride's here."</li>
-                        <li>"We've got to go grab your phone from the bar."</li>
-                    </ul>
-                    <p>Make it believable and confident. Confidence is disarming.</p>
+            <button class="collapsible">Step 3: Give the Person an Out</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul>
+                                <li>Ask: "Hey, you good?" or "Want to walk with me to the bathroom?"</li>
+                                <li>If they look panicked or can't speak, just say, "Come on, I'll go with you."</li>
+                                <li>Don't wait for permission to help — people often freeze when scared.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">🕯️</div>
-                    <h3 class="card-title">Step 7: Check Back In</h3>
-                </div>
-                <div class="card-content">
-                    <p>If they get away, make sure they're safe before walking off. Offer to wait with them or walk them to a well-lit area.</p>
-                    <p>If you're sober, be the person who stays with them until they're solid again.</p>
+            <button class="collapsible">Step 4: Team Up</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>If you're not sure what to do, grab a bartender, security, or another bystander.</p>
+                            <ul>
+                                <li>"Hey, can you help me check on them?" works way better than yelling "That's creepy!"</li>
+                                <li>At raves, find a medic booth, harm reduction tent, or venue staff — they'll help you intervene safely.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon">⚡</div>
-                    <h3 class="card-title">Pro-Tips for Bystanders</h3>
+            <button class="collapsible">Step 5: Document or Report</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>If things escalate, discreetly record or take note of:</p>
+                            <ul>
+                                <li>Time, location, and what's happening</li>
+                                <li>Description of people involved</li>
+                                <li>License plate or rideshare info if relevant</li>
+                            </ul>
+                            <p>If it's a rideshare or parking lot situation — you can call security, the bar manager, or even 911 if someone's actively in danger.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <ul>
-                        <li>Look for body language mismatches. If someone's saying "I'm fine" but their eyes are saying "I'm terrified," believe the eyes.</li>
-                        <li>Don't escalate. Focus on removing the person in danger, not confronting the aggressor.</li>
-                        <li>Never make it about you. The goal is safety, not a scene.</li>
-                        <li>Use allies. Bartenders, bouncers, or groups of women are usually down to help.</li>
-                        <li>Plan a "rescue phrase." If you're going out with friends, agree on a code like "Have you seen my charger?" that means "I need to leave now."</li>
-                        <li>Pre-write emergency contacts in your Notes app so someone can text for you if you freeze.</li>
-                    </ul>
+            </div>
+            
+            <button class="collapsible">Step 6: Use Strategic Lies</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>If you're helping someone get away:</p>
+                            <ul>
+                                <li>"Hey, your friend's waiting outside."</li>
+                                <li>"Your ride's here."</li>
+                                <li>"We've got to go grab your phone from the bar."</li>
+                            </ul>
+                            <p>Make it believable and confident. Confidence is disarming.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="collapsible">Step 7: Check Back In</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <p>If they get away, make sure they're safe before walking off. Offer to wait with them or walk them to a well-lit area.</p>
+                            <p>If you're sober, be the person who stays with them until they're solid again.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="collapsible">Pro-Tips for Bystanders</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul>
+                                <li>Look for body language mismatches. If someone's saying "I'm fine" but their eyes are saying "I'm terrified," believe the eyes.</li>
+                                <li>Don't escalate. Focus on removing the person in danger, not confronting the aggressor.</li>
+                                <li>Never make it about you. The goal is safety, not a scene.</li>
+                                <li>Use allies. Bartenders, bouncers, or groups of women are usually down to help.</li>
+                                <li>Plan a "rescue phrase." If you're going out with friends, agree on a code like "Have you seen my charger?" that means "I need to leave now."</li>
+                                <li>Pre-write emergency contacts in your Notes app so someone can text for you if you freeze.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -653,9 +855,10 @@
         <div class="container">
             <div class="footer-links">
                 <a href="index.html">Home</a>
-                <a href="booth">Our part</a>
+                <a href="about.html">About</a>
                 <a href="resources.html">Resources</a>
-                <a href="panic.html">Panic</a>
+                <a href="contact.html">Contact</a>
+                <a href="venues-guide.html">Venues Guide</a>
             </div>
             <div class="copyright">
                 &copy; 2025 PLURderapolis. All rights reserved.
@@ -664,6 +867,72 @@
     </footer>
 
     <script>
+        // Collapsible sections functionality [citation:1]
+        document.addEventListener('DOMContentLoaded', function() {
+            const coll = document.getElementsByClassName("collapsible");
+            
+            for (let i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    const content = this.nextElementSibling;
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            }
+            
+            // Open first few sections by default for better UX
+            if (coll.length > 0) {
+                coll[0].click();
+                if (coll.length > 1) coll[1].click();
+            }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.toggle('active');
+            
+            // Animate hamburger to X
+            const spans = this.getElementsByTagName('span');
+            if (document.getElementById('mobileNav').classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    document.getElementById('mobileNav').classList.remove('active');
+                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[0].style.transform = 'none';
+                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[1].style.opacity = '1';
+                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[2].style.transform = 'none';
+                    
+                    // Scroll to target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
         // Scroll to top functionality
         const scrollTopBtn = document.getElementById('scrollTop');
         
@@ -683,14 +952,25 @@
         });
         
         // Download button functionality
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Safety guide download would start here. In a real implementation, this would trigger a PDF download.');
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // In a real implementation, this would generate a PDF
+            alert('PDF download would start here. This would connect to a PDF generation service in production.');
+            
+            // For a simple text version users can save:
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'plurderapolis-safety-guide.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         });
         
         // Share button functionality
-        document.getElementById('shareBtn').addEventListener('click', function(e) {
-            e.preventDefault();
+        document.getElementById('shareBtn').addEventListener('click', function() {
             if (navigator.share) {
                 navigator.share({
                     title: 'Ride Safety & Bystander Basics',
@@ -699,10 +979,11 @@
                 })
                 .catch(error => console.log('Error sharing:', error));
             } else {
+                // Fallback for browsers that don't support Web Share API
                 alert('Share this page using your browser\'s share functionality or copy the URL.');
             }
         });
-        
+
         // Add animation to cards on scroll
         const observerOptions = {
             threshold: 0.1,
