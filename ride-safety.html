@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ride Safety & Bystander Basics | PLURderapolis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --primary: #8A2BE2;
@@ -14,6 +15,8 @@
             --light: #F5F5F5;
             --text: #FFFFFF;
             --text-dark: #333333;
+            --success: #00FF88;
+            --warning: #FFAA00;
         }
         
         * {
@@ -38,7 +41,7 @@
         
         /* Header & Navigation */
         header {
-            background: rgba(26, 0, 51, 0.95);
+            background: rgba(26, 0, 51, 0.98);
             backdrop-filter: blur(10px);
             padding: 15px 0;
             position: sticky;
@@ -90,16 +93,17 @@
             color: white;
         }
         
-        /* Mobile Navigation */
+        /* Mobile Navigation - Solid Background */
         .mobile-nav {
             display: none;
             flex-direction: column;
             width: 100%;
-            background: rgba(26, 0, 51, 0.95);
+            background: var(--dark);
             position: absolute;
             top: 100%;
             left: 0;
             z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
         
         .mobile-nav.active {
@@ -144,6 +148,20 @@
             margin-bottom: 40px;
             border-radius: 0 0 20px 20px;
             animation: fadeIn 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
         
         .hero h1 {
@@ -178,6 +196,23 @@
             cursor: pointer;
             border: none;
             font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary {
@@ -203,6 +238,17 @@
             transform: translateY(-3px);
         }
         
+        .btn-success {
+            background: var(--success);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.6);
+        }
+        
         /* Collapsible Sections */
         .collapsible {
             background-color: rgba(138, 43, 226, 0.2);
@@ -221,6 +267,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .collapsible::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .collapsible:hover::before {
+            width: 8px;
         }
         
         .active, .collapsible:hover {
@@ -266,11 +329,23 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 2px solid var(--primary);
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--secondary);
         }
         
         .section-icon {
             font-size: 2.2rem;
             margin-right: 15px;
+            animation: pulse 2s infinite;
         }
         
         .section-title {
@@ -287,6 +362,25 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
         }
         
         .card:hover {
@@ -336,6 +430,24 @@
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .highlight:hover::before {
+            transform: translateX(100%);
         }
         
         .resources {
@@ -349,6 +461,24 @@
             border-radius: 10px;
             padding: 20px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .resource-card:hover::before {
+            transform: translateX(100%);
         }
         
         .resource-card:hover {
@@ -390,11 +520,134 @@
             text-decoration: none;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quick-nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .quick-nav a:hover::before {
+            transform: translateX(100%);
         }
         
         .quick-nav a:hover {
             background: rgba(138, 43, 226, 0.4);
             transform: translateY(-3px);
+        }
+        
+        /* Enhanced Quick Links */
+        .enhanced-quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .enhanced-link {
+            background: rgba(138, 43, 226, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enhanced-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        
+        .enhanced-link:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .enhanced-link:hover {
+            background: rgba(138, 43, 226, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .enhanced-link-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+        
+        .enhanced-link-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+        
+        .enhanced-link-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Save Options */
+        .save-options {
+            display: none;
+            position: absolute;
+            background: var(--dark);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            top: 100%;
+            left: 0;
+            width: 200px;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .save-options.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .save-option {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            margin-bottom: 5px;
+        }
+        
+        .save-option:hover {
+            background: rgba(138, 43, 226, 0.3);
+        }
+        
+        .save-option:last-child {
+            margin-bottom: 0;
         }
         
         /* Scroll to Top Button */
@@ -483,13 +736,23 @@
             100% { transform: scale(1); }
         }
         
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--secondary); }
+            50% { box-shadow: 0 0 20px var(--secondary); }
+            100% { box-shadow: 0 0 5px var(--secondary); }
+        }
+        
         .pulse {
             animation: pulse 2s infinite;
         }
         
+        .glow {
+            animation: glow 2s infinite;
+        }
+        
         /* Print Styles */
         @media print {
-            nav, .scroll-top, .btn, footer, .hamburger, .quick-nav {
+            nav, .scroll-top, .btn, footer, .hamburger, .quick-nav, .save-options {
                 display: none !important;
             }
             
@@ -563,6 +826,10 @@
                 max-width: 300px;
                 text-align: center;
             }
+            
+            .enhanced-quick-links {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -630,19 +897,55 @@
             <h1>Ride Safety & Bystander Basics</h1>
             <p>Essential safety tips for rideshares, parking situations, and how to step in when you see something concerning. Stay safe, look out for each other.</p>
             
-            <!-- Quick Navigation -->
-            <div class="quick-nav">
-                <a href="#rideshare">🚗 Rideshare Safety</a>
-                <a href="#bystander">🚨 Bystander Basics</a>
-                <a href="#resources">📍 Local Resources</a>
+            <!-- Enhanced Quick Links -->
+            <div class="enhanced-quick-links">
+                <a href="#before-ride" class="enhanced-link">
+                    <div class="enhanced-link-icon">🚗</div>
+                    <div class="enhanced-link-title">Before the Ride</div>
+                    <div class="enhanced-link-desc">Verification & preparation</div>
+                </a>
+                <a href="#during-ride" class="enhanced-link">
+                    <div class="enhanced-link-icon">📱</div>
+                    <div class="enhanced-link-title">During the Ride</div>
+                    <div class="enhanced-link-desc">Staying alert & safe</div>
+                </a>
+                <a href="#after-ride" class="enhanced-link">
+                    <div class="enhanced-link-icon">🅿️</div>
+                    <div class="enhanced-link-title">After the Ride</div>
+                    <div class="enhanced-link-desc">Parking & walking safety</div>
+                </a>
+                <a href="#bystander-steps" class="enhanced-link">
+                    <div class="enhanced-link-icon">👀</div>
+                    <div class="enhanced-link-title">Bystander Steps</div>
+                    <div class="enhanced-link-desc">How to intervene safely</div>
+                </a>
             </div>
             
             <div class="cta-buttons">
-                <button class="btn btn-primary" id="printBtn">
-                    <i class="fas fa-print"></i> Print Guide
-                </button>
+                <div style="position: relative;">
+                    <button class="btn btn-primary" id="saveBtn">
+                        <i class="fas fa-download"></i> Save Guide
+                    </button>
+                    <div class="save-options" id="saveOptions">
+                        <button class="save-option" id="printOption">
+                            <i class="fas fa-print"></i> Print Guide
+                        </button>
+                        <button class="save-option" id="pdfOption">
+                            <i class="fas fa-file-pdf"></i> Save as PDF
+                        </button>
+                        <button class="save-option" id="imageOption">
+                            <i class="fas fa-image"></i> Save as Image
+                        </button>
+                        <button class="save-option" id="textOption">
+                            <i class="fas fa-file-alt"></i> Save as Text
+                        </button>
+                    </div>
+                </div>
                 <button class="btn btn-secondary" id="shareBtn">
                     <i class="fas fa-share-alt"></i> Share Guide
+                </button>
+                <button class="btn btn-success" id="emergencyBtn">
+                    <i class="fas fa-phone-alt"></i> Emergency Contacts
                 </button>
             </div>
         </div>
@@ -657,7 +960,7 @@
                 <h2 class="section-title">Rideshare + Personal Safety Tips</h2>
             </div>
             
-            <button class="collapsible">Before the Ride</button>
+            <button class="collapsible" id="before-ride">Before the Ride</button>
             <div class="content">
                 <div class="content-inner">
                     <div class="card">
@@ -674,7 +977,7 @@
                 </div>
             </div>
             
-            <button class="collapsible">During the Ride</button>
+            <button class="collapsible" id="during-ride">During the Ride</button>
             <div class="content">
                 <div class="content-inner">
                     <div class="card">
@@ -689,7 +992,7 @@
                 </div>
             </div>
             
-            <button class="collapsible">After the Ride or When Walking to Your Car</button>
+            <button class="collapsible" id="after-ride">After the Ride or When Walking to Your Car</button>
             <div class="content">
                 <div class="content-inner">
                     <div class="card">
@@ -825,7 +1128,7 @@
                 </div>
             </div>
             
-            <button class="collapsible">Pro-Tips for Bystanders</button>
+            <button class="collapsible" id="bystander-steps">Pro-Tips for Bystanders</button>
             <div class="content">
                 <div class="content-inner">
                     <div class="card">
@@ -1051,9 +1354,53 @@
             });
         });
         
-        // Print button functionality
-        document.getElementById('printBtn').addEventListener('click', function() {
+        // Save options functionality
+        const saveBtn = document.getElementById('saveBtn');
+        const saveOptions = document.getElementById('saveOptions');
+        
+        saveBtn.addEventListener('click', function() {
+            saveOptions.classList.toggle('active');
+        });
+        
+        // Close save options when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!saveBtn.contains(event.target) && !saveOptions.contains(event.target)) {
+                saveOptions.classList.remove('active');
+            }
+        });
+        
+        // Print option
+        document.getElementById('printOption').addEventListener('click', function() {
             window.print();
+            saveOptions.classList.remove('active');
+        });
+        
+        // PDF option
+        document.getElementById('pdfOption').addEventListener('click', function() {
+            alert('PDF generation would be implemented here. In a production environment, this would connect to a PDF generation service.');
+            saveOptions.classList.remove('active');
+        });
+        
+        // Image option
+        document.getElementById('imageOption').addEventListener('click', function() {
+            alert('Image capture would be implemented here. This would use html2canvas to capture the page as an image.');
+            saveOptions.classList.remove('active');
+        });
+        
+        // Text option
+        document.getElementById('textOption').addEventListener('click', function() {
+            // Create a simplified text version
+            const content = document.querySelector('.container').innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'plurderapolis-safety-guide.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            saveOptions.classList.remove('active');
         });
         
         // Share button functionality
@@ -1069,6 +1416,11 @@
                 // Fallback for browsers that don't support Web Share API
                 alert('Share this page using your browser\'s share functionality or copy the URL.');
             }
+        });
+        
+        // Emergency contacts button
+        document.getElementById('emergencyBtn').addEventListener('click', function() {
+            alert('Emergency Contacts:\n\nRAINN: 1-800-656-4673\nCornerstone: 1-866-223-1111\n911 for immediate emergencies');
         });
 
         // Add animation to cards on scroll
