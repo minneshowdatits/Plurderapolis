@@ -919,13 +919,68 @@
             border: 1px solid rgba(255, 105, 180, 0.2);
         }
         
-        .safety-tips-section {
-            background: var(--card-bg);
+        .safety-guides-section {
+            margin: 40px 0;
+        }
+        
+        .safety-guides-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .safety-guide-accordion {
+            background: linear-gradient(145deg, #121225, #0d0d1a);
             border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-            border: 1px solid rgba(65, 105, 225, 0.3);
+            overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 105, 180, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .safety-guide-accordion:hover {
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+            border-color: rgba(255, 105, 180, 0.4);
+        }
+        
+        .safety-guide-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .safety-guide-header:hover {
+            background: rgba(255, 105, 180, 0.05);
+        }
+        
+        .safety-guide-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .safety-guide-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .safety-guide-content-inner {
+            padding: 0 25px 25px;
         }
         
         .safety-tips-grid {
@@ -969,14 +1024,6 @@
             font-size: 1.1rem;
         }
         
-        .security-measures-section {
-            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(65, 105, 225, 0.1));
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 30px 0;
-        }
-        
         .measures-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1003,6 +1050,10 @@
         }
         
         .active .accordion-content {
+            max-height: 2000px;
+        }
+        
+        .active .safety-guide-content {
             max-height: 2000px;
         }
         
@@ -1174,6 +1225,10 @@
             .measures-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .safety-guide-title {
+                font-size: 1.2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1193,7 +1248,7 @@
                 font-size: 1.5rem;
             }
             
-            .search-section, .health-section, .booth-cta, .intro-section, .safety-tips-section, .security-measures-section {
+            .search-section, .health-section, .booth-cta, .intro-section {
                 padding: 15px;
             }
             
@@ -1203,6 +1258,14 @@
             
             .accordion-header {
                 padding: 15px;
+            }
+            
+            .safety-guide-header {
+                padding: 15px;
+            }
+            
+            .safety-guide-content-inner {
+                padding: 0 15px 15px;
             }
         }
         
@@ -1225,7 +1288,7 @@
             }
             
             .venue-accordion, .search-section, .health-section, .booth-cta, footer,
-            .intro-section, .safety-tips-section, .security-measures-section {
+            .intro-section, .safety-guide-accordion {
                 border-width: 2px;
             }
         }
@@ -1295,90 +1358,6 @@
             <h2 style="color: var(--accent-pink); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> About This Venue Safety Guide</h2>
             <p>This guide helps you make informed decisions and find ways to stay safer at Twin Cities venues. We provide detailed information about accessibility, sober-friendly options, venue layouts, and harm reduction resources to help you plan your night out.</p>
             <p style="margin-top: 10px;"><strong>Remember:</strong> Your safety is personal responsibility. This guide provides information to help you make informed choices, but always trust your instincts and prioritize your wellbeing.</p>
-        </section>
-
-        <!-- New Safety Tips Section -->
-        <section class="safety-tips-section">
-            <h2 style="color: var(--accent-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-shield-alt"></i> Essential Safety Tips for Public Spaces
-            </h2>
-            <p>Knowing what to do in crowded spaces can help you stay safer. Here are essential tips from safety experts:</p>
-            
-            <div class="safety-tips-grid">
-                <div class="safety-tip-card crowd">
-                    <h3 class="tip-title"><i class="fas fa-users"></i> Crowd Safety</h3>
-                    <div class="detail-content">
-                        <p><strong>If you feel unsafe in a crowd:</strong></p>
-                        <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li>Try to move towards the edge of the crowd if possible</li>
-                            <li>Keep your head and body protected</li>
-                            <li>Curl into a ball to protect your head and neck if you fall</li>
-                            <li>Get back on your feet as soon as possible and move to a safer location</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="safety-tip-card medical">
-                    <h3 class="tip-title"><i class="fas fa-first-aid"></i> Medical Preparedness</h3>
-                    <div class="detail-content">
-                        <p><strong>For event organizers and venues:</strong></p>
-                        <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li>Plan for medical emergencies during initial event layout and design</li>
-                            <li>Consider hiring on-site medical staff for faster response times</li>
-                            <li>Establish clear communication procedures</li>
-                            <li>Designate areas for medical treatment that maintain privacy</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="safety-tip-card emergency">
-                    <h3 class="tip-title"><i class="fas fa-exclamation-triangle"></i> Emergency Planning</h3>
-                    <div class="detail-content">
-                        <p><strong>Personal emergency plan:</strong></p>
-                        <ul style="margin-left: 20px; margin-top: 10px;">
-                            <li>Have a prearranged place to meet during disturbances</li>
-                            <li>Keep an overnight bag ready when there's a threat of unrest</li>
-                            <li>Identify emergency exits and stairwells upon arrival</li>
-                            <li>Know the rally point outside the venue</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- New Security Measures Section -->
-        <section class="security-measures-section">
-            <h2 style="color: var(--primary-plum); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-user-shield"></i> Event Security Best Practices
-            </h2>
-            <p>Professional security measures that help keep venues safer for everyone:</p>
-            
-            <div class="measures-grid">
-                <div class="measure-item">
-                    <i class="fas fa-binoculars"></i>
-                    <span>Risk assessment and threat mitigation planning</span>
-                </div>
-                <div class="measure-item">
-                    <i class="fas fa-people-arrows"></i>
-                    <span>Crowd management and evacuation plans</span>
-                </div>
-                <div class="measure-item">
-                    <i class="fas fa-door-open"></i>
-                    <span>Controlled access points and credential checks</span>
-                </div>
-                <div class="measure-item">
-                    <i class="fas fa-walkie-talkie"></i>
-                    <span>Clear communication protocols and chain of command</span>
-                </div>
-                <div class="measure-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>Staff training on threat identification and de-escalation</span>
-                </div>
-                <div class="measure-item">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span>Designated entry points for EMS and first responders</span>
-                </div>
-            </div>
         </section>
         
         <div class="search-section">
@@ -1489,6 +1468,130 @@
                 </a>
             </div>
         </div>
+        
+        <!-- Safety Guides Section (Collapsible) -->
+        <section class="safety-guides-section">
+            <h2 class="safety-guides-title">
+                <i class="fas fa-shield-alt"></i> Safety Guides & Resources
+            </h2>
+            
+            <div class="safety-guide-accordion">
+                <div class="safety-guide-header">
+                    <div class="safety-guide-title">
+                        <i class="fas fa-info-circle"></i> About This Venue Safety Guide
+                    </div>
+                    <div class="accordion-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="safety-guide-content">
+                    <div class="safety-guide-content-inner">
+                        <p>This guide helps you make informed decisions and find ways to stay safer at Twin Cities venues. We provide detailed information about accessibility, sober-friendly options, venue layouts, and harm reduction resources to help you plan your night out.</p>
+                        <p style="margin-top: 10px;"><strong>Remember:</strong> Your safety is personal responsibility. This guide provides information to help you make informed choices, but always trust your instincts and prioritize your wellbeing.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="safety-guide-accordion">
+                <div class="safety-guide-header">
+                    <div class="safety-guide-title">
+                        <i class="fas fa-users"></i> Essential Safety Tips for Public Spaces
+                    </div>
+                    <div class="accordion-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="safety-guide-content">
+                    <div class="safety-guide-content-inner">
+                        <p>Knowing what to do in crowded spaces can help you stay safer. Here are essential tips from safety experts:</p>
+                        
+                        <div class="safety-tips-grid">
+                            <div class="safety-tip-card crowd">
+                                <h3 class="tip-title"><i class="fas fa-users"></i> Crowd Safety</h3>
+                                <div class="detail-content">
+                                    <p><strong>If you feel unsafe in a crowd:</strong></p>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Try to move towards the edge of the crowd if possible</li>
+                                        <li>Keep your head and body protected</li>
+                                        <li>Curl into a ball to protect your head and neck if you fall</li>
+                                        <li>Get back on your feet as soon as possible and move to a safer location</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="safety-tip-card medical">
+                                <h3 class="tip-title"><i class="fas fa-first-aid"></i> Medical Preparedness</h3>
+                                <div class="detail-content">
+                                    <p><strong>For event organizers and venues:</strong></p>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Plan for medical emergencies during initial event layout and design</li>
+                                        <li>Consider hiring on-site medical staff for faster response times</li>
+                                        <li>Establish clear communication procedures</li>
+                                        <li>Designate areas for medical treatment that maintain privacy</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="safety-tip-card emergency">
+                                <h3 class="tip-title"><i class="fas fa-exclamation-triangle"></i> Emergency Planning</h3>
+                                <div class="detail-content">
+                                    <p><strong>Personal emergency plan:</strong></p>
+                                    <ul style="margin-left: 20px; margin-top: 10px;">
+                                        <li>Have a prearranged place to meet during disturbances</li>
+                                        <li>Keep an overnight bag ready when there's a threat of unrest</li>
+                                        <li>Identify emergency exits and stairwells upon arrival</li>
+                                        <li>Know the rally point outside the venue</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="safety-guide-accordion">
+                <div class="safety-guide-header">
+                    <div class="safety-guide-title">
+                        <i class="fas fa-user-shield"></i> Event Security Best Practices
+                    </div>
+                    <div class="accordion-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="safety-guide-content">
+                    <div class="safety-guide-content-inner">
+                        <p>Professional security measures that help keep venues safer for everyone:</p>
+                        
+                        <div class="measures-grid">
+                            <div class="measure-item">
+                                <i class="fas fa-binoculars"></i>
+                                <span>Risk assessment and threat mitigation planning</span>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-people-arrows"></i>
+                                <span>Crowd management and evacuation plans</span>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-door-open"></i>
+                                <span>Controlled access points and credential checks</span>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-walkie-talkie"></i>
+                                <span>Clear communication protocols and chain of command</span>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Staff training on threat identification and de-escalation</span>
+                            </div>
+                            <div class="measure-item">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <span>Designated entry points for EMS and first responders</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         
         <footer>
             <div class="footer-content">
@@ -2268,6 +2371,15 @@
                 venueClusters.style.display = 'none';
                 document.getElementById('showClusters').innerHTML = '<i class="fas fa-layer-group"></i> Show Venue Clusters';
             }
+        });
+
+        // Safety guide accordion functionality
+        const safetyGuideHeaders = document.querySelectorAll('.safety-guide-header');
+        safetyGuideHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const accordion = header.parentElement;
+                accordion.classList.toggle('active');
+            });
         });
 
         // Initial render
