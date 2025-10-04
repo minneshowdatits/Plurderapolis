@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ride Safety & Bystander Basics | PLURderapolis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #8A2BE2;
@@ -14,27 +15,27 @@
             --text: #FFFFFF;
             --text-dark: #333333;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
             background: linear-gradient(135deg, var(--dark) 0%, #2D004D 100%);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
+        
         /* Header & Navigation */
         header {
             background: rgba(26, 0, 51, 0.95);
@@ -45,13 +46,13 @@
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
+        
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .logo a {
             color: var(--secondary);
             font-size: 1.8rem;
@@ -62,18 +63,19 @@
             text-shadow: 0 0 10px var(--secondary);
             transition: all 0.3s ease;
         }
-
+        
         .logo a:hover {
             color: var(--accent);
             text-shadow: 0 0 10px var(--accent);
         }
-
-        .topnav {
+        
+        /* Desktop Navigation */
+        .desktop-nav {
             display: flex;
             gap: 10px;
         }
-
-        .topnav a {
+        
+        .desktop-nav a {
             color: var(--text);
             text-align: center;
             padding: 10px 15px;
@@ -82,12 +84,12 @@
             border-radius: 5px;
             transition: all 0.3s ease;
         }
-
-        .topnav a:hover, .topnav a.active {
+        
+        .desktop-nav a:hover, .desktop-nav a.active {
             background-color: var(--primary);
             color: white;
         }
-
+        
         /* Mobile Navigation */
         .mobile-nav {
             display: none;
@@ -99,11 +101,11 @@
             left: 0;
             z-index: 999;
         }
-
+        
         .mobile-nav.active {
             display: flex;
         }
-
+        
         .mobile-nav a {
             color: var(--text);
             padding: 15px 20px;
@@ -111,12 +113,13 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-
+        
         .mobile-nav a:hover {
             background-color: var(--primary);
         }
-
-        .menu-toggle {
+        
+        /* Hamburger Menu */
+        .hamburger {
             display: none;
             flex-direction: column;
             justify-content: space-between;
@@ -124,15 +127,15 @@
             height: 21px;
             cursor: pointer;
         }
-
-        .menu-toggle span {
+        
+        .hamburger span {
             height: 3px;
             width: 100%;
             background-color: var(--secondary);
             border-radius: 10px;
             transition: all 0.3s ease;
         }
-
+        
         /* Hero Section */
         .hero {
             text-align: center;
@@ -142,27 +145,27 @@
             border-radius: 0 0 20px 20px;
             animation: fadeIn 1s ease;
         }
-
+        
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: var(--secondary);
             text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
-
+        
         .hero p {
             font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 30px;
         }
-
+        
         .cta-buttons {
             display: flex;
             justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
         }
-
+        
         .btn {
             padding: 12px 25px;
             border-radius: 30px;
@@ -176,30 +179,30 @@
             border: none;
             font-size: 1rem;
         }
-
+        
         .btn-primary {
             background: var(--primary);
             color: white;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
         }
-
+        
         .btn-primary:hover {
             background: var(--accent);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(255, 0, 255, 0.5);
         }
-
+        
         .btn-secondary {
             background: transparent;
             color: var(--secondary);
             border: 2px solid var(--secondary);
         }
-
+        
         .btn-secondary:hover {
             background: rgba(0, 255, 255, 0.1);
             transform: translateY(-3px);
         }
-
+        
         /* Collapsible Sections */
         .collapsible {
             background-color: rgba(138, 43, 226, 0.2);
@@ -219,11 +222,11 @@
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .active, .collapsible:hover {
             background-color: rgba(138, 43, 226, 0.4);
         }
-
+        
         .collapsible:after {
             content: '\002B'; /* Plus sign */
             color: var(--secondary);
@@ -231,12 +234,12 @@
             font-size: 1.5rem;
             transition: all 0.3s ease;
         }
-
+        
         .active:after {
             content: "\2212"; /* Minus sign */
             transform: rotate(180deg);
         }
-
+        
         .content {
             padding: 0 20px;
             max-height: 0;
@@ -246,17 +249,17 @@
             border-radius: 0 0 10px 10px;
             margin-bottom: 20px;
         }
-
+        
         .content-inner {
             padding: 20px 0;
         }
-
+        
         /* Section Styles */
         section {
             margin-bottom: 60px;
             animation: fadeInUp 1s ease;
         }
-
+        
         .section-header {
             display: flex;
             align-items: center;
@@ -264,17 +267,17 @@
             padding-bottom: 15px;
             border-bottom: 2px solid var(--primary);
         }
-
+        
         .section-icon {
             font-size: 2.2rem;
             margin-right: 15px;
         }
-
+        
         .section-title {
             font-size: 1.8rem;
             color: var(--secondary);
         }
-
+        
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -285,39 +288,39 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-
+        
         .card-header {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
         }
-
+        
         .card-icon {
             font-size: 1.5rem;
             margin-right: 10px;
         }
-
+        
         .card-title {
             font-size: 1.3rem;
             color: var(--accent);
         }
-
+        
         .card-content ul {
             list-style-type: none;
             padding-left: 0;
         }
-
+        
         .card-content li {
             margin-bottom: 10px;
             padding-left: 25px;
             position: relative;
         }
-
+        
         .card-content li:before {
             content: "•";
             color: var(--secondary);
@@ -326,7 +329,7 @@
             left: 0;
             top: -5px;
         }
-
+        
         .highlight {
             background: rgba(0, 255, 255, 0.1);
             padding: 20px;
@@ -334,31 +337,42 @@
             margin: 20px 0;
             border-left: 4px solid var(--secondary);
         }
-
+        
         .resources {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-
+        
         .resource-card {
             background: rgba(138, 43, 226, 0.1);
             border-radius: 10px;
             padding: 20px;
             transition: all 0.3s ease;
         }
-
+        
         .resource-card:hover {
             background: rgba(138, 43, 226, 0.2);
             transform: scale(1.03);
         }
-
+        
         .resource-title {
             font-weight: 600;
             margin-bottom: 10px;
             color: var(--accent);
         }
-
+        
+        .resource-card a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-card a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        
         /* Quick Nav */
         .quick-nav {
             display: flex;
@@ -367,7 +381,7 @@
             margin: 30px 0;
             flex-wrap: wrap;
         }
-
+        
         .quick-nav a {
             background: rgba(138, 43, 226, 0.2);
             color: var(--text);
@@ -377,12 +391,12 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
+        
         .quick-nav a:hover {
             background: rgba(138, 43, 226, 0.4);
             transform: translateY(-3px);
         }
-
+        
         /* Scroll to Top Button */
         .scroll-top {
             position: fixed;
@@ -404,17 +418,17 @@
             opacity: 0;
             visibility: hidden;
         }
-
+        
         .scroll-top.active {
             opacity: 1;
             visibility: visible;
         }
-
+        
         .scroll-top:hover {
             background: var(--accent);
             transform: translateY(-5px);
         }
-
+        
         /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.5);
@@ -422,7 +436,7 @@
             margin-top: 60px;
             text-align: center;
         }
-
+        
         .footer-links {
             display: flex;
             justify-content: center;
@@ -430,28 +444,28 @@
             margin-bottom: 30px;
             flex-wrap: wrap;
         }
-
+        
         .footer-links a {
             color: var(--secondary);
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
+        
         .footer-links a:hover {
             color: var(--accent);
         }
-
+        
         .copyright {
             color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
-
+        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -462,85 +476,114 @@
                 transform: translateY(0);
             }
         }
-
+        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-
+        
         .pulse {
             animation: pulse 2s infinite;
         }
-
+        
+        /* Print Styles */
+        @media print {
+            nav, .scroll-top, .btn, footer, .hamburger, .quick-nav {
+                display: none !important;
+            }
+            
+            body {
+                color: black;
+                background: white;
+            }
+            
+            .collapsible {
+                background-color: #f1f1f1 !important;
+                color: black !important;
+            }
+            
+            .content {
+                max-height: none !important;
+                display: block !important;
+            }
+            
+            .card {
+                background: white !important;
+                color: black !important;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+        
         /* Responsive Styles */
         @media (max-width: 768px) {
-            .topnav {
+            .desktop-nav {
                 display: none;
             }
-
-            .menu-toggle {
+            
+            .hamburger {
                 display: flex;
             }
-
+            
             .hero h1 {
                 font-size: 2rem;
             }
-
+            
             .section-title {
                 font-size: 1.5rem;
             }
-
+            
             .card {
                 padding: 20px;
             }
-
+            
             .resources {
                 grid-template-columns: 1fr;
             }
-
+            
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
+            
             .btn {
                 width: 100%;
                 max-width: 300px;
                 justify-content: center;
             }
-
+            
             .quick-nav {
                 flex-direction: column;
                 align-items: center;
             }
-
+            
             .quick-nav a {
                 width: 100%;
                 max-width: 300px;
                 text-align: center;
             }
         }
-
+        
         @media (max-width: 480px) {
             .hero {
                 padding: 40px 15px;
             }
-
+            
             .hero h1 {
                 font-size: 1.8rem;
             }
-
+            
             .section-header {
                 flex-direction: column;
                 text-align: center;
             }
-
+            
             .section-icon {
                 margin-right: 0;
                 margin-bottom: 10px;
             }
-
+            
             .collapsible {
                 padding: 15px;
                 font-size: 1.1rem;
@@ -557,15 +600,15 @@
             </div>
             
             <!-- Desktop Navigation -->
-            <nav class="topnav">
+            <nav class="desktop-nav">
                 <a href="#rideshare" class="active">Rideshare Safety</a>
                 <a href="#bystander">Bystander Basics</a>
                 <a href="#resources">Local Resources</a>
                 <a href="venues-guide.html">Venues Guide</a>
             </nav>
             
-            <!-- Mobile Menu Toggle -->
-            <div class="menu-toggle" id="mobileMenuToggle">
+            <!-- Hamburger Menu -->
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -595,11 +638,11 @@
             </div>
             
             <div class="cta-buttons">
-                <button class="btn btn-primary" id="downloadBtn">
-                    📄 Save as PDF
+                <button class="btn btn-primary" id="printBtn">
+                    <i class="fas fa-print"></i> Print Guide
                 </button>
                 <button class="btn btn-secondary" id="shareBtn">
-                    📤 Share Guide
+                    <i class="fas fa-share-alt"></i> Share Guide
                 </button>
             </div>
         </div>
@@ -607,14 +650,11 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Quick Navigation -->
-        
-
         <!-- Rideshare Safety Section -->
         <section id="rideshare">
             <div class="section-header">
                 <div class="section-icon">🚗</div>
-                <h2 class="section-title">Rideshare + Personal Safety Tips (MN Edition)</h2>
+                <h2 class="section-title">Rideshare + Personal Safety Tips</h2>
             </div>
             
             <button class="collapsible">Before the Ride</button>
@@ -813,33 +853,93 @@
         <section id="resources">
             <div class="section-header">
                 <div class="section-icon">📍</div>
-                <h2 class="section-title">Local Resources</h2>
+                <h2 class="section-title">Safety Resources</h2>
             </div>
             
-            <div class="resources">
-                <div class="resource-card">
-                    <div class="resource-title">Minnesota Coalition Against Sexual Assault (MNCASA)</div>
-                    <p>Website: mncasa.org</p>
+            <button class="collapsible">🌐 National Resources</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="resources">
+                        <div class="resource-card">
+                            <div class="resource-title">RAINN</div>
+                            <p>Rideshare safety & survivor support<br>
+                            <a href="https://rainn.org" target="_blank">https://rainn.org</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">DanceSafe</div>
+                            <p>Party safety tips<br>
+                            <a href="https://dancesafe.org/safety-tips/" target="_blank">https://dancesafe.org/safety-tips/</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">Good Night Out Campaign</div>
+                            <p>Nightlife safety guides<br>
+                            <a href="https://goodnightoutcampaign.org/" target="_blank">https://goodnightoutcampaign.org/</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">Safe Bars Collective</div>
+                            <p>Bystander and venue safety resources<br>
+                            <a href="https://safebars.org/" target="_blank">https://safebars.org/</a></p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="resource-card">
-                    <div class="resource-title">Sexual Violence Center (Minneapolis)</div>
-                    <p>24-hour crisis line: (612) 871-5111</p>
+            </div>
+            
+            <button class="collapsible">🌆 Minnesota / Minneapolis Resources</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="resources">
+                        <div class="resource-card">
+                            <div class="resource-title">Our Streets Minneapolis</div>
+                            <p>Pedestrian and late-night street safety<br>
+                            <a href="https://ourstreetsmpls.org" target="_blank">https://ourstreetsmpls.org</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">Metro Transit</div>
+                            <p>Rider safety, reporting<br>
+                            <a href="https://www.metrotransit.org/rider-safety" target="_blank">https://www.metrotransit.org/rider-safety</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">MN Coalition Against Sexual Assault</div>
+                            <p>Support and resources<br>
+                            <a href="https://www.mncasa.org/" target="_blank">https://www.mncasa.org/</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">Cornerstone MN</div>
+                            <p>24/7 crisis support: 866-223-1111<br>
+                            <a href="https://cornerstonemn.org/" target="_blank">https://cornerstonemn.org/</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">Tubman</div>
+                            <p>Minneapolis crisis, advocacy, and transport support<br>
+                            <a href="https://www.tubman.org/" target="_blank">https://www.tubman.org/</a></p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="resource-card">
-                    <div class="resource-title">Cornerstone Advocacy Service (Bloomington)</div>
-                    <p>24-hour crisis line: (952) 884-0330</p>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-title">Violence Free Minnesota</div>
-                    <p>Website: violencefreemn.org</p>
-                </div>
-                
-                <div class="resource-card">
-                    <div class="resource-title">Safe Walk Program (University of Minnesota)</div>
-                    <p>Phone: (612) 624-WALK</p>
+            </div>
+            
+            <button class="collapsible">📞 Hotlines</button>
+            <div class="content">
+                <div class="content-inner">
+                    <div class="resources">
+                        <div class="resource-card">
+                            <div class="resource-title">RAINN National Sexual Assault Hotline</div>
+                            <p>24/7 support<br>
+                            <a href="tel:1-800-656-4673">1-800-656-4673</a></p>
+                        </div>
+                        
+                        <div class="resource-card">
+                            <div class="resource-title">MN Day One / Cornerstone Crisis Line</div>
+                            <p>24/7 support<br>
+                            <a href="tel:1-866-223-1111">1-866-223-1111</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -867,7 +967,7 @@
     </footer>
 
     <script>
-        // Collapsible sections functionality [citation:1]
+        // Collapsible sections functionality 
         document.addEventListener('DOMContentLoaded', function() {
             const coll = document.getElementsByClassName("collapsible");
             
@@ -892,7 +992,7 @@
         });
 
         // Mobile menu toggle
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('hamburger').addEventListener('click', function() {
             document.getElementById('mobileNav').classList.toggle('active');
             
             // Animate hamburger to X
@@ -920,9 +1020,9 @@
                 if (targetElement) {
                     // Close mobile menu if open
                     document.getElementById('mobileNav').classList.remove('active');
-                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[0].style.transform = 'none';
-                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[1].style.opacity = '1';
-                    document.getElementById('mobileMenuToggle').getElementsByTagName('span')[2].style.transform = 'none';
+                    document.getElementById('hamburger').getElementsByTagName('span')[0].style.transform = 'none';
+                    document.getElementById('hamburger').getElementsByTagName('span')[1].style.opacity = '1';
+                    document.getElementById('hamburger').getElementsByTagName('span')[2].style.transform = 'none';
                     
                     // Scroll to target
                     window.scrollTo({
@@ -951,22 +1051,9 @@
             });
         });
         
-        // Download button functionality
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            // In a real implementation, this would generate a PDF
-            alert('PDF download would start here. This would connect to a PDF generation service in production.');
-            
-            // For a simple text version users can save:
-            const content = document.documentElement.outerHTML;
-            const blob = new Blob([content], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'plurderapolis-safety-guide.html';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        // Print button functionality
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
         });
         
         // Share button functionality
