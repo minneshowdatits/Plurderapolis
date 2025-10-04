@@ -901,52 +901,203 @@
             font-style: italic;
         }
 
-        /* Legal Disclaimer Styles */
-        .legal-section {
-            background: var(--card-bg);
+        /* Timer Widget Styles - FIXED LAYOUT */
+        .timer-widget {
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+        }
+
+        .water-wave-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .water-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 20px;
+            background: linear-gradient(90deg, transparent, rgba(0, 183, 255, 0.1), transparent);
+            animation: waveMove 15s infinite linear;
+            opacity: 0.3;
+        }
+
+        .water-wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.2;
+            height: 15px;
+        }
+
+        .water-wave:nth-child(3) {
+            animation-delay: -10s;
+            opacity: 0.1;
+            height: 10px;
+        }
+
+        .timer-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(58, 0, 82, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid var(--accent6);
-        }
-
-        .legal-section h2 {
-            color: var(--accent6);
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 179, 0, 0.3);
-            padding-bottom: 8px;
-        }
-
-        .legal-section h3 {
-            color: var(--primary);
-            margin: 15px 0 8px 0;
-        }
-
-        .legal-section p, .legal-section li {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-
-        .legal-section ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .warning-box {
-            background: rgba(255, 179, 0, 0.1);
-            border: 1px solid var(--accent6);
-            border-radius: 6px;
             padding: 15px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent3);
+        }
+
+        .timer-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .timer-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(0, 247, 224, 0.3);
+        }
+
+        .timer-btn:hover {
+            background: var(--primary);
+            color: #2e003e;
+            transform: translateY(-1px);
+        }
+
+        .btn-start {
+            background: var(--accent3);
+            color: white;
+        }
+
+        .btn-snooze {
+            background: var(--accent4);
+            color: white;
+        }
+
+        .btn-settings {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-save {
+            background: var(--accent5);
+            color: white;
+        }
+
+        .btn-send {
+            background: var(--accent2);
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .customization-panel {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid rgba(0, 247, 224, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            color: var(--medium-text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 247, 224, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Send Modal Styles */
+        .send-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1.2rem;
+        }
+
+        .send-modal-content {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90%;
+            overflow-y: auto;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px rgba(0, 247, 224, 0.4);
+        }
+
+        .send-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .send-options {
             margin: 15px 0;
         }
 
-        .warning-box h4 {
-            color: var(--accent6);
-            margin: 0 0 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .send-option {
+            margin-bottom: 10px;
+        }
+
+        .send-option label {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .send-preview {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
         }
 
         @media (min-width:768px){
@@ -965,6 +1116,9 @@
             }
             .resource-list {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .timer-controls {
+                flex-wrap: nowrap;
             }
         }
         @media (min-width:1024px){
@@ -990,6 +1144,9 @@
             }
             .location-buttons {
                 grid-template-columns: 1fr;
+            }
+            .timer-controls {
+                flex-direction: column;
             }
         }
     </style>
@@ -1232,7 +1389,7 @@
         </div>
     </div>
 
-    <!-- Hydration & Check-in Timer Widget -->
+    <!-- Hydration & Check-in Timer Widget - FIXED LAYOUT -->
     <div class="section-card floating floating-delay-1 collapsed">
         <div class="card-header">
             <h2>💧 Hydration & Check-in</h2>
@@ -1247,7 +1404,6 @@
                     <div class="water-wave"></div>
                 </div>
                 
-                <!-- Existing timer content remains the same -->
                 <div class="timer-card" id="water-timer">
                     <div class="timer-title">
                         <span>💧 Drink Water</span>
@@ -1316,14 +1472,14 @@
     <!-- NEW: Discrete Analytics Widget -->
     <div class="section-card floating floating-delay-3 collapsed">
         <div class="card-header">
-            <h2>📊 Usage Analytics</h2>
+            <h2>📊</h2>
             <button class="collapsible-toggle">+</button>
         </div>
         <div class="section-summary">Anonymous usage tracking to help us improve resources.</div>
         <div class="collapsible-content">
             <div class="analytics-widget">
                 <div class="analytics-header" onclick="toggleWidget('analyticsContent')">
-                    <h3>📊 Anonymous Usage Data</h3>
+                    <span style="font-size: 0.8rem; color: var(--medium-text);">Usage Insights</span>
                     <button class="analytics-toggle">▼</button>
                 </div>
                 <div class="analytics-content" id="analyticsContent">
@@ -1513,67 +1669,6 @@
         </div>
     </div>
 
-    <!-- Legal Disclaimers & Terms Section - NOW COLLAPSED -->
-    <div class="section-card floating floating-delay-3 collapsed">
-        <div class="card-header">
-            <h2>⚖️ Legal Disclaimers & Terms</h2>
-            <button class="collapsible-toggle">+</button>
-        </div>
-        <div class="section-summary">Important legal information about the use of this site and its resources.</div>
-        <div class="collapsible-content">
-            <div class="legal-section">
-                <div class="warning-box">
-                    <h4>⚠️ IMPORTANT LEGAL NOTICE</h4>
-                    <p>This site provides harm reduction information and resources. It is NOT a substitute for professional medical, legal, or mental health advice. Always consult qualified professionals for specific concerns.</p>
-                </div>
-
-                <h3>Medical Disclaimer</h3>
-                <p>The information contained on PLURderapolis.org is for informational and educational purposes only and should not be relied upon for any medical or diagnostic purpose, or for the treatment of any condition or symptom.</p>
-                
-                <p>The information and materials provided on this site do not constitute the provision or practice of medical, nursing, or professional health care advice or services, and are not intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
-                
-                <p><strong>You should always consult with a physician or other qualified health care provider regarding any specific medical questions or concerns.</strong> Do not disregard medical or professional advice, or delay seeking it, because of something you have read on this website.</p>
-
-                <h3>No Doctor-Patient Relationship</h3>
-                <p>Use of this Site is not a substitute for a call or visit to, or consultation with, your physician or healthcare professional. You should not rely on the Site or any other service offered by or through this Site for medical diagnosis or treatment.</p>
-
-                <h3>Emergency Situations</h3>
-                <p>In the event of a medical emergency, contact your physician or call 911 IMMEDIATELY.</p>
-
-                <h3>Harm Reduction Disclaimer</h3>
-                <p>While PLURderapolis provides information aimed at reducing harm associated with substance use, we do not encourage or condone illegal activities. The information provided is intended to:</p>
-                <ul>
-                    <li>Reduce the risks associated with substance use</li>
-                    <li>Provide life-saving information in emergency situations</li>
-                    <li>Connect individuals with professional resources and support</li>
-                    <li>Promote educated and informed decision-making</li>
-                </ul>
-
-                <h3>No Endorsement</h3>
-                <p>PLURderapolis does not recommend or endorse any specific products, procedures, opinions, tests, physicians, hospitals, products, procedures, opinions, or other information that may be mentioned on this website.</p>
-
-                <h3>Accuracy of Information</h3>
-                <p>Medical information and understanding change constantly, and the information provided on PLURderapolis.org is subject to change without notice and should not be considered current, complete, or exhaustive, nor should you rely on such information to recommend a course of treatment for you or any other individual.</p>
-
-                <h3>Limitation of Liability</h3>
-                <p>To the maximum extent permitted by law, PLURderapolis disclaims all liability for any damages whatsoever arising out of or in connection with your use or inability to use this website or any websites linked to this site.</p>
-
-                <h3>Jurisdictional Issues</h3>
-                <p>This website is intended for residents of Minnesota, United States. Some content may not be appropriate or legal in all jurisdictions. Users are responsible for understanding and complying with local laws.</p>
-
-                <h3>Acceptance of Terms</h3>
-                <p>By using this website, you indicate that you accept these terms and conditions. If you do not accept these terms, do not use this site.</p>
-
-                <div class="warning-box">
-                    <h4>🚨 URGENT LEGAL NOTICE</h4>
-                    <p>Some harm reduction practices discussed on this site may conflict with local, state, or federal laws. We provide this information for educational purposes to reduce harm and save lives, not to encourage illegal activities. You are responsible for knowing and complying with applicable laws in your jurisdiction.</p>
-                </div>
-
-                <p style="text-align: center; margin-top: 20px; font-weight: bold;">Last updated: October 4, 2025</p>
-            </div>
-        </div>
-    </div>
-
     <!-- About Us Section - COLLAPSED -->
     <div class="section-card floating floating-delay-3 collapsed">
         <div class="card-header">
@@ -1745,9 +1840,15 @@
                 <a href="seasonal.html" class="sitemap-link">Seasonal Tips</a>
                 <a href="sober.html" class="sitemap-link">Sober Ravers</a>
                 <a href="resources.html" class="sitemap-link">MN Resources</a>
-                <a href="index.html" class="sitemap-link">Home</a>
+                <a href="legal-disclaimers-terms.html" class="sitemap-link">Legal Disclaimers</a>
             </div>
         </div>
+    </div>
+    
+    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #444;">
+        <ul>
+            <li><a href="legal-disclaimers-terms.html" style="color: var(--medium-text); font-size: 0.8rem;">Legal Disclaimers & Terms</a></li>
+        </ul>
     </div>
     
     <p style="font-size:0.75rem;color:#ccc;margin-top:0.8rem;">Disclaimer: PLURderapolis provides harm reduction education. This is not medical or legal advice. Always consult professionals for health or legal concerns.</p>
@@ -2108,14 +2209,243 @@ function resetAnalyticsData() {
     }
 }
 
+// Timer functionality with localStorage persistence [citation:1]
+let timers = {
+    water: { running: false, endTime: null, interval: 60 },
+    buddy: { running: false, endTime: null, interval: 120 },
+    eat: { running: false, endTime: null, interval: 180 }
+};
+
+// Load timer settings from localStorage
+function loadTimerSettings() {
+    const saved = localStorage.getItem('plurderapolisTimers');
+    if (saved) {
+        const savedTimers = JSON.parse(saved);
+        Object.keys(timers).forEach(timer => {
+            if (savedTimers[timer]) {
+                timers[timer] = { ...timers[timer], ...savedTimers[timer] };
+            }
+        });
+    }
+    
+    // Load custom intervals
+    const custom = localStorage.getItem('plurderapolisTimerSettings');
+    if (custom) {
+        const settings = JSON.parse(custom);
+        document.getElementById('water-interval').value = settings.waterInterval || 60;
+        document.getElementById('buddy-interval').value = settings.buddyInterval || 120;
+        document.getElementById('eat-interval').value = settings.eatInterval || 180;
+        document.getElementById('snooze-duration').value = settings.snoozeDuration || 10;
+        
+        // Update timer intervals
+        timers.water.interval = settings.waterInterval || 60;
+        timers.buddy.interval = settings.buddyInterval || 120;
+        timers.eat.interval = settings.eatInterval || 180;
+    }
+}
+
+function startTimer(timerType) {
+    const timer = timers[timerType];
+    timer.running = true;
+    timer.endTime = Date.now() + (timer.interval * 60 * 1000);
+    
+    // Show snooze button
+    document.querySelector(`#${timerType}-timer .btn-snooze`).classList.remove('hidden');
+    
+    // Save to localStorage [citation:1]
+    saveTimerState();
+    
+    updateTimerDisplay(timerType);
+}
+
+function snoozeTimer(timerType) {
+    const timer = timers[timerType];
+    const snoozeDuration = parseInt(document.getElementById('snooze-duration').value) || 10;
+    
+    timer.endTime = Date.now() + (snoozeDuration * 60 * 1000);
+    saveTimerState();
+    updateTimerDisplay(timerType);
+}
+
+function updateTimerDisplay(timerType) {
+    const timer = timers[timerType];
+    const statusElement = document.getElementById(`${timerType}-status`);
+    
+    if (timer.running && timer.endTime) {
+        const now = Date.now();
+        const timeLeft = timer.endTime - now;
+        
+        if (timeLeft <= 0) {
+            // Timer completed
+            statusElement.textContent = 'NOW!';
+            statusElement.style.color = 'var(--secondary)';
+            statusElement.style.fontWeight = 'bold';
+            
+            // Show notification
+            if (Notification.permission === 'granted') {
+                new Notification(`Time to ${getTimerAction(timerType)}!`, {
+                    body: getTimerMessage(timerType),
+                    icon: '/favicon.ico'
+                });
+            }
+        } else {
+            // Timer still running
+            const minutes = Math.floor(timeLeft / (60 * 1000));
+            const seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
+            statusElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            statusElement.style.color = 'var(--primary)';
+        }
+    } else {
+        // Timer not running
+        statusElement.textContent = '--:--';
+        statusElement.style.color = 'var(--medium-text)';
+    }
+}
+
+function getTimerAction(timerType) {
+    switch(timerType) {
+        case 'water': return 'drink water';
+        case 'buddy': return 'check in with your buddy';
+        case 'eat': return 'eat something';
+        default: return 'take a break';
+    }
+}
+
+function getTimerMessage(timerType) {
+    switch(timerType) {
+        case 'water': return 'Stay hydrated! Your body will thank you.';
+        case 'buddy': return 'Reach out to your buddy. A quick chat can make a big difference.';
+        case 'eat': return 'Fuel your body with a healthy snack or meal.';
+        default: return 'Time for a break!';
+    }
+}
+
+function saveTimerState() {
+    localStorage.setItem('plurderapolisTimers', JSON.stringify(timers));
+}
+
+function toggleCustomization() {
+    const panel = document.getElementById('customization-panel');
+    panel.classList.toggle('hidden');
+}
+
+function saveCustomizations() {
+    const settings = {
+        waterInterval: parseInt(document.getElementById('water-interval').value),
+        buddyInterval: parseInt(document.getElementById('buddy-interval').value),
+        eatInterval: parseInt(document.getElementById('eat-interval').value),
+        snoozeDuration: parseInt(document.getElementById('snooze-duration').value)
+    };
+    
+    // Update timer intervals
+    timers.water.interval = settings.waterInterval;
+    timers.buddy.interval = settings.buddyInterval;
+    timers.eat.interval = settings.eatInterval;
+    
+    // Save to localStorage [citation:1]
+    localStorage.setItem('plurderapolisTimerSettings', JSON.stringify(settings));
+    
+    alert('Settings saved!');
+}
+
+// Send to Friend functionality [citation:5]
+function showSendModal() {
+    const modal = document.getElementById('sendModal');
+    modal.style.display = 'block';
+    generateShareContent();
+}
+
+function closeSendModal() {
+    const modal = document.getElementById('sendModal');
+    modal.style.display = 'none';
+}
+
+function generateShareContent() {
+    const method = document.querySelector('input[name="send-method"]:checked').value;
+    const preview = document.getElementById('sendPreview');
+    
+    const timerSettings = {
+        water: timers.water.interval,
+        buddy: timers.buddy.interval,
+        eat: timers.eat.interval
+    };
+    
+    let shareContent = '';
+    
+    switch(method) {
+        case 'link':
+            shareContent = generateShareableLink(timerSettings);
+            break;
+        case 'json':
+            shareContent = generateJSONExport(timerSettings);
+            break;
+        case 'html':
+            shareContent = generateHTMLWidget(timerSettings);
+            break;
+    }
+    
+    preview.innerHTML = `<pre style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 0.8rem;">${shareContent}</pre>`;
+}
+
+function generateShareableLink(settings) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const params = new URLSearchParams({
+        water: settings.water,
+        buddy: settings.buddy,
+        eat: settings.eat,
+        shared: 'true'
+    });
+    return `${baseUrl}?${params.toString()}`;
+}
+
+function generateJSONExport(settings) {
+    return JSON.stringify({
+        timerSettings: settings,
+        message: "Check out these hydration timer settings from PLURderapolis!",
+        source: "PLURderapolis Harm Reduction"
+    }, null, 2);
+}
+
+function generateHTMLWidget(settings) {
+    return `<!-- PLURderapolis Timer Widget -->
+<div class="timer-widget">
+    <p>Hydration Reminders:</p>
+    <ul>
+        <li>Water: Every ${settings.water} minutes</li>
+        <li>Buddy Check-in: Every ${settings.buddy} minutes</li>
+        <li>Eat: Every ${settings.eat} minutes</li>
+    </ul>
+    <p>Visit <a href="${window.location.origin}">PLURderapolis</a> for more harm reduction resources.</p>
+</div>`;
+}
+
+function copyToClipboard() {
+    const preview = document.getElementById('sendPreview');
+    const text = preview.textContent || preview.innerText;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+    }).catch(() => {
+        alert('Failed to copy to clipboard. Please select and copy manually.');
+    });
+}
+
 // Initialize everything when the page loads
 window.addEventListener('DOMContentLoaded', function() {
     initializeAnalytics();
     createParticles();
+    loadTimerSettings();
+    
+    // Update timer displays every second
+    setInterval(() => {
+        Object.keys(timers).forEach(timerType => {
+            updateTimerDisplay(timerType);
+        });
+    }, 1000);
 });
 
 // Rest of your existing JavaScript remains the same (mobile nav, search, panic button, etc.)
-// ... (including all your existing functions for mobile nav, search, panic button, timers, etc.)
+// ... (including all your existing functions for mobile nav, search, panic button, etc.)
 
 // Subtle Animated Background
 function createParticles() {
