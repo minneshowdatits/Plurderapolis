@@ -34,20 +34,98 @@
   h1{font-size:clamp(1.8rem,3vw,2.5rem);color:var(--accent);margin:8px 0 6px; text-align: center; text-shadow: 0 0 10px rgba(191, 0, 191, 0.4);}
   p.lede{color:#f0d1ff;margin:.25rem 0 1rem; font-size: 1.1rem; text-align: center; line-height: 1.5;}
   
-  /* Navigation */
-  .navigation {display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;}
-  .nav-links {display: flex; gap: 15px; flex-wrap: wrap;}
-  .nav-button {background: var(--chip); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px;}
-  .nav-button:hover {background: var(--accent); transform: translateY(-2px); box-shadow: var(--glow);}
-  
   /* Header branding */
   .branding{display:flex;align-items:center;gap:10px;margin-bottom:10px; justify-content: center; flex-direction: column; text-align: center;}
-  .logo{font-size:2.5rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent; animation: logoPulse 4s infinite ease-in-out; text-shadow: 0 0 15px rgba(191, 0, 191, 0.5); margin-bottom: 5px;}
+  .logo{font-size:2.5rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2), #ff00ff, #bf00bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent; animation: logoPulse 4s infinite ease-in-out, logoColors 8s infinite linear; text-shadow: 0 0 15px rgba(191, 0, 191, 0.5); margin-bottom: 5px; cursor: pointer;}
   @keyframes logoPulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
   }
+  @keyframes logoColors {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
   .tagline{color:var(--muted);font-size:1rem; max-width: 500px; line-height: 1.4;}
+  
+  /* Hamburger menu */
+  .hamburger-menu {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+  }
+  
+  .hamburger-btn {
+    background: var(--chip);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .hamburger-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--card-gradient);
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    padding: 10px 0;
+    z-index: 1000;
+    animation: dropdownFade 0.3s ease-out;
+  }
+  
+  @keyframes dropdownFade {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .dropdown-content a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+  }
+  
+  .dropdown-content a:hover {
+    background: rgba(191, 0, 191, 0.1);
+    border-left-color: var(--accent);
+    padding-left: 25px;
+  }
+  
+  .dropdown-content .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 8px 0;
+  }
+  
+  .dropdown-content .section-title {
+    padding: 8px 20px;
+    font-weight: 700;
+    color: var(--accent-2);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
   
   /* Top checker card */
   .tool{background:var(--card-gradient);border-radius:14px;padding:20px;box-shadow:var(--shadow);position:sticky;top:0.35rem;z-index:5; animation: fadeIn 0.8s ease-out; border: 1px solid var(--line); margin-bottom: 25px;}
@@ -96,6 +174,36 @@
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0 0;font-size:.95rem;color:var(--muted); justify-content: center;}
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem; transition: all 0.3s ease;}
   .legend span:hover {transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
+  
+  /* Share Results */
+  .share-results {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .share-btn {
+    background: var(--chip);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+  }
+  
+  .share-btn:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+  }
   
   /* Matrix */
   .controls{display:flex;align-items:center;gap:15px;margin:20px 0 15px;flex-wrap:wrap; justify-content: center;}
@@ -149,17 +257,53 @@
   .pill{display:inline-block;background:var(--chip);padding:.22rem .6rem;border-radius:999px;font-weight:800; transition: all 0.3s ease;}
   .pill:hover {transform: scale(1.05); background: var(--accent);}
   
+  /* Footer Navigation */
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .footer-link {
+    color: var(--muted);
+    transition: all 0.3s ease;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+  }
+  
+  .footer-link:hover {
+    color: var(--accent-2);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  
+  .footer-link.highlight {
+    background: var(--chip);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  
+  .footer-link.highlight:hover {
+    background: var(--accent);
+  }
+  
   /* Mobile niceties */
   @media (max-width:640px){
     .tool{position:static}
     .legend{font-size:.9rem}
     table{font-size:.86rem;min-width:840px}
     .controls{flex-direction:column;align-items:flex-start}
-    .navigation {flex-direction: column; align-items: flex-start;}
-    .nav-links {margin-top: 10px;}
     .branding {flex-direction: column; align-items: flex-start; gap: 5px;}
     h1 {text-align: left;}
     p.lede {text-align: left;}
+    .footer-nav {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
   }
   
   /* Save page modal */
@@ -313,22 +457,33 @@
   <!-- Floating particles -->
   <div class="particles" id="particles"></div>
   
-  <div class="wrap">
-    <!-- Navigation -->
-    <div class="navigation">
-      <button class="nav-button" id="backButton" onclick="history.back()"><i class="fas fa-arrow-left"></i> Back</button>
-      <div class="nav-links">
-        <a href="resources.html" class="nav-button"><i class="fas fa-book"></i> Resources</a>
-        <a href="emergency.html" class="nav-button"><i class="fas fa-exclamation-triangle"></i> Emergency</a>
-        <a href="spiking.html" class="nav-button"><i class="fas fa-skull-crossbones"></i> Spiking</a>
-        <a href="fake.html" class="nav-button"><i class="fas fa-search"></i> Fake Drugs</a>
-        <a href="rx-combos.html" class="nav-button"><i class="fas fa-prescription-bottle"></i> Rx Combos</a>
-      </div>
+  <!-- Hamburger Menu -->
+  <div class="hamburger-menu">
+    <button class="hamburger-btn" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="dropdown-content" id="dropdownContent">
+      <div class="section-title">Page Sections</div>
+      <a href="#tool"><i class="fas fa-search-plus"></i> Interaction Checker</a>
+      <a href="#matrix"><i class="fas fa-table"></i> Risk Matrix</a>
+      <a href="#tips"><i class="fas fa-lightbulb"></i> Harm Reduction Tips</a>
+      <a href="#categories"><i class="fas fa-layer-group"></i> Combo Categories</a>
+      
+      <div class="divider"></div>
+      
+      <div class="section-title">Site Pages</div>
+      <a href="rx-combos.html" class="highlight"><i class="fas fa-prescription-bottle"></i> Rx Combos</a>
+      <a href="resources.html"><i class="fas fa-book"></i> Resources</a>
+      <a href="emergency.html"><i class="fas fa-exclamation-triangle"></i> Emergency</a>
+      <a href="spiking.html"><i class="fas fa-skull-crossbones"></i> Spiking</a>
+      <a href="fake.html"><i class="fas fa-search"></i> Fake Drugs</a>
     </div>
-    
+  </div>
+  
+  <div class="wrap">
     <!-- PLURderapolis branding -->
     <div class="branding">
-      <div class="logo">PLURderapolis</div>
+      <div class="logo" id="homeLink">PLURderapolis</div>
       <div class="tagline">Harm Reduction & Community Safety - Empowering informed decisions through education and support</div>
     </div>
     
@@ -336,7 +491,7 @@
     <p class="lede">Mobile-first, harm-reduction focused tool to check drug combination risks. Pick up to three substances and see detailed safety information. Matrix is downloadable + shareable.</p>
 
     <!-- ===== Interaction Checker (TOP) ===== -->
-    <section class="tool" aria-label="Polydrug Interaction Checker">
+    <section class="tool" aria-label="Polydrug Interaction Checker" id="tool">
       <h2><i class="fas fa-search-plus"></i> Quick Check</h2>
       <div class="row">
         <div class="sel">
@@ -366,6 +521,12 @@
       <div class="result" id="resultBox" aria-live="polite">
         <h3><i class="fas fa-clipboard-list"></i> Results will appear here</h3>
         <p>We'll show A+B, A+C, B+C and a combined A+B+C overview with detailed harm-reduction pointers.</p>
+        <div class="share-results" id="shareResults" style="display: none;">
+          <button class="share-btn" id="copyResults"><i class="fas fa-copy"></i> Copy Results</button>
+          <button class="share-btn" id="saveResults"><i class="fas fa-save"></i> Save Results</button>
+          <button class="share-btn" id="shareTwitter"><i class="fab fa-twitter"></i> Tweet</button>
+          <button class="share-btn" id="shareReddit"><i class="fab fa-reddit"></i> Reddit</button>
+        </div>
       </div>
     </section>
 
@@ -379,16 +540,16 @@
       <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
     </div>
 
-    <div class="section-heading">
+    <div class="section-heading" id="matrix">
       <i class="fas fa-table"></i> Interaction Matrix
     </div>
 
     <div class="matrix" role="region" aria-label="Combo Risk Matrix">
-      <table id="matrix"></table>
+      <table id="matrixTable"></table>
     </div>
 
     <!-- ===== Tips (quick) ===== -->
-    <details class="info" open>
+    <details class="info" open id="tips">
       <summary><i class="fas fa-lightbulb"></i> Harm Reduction Tips <span class="tag">(quick)</span></summary>
       <ul>
         <li><strong>Test what you can.</strong> Start low, go slow. Space redoses.</li>
@@ -400,7 +561,7 @@
     </details>
 
     <!-- ===== Category cards at bottom ===== -->
-    <div class="section-heading">
+    <div class="section-heading" id="categories">
       <i class="fas fa-layer-group"></i> Combo Categories
     </div>
 
@@ -433,6 +594,15 @@
     <details class="info"><summary><i class="fas fa-head-side-virus"></i> Dissociative × Depressant <span class="tag">ketamine/nitrous + alcohol/benzos/GHB</span></summary>
       <p>Hypoxia/airway risk + amnesia. Sit down, supervised, fresh air breaks.</p>
     </details>
+
+    <!-- Footer Navigation -->
+    <div class="footer-nav">
+      <a href="rx-combos.html" class="footer-link highlight"><i class="fas fa-prescription-bottle"></i> Rx Combos</a>
+      <a href="resources.html" class="footer-link"><i class="fas fa-book"></i> Resources</a>
+      <a href="emergency.html" class="footer-link"><i class="fas fa-exclamation-triangle"></i> Emergency</a>
+      <a href="spiking.html" class="footer-link"><i class="fas fa-skull-crossbones"></i> Spiking</a>
+      <a href="fake.html" class="footer-link"><i class="fas fa-search"></i> Fake Drugs</a>
+    </div>
 
     <!-- ===== Legal disclaimer (single) ===== -->
     <footer>
@@ -748,11 +918,15 @@ function tripleAdvisory(sel, worst){
   </div>`;
 }
 
+// Store current results for sharing
+let currentResults = '';
+
 document.getElementById("checkBtn").addEventListener("click", ()=>{
   const sel = ["drugA","drugB","drugC"].map(id=>document.getElementById(id).value).filter(Boolean);
   const box = document.getElementById("resultBox");
   if (sel.length<2){
     box.innerHTML = `<h3>Please select at least two substances.</h3>`;
+    document.getElementById("shareResults").style.display = "none";
     return;
   }
   const {pairs,worst} = renderPairs(sel);
@@ -779,13 +953,28 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
   
   box.innerHTML = content;
   
+  // Store results for sharing
+  currentResults = `
+PLURderapolis Interaction Check Results:
+
+${sel.join(' + ')}
+${pairs.map(pair => `${pair.a} + ${pair.b}: ${pair.v}`).join('\n')}
+
+${sel.length === 3 ? `Three-way combination: ${worst}` : ''}
+
+Checked at: ${new Date().toLocaleString()}
+  `.trim();
+  
+  // Show share buttons
+  document.getElementById("shareResults").style.display = "flex";
+  
   // Scroll to results
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
 
 // Render matrix table
 (function renderMatrix(){
-  const tbl = document.getElementById("matrix");
+  const tbl = document.getElementById("matrixTable");
   const thead = document.createElement("thead");
   const hrow = document.createElement("tr");
   hrow.appendChild(document.createElement("th")).textContent = "↓ / →";
@@ -830,6 +1019,63 @@ function createParticles() {
     particlesContainer.appendChild(particle);
   }
 }
+
+// Hamburger menu functionality
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const dropdownContent = document.getElementById('dropdownContent');
+
+hamburgerBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', () => {
+  dropdownContent.style.display = 'none';
+});
+
+// Home link functionality
+document.getElementById('homeLink').addEventListener('click', () => {
+  // In a real implementation, this would navigate to the home page
+  // For this demo, we'll just scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Share results functionality
+document.getElementById('copyResults').addEventListener('click', () => {
+  navigator.clipboard.writeText(currentResults)
+    .then(() => {
+      alert('Results copied to clipboard!');
+    })
+    .catch(err => {
+      console.error('Failed to copy: ', err);
+      alert('Failed to copy results. Please try again.');
+    });
+});
+
+document.getElementById('saveResults').addEventListener('click', () => {
+  const blob = new Blob([currentResults], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'plurderapolis-interaction-results.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById('shareTwitter').addEventListener('click', () => {
+  const text = encodeURIComponent('Check out my drug interaction results from PLURderapolis!');
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+});
+
+document.getElementById('shareReddit').addEventListener('click', () => {
+  const title = encodeURIComponent('PLURderapolis Drug Interaction Results');
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://www.reddit.com/submit?title=${title}&url=${url}`, '_blank');
+});
 
 // Save page functionality
 const saveModal = document.getElementById("saveModal");
