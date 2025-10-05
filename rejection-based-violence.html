@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Learn about rejection-based violence: recognize warning signs, interrupt patterns, and prevent harm. Resources and support for domestic violence awareness.">
-    <title>When "No" Isn't Respected: Rejection-Based Violence | Plurderapolis</title>
+    <title>Rejection Based Violence | Plurderapolis</title>
     <style>
         :root {
             --bg-dark: #0f0716;
@@ -14,13 +14,17 @@
             --purple-secondary: #6b4b8a;
             --purple-light: #8e6caf;
             --purple-lighter: #b39ddb;
+            --purple-glow: rgba(179, 157, 219, 0.3);
+            --accent-teal: #4db8b8;
+            --accent-pink: #d87a95;
             --text-light: #f5f3f7;
             --text-muted: #d8cae4;
             --shadow: 0 4px 12px rgba(0,0,0,0.3);
-            --border-radius: 8px;
+            --border-radius: 10px;
+            --section-spacing: 4rem;
         }
         
-        /* Smooth scrolling for whole page with accessibility consideration */
+        /* Smooth scrolling with reduced motion support */
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
@@ -44,6 +48,9 @@
             color: var(--text-light);
             line-height: 1.7;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(74, 48, 109, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 60%, rgba(77, 184, 184, 0.05) 0%, transparent 20%);
         }
         
         /* Header & Navigation */
@@ -68,16 +75,31 @@
             margin: 0 auto;
         }
         
+        .logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
         .logo a {
             color: var(--text-light);
             text-decoration: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
         }
         
         .logo a:hover {
             color: var(--purple-lighter);
+            transform: translateY(-2px);
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            color: var(--accent-teal);
+            margin-top: 0.2rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
         
         .nav-menu {
@@ -92,10 +114,37 @@
             font-weight: 500;
             transition: color 0.3s;
             font-size: 0.95rem;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--purple-light), var(--accent-teal));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after,
+        .nav-menu a:focus::after {
+            width: 100%;
         }
         
         .nav-menu a:hover {
             color: var(--purple-lighter);
+        }
+        
+        /* Special styling for memorial menu item */
+        .nav-menu a[href="#kayli"] {
+            color: var(--accent-pink);
+        }
+        
+        .nav-menu a[href="#kayli"]::after {
+            background: linear-gradient(to right, var(--accent-pink), var(--purple-light));
         }
         
         /* Mobile Navigation */
@@ -107,6 +156,11 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.25rem;
+            transition: transform 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: rotate(90deg);
         }
         
         /* Main content spacing for fixed header */
@@ -116,22 +170,52 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(74, 48, 109, 0.85), rgba(26, 16, 37, 0.9));
+            background: linear-gradient(135deg, rgba(74, 48, 109, 0.8) 0%, rgba(26, 16, 37, 0.9) 100%);
             color: var(--text-light);
             padding: 5rem 1rem;
             text-align: center;
             border-bottom: 1px solid var(--purple-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(179, 157, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(77, 184, 184, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
         
         .hero-content {
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 1.2rem;
             margin-bottom: 1.5rem;
-            line-height: 1.3;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--purple-lighter), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero p {
@@ -141,16 +225,19 @@
             color: var(--text-muted);
         }
         
-        /* Section styling */
+        /* Section styling with even spacing */
         section {
-            padding: 4rem 1rem;
+            padding: var(--section-spacing) 1rem;
             max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
         
         .section-title {
             color: var(--text-light);
-            margin-bottom: 2.5rem;
+            margin-bottom: 0.5rem;
             text-align: center;
             font-size: 2rem;
             position: relative;
@@ -165,24 +252,25 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background: linear-gradient(to right, var(--purple-primary), var(--purple-light));
+            background: linear-gradient(to right, var(--purple-primary), var(--accent-teal));
             border-radius: 3px;
         }
         
-        /* Collapsible sections - improved accessibility */
+        /* Collapsible sections with improved animations */
         .collapsible {
             background-color: var(--bg-card);
             border-radius: var(--border-radius);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             box-shadow: var(--shadow);
             overflow: hidden;
             border: 1px solid rgba(107, 75, 138, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
         
         .collapsible:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border-color: rgba(107, 75, 138, 0.6);
         }
         
         .collapsible-header {
@@ -206,14 +294,14 @@
         }
         
         .collapsible-header::after {
-            content: '\002B'; /* Plus sign */
+            content: '\002B';
             font-size: 1.5rem;
             color: var(--purple-lighter);
             transition: transform 0.3s;
         }
         
         .collapsible-header.active::after {
-            content: '\2212'; /* Minus sign */
+            content: '\2212';
             transform: rotate(180deg);
         }
         
@@ -221,7 +309,7 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            transition: max-height 0.5s ease-out, padding 0.3s ease;
             background-color: var(--bg-card);
         }
         
@@ -238,7 +326,7 @@
         }
         
         h4 {
-            color: var(--text-muted);
+            color: var(--accent-teal);
             margin: 1.25rem 0 0.75rem;
             font-size: 1.1rem;
         }
@@ -256,6 +344,16 @@
         
         li {
             margin-bottom: 0.75rem;
+            position: relative;
+        }
+        
+        li::before {
+            content: '•';
+            color: var(--accent-teal);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
         }
         
         .highlight-box {
@@ -265,6 +363,12 @@
             margin: 1.5rem 0;
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .highlight-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
         }
         
         .highlight-box p {
@@ -285,6 +389,15 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             border: 1px solid rgba(107, 75, 138, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border-color: var(--accent-teal);
         }
         
         .resource-card h4 {
@@ -292,30 +405,81 @@
             margin-top: 0;
         }
         
-        /* Memorial section */
+        .resource-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            margin-top: auto;
+            padding-top: 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .resource-link:hover {
+            color: var(--purple-lighter);
+            text-decoration: underline;
+        }
+        
+        /* Memorial section with special styling */
         .memorial {
-            background: linear-gradient(rgba(26, 16, 37, 0.9), rgba(15, 7, 22, 0.95));
-            padding: 4rem 1rem;
+            background: linear-gradient(135deg, rgba(26, 16, 37, 0.9) 0%, rgba(15, 7, 22, 0.95) 100%);
+            padding: var(--section-spacing) 1rem;
             text-align: center;
             border-top: 1px solid var(--purple-primary);
             border-bottom: 1px solid var(--purple-primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memorial::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(216, 122, 149, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(179, 157, 219, 0.1) 0%, transparent 50%);
+            z-index: 0;
         }
         
         .memorial-content {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .memorial h2 {
-            color: var(--text-light);
+            color: var(--accent-pink);
             margin-bottom: 2rem;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .memorial h2::after {
+            content: '🖤';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
         }
         
         .memorial p {
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .memorial-flower {
+            font-size: 2rem;
+            margin: 2rem 0;
+            animation: float 6s ease-in-out infinite;
+            display: inline-block;
         }
         
         /* Footer */
@@ -350,7 +514,7 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background-color: var(--purple-primary);
+            background: linear-gradient(135deg, var(--purple-primary), var(--accent-teal));
             color: white;
             width: 50px;
             height: 50px;
@@ -369,8 +533,8 @@
         }
         
         .scroll-top:hover {
-            background-color: var(--purple-secondary);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
         }
         
         .scroll-top.show {
@@ -384,6 +548,7 @@
             padding: 3rem 1rem;
             background-color: var(--bg-card-light);
             border-top: 1px solid rgba(107, 75, 138, 0.3);
+            border-bottom: 1px solid rgba(107, 75, 138, 0.3);
         }
         
         .bottom-line p {
@@ -402,6 +567,33 @@
         .bottom-line-list li {
             margin-bottom: 0.5rem;
             color: var(--text-muted);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Scroll animations */
+        .hidden {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+        
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
         }
         
         /* Mobile Responsive */
@@ -432,7 +624,7 @@
                 display: block;
             }
             
-            .hero h1 {
+            .hero h2 {
                 font-size: 2rem;
             }
             
@@ -452,28 +644,46 @@
             .resource-list {
                 grid-template-columns: 1fr;
             }
+            
+            section {
+                padding: 3rem 1rem;
+            }
         }
         
-        /* Scroll animations */
-        .hidden {
-            opacity: 0;
-            filter: blur(5px);
-            transform: translateY(30px);
-            transition: all 0.6s;
-        }
-        
-        .show {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(0);
-        }
-        
-        /* Stagger animation for list items */
+        /* Reduced motion support */
         @media (prefers-reduced-motion: reduce) {
             .hidden {
                 transition: none;
                 transform: none;
                 filter: none;
+            }
+            
+            .collapsible:hover {
+                transform: none;
+            }
+            
+            .resource-card:hover {
+                transform: none;
+            }
+            
+            .highlight-box:hover {
+                transform: none;
+            }
+            
+            .scroll-top:hover {
+                transform: none;
+            }
+            
+            .memorial-flower {
+                animation: none;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { transform: translateY(-50%) scale(1); }
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
             }
         }
     </style>
@@ -483,7 +693,8 @@
     <header>
         <div class="nav-container">
             <div class="logo">
-                <a href="https://plurderapolis.org">plurderapolis.org</a>
+                <a href="https://plurderapolis.org">plurderapolis</a>
+                <div class="logo-subtitle">Rejection based violence</div>
             </div>
             <button class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
             <ul class="nav-menu">
@@ -503,6 +714,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>When "No" Isn't Respected: Recognize, Interrupt, and Prevent Rejection-Based Violence</h1>
+                <h2>Rejection Based Violence</h2>
                 <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set.</p>
             </div>
         </section>
@@ -659,18 +871,22 @@
                 <div class="resource-card">
                     <h4>Minnesota Domestic Violence Hotline</h4>
                     <p>1-866-223-1111</p>
+                    <a href="tel:1-866-223-1111" class="resource-link">Call Now</a>
                 </div>
                 <div class="resource-card">
                     <h4>W Minnesota (shelter, legal, counseling)</h4>
                     <p>wmn.org</p>
+                    <a href="https://wmn.org" class="resource-link" target="_blank">Visit Website</a>
                 </div>
                 <div class="resource-card">
                     <h4>National Domestic Violence Hotline</h4>
                     <p>1-800-799-7233 or thehotline.org</p>
+                    <a href="tel:1-800-799-7233" class="resource-link">Call Now</a>
                 </div>
                 <div class="resource-card">
                     <h4>Emergency</h4>
                     <p>If someone is in immediate danger, call 911. You do not have to wait until it gets worse.</p>
+                    <a href="tel:911" class="resource-link">Call 911</a>
                 </div>
             </div>
         </section>
@@ -678,13 +894,15 @@
         <!-- In Memory Section -->
         <section id="kayli" class="memorial hidden">
             <div class="memorial-content">
-                <h2>🖤 In Memory of Kayli Arseth</h2>
+                <h2>In Memory of Kayli Arseth</h2>
+                <div class="memorial-flower">🌹</div>
                 <p>Kayli Grace Arseth, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
                 <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician, offering patience and care to some of the most vulnerable. She had recently made the decision to pursue a degree in Developmental Psychology because she believed in making the world kinder, especially for those who needed it most.</p>
                 <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
                 <p>Kayli deserved peace. She deserved to be respected.<br>
                 She deserved to be safe.<br>
                 She deserved to be here.</p>
+                <div class="memorial-flower">🌹</div>
             </div>
         </section>
 
@@ -726,7 +944,7 @@
             navMenu.classList.toggle('active');
         });
 
-        // Collapsible sections with improved accessibility [citation:1]
+        // Collapsible sections with improved animations [citation:2]
         const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
         
         collapsibleHeaders.forEach(header => {
@@ -763,7 +981,7 @@
         const hiddenElements = document.querySelectorAll('.hidden');
         hiddenElements.forEach(el => observer.observe(el));
 
-        // Smooth scrolling for navigation links [citation:2]
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -785,7 +1003,7 @@
             });
         });
 
-        // Scroll to top button [citation:3]
+        // Scroll to top button
         const scrollTopBtn = document.querySelector('.scroll-top');
         
         window.addEventListener('scroll', () => {
@@ -797,7 +1015,7 @@
         });
         
         scrollTopBtn.addEventListener('click', () => {
-            // Use smooth scrolling with fallback [citation:7]
+            // Use smooth scrolling with fallback
             if ('scrollBehavior' in document.documentElement.style) {
                 window.scrollTo({
                     top: 0,
