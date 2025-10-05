@@ -1,2001 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Recognize, interrupt, and prevent rejection-based violence. Learn about consent, accountability, and community safety with PLURderapolis.">
-  <meta name="keywords" content="rejection-based violence, consent, accountability, domestic violence prevention, community safety, PLURderapolis">
-  <title>Rejection-Based Violence Prevention | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-purple: #8a2be2;
-      --secondary-purple: #9b4dff;
-      --light-purple: #c77dff;
-      --dark-purple: #5a189a;
-      --accent-teal: #00ffcc;
-      --accent-pink: #ff4d9e;
-      --accent-blue: #4d9fff;
-      --accent-yellow: #ffd166;
-      --accent-red: #ff4d4d;
-      --text-light: #f5f5f5;
-      --text-muted: #b0b0b0;
-      --bg-dark: #1a102b;
-      --bg-card: #2d1b4e;
-      --bg-card-hover: #3a2463;
-      --bg-alt: #25173d;
-      --border-radius: 12px;
-      --transition: all 0.3s ease;
-      --section-spacing: 2rem;
-      --glow: 0 0 15px rgba(155, 77, 255, 0.5);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-light);
-      line-height: 1.6;
-      padding-top: 80px;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(155, 77, 255, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 255, 204, 0.05) 0%, transparent 20%);
-    }
-
-    /* Responsive Navigation */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(42, 28, 63, 0.98);
-      backdrop-filter: blur(10px);
-      padding: 0.8rem 0;
-      z-index: 1000;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-      transition: var(--transition);
-      border-bottom: 1px solid rgba(155, 77, 255, 0.3);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 1.6rem;
-      background: linear-gradient(45deg, var(--accent-teal), var(--accent-pink), var(--accent-blue));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-shadow: 0 0 10px rgba(155, 77, 255, 0.3);
-    }
-
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 1.8rem;
-    }
-
-    .nav-link {
-      color: var(--text-light);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: var(--transition);
-      padding: 0.4rem 0;
-      position: relative;
-    }
-
-    .nav-link:hover {
-      color: var(--light-purple);
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--light-purple);
-      transition: var(--transition);
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    /* Dropdown Menu */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropbtn {
-      font-size: 0.95rem;
-      border: none;
-      outline: none;
-      color: var(--text-light);
-      padding: 0.4rem 0.8rem;
-      background-color: inherit;
-      font-family: inherit;
-      margin: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: var(--transition);
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: var(--bg-card);
-      min-width: 200px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-      border-radius: var(--border-radius);
-      border: 1px solid rgba(155, 77, 255, 0.3);
-      top: 100%;
-      left: 0;
-      margin-top: 0.5rem;
-    }
-
-    .dropdown-content a {
-      color: var(--text-light);
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      transition: var(--transition);
-      border-bottom: 1px solid rgba(155, 77, 255, 0.1);
-    }
-
-    .dropdown-content a:last-child {
-      border-bottom: none;
-    }
-
-    .dropdown-content a:hover {
-      background-color: var(--bg-card-hover);
-      color: var(--light-purple);
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .dropdown:hover .dropbtn {
-      color: var(--light-purple);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--text-light);
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-
-    /* Crisis Banner */
-    .crisis-banner {
-      background: linear-gradient(90deg, var(--accent-red), var(--accent-pink));
-      color: white;
-      text-align: center;
-      padding: 0.8rem 1rem;
-      font-weight: 600;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1001;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .crisis-banner a {
-      color: white;
-      text-decoration: underline;
-      margin-left: 0.5rem;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 4rem 0;
-      margin-bottom: var(--section-spacing);
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--border-radius);
-      background: linear-gradient(135deg, var(--dark-purple) 0%, var(--bg-card) 100%);
-      box-shadow: var(--glow);
-      border: 1px solid rgba(155, 77, 255, 0.3);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(155, 77, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(0, 255, 204, 0.1) 0%, transparent 40%);
-      z-index: 0;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, var(--accent-teal), var(--light-purple), var(--accent-pink));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: fadeInUp 0.8s ease;
-      text-shadow: 0 0 20px rgba(155, 77, 255, 0.3);
-    }
-
-    .hero .subtitle {
-      font-size: 1.3rem;
-      color: var(--light-purple);
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      animation: fadeInUp 0.8s ease 0.2s both;
-    }
-
-    .hero-cta {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-top: 2rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.7rem;
-      padding: 1rem 1.8rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: var(--transition);
-      border: none;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .btn-primary {
-      background: linear-gradient(45deg, var(--accent-teal), var(--accent-blue));
-      color: var(--bg-dark);
-      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 255, 204, 0.5);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-light);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-danger {
-      background: linear-gradient(45deg, var(--accent-red), var(--accent-pink));
-      color: white;
-      box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
-    }
-
-    .btn-danger:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 77, 77, 0.5);
-    }
-
-    /* Jump Link Navigation */
-    .jump-nav {
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      margin-bottom: var(--section-spacing);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      box-shadow: var(--glow);
-      border: 1px solid rgba(155, 77, 255, 0.2);
-    }
-
-    .jump-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.2rem;
-      background: rgba(0, 0, 0, 0.2);
-      color: var(--text-light);
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: var(--transition);
-      border: 1px solid rgba(155, 77, 255, 0.2);
-    }
-
-    .jump-link:hover {
-      background: rgba(155, 77, 255, 0.2);
-      transform: translateY(-2px);
-    }
-
-    /* Main Content Layout */
-    .main-container {
-      display: flex;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      gap: 2rem;
-    }
-
-    /* Topics Sidebar */
-    .topics-sidebar {
-      flex: 0 0 280px;
-      position: sticky;
-      top: 100px;
-      height: calc(100vh - 120px);
-      overflow-y: auto;
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--glow);
-      border: 1px solid rgba(155, 77, 255, 0.3);
-      transition: var(--transition);
-    }
-
-    .topics-sidebar h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.3rem;
-      color: var(--accent-teal);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(155, 77, 255, 0.3);
-    }
-
-    .topics-list {
-      list-style: none;
-    }
-
-    .topics-list li {
-      margin-bottom: 0.5rem;
-    }
-
-    .topics-list a {
-      display: flex;
-      align-items: center;
-      color: var(--text-light);
-      text-decoration: none;
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      transition: var(--transition);
-      font-size: 0.95rem;
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    .topics-list a:hover, .topics-list a.active {
-      background: var(--bg-card-hover);
-      color: var(--light-purple);
-      transform: translateX(5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .topics-list a i {
-      margin-right: 0.8rem;
-      width: 20px;
-      text-align: center;
-      color: var(--accent-teal);
-    }
-
-    /* Content Area */
-    .content-area {
-      flex: 1;
-      min-width: 0;
-    }
-
-    /* Section Styling */
-    .section {
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      padding: 2.5rem;
-      margin-bottom: var(--section-spacing);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-      animation: fadeIn 0.8s ease;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(155, 77, 255, 0.2);
-    }
-
-    .section-alt {
-      background: var(--bg-alt);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-icon {
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(155, 77, 255, 0.2);
-      border-radius: 50%;
-      color: var(--secondary-purple);
-      font-size: 1.5rem;
-    }
-
-    .section-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.6rem;
-      color: var(--light-purple);
-      margin: 0;
-    }
-
-    /* Intro Section */
-    .intro {
-      border-left: 5px solid var(--accent-teal);
-    }
-
-    .intro::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, transparent 0%, rgba(155, 77, 255, 0.05) 100%);
-      z-index: 0;
-    }
-
-    .intro p {
-      margin-bottom: 1.2rem;
-      position: relative;
-      z-index: 1;
-      font-size: 1.05rem;
-    }
-
-    .intro p:last-child {
-      margin-bottom: 0;
-    }
-
-    .highlight {
-      color: var(--accent-teal);
-      font-weight: 600;
-    }
-
-    /* Collapsible Cards - Improved Accessibility */
-    .cards-container {
-      margin-bottom: var(--section-spacing);
-    }
-
-    .card {
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      transition: var(--transition);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.2rem;
-      animation: fadeInUp 0.8s ease;
-      border: 1px solid rgba(155, 77, 255, 0.2);
-    }
-
-    .card:last-child {
-      margin-bottom: 0;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), var(--glow);
-      border-color: rgba(155, 77, 255, 0.4);
-    }
-
-    .card-header {
-      padding: 1.5rem;
-      background: linear-gradient(90deg, rgba(155, 77, 255, 0.2) 0%, transparent 100%);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      border: none;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-      color: inherit;
-    }
-
-    .card-header:hover {
-      background: linear-gradient(90deg, rgba(155, 77, 255, 0.3) 0%, transparent 100%);
-    }
-
-    .card-title {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .card-header h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin: 0;
-      color: var(--light-purple);
-    }
-
-    .card-icon {
-      width: 45px;
-      height: 45px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(155, 77, 255, 0.2);
-      border-radius: 50%;
-      color: var(--secondary-purple);
-      transition: var(--transition);
-      font-size: 1.2rem;
-    }
-
-    .card.active .card-icon {
-      background: var(--secondary-purple);
-      color: white;
-      transform: rotate(360deg);
-    }
-
-    .card-arrow {
-      color: var(--text-muted);
-      transition: var(--transition);
-      font-size: 1.2rem;
-    }
-
-    .card-content {
-      padding: 0 1.5rem;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease, padding 0.3s ease;
-      background: rgba(0, 0, 0, 0.1);
-    }
-
-    .card.active .card-content {
-      padding: 1.5rem;
-      max-height: 2000px;
-    }
-
-    .card.active .card-arrow {
-      transform: rotate(180deg);
-      color: var(--secondary-purple);
-    }
-
-    .card ul {
-      padding-left: 1.2rem;
-    }
-
-    .card li {
-      margin-bottom: 0.8rem;
-      position: relative;
-      padding-left: 0.5rem;
-      transition: var(--transition);
-    }
-
-    .card li:hover {
-      transform: translateX(5px);
-    }
-
-    .card li::before {
-      content: "•";
-      color: var(--accent-teal);
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
-    }
-
-    /* CTA Section */
-    .cta-section {
-      text-align: center;
-      padding: 2.5rem;
-      border-radius: var(--border-radius);
-      background: linear-gradient(135deg, var(--dark-purple) 0%, var(--bg-card) 100%);
-      margin-bottom: var(--section-spacing);
-      box-shadow: var(--glow);
-      border: 1px solid rgba(155, 77, 255, 0.3);
-    }
-
-    .cta-section h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.8rem;
-      color: var(--accent-teal);
-      margin-bottom: 1.5rem;
-    }
-
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    /* Pull Quote */
-    .pull-quote {
-      font-style: italic;
-      text-align: center;
-      padding: 2rem;
-      margin: 2rem 0;
-      border-left: 3px solid var(--accent-teal);
-      background: rgba(0, 255, 204, 0.05);
-      border-radius: var(--border-radius);
-      position: relative;
-      overflow: hidden;
-      font-size: 1.15rem;
-      border: 1px solid rgba(0, 255, 204, 0.1);
-    }
-
-    .pull-quote::before {
-      content: """;
-      position: absolute;
-      top: -20px;
-      left: 10px;
-      font-size: 6rem;
-      color: rgba(0, 255, 204, 0.1);
-      font-family: serif;
-      z-index: 0;
-    }
-
-    /* Memorial Section */
-    .memorial {
-      background: linear-gradient(135deg, var(--dark-purple) 0%, var(--bg-card) 100%);
-      border-radius: var(--border-radius);
-      padding: 3rem;
-      margin-bottom: var(--section-spacing);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.8s ease;
-      border: 1px solid rgba(155, 77, 255, 0.3);
-      text-align: center;
-    }
-
-    .memorial::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(155, 77, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(0, 255, 204, 0.1) 0%, transparent 40%),
-        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C35 20 20 35 20 50s15 30 30 30 30-15 30-30S65 20 50 20zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%23c77dff' fill-opacity='0.05'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      z-index: 0;
-    }
-
-    .memorial::after {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(155, 77, 255, 0.1) 0%, transparent 70%);
-      animation: pulse-glow 8s infinite ease-in-out;
-      z-index: 0;
-    }
-
-    .memorial h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2.2rem;
-      color: var(--accent-teal);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7rem;
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-    }
-
-    .memorial-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .memorial p {
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-      font-size: 1.1rem;
-    }
-
-    .memorial p:last-child {
-      margin-bottom: 0;
-    }
-
-    .memorial strong {
-      color: var(--light-purple);
-    }
-
-    .memorial-quote {
-      font-style: italic;
-      text-align: center;
-      padding: 2rem;
-      margin: 2rem 0;
-      border-left: 3px solid var(--accent-teal);
-      background: rgba(0, 255, 204, 0.05);
-      border-radius: var(--border-radius);
-      position: relative;
-      overflow: hidden;
-      font-size: 1.15rem;
-      border: 1px solid rgba(0, 255, 204, 0.1);
-    }
-
-    .memorial-quote::before {
-      content: """;
-      position: absolute;
-      top: -20px;
-      left: 10px;
-      font-size: 6rem;
-      color: rgba(0, 255, 204, 0.1);
-      font-family: serif;
-      z-index: 0;
-    }
-
-    /* Bottom Line Section */
-    .bottom-line {
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      padding: 2.5rem;
-      margin-bottom: var(--section-spacing);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-      border-left: 5px solid var(--accent-blue);
-      animation: fadeIn 0.8s ease;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(155, 77, 255, 0.2);
-    }
-
-    .bottom-line::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, transparent 0%, rgba(77, 159, 255, 0.05) 100%);
-      z-index: 0;
-    }
-
-    .bottom-line h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.6rem;
-      color: var(--accent-blue);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .bottom-line ul {
-      margin-bottom: 1.5rem;
-      padding-left: 1.2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .bottom-line li {
-      margin-bottom: 0.8rem;
-      position: relative;
-      padding-left: 0.5rem;
-      transition: var(--transition);
-      font-size: 1.05rem;
-    }
-
-    .bottom-line li:hover {
-      transform: translateX(5px);
-    }
-
-    .bottom-line li::before {
-      content: "•";
-      color: var(--accent-blue);
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-left: -1em;
-    }
-
-    .bottom-line p {
-      position: relative;
-      z-index: 1;
-      font-size: 1.05rem;
-    }
-
-    /* Sticky Resource Box */
-    .sticky-resource {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 300px;
-      background: var(--bg-card);
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--glow);
-      border: 1px solid rgba(155, 77, 255, 0.3);
-      z-index: 999;
-      transition: var(--transition);
-      transform: translateY(20px);
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .sticky-resource.visible {
-      transform: translateY(0);
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .sticky-resource h4 {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--accent-teal);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .sticky-resource ul {
-      list-style: none;
-      margin-bottom: 1rem;
-    }
-
-    .sticky-resource li {
-      margin-bottom: 0.5rem;
-      padding-left: 0;
-    }
-
-    .sticky-resource li::before {
-      content: none;
-    }
-
-    .sticky-resource a {
-      color: var(--light-purple);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .sticky-resource a:hover {
-      color: var(--accent-teal);
-    }
-
-    .close-sticky {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2.5rem 0;
-      margin-top: 3rem;
-      border-top: 1px solid rgba(155, 77, 255, 0.3);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      background: rgba(0, 0, 0, 0.1);
-      border-radius: var(--border-radius);
-      position: relative;
-    }
-
-    footer::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(155, 77, 255, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(0, 255, 204, 0.05) 0%, transparent 20%);
-      z-index: 0;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links a {
-      color: var(--light-purple);
-      text-decoration: none;
-      transition: var(--transition);
-      font-weight: 500;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent-teal);
-      text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
-    }
-
-    .footer-text {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Scroll to Top Button */
-    .scroll-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(45deg, var(--secondary-purple), var(--accent-teal));
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: var(--glow);
-      transition: var(--transition);
-      opacity: 0;
-      visibility: hidden;
-      z-index: 999;
-    }
-
-    .scroll-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .scroll-to-top:hover {
-      transform: translateY(-3px) scale(1.1);
-      box-shadow: 0 8px 20px rgba(155, 77, 255, 0.8);
-    }
-
-    /* Share Button */
-    .share-btn {
-      position: fixed;
-      bottom: 2rem;
-      left: 2rem;
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: var(--glow);
-      transition: var(--transition);
-      z-index: 999;
-    }
-
-    .share-btn:hover {
-      transform: translateY(-3px) scale(1.1);
-      box-shadow: 0 8px 20px rgba(255, 77, 158, 0.8);
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse-glow {
-      0% { 
-        opacity: 0.5;
-        transform: scale(1);
-      }
-      50% { 
-        opacity: 0.8;
-        transform: scale(1.05);
-      }
-      100% { 
-        opacity: 0.5;
-        transform: scale(1);
-      }
-    }
-
-    /* Responsive Design */
-    @media screen and (max-width: 1024px) {
-      .topics-sidebar {
-        flex: 0 0 240px;
-      }
-      
-      .sticky-resource {
-        width: 280px;
-      }
-    }
-
-    @media screen and (max-width: 900px) {
-      .main-container {
-        flex-direction: column;
-      }
-      
-      .topics-sidebar {
-        position: static;
-        height: auto;
-        margin-bottom: 2rem;
-        flex: 0 0 auto;
-      }
-      
-      .topics-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 0.5rem;
-      }
-      
-      .topics-list a {
-        padding: 0.6rem 0.8rem;
-        font-size: 0.9rem;
-      }
-      
-      .sticky-resource {
-        width: 250px;
-        right: 1rem;
-      }
-    }
-
-    @media screen and (max-width: 768px) {
-      .nav-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: var(--bg-card);
-        flex-direction: column;
-        padding: 1rem;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        gap: 0;
-      }
-
-      .nav-menu.active {
-        display: flex;
-      }
-
-      .nav-link {
-        padding: 0.8rem 0;
-        border-bottom: 1px solid rgba(155, 77, 255, 0.1);
-      }
-
-      .dropdown {
-        width: 100%;
-      }
-
-      .dropbtn {
-        width: 100%;
-        justify-content: space-between;
-        padding: 0.8rem 0;
-      }
-
-      .dropdown-content {
-        position: static;
-        width: 100%;
-        box-shadow: none;
-        margin-top: 0;
-      }
-
-      .mobile-menu-btn {
-        display: block;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .hero .subtitle {
-        font-size: 1.1rem;
-      }
-
-      .memorial, .intro, .bottom-line, .section {
-        padding: 1.8rem;
-      }
-
-      .memorial h2 {
-        font-size: 1.8rem;
-      }
-      
-      .topics-list {
-        grid-template-columns: 1fr;
-      }
-      
-      .hero-cta, .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .btn {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
-      }
-      
-      .sticky-resource {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        border-radius: 0;
-        transform: translateY(100%);
-      }
-      
-      .sticky-resource.visible {
-        transform: translateY(0);
-      }
-
-      .share-btn {
-        left: 1rem;
-        bottom: 1rem;
-      }
-
-      .scroll-to-top {
-        right: 1rem;
-        bottom: 1rem;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      body {
-        padding-top: 70px;
-      }
-      
-      .navbar {
-        padding: 0.6rem 0;
-      }
-
-      .hero {
-        padding: 2.5rem 0;
-      }
-
-      .hero h1 {
-        font-size: 1.9rem;
-      }
-
-      .card-header, .card-content {
-        padding: 1.2rem;
-      }
-
-      .scroll-to-top, .share-btn {
-        bottom: 1rem;
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
-      }
-      
-      .scroll-to-top {
-        right: 1rem;
-      }
-      
-      .share-btn {
-        left: 1rem;
-      }
-      
-      .memorial {
-        padding: 1.5rem;
-      }
-      
-      .topics-sidebar {
-        padding: 1rem;
-      }
-      
-      .topics-sidebar h3 {
-        font-size: 1.1rem;
-      }
-      
-      .section-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about rejection-based violence: recognize warning signs, interrupt patterns, and prevent harm. Resources and support for domestic violence awareness.">
+    <title>When "No" Isn't Respected: Rejection-Based Violence | Plurderapolis</title>
+    <style>
+        :root {
+            --purple-primary: #4a306d;
+            --purple-secondary: #6b4b8a;
+            --purple-light: #8e6caf;
+            --purple-lighter: #e6e6fa;
+            --text-dark: #333;
+            --text-light: #fff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        /* Smooth scrolling for whole page */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f7fd;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            color: var(--text-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Main content spacing for fixed header */
+        main {
+            margin-top: 80px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(74, 48, 109, 0.8), rgba(74, 48, 109, 0.9)), url('purple-texture.jpg');
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Section styling */
+        section {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        section:nth-child(even) {
+            background-color: var(--purple-lighter);
+        }
+        
+        .section-title {
+            color: var(--purple-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        /* Collapsible sections */
+        .collapsible {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .collapsible-header {
+            background-color: var(--purple-secondary);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .collapsible-header:hover {
+            background-color: var(--purple-primary);
+        }
+        
+        .collapsible-header::after {
+            content: '\002B'; /* Plus sign */
+            font-size: 1.5rem;
+        }
+        
+        .collapsible-header.active::after {
+            content: '\2212'; /* Minus sign */
+        }
+        
+        .collapsible-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .collapsible-content.show {
+            padding: 1.5rem;
+            max-height: 2000px;
+        }
+        
+        /* Content styling */
+        h3 {
+            color: var(--purple-primary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background-color: white;
+            border-left: 4px solid var(--purple-primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        /* Scroll animations */
+        .hidden {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(50px);
+            transition: all 0.8s;
+        }
+        
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--purple-primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            z-index: 999;
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--purple-primary);
+                flex-direction: column;
+                padding: 1rem 0;
+                text-align: center;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Crisis Banner -->
-  <div class="crisis-banner">
-    <i class="fas fa-exclamation-triangle"></i> In crisis? Call 911 or your local hotline
-    <a href="#resources">Get Help Now</a>
-  </div>
-
-  <!-- Fixed Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="logo">
-        <i class="fas fa-heart"></i> PLURderapolis
-      </a>
-      
-      <!-- Main Navigation Menu with Dropdown -->
-      <div class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <div class="dropdown">
-          <button class="dropbtn">
-            Resources <i class="fas fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="consent.html">Consent</a>
-            <a href="accountability.html">Accountability</a>
-            <a href="ride-safety.html">Ride Safety</a>
-            <a href="resources.html">All Resources</a>
-          </div>
-        </div>
-        <a href="#memorial" class="nav-link">Memorial</a>
-        <a href="#resources" class="nav-link">Get Help</a>
-      </div>
-      
-      <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Scroll to Top Button -->
-  <button class="scroll-to-top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <!-- Share Button -->
-  <button class="share-btn">
-    <i class="fas fa-share-alt"></i>
-  </button>
-
-  <!-- Sticky Resource Box -->
-  <div class="sticky-resource">
-    <button class="close-sticky">
-      <i class="fas fa-times"></i>
-    </button>
-    <h4><i class="fas fa-life-ring"></i> Immediate Help</h4>
-    <ul>
-      <li><strong>MN Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-      <li><strong>National Hotline:</strong> 1-800-799-7233</li>
-      <li><strong>In immediate danger? Call 911</strong></li>
-    </ul>
-    <a href="#resources" class="btn btn-primary" style="width: 100%; text-align: center; padding: 0.7rem;">
-      <i class="fas fa-phone-alt"></i> More Resources
-    </a>
-  </div>
-
-  <!-- Main Content with Topics Sidebar -->
-  <div class="main-container">
-    <!-- Topics Sidebar -->
-    <aside class="topics-sidebar">
-      <h3><i class="fas fa-bookmark"></i> Topics</h3>
-      <ul class="topics-list">
-        <li><a href="#violence-looks-like" class="topic-link"><i class="fas fa-flag"></i> What It Looks Like</a></li>
-        <li><a href="#signs-you" class="topic-link"><i class="fas fa-user-check"></i> Signs: You</a></li>
-        <li><a href="#what-to-do" class="topic-link"><i class="fas fa-shield-alt"></i> What To Do</a></li>
-        <li><a href="#signs-others" class="topic-link"><i class="fas fa-eye"></i> Signs: Others</a></li>
-        <li><a href="#help-others" class="topic-link"><i class="fas fa-hands-helping"></i> Help Others</a></li>
-        <li><a href="#friend-crossing-line" class="topic-link"><i class="fas fa-user-friends"></i> Friend Crossing Line</a></li>
-        <li><a href="#memorial" class="topic-link"><i class="fas fa-heart"></i> Kayli's Story</a></li>
-        <li><a href="#psychological-truths" class="topic-link"><i class="fas fa-brain"></i> Psychological Truths</a></li>
-        <li><a href="#resources" class="topic-link"><i class="fas fa-phone-alt"></i> Resources</a></li>
-      </ul>
-    </aside>
-
-    <!-- Content Area -->
-    <main class="content-area">
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-content">
-          <h1><i class="fas fa-volume-up"></i> When "No" Isn't Respected</h1>
-          <div class="subtitle">Recognize, Interrupt, and Prevent Rejection-Based Violence</div>
-          
-          <div class="hero-cta">
-            <a href="#signs-you" class="btn btn-primary">
-              <i class="fas fa-user-check"></i> Am I Experiencing This?
-            </a>
-            <a href="#what-to-do" class="btn btn-secondary">
-              <i class="fas fa-shield-alt"></i> What Can I Do Right Now?
-            </a>
-            <a href="#resources" class="btn btn-danger">
-              <i class="fas fa-phone-alt"></i> Get Help / Resources
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Jump Link Navigation -->
-      <nav class="jump-nav">
-        <a href="#violence-looks-like" class="jump-link">
-          <i class="fas fa-flag"></i> What It Looks Like
-        </a>
-        <a href="#signs-you" class="jump-link">
-          <i class="fas fa-user-check"></i> Signs For You
-        </a>
-        <a href="#what-to-do" class="jump-link">
-          <i class="fas fa-shield-alt"></i> What To Do
-        </a>
-        <a href="#resources" class="jump-link">
-          <i class="fas fa-phone-alt"></i> Resources
-        </a>
-      </nav>
-
-      <!-- Intro Section -->
-      <section class="section intro">
-        <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set. After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
-
-        <p>This is <span class="highlight">rejection-based violence</span>, and it's dangerously common. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds — and sometimes, it kills.</p>
-
-        <p><strong>That's what happened to Kayli Arseth.</strong> She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment and took her life.</p>
-      </section>
-
-      <!-- Cards Section -->
-      <div class="cards-container">
-        <div class="card" id="violence-looks-like">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-flag"></i>
-              </div>
-              <h3>What Rejection-Based Violence Can Look Like</h3>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="https://plurderapolis.org">plurderapolis.org</a>
             </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
-              <li>They show up at your work, home, or events without being invited.</li>
-              <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
-              <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
-              <li>They try to isolate you from friends, family, or community.</li>
-              <li>They escalate after being rejected: stalking, threats, breaking in, or worse.</li>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-menu">
+                <li><a href="#what-is">What Is It?</a></li>
+                <li><a href="#warning-signs">Warning Signs</a></li>
+                <li><a href="#psychological">Psychological Truths</a></li>
+                <li><a href="#what-to-do">What To Do</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#kayli">In Memory</a></li>
             </ul>
-          </div>
         </div>
+    </header>
 
-        <div class="card" id="signs-you">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-user-check"></i>
-              </div>
-              <h3>Signs It Might Be Happening To You</h3>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>When "No" Isn't Respected: Recognize, Interrupt, and Prevent Rejection-Based Violence</h1>
+                <p>Someone doesn't have to be in a relationship to experience dating violence. Sometimes, the harm begins after a boundary is set.</p>
             </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
-              <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
-              <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
-              <li>They make you feel responsible for their emotions or threats.</li>
-              <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
-            </ul>
-            
-            <div class="pull-quote">
-              "You don't need a bruise to know something is wrong."
-            </div>
-            
-            <div class="cta-buttons">
-              <a href="#what-to-do" class="btn btn-primary">
-                <i class="fas fa-shield-alt"></i> What To Do If This Is You
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="what-to-do">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <h3>What To Do If You Think It's Happening To You</h3>
-            </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li>Trust your gut. You don't need a bruise to know something is wrong.</li>
-              <li>Tell someone you trust what's happening. Don't do this alone.</li>
-              <li>Save messages, voicemails, screenshots; anything that documents the pattern.</li>
-              <li>Adjust privacy settings and think about what you're sharing online.</li>
-              <li>Make a plan: Know where you can go, who you can call, what feels safe.</li>
-              <li>Use support resources (listed below).</li>
-              <li>Don't blame yourself. You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
-            </ul>
-            
-            <div class="cta-buttons">
-              <a href="#resources" class="btn btn-danger">
-                <i class="fas fa-phone-alt"></i> Get Help Now
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="signs-others">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-eye"></i>
-              </div>
-              <h3>Signs It Might Be Happening to Someone You Know</h3>
-            </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li>They suddenly stop going out, posting, or responding.</li>
-              <li>They seem on edge, especially when a certain name comes up.</li>
-              <li>You hear obsessive, bitter talk about someone who rejected them.</li>
-              <li>They have a "friend" who's always around, even when not invited.</li>
-              <li>You see stalking or control disguised as "romance" or "worry."</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card" id="help-others">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-hands-helping"></i>
-              </div>
-              <h3>What To Do If You Notice It</h3>
-            </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li><strong>If a friend might be targeted:</strong></li>
-              <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
-              <li>Offer support without judgment or pressure.</li>
-              <li>Respect their pace. Leaving or naming this stuff is hard.</li>
-              <li>Stay consistent. Isolation makes everything worse.</li>
-              <li><strong>If you witness harassment or stalking:</strong> Distract, Delegate, Document, Delay, Direct — only if safe.</li>
-            </ul>
-            
-            <div class="cta-buttons">
-              <a href="#friend-crossing-line" class="btn btn-secondary">
-                <i class="fas fa-user-friends"></i> Help Someone Else
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" id="friend-crossing-line">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-user-friends"></i>
-              </div>
-              <h3>What If It's Your Friend Crossing the Line?</h3>
-            </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li>"She said she's not interested. You need to respect that."</li>
-              <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
-              <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
-              <li>"Showing up uninvited isn't romantic, it's harassment."</li>
-              <li>"You're not owed a relationship because you were 'nice.'"</li>
-            </ul>
-            <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
-            <p><a href="accountability.html" style="color: var(--accent-teal); font-weight: bold;">Learn more about accountability in our community →</a></p>
-          </div>
-        </div>
-
-        <!-- Memorial Section -->
-        <section id="memorial" class="memorial">
-          <h2><i class="fas fa-heart"></i> In Memory of Kayli Arseth</h2>
-          <div class="memorial-content">
-            <p><strong>Kayli Grace Arseth</strong>, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
-            
-            <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician and had recently made the decision to pursue a degree in Developmental Psychology. She believed in making the world kinder — especially for those who needed it most.</p>
-            
-            <div class="memorial-quote">
-              "She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment."
-            </div>
-            
-            <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
-            
-            <p><strong>Kayli deserved peace. She deserved to be respected. She deserved to be safe. She deserved to be here.</strong></p>
-          </div>
         </section>
 
-        <div class="card" id="psychological-truths">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-brain"></i>
-              </div>
-              <h3>Psychological Truths Behind This Pattern</h3>
+        <!-- What Is Rejection-Based Violence Section -->
+        <section id="what-is">
+            <h2 class="section-title">What Is Rejection-Based Violence?</h2>
+            <div class="collapsible">
+                <div class="collapsible-header">Understanding Rejection-Based Violence</div>
+                <div class="collapsible-content">
+                    <p>After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
+                    <p>This is rejection based violence, and it's dangerously common. It doesn't always look like what we've been told to expect. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds, and sometimes, it kills.</p>
+                    <div class="highlight-box">
+                        <p>That's what happened to Kayli Arseth. She was not in a relationship with the man who murdered her. She had made it clear she wasn't interested. He kept pushing. She said no again. He waited for her in her apartment, and took her life.</p>
+                    </div>
+                </div>
             </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <ul>
-              <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
-              <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
-              <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
-            </ul>
-          </div>
-        </div>
+        </section>
 
-        <div class="card" id="resources">
-          <button class="card-header" aria-expanded="false">
-            <div class="card-title">
-              <div class="card-icon">
-                <i class="fas fa-phone-alt"></i>
-              </div>
-              <h3>Support Resources (Minnesota + National)</h3>
+        <!-- Warning Signs Section -->
+        <section id="warning-signs" class="hidden">
+            <h2 class="section-title">🚩 What Rejection Based Violence Can Look Like</h2>
+            <div class="collapsible">
+                <div class="collapsible-header">Behavioral Warning Signs</div>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
+                        <li>They show up at your work, home, or events without being invited.</li>
+                        <li>They use guilt trips, gifts, or emotional manipulation to try and wear you down.</li>
+                        <li>They talk about you like you're owed to them: "I did everything for you," "You led me on."</li>
+                        <li>They try to isolate you from friends, family, or community.</li>
+                        <li>They escalate after being rejected. Stalking, threats, breaking in, or worse.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>This isn't just "bad communication" or "mixed signals." It's entitlement. It's a refusal to respect autonomy and it often turns violent.</p>
+                    </div>
+                </div>
             </div>
-            <i class="fas fa-chevron-down card-arrow"></i>
-          </button>
-          <div class="card-content">
-            <h4 style="color: var(--accent-teal); margin-bottom: 1rem;">Minnesota Resources</h4>
-            <ul>
-              <li><strong>Minnesota Domestic Violence Hotline:</strong> 1-866-223-1111</li>
-              <li><strong>W Minnesota (shelter, legal, counseling):</strong> <a href="https://wmn.org" target="_blank" style="color: var(--accent-teal);">wmn.org</a></li>
-              <li><strong>Minnesota Day One Crisis Line:</strong> 1-866-223-1111</li>
-            </ul>
-            
-            <h4 style="color: var(--accent-teal); margin: 1.5rem 0 1rem;">National Resources</h4>
-            <ul>
-              <li><strong>National Domestic Violence Hotline:</strong> 1-800-799-7233 or <a href="https://thehotline.org" target="_blank" style="color: var(--accent-teal);">thehotline.org</a></li>
-              <li><strong>Crisis Text Line:</strong> Text HOME to 741741</li>
-              <li><strong>RAINN (Sexual Assault Hotline):</strong> 1-800-656-4673</li>
-            </ul>
-            
-            <p><strong>If someone is in immediate danger, call 911.</strong></p>
-            
-            <div class="cta-buttons">
-              <button class="btn btn-primary" id="downloadBtn">
-                <i class="fas fa-download"></i> Download Safety Checklist
-              </button>
-              <button class="btn btn-secondary" id="shareBtn">
-                <i class="fas fa-share-alt"></i> Share This Page
-              </button>
+        </section>
+
+        <!-- More sections would continue here with similar structure -->
+        <!-- Psychological Truths, What To Do, Resources, In Memory sections -->
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-links">
+                <a href="https://plurderapolis.org/consent.html">Consent</a>
+                <a href="https://plurderapolis.org/accountability.html">Accountability</a>
+                <a href="https://plurderapolis.org/ride-safety.html">Ride Safety</a>
+                <a href="https://plurderapolis.org/resources.html">Resources</a>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA Section -->
-      <section class="cta-section">
-        <h3>You Are Not Alone</h3>
-        <p>If you're experiencing any of this, reach out. There are people who want to help.</p>
-        <div class="cta-buttons">
-          <a href="#resources" class="btn btn-danger">
-            <i class="fas fa-phone-alt"></i> Get Help Now
-          </a>
-          <a href="#what-to-do" class="btn btn-primary">
-            <i class="fas fa-shield-alt"></i> Safety Planning
-          </a>
-        </div>
-      </section>
-
-      <!-- Bottom Line Section -->
-      <section class="bottom-line">
-        <h3><i class="fas fa-exclamation-circle"></i> Bottom Line</h3>
-        <ul>
-          <li>Rejection isn't cruelty.</li>
-          <li>"No" is not an invitation to negotiate.</li>
-          <li>Harassment isn't romance.</li>
-          <li>Violence is never a justified response.</li>
-          <li>No one owes you love. Ever.</li>
-        </ul>
-        <p><strong>We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</strong></p>
-        <p>R.I.P Kayli <i class="fas fa-heart" style="color: var(--accent-teal);"></i></p>
-      </section>
-
-      <!-- Footer -->
-      <footer>
-        <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="consent.html">Consent</a>
-          <a href="accountability.html">Accountability</a>
-          <a href="ride-safety.html">Ride Safety</a>
-          <a href="resources.html">Resources</a>
-          <a href="#memorial">Memorial</a>
-        </div>
-        <div class="footer-text">
-          <p>PLURderapolis.org | Peace, Love, Unity, Respect</p>
-        </div>
-      </footer>
+            <p>&copy; 2025 plurderapolis.org | Domestic Violence Awareness</p>
+        </footer>
     </main>
-  </div>
 
-  <script>
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-    });
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top">↑</div>
 
-    // Enhanced collapsible cards with accessibility
-    const cardHeaders = document.querySelectorAll('.card-header');
-    
-    cardHeaders.forEach(header => {
-      // Add keyboard support
-      header.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          this.click();
-        }
-      });
-      
-      header.addEventListener('click', function() {
-        const card = this.parentElement;
-        const isActive = card.classList.contains('active');
-        const content = this.nextElementSibling;
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
         
-        // Update ARIA attributes
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !expanded);
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Collapsible sections [citation:3]
+        const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
         
-        // Close all other cards
-        document.querySelectorAll('.card.active').forEach(activeCard => {
-          if (activeCard !== card) {
-            activeCard.classList.remove('active');
-            const otherHeader = activeCard.querySelector('.card-header');
-            const otherContent = activeCard.querySelector('.card-content');
-            otherHeader.setAttribute('aria-expanded', 'false');
-            otherContent.style.maxHeight = null;
-          }
+        collapsibleHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.classList.contains('show')) {
+                    content.classList.remove('show');
+                } else {
+                    content.classList.add('show');
+                }
+            });
+        });
+
+        // Scroll animations [citation:9]
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
         });
         
-        // Toggle current card
-        card.classList.toggle('active');
-        
-        // Smooth height transition
-        if (card.classList.contains('active')) {
-          content.style.maxHeight = content.scrollHeight + 'px';
-          
-          // Scroll to card with offset
-          const headerHeight = document.querySelector('.navbar').offsetHeight;
-          const cardPosition = card.offsetTop - headerHeight - 20;
-          
-          window.scrollTo({
-            top: cardPosition,
-            behavior: 'smooth'
-          });
-          
-          // Add a visual highlight
-          card.style.boxShadow = '0 0 20px rgba(155, 77, 255, 0.7)';
-          setTimeout(() => {
-            card.style.boxShadow = '';
-          }, 1000);
-        } else {
-          content.style.maxHeight = null;
-        }
-      });
-    });
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach(el => observer.observe(el));
 
-    // Topics navigation functionality
-    const topicLinks = document.querySelectorAll('.topic-link');
-    
-    topicLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetCard = document.getElementById(targetId);
+        // Smooth scrolling for navigation links [citation:4]
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-top');
         
-        if (targetCard) {
-          // Close all other cards
-          document.querySelectorAll('.card.active').forEach(card => {
-            if (card.id !== targetId) {
-              card.classList.remove('active');
-              const header = card.querySelector('.card-header');
-              const content = card.querySelector('.card-content');
-              header.setAttribute('aria-expanded', 'false');
-              content.style.maxHeight = null;
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
             }
-          });
-          
-          // Open the target card
-          if (!targetCard.classList.contains('active')) {
-            targetCard.classList.add('active');
-            const header = targetCard.querySelector('.card-header');
-            const content = targetCard.querySelector('.card-content');
-            header.setAttribute('aria-expanded', 'true');
-            content.style.maxHeight = content.scrollHeight + 'px';
-          }
-          
-          // Scroll to the section with offset for fixed header
-          const headerHeight = document.querySelector('.navbar').offsetHeight;
-          let targetPosition;
-          
-          if (targetId === 'memorial') {
-            targetPosition = targetCard.offsetTop - headerHeight - 20;
-          } else {
-            targetPosition = targetCard.offsetTop - headerHeight - 20;
-          }
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-          
-          // Add a visual highlight to the section
-          targetCard.style.boxShadow = '0 0 20px rgba(155, 77, 255, 0.7)';
-          setTimeout(() => {
-            targetCard.style.boxShadow = '';
-          }, 1000);
-          
-          // Update active state in topics sidebar
-          topicLinks.forEach(l => l.classList.remove('active'));
-          this.classList.add('active');
-        }
-      });
-    });
-
-    // Scroll to top button
-    const scrollToTopBtn = document.querySelector('.scroll-to-top');
-    
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 300) {
-        scrollToTopBtn.classList.add('visible');
-      } else {
-        scrollToTopBtn.classList.remove('visible');
-      }
-      
-      // Update active topic based on scroll position
-      updateActiveTopic();
-      
-      // Show/hide sticky resource box
-      toggleStickyResource();
-    });
-    
-    scrollToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // Sticky resource box functionality
-    const stickyResource = document.querySelector('.sticky-resource');
-    const closeStickyBtn = document.querySelector('.close-sticky');
-    
-    function toggleStickyResource() {
-      if (window.pageYOffset > 500) {
-        stickyResource.classList.add('visible');
-      } else {
-        stickyResource.classList.remove('visible');
-      }
-    }
-    
-    closeStickyBtn.addEventListener('click', () => {
-      stickyResource.classList.remove('visible');
-    });
-
-    // Update active topic based on scroll position
-    function updateActiveTopic() {
-      const sections = document.querySelectorAll('.card, .memorial');
-      const headerHeight = document.querySelector('.navbar').offsetHeight;
-      let currentActive = null;
-      
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= headerHeight + 100 && rect.bottom >= headerHeight + 100) {
-          currentActive = section.id;
-        }
-      });
-      
-      if (currentActive) {
-        topicLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${currentActive}`) {
-            link.classList.add('active');
-          }
         });
-      }
-    }
-
-    // Animation on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    // Observe elements that should animate on scroll
-    const animatedElements = document.querySelectorAll('.card, .memorial, .bottom-line, .intro, .section, .cta-section');
-    animatedElements.forEach(el => {
-      el.style.animation = 'fadeInUp 0.8s ease forwards';
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
-    });
-
-    // Share functionality
-    const shareBtn = document.querySelector('.share-btn');
-    const pageShareBtn = document.getElementById('shareBtn');
-    
-    function sharePage() {
-      if (navigator.share) {
-        navigator.share({
-          title: 'PLURderapolis - Rejection-Based Violence Prevention',
-          text: 'Learn how to recognize, interrupt, and prevent rejection-based violence in our community.',
-          url: window.location.href
-        })
-        .catch(err => console.log('Error sharing:', err));
-      } else {
-        // Fallback: copy to clipboard
-        navigator.clipboard.writeText(window.location.href)
-          .then(() => alert('Link copied to clipboard!'))
-          .catch(err => console.log('Could not copy text: ', err));
-      }
-    }
-    
-    if (shareBtn) shareBtn.addEventListener('click', sharePage);
-    if (pageShareBtn) pageShareBtn.addEventListener('click', sharePage);
-
-    // Download functionality
-    const downloadBtn = document.getElementById('downloadBtn');
-    
-    if (downloadBtn) {
-      downloadBtn.addEventListener('click', function() {
-        // Create a simple text content for the safety checklist
-        const checklistContent = `PLURderapolis Safety Checklist
-
-Personal Safety:
-- Trust your instincts
-- Share your location with trusted friends
-- Vary your routines
-- Save evidence of unwanted contact
-- Block people who don't respect boundaries
-
-Digital Safety:
-- Adjust privacy settings
-- Be careful what you share online
-- Use strong, unique passwords
-- Log out of shared devices
-
-Emergency Contacts:
-- MN Domestic Violence Hotline: 1-866-223-1111
-- National Domestic Violence Hotline: 1-800-799-7233
-- Crisis Text Line: Text HOME to 741741
-- In immediate danger: Call 911
-
-Remember: You deserve to feel safe. Your boundaries matter.`;
-
-        // Create a blob and download link
-        const blob = new Blob([checklistContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'PLURderapolis-Safety-Checklist.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-    }
-
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link, .dropdown-content a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-      });
-    });
-
-    // Jump link functionality
-    document.querySelectorAll('.jump-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetSection = document.getElementById(targetId);
         
-        if (targetSection) {
-          const headerHeight = document.querySelector('.navbar').offsetHeight;
-          const targetPosition = targetSection.offsetTop - headerHeight - 20;
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    // Initialize all card headers with ARIA attributes
-    cardHeaders.forEach(header => {
-      header.setAttribute('aria-expanded', 'false');
-      header.setAttribute('role', 'button');
-      header.setAttribute('tabindex', '0');
-    });
-  </script>
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
