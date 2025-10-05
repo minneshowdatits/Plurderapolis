@@ -175,6 +175,63 @@
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem; transition: all 0.3s ease;}
   .legend span:hover {transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
   
+  /* Matrix Key Section */
+  .matrix-key {
+    background: var(--card-gradient);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .matrix-key h3 {
+    color: var(--accent-2);
+    margin-top: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .key-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .key-item {
+    background: #1f001f;
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  
+  .key-item.low { border-left-color: var(--low-risk); }
+  .key-item.caution { border-left-color: var(--caution); }
+  .key-item.strong { border-left-color: var(--accent); }
+  .key-item.danger { border-left-color: var(--danger); }
+  
+  .key-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .key-icon {
+    font-size: 1.5rem;
+  }
+  
+  .key-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  
   /* Share Results */
   .share-results {
     display: flex;
@@ -303,6 +360,9 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+    }
+    .key-items {
+      grid-template-columns: 1fr;
     }
   }
   
@@ -451,6 +511,68 @@
       opacity: 0;
     }
   }
+  
+  /* Matrix Detail Modal */
+  .matrix-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .matrix-modal-content {
+    background: var(--card-gradient);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    animation: slideIn 0.3s ease-out;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .matrix-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .matrix-modal h3 {
+    margin: 0;
+    color: var(--accent-2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .matrix-modal-close {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .matrix-modal-close:hover {
+    background: var(--accent-2);
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
@@ -465,6 +587,7 @@
     <div class="dropdown-content" id="dropdownContent">
       <div class="section-title">Page Sections</div>
       <a href="#tool"><i class="fas fa-search-plus"></i> Interaction Checker</a>
+      <a href="#matrix-key"><i class="fas fa-key"></i> Matrix Key</a>
       <a href="#matrix"><i class="fas fa-table"></i> Risk Matrix</a>
       <a href="#tips"><i class="fas fa-lightbulb"></i> Harm Reduction Tips</a>
       <a href="#categories"><i class="fas fa-layer-group"></i> Combo Categories</a>
@@ -529,6 +652,55 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== Matrix Key ===== -->
+    <div class="section-heading" id="matrix-key">
+      <i class="fas fa-key"></i> Matrix Risk Key
+    </div>
+
+    <div class="matrix-key">
+      <h3><i class="fas fa-info-circle"></i> Understanding the Risk Levels</h3>
+      <div class="key-items">
+        <div class="key-item low">
+          <div class="key-header">
+            <span class="key-icon">🌈</span>
+            <span class="key-title">Low Risk (🌈)</span>
+          </div>
+          <p><strong>Minimal interaction concerns</strong> - These substances typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
+          <p><strong>Harm Reduction Tips:</strong> Start with lower doses than you would take individually, stay hydrated, and have a sober friend present if trying this combination for the first time.</p>
+        </div>
+        
+        <div class="key-item caution">
+          <div class="key-header">
+            <span class="key-icon">⚡</span>
+            <span class="key-title">Caution (⚡)</span>
+          </div>
+          <p><strong>Moderate interaction concerns</strong> - These combinations may increase side effects or intensify experiences beyond comfortable levels. Requires careful dosing and monitoring.</p>
+          <p><strong>Potential Concerns:</strong> Increased heart rate, blood pressure changes, anxiety, or unexpected psychological effects.</p>
+          <p><strong>Harm Reduction Tips:</strong> Use significantly lower doses than you would take individually, wait longer between doses to assess effects, and avoid operating vehicles or machinery.</p>
+        </div>
+        
+        <div class="key-item strong">
+          <div class="key-header">
+            <span class="key-icon">💊</span>
+            <span class="key-title">Strong Caution (💊)</span>
+          </div>
+          <p><strong>Significant interaction risk</strong> - These substances have known pharmacological interactions that can significantly increase risks. Should be approached with extreme caution.</p>
+          <p><strong>Specific Risks:</strong> Potential for serotonin syndrome, respiratory depression, cardiovascular stress, or unpredictable psychological effects.</p>
+          <p><strong>Harm Reduction Tips:</strong> Avoid this combination if possible. If combining, use minimal doses and have medical supervision available. Do not use alone.</p>
+        </div>
+        
+        <div class="key-item danger">
+          <div class="key-header">
+            <span class="key-icon">💀</span>
+            <span class="key-title">Dangerous (💀)</span>
+          </div>
+          <p><strong>High risk of severe harm or death</strong> - These combinations create a high risk of fatal overdose, severe medical complications, or permanent harm. Among the most dangerous drug combinations known.</p>
+          <p><strong>Specific Life-Threatening Risks:</strong> Profound respiratory depression, cardiac arrest, seizure risk, extreme hyperthermia, or coma.</p>
+          <p><strong>CRITICAL SAFETY INFORMATION:</strong> DO NOT COMBINE THESE SUBSTANCES. If accidental exposure occurs, call emergency services immediately.</p>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== Controls + Matrix ===== -->
     <div class="swipe-indicator">
@@ -606,7 +778,14 @@
 
     <!-- ===== Legal disclaimer (single) ===== -->
     <footer>
-      <p><strong>Legal & Medical Disclaimer:</strong> Educational content only; not medical advice. No mix is 100% safe. Accuracy is prioritized using established harm-reduction resources (TripSit, DanceSafe, IMPACT SF, TheBody) plus your local notes, but contexts differ. If someone shows trouble breathing, severe chest pain, seizures, or won't wake, call emergency services.</p>
+      <p><strong>Legal & Medical Disclaimer:</strong> The information provided on PLURderapolis.org is for educational and harm reduction purposes only. It is not intended as medical advice, diagnosis, or treatment. Always seek the advice of qualified healthcare providers with any questions regarding medical conditions or substance use.</p>
+      
+      <p>No information on this site should be interpreted as encouraging or promoting substance use. The interaction data presented is based on established harm reduction resources and clinical literature, but individual responses to substances vary widely based on numerous factors including genetics, tolerance, metabolism, underlying health conditions, dosage, and setting.</p>
+      
+      <p>PLURderapolis.org makes no representations or warranties about the accuracy, completeness, or suitability of the information provided. Users assume all risks associated with any actions taken based on this information. In case of medical emergency, contact emergency services immediately.</p>
+      
+      <p>By using this site, you acknowledge and agree that PLURderapolis.org, its creators, and contributors are not liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of or reliance on the information provided.</p>
+      
       <p>© 2025 PLURderapolis • <span class="pill">Stay safe. Stay kind.</span></p>
     </footer>
   </div>
@@ -631,6 +810,17 @@
         </div>
       </div>
       <button class="modal-close" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <!-- Matrix Detail Modal -->
+  <div class="matrix-modal" id="matrixModal">
+    <div class="matrix-modal-content">
+      <div class="matrix-modal-header">
+        <h3 id="matrixModalTitle"><i class="fas fa-info-circle"></i> Interaction Details</h3>
+        <button class="matrix-modal-close" id="matrixModalClose"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="matrixModalBody"></div>
     </div>
   </div>
 
@@ -972,7 +1162,7 @@ Checked at: ${new Date().toLocaleString()}
   box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 });
 
-// Render matrix table
+// Render matrix table with clickable cells
 (function renderMatrix(){
   const tbl = document.getElementById("matrixTable");
   const thead = document.createElement("thead");
@@ -991,12 +1181,60 @@ Checked at: ${new Date().toLocaleString()}
       td.textContent = val;
       td.className = getRiskClass(val);
       td.title = `${r} + ${c}: ${iconExplain(val)}`;
+      
+      // Add click event to show detailed explanation
+      td.addEventListener('click', () => {
+        showMatrixDetail(r, c, val);
+      });
+      
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
   });
   tbl.appendChild(thead); tbl.appendChild(tbody);
 })();
+
+// Show matrix detail modal
+function showMatrixDetail(substanceA, substanceB, riskLevel) {
+  const modal = document.getElementById('matrixModal');
+  const modalTitle = document.getElementById('matrixModalTitle');
+  const modalBody = document.getElementById('matrixModalBody');
+  
+  modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${substanceA} + ${substanceB} → ${riskLevel}`;
+  
+  let content = '';
+  
+  if (substanceA === substanceB) {
+    content = `
+      <div class="pair-detail ${getRiskClass(riskLevel)}">
+        <p><strong>Same Substance Combination:</strong> Using ${substanceA} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
+        <p><strong>Harm Reduction Tips:</strong></p>
+        <ul>
+          <li>Be mindful of cumulative dosing and tolerance</li>
+          <li>Follow standard harm reduction practices for this substance</li>
+          <li>Remember that redosing increases risks even with the same substance</li>
+        </ul>
+      </div>
+    `;
+  } else {
+    content = detailedExplanations[riskLevel](substanceA, substanceB);
+  }
+  
+  modalBody.innerHTML = content;
+  modal.style.display = 'flex';
+}
+
+// Close matrix modal
+document.getElementById('matrixModalClose').addEventListener('click', () => {
+  document.getElementById('matrixModal').style.display = 'none';
+});
+
+// Close modal when clicking outside
+document.getElementById('matrixModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('matrixModal')) {
+    document.getElementById('matrixModal').style.display = 'none';
+  }
+});
 
 // Create floating particles
 function createParticles() {
