@@ -24,7 +24,6 @@
     --low-risk:#4dff88;
     --card-gradient: linear-gradient(135deg, #1b0b1b 0%, #2a0a2a 100%);
     --glow: 0 0 15px rgba(191, 0, 191, 0.5);
-    --success-glow: 0 0 15px rgba(77, 255, 136, 0.3);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:'Open Sans',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; scroll-behavior: smooth;}
@@ -89,17 +88,14 @@
   .pair-detail.risk-caution{border-left-color:var(--caution); box-shadow: 0 2px 8px rgba(255, 184, 77, 0.1);}
   .pair-detail.risk-strong{border-left-color:var(--accent);}
   .pair-detail.risk-danger{border-left-color:var(--danger); box-shadow: 0 2px 8px rgba(255, 77, 77, 0.1);}
-  .risk-icon {position: absolute; top: 15px; right: 15px; font-size: 1.5rem;}
+  .risk-icon {position: absolute; top: 15px; right: 15px; font-size: 1.5rem; animation: pulse 2s infinite;}
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0 0;font-size:.95rem;color:var(--muted); justify-content: center;}
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem; transition: all 0.3s ease;}
   .legend span:hover {transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
-  
-  /* Success message styling */
-  .success-message {background: rgba(77, 255, 136, 0.1); border: 1px solid var(--low-risk); border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; animation: pulseSuccess 2s infinite;}
-  @keyframes pulseSuccess {
-    0%, 100% { box-shadow: 0 0 5px rgba(77, 255, 136, 0.3); }
-    50% { box-shadow: 0 0 15px rgba(77, 255, 136, 0.5); }
-  }
   
   /* Matrix */
   .controls{display:flex;align-items:center;gap:15px;margin:20px 0 15px;flex-wrap:wrap; justify-content: center;}
@@ -113,7 +109,12 @@
   thead th{position:sticky;top:0;background:#3b0a3b;color:#ffe5ff;z-index:2; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
   tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:1; box-shadow: 2px 0 5px rgba(0,0,0,0.2);}
   td{background:#1f001f; transition: all 0.3s ease; cursor: pointer;}
-  td:hover {transform: scale(1.05); z-index: 3; box-shadow: 0 0 10px rgba(191, 0, 191, 0.5);}
+  td:hover {transform: scale(1.05); z-index: 3; box-shadow: 0 0 10px rgba(191, 0, 191, 0.5); animation: cellPulse 0.5s;}
+  @keyframes cellPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1.05); }
+  }
   td.risk-low{background:#0a2a14}
   td.risk-caution{background:#2a200a}
   td.risk-strong{background:#2a0a2a}
@@ -135,7 +136,12 @@
   }
   
   /* Back to top button */
-  .back-to-top{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;border:0;border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow);z-index:100;display:none; transition: all 0.3s ease;}
+  .back-to-top{position:fixed;bottom:20px;right:20px;background:var(--accent);color:#fff;border:0;border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow);z-index:100;display:none; transition: all 0.3s ease; animation: bounce 2s infinite;}
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-10px);}
+    60% {transform: translateY(-5px);}
+  }
   .back-to-top:hover {background: var(--accent-2); transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 15px rgba(191, 0, 191, 0.5);}
   
   /* Footer */
@@ -254,6 +260,7 @@
     margin: 25px 0 15px;
     color: var(--accent-2);
     font-size: 1.4rem;
+    animation: fadeIn 0.8s ease-out;
   }
   
   .section-heading::after {
@@ -262,9 +269,50 @@
     height: 2px;
     background: linear-gradient(90deg, var(--accent-2), transparent);
   }
+  
+  /* Floating particles animation */
+  .particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-2);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+    opacity: 0.3;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(100vh) translateX(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.3;
+    }
+    90% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-100px) translateX(100px);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+  
   <div class="wrap">
     <!-- Navigation -->
     <div class="navigation">
@@ -318,9 +366,6 @@
       <div class="result" id="resultBox" aria-live="polite">
         <h3><i class="fas fa-clipboard-list"></i> Results will appear here</h3>
         <p>We'll show A+B, A+C, B+C and a combined A+B+C overview with detailed harm-reduction pointers.</p>
-        <div class="success-message">
-          <p><i class="fas fa-heart"></i> <strong>Thank you for being proactive about your safety!</strong> Checking interactions is a responsible harm reduction practice.</p>
-        </div>
       </div>
     </section>
 
@@ -352,9 +397,6 @@
         <li><strong>Carry naloxone</strong> if opioids could be around. Don't use alone. Recovery position if someone is out.</li>
         <li><strong>On Rx meds?</strong> Avoid chasing "muted" effects by redosing — risk goes up even if euphoria doesn't.</li>
       </ul>
-      <div class="success-message">
-        <p><i class="fas fa-star"></i> <strong>Great job educating yourself!</strong> Knowledge is the first step toward safer practices.</p>
-      </div>
     </details>
 
     <!-- ===== Category cards at bottom ===== -->
@@ -368,9 +410,6 @@
         <li>Keep people awake & breathing; recovery position if unresponsive.</li>
         <li>Naloxone reverses opioids (not benzos/GHB); still call EMS.</li>
       </ul>
-      <div class="success-message">
-        <p><i class="fas fa-shield-alt"></i> <strong>You're being smart by checking this!</strong> Depressant combinations are among the most dangerous.</p>
-      </div>
     </details>
 
     <details class="info"><summary><i class="fas fa-bolt"></i> Stimulant × Stimulant <span class="tag">MDMA, cocaine, ADHD meds, bupropion</span></summary>
@@ -389,9 +428,6 @@
 
     <details class="info"><summary><i class="fas fa-cloud-sun"></i> Psychedelics with Cannabis</summary>
       <p>Can potentiate intensity/anxiety. Delay THC until past peak; micro-puffs if at all.</p>
-      <div class="success-message">
-        <p><i class="fas fa-leaf"></i> <strong>Smart thinking!</strong> Cannabis can significantly alter psychedelic experiences.</p>
-      </div>
     </details>
 
     <details class="info"><summary><i class="fas fa-head-side-virus"></i> Dissociative × Depressant <span class="tag">ketamine/nitrous + alcohol/benzos/GHB</span></summary>
@@ -588,9 +624,6 @@ const detailedExplanations = {
       <li>Stay hydrated and in a safe environment</li>
       <li>Have a sober friend present if trying this combination for the first time</li>
     </ul>
-    <div class="success-message">
-      <p><i class="fas fa-check-circle"></i> <strong>Great news!</strong> This combination has a lower risk profile, but always practice harm reduction.</p>
-    </div>
   `,
   "⚡": (a, b) => `
     <p><strong>Caution Advised:</strong> Combining ${a} and ${b} may increase side effects or intensify experiences beyond comfortable levels. This combination requires careful dosing and monitoring.</p>
@@ -602,9 +635,6 @@ const detailedExplanations = {
       <li>Have benzodiazepines available if anxiety becomes overwhelming (only if prescribed)</li>
       <li>Avoid operating vehicles or machinery</li>
     </ul>
-    <div class="success-message">
-      <p><i class="fas fa-exclamation-triangle"></i> <strong>Smart move checking this!</strong> Being aware of potential interactions is key to harm reduction.</p>
-    </div>
   `,
   "💊": (a, b) => `
     <p><strong>Strong Caution - Significant Interaction Risk:</strong> ${a} and ${b} have known pharmacological interactions that can significantly increase risks. This combination should be approached with extreme caution.</p>
@@ -617,9 +647,6 @@ const detailedExplanations = {
       <li>Have naloxone available if opioids are involved</li>
       <li>Do not use alone</li>
     </ul>
-    <div class="success-message">
-      <p><i class="fas fa-shield-alt"></i> <strong>Thank you for being cautious!</strong> Identifying high-risk combinations is a critical safety step.</p>
-    </div>
   `,
   "💀": (a, b) => `
     <p><strong>DANGEROUS COMBINATION - AVOID:</strong> Combining ${a} and ${b} creates a high risk of fatal overdose, severe medical complications, or permanent harm. This is one of the most dangerous drug combinations known.</p>
@@ -632,9 +659,6 @@ const detailedExplanations = {
       <li>This combination has resulted in numerous fatal overdoses</li>
       <li>Consider alternative substances that don't carry this extreme risk</li>
     </ul>
-    <div class="success-message">
-      <p><i class="fas fa-life-ring"></i> <strong>Potentially life-saving decision to check this!</strong> Avoiding dangerous combinations is the most effective harm reduction.</p>
-    </div>
   `
 };
 
@@ -642,30 +666,18 @@ const trioExplanations = {
   "🌈": (a, b, c) => `
     <p><strong>Three-Way Combination Assessment:</strong> While no major red flags are present for combining ${a}, ${b}, and ${c}, the complexity increases significantly with three substances.</p>
     <p><strong>Harm Reduction Strategy:</strong> Introduce substances sequentially with ample time between to assess effects. Consider eliminating one substance from the combination to reduce variables.</p>
-    <div class="success-message">
-      <p><i class="fas fa-star"></i> <strong>Excellent harm reduction practice!</strong> Checking three-way interactions shows advanced safety awareness.</p>
-    </div>
   `,
   "⚡": (a, b, c) => `
     <p><strong>Three-Way Combination - Elevated Risk:</strong> Combining ${a}, ${b}, and ${c} creates overlapping effects that may be difficult to predict or manage.</p>
     <p><strong>Harm Reduction Strategy:</strong> Extreme caution advised. Consider eliminating the highest-risk pair from this combination. Have sober supervision and emergency contacts readily available.</p>
-    <div class="success-message">
-      <p><i class="fas fa-exclamation-circle"></i> <strong>Smart thinking checking this trio!</strong> Complex combinations require extra caution.</p>
-    </div>
   `,
   "💊": (a, b, c) => `
     <p><strong>Three-Way Combination - High Risk:</strong> This combination of ${a}, ${b}, and ${c} includes significant interaction risks that compound when combined.</p>
     <p><strong>Harm Reduction Strategy:</strong> Strongly consider avoiding this combination entirely. If proceeding, have medical supervision, naloxone if opioids are involved, and clear emergency protocols.</p>
-    <div class="success-message">
-      <p><i class="fas fa-shield-alt"></i> <strong>Critical safety check!</strong> Identifying high-risk trios prevents dangerous situations.</p>
-    </div>
   `,
   "💀": (a, b, c) => `
     <p><strong>THREE-WAY COMBINATION - EXTREME DANGER:</strong> This combination of ${a}, ${b}, and ${c} includes known dangerous pairs that create a potentially fatal scenario.</p>
     <p><strong>CRITICAL WARNING:</strong> This combination should be avoided under all circumstances. The risk of fatal overdose or severe medical emergency is extremely high.</p>
-    <div class="success-message">
-      <p><i class="fas fa-heartbeat"></i> <strong>Potentially life-saving discovery!</strong> Identifying extremely dangerous combinations is the highest form of harm reduction.</p>
-    </div>
   `
 };
 
@@ -797,6 +809,28 @@ document.getElementById("checkBtn").addEventListener("click", ()=>{
   tbl.appendChild(thead); tbl.appendChild(tbody);
 })();
 
+// Create floating particles
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 30;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    
+    // Random position
+    const left = Math.random() * 100;
+    const delay = Math.random() * 15;
+    const duration = 15 + Math.random() * 10;
+    
+    particle.style.left = `${left}vw`;
+    particle.style.animationDelay = `${delay}s`;
+    particle.style.animationDuration = `${duration}s`;
+    
+    particlesContainer.appendChild(particle);
+  }
+}
+
 // Save page functionality
 const saveModal = document.getElementById("saveModal");
 const savePageBtn = document.getElementById("savePageBtn");
@@ -913,6 +947,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Initialize particles
+createParticles();
 </script>
 </body>
 </html>
