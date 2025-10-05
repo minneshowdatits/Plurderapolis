@@ -7,19 +7,29 @@
     <title>When "No" Isn't Respected: Rejection-Based Violence | Plurderapolis</title>
     <style>
         :root {
+            --bg-dark: #0f0716;
+            --bg-card: #1a1025;
+            --bg-card-light: #231533;
             --purple-primary: #4a306d;
             --purple-secondary: #6b4b8a;
             --purple-light: #8e6caf;
-            --purple-lighter: #e6e6fa;
-            --text-dark: #333;
-            --text-light: #fff;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --purple-lighter: #b39ddb;
+            --text-light: #f5f3f7;
+            --text-muted: #d8cae4;
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+            --border-radius: 8px;
         }
         
-        /* Smooth scrolling for whole page */
+        /* Smooth scrolling for whole page with accessibility consideration */
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
         }
         
         * {
@@ -30,20 +40,23 @@
         }
         
         body {
-            background-color: #f9f7fd;
-            color: var(--text-dark);
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            min-height: 100vh;
         }
         
         /* Header & Navigation */
         header {
-            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+            background-color: rgba(15, 7, 22, 0.95);
+            backdrop-filter: blur(10px);
             color: var(--text-light);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
+            border-bottom: 1px solid var(--purple-primary);
         }
         
         .nav-container {
@@ -56,10 +69,15 @@
         }
         
         .logo a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        .logo a:hover {
+            color: var(--purple-lighter);
         }
         
         .nav-menu {
@@ -69,14 +87,15 @@
         }
         
         .nav-menu a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.3s;
+            transition: color 0.3s;
+            font-size: 0.95rem;
         }
         
         .nav-menu a:hover {
-            opacity: 0.8;
+            color: var(--purple-lighter);
         }
         
         /* Mobile Navigation */
@@ -84,9 +103,10 @@
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--text-light);
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.25rem;
         }
         
         /* Main content spacing for fixed header */
@@ -96,52 +116,78 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(74, 48, 109, 0.8), rgba(74, 48, 109, 0.9)), url('purple-texture.jpg');
-            color: white;
-            padding: 4rem 1rem;
+            background: linear-gradient(rgba(74, 48, 109, 0.85), rgba(26, 16, 37, 0.9));
+            color: var(--text-light);
+            padding: 5rem 1rem;
             text-align: center;
+            border-bottom: 1px solid var(--purple-primary);
         }
         
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
         
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-muted);
         }
         
         /* Section styling */
         section {
-            padding: 3rem 1rem;
+            padding: 4rem 1rem;
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        section:nth-child(even) {
-            background-color: var(--purple-lighter);
-        }
-        
         .section-title {
-            color: var(--purple-primary);
-            margin-bottom: 2rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
             text-align: center;
             font-size: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
         }
         
-        /* Collapsible sections */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--purple-primary), var(--purple-light));
+            border-radius: 3px;
+        }
+        
+        /* Collapsible sections - improved accessibility */
         .collapsible {
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             overflow: hidden;
+            border: 1px solid rgba(107, 75, 138, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .collapsible:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
         }
         
         .collapsible-header {
-            background-color: var(--purple-secondary);
-            color: white;
+            background-color: var(--bg-card-light);
+            color: var(--text-light);
             padding: 1.5rem;
             cursor: pointer;
             display: flex;
@@ -149,19 +195,26 @@
             align-items: center;
             font-weight: 600;
             transition: background-color 0.3s;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
         }
         
         .collapsible-header:hover {
-            background-color: var(--purple-primary);
+            background-color: rgba(107, 75, 138, 0.2);
         }
         
         .collapsible-header::after {
             content: '\002B'; /* Plus sign */
             font-size: 1.5rem;
+            color: var(--purple-lighter);
+            transition: transform 0.3s;
         }
         
         .collapsible-header.active::after {
             content: '\2212'; /* Minus sign */
+            transform: rotate(180deg);
         }
         
         .collapsible-content {
@@ -169,57 +222,109 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: var(--bg-card);
         }
         
         .collapsible-content.show {
             padding: 1.5rem;
-            max-height: 2000px;
+            max-height: 5000px;
         }
         
         /* Content styling */
         h3 {
-            color: var(--purple-primary);
+            color: var(--purple-lighter);
             margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+        
+        h4 {
+            color: var(--text-muted);
+            margin: 1.25rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
         }
         
         ul, ol {
             padding-left: 1.5rem;
             margin-bottom: 1.5rem;
+            color: var(--text-muted);
         }
         
         li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         
         .highlight-box {
-            background-color: white;
+            background-color: var(--bg-card-light);
             border-left: 4px solid var(--purple-primary);
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
             box-shadow: var(--shadow);
         }
         
-        /* Scroll animations */
-        .hidden {
-            opacity: 0;
-            filter: blur(5px);
-            transform: translateY(50px);
-            transition: all 0.8s;
+        .highlight-box p {
+            margin-bottom: 0;
+            font-style: italic;
         }
         
-        .show {
-            opacity: 1;
-            filter: blur(0);
-            transform: translateY(0);
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .resource-card {
+            background-color: var(--bg-card-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(107, 75, 138, 0.3);
+        }
+        
+        .resource-card h4 {
+            color: var(--purple-lighter);
+            margin-top: 0;
+        }
+        
+        /* Memorial section */
+        .memorial {
+            background: linear-gradient(rgba(26, 16, 37, 0.9), rgba(15, 7, 22, 0.95));
+            padding: 4rem 1rem;
+            text-align: center;
+            border-top: 1px solid var(--purple-primary);
+            border-bottom: 1px solid var(--purple-primary);
+        }
+        
+        .memorial-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .memorial h2 {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .memorial p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
         
         /* Footer */
         footer {
-            background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
-            color: white;
+            background-color: var(--bg-card);
+            color: var(--text-muted);
             padding: 3rem 1rem;
             text-align: center;
+            border-top: 1px solid rgba(107, 75, 138, 0.3);
         }
         
         .footer-links {
@@ -231,12 +336,13 @@
         }
         
         .footer-links a {
-            color: white;
+            color: var(--text-muted);
             text-decoration: none;
+            transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            text-decoration: underline;
+            color: var(--purple-lighter);
         }
         
         /* Scroll to top button */
@@ -258,11 +364,44 @@
             transition: all 0.3s;
             box-shadow: var(--shadow);
             z-index: 999;
+            border: none;
+            font-size: 1.2rem;
+        }
+        
+        .scroll-top:hover {
+            background-color: var(--purple-secondary);
+            transform: translateY(-3px);
         }
         
         .scroll-top.show {
             opacity: 1;
             visibility: visible;
+        }
+        
+        /* Bottom line section */
+        .bottom-line {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: var(--bg-card-light);
+            border-top: 1px solid rgba(107, 75, 138, 0.3);
+        }
+        
+        .bottom-line p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .bottom-line-list {
+            display: inline-block;
+            text-align: left;
+            margin: 0 auto;
+        }
+        
+        .bottom-line-list li {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
         }
         
         /* Mobile Responsive */
@@ -273,14 +412,20 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background-color: var(--purple-primary);
+                background-color: var(--bg-card);
                 flex-direction: column;
                 padding: 1rem 0;
                 text-align: center;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+                border-top: 1px solid var(--purple-primary);
             }
             
             .nav-menu.active {
                 display: flex;
+            }
+            
+            .nav-menu li {
+                margin: 0.5rem 0;
             }
             
             .mobile-menu-btn {
@@ -291,6 +436,10 @@
                 font-size: 2rem;
             }
             
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
             .section-title {
                 font-size: 1.7rem;
             }
@@ -298,6 +447,33 @@
             .footer-links {
                 flex-direction: column;
                 gap: 1rem;
+            }
+            
+            .resource-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Scroll animations */
+        .hidden {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(30px);
+            transition: all 0.6s;
+        }
+        
+        .show {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+        
+        /* Stagger animation for list items */
+        @media (prefers-reduced-motion: reduce) {
+            .hidden {
+                transition: none;
+                transform: none;
+                filter: none;
             }
         }
     </style>
@@ -309,7 +485,7 @@
             <div class="logo">
                 <a href="https://plurderapolis.org">plurderapolis.org</a>
             </div>
-            <button class="mobile-menu-btn">☰</button>
+            <button class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
             <ul class="nav-menu">
                 <li><a href="#what-is">What Is It?</a></li>
                 <li><a href="#warning-signs">Warning Signs</a></li>
@@ -335,7 +511,7 @@
         <section id="what-is">
             <h2 class="section-title">What Is Rejection-Based Violence?</h2>
             <div class="collapsible">
-                <div class="collapsible-header">Understanding Rejection-Based Violence</div>
+                <button class="collapsible-header">Understanding Rejection-Based Violence</button>
                 <div class="collapsible-content">
                     <p>After someone says "no" to dating, sex, or connection, and the other person refuses to accept it.</p>
                     <p>This is rejection based violence, and it's dangerously common. It doesn't always look like what we've been told to expect. It isn't just bruises and screaming matches. It can be soft. Quiet. Stretched out over weeks or months. But it builds, and sometimes, it kills.</p>
@@ -350,7 +526,7 @@
         <section id="warning-signs" class="hidden">
             <h2 class="section-title">🚩 What Rejection Based Violence Can Look Like</h2>
             <div class="collapsible">
-                <div class="collapsible-header">Behavioral Warning Signs</div>
+                <button class="collapsible-header">Behavioral Warning Signs</button>
                 <div class="collapsible-content">
                     <ul>
                         <li>They won't stop messaging, calling, or contacting you after you've said no.</li>
@@ -367,8 +543,163 @@
             </div>
         </section>
 
-        <!-- More sections would continue here with similar structure -->
-        <!-- Psychological Truths, What To Do, Resources, In Memory sections -->
+        <!-- Psychological Truths Section -->
+        <section id="psychological" class="hidden">
+            <h2 class="section-title">🧠 Psychological Truths Behind This Pattern</h2>
+            <div class="collapsible">
+                <button class="collapsible-header">Understanding the Psychology</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Narcissistic entitlement:</strong> Believing they "deserve" a relationship, no matter what you want.</li>
+                        <li><strong>Cognitive dissonance:</strong> Rejection challenges the fantasy they've built. Some react with violence to reassert control.</li>
+                        <li><strong>Power + control > love:</strong> This isn't about romance. It's about domination.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signs It Might Be Happening To You Section -->
+        <section id="happening-to-you" class="hidden">
+            <h2 class="section-title">👁️‍🗨️ Signs It Might Be Happening To You</h2>
+            <div class="collapsible">
+                <button class="collapsible-header">Recognizing the Signs in Your Own Life</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>You feel anxious or unsafe around someone who keeps contacting you even after you've been clear.</li>
+                        <li>You're changing your routine, hiding your location, or avoiding certain places to stay safe.</li>
+                        <li>You second guess whether you were "clear enough" or "mean enough." (Spoiler: you were.)</li>
+                        <li>They make you feel responsible for their emotions or threats.</li>
+                        <li>You've said no, and they're still showing up, still texting, still trying to flip the script.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>You don't owe anyone your peace, your body, or your time. Saying "no" doesn't make you cruel. Setting boundaries doesn't make you responsible for someone else's meltdown.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What To Do Section -->
+        <section id="what-to-do" class="hidden">
+            <h2 class="section-title">🔐 What To Do If You Think It's Happening To You</h2>
+            <div class="collapsible">
+                <button class="collapsible-header">Immediate Actions and Safety Planning</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Trust your gut.</strong> You don't need a bruise to know something is wrong.</li>
+                        <li><strong>Tell someone you trust</strong> what's happening. Don't do this alone.</li>
+                        <li><strong>Save messages, voicemails, screenshots;</strong> anything that documents the pattern.</li>
+                        <li><strong>Adjust privacy settings</strong> and think about what you're sharing online.</li>
+                        <li><strong>Make a plan:</strong> Know where you can go, who you can call, what feels safe.</li>
+                        <li><strong>Use support resources</strong> (listed below).</li>
+                        <li><strong>Don't blame yourself.</strong> You didn't cause this. You're allowed to be scared. You're allowed to leave.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="collapsible">
+                <button class="collapsible-header">👀 Signs It Might Be Happening to Someone You Know</button>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>They suddenly stop going out, posting, or responding.</li>
+                        <li>They seem on edge, especially when a certain name comes up.</li>
+                        <li>You hear obsessive, bitter talk about someone who rejected them.</li>
+                        <li>They have a "friend" who's always around, even when not invited.</li>
+                        <li>You see stalking or control disguised as "romance" or "worry."</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="collapsible">
+                <button class="collapsible-header">✊ What To Do If You Notice It</button>
+                <div class="collapsible-content">
+                    <h4>If a friend might be targeted:</h4>
+                    <ul>
+                        <li>"You seem stressed when [Name] comes up. I'm here if you ever want to talk."</li>
+                        <li>Offer support without judgment or pressure.</li>
+                        <li>Respect their pace. Leaving or naming this stuff is hard.</li>
+                        <li>Stay consistent. Isolation makes everything worse.</li>
+                    </ul>
+                    
+                    <h4>If you witness harassment or stalking:</h4>
+                    <ul>
+                        <li><strong>Distract:</strong> Interrupt the situation. Start a conversation.</li>
+                        <li><strong>Delegate:</strong> Get someone else involved if it's unsafe to act alone.</li>
+                        <li><strong>Document:</strong> Record or note what's happening, if it's safe.</li>
+                        <li><strong>Delay:</strong> Check in after. Ask if they're okay.</li>
+                        <li><strong>Direct:</strong> Only if safe, speak up: "She said no. You need to back off."</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="collapsible">
+                <button class="collapsible-header">❓🧍‍♂️ What If It's Your Friend Crossing the Line?</button>
+                <div class="collapsible-content">
+                    <p>It's not always strangers. It's not always creeps in alleys. Sometimes it's our people.</p>
+                    <p>Holding your friends accountable isn't betrayal. It's harm reduction.</p>
+                    <p>Say something.</p>
+                    <ul>
+                        <li>"Hey, I've noticed the way you talk about her makes me uncomfortable."</li>
+                        <li>"She said she's not interested. You need to respect that."</li>
+                        <li>"This is getting into obsession, not love. You gotta chill and let it go."</li>
+                        <li>"If someone kept messaging you after you said no, you'd be creeped out too."</li>
+                        <li>"Showing up uninvited isn't romantic, it's harassment."</li>
+                        <li>"You're not owed a relationship because you were 'nice.'"</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>Call them in before it turns into something worse. Before they ruin someone's life, or their own. This is how we keep each other safe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="hidden">
+            <h2 class="section-title">📞 Support Resources (Minnesota + National)</h2>
+            <div class="resource-list">
+                <div class="resource-card">
+                    <h4>Minnesota Domestic Violence Hotline</h4>
+                    <p>1-866-223-1111</p>
+                </div>
+                <div class="resource-card">
+                    <h4>W Minnesota (shelter, legal, counseling)</h4>
+                    <p>wmn.org</p>
+                </div>
+                <div class="resource-card">
+                    <h4>National Domestic Violence Hotline</h4>
+                    <p>1-800-799-7233 or thehotline.org</p>
+                </div>
+                <div class="resource-card">
+                    <h4>Emergency</h4>
+                    <p>If someone is in immediate danger, call 911. You do not have to wait until it gets worse.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- In Memory Section -->
+        <section id="kayli" class="memorial hidden">
+            <div class="memorial-content">
+                <h2>🖤 In Memory of Kayli Arseth</h2>
+                <p>Kayli Grace Arseth, 22, was murdered in her Richfield apartment on June 16, 2025, by a man she had clearly and repeatedly told she wasn't interested in.</p>
+                <p>Kayli was vibrant, compassionate, and deeply loved. She had a light about her that made people feel seen, safe, and understood. She worked with children as a Behavioral Technician, offering patience and care to some of the most vulnerable. She had recently made the decision to pursue a degree in Developmental Psychology because she believed in making the world kinder, especially for those who needed it most.</p>
+                <p>She loved art, music, and riding her motorcycle. She found joy in creativity and connection. She was the kind of friend who showed up. The kind of person who danced freely at shows, laughed loudly, and held people close without judgment. She was a regular in our scene. Someone who just wanted to live, love, and grow.</p>
+                <p>Kayli deserved peace. She deserved to be respected.<br>
+                She deserved to be safe.<br>
+                She deserved to be here.</p>
+            </div>
+        </section>
+
+        <!-- Bottom Line Section -->
+        <section class="bottom-line hidden">
+            <p>Bottom Line:</p>
+            <ul class="bottom-line-list">
+                <li>🚫 Rejection isn't cruelty.</li>
+                <li>🚫 "No" is not an invitation to negotiate.</li>
+                <li>🚫 Harassment isn't romance.</li>
+                <li>🚫 Violence is never a justified response.</li>
+                <li>🚫 No one owes you love. Ever.</li>
+            </ul>
+            <p style="margin-top: 2rem;">We all have a part in preventing this. Believe people. Intervene when you can. Speak up when it's uncomfortable. Keep each other safe.</p>
+        </section>
 
         <!-- Footer -->
         <footer>
@@ -383,7 +714,7 @@
     </main>
 
     <!-- Scroll to Top Button -->
-    <div class="scroll-top">↑</div>
+    <button class="scroll-top" aria-label="Scroll to top">↑</button>
 
     <!-- JavaScript -->
     <script>
@@ -395,50 +726,66 @@
             navMenu.classList.toggle('active');
         });
 
-        // Collapsible sections [citation:3]
+        // Collapsible sections with improved accessibility [citation:1]
         const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
         
         collapsibleHeaders.forEach(header => {
             header.addEventListener('click', function() {
                 this.classList.toggle('active');
                 const content = this.nextElementSibling;
+                const isExpanded = this.classList.contains('active');
+                
+                // Update ARIA attributes for accessibility
+                this.setAttribute('aria-expanded', isExpanded);
+                
                 if (content.classList.contains('show')) {
                     content.classList.remove('show');
                 } else {
                     content.classList.add('show');
                 }
             });
+            
+            // Initialize ARIA attributes
+            header.setAttribute('aria-expanded', 'false');
         });
 
-        // Scroll animations [citation:9]
+        // Scroll animations
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('show');
                 }
             });
+        }, {
+            threshold: 0.1
         });
         
         const hiddenElements = document.querySelectorAll('.hidden');
         hiddenElements.forEach(el => observer.observe(el));
 
-        // Smooth scrolling for navigation links [citation:4]
+        // Smooth scrolling for navigation links [citation:2]
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    // Use smooth scroll behavior with fallback
+                    if ('scrollBehavior' in document.documentElement.style) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    } else {
+                        target.scrollIntoView(true);
+                    }
+                    
                     // Close mobile menu if open
                     navMenu.classList.remove('active');
                 }
             });
         });
 
-        // Scroll to top button
+        // Scroll to top button [citation:3]
         const scrollTopBtn = document.querySelector('.scroll-top');
         
         window.addEventListener('scroll', () => {
@@ -450,10 +797,15 @@
         });
         
         scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            // Use smooth scrolling with fallback [citation:7]
+            if ('scrollBehavior' in document.documentElement.style) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                window.scrollTo(0, 0);
+            }
         });
     </script>
 </body>
