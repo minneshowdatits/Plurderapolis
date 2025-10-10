@@ -2,8 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Consent Culture - PLURderapolis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PLURderapolis promotes consent culture in nightlife and rave spaces. Learn about consent, boundaries, and creating safer communities." />
+  <meta name="keywords" content="consent, PLUR, rave culture, nightlife safety, boundaries, accountability" />
+  <meta name="author" content="PLURderapolis" />
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="Consent Culture - PLURderapolis" />
+  <meta property="og:description" content="Creating safer PLUR communities through consent culture, education, and accountability." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://plurderapolis.org/consent-culture.html" />
+  <meta property="og:image" content="https://plurderapolis.org/images/plurderapolis-social.jpg" />
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Consent Culture - PLURderapolis" />
+  <meta name="twitter:description" content="Creating safer PLUR communities through consent culture." />
+  <meta name="twitter:image" content="https://plurderapolis.org/images/plurderapolis-social.jpg" />
+  
+  <title>Consent Culture - PLURderapolis | Safer Rave Communities</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -20,6 +37,7 @@
       --neon-yellow: #f7f000;
       --plur-green: #00ff88;
       --plur-blue: #0099ff;
+      --card-bg: rgba(40, 5, 60, 0.7);
     }
     
     * {
@@ -55,9 +73,9 @@
     }
     
     /* Header styles */
-    header {
+    .main-header {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
       position: relative;
       margin-bottom: 1rem;
       border-bottom: 2px solid var(--accent-purple);
@@ -73,38 +91,9 @@
       100% { box-shadow: 0 5px 25px rgba(255, 0, 170, 0.6); }
     }
     
-    .back-button {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(90, 60, 150, 0.3);
-      color: var(--plur-cyan);
-      border: 1px solid var(--accent-purple);
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      animation: pulse 2s infinite;
-    }
-    
-    .back-button:hover {
-      background: rgba(110, 80, 180, 0.5);
-      color: var(--plur-cyan-light);
-      box-shadow: 0 0 10px rgba(123, 91, 228, 0.4);
-      transform: translateY(-50%) scale(1.05);
-    }
-    
-    h1 {
+    .brand-title {
       font-family: 'Montserrat', sans-serif;
       font-size: 2.5rem;
-      color: var(--neon-pink);
       margin-bottom: 0.5rem;
       text-shadow: 0 0 10px rgba(255, 0, 170, 0.6);
       letter-spacing: 1px;
@@ -113,6 +102,14 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: titlePulse 3s infinite alternate;
+      display: inline-block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .brand-title:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(255, 0, 170, 0.8);
     }
     
     @keyframes titlePulse {
@@ -120,10 +117,97 @@
       100% { transform: scale(1.02); }
     }
     
+    .page-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      color: var(--plur-cyan);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 8px rgba(0, 240, 224, 0.5);
+    }
+    
     .subtitle {
       color: var(--text-muted);
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
+    }
+    
+    /* Card-based layout for content */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--neon-pink), var(--plur-cyan));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(123, 44, 191, 0.5);
+    }
+    
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--plur-cyan);
+      text-align: center;
+    }
+    
+    .card h3 {
+      color: var(--hot-pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .card p {
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    
+    .card ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    
+    .card li {
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    
+    .card li strong {
+      color: var(--plur-cyan);
     }
     
     /* Interactive Map/Navigation */
@@ -268,39 +352,6 @@
     h2 i {
       margin-right: 10px;
       font-size: 1.5rem;
-    }
-    
-    h3 {
-      color: var(--hot-pink);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.4rem;
-      margin: 1.2rem 0 0.8rem;
-      display: flex;
-      align-items: center;
-    }
-    
-    h3 i {
-      margin-right: 8px;
-      font-size: 1.2rem;
-    }
-    
-    p {
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-    
-    ul {
-      padding-left: 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-    
-    li {
-      margin-bottom: 0.6rem;
-      position: relative;
-    }
-    
-    li strong {
-      color: var(--plur-cyan);
     }
     
     /* Details/summary styling */
@@ -668,24 +719,62 @@
       100% { transform: translate(0, 0) rotate(360deg); }
     }
     
+    /* Share buttons */
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .share-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-purple);
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .share-button:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .share-button.facebook { background: #3b5998; }
+    .share-button.twitter { background: #1da1f2; }
+    .share-button.linkedin { background: #0077b5; }
+    
+    /* Ripple effect styles */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(0);
+      animation: ripple-animation 0.6s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    
     /* Responsive adjustments */
     @media (max-width: 768px) {
-      h1 {
+      .brand-title {
         font-size: 2rem;
-        padding: 0 1rem;
       }
       
-      .back-button {
-        position: relative;
-        display: inline-block;
-        margin-bottom: 1rem;
-        left: 0;
-        transform: none;
-        top: 0;
-      }
-      
-      header {
-        padding-top: 1rem;
+      .page-title {
+        font-size: 1.7rem;
       }
       
       .content-section, details {
@@ -714,14 +803,18 @@
         width: 45px;
         height: 45px;
       }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
     }
     
     @media (max-width: 480px) {
-      h1 {
+      .brand-title {
         font-size: 1.8rem;
       }
       
-      h2 {
+      .page-title {
         font-size: 1.5rem;
       }
       
@@ -741,6 +834,10 @@
       .interactive-map {
         padding: 1rem;
       }
+      
+      .share-buttons {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
@@ -753,11 +850,24 @@
   <div class="floating-element" style="top: 30%; right: 15%; width: 80px; height: 80px; animation-duration: 18s;"></div>
   
   <div class="container">
-    <header>
-      <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
-      <h1><i class="fas fa-brain"></i> Consent Culture</h1>
+    <header class="main-header">
+      <a href="https://plurderapolis.org/index.html" class="brand-title">PLURderapolis</a>
+      <h1 class="page-title"><i class="fas fa-brain"></i> Consent Culture</h1>
       <p class="subtitle">Creating a safer PLUR community together</p>
     </header>
+    
+    <!-- Share buttons -->
+    <div class="share-buttons">
+      <a href="#" class="share-button facebook" aria-label="Share on Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#" class="share-button twitter" aria-label="Share on Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="share-button linkedin" aria-label="Share on LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
     
     <!-- Interactive Map/Navigation -->
     <div class="interactive-map fade-in">
@@ -792,69 +902,89 @@
     <div id="what-is-consent" class="fade-in">
       <h2><i class="fas fa-question-circle"></i> Understanding Consent</h2>
       
-      <details>
-        <summary><i class="fas fa-check-circle"></i> ✅ Consent is:</summary>
-        <ul>
-          <li><strong>Freely given</strong> – Not coerced, pressured, or guilt-tripped.</li>
-          <li><strong>Reversible</strong> – You can say yes, then change your mind at any time.</li>
-          <li><strong>Informed</strong> – Everyone knows exactly what's going on.</li>
-          <li><strong>Enthusiastic</strong> – If it's not a <em>hell yes</em>, it's a no.</li>
-          <li><strong>Specific</strong> – Saying yes to one thing doesn't mean yes to everything.</li>
-        </ul>
-        <p style="font-style: italic; color: var(--text-muted);">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
-      </details>
-
-      <details>
-        <summary><i class="fas fa-times-circle"></i> 🚫 Not consent:</summary>
-        <ul>
-          <li>"They didn't say no."</li>
-          <li>"They were into it earlier."</li>
-          <li>"They didn't fight me."</li>
-          <li>"They were drunk/high."</li>
-          <li>"They didn't respond."</li>
-        </ul>
-        <p>Silence or lack of resistance does not equal consent. Only an enthusiastic, ongoing "yes" means yes.</p>
-      </details>
-
-      <details>
-        <summary><i class="fas fa-music"></i> 🎶 In rave spaces:</summary>
-        <ul>
-          <li>Loud music + substances + vibes ≠ implied consent.</li>
-          <li>Don't touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
-          <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
-          <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
-        </ul>
-        <p>Remember: PLUR means <span class="plur-badge peace">Peace</span>, <span class="plur-badge love">Love</span>, <span class="plur-badge unity">Unity</span>, and <span class="plur-badge respect">Respect</span> for all.</p>
-      </details>
-
-      <details>
-        <summary><i class="fas fa-comments"></i> ⚠️ Quick check-in phrases:</summary>
-        <ul>
-          <li>"Are you good with this?"</li>
-          <li>"Want me to keep going?"</li>
-          <li>"Let me know if you want to stop."</li>
-          <li>"Is this okay?"</li>
-          <li>"How are you feeling?"</li>
-        </ul>
-        <p>Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
-      </details>
-
-      <details>
-        <summary><i class="fas fa-rainbow"></i> 🏳️‍🌈 Respect all identities.</summary>
-        <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
-        <p>Our community celebrates diversity and expects everyone to respect each other's identities and boundaries.</p>
-      </details>
-
-      <details>
-        <summary><i class="fas fa-exclamation-triangle"></i> 🔥 What to do if someone crosses a line:</summary>
-        <ul>
-          <li>If it's happening now, intervene safely or get help.</li>
-          <li>Support the person—not the abuser, not the rumors.</li>
-          <li>Believe survivors. Listen first. Don't center yourself.</li>
-          <li>Consent violations aren't just private drama—they're community safety issues.</li>
-        </ul>
-        <p>If you witness or experience a consent violation, report it to event staff or use our <a href="accountability.html">accountability process</a>.</p>
-      </details>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h3>✅ Consent is:</h3>
+          <ul>
+            <li><strong>Freely given</strong> – Not coerced, pressured, or guilt-tripped.</li>
+            <li><strong>Reversible</strong> – You can say yes, then change your mind at any time.</li>
+            <li><strong>Informed</strong> – Everyone knows exactly what's going on.</li>
+            <li><strong>Enthusiastic</strong> – If it's not a <em>hell yes</em>, it's a no.</li>
+            <li><strong>Specific</strong> – Saying yes to one thing doesn't mean yes to everything.</li>
+          </ul>
+          <p style="font-style: italic; color: var(--text-muted); margin-top: auto;">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <h3>🚫 Not consent:</h3>
+          <ul>
+            <li>"They didn't say no."</li>
+            <li>"They were into it earlier."</li>
+            <li>"They didn't fight me."</li>
+            <li>"They were drunk/high."</li>
+            <li>"They didn't respond."</li>
+          </ul>
+          <p style="margin-top: auto;">Silence or lack of resistance does not equal consent. Only an enthusiastic, ongoing "yes" means yes.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-music"></i>
+          </div>
+          <h3>🎶 In rave spaces:</h3>
+          <ul>
+            <li>Loud music + substances + vibes ≠ implied consent.</li>
+            <li>Don't touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
+            <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
+            <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
+          </ul>
+          <p style="margin-top: auto;">Remember: PLUR means <span class="plur-badge peace">Peace</span>, <span class="plur-badge love">Love</span>, <span class="plur-badge unity">Unity</span>, and <span class="plur-badge respect">Respect</span> for all.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>⚠️ Quick check-in phrases:</h3>
+          <ul>
+            <li>"Are you good with this?"</li>
+            <li>"Want me to keep going?"</li>
+            <li>"Let me know if you want to stop."</li>
+            <li>"Is this okay?"</li>
+            <li>"How are you feeling?"</li>
+          </ul>
+          <p style="margin-top: auto;">Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-rainbow"></i>
+          </div>
+          <h3>🏳️‍🌈 Respect all identities.</h3>
+          <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
+          <p style="margin-top: auto;">Our community celebrates diversity and expects everyone to respect each other's identities and boundaries.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <h3>🔥 What to do if someone crosses a line:</h3>
+          <ul>
+            <li>If it's happening now, intervene safely or get help.</li>
+            <li>Support the person—not the abuser, not the rumors.</li>
+            <li>Believe survivors. Listen first. Don't center yourself.</li>
+            <li>Consent violations aren't just private drama—they're community safety issues.</li>
+          </ul>
+          <p style="margin-top: auto;">If you witness or experience a consent violation, report it to event staff or use our <a href="https://plurderapolis.org/accountability.html" style="color: var(--plur-cyan);">accountability process</a>.</p>
+        </div>
+      </div>
     </div>
 
     <div id="ongoing-process" class="ongoing-consent fade-in">
@@ -891,9 +1021,9 @@
     <div id="resources" class="fade-in">
       <h2><i class="fas fa-life-ring"></i> Resources & Support</h2>
       <div class="resource-links">
-        <a href="accountability.html" class="resource-link"><i class="fas fa-balance-scale"></i> View Accountability Process</a>
-        <a href="rejection-based-violence.html" class="resource-link"><i class="fas fa-shield-alt"></i> Learn About Rejection-Based Violence</a>
-        <a href="resources.html" class="resource-link"><i class="fas fa-hands-helping"></i> Access Community Resources</a>
+        <a href="https://plurderapolis.org/accountability.html" class="resource-link"><i class="fas fa-balance-scale"></i> View Accountability Process</a>
+        <a href="https://plurderapolis.org/ride-safety.html" class="resource-link"><i class="fas fa-car-side"></i> Ride Safety Guidelines</a>
+        <a href="https://plurderapolis.org/rejection-based-violence.html" class="resource-link"><i class="fas fa-shield-alt"></i> Learn About Rejection-Based Violence</a>
       </div>
     </div>
 
@@ -925,7 +1055,7 @@
     <div class="highlight-box fade-in">
       <p><strong>PLURderapolis stands for safe dance floors.</strong><br />
       If someone tells you a person made them uncomfortable or violated consent, take it seriously.</p>
-      <p>If you feel unsafe or unsure what to do, check our <a href="resources.html">Emergency Resources</a>, or find a trusted peer, medic, or venue staff member.</p>
+      <p>If you feel unsafe or unsure what to do, check our <a href="https://plurderapolis.org/resources.html">Emergency Resources</a>, or find a trusted peer, medic, or venue staff member.</p>
     </div>
 
     <footer>
@@ -940,7 +1070,7 @@
   </button>
 
   <script>
-    // Add subtle animations to details elements
+    // Add subtle animations to elements
     document.querySelectorAll('details').forEach(detail => {
       detail.addEventListener('toggle', function() {
         if (this.open) {
@@ -1026,47 +1156,54 @@
       });
     });
     
-    // Add ripple effect to map items
-    document.querySelectorAll('.map-item').forEach(item => {
-      item.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-      });
-    });
-    
-    // Add CSS for ripple effect
-    const style = document.createElement('style');
-    style.textContent = `
-      .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
+    // Add ripple effect to interactive elements
+    function createRipple(event) {
+      const button = event.currentTarget;
+      const circle = document.createElement('span');
+      const diameter = Math.max(button.clientWidth, button.clientHeight);
+      const radius = diameter / 2;
+      
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+      circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+      circle.classList.add('ripple');
+      
+      const ripple = button.getElementsByClassName('ripple')[0];
+      
+      if (ripple) {
+        ripple.remove();
       }
       
-      @keyframes ripple-animation {
-        to {
-          transform: scale(4);
-          opacity: 0;
+      button.appendChild(circle);
+    }
+    
+    // Apply ripple effect to buttons and interactive elements
+    const buttons = document.querySelectorAll('.map-item, .resource-link, .share-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', createRipple);
+    });
+    
+    // Share functionality
+    document.querySelectorAll('.share-button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        let shareUrl;
+        
+        if (this.classList.contains('facebook')) {
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        } else if (this.classList.contains('twitter')) {
+          shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+        } else if (this.classList.contains('linkedin')) {
+          shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
         }
-      }
-    `;
-    document.head.appendChild(style);
+        
+        if (shareUrl) {
+          window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+      });
+    });
   </script>
 </body>
 </html>
