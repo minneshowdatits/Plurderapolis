@@ -38,6 +38,7 @@
       --plur-green: #00ff88;
       --plur-blue: #0099ff;
       --card-bg: rgba(40, 5, 60, 0.7);
+      --section-bg: rgba(30, 0, 45, 0.8);
     }
     
     * {
@@ -79,7 +80,7 @@
       position: relative;
       margin-bottom: 1rem;
       border-bottom: 2px solid var(--accent-purple);
-      background: rgba(30, 0, 45, 0.8);
+      background: var(--section-bg);
       border-radius: 12px;
       margin-top: 1rem;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -131,12 +132,122 @@
       margin-bottom: 0.5rem;
     }
     
+    /* Navigation Menu */
+    .nav-menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+    
+    .nav-item {
+      background: linear-gradient(135deg, rgba(123, 44, 191, 0.3), rgba(255, 0, 170, 0.2));
+      border: 1px solid var(--accent-purple);
+      border-radius: 25px;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      color: var(--text-light);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-item:hover {
+      background: linear-gradient(135deg, rgba(123, 44, 191, 0.5), rgba(255, 0, 170, 0.4));
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
+    }
+    
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--accent-purple), var(--hot-pink));
+      box-shadow: 0 0 15px rgba(255, 0, 170, 0.5);
+    }
+    
+    /* Main content sections with collapsible functionality */
+    .content-section {
+      background: var(--section-bg);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      transition: all 0.4s ease;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--neon-pink), var(--plur-cyan));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+    
+    .content-section.active::before {
+      transform: scaleX(1);
+    }
+    
+    .section-header {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    
+    .section-header:hover {
+      background: rgba(123, 44, 191, 0.1);
+    }
+    
+    .section-title {
+      color: var(--plur-cyan);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    
+    .section-icon {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .section-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+    
+    .content-section.active .section-content {
+      max-height: 5000px;
+      padding: 0 1.5rem 1.5rem;
+    }
+    
+    .content-section.active .section-icon {
+      transform: rotate(180deg);
+    }
+    
     /* Card-based layout for content */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1.5rem;
-      margin: 2rem 0;
+      margin: 1.5rem 0;
     }
     
     .card {
@@ -210,131 +321,13 @@
       color: var(--plur-cyan);
     }
     
-    /* Interactive Map/Navigation */
-    .interactive-map {
-      background: rgba(40, 5, 60, 0.9);
-      border: 1px solid var(--accent-purple);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(5px);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .map-title {
-      text-align: center;
-      color: var(--plur-cyan);
+    /* Typography hierarchy */
+    h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-    
-    .map-title:after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(to right, var(--neon-pink), var(--plur-cyan));
-      border-radius: 2px;
-    }
-    
-    .map-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    
-    .map-item {
-      background: linear-gradient(135deg, rgba(123, 44, 191, 0.3), rgba(255, 0, 170, 0.2));
-      border: 1px solid var(--accent-purple);
-      border-radius: 10px;
-      padding: 1.2rem;
-      text-align: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .map-item:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      transition: left 0.7s;
-    }
-    
-    .map-item:hover:before {
-      left: 100%;
-    }
-    
-    .map-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(123, 44, 191, 0.4);
-      border-color: var(--plur-cyan);
-    }
-    
-    .map-item i {
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
+      font-size: 2.5rem;
       color: var(--plur-cyan);
-    }
-    
-    .map-item h3 {
-      color: var(--text-light);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.1rem;
-      margin: 0;
-    }
-    
-    /* Content sections */
-    .content-section {
-      background: rgba(40, 5, 60, 0.7);
-      border: 1px solid var(--accent-purple);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(5px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .content-section:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(to right, var(--neon-pink), var(--plur-cyan));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s ease;
-    }
-    
-    .content-section:hover:before {
-      transform: scaleX(1);
-    }
-    
-    .content-section:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(123, 44, 191, 0.5);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px rgba(0, 240, 224, 0.5);
     }
     
     h2 {
@@ -344,104 +337,25 @@
       margin-bottom: 1rem;
       border-bottom: 1px solid var(--accent-purple);
       padding-bottom: 0.5rem;
-      position: relative;
-      display: flex;
-      align-items: center;
     }
     
-    h2 i {
-      margin-right: 10px;
-      font-size: 1.5rem;
-    }
-    
-    /* Details/summary styling */
-    details {
-      background: rgba(50, 15, 70, 0.8);
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      box-shadow: 0 0 12px rgba(255, 0, 255, 0.2);
-      border: 1px solid var(--mid-purple);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      position: relative;
-    }
-    
-    details[open] {
-      background: rgba(60, 20, 85, 0.9);
-      box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
-    }
-    
-    details[open] summary {
-      border-bottom: 1px solid var(--accent-purple);
-      margin-bottom: 1rem;
-      padding-bottom: 0.6rem;
-    }
-    
-    summary {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
+    h3 {
       color: var(--hot-pink);
-      cursor: pointer;
-      outline: none;
-      transition: color 0.2s ease;
-      padding: 0.5rem 0;
-      position: relative;
-      padding-right: 2rem;
-      display: flex;
-      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      margin: 1.2rem 0 0.8rem;
     }
     
-    summary i {
-      margin-right: 10px;
-      font-size: 1.2rem;
+    h4 {
+      color: var(--neon-yellow);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
     }
     
-    summary:hover {
-      color: var(--neon-pink);
-    }
-    
-    /* Highlight box */
-    .highlight-box {
-      background: linear-gradient(135deg, var(--accent-purple), var(--hot-pink));
-      color: #fff;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      border-radius: 12px;
+    p {
+      margin-bottom: 1rem;
       font-size: 1rem;
-      box-shadow: 0 5px 20px rgba(160, 0, 120, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      animation: pulse 3s infinite;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .highlight-box:before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: rotate(45deg);
-      animation: shine 5s infinite;
-    }
-    
-    @keyframes shine {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-    }
-    
-    .highlight-box a {
-      color: #fff;
-      font-weight: 600;
-      text-decoration: underline;
-    }
-    
-    .highlight-box a:hover {
-      color: var(--plur-cyan-light);
     }
     
     /* Resource links section */
@@ -520,12 +434,6 @@
       background: radial-gradient(circle at 30% 50%, rgba(255, 20, 147, 0.1), transparent 50%);
     }
     
-    .ongoing-consent h2 {
-      color: var(--neon-yellow);
-      text-shadow: 0 0 5px rgba(247, 240, 0, 0.5);
-      border-bottom: 1px solid var(--hot-pink);
-    }
-    
     .consent-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -564,17 +472,46 @@
       box-shadow: 0 5px 15px rgba(247, 240, 0, 0.2);
     }
     
-    .consent-point h4 {
-      color: var(--neon-yellow);
-      margin-bottom: 0.6rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
+    /* Highlight box */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--accent-purple), var(--hot-pink));
+      color: #fff;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 12px;
+      font-size: 1rem;
+      box-shadow: 0 5px 20px rgba(160, 0, 120, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: pulse 3s infinite;
+      position: relative;
+      overflow: hidden;
     }
     
-    .consent-point h4 i {
-      margin-right: 8px;
+    .highlight-box:before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 5s infinite;
+    }
+    
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .highlight-box a {
+      color: #fff;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    
+    .highlight-box a:hover {
+      color: var(--plur-cyan-light);
     }
     
     /* Footer */
@@ -585,28 +522,6 @@
       border-top: 1px solid var(--mid-purple);
       font-size: 0.9rem;
       color: var(--text-muted);
-    }
-    
-    /* Animation for details */
-    details summary::-webkit-details-marker {
-      display: none;
-    }
-    
-    details summary:after {
-      content: "+";
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-weight: bold;
-      font-size: 1.5rem;
-      color: var(--plur-cyan);
-      transition: transform 0.3s ease;
-    }
-    
-    details[open] summary:after {
-      content: "-";
-      transform: translateY(-50%) rotate(0deg);
     }
     
     /* Pulse animation for important elements */
@@ -767,6 +682,44 @@
       }
     }
     
+    /* Quick navigation */
+    .quick-nav {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      margin-bottom: 2rem;
+    }
+    
+    .quick-nav-content {
+      background: var(--section-bg);
+      border: 1px solid var(--accent-purple);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .quick-nav-item {
+      background: rgba(123, 44, 191, 0.2);
+      border: 1px solid var(--accent-purple);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .quick-nav-item:hover {
+      background: rgba(123, 44, 191, 0.4);
+      transform: translateY(-2px);
+    }
+    
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .brand-title {
@@ -777,20 +730,23 @@
         font-size: 1.7rem;
       }
       
-      .content-section, details {
-        padding: 1rem;
+      .section-title {
+        font-size: 1.5rem;
       }
       
-      summary {
-        font-size: 1.1rem;
+      .nav-menu {
+        flex-direction: column;
+        align-items: center;
       }
       
-      .map-grid {
+      .nav-item {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+      
+      .card-grid {
         grid-template-columns: 1fr;
-      }
-      
-      .map-item {
-        min-height: 100px;
       }
       
       .consent-grid {
@@ -804,8 +760,16 @@
         height: 45px;
       }
       
-      .card-grid {
-        grid-template-columns: 1fr;
+      .section-header {
+        padding: 1rem;
+      }
+      
+      .section-content {
+        padding: 0 1rem;
+      }
+      
+      .content-section.active .section-content {
+        padding: 0 1rem 1rem;
       }
     }
     
@@ -818,8 +782,8 @@
         font-size: 1.5rem;
       }
       
-      summary {
-        font-size: 1rem;
+      .section-title {
+        font-size: 1.3rem;
       }
       
       .resource-link {
@@ -831,12 +795,17 @@
         padding: 0.5rem;
       }
       
-      .interactive-map {
-        padding: 1rem;
-      }
-      
       .share-buttons {
         flex-wrap: wrap;
+      }
+      
+      .quick-nav-content {
+        padding: 0.8rem;
+      }
+      
+      .quick-nav-item {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -856,6 +825,16 @@
       <p class="subtitle">Creating a safer PLUR community together</p>
     </header>
     
+    <!-- Quick Navigation -->
+    <div class="quick-nav">
+      <div class="quick-nav-content">
+        <a href="#what-is-consent" class="quick-nav-item">What is Consent</a>
+        <a href="#ongoing-process" class="quick-nav-item">Ongoing Process</a>
+        <a href="#resources" class="quick-nav-item">Resources</a>
+        <a href="#quick-tips" class="quick-nav-item">Quick Tips</a>
+      </div>
+    </div>
+    
     <!-- Share buttons -->
     <div class="share-buttons">
       <a href="#" class="share-button facebook" aria-label="Share on Facebook">
@@ -869,185 +848,192 @@
       </a>
     </div>
     
-    <!-- Interactive Map/Navigation -->
-    <div class="interactive-map fade-in">
-      <div class="map-title">
-        <i class="fas fa-map"></i> Navigate Consent Culture
+    <!-- Introduction Section -->
+    <div class="content-section fade-in active" id="introduction">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-info-circle section-icon"></i> Introduction</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
       </div>
-      <div class="map-grid">
-        <div class="map-item" data-target="what-is-consent">
-          <i class="fas fa-question-circle"></i>
-          <h3>What is Consent?</h3>
-        </div>
-        <div class="map-item" data-target="ongoing-process">
-          <i class="fas fa-sync-alt"></i>
-          <h3>Ongoing Process</h3>
-        </div>
-        <div class="map-item" data-target="resources">
-          <i class="fas fa-life-ring"></i>
-          <h3>Resources & Support</h3>
-        </div>
-        <div class="map-item" data-target="quick-tips">
-          <i class="fas fa-lightbulb"></i>
-          <h3>Quick Tips</h3>
-        </div>
+      <div class="section-content">
+        <p><strong>Consent isn't just sexy—it's necessary.</strong> Especially in nightlife spaces where people are vulnerable, intoxicated, overstimulated, or all of the above.</p>
+        <p>At PLURderapolis, we believe in creating spaces where everyone feels safe, respected, and empowered. That's why consent culture is at the heart of everything we do.</p>
       </div>
     </div>
 
-    <div class="content-section fade-in">
-      <p><strong>Consent isn't just sexy—it's necessary.</strong> Especially in nightlife spaces where people are vulnerable, intoxicated, overstimulated, or all of the above.</p>
-      <p>At PLURderapolis, we believe in creating spaces where everyone feels safe, respected, and empowered. That's why consent culture is at the heart of everything we do.</p>
-    </div>
-
-    <div id="what-is-consent" class="fade-in">
-      <h2><i class="fas fa-question-circle"></i> Understanding Consent</h2>
-      
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-check-circle"></i>
+    <!-- What is Consent Section -->
+    <div class="content-section fade-in" id="what-is-consent">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-question-circle section-icon"></i> Understanding Consent</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>✅ Consent is:</h3>
+            <ul>
+              <li><strong>Freely given</strong> – Not coerced, pressured, or guilt-tripped.</li>
+              <li><strong>Reversible</strong> – You can say yes, then change your mind at any time.</li>
+              <li><strong>Informed</strong> – Everyone knows exactly what's going on.</li>
+              <li><strong>Enthusiastic</strong> – If it's not a <em>hell yes</em>, it's a no.</li>
+              <li><strong>Specific</strong> – Saying yes to one thing doesn't mean yes to everything.</li>
+            </ul>
+            <p style="font-style: italic; color: var(--text-muted); margin-top: auto;">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
           </div>
-          <h3>✅ Consent is:</h3>
-          <ul>
-            <li><strong>Freely given</strong> – Not coerced, pressured, or guilt-tripped.</li>
-            <li><strong>Reversible</strong> – You can say yes, then change your mind at any time.</li>
-            <li><strong>Informed</strong> – Everyone knows exactly what's going on.</li>
-            <li><strong>Enthusiastic</strong> – If it's not a <em>hell yes</em>, it's a no.</li>
-            <li><strong>Specific</strong> – Saying yes to one thing doesn't mean yes to everything.</li>
-          </ul>
-          <p style="font-style: italic; color: var(--text-muted); margin-top: auto;">(That spells <strong>FRIES</strong> if you need to remember it.)</p>
-        </div>
-        
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-times-circle"></i>
+          
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <h3>🚫 Not consent:</h3>
+            <ul>
+              <li>"They didn't say no."</li>
+              <li>"They were into it earlier."</li>
+              <li>"They didn't fight me."</li>
+              <li>"They were drunk/high."</li>
+              <li>"They didn't respond."</li>
+            </ul>
+            <p style="margin-top: auto;">Silence or lack of resistance does not equal consent. Only an enthusiastic, ongoing "yes" means yes.</p>
           </div>
-          <h3>🚫 Not consent:</h3>
-          <ul>
-            <li>"They didn't say no."</li>
-            <li>"They were into it earlier."</li>
-            <li>"They didn't fight me."</li>
-            <li>"They were drunk/high."</li>
-            <li>"They didn't respond."</li>
-          </ul>
-          <p style="margin-top: auto;">Silence or lack of resistance does not equal consent. Only an enthusiastic, ongoing "yes" means yes.</p>
-        </div>
-        
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-music"></i>
+          
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-music"></i>
+            </div>
+            <h3>🎶 In rave spaces:</h3>
+            <ul>
+              <li>Loud music + substances + vibes ≠ implied consent.</li>
+              <li>Don't touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
+              <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
+              <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
+            </ul>
+            <p style="margin-top: auto;">Remember: PLUR means <span class="plur-badge peace">Peace</span>, <span class="plur-badge love">Love</span>, <span class="plur-badge unity">Unity</span>, and <span class="plur-badge respect">Respect</span> for all.</p>
           </div>
-          <h3>🎶 In rave spaces:</h3>
-          <ul>
-            <li>Loud music + substances + vibes ≠ implied consent.</li>
-            <li>Don't touch people without asking—<strong>not even to dance, grab hands, or hug.</strong></li>
-            <li>Don't assume someone's outfit, flirting, or dancing means anything more than what it is.</li>
-            <li>People who are rolling, drunk, tripping, or otherwise altered can't legally or ethically give consent.</li>
-          </ul>
-          <p style="margin-top: auto;">Remember: PLUR means <span class="plur-badge peace">Peace</span>, <span class="plur-badge love">Love</span>, <span class="plur-badge unity">Unity</span>, and <span class="plur-badge respect">Respect</span> for all.</p>
-        </div>
-        
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-comments"></i>
+          
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <h3>⚠️ Quick check-in phrases:</h3>
+            <ul>
+              <li>"Are you good with this?"</li>
+              <li>"Want me to keep going?"</li>
+              <li>"Let me know if you want to stop."</li>
+              <li>"Is this okay?"</li>
+              <li>"How are you feeling?"</li>
+            </ul>
+            <p style="margin-top: auto;">Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
           </div>
-          <h3>⚠️ Quick check-in phrases:</h3>
-          <ul>
-            <li>"Are you good with this?"</li>
-            <li>"Want me to keep going?"</li>
-            <li>"Let me know if you want to stop."</li>
-            <li>"Is this okay?"</li>
-            <li>"How are you feeling?"</li>
-          </ul>
-          <p style="margin-top: auto;">Keep it <strong>clear, casual, and ongoing</strong>. Consent isn't one question—it's a whole-ass <em>conversation</em>.</p>
-        </div>
-        
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-rainbow"></i>
+          
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-rainbow"></i>
+            </div>
+            <h3>🏳️‍🌈 Respect all identities.</h3>
+            <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
+            <p style="margin-top: auto;">Our community celebrates diversity and expects everyone to respect each other's identities and boundaries.</p>
           </div>
-          <h3>🏳️‍🌈 Respect all identities.</h3>
-          <p>Don't misgender people. Don't make assumptions. Don't use someone's gender or sexuality as an excuse to be invasive or weird. <strong>Transphobia, homophobia, and racism = not welcome here.</strong></p>
-          <p style="margin-top: auto;">Our community celebrates diversity and expects everyone to respect each other's identities and boundaries.</p>
-        </div>
-        
-        <div class="card">
-          <div class="card-icon">
-            <i class="fas fa-exclamation-triangle"></i>
+          
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>🔥 What to do if someone crosses a line:</h3>
+            <ul>
+              <li>If it's happening now, intervene safely or get help.</li>
+              <li>Support the person—not the abuser, not the rumors.</li>
+              <li>Believe survivors. Listen first. Don't center yourself.</li>
+              <li>Consent violations aren't just private drama—they're community safety issues.</li>
+            </ul>
+            <p style="margin-top: auto;">If you witness or experience a consent violation, report it to event staff or use our <a href="https://plurderapolis.org/accountability.html" style="color: var(--plur-cyan);">accountability process</a>.</p>
           </div>
-          <h3>🔥 What to do if someone crosses a line:</h3>
-          <ul>
-            <li>If it's happening now, intervene safely or get help.</li>
-            <li>Support the person—not the abuser, not the rumors.</li>
-            <li>Believe survivors. Listen first. Don't center yourself.</li>
-            <li>Consent violations aren't just private drama—they're community safety issues.</li>
-          </ul>
-          <p style="margin-top: auto;">If you witness or experience a consent violation, report it to event staff or use our <a href="https://plurderapolis.org/accountability.html" style="color: var(--plur-cyan);">accountability process</a>.</p>
         </div>
       </div>
     </div>
 
-    <div id="ongoing-process" class="ongoing-consent fade-in">
-      <h2><i class="fas fa-sync-alt"></i> 🔄 Consent is an Ongoing Process</h2>
-      <p>True consent culture extends far beyond getting a "yes" or respecting a "no." It's about creating environments where everyone feels empowered to communicate their boundaries and have them respected throughout every interaction.</p>
-      
-      <div class="consent-grid">
-        <div class="consent-point">
-          <h4><i class="fas fa-redo"></i> Continuous Check-ins</h4>
-          <p>Consent isn't a one-time question. Check in regularly with your partners, especially as situations evolve or intensify.</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-user-check"></i> Non-Verbal Cues Matter</h4>
-          <p>Pay attention to body language. Stiffening, pulling away, or avoiding eye contact may indicate discomfort even when words don't.</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-heart"></i> Enthusiastic Participation</h4>
-          <p>Look for active participation rather than passive acceptance. The absence of a "no" doesn't equal the presence of a "yes."</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-exchange-alt"></i> Changing Minds is Normal</h4>
-          <p>People can withdraw consent at any time, for any reason. Respecting this is fundamental to consent culture.</p>
+    <!-- Ongoing Process Section -->
+    <div class="content-section fade-in" id="ongoing-process">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-sync-alt section-icon"></i> Consent is an Ongoing Process</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <div class="ongoing-consent">
+          <p>True consent culture extends far beyond getting a "yes" or respecting a "no." It's about creating environments where everyone feels empowered to communicate their boundaries and have them respected throughout every interaction.</p>
+          
+          <div class="consent-grid">
+            <div class="consent-point">
+              <h4><i class="fas fa-redo"></i> Continuous Check-ins</h4>
+              <p>Consent isn't a one-time question. Check in regularly with your partners, especially as situations evolve or intensify.</p>
+            </div>
+            
+            <div class="consent-point">
+              <h4><i class="fas fa-user-check"></i> Non-Verbal Cues Matter</h4>
+              <p>Pay attention to body language. Stiffening, pulling away, or avoiding eye contact may indicate discomfort even when words don't.</p>
+            </div>
+            
+            <div class="consent-point">
+              <h4><i class="fas fa-heart"></i> Enthusiastic Participation</h4>
+              <p>Look for active participation rather than passive acceptance. The absence of a "no" doesn't equal the presence of a "yes."</p>
+            </div>
+            
+            <div class="consent-point">
+              <h4><i class="fas fa-exchange-alt"></i> Changing Minds is Normal</h4>
+              <p>People can withdraw consent at any time, for any reason. Respecting this is fundamental to consent culture.</p>
+            </div>
+          </div>
+          
+          <p class="pulse" style="padding: 1rem; text-align: center; border-radius: 8px; margin-top: 1.5rem;">
+            <strong>Remember:</strong> Consent isn't just about avoiding violation—it's about actively creating safety and respect.
+          </p>
         </div>
       </div>
-      
-      <p class="pulse" style="padding: 1rem; text-align: center; border-radius: 8px; margin-top: 1.5rem;">
-        <strong>Remember:</strong> Consent isn't just about avoiding violation—it's about actively creating safety and respect.
-      </p>
     </div>
 
-    <div id="resources" class="fade-in">
-      <h2><i class="fas fa-life-ring"></i> Resources & Support</h2>
-      <div class="resource-links">
-        <a href="https://plurderapolis.org/accountability.html" class="resource-link"><i class="fas fa-balance-scale"></i> View Accountability Process</a>
-        <a href="https://plurderapolis.org/ride-safety.html" class="resource-link"><i class="fas fa-car-side"></i> Ride Safety Guidelines</a>
-        <a href="https://plurderapolis.org/rejection-based-violence.html" class="resource-link"><i class="fas fa-shield-alt"></i> Learn About Rejection-Based Violence</a>
+    <!-- Resources Section -->
+    <div class="content-section fade-in" id="resources">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-life-ring section-icon"></i> Resources & Support</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <div class="resource-links">
+          <a href="https://plurderapolis.org/accountability.html" class="resource-link"><i class="fas fa-balance-scale"></i> View Accountability Process</a>
+          <a href="https://plurderapolis.org/ride-safety.html" class="resource-link"><i class="fas fa-car-side"></i> Ride Safety Guidelines</a>
+          <a href="https://plurderapolis.org/rejection-based-violence.html" class="resource-link"><i class="fas fa-shield-alt"></i> Learn About Rejection-Based Violence</a>
+        </div>
       </div>
     </div>
 
-    <div id="quick-tips" class="content-section fade-in">
-      <h2><i class="fas fa-lightbulb"></i> Quick Tips for Consent Culture</h2>
-      <div class="consent-grid">
-        <div class="consent-point">
-          <h4><i class="fas fa-volume-up"></i> Communicate Clearly</h4>
-          <p>Use direct language and check for understanding. Don't rely on assumptions or hints.</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-hand-paper"></i> Respect Boundaries</h4>
-          <p>When someone sets a boundary, honor it immediately without question or negotiation.</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-users"></i> Be an Active Bystander</h4>
-          <p>If you see something that doesn't look right, check in with the person who might need support.</p>
-        </div>
-        
-        <div class="consent-point">
-          <h4><i class="fas fa-heartbeat"></i> Check Your Intentions</h4>
-          <p>Ask yourself why you want to interact with someone. Is it for mutual connection or your own gratification?</p>
+    <!-- Quick Tips Section -->
+    <div class="content-section fade-in" id="quick-tips">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-lightbulb section-icon"></i> Quick Tips for Consent Culture</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <div class="consent-grid">
+          <div class="consent-point">
+            <h4><i class="fas fa-volume-up"></i> Communicate Clearly</h4>
+            <p>Use direct language and check for understanding. Don't rely on assumptions or hints.</p>
+          </div>
+          
+          <div class="consent-point">
+            <h4><i class="fas fa-hand-paper"></i> Respect Boundaries</h4>
+            <p>When someone sets a boundary, honor it immediately without question or negotiation.</p>
+          </div>
+          
+          <div class="consent-point">
+            <h4><i class="fas fa-users"></i> Be an Active Bystander</h4>
+            <p>If you see something that doesn't look right, check in with the person who might need support.</p>
+          </div>
+          
+          <div class="consent-point">
+            <h4><i class="fas fa-heartbeat"></i> Check Your Intentions</h4>
+            <p>Ask yourself why you want to interact with someone. Is it for mutual connection or your own gratification?</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1070,36 +1056,41 @@
   </button>
 
   <script>
-    // Add subtle animations to elements
-    document.querySelectorAll('details').forEach(detail => {
-      detail.addEventListener('toggle', function() {
-        if (this.open) {
-          this.style.transform = 'translateY(5px)';
-          setTimeout(() => {
-            this.style.transform = 'translateY(0)';
-          }, 300);
+    // Collapsible section functionality
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', function() {
+        const section = this.parentElement;
+        section.classList.toggle('active');
+        
+        // Close other sections when one is opened (optional - remove if you want multiple open)
+        if (section.classList.contains('active')) {
+          document.querySelectorAll('.content-section').forEach(otherSection => {
+            if (otherSection !== section && otherSection.classList.contains('active')) {
+              otherSection.classList.remove('active');
+            }
+          });
         }
       });
     });
     
-    // Interactive map navigation
-    document.querySelectorAll('.map-item').forEach(item => {
-      item.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          // Close all open details before scrolling
-          document.querySelectorAll('details[open]').forEach(detail => {
-            detail.removeAttribute('open');
+    // Quick navigation functionality
+    document.querySelectorAll('.quick-nav-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          // Close all sections first
+          document.querySelectorAll('.content-section').forEach(section => {
+            section.classList.remove('active');
           });
           
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+          // Open the target section
+          targetSection.classList.add('active');
           
-          // Add highlight effect to the target section
-          targetElement.style.boxShadow = '0 0 30px rgba(123, 44, 191, 0.7)';
-          setTimeout(() => {
-            targetElement.style.boxShadow = '';
-          }, 2000);
+          // Scroll to the section
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
@@ -1178,7 +1169,7 @@
     }
     
     // Apply ripple effect to buttons and interactive elements
-    const buttons = document.querySelectorAll('.map-item, .resource-link, .share-button');
+    const buttons = document.querySelectorAll('.resource-link, .share-button, .quick-nav-item');
     buttons.forEach(button => {
       button.addEventListener('click', createRipple);
     });
@@ -1204,6 +1195,9 @@
         }
       });
     });
+    
+    // Open the first section by default
+    document.querySelector('.content-section').classList.add('active');
   </script>
 </body>
 </html>
