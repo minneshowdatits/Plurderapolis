@@ -93,19 +93,38 @@
       color: var(--accent);
     }
     
+    /* Improved Hamburger Menu */
     .nav-toggle {
       display: none;
       background: none;
       border: none;
       color: var(--highlight);
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       cursor: pointer;
       transition: transform 0.3s;
       z-index: 101;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 110, 199, 0.1);
+      position: relative;
     }
     
     .nav-toggle:hover {
       transform: scale(1.1);
+      background: rgba(255, 110, 199, 0.2);
+    }
+    
+    .nav-toggle.active {
+      background: rgba(255, 110, 199, 0.3);
+    }
+    
+    .nav-toggle i {
+      transition: transform 0.3s;
+    }
+    
+    .nav-toggle.active i {
+      transform: rotate(90deg);
     }
     
     nav ul {
@@ -266,7 +285,7 @@
       background-color: var(--contact);
     }
     
-    /* Collapsible sections */
+    /* Collapsible sections with scrollable content */
     .collapsible {
       background-color: rgba(255, 110, 199, 0.1);
       color: var(--accent);
@@ -418,13 +437,33 @@
       white-space: nowrap;
     }
     
-    /* Mocktail Cards */
+    /* Mocktail Cards - Scrollable Section */
     .mocktail-card {
       background: linear-gradient(to bottom, rgba(28, 0, 42, 0.7), rgba(28, 0, 42, 0.9));
       border-radius: 0.75rem;
       padding: 1.25rem;
       margin-bottom: 1.25rem;
       border-left: 3px solid var(--accent);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .mocktail-card::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .mocktail-card::-webkit-scrollbar-track {
+      background: rgba(255, 110, 199, 0.1);
+      border-radius: 4px;
+    }
+    
+    .mocktail-card::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    
+    .mocktail-card::-webkit-scrollbar-thumb:hover {
+      background: var(--highlight);
     }
     
     .mocktail-card:last-child {
@@ -625,7 +664,9 @@
       }
       
       .nav-toggle {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       
       nav {
@@ -759,6 +800,7 @@
       
       .mocktail-card {
         padding: 1rem;
+        max-height: 250px;
       }
       
       .mocktail-steps li {
@@ -808,6 +850,7 @@
       
       .mocktail-card {
         padding: 0.8rem;
+        max-height: 200px;
       }
       
       .share-btn, .social-link {
@@ -882,6 +925,31 @@
       opacity: 1;
       visibility: visible;
     }
+    
+    /* Scrollable sections */
+    .scrollable-section {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    
+    .scrollable-section::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .scrollable-section::-webkit-scrollbar-track {
+      background: rgba(255, 110, 199, 0.1);
+      border-radius: 4px;
+    }
+    
+    .scrollable-section::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    
+    .scrollable-section::-webkit-scrollbar-thumb:hover {
+      background: var(--highlight);
+    }
   </style>
 </head>
 <body>
@@ -936,7 +1004,7 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner">
+          <div class="card-content-inner scrollable-section">
             <p class="resource-desc" style="margin-bottom: 1.5rem;">Local venues, clubs & projects where the music is front and center — even if they're not 100% "sober bars." These are spaces for 👽 sober ravers to connect directly with the scene.</p>
             
             <button class="collapsible">ZeroProof Beverage House</button>
@@ -1013,7 +1081,7 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner">
+          <div class="card-content-inner scrollable-section">
             <button class="collapsible">Marigold</button>
             <div class="collapsible-content">
               <div class="collapsible-content-inner">
@@ -1112,7 +1180,7 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner">
+          <div class="card-content-inner scrollable-section">
             <button class="collapsible">Khâluna & Chip's Clubhouse</button>
             <div class="collapsible-content">
               <div class="collapsible-content-inner">
@@ -1154,7 +1222,7 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner">
+          <div class="card-content-inner scrollable-section">
             <button class="collapsible">Minnesota Recovery Connection</button>
             <div class="collapsible-content">
               <div class="collapsible-content-inner">
@@ -1208,7 +1276,7 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner">
+          <div class="card-content-inner scrollable-section">
             <button class="collapsible">Electric Lemonade</button>
             <div class="collapsible-content">
               <div class="collapsible-content-inner">
@@ -1286,7 +1354,7 @@
         <i class="fas fa-chevron-down toggle-icon"></i>
       </div>
       <div class="card-content">
-        <div class="card-content-inner">
+        <div class="card-content-inner scrollable-section">
           <p style="margin-bottom: 1.5rem;">Have questions, suggestions, or want to join our sober raver community? Reach out to us through any of these channels:</p>
           
           <div class="social-links">
@@ -1336,7 +1404,9 @@
     // Navigation toggle for mobile
     document.getElementById('navToggle').addEventListener('click', function() {
       const nav = document.getElementById('mainNav');
+      const toggle = this;
       nav.classList.toggle('active');
+      toggle.classList.toggle('active');
     });
     
     // Smooth scrolling for navigation links
@@ -1364,6 +1434,7 @@
         // Close mobile menu if open
         if (window.innerWidth <= 768) {
           document.getElementById('mainNav').classList.remove('active');
+          document.getElementById('navToggle').classList.remove('active');
         }
       });
     });
