@@ -17,6 +17,12 @@
       --text: #f8f8f8;
       --shadow: rgba(0, 255, 255, 0.1);
       --card-border: rgba(255, 110, 199, 0.2);
+      --edm-hub: #1c002a;
+      --na-shops: #2a0039;
+      --mocktail-venues: #390047;
+      --support: #470056;
+      --mocktails: #560065;
+      --contact: #650074;
     }
     
     * {
@@ -88,24 +94,32 @@
       color: var(--highlight);
       font-size: 1.5rem;
       cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .nav-toggle:hover {
+      transform: scale(1.1);
     }
     
     nav ul {
       display: flex;
       list-style: none;
-      gap: 2rem;
+      gap: 1.5rem;
     }
     
     nav a {
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      transition: all 0.3s;
       position: relative;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
     }
     
     nav a:hover, nav a.active {
       color: var(--highlight);
+      background: rgba(255, 110, 199, 0.1);
     }
     
     nav a::after {
@@ -153,17 +167,16 @@
     
     /* Cards Layout */
     .cards-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 2rem;
       margin-bottom: 3rem;
     }
     
     .card {
-      background-color: var(--card);
       border-radius: 1rem;
       box-shadow: 0 0 20px var(--shadow);
-      padding: 1.5rem;
+      padding: 0;
       border: 1px solid var(--card-border);
       transition: transform 0.3s, box-shadow 0.3s;
       overflow: hidden;
@@ -176,11 +189,16 @@
     
     .card-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .card-header:hover {
+      background-color: rgba(255, 255, 255, 0.05);
     }
     
     .card-header i {
@@ -195,7 +213,47 @@
       margin: 0;
     }
     
-    /* Collapsible sections - Updated with animation */
+    .card-header .toggle-icon {
+      transition: transform 0.3s;
+    }
+    
+    .card-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+      background-color: var(--card);
+    }
+    
+    .card-content-inner {
+      padding: 0 1.5rem 1.5rem;
+    }
+    
+    /* Section-specific colors */
+    #edm-hub .card-header {
+      background-color: var(--edm-hub);
+    }
+    
+    #events .card-header {
+      background-color: var(--na-shops);
+    }
+    
+    #trending-mocktails .card-header {
+      background-color: var(--mocktail-venues);
+    }
+    
+    #support .card-header {
+      background-color: var(--support);
+    }
+    
+    #mocktails .card-header {
+      background-color: var(--mocktails);
+    }
+    
+    #contact .card-header {
+      background-color: var(--contact);
+    }
+    
+    /* Collapsible sections */
     .collapsible {
       background-color: rgba(255, 110, 199, 0.1);
       color: var(--accent);
@@ -254,6 +312,17 @@
       margin: 0.75rem 0;
       color: var(--highlight);
       font-weight: 500;
+    }
+    
+    .venue-location a {
+      color: var(--highlight);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .venue-location a:hover {
+      color: #fff;
+      text-decoration: underline;
     }
     
     .venue-location i {
@@ -538,16 +607,12 @@
       
       nav ul {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.5rem;
         padding: 1rem 0;
       }
       
       .hero h1 {
         font-size: 2rem;
-      }
-      
-      .cards-container {
-        grid-template-columns: 1fr;
       }
       
       .share-section {
@@ -643,9 +708,9 @@
       <nav id="mainNav">
         <ul>
           <li><a href="#edm-hub" class="active">EDM Hub</a></li>
-          <li><a href="#events">Events</a></li>
-          <li><a href="venues.html">Venues</a></li>
-          <li><a href="resources.html">Resources</a></li>
+          <li><a href="#events">NA Shops & Bars</a></li>
+          <li><a href="venues-guide.html">Venues Guide</a></li>
+          <li><a href="#trending-mocktails">Mocktail Venues</a></li>
           <li><a href="#support">Support</a></li>
           <li><a href="#mocktails">Mocktails</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -673,68 +738,75 @@
       <!-- Sober EDM Hub Card -->
       <div class="card" id="edm-hub">
         <div class="card-header">
-          <i class="fas fa-compact-disc"></i>
-          <h2>Sober EDM Hub</h2>
-        </div>
-        <p class="resource-desc" style="margin-bottom: 1.5rem;">Local venues, clubs & projects where the music is front and center — even if they're not 100% "sober bars." These are spaces for 👽 sober ravers to connect directly with the scene.</p>
-        
-        <button class="collapsible">ZeroProof Beverage House</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Northeast Minneapolis</span>
-            </div>
-            <p class="venue-description">Non-alcoholic beverage shop + community space with plug-n-play texture for sober EDM meetups.</p>
-            <div class="sound-tags">
-              <span class="sound-tag">House</span>
-              <span class="sound-tag">Techno</span>
-            </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-compact-disc"></i>
+            <h2>Sober EDM Hub</h2>
           </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        
-        <button class="collapsible">Būch Fermentary & Taproom</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Northeast Minneapolis</span>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <p class="resource-desc" style="margin-bottom: 1.5rem;">Local venues, clubs & projects where the music is front and center — even if they're not 100% "sober bars." These are spaces for 👽 sober ravers to connect directly with the scene.</p>
+            
+            <button class="collapsible">ZeroProof Beverage House</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=ZeroProof+Beverage+House+Northeast+Minneapolis" target="_blank">Northeast Minneapolis</a>
+                </div>
+                <p class="venue-description">Non-alcoholic beverage shop + community space with plug-n-play texture for sober EDM meetups.</p>
+                <div class="sound-tags">
+                  <span class="sound-tag">House</span>
+                  <span class="sound-tag">Techno</span>
+                </div>
+              </div>
             </div>
-            <p class="venue-description">Northeast MPLS space famous for kombucha and THC beverage pop-ups — a great spot for low-key sober events.</p>
-            <div class="sound-tags">
-              <span class="sound-tag">Deep House</span>
-              <span class="sound-tag">Downtempo</span>
+            
+            <button class="collapsible">Būch Fermentary & Taproom</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Buch+Fermentary+Taproom+Northeast+Minneapolis" target="_blank">Northeast Minneapolis</a>
+                </div>
+                <p class="venue-description">Northeast MPLS space famous for kombucha and THC beverage pop-ups — a great spot for low-key sober events.</p>
+                <div class="sound-tags">
+                  <span class="sound-tag">Deep House</span>
+                  <span class="sound-tag">Downtempo</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        
-        <button class="collapsible">Earl Giles</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Northeast Minneapolis</span>
+            
+            <button class="collapsible">Earl Giles</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Earl+Giles+Northeast+Minneapolis" target="_blank">Northeast Minneapolis</a>
+                </div>
+                <p class="venue-description">Massive new project: non-alcoholic elixir apothecary, event venue, botanical lounge, and plant haven. Already hosting pop-up DJ nights.</p>
+                <div class="sound-tags">
+                  <span class="sound-tag">Ambient</span>
+                  <span class="sound-tag">Experimental</span>
+                </div>
+              </div>
             </div>
-            <p class="venue-description">Massive new project: non-alcoholic elixir apothecary, event venue, botanical lounge, and plant haven. Already hosting pop-up DJ nights.</p>
-            <div class="sound-tags">
-              <span class="sound-tag">Ambient</span>
-              <span class="sound-tag">Experimental</span>
-            </div>
-          </div>
-        </div>
-        
-        <button class="collapsible">Club Throwdown</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>St. Paul</span>
-            </div>
-            <p class="venue-description">A newly reopened alcohol-free rave venue in St. Paul that exclusively serves NA drinks and hosts EDM shows.</p>
-            <div class="sound-tags">
-              <span class="sound-tag">DnB</span>
-              <span class="sound-tag">Dubstep</span>
-              <span class="sound-tag">Hardstyle</span>
+            
+            <button class="collapsible">Club Throwdown</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Club+Throwdown+St+Paul" target="_blank">St. Paul</a>
+                </div>
+                <p class="venue-description">A newly reopened alcohol-free rave venue in St. Paul that exclusively serves NA drinks and hosts EDM shows.</p>
+                <div class="sound-tags">
+                  <span class="sound-tag">DnB</span>
+                  <span class="sound-tag">Dubstep</span>
+                  <span class="sound-tag">Hardstyle</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -743,128 +815,140 @@
       <!-- Verified NA Shops & Bars Card -->
       <div class="card" id="events">
         <div class="card-header">
-          <i class="fas fa-store"></i>
-          <h2>Verified NA Shops & Bars</h2>
-        </div>
-        
-        <button class="collapsible">Marigold</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Minneapolis (3506 Nicollet Ave) & St. Paul (2236 Carter Ave)</span>
-            </div>
-            <p class="venue-description">Both locations are active, open Mon–Sat 12–6 PM, and completely dedicated to non-alcoholic beer, spirits, wine, cocktail mixers, THC drinks, and NA merch.</p>
-            <p>💡 Bonus: They house ~60 THC drink varieties and continue hosting tastings and pop-ups.</p>
-            <a href="https://shopmari.gold/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Marigold
-            </a>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-store"></i>
+            <h2>Verified NA Shops & Bars</h2>
           </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        
-        <button class="collapsible">Club Throw Down</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>St. Paul (1440 Arcade St.)</span>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <button class="collapsible">Marigold</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Marigold+Minneapolis+3506+Nicollet+Ave" target="_blank">Minneapolis (3506 Nicollet Ave) & St. Paul (2236 Carter Ave)</a>
+                </div>
+                <p class="venue-description">Both locations are active, open Mon–Sat 12–6 PM, and completely dedicated to non-alcoholic beer, spirits, wine, cocktail mixers, THC drinks, and NA merch.</p>
+                <p>💡 Bonus: They house ~60 THC drink varieties and continue hosting tastings and pop-ups.</p>
+                <a href="https://shopmari.gold/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Marigold
+                </a>
+              </div>
             </div>
-            <p class="venue-description">Opened March 15, 2024, and still active as Minnesota's first sober nightclub. Events continue monthly with DJs, mocktails, live entertainment, karaoke, and community meet-ups.</p>
-            <a href="https://clubthrowdown.com/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Club Throw Down
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Out & Sober Minnesota</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Twin Cities Area</span>
+            
+            <button class="collapsible">Club Throw Down</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Club+Throw+Down+St+Paul+1440+Arcade+St" target="_blank">St. Paul (1440 Arcade St.)</a>
+                </div>
+                <p class="venue-description">Opened March 15, 2024, and still active as Minnesota's first sober nightclub. Events continue monthly with DJs, mocktails, live entertainment, karaoke, and community meet-ups.</p>
+                <a href="https://clubthrowdown.com/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Club Throw Down
+                </a>
+              </div>
             </div>
-            <p class="venue-description">✅ Bi-weekly and monthly sober LGBTQ+ meet-ups, social events (BBQs, tubing, art walks, holiday craft socials, and Recovery Month walks) are ongoing. Regular forthcoming events listed into 2025.</p>
-            <a href="https://outsobermn.org/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Out & Sober MN Events
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Hi Flora!</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>South Minneapolis</span>
+            
+            <button class="collapsible">Out & Sober Minnesota</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Out+Sober+Minnesota+Twin+Cities" target="_blank">Twin Cities Area</a>
+                </div>
+                <p class="venue-description">✅ Bi-weekly and monthly sober LGBTQ+ meet-ups, social events (BBQs, tubing, art walks, holiday craft socials, and Recovery Month walks) are ongoing. Regular forthcoming events listed into 2025.</p>
+                <a href="https://outsobermn.org/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Out & Sober MN Events
+                </a>
+              </div>
             </div>
-            <p class="venue-description">A vegan restaurant that's fully alcohol-free, offering over a dozen mocktails and zero-proof options.</p>
-            <a href="https://www.hiflora.com/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Hi Flora!
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Zero Proof</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Northeast Minneapolis & St. Paul</span>
+            
+            <button class="collapsible">Hi Flora!</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Hi+Flora+South+Minneapolis" target="_blank">South Minneapolis</a>
+                </div>
+                <p class="venue-description">A vegan restaurant that's fully alcohol-free, offering over a dozen mocktails and zero-proof options.</p>
+                <a href="https://www.hiflora.com/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Hi Flora!
+                </a>
+              </div>
             </div>
-            <p class="venue-description">Not just a bottle shop, but a go-to for NA spirits, CBD drinks, and community events.</p>
-            <a href="https://zeroproofmn.com/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Zero Proof
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Northern Soda Company</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>New Brighton</span>
+            
+            <button class="collapsible">Zero Proof</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Zero+Proof+Northeast+Minneapolis+St+Paul" target="_blank">Northeast Minneapolis & St. Paul</a>
+                </div>
+                <p class="venue-description">Not just a bottle shop, but a go-to for NA spirits, CBD drinks, and community events.</p>
+                <a href="https://zeroproofmn.com/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Zero Proof
+                </a>
+              </div>
             </div>
-            <p class="venue-description">Popular soda taproom with unique flavors and tasting flights — gets mentioned by locals frequently as a chill hangout with no booze.</p>
-            <a href="https://northernsodacompany.com/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Northern Soda Company
-            </a>
+            
+            <button class="collapsible">Northern Soda Company</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Northern+Soda+Company+New+Brighton" target="_blank">New Brighton</a>
+                </div>
+                <p class="venue-description">Popular soda taproom with unique flavors and tasting flights — gets mentioned by locals frequently as a chill hangout with no booze.</p>
+                <a href="https://northernsodacompany.com/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Northern Soda Company
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Trending Mocktail Venues Card -->
-      <div class="card">
+      <div class="card" id="trending-mocktails">
         <div class="card-header">
-          <i class="fas fa-glass-cheers"></i>
-          <h2>Trending Mocktail Venues</h2>
-        </div>
-        
-        <button class="collapsible">Khâluna & Chip's Clubhouse</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Minneapolis & St. Paul</span>
-            </div>
-            <p class="venue-description">Named by Axios as some of the strongest mocktail programs in the Twin Cities. Herbst Eatery also comes up often online.</p>
-            <a href="https://www.khaluna.com/" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit Khâluna
-            </a>
-            <a href="https://chipsclubhouse.com/" target="_blank" class="resource-link" style="margin-left: 1rem;">
-              <i class="fas fa-external-link-alt"></i> Visit Chip's Clubhouse
-            </a>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-glass-cheers"></i>
+            <h2>Trending Mocktail Venues</h2>
           </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        
-        <button class="collapsible">Brewing Companies with NA Options</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="venue-location">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>Twin Cities Area</span>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <button class="collapsible">Khâluna & Chip's Clubhouse</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Khaluna+Chips+Clubhouse+Minneapolis+St+Paul" target="_blank">Minneapolis & St. Paul</a>
+                </div>
+                <p class="venue-description">Named by Axios as some of the strongest mocktail programs in the Twin Cities. Herbst Eatery also comes up often online.</p>
+                <a href="https://www.khaluna.com/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit Khâluna
+                </a>
+                <a href="https://chipsclubhouse.com/" target="_blank" class="resource-link" style="margin-left: 1rem;">
+                  <i class="fas fa-external-link-alt"></i> Visit Chip's Clubhouse
+                </a>
+              </div>
             </div>
-            <p class="venue-description">Indeed Brewing, Būch Fermentary, Modist Brewing, Fulton Brewing – brewing companies now offer THC seltzers and caffeine-free hop water under new legalization rules – some mix-ins repeatedly recommended by the sober-curious crowd.</p>
+            
+            <button class="collapsible">Brewing Companies with NA Options</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="venue-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <a href="https://www.google.com/maps/search/?api=1&query=Brewing+Companies+NA+Options+Twin+Cities" target="_blank">Twin Cities Area</a>
+                </div>
+                <p class="venue-description">Indeed Brewing, Būch Fermentary, Modist Brewing, Fulton Brewing – brewing companies now offer THC seltzers and caffeine-free hop water under new legalization rules – some mix-ins repeatedly recommended by the sober-curious crowd.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -872,47 +956,53 @@
       <!-- Support Card -->
       <div class="card" id="support">
         <div class="card-header">
-          <i class="fas fa-hands-helping"></i>
-          <h2>Sober Raver Support Groups</h2>
-        </div>
-        
-        <button class="collapsible">Minnesota Recovery Connection</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <p class="venue-description">Peer-led support organization hosting sober social events and recovery resources.</p>
-            <a href="https://mnrecovery.org" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit website
-            </a>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-hands-helping"></i>
+            <h2>Sober Raver Support Groups</h2>
           </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        
-        <button class="collapsible">SMART Recovery Minnesota</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <p class="venue-description">Evidence-based, self-empowerment focused addiction recovery meetings.</p>
-            <a href="https://smartrecovery.org/minnesota" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Learn more
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Alano Club of Minneapolis</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <p class="venue-description">Sober social club downtown hosting daily meetings plus communal activities.</p>
-            <a href="https://alanoclubmpls.org" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Visit website
-            </a>
-          </div>
-        </div>
-        
-        <button class="collapsible">Refuge Recovery Minneapolis</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <p class="venue-description">Buddhist-inspired recovery meetings and meditation practice.</p>
-            <a href="https://refugerecovery.org/meetings?location=Minneapolis%2C+MN%2C+USA" target="_blank" class="resource-link">
-              <i class="fas fa-external-link-alt"></i> Find Meetings
-            </a>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <button class="collapsible">Minnesota Recovery Connection</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Peer-led support organization hosting sober social events and recovery resources.</p>
+                <a href="https://mnrecovery.org" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit website
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">SMART Recovery Minnesota</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Evidence-based, self-empowerment focused addiction recovery meetings.</p>
+                <a href="https://smartrecovery.org/minnesota" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Learn more
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">Alano Club of Minneapolis</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Sober social club downtown hosting daily meetings plus communal activities.</p>
+                <a href="https://alanoclubmpls.org" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit website
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">Refuge Recovery Minneapolis</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Buddhist-inspired recovery meetings and meditation practice.</p>
+                <a href="https://refugerecovery.org/meetings?location=Minneapolis%2C+MN%2C+USA" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Find Meetings
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -920,69 +1010,75 @@
       <!-- Mocktails Card -->
       <div class="card" id="mocktails">
         <div class="card-header">
-          <i class="fas fa-glass-cheers"></i>
-          <h2>Top-Rated Mocktail Recipes</h2>
-        </div>
-        
-        <button class="collapsible">Electric Lemonade</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="mocktail-card">
-              <ol class="mocktail-steps">
-                <li>Fill a glass with ice</li>
-                <li>Pour 6 oz lemonade</li>
-                <li>Add 1 oz non-alcoholic blue curaçao syrup</li>
-                <li>Top with 2 oz sparkling water</li>
-                <li>Stir gently</li>
-                <li>Garnish with a lemon slice</li>
-              </ol>
-              <p class="mocktail-note">Bonus: glows under blacklight!</p>
-            </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-glass-cheers"></i>
+            <h2>Top-Rated Mocktail Recipes</h2>
           </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        
-        <button class="collapsible">Ginger Citrus Fizz</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="mocktail-card">
-              <ol class="mocktail-steps">
-                <li>Fill a glass with ice</li>
-                <li>Add 4 oz ginger beer</li>
-                <li>Squeeze 1 oz fresh lime juice</li>
-                <li>Add 1 oz fresh orange juice</li>
-                <li>Drop in a few fresh mint leaves</li>
-                <li>Stir lightly and garnish with an orange wedge</li>
-              </ol>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <button class="collapsible">Electric Lemonade</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="mocktail-card">
+                  <ol class="mocktail-steps">
+                    <li>Fill a glass with ice</li>
+                    <li>Pour 6 oz lemonade</li>
+                    <li>Add 1 oz non-alcoholic blue curaçao syrup</li>
+                    <li>Top with 2 oz sparkling water</li>
+                    <li>Stir gently</li>
+                    <li>Garnish with a lemon slice</li>
+                  </ol>
+                  <p class="mocktail-note">Bonus: glows under blacklight!</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        
-        <button class="collapsible">Virgin Mojito</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="mocktail-card">
-              <ol class="mocktail-steps">
-                <li>Muddle 8 fresh mint leaves with 1 tsp sugar in a glass</li>
-                <li>Add juice of 1 lime</li>
-                <li>Fill the glass with ice</li>
-                <li>Top with soda water</li>
-                <li>Stir well and garnish with a mint sprig and lime wedge</li>
-              </ol>
+            
+            <button class="collapsible">Ginger Citrus Fizz</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="mocktail-card">
+                  <ol class="mocktail-steps">
+                    <li>Fill a glass with ice</li>
+                    <li>Add 4 oz ginger beer</li>
+                    <li>Squeeze 1 oz fresh lime juice</li>
+                    <li>Add 1 oz fresh orange juice</li>
+                    <li>Drop in a few fresh mint leaves</li>
+                    <li>Stir lightly and garnish with an orange wedge</li>
+                  </ol>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+            
+            <button class="collapsible">Virgin Mojito</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="mocktail-card">
+                  <ol class="mocktail-steps">
+                    <li>Muddle 8 fresh mint leaves with 1 tsp sugar in a glass</li>
+                    <li>Add juice of 1 lime</li>
+                    <li>Fill the glass with ice</li>
+                    <li>Top with soda water</li>
+                    <li>Stir well and garnish with a mint sprig and lime wedge</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
 
-        <button class="collapsible">PLUR Punch</button>
-        <div class="collapsible-content">
-          <div class="collapsible-content-inner">
-            <div class="mocktail-card">
-              <ol class="mocktail-steps">
-                <li>Mix 4 oz cranberry juice with 2 oz pineapple juice</li>
-                <li>Add 1 oz fresh lime juice</li>
-                <li>Fill with ice and top with club soda</li>
-                <li>Garnish with lime wheel and edible glitter</li>
-              </ol>
-              <p class="mocktail-note">Perfect for rave-themed gatherings!</p>
+            <button class="collapsible">PLUR Punch</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <div class="mocktail-card">
+                  <ol class="mocktail-steps">
+                    <li>Mix 4 oz cranberry juice with 2 oz pineapple juice</li>
+                    <li>Add 1 oz fresh lime juice</li>
+                    <li>Fill with ice and top with club soda</li>
+                    <li>Garnish with lime wheel and edible glitter</li>
+                  </ol>
+                  <p class="mocktail-note">Perfect for rave-themed gatherings!</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -992,24 +1088,31 @@
     <!-- Contact Section -->
     <section class="card" id="contact">
       <div class="card-header">
-        <i class="fas fa-envelope"></i>
-        <h2>Connect With Us</h2>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-envelope"></i>
+          <h2>Connect With Us</h2>
+        </div>
+        <i class="fas fa-chevron-down toggle-icon"></i>
       </div>
-      <p style="margin-bottom: 1.5rem;">Have questions, suggestions, or want to join our sober raver community? Reach out to us through any of these channels:</p>
-      
-      <div class="social-links">
-        <a href="mailto:plurderapolis@gmail.com" class="social-link">
-          <i class="fas fa-envelope"></i> Email Us
-        </a>
-        <a href="https://facebook.com/plurderapolis" target="_blank" class="social-link">
-          <i class="fab fa-facebook"></i> @plurderapolis
-        </a>
-        <a href="https://instagram.com/plurderapolis" target="_blank" class="social-link">
-          <i class="fab fa-instagram"></i> @plurderapolis
-        </a>
+      <div class="card-content">
+        <div class="card-content-inner">
+          <p style="margin-bottom: 1.5rem;">Have questions, suggestions, or want to join our sober raver community? Reach out to us through any of these channels:</p>
+          
+          <div class="social-links">
+            <a href="mailto:plurderapolis@gmail.com" class="social-link">
+              <i class="fas fa-envelope"></i> Email Us
+            </a>
+            <a href="https://facebook.com/plurderapolis" target="_blank" class="social-link">
+              <i class="fab fa-facebook"></i> @plurderapolis
+            </a>
+            <a href="https://instagram.com/plurderapolis" target="_blank" class="social-link">
+              <i class="fab fa-instagram"></i> @plurderapolis
+            </a>
+          </div>
+          
+          <p style="text-align: center; color: #ccc; margin-top: 1rem;">We'd love to hear about your experiences and any sober-friendly venues or events we should feature!</p>
+        </div>
       </div>
-      
-      <p style="text-align: center; color: #ccc; margin-top: 1rem;">We'd love to hear about your experiences and any sober-friendly venues or events we should feature!</p>
     </section>
   </main>
 
@@ -1106,6 +1209,23 @@
           content.style.maxHeight = null;
         } else {
           content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+    
+    // Card header toggle functionality
+    document.querySelectorAll('.card-header').forEach(header => {
+      header.addEventListener('click', function() {
+        const card = this.parentElement;
+        const content = this.nextElementSibling;
+        const icon = this.querySelector('.toggle-icon');
+        
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
         }
       });
     });
