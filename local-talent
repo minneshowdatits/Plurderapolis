@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Artists & Talent | PLURderapolis</title>
+    <meta name="description" content="Showcasing Minnesota's vibrant local artists and talent in the electronic music community.">
+    <meta name="keywords" content="Minnesota artists, local talent, electronic music, DJs, producers, visual artists, PLURderapolis">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://plurderapolis.org/local-talent/">
+    <meta property="og:title" content="Local Artists & Talent | PLURderapolis">
+    <meta property="og:description" content="Showcasing Minnesota's vibrant local artists and talent in the electronic music community.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://plurderapolis.org/local-artists/">
+    <meta property="twitter:title" content="Local Artists & Talent | PLURderapolis">
+    <meta property="twitter:description" content="Showcasing Minnesota's vibrant local artists and talent in the electronic music community.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    
+    <!-- Preload fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap"></noscript>
+    
+    <style>
+        /* Base styles */
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root {
+            --primary: #00f7e0;
+            --secondary: #ff69b4;
+            --accent1: #bf00bf;
+            --accent2: #e051ff;
+            --accent3: #00b7ff;
+            --accent4: #ff9a7a;
+            --accent5: #00c896;
+            --accent6: #ffb300;
+            --dark-bg: #0d0d0d;
+            --card-bg: #3a0052;
+            --light-text: #ffffff;
+            --medium-text: #cccccc;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+        
+        /* Animated Background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(58, 0, 82, 0.2) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(0, 247, 224, 0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 40%, rgba(255, 105, 180, 0.08) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        .bg-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 25s infinite linear;
+        }
+        
+        .pulse-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulse 6s infinite ease-in-out;
+            opacity: 0.5;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 8%;
+            background: linear-gradient(90deg, transparent, rgba(0, 247, 224, 0.05), transparent);
+            animation: waveMove 25s infinite linear;
+            transform-origin: center bottom;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.3;
+            height: 6%;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: -10s;
+            opacity: 0.2;
+            height: 4%;
+        }
+        
+        @keyframes gradientShift {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.5); opacity: 0.1; }
+        }
+        
+        @keyframes waveMove {
+            0% { transform: translateX(0) skew(0, 3deg); }
+            100% { transform: translateX(-50%) skew(0, 3deg); }
+        }
+        
+        body{font-family:'Roboto',sans-serif;background:var(--dark-bg);color:var(--light-text);line-height:1.7;overflow-x:hidden;position:relative}
+        
+        /* Header Styles */
+        .site-title{text-align:center;padding:1.5rem 1rem 0.5rem;position:relative;z-index:2;margin-top:0.5rem}
+        .site-title h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(2rem,6vw,3rem);letter-spacing:0.15em;text-transform:uppercase;background:linear-gradient(90deg,var(--primary) 0%,#a3f7ff 50%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shineMove 6s linear infinite;filter:drop-shadow(0 0 4px rgba(0,247,224,0.5));margin:0}
+        .site-title .tagline{font-family:'Roboto',sans-serif;color:#88e9e3;font-size:1rem;letter-spacing:0.1em;margin-top:0.5rem;font-weight:600;text-transform:uppercase;opacity:0.9}
+        
+        @keyframes shineMove{0%{background-position:100% 0}100%{background-position:0 0}}
+        
+        /* Navigation */
+        .mobile-nav-btn{position:fixed;top:12px;left:12px;z-index:1100;cursor:pointer;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(58,0,82,0.8);border-radius:8px;border:1px solid var(--primary);backdrop-filter:blur(5px)}
+        .mobile-nav-btn div{height:3px;background:var(--primary);border-radius:3px;transition:all 0.3s ease;width:24px;margin:2.5px 0}
+        .mobile-nav-btn.active div:nth-child(1){transform:rotate(45deg) translate(6px,6px);width:24px}
+        .mobile-nav-btn.active div:nth-child(2){opacity:0}
+        .mobile-nav-btn.active div:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);width:24px}
+        
+        .mobile-nav{position:fixed;top:0;left:-100%;width:100%;height:100%;background:rgba(26,0,26,0.95);backdrop-filter:blur(10px);overflow-y:auto;transition:left 0.4s ease;z-index:1000;padding:70px 20px 20px}
+        .mobile-nav.active{left:0}
+        .mobile-nav-category{margin-bottom:15px}
+        .mobile-nav-category h3{font-family:'Montserrat',sans-serif;color:var(--primary);font-size:1.2rem;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid rgba(0,247,224,0.3);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+        .mobile-nav-category h3 .toggle-icon{transition:transform 0.3s ease}
+        .mobile-nav-category.active h3 .toggle-icon{transform:rotate(180deg)}
+        .mobile-nav-links{display:grid;grid-template-columns:1fr;gap:6px;max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+        .mobile-nav-category.active .mobile-nav-links{max-height:500px}
+        .mobile-nav-link{display:flex;align-items:center;padding:10px 12px;background:rgba(58,0,82,0.6);border-radius:6px;text-decoration:none;color:var(--light-text);transition:all 0.3s ease;border-left:3px solid var(--primary);font-size:0.9rem}
+        .mobile-nav-link:hover{background:rgba(58,0,82,0.9);transform:translateX(5px)}
+        .mobile-nav-link .icon{font-size:1.1rem;margin-right:10px;width:20px;text-align:center}
+        
+        /* Page Intro */
+        .page-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 0 1.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .page-intro h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .page-intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--medium-text);
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Artist Categories */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 2rem auto;
+            flex-wrap: wrap;
+            max-width: 800px;
+            padding: 0 1.5rem;
+        }
+        
+        .category-tab {
+            padding: 10px 20px;
+            background: rgba(58, 0, 82, 0.5);
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .category-tab.active {
+            background: var(--primary);
+            color: var(--dark-bg);
+            box-shadow: 0 0 10px rgba(0, 247, 224, 0.5);
+        }
+        
+        .category-tab:hover:not(.active) {
+            background: rgba(0, 247, 224, 0.2);
+        }
+        
+        /* Artists Grid */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 1.5rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .artist-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.6s ease-out forwards;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 247, 224, 0.1);
+        }
+        
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 247, 224, 0.2);
+        }
+        
+        .artist-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .artist-card:hover .artist-image {
+            transform: scale(1.05);
+        }
+        
+        .artist-info {
+            padding: 1.5rem;
+        }
+        
+        .artist-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .artist-genre {
+            display: inline-block;
+            background: rgba(0, 247, 224, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .artist-bio {
+            color: var(--medium-text);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .artist-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .artist-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 247, 224, 0.3);
+        }
+        
+        .artist-link:hover {
+            background: var(--primary);
+            color: var(--dark-bg);
+            transform: translateY(-2px);
+        }
+        
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: rgba(58, 0, 82, 0.3);
+            margin: 2rem auto;
+            border-radius: 12px;
+            max-width: 800px;
+            animation: pulse 3s infinite;
+        }
+        
+        .cta-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .cta-section p {
+            margin-bottom: 1.5rem;
+            color: var(--medium-text);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 247, 224, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 247, 224, 0.5);
+        }
+        
+        /* Footer */
+        footer{margin-top:1.5rem;font-size:0.85rem;color:#aaa;text-align:center;position:relative;z-index:2;padding:1rem;background:rgba(0,0,0,0.5);border-top:1px solid #444}
+        footer hr{border-color:#444;margin-bottom:0.8rem}
+        footer p{max-width:800px;margin:0.7rem auto;line-height:1.5}
+        .social-links{display:flex;justify-content:center;gap:12px;margin:1rem 0}
+        .social-link{display:flex;align-items:center;gap:6px;color:var(--primary);text-decoration:none;padding:8px 12px;border-radius:6px;transition:all 0.3s ease;background:rgba(58,0,82,0.3);border:1px solid rgba(0,247,224,0.3);font-size:0.85rem}
+        .social-link:hover{background:rgba(58,0,82,0.6);transform:translateY(-2px);box-shadow:0 3px 6px rgba(0,247,224,0.15)}
+        .social-link span{font-size:1rem}
+        
+        /* Mobile HUD Navigation */
+        .mobile-hud{position:fixed;bottom:0;left:0;width:100%;background-color:rgba(58,0,82,0.95);display:flex;justify-content:space-around;padding:8px 0;z-index:1001;backdrop-filter:blur(5px);border-top:1px solid var(--primary)}
+        .hud-btn{display:flex;flex-direction:column;align-items:center;color:white;text-decoration:none;font-size:0.7rem;padding:5px;flex:1;text-align:center;transition:all 0.3s}
+        .hud-btn span{font-size:1.1rem;margin-bottom:2px}
+        .hud-btn:hover{background:rgba(255,105,180,0.2);border-radius:5px}
+        
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 1001;
+            border: none;
+            outline: none;
+            background-color: var(--primary);
+            color: #2e003e;
+            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            box-shadow: 0 3px 8px rgba(0, 247, 224, 0.3);
+            transition: all 0.3s ease;
+            animation: bounce 2.5s infinite;
+        }
+        
+        #scrollTopBtn:hover {
+            background-color: #00e6cc;
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 247, 224, 0.5);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-4px);}
+            60% {transform: translateY(-2px);}
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .artists-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .category-tabs {
+                gap: 8px;
+            }
+            
+            .category-tab {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .artist-info {
+                padding: 1rem;
+            }
+            
+            .artist-name {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-hud {
+                display: none;
+            }
+            
+            #scrollTopBtn {
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="animated-background">
+    <div class="bg-gradient"></div>
+    <div class="bg-particles" id="particles"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" title="Go to top">↑</button>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav-btn" id="mobileNavBtn">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-category active">
+        <h3>Navigation <span class="toggle-icon">▼</span></h3>
+        <div class="mobile-nav-links">
+            <a href="index.html" class="mobile-nav-link"><span class="icon">🏠</span>Home</a>
+            <a href="local-artists.html" class="mobile-nav-link"><span class="icon">🎨</span>Local Artists</a>
+            <a href="resources.html" class="mobile-nav-link"><span class="icon">📚</span>Resources</a>
+            <a href="booth.html" class="mobile-nav-link"><span class="icon">🎉</span>Our Booth</a>
+        </div>
+    </div>
+    
+    <div class="mobile-nav-category">
+        <h3>Safety & Emergency <span class="toggle-icon">▼</span></h3>
+        <div class="mobile-nav-links">
+            <a href="panic.html" class="mobile-nav-link"><span class="icon">🚨</span>Panic Button</a>
+            <a href="emergency.html" class="mobile-nav-link"><span class="icon">🆘</span>Emergency Guides</a>
+            <a href="badtrip.html" class="mobile-nav-link"><span class="icon">🌈</span>Bad Trip Mode</a>
+        </div>
+    </div>
+    
+    <div class="mobile-nav-category">
+        <h3>Connect With Us <span class="toggle-icon">▼</span></h3>
+        <div class="mobile-nav-links">
+            <a href="https://www.facebook.com/plurderapolis" class="mobile-nav-link" target="_blank"><span class="icon">📘</span>Facebook</a>
+            <a href="https://www.instagram.com/plurderapolis" class="mobile-nav-link" target="_blank"><span class="icon">📷</span>Instagram</a>
+            <a href="https://www.venmo.com/u/plurderdapolis" class="mobile-nav-link"><span class="icon">💖</span>Donate</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Site title -->
+<div class="site-title">
+    <h1>PLURderapolis</h1>
+    <div class="tagline">Local Artists & Talent</div>
+</div>
+
+<!-- Page Introduction -->
+<section class="page-intro">
+    <h2>Celebrating Minnesota's Creative Community</h2>
+    <p>Discover the incredible artists, DJs, producers, and visual creators who make Minnesota's electronic music scene vibrant and unique. From established names to emerging talent, we're proud to showcase the diverse voices that shape our community.</p>
+</section>
+
+<!-- Artist Categories -->
+<div class="category-tabs">
+    <button class="category-tab active" data-category="all">All Artists</button>
+    <button class="category-tab" data-category="djs">DJs & Producers</button>
+    <button class="category-tab" data-category="visual">Visual Artists</button>
+    <button class="category-tab" data-category="performers">Performers</button>
+</div>
+
+<!-- Artists Grid -->
+<div class="artists-grid" id="artistsGrid">
+    <!-- DJs & Producers -->
+    <div class="artist-card" data-category="djs">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="DJ Luna" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">DJ Luna</h3>
+            <span class="artist-genre">Techno & House</span>
+            <p class="artist-bio">Minneapolis-based DJ known for hypnotic techno sets that blend atmospheric soundscapes with driving basslines. Resident at The Loft and regular at underground warehouse parties.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🎵</span> SoundCloud</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>📅</span> Events</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="artist-card" data-category="djs">
+        <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bassline Bloom" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Bassline Bloom</h3>
+            <span class="artist-genre">Bass Music & Future Beats</span>
+            <p class="artist-bio">St. Paul producer creating immersive sound experiences that blend organic textures with heavy bass. Known for intricate sound design and emotionally charged compositions.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🎵</span> Bandcamp</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>🎧</span> Mixes</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Visual Artists -->
+    <div class="artist-card" data-category="visual">
+        <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pixel Pixie" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Pixel Pixie</h3>
+            <span class="artist-genre">Digital Art & Projection Mapping</span>
+            <p class="artist-bio">Creating mesmerizing visual experiences that transform venues into immersive digital wonderlands. Specializes in real-time generative art and interactive installations.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🎨</span> Portfolio</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>👁️</span> Showreel</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="artist-card" data-category="visual">
+        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Glow Graffiti" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Glow Graffiti</h3>
+            <span class="artist-genre">UV Art & Live Painting</span>
+            <p class="artist-bio">Transforming spaces with vibrant UV-reactive creations. Known for live painting performances at festivals and creating immersive environments that glow under blacklight.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🎨</span> Gallery</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>🖌️</span> Commissions</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Performers -->
+    <div class="artist-card" data-category="performers">
+        <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Flow Motion" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Flow Motion</h3>
+            <span class="artist-genre">Flow Arts & Dance</span>
+            <p class="artist-bio">A collective of flow artists specializing in poi, staff, and hoop performances. Their synchronized shows blend technical skill with expressive movement to create captivating visual stories.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>💃</span> Reel</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>🎭</span> Bookings</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="artist-card" data-category="djs">
+        <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Synth Sister" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Synth Sister</h3>
+            <span class="artist-genre">Synthwave & Dream Pop</span>
+            <p class="artist-bio">Creating nostalgic soundscapes that transport listeners to retro-futuristic worlds. Blends analog synth textures with ethereal vocals for a truly immersive experience.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🎵</span> Spotify</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>🎤</span> Live Sets</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="artist-card" data-category="visual">
+        <img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Light Weaver" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Light Weaver</h3>
+            <span class="artist-genre">Laser Art & Light Sculpture</span>
+            <p class="artist-bio">Master of light manipulation, creating breathtaking laser shows that dance in sync with music. Specializes in 3D laser mapping and interactive light installations.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>💡</span> Portfolio</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>✨</span> Showreel</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="artist-card" data-category="performers">
+        <img src="https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Aura Aerial" class="artist-image">
+        <div class="artist-info">
+            <h3 class="artist-name">Aura Aerial</h3>
+            <span class="artist-genre">Aerial Arts & Acrobatics</span>
+            <p class="artist-bio">Graceful aerial performances on silks, hoop, and trapeze. Creates mesmerizing displays of strength and beauty that complement the musical journey of any event.</p>
+            <div class="artist-links">
+                <a href="#" class="artist-link"><span>🦋</span> Reel</a>
+                <a href="#" class="artist-link"><span>📷</span> Instagram</a>
+                <a href="#" class="artist-link"><span>🎪</span> Bookings</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <h2>Are You a Minnesota Artist?</h2>
+    <p>We're always looking to showcase more local talent! If you're a DJ, producer, visual artist, or performer in the Minnesota electronic music scene, we'd love to feature your work.</p>
+    <a href="mailto:plurderapolis@gmail.com?subject=Artist Submission" class="cta-button">Submit Your Work</a>
+</section>
+
+<!-- Mobile HUD Navigation -->
+<div class="mobile-hud">
+    <a href="index.html" class="hud-btn"><span>🏠</span>Home</a>
+    <a href="local-artists.html" class="hud-btn"><span>🎨</span>Artists</a>
+    <a href="resources.html" class="hud-btn"><span>📚</span>Resources</a>
+    <a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a>
+    <a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a>
+</div>
+
+<!-- Footer -->
+<footer>
+    <hr/>
+    <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+    <p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:var(--primary)">plurderapolis@gmail.com</a></p>
+    
+    <div class="social-links">
+        <a href="https://www.facebook.com/plurderapolis" class="social-link" target="_blank">
+            <span>📘</span> Facebook
+        </a>
+        <a href="https://www.instagram.com/plurderapolis" class="social-link" target="_blank">
+            <span>📷</span> Instagram
+        </a>
+        <a href="https://www.venmo.com/u/plurderdapolis" class="social-link" target="_blank" style="background:linear-gradient(135deg, var(--secondary), var(--accent1));">
+            <span>💖</span> Donate
+        </a>
+    </div>
+    
+    <p style="font-size:0.75rem;color:#ccc;margin-top:0.8rem;">Disclaimer: PLURderapolis provides harm reduction education. This is not medical or legal advice. Always consult professionals for health or legal concerns.</p>
+</footer>
+
+<script>
+// Mobile Navigation
+const mobileNavBtn = document.getElementById('mobileNavBtn');
+const mobileNav = document.getElementById('mobileNav');
+const navCategories = document.querySelectorAll('.mobile-nav-category');
+
+mobileNavBtn.addEventListener('click', () => {
+    mobileNavBtn.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+});
+
+// Make categories collapsible
+navCategories.forEach(category => {
+    const heading = category.querySelector('h3');
+    heading.addEventListener('click', () => {
+        category.classList.toggle('active');
+    });
+});
+
+// Close mobile nav when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileNav.contains(e.target) && !mobileNavBtn.contains(e.target)) {
+        mobileNavBtn.classList.remove('active');
+        mobileNav.classList.remove('active');
+    }
+});
+
+// Artist Category Filtering
+const categoryTabs = document.querySelectorAll('.category-tab');
+const artistCards = document.querySelectorAll('.artist-card');
+
+categoryTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active class from all tabs
+        categoryTabs.forEach(t => t.classList.remove('active'));
+        // Add active class to clicked tab
+        tab.classList.add('active');
+        
+        const category = tab.getAttribute('data-category');
+        
+        // Filter artist cards
+        artistCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.style.display = 'block';
+                // Add animation for appearing cards
+                card.style.animation = 'cardAppear 0.6s ease-out forwards';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Scroll to Top Button
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+window.addEventListener('scroll', function() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.style.display = 'block';
+    } else {
+        scrollTopBtn.style.display = 'none';
+    }
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Create animated background particles
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const colors = [
+        'rgba(0, 247, 224, 0.2)',
+        'rgba(255, 105, 180, 0.15)',
+        'rgba(191, 0, 191, 0.15)',
+        'rgba(224, 81, 255, 0.15)',
+        'rgba(0, 183, 255, 0.15)'
+    ];
+    
+    // Create floating particles
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        const size = Math.random() * 4 + 1;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.animationDelay = `${Math.random() * 25}s`;
+        particle.style.animationDuration = `${20 + Math.random() * 15}s`;
+        
+        particlesContainer.appendChild(particle);
+    }
+    
+    // Create pulse dots
+    for (let i = 0; i < 10; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('pulse-dot');
+        
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        dot.style.animationDelay = `${Math.random() * 6}s`;
+        
+        particlesContainer.appendChild(dot);
+    }
+}
+
+// Initialize when page loads
+window.addEventListener('DOMContentLoaded', function() {
+    createParticles();
+    
+    // Add staggered animation delays to artist cards
+    const cards = document.querySelectorAll('.artist-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+});
+</script>
+
+</body>
+</html>
