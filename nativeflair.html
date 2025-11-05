@@ -60,7 +60,9 @@
             background-color: var(--sandstone);
             line-height: var(--line-height);
             font-size: 1rem;
+            /* Subtle background texture */
             background-image: 
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a84d3c' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E"),
                 radial-gradient(circle at 15% 50%, rgba(201, 166, 70, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 85% 30%, rgba(60, 166, 166, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 50% 80%, rgba(122, 62, 69, 0.05) 0%, transparent 20%);
@@ -98,13 +100,16 @@
             padding: 0 15px;
         }
         
-        /* Header & Navigation - Updated with new palette */
+        /* Header & Navigation - Updated with new palette and persistent menu */
         header {
             background: linear-gradient(135deg, var(--deep-garnet) 0%, var(--dark-purple) 100%);
             padding: 20px 0;
             border-bottom: 1px solid rgba(201, 166, 70, 0.3);
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         header::before {
@@ -195,7 +200,7 @@
             right: -5px;
         }
         
-        /* Main Navigation - Updated colors */
+        /* Main Navigation - Updated colors and layout */
         .nav-container {
             width: 100%;
         }
@@ -252,17 +257,6 @@
         
         nav a:hover::after {
             width: 80%;
-        }
-        
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--pearl);
-            padding: 5px;
         }
         
         /* Hero Section - Updated with new palette */
@@ -1204,7 +1198,7 @@
             font-family: 'Quicksand', sans-serif;
         }
         
-        /* Enhanced Accessibility Controls */
+        /* Enhanced Accessibility Controls with Popup */
         .accessibility-controls {
             position: fixed;
             bottom: 20px;
@@ -1280,6 +1274,49 @@
             --pearl: #FFFFFF;
         }
         
+        .dark-mode {
+            --sandstone: #1a1a1a;
+            --charcoal: #f5f5f5;
+            --pearl: #f5f5f5;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+        }
+        
+        /* Accessibility Tooltip */
+        .accessibility-tooltip {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: var(--deep-garnet);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            width: 220px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1002;
+        }
+        
+        .accessibility-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: var(--deep-garnet) transparent transparent transparent;
+        }
+        
+        .accessibility-controls:hover .accessibility-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Back to top button */
         .back-to-top {
             position: fixed;
@@ -1331,6 +1368,53 @@
             background-color: var(--persian-turquoise);
             transform: translateY(-3px) scale(1.05);
             opacity: 1;
+        }
+        
+        /* Section Borders - Hand-drawn style */
+        .section-border {
+            position: relative;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        
+        .section-border::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-vermeil), var(--tribal-turquoise), var(--deep-garnet), transparent);
+            border-radius: 1px;
+        }
+        
+        .section-border::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            right: 5%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--deep-garnet), var(--tribal-turquoise), var(--gold-vermeil), transparent);
+            border-radius: 1px;
+        }
+        
+        /* Hand-drawn style borders for elements */
+        .hand-drawn-border {
+            position: relative;
+        }
+        
+        .hand-drawn-border::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--gold-vermeil);
+            border-radius: calc(var(--radius) + 3px);
+            opacity: 0.3;
+            pointer-events: none;
         }
         
         /* Responsive Styles */
@@ -1451,23 +1535,23 @@
                 width: 100%;
             }
             
-            .mobile-menu-toggle {
-                display: block;
-            }
-            
+            /* Always visible navigation on mobile */
             .nav-container {
-                display: none;
+                display: block;
                 width: 100%;
                 margin-top: 20px;
-            }
-            
-            .nav-container.active {
-                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             
             nav ul {
-                flex-direction: column;
-                gap: 5px;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+            
+            nav li {
+                flex-shrink: 0;
             }
             
             .hero-btns {
@@ -1478,6 +1562,17 @@
             .btn {
                 width: 100%;
                 max-width: 280px;
+            }
+            
+            .accessibility-controls {
+                flex-direction: column;
+                bottom: 70px;
+                right: 10px;
+            }
+            
+            .accessibility-tooltip {
+                width: 180px;
+                right: -10px;
             }
         }
         
@@ -1503,8 +1598,11 @@
         </div>
     </div>
 
-    <!-- Enhanced Accessibility Controls -->
+    <!-- Enhanced Accessibility Controls with Tooltip -->
     <div class="accessibility-controls" aria-label="Accessibility controls">
+        <div class="accessibility-tooltip">
+            Use these controls to adjust text size, contrast, and enable voice assistance for better accessibility.
+        </div>
         <div class="control-group">
             <button class="accessibility-btn voice-btn" id="voiceToggle" aria-label="Toggle voice narration">🔊</button>
             <button class="accessibility-btn dark-btn" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
@@ -1530,7 +1628,6 @@
                 <div class="logo">Native <span>Flair</span></div>
                 <div class="logo-subtitle">Hand-Painted Vases</div>
             </div>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
             <div class="nav-container" id="navContainer">
                 <nav>
                     <ul>
@@ -1559,7 +1656,7 @@
     </section>
 
     <!-- Products Section - Moved to the top -->
-    <section class="products" id="products">
+    <section class="products section-border" id="products">
         <div class="container">
             <h2 class="section-title">Vase Collection</h2>
             <div class="view-toggle">
@@ -1572,7 +1669,7 @@
             </div>
             <div class="product-grid grid-view">
                 <!-- Product 1 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="1">
                             <div class="carousel-inner">
@@ -1603,7 +1700,7 @@
                 </div>
                 
                 <!-- Product 2 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="2">
                             <div class="carousel-inner">
@@ -1634,7 +1731,7 @@
                 </div>
                 
                 <!-- Product 3 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="3">
                             <div class="carousel-inner">
@@ -1665,7 +1762,7 @@
                 </div>
                 
                 <!-- Product 4 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="4">
                             <div class="carousel-inner">
@@ -1696,7 +1793,7 @@
                 </div>
                 
                 <!-- Product 5 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="5">
                             <div class="carousel-inner">
@@ -1727,7 +1824,7 @@
                 </div>
                 
                 <!-- Product 6 -->
-                <div class="product-card">
+                <div class="product-card hand-drawn-border">
                     <div class="product-image">
                         <div class="carousel" data-product="6">
                             <div class="carousel-inner">
@@ -1763,7 +1860,7 @@
     <div class="pattern-divider"></div>
 
     <!-- Collapsible About Section -->
-    <section class="about" id="about">
+    <section class="about section-border" id="about">
         <div class="container">
             <h2 class="section-title">About Native Flair</h2>
             <div class="collapsible-section">
@@ -1779,7 +1876,7 @@
                                 <p>Every vase tells a story, with colors and patterns that reflect nature's beauty and the artist's unique perspective. The intricate designs are carefully painted on the inside of each vase, creating a delightful surprise when viewed from different angles.</p>
                                 <a href="#contact" class="btn" aria-label="Contact Native Flair">📞 Contact Native Flair</a>
                             </div>
-                            <div class="about-image">
+                            <div class="about-image hand-drawn-border">
                                 <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Artist at work painting the inside of a vase with careful attention to detail">
                             </div>
                         </div>
@@ -1819,7 +1916,7 @@
                                 <p>Each vase incorporates elements inspired by Michigan's natural landscapes - the flowing rivers, forest textures, and seasonal changes that have shaped the Saginaw people's way of life for generations.</p>
                                 <a href="#products" class="btn btn-gold" aria-label="View tribal inspired vases">🌾 Tribal Collection</a>
                             </div>
-                            <div class="tribal-image">
+                            <div class="tribal-image hand-drawn-border">
                                 <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Traditional Native American beadwork and patterns">
                             </div>
                         </div>
@@ -1830,7 +1927,7 @@
     </section>
 
     <!-- Commission Section -->
-    <section class="commission" id="commission">
+    <section class="commission section-border" id="commission">
         <div class="container">
             <h2 class="section-title">Custom Commissions</h2>
             <div class="commission-content">
@@ -1848,7 +1945,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="commission-form">
+                <div class="commission-form hand-drawn-border">
                     <form id="commissionForm">
                         <div class="form-group">
                             <label for="name" class="form-label">Your Name</label>
@@ -1889,7 +1986,7 @@
     </section>
 
     <!-- Collapsible Process Section -->
-    <section class="process" id="process">
+    <section class="process section-border" id="process">
         <div class="container">
             <h2 class="section-title">Our Creative Process</h2>
             <div class="collapsible-section">
@@ -1900,22 +1997,22 @@
                 <div class="collapsible-content" id="processContent">
                     <div class="content-wrapper">
                         <div class="process-steps">
-                            <div class="step">
+                            <div class="step hand-drawn-border">
                                 <div class="step-icon">🎨</div>
                                 <h3 class="step-title">Design Inspiration</h3>
                                 <p>Each design begins with inspiration from nature, tribal patterns, and colors that speak to the artist's heritage and creative vision.</p>
                             </div>
-                            <div class="step">
+                            <div class="step hand-drawn-border">
                                 <div class="step-icon">✍️</div>
                                 <h3 class="step-title">Interior Painting</h3>
                                 <p>Using specialized techniques, the interior of each vase is carefully painted with precision, often requiring multiple layers and careful attention to detail.</p>
                             </div>
-                            <div class="step">
+                            <div class="step hand-drawn-border">
                                 <div class="step-icon">🔥</div>
                                 <h3 class="step-title">Curing Process</h3>
                                 <p>The painted vases undergo a careful curing process to ensure durability and longevity of the artwork, preserving it for generations.</p>
                             </div>
-                            <div class="step">
+                            <div class="step hand-drawn-border">
                                 <div class="step-icon">📦</div>
                                 <h3 class="step-title">Careful Packaging</h3>
                                 <p>Each vase is carefully packaged with eco-friendly materials to ensure it arrives safely at your doorstep, ready to display.</p>
@@ -1930,7 +2027,7 @@
     <div class="pattern-divider"></div>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact section-border" id="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
@@ -1945,7 +2042,7 @@
                         <a href="#" class="btn btn-secondary" aria-label="Follow on Instagram">📷 Instagram</a>
                     </div>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form hand-drawn-border">
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="contactName" class="form-label">Your Name</label>
@@ -2036,14 +2133,6 @@
                 fontSize += 2;
                 html.style.fontSize = fontSize + 'px';
             }
-        });
-        
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const navContainer = document.getElementById('navContainer');
-        
-        mobileMenuToggle.addEventListener('click', () => {
-            navContainer.classList.toggle('active');
         });
         
         // Grid/List view toggle
@@ -2172,6 +2261,27 @@
         
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+        });
+
+        // Show accessibility tooltip on first visit
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasSeenTooltip = localStorage.getItem('hasSeenAccessibilityTooltip');
+            const tooltip = document.querySelector('.accessibility-tooltip');
+            
+            if (!hasSeenTooltip) {
+                // Show tooltip after a brief delay on first visit
+                setTimeout(() => {
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'translateY(0)';
+                    
+                    // Hide after 8 seconds
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.transform = 'translateY(10px)';
+                        localStorage.setItem('hasSeenAccessibilityTooltip', 'true');
+                    }, 8000);
+                }, 2000);
+            }
         });
     </script>
 </body>
