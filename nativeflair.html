@@ -16,10 +16,25 @@
             --turquoise-dark: #20766C;
             --copper: #B87333;
             --gold: #D4AF37;
+            --maroon: #8B2E45;
+            --purple: #6B4E85;
             --white: #FFFFFF;
             --transition: all 0.3s ease;
             --font-size-base: 20px;
             --line-height: 1.7;
+        }
+        
+        /* Dark Mode Variables */
+        .dark-mode {
+            --cream: #1A1A1A;
+            --espresso: #E8E6E3;
+            --turquoise: #3DB4A8;
+            --turquoise-dark: #2D8C82;
+            --copper: #C98A4D;
+            --gold: #E0B94B;
+            --maroon: #A84A63;
+            --purple: #8A6BA8;
+            --white: #2D2D2D;
         }
         
         * {
@@ -81,6 +96,10 @@
             border-bottom: 2px solid var(--gold);
         }
         
+        .dark-mode header {
+            background-image: linear-gradient(135deg, var(--white) 0%, #2a2a2a 100%);
+        }
+        
         .header-container {
             display: flex;
             flex-direction: column;
@@ -126,16 +145,31 @@
             animation: float 6s infinite ease-in-out;
         }
         
+        /* Scrollable Navigation */
+        .nav-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 10px 0;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        .nav-scroll-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        
         nav ul {
             display: flex;
             list-style: none;
             gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
+            min-width: max-content;
+            padding: 0 10px;
         }
         
         nav li {
             margin: 0;
+            flex-shrink: 0;
         }
         
         nav a {
@@ -153,6 +187,7 @@
             transition: var(--transition);
             text-align: center;
             border: 1px solid transparent;
+            white-space: nowrap;
         }
         
         nav a:hover, nav a:focus {
@@ -278,6 +313,22 @@
             color: var(--white);
         }
         
+        .btn-maroon {
+            background-color: var(--maroon);
+        }
+        
+        .btn-maroon:hover, .btn-maroon:focus {
+            background-color: #7a2840;
+        }
+        
+        .btn-purple {
+            background-color: var(--purple);
+        }
+        
+        .btn-purple:hover, .btn-purple:focus {
+            background-color: #5d4273;
+        }
+        
         /* Section Styles */
         section {
             padding: 60px 0;
@@ -387,10 +438,65 @@
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23b87333' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
         
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        
+        .view-btn {
+            background: var(--white);
+            border: 2px solid var(--turquoise);
+            color: var(--turquoise);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-btn.active {
+            background: var(--turquoise);
+            color: var(--white);
+        }
+        
+        .view-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
         .product-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 30px;
+        }
+        
+        .product-grid.grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+        
+        .product-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .product-grid.list-view .product-card {
+            display: flex;
+            flex-direction: row;
+            max-width: 100%;
+        }
+        
+        .product-grid.list-view .product-image {
+            width: 300px;
+            height: 250px;
+            flex-shrink: 0;
+        }
+        
+        .product-grid.list-view .product-info {
+            flex: 1;
         }
         
         .product-card {
@@ -409,7 +515,7 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, var(--turquoise), var(--copper));
+            background: linear-gradient(90deg, var(--turquoise), var(--maroon), var(--purple));
             z-index: 1;
         }
         
@@ -465,6 +571,123 @@
             margin-bottom: 15px;
         }
         
+        /* Tribal Info Section */
+        .tribal-info {
+            background-color: var(--maroon);
+            color: var(--white);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tribal-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .tribal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .tribal-text {
+            width: 100%;
+        }
+        
+        .tribal-image {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .tribal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Commission Section */
+        .commission {
+            background-color: var(--purple);
+            color: var(--white);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .commission::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .commission-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .commission-text {
+            width: 100%;
+        }
+        
+        .commission-form {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-family: 'Open Sans', sans-serif;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
         /* Process Section */
         .process {
             background-color: var(--white);
@@ -494,7 +717,7 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(90deg, var(--turquoise), var(--copper));
+            background: linear-gradient(90deg, var(--turquoise), var(--maroon), var(--purple));
         }
         
         .step:hover {
@@ -532,38 +755,6 @@
         
         .contact-form {
             width: 100%;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-family: 'Open Sans', sans-serif;
-            transition: var(--transition);
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--turquoise);
-            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
-        }
-        
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
         }
         
         /* Footer */
@@ -615,7 +806,7 @@
             font-size: 1rem;
         }
         
-        /* Accessibility Controls - Mobile Optimized */
+        /* Accessibility Controls - Less Obtrusive */
         .accessibility-controls {
             position: fixed;
             bottom: 20px;
@@ -629,6 +820,22 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             flex-direction: column;
             border: 1px solid var(--gold);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .accessibility-controls:hover {
+            opacity: 1;
+        }
+        
+        .dark-mode .accessibility-controls {
+            background: rgba(45,45,45,0.9);
+            border: 1px solid var(--gold);
+        }
+        
+        .control-group {
+            display: flex;
+            gap: 5px;
         }
         
         .text-size-controls {
@@ -636,7 +843,7 @@
             gap: 5px;
         }
         
-        .text-size-btn {
+        .accessibility-btn {
             background: var(--turquoise);
             color: white;
             border: none;
@@ -652,30 +859,22 @@
             transition: var(--transition);
         }
         
-        .text-size-btn:hover {
+        .accessibility-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
-        .contrast-btn {
-            background: var(--turquoise);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-            justify-content: center;
-            transition: var(--transition);
+        .voice-btn {
+            background: var(--purple);
         }
         
-        .contrast-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        .dark-btn {
+            background: var(--espresso);
+        }
+        
+        .dark-mode .dark-btn {
+            background: var(--gold);
+            color: var(--espresso);
         }
         
         /* Back to top button */
@@ -697,11 +896,13 @@
             transition: var(--transition);
             text-decoration: none;
             animation: gentlePulse 3s infinite ease-in-out;
+            opacity: 0.7;
         }
         
         .back-to-top:hover, .back-to-top:focus {
             background-color: var(--turquoise-dark);
             transform: translateY(-3px) scale(1.1);
+            opacity: 1;
         }
         
         /* Mobile Shop Button */
@@ -721,27 +922,13 @@
             transition: var(--transition);
             text-decoration: none;
             animation: gentlePulse 3s infinite ease-in-out;
+            opacity: 0.9;
         }
         
         .mobile-shop-btn:hover, .mobile-shop-btn:focus {
             background-color: var(--turquoise-dark);
             transform: translateY(-3px) scale(1.05);
-        }
-        
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--turquoise);
-            padding: 10px;
-            transition: var(--transition);
-        }
-        
-        .mobile-menu-toggle:hover {
-            transform: scale(1.1);
+            opacity: 1;
         }
         
         /* Animations */
@@ -787,8 +974,14 @@
                 text-align: left;
             }
             
+            .nav-scroll-container {
+                width: auto;
+                flex: 1;
+                margin-left: 30px;
+            }
+            
             nav ul {
-                gap: 15px;
+                justify-content: flex-end;
             }
             
             .hero {
@@ -807,23 +1000,22 @@
                 padding: 80px 0;
             }
             
-            .about-content {
+            .about-content, .tribal-content, .commission-content {
                 flex-direction: row;
                 align-items: center;
                 gap: 60px;
             }
             
-            .about-text {
+            .about-text, .tribal-text, .commission-text {
                 flex: 1;
             }
             
-            .about-image {
+            .about-image, .tribal-image, .commission-form {
                 flex: 1;
             }
             
-            .product-grid {
+            .product-grid.grid-view {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
             }
             
             .process-steps {
@@ -858,6 +1050,10 @@
         }
         
         @media (min-width: 992px) {
+            .product-grid.grid-view {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
             .process-steps {
                 grid-template-columns: repeat(4, 1fr);
             }
@@ -870,35 +1066,16 @@
                 gap: 8px;
             }
             
-            .mobile-menu-toggle {
-                display: block;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-            }
-            
-            nav {
-                display: none;
-                width: 100%;
-                margin-top: 20px;
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            nav a {
-                width: 100%;
-                justify-content: center;
-            }
-            
             .logo {
                 font-size: 2.8rem;
+            }
+            
+            .product-grid.list-view .product-card {
+                flex-direction: column;
+            }
+            
+            .product-grid.list-view .product-image {
+                width: 100%;
             }
         }
         
@@ -922,13 +1099,14 @@
 <body>
     <!-- Accessibility Controls -->
     <div class="accessibility-controls" aria-label="Accessibility controls">
-        <div class="text-size-controls">
-            <button class="text-size-btn" id="decreaseText" aria-label="Decrease text size">A-</button>
-            <button class="text-size-btn" id="increaseText" aria-label="Increase text size">A+</button>
+        <div class="control-group">
+            <button class="accessibility-btn voice-btn" id="voiceToggle" aria-label="Toggle voice narration">🔊</button>
+            <button class="accessibility-btn dark-btn" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
         </div>
-        <button class="contrast-btn" id="toggleContrast" aria-pressed="false">
-            <span>🌙</span> High Contrast
-        </button>
+        <div class="text-size-controls">
+            <button class="accessibility-btn" id="decreaseText" aria-label="Decrease text size">A-</button>
+            <button class="accessibility-btn" id="increaseText" aria-label="Increase text size">A+</button>
+        </div>
     </div>
 
     <!-- Back to top button -->
@@ -944,16 +1122,19 @@
                 <div class="logo">Native <span>Flair</span></div>
                 <div class="logo-subtitle">Hand-Painted Vases</div>
             </div>
-            <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="#home">🏠 Home</a></li>
-                    <li><a href="#about">🪶 About</a></li>
-                    <li><a href="#products">🏺 Shop</a></li>
-                    <li><a href="#process">🎨 Process</a></li>
-                    <li><a href="#contact">💌 Contact</a></li>
-                </ul>
-            </nav>
+            <div class="nav-scroll-container">
+                <nav>
+                    <ul>
+                        <li><a href="#home">🏠 Home</a></li>
+                        <li><a href="#about">🪶 About</a></li>
+                        <li><a href="#tribal">🌾 Saginaw Tribe</a></li>
+                        <li><a href="#products">🏺 Shop</a></li>
+                        <li><a href="#commission">🎨 Commissions</a></li>
+                        <li><a href="#process">✨ Process</a></li>
+                        <li><a href="#contact">💌 Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -964,7 +1145,7 @@
             <p>Each vase is uniquely crafted with intricate interior paintings, bringing beauty and artistry to your home.</p>
             <div class="hero-btns">
                 <a href="#products" class="btn" aria-label="Shop the vase collection">🛍 Shop Vases</a>
-                <a href="#about" class="btn btn-secondary" aria-label="Learn about the artist">👩‍🎨 About the Artist</a>
+                <a href="#commission" class="btn btn-secondary" aria-label="Commission a custom piece">🎨 Custom Order</a>
             </div>
         </div>
     </section>
@@ -997,11 +1178,38 @@
         </div>
     </section>
 
+    <!-- Tribal Info Section -->
+    <section class="tribal-info" id="tribal">
+        <div class="container">
+            <h2 class="section-title">Saginaw Chippewa Tribal Inspiration</h2>
+            <div class="tribal-content">
+                <div class="tribal-text">
+                    <h3>Honoring Ancestral Roots</h3>
+                    <p>The Saginaw Chippewa Indian Tribe of Michigan has a rich cultural heritage that inspires the Native Flair collection. Based in the Great Lakes region, the tribe's traditional artistry, beadwork, and connection to nature influence many of the designs.</p>
+                    <p>Traditional Anishinaabe floral patterns, woodland imagery, and earth-toned color palettes pay homage to the tribe's artistic traditions while creating contemporary pieces for modern homes.</p>
+                    <p>Each vase incorporates elements inspired by Michigan's natural landscapes - the flowing rivers, forest textures, and seasonal changes that have shaped the Saginaw people's way of life for generations.</p>
+                    <a href="#products" class="btn btn-maroon" aria-label="View tribal inspired vases">🌾 Tribal Collection</a>
+                </div>
+                <div class="tribal-image">
+                    <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Traditional Native American beadwork and patterns">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Products Section -->
     <section class="products" id="products">
         <div class="container">
             <h2 class="section-title">Vase Collection</h2>
-            <div class="product-grid">
+            <div class="view-toggle">
+                <button class="view-btn active" id="gridView">
+                    <span>⏹️</span> Grid View
+                </button>
+                <button class="view-btn" id="listView">
+                    <span>📋</span> List View
+                </button>
+            </div>
+            <div class="product-grid grid-view">
                 <!-- Product 1 -->
                 <div class="product-card">
                     <div class="product-image">
@@ -1011,7 +1219,7 @@
                     <div class="product-info">
                         <h3 class="product-title">Spring Blossom Vase</h3>
                         <p class="product-price">$45.00</p>
-                        <p>Delicate floral patterns in soft pastels, inspired by spring's first blooms.</p>
+                        <p>Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs.</p>
                         <a href="#" class="btn" aria-label="Add Spring Blossom Vase to cart">🛒 Add to Cart</a>
                     </div>
                 </div>
@@ -1025,7 +1233,7 @@
                     <div class="product-info">
                         <h3 class="product-title">Modern Geometric Vase</h3>
                         <p class="product-price">$52.00</p>
-                        <p>Bold lines and angular shapes create a contemporary statement piece.</p>
+                        <p>Bold lines and angular shapes create a contemporary statement piece inspired by traditional beadwork patterns.</p>
                         <a href="#" class="btn" aria-label="Add Modern Geometric Vase to cart">🛒 Add to Cart</a>
                     </div>
                 </div>
@@ -1039,7 +1247,7 @@
                     <div class="product-info">
                         <h3 class="product-title">Forest Whisper Vase</h3>
                         <p class="product-price">$48.00</p>
-                        <p>Earthy tones and organic patterns that evoke the tranquility of a forest.</p>
+                        <p>Earthy tones and organic patterns that evoke the tranquility of Michigan's forests and traditional woodland art.</p>
                         <a href="#" class="btn" aria-label="Add Forest Whisper Vase to cart" style="opacity: 0.6; pointer-events: none;">🛒 Sold Out</a>
                     </div>
                 </div>
@@ -1053,9 +1261,97 @@
                     <div class="product-info">
                         <h3 class="product-title">Tropical Paradise Vase</h3>
                         <p class="product-price">$55.00</p>
-                        <p>Vibrant tropical flowers painted in rich, saturated colors.</p>
+                        <p>Vibrant tropical flowers painted in rich, saturated colors with influences from indigenous art forms.</p>
                         <a href="#" class="btn" aria-label="Add Tropical Paradise Vase to cart">🛒 Add to Cart</a>
                     </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="River Flow Vase with flowing blue patterns inspired by Michigan rivers">
+                        <span class="product-tag">New</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">River Flow Vase</h3>
+                        <p class="product-price">$58.00</p>
+                        <p>Flowing blue patterns inspired by Michigan's rivers and traditional water symbolism in Native art.</p>
+                        <a href="#" class="btn" aria-label="Add River Flow Vase to cart">🛒 Add to Cart</a>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1578507618937-31612381921c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sunset Horizon Vase with warm sunset colors and gradient effects">
+                        <span class="product-tag">Bidding</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sunset Horizon Vase</h3>
+                        <p class="product-price">$65.00</p>
+                        <p>Warm sunset colors with gradient effects, capturing the beauty of Michigan's Great Lakes sunsets.</p>
+                        <a href="#" class="btn btn-purple" aria-label="Bid on Sunset Horizon Vase">💰 Place Bid</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commission Section -->
+    <section class="commission" id="commission">
+        <div class="container">
+            <h2 class="section-title">Custom Commissions</h2>
+            <div class="commission-content">
+                <div class="commission-text">
+                    <h3>Request a Custom Piece</h3>
+                    <p>Looking for something unique? Native Flair accepts custom commission work for special occasions, gifts, or to match your specific home decor.</p>
+                    <p>Commissioned pieces start at $75 and can include personalized colors, patterns, sizes, and design elements. Each custom vase comes with a certificate of authenticity and the story behind its creation.</p>
+                    <p>For bidding on exclusive or one-of-a-kind pieces, please indicate your interest in the form and we'll contact you with details.</p>
+                    <div class="pricing-info">
+                        <h4>Commission Pricing:</h4>
+                        <ul>
+                            <li>Small Vase (up to 6"): Starting at $75</li>
+                            <li>Medium Vase (6-10"): Starting at $100</li>
+                            <li>Large Vase (10"+): Starting at $150</li>
+                            <li>Complex Designs: Additional $25-50</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="commission-form">
+                    <form id="commissionForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="project" class="form-label">Project Type</label>
+                            <select id="project" class="form-control" required>
+                                <option value="">Select an option</option>
+                                <option value="commission">Custom Commission</option>
+                                <option value="bidding">Bidding on Existing Piece</option>
+                                <option value="consultation">Design Consultation</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="form-label">Project Description</label>
+                            <textarea id="description" class="form-control" placeholder="Tell us about your vision, preferred colors, size, and any special requirements..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget" class="form-label">Budget Range</label>
+                            <select id="budget" class="form-control" required>
+                                <option value="">Select budget range</option>
+                                <option value="50-100">$50 - $100</option>
+                                <option value="100-150">$100 - $150</option>
+                                <option value="150-200">$150 - $200</option>
+                                <option value="200+">$200+</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-maroon">🎨 Submit Commission Request</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -1069,22 +1365,22 @@
                 <div class="step">
                     <div class="step-icon">🎨</div>
                     <h3 class="step-title">Design Inspiration</h3>
-                    <p>Each design begins with inspiration from nature, patterns, and colors that speak to the artist.</p>
+                    <p>Each design begins with inspiration from nature, tribal patterns, and colors that speak to the artist's heritage and creative vision.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">✍️</div>
                     <h3 class="step-title">Interior Painting</h3>
-                    <p>Using specialized techniques, the interior of each vase is carefully painted with precision.</p>
+                    <p>Using specialized techniques, the interior of each vase is carefully painted with precision, often requiring multiple layers and careful attention to detail.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">🔥</div>
                     <h3 class="step-title">Curing Process</h3>
-                    <p>The painted vases undergo a careful curing process to ensure durability and longevity.</p>
+                    <p>The painted vases undergo a careful curing process to ensure durability and longevity of the artwork, preserving it for generations.</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">📦</div>
                     <h3 class="step-title">Careful Packaging</h3>
-                    <p>Each vase is carefully packaged to ensure it arrives safely at your doorstep.</p>
+                    <p>Each vase is carefully packaged with eco-friendly materials to ensure it arrives safely at your doorstep, ready to display.</p>
                 </div>
             </div>
         </div>
@@ -1100,20 +1396,35 @@
                     <p>Have questions about our vases or want to request a custom design? We'd love to hear from you!</p>
                     <p><strong>Email:</strong> info@nativeflair.com</p>
                     <p><strong>Phone:</strong> (555) 123-4567</p>
+                    <p><strong>Studio:</strong> Based in Michigan, honoring Saginaw Chippewa traditions</p>
+                    <div class="social-links">
+                        <a href="#" class="btn btn-secondary" aria-label="Follow on Facebook">📘 Facebook</a>
+                        <a href="#" class="btn btn-secondary" aria-label="Follow on Instagram">📷 Instagram</a>
+                    </div>
                 </div>
                 <div class="contact-form">
                     <form id="contactForm">
                         <div class="form-group">
-                            <label for="name" class="form-label">Your Name</label>
-                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                            <label for="contactName" class="form-label">Your Name</label>
+                            <input type="text" id="contactName" class="form-control" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="form-label">Your Email</label>
-                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                            <label for="contactEmail" class="form-label">Your Email</label>
+                            <input type="email" id="contactEmail" class="form-control" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <label for="message" class="form-label">Your Message</label>
-                            <textarea id="message" class="form-control" placeholder="Your Message" required></textarea>
+                            <label for="contactSubject" class="form-label">Subject</label>
+                            <select id="contactSubject" class="form-control" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="commission">Custom Commission</option>
+                                <option value="wholesale">Wholesale Orders</option>
+                                <option value="collaboration">Collaboration</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage" class="form-label">Your Message</label>
+                            <textarea id="contactMessage" class="form-control" placeholder="Your Message" required></textarea>
                         </div>
                         <button type="submit" class="btn">📨 Send Message</button>
                     </form>
@@ -1128,15 +1439,16 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Native Flair</h3>
-                    <p>Hand-painted vases with unique interior designs that bring artistry and beauty to your home.</p>
+                    <p>Hand-painted vases with unique interior designs that bring artistry and beauty to your home. Honoring Saginaw Chippewa traditions with every piece.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#tribal">Saginaw Tribe</a></li>
                         <li><a href="#products">Shop</a></li>
-                        <li><a href="#process">Process</a></li>
+                        <li><a href="#commission">Commissions</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -1145,11 +1457,12 @@
                         <li><a href="#">Shipping Policy</a></li>
                         <li><a href="#">Returns & Refunds</a></li>
                         <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Native Flair. All rights reserved.</p>
+                <p>&copy; 2023 Native Flair. All rights reserved. | Honoring Saginaw Chippewa Tribal traditions</p>
             </div>
         </div>
     </footer>
@@ -1175,30 +1488,72 @@
             }
         });
         
-        // High contrast toggle
-        const contrastBtn = document.getElementById('toggleContrast');
-        contrastBtn.addEventListener('click', () => {
-            document.body.classList.toggle('high-contrast');
-            const isPressed = document.body.classList.contains('high-contrast');
-            contrastBtn.setAttribute('aria-pressed', isPressed);
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            darkModeToggle.setAttribute('aria-pressed', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
         });
         
-        // Form submission
+        // Voice narration
+        const voiceToggle = document.getElementById('voiceToggle');
+        let isVoiceActive = false;
+        let speech = null;
+        
+        voiceToggle.addEventListener('click', () => {
+            if (!isVoiceActive) {
+                // Start voice narration
+                if ('speechSynthesis' in window) {
+                    speech = new SpeechSynthesisUtterance();
+                    speech.text = "Welcome to Native Flair. Hand-painted vases with unique interior designs. Use the navigation to explore our collection, learn about the Saginaw Chippewa inspiration, or commission a custom piece.";
+                    speech.rate = 0.9;
+                    speech.pitch = 1;
+                    window.speechSynthesis.speak(speech);
+                    isVoiceActive = true;
+                    voiceToggle.textContent = '🔇';
+                }
+            } else {
+                // Stop voice narration
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    isVoiceActive = false;
+                    voiceToggle.textContent = '🔊';
+                }
+            }
+        });
+        
+        // Grid/List view toggle
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const productGrid = document.querySelector('.product-grid');
+        
+        gridViewBtn.addEventListener('click', () => {
+            productGrid.classList.remove('list-view');
+            productGrid.classList.add('grid-view');
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+        });
+        
+        listViewBtn.addEventListener('click', () => {
+            productGrid.classList.remove('grid-view');
+            productGrid.classList.add('list-view');
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+        });
+        
+        // Form submissions
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Thank you for your message! We will get back to you soon.');
             this.reset();
         });
         
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const mainNav = document.getElementById('mainNav');
-        
-        menuToggle.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-            menuToggle.textContent = mainNav.classList.contains('active') ? '✕' : '☰';
-            menuToggle.setAttribute('aria-label', 
-                mainNav.classList.contains('active') ? 'Close menu' : 'Open menu');
+        document.getElementById('commissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your commission request! We will review your project and contact you within 2 business days.');
+            this.reset();
         });
         
         // Add fade-in animation to elements when they come into view
@@ -1217,7 +1572,7 @@
         }, observerOptions);
         
         // Observe elements for animation
-        document.querySelectorAll('.product-card, .step, .about-content, .contact-content').forEach(el => {
+        document.querySelectorAll('.product-card, .step, .about-content, .tribal-content, .commission-content').forEach(el => {
             el.style.opacity = '0';
             observer.observe(el);
         });
