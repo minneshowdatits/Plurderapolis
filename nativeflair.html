@@ -26,7 +26,7 @@
             --water-splatter-purple: #8E44AD;
             --water-splatter-green: #27AE60;
             
-            /* NEW: Updated colors */
+            /* Updated colors */
             --dark-turquoise: #1A5F5F;
             --deep-plum: #5D2A4C;
         }
@@ -50,6 +50,26 @@
             font-size: 1rem;
         }
         
+        /* High Contrast Mode */
+        body.high-contrast {
+            --sandstone: #000000;
+            --charcoal: #FFFFFF;
+            --deep-garnet: #FF0000;
+            --gold-vermeil: #FFFF00;
+            --tribal-turquoise: #00FFFF;
+            --pearl: #FFFFFF;
+        }
+        
+        /* Dark Mode */
+        body.dark-mode {
+            --sandstone: #1a1a1a;
+            --charcoal: #e0e0e0;
+            --deep-garnet: #a83232;
+            --gold-vermeil: #d4af37;
+            --tribal-turquoise: #2a7a7a;
+            --pearl: #f0f0f0;
+        }
+        
         /* Typography */
         h1, h2, h3, h4 {
             font-family: 'Playfair Display', serif;
@@ -64,7 +84,7 @@
             letter-spacing: 0.5px;
         }
         
-        /* UPDATED: Make all headings except title easier to read */
+        /* Make all headings except title easier to read */
         h2, h3, h4 {
             font-family: 'Quicksand', sans-serif;
             font-weight: 600;
@@ -98,7 +118,7 @@
             font-size: 2.5rem;
         }
         
-        /* NEW: Special title styling with split words */
+        /* Special title styling with split words */
         .split-title {
             display: flex;
             align-items: center;
@@ -150,11 +170,9 @@
             padding: 0 15px;
         }
         
-        /* Header with Stone Texture */
+        /* Header */
         header {
-            background: 
-                linear-gradient(rgba(77, 39, 89, 0.8), rgba(77, 39, 89, 0.8)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234A235A"/><path d="M0 0L100 100M100 0L0 100" stroke="%235D2A4C" stroke-width="2" opacity="0.2"/><circle cx="20" cy="20" r="5" fill="%23C9A646" opacity="0.3"/><circle cx="80" cy="80" r="7" fill="%23C9A646" opacity="0.3"/><circle cx="50" cy="50" r="10" fill="%23C9A646" opacity="0.2"/></svg>');
+            background: linear-gradient(135deg, var(--deep-plum) 0%, var(--dark-purple) 100%);
             padding: 12px 0;
             border-bottom: 1px solid var(--gold-vermeil);
             position: sticky;
@@ -162,9 +180,6 @@
             z-index: 1000;
             transition: var(--transition);
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            /* Stone-like texture effect */
-            background-size: cover;
-            background-attachment: fixed;
         }
         
         .header-container {
@@ -181,7 +196,7 @@
             text-align: center;
         }
         
-        /* UPDATED: Logo styling with split words and bigger size */
+        /* Logo styling with split words and bigger size */
         .logo {
             display: flex;
             align-items: center;
@@ -299,7 +314,7 @@
             z-index: 2;
         }
         
-        /* UPDATED: Hero title with split words */
+        /* Hero title with split words */
         .hero h1 {
             font-size: 2.4rem;
             margin-bottom: 1rem;
@@ -411,18 +426,10 @@
             background: linear-gradient(135deg, var(--water-splatter-purple), var(--deep-plum));
         }
         
-        /* Section Styles with Scroll Animation */
+        /* Section Styles */
         section {
             padding: 50px 0;
             position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         .section-title {
@@ -441,10 +448,265 @@
             border-radius: 2px;
         }
         
-        /* Products Section */
+        /* Gallery Section with Slideshow */
+        .gallery {
+            background-color: var(--sandstone);
+            position: relative;
+        }
+        
+        .gallery-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Gallery contrast controls */
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-mode-btn {
+            background: var(--dark-turquoise);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .gallery-mode-btn.active {
+            background: var(--deep-plum);
+        }
+        
+        .gallery-mode-btn:hover {
+            background: #145050;
+        }
+        
+        /* Gallery contrast modes */
+        .gallery-high-contrast .gallery-main {
+            filter: contrast(150%) brightness(120%);
+        }
+        
+        .gallery-dark-mode .gallery-main {
+            filter: brightness(70%) contrast(130%);
+        }
+        
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .category-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--gold-vermeil);
+            color: var(--charcoal);
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .category-tab.active, .category-tab:hover {
+            background: var(--dark-turquoise);
+            color: var(--pearl);
+        }
+        
+        /* Gallery Container */
+        .gallery-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .gallery-main {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+        
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-slide.active {
+            opacity: 1;
+        }
+        
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .gallery-dot.active {
+            background: var(--pearl);
+            transform: scale(1.2);
+        }
+        
+        .gallery-prev, .gallery-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.7);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            color: var(--charcoal);
+        }
+        
+        .gallery-prev {
+            left: 15px;
+        }
+        
+        .gallery-next {
+            right: 15px;
+        }
+        
+        .gallery-prev:hover, .gallery-next:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .gallery-thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .gallery-thumbnail {
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .gallery-thumbnail.active, .gallery-thumbnail:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .show-more-btn {
+            display: block;
+            margin: 30px auto;
+            text-align: center;
+        }
+        
+        /* Products Section with Advanced Filtering */
         .products {
             background-color: var(--sandstone);
             position: relative;
+        }
+        
+        /* Advanced Filtering System */
+        .filter-container {
+            background: rgba(40, 40, 40, 0.95);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            border: 1px solid var(--gold-vermeil);
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--charcoal);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--gold-vermeil);
+            color: var(--charcoal);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .filter-option.active, .filter-option:hover {
+            background: var(--dark-turquoise);
+            color: var(--pearl);
+        }
+        
+        .filter-reset {
+            background: var(--deep-plum);
+            color: var(--pearl);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .filter-reset:hover {
+            background: #6a2a38;
         }
         
         .product-grid {
@@ -483,6 +745,78 @@
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
+        }
+        
+        /* Individual Item Display Controls */
+        .item-display-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .display-control-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .display-control-btn:focus {
+            outline: 2px solid var(--gold-vermeil);
+            outline-offset: 2px;
+        }
+        
+        .display-control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .display-control-btn.active {
+            background: var(--tribal-turquoise);
+            color: white;
+        }
+        
+        /* Individual Item Display Modes */
+        .item-night-mode .product-image {
+            background-color: #1a1a1a;
+        }
+        
+        .item-night-mode .product-info {
+            background-color: #2d2d2d;
+        }
+        
+        .item-night-mode .product-title,
+        .item-night-mode .product-price,
+        .item-night-mode p {
+            color: #f0f0f0;
+        }
+        
+        .item-high-contrast .product-image {
+            background-color: #000;
+        }
+        
+        .item-high-contrast .product-info {
+            background-color: #000;
+            border: 2px solid #fff;
+        }
+        
+        .item-high-contrast .product-title,
+        .item-high-contrast .product-price,
+        .item-high-contrast p {
+            color: #fff;
+            font-weight: bold;
         }
         
         .product-info {
@@ -559,42 +893,40 @@
             font-family: 'Nunito Sans', sans-serif;
         }
         
-        /* UPDATED: Call to Action Section with Stone Texture */
-        .cta-section {
-            background: 
-                linear-gradient(rgba(77, 39, 89, 0.85), rgba(77, 39, 89, 0.85)),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234A235A"/><path d="M0 0L100 100M100 0L0 100" stroke="%235D2A4C" stroke-width="2" opacity="0.2"/><circle cx="20" cy="20" r="5" fill="%23C9A646" opacity="0.3"/><circle cx="80" cy="80" r="7" fill="%23C9A646" opacity="0.3"/><circle cx="50" cy="50" r="10" fill="%23C9A646" opacity="0.2"/></svg>');
+        /* Tribal Info Section - UPDATED: Call to Action Space */
+        .tribal-info {
+            background: linear-gradient(135deg, var(--dark-purple) 0%, var(--deep-plum) 100%);
             color: var(--pearl);
             padding: 50px 0;
-            text-align: center;
             position: relative;
             overflow: hidden;
-            /* Stone-like texture effect */
-            background-size: cover;
-            background-attachment: fixed;
         }
         
-        .cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .cta-title {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-        
-        .cta-text {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
-        .cta-buttons {
+        .tribal-content {
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .tribal-text {
+            width: 100%;
+        }
+        
+        .tribal-text h2, .tribal-text h3 {
+            color: var(--pearl);
+        }
+        
+        .tribal-image {
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .tribal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
         /* Commission Section */
@@ -723,6 +1055,39 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid var(--gold-vermeil);
+        }
+        
+        /* UPDATED: Call to Action Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-purple) 0%, var(--deep-plum) 100%);
+            color: var(--pearl);
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         /* Footer */
@@ -1045,7 +1410,7 @@
             font-size: 1.1rem;
         }
         
-        /* NEW: Text-to-speech button */
+        /* Text-to-speech button */
         .text-to-speech-btn {
             background: var(--dark-turquoise);
             color: white;
@@ -1064,7 +1429,7 @@
             background: #145050;
         }
         
-        /* NEW: Bid Section */
+        /* Bid Section */
         .bid-section {
             margin-top: 20px;
             padding: 20px;
@@ -1270,224 +1635,7 @@
             font-size: 0.9rem;
         }
         
-        /* NEW: Enhanced Gallery Styles */
-        .gallery-container {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .gallery-main {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
-            border-radius: var(--radius);
-            margin-bottom: 20px;
-        }
-        
-        .gallery-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .gallery-slide.active {
-            opacity: 1;
-        }
-        
-        .gallery-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .gallery-nav {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .gallery-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .gallery-dot.active {
-            background: var(--pearl);
-            transform: scale(1.2);
-        }
-        
-        .gallery-prev, .gallery-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.7);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            color: var(--charcoal);
-        }
-        
-        .gallery-prev {
-            left: 15px;
-        }
-        
-        .gallery-next {
-            right: 15px;
-        }
-        
-        .gallery-prev:hover, .gallery-next:hover {
-            background: rgba(255,255,255,0.9);
-        }
-        
-        .gallery-thumbnails {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .gallery-thumbnail {
-            height: 80px;
-            border-radius: 8px;
-            overflow: hidden;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: var(--transition);
-        }
-        
-        .gallery-thumbnail.active, .gallery-thumbnail:hover {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        
-        .gallery-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .show-more-btn {
-            display: block;
-            margin: 30px auto;
-            text-align: center;
-        }
-        
-        /* NEW: Gallery contrast controls */
-        .gallery-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .gallery-mode-btn {
-            background: var(--dark-turquoise);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .gallery-mode-btn.active {
-            background: var(--deep-plum);
-        }
-        
-        .gallery-mode-btn:hover {
-            background: #145050;
-        }
-        
-        /* Gallery contrast modes */
-        .gallery-high-contrast .gallery-main {
-            filter: contrast(150%) brightness(120%);
-        }
-        
-        .gallery-dark-mode .gallery-main {
-            filter: brightness(70%) contrast(130%);
-        }
-        
-        /* NEW: Advanced Filtering System */
-        .filter-container {
-            background: rgba(40, 40, 40, 0.95);
-            padding: 25px;
-            border-radius: var(--radius);
-            margin-bottom: 30px;
-            border: 1px solid var(--gold-vermeil);
-        }
-        
-        .filter-group {
-            margin-bottom: 20px;
-        }
-        
-        .filter-title {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: var(--charcoal);
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .filter-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .filter-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--gold-vermeil);
-            color: var(--charcoal);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-        
-        .filter-option.active, .filter-option:hover {
-            background: var(--dark-turquoise);
-            color: var(--pearl);
-        }
-        
-        .filter-reset {
-            background: var(--deep-plum);
-            color: var(--pearl);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-        
-        .filter-reset:hover {
-            background: #6a2a38;
-        }
-        
-        /* NEW: Image Zoom Modal */
+        /* Image Zoom Modal */
         .zoom-modal {
             display: none;
             position: fixed;
@@ -1535,100 +1683,13 @@
             border-radius: 4px;
         }
         
-        /* NEW: Product Categories */
-        .category-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 30px;
-            justify-content: center;
-        }
-        
-        .category-tab {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--gold-vermeil);
-            color: var(--charcoal);
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-        
-        .category-tab.active, .category-tab:hover {
-            background: var(--dark-turquoise);
-            color: var(--pearl);
-        }
-        
-        /* NEW: Product Types */
+        /* Product Categories */
         .product-type {
             display: none;
         }
         
         .product-type.active {
             display: block;
-        }
-        
-        /* UPDATED: Improved Gallery Product Details */
-        .gallery-product-info {
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius);
-            margin-top: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gold-vermeil);
-            color: #333;
-        }
-        
-        .gallery-product-title {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            font-family: 'Playfair Display', serif;
-            color: var(--deep-plum);
-        }
-        
-        .gallery-product-description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-        
-        .gallery-product-price {
-            font-weight: 700;
-            color: var(--deep-plum);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-        
-        .gallery-product-attributes {
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-        
-        .gallery-product-attributes p {
-            margin-bottom: 8px;
-        }
-        
-        .responsive-view-details-btn {
-            background: var(--dark-turquoise);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: block;
-            margin: 20px auto;
-            text-align: center;
-            width: 100%;
-            max-width: 300px;
-        }
-        
-        .responsive-view-details-btn:hover {
-            background: #145050;
-            transform: translateY(-3px);
         }
         
         /* Responsive Styles */
@@ -1736,18 +1797,6 @@
             .gallery-thumbnails {
                 grid-template-columns: repeat(6, 1fr);
             }
-            
-            .gallery-product-info {
-                padding: 30px;
-            }
-            
-            .gallery-product-title {
-                font-size: 1.6rem;
-            }
-            
-            .gallery-product-description {
-                font-size: 1.2rem;
-            }
         }
         
         @media (min-width: 992px) {
@@ -1827,18 +1876,6 @@
                 flex-direction: column;
                 align-items: center;
             }
-            
-            .gallery-product-info {
-                padding: 20px;
-            }
-            
-            .gallery-product-title {
-                font-size: 1.3rem;
-            }
-            
-            .gallery-product-description {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
@@ -1897,7 +1934,7 @@
                     <p class="product-price" id="detailPrice"></p>
                     <p id="detailDescription"></p>
                     
-                    <!-- NEW: Text-to-speech button -->
+                    <!-- Text-to-speech button -->
                     <button class="text-to-speech-btn" id="textToSpeechBtn">
                         <span>🔊 Read Aloud</span>
                     </button>
@@ -1907,7 +1944,7 @@
                         <!-- Will be populated with product attributes -->
                     </div>
                     
-                    <!-- NEW: Bid Section -->
+                    <!-- Bid Section -->
                     <div class="bid-section">
                         <h4>Place a Bid</h4>
                         <p>Current highest bid: <span class="current-bid" id="currentBid">$0</span></p>
@@ -1969,11 +2006,11 @@
     <!-- Working Back to top button -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
-    <!-- Sticky Header with Stone Texture -->
+    <!-- Sticky Header -->
     <header id="home">
         <div class="container header-container">
             <div class="logo-container">
-                <!-- UPDATED: Logo with split words and bigger size -->
+                <!-- Logo with split words and bigger size -->
                 <div class="logo">
                     <span class="logo-native">Native</span>
                     <span class="logo-flair">Flair</span>
@@ -1999,7 +2036,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <!-- UPDATED: Hero title with split words -->
+            <!-- Hero title with split words -->
             <h1>
                 <span class="hero-native">Native</span>
                 <span class="hero-flair">Flair</span>
@@ -2014,12 +2051,12 @@
     </section>
 
     <!-- Gallery Section with Slideshow -->
-    <section class="products" id="gallery">
+    <section class="gallery" id="gallery">
         <div class="container">
             <h2 class="section-title cursive-title">Art Gallery</h2>
-            <p class="text-center" style="text-align: center; margin-bottom: 30px;">Explore our collection of handcrafted pieces featuring intricate designs</p>
+            <p class="gallery-intro">Explore our collection of handcrafted pieces featuring intricate designs. Try the display controls on each item to see how it would look in different lighting conditions.</p>
             
-            <!-- NEW: Gallery contrast controls -->
+            <!-- Gallery contrast controls -->
             <div class="gallery-controls">
                 <button class="gallery-mode-btn" id="galleryNormalMode">Normal</button>
                 <button class="gallery-mode-btn" id="galleryHighContrast">High Contrast</button>
@@ -2075,21 +2112,6 @@
                     <div class="gallery-thumbnail" data-slide="3">
                         <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Traditional beadwork thumbnail">
                     </div>
-                </div>
-                
-                <!-- UPDATED: Gallery Product Details with bigger text -->
-                <div class="gallery-product-info">
-                    <h3 class="gallery-product-title">Spring Blossom Vase</h3>
-                    <p class="gallery-product-description">Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs. Made from high-quality ceramic with a glossy finish. Measures 8 inches tall.</p>
-                    <p class="gallery-product-price">$45.00</p>
-                    <div class="gallery-product-attributes">
-                        <p><strong>Category:</strong> Vases</p>
-                        <p><strong>Vibe:</strong> Flowery</p>
-                        <p><strong>Colors:</strong> Pink, Green, White</p>
-                        <p><strong>Size:</strong> Medium</p>
-                        <p><strong>Perfect For:</strong> Birthday, Anniversary, Housewarming</p>
-                    </div>
-                    <button class="responsive-view-details-btn" data-id="1">View Full Details</button>
                 </div>
             </div>
             
@@ -2194,7 +2216,7 @@
         </div>
     </section>
 
-    <!-- UPDATED: Call to Action Section with Stone Texture -->
+    <!-- UPDATED: Call to Action Section (replaces second logo/title) -->
     <section class="cta-section" id="cta">
         <div class="container">
             <div class="cta-content">
@@ -2591,6 +2613,13 @@
             document.body.classList.toggle('high-contrast');
         });
         
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+        
         // Image zoom controls
         const zoomIn = document.getElementById('zoomIn');
         const zoomOut = document.getElementById('zoomOut');
@@ -2685,7 +2714,7 @@
         const relatedProductsContainer = document.getElementById('relatedProducts');
         const viewDetailBtns = document.querySelectorAll('.view-detail-btn');
         
-        // NEW: Text-to-speech functionality
+        // Text-to-speech functionality
         const textToSpeechBtn = document.getElementById('textToSpeechBtn');
         let speechSynthesis = window.speechSynthesis;
         
@@ -2715,7 +2744,7 @@
             };
         });
         
-        // NEW: Bid functionality
+        // Bid functionality
         const bidAmountInput = document.getElementById('bidAmount');
         const placeBidBtn = document.getElementById('placeBidBtn');
         const currentBidElement = document.getElementById('currentBid');
@@ -2763,7 +2792,7 @@
             `;
             detailAttributes.innerHTML = attributesHTML;
             
-            // NEW: Set bid information
+            // Set bid information
             if (product.bidEnabled) {
                 currentBidElement.textContent = `$${product.currentBid}`;
                 bidTimeLeftElement.textContent = calculateTimeLeft(product.bidEndDate);
@@ -2850,12 +2879,6 @@
                 const productId = btn.getAttribute('data-id');
                 openProductDetail(productId);
             }
-        });
-        
-        // NEW: Add event listener for responsive view details button
-        document.querySelector('.responsive-view-details-btn').addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            openProductDetail(productId);
         });
         
         // Close product detail modal
@@ -2986,7 +3009,7 @@
             }, 5000);
         });
         
-        // NEW: Gallery contrast modes
+        // Gallery contrast modes
         const galleryNormalModeBtn = document.getElementById('galleryNormalMode');
         const galleryHighContrastBtn = document.getElementById('galleryHighContrast');
         const galleryDarkModeBtn = document.getElementById('galleryDarkMode');
@@ -3070,6 +3093,10 @@
                 card.innerHTML = `
                     <div class="product-image">
                         <img src="${product.image}" alt="${product.title}">
+                        <div class="item-display-controls">
+                            <button class="display-control-btn night-mode-toggle" aria-label="Toggle night mode for ${product.title}">🌙</button>
+                            <button class="display-control-btn high-contrast-toggle" aria-label="Toggle high contrast for ${product.title}">⚫</button>
+                        </div>
                         ${product.tags.includes('sold-out') ? '<span class="product-tag">Sold Out</span>' : ''}
                         ${product.tags.includes('new') ? '<span class="product-tag">New</span>' : ''}
                         ${product.tags.includes('limited') ? '<span class="product-tag">Limited</span>' : ''}
@@ -3087,6 +3114,39 @@
                 `;
                 
                 productGrid.appendChild(card);
+            });
+            
+            // Add event listeners to display control buttons
+            document.querySelectorAll('.night-mode-toggle').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    productCard.classList.toggle('item-night-mode');
+                    this.classList.toggle('active');
+                    
+                    // If night mode is activated, ensure high contrast is deactivated
+                    if (productCard.classList.contains('item-night-mode')) {
+                        productCard.classList.remove('item-high-contrast');
+                        const highContrastBtn = productCard.querySelector('.high-contrast-toggle');
+                        highContrastBtn.classList.remove('active');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.high-contrast-toggle').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    productCard.classList.toggle('item-high-contrast');
+                    this.classList.toggle('active');
+                    
+                    // If high contrast is activated, ensure night mode is deactivated
+                    if (productCard.classList.contains('item-high-contrast')) {
+                        productCard.classList.remove('item-night-mode');
+                        const nightModeBtn = productCard.querySelector('.night-mode-toggle');
+                        nightModeBtn.classList.remove('active');
+                    }
+                });
             });
             
             // Add event listeners to the new view detail buttons
@@ -3257,29 +3317,8 @@
             }
         });
         
-        // NEW: Scroll Animation Functionality
-        function checkVisibility() {
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (sectionTop < windowHeight * 0.85) {
-                    section.classList.add('visible');
-                }
-            });
-        }
-        
-        // Initial check on page load
-        window.addEventListener('load', checkVisibility);
-        
-        // Check on scroll
-        window.addEventListener('scroll', checkVisibility);
-        
         // Initialize the page
         initializeProductGrid();
-        checkVisibility();
     </script>
 </body>
 </html>
