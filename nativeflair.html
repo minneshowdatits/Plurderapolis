@@ -6,7 +6,7 @@
     <title>Native Flair - Authentic Native American Art</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600&family=Cinzel:wght@400;500;600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600&family=Cinzel:wght@400;500;600&family=Quicksand:wght@400;500;600&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
     <style>
         /* CSS Reset and Variables - Updated with reddish pink, dark teal/turquoise */
         :root {
@@ -18,6 +18,8 @@
             --dark-turquoise: #1A5F5F; /* Even darker turquoise */
             --carnelian: #A84D3C; /* Warm reddish-orange */
             --pyrite: #B8B08D; /* Metallic gold-gray */
+            --dark-silver: #5D5D5D; /* Dark grey silver accents */
+            --light-silver: #A0A0A0; /* Light silver accents */
             
             /* Victorian Bohemian Palette - Rich and Historical */
             --victorian-garnet: #8B2635; /* Deep red */
@@ -139,15 +141,15 @@
             text-align: center;
         }
         
-        /* Enhanced Logo Design with more flair */
+        /* Enhanced Logo Design with cursive effect */
         .logo {
-            font-family: 'Cinzel', serif;
-            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2rem;
             font-weight: 600;
             color: var(--pearl);
             position: relative;
             display: inline-block;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             padding: 10px 20px;
             border: 2px solid var(--gold-vermeil);
@@ -414,7 +416,7 @@
             color: var(--charcoal);
         }
         
-        /* Section Styles */
+        /* Section Styles with contrasting text colors */
         section {
             padding: 60px 0;
             position: relative;
@@ -447,6 +449,95 @@
             background-size: 100% 100%, 30px 100%;
             opacity: 0.7;
             margin: 30px 0;
+        }
+        
+        /* Horizontal Swipe Gallery */
+        .gallery-preview {
+            overflow-x: auto;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--tribal-turquoise) var(--sandstone);
+        }
+        
+        .gallery-preview::-webkit-scrollbar {
+            height: 8px;
+        }
+        
+        .gallery-preview::-webkit-scrollbar-track {
+            background: var(--sandstone);
+            border-radius: 4px;
+        }
+        
+        .gallery-preview::-webkit-scrollbar-thumb {
+            background: var(--tribal-turquoise);
+            border-radius: 4px;
+        }
+        
+        .gallery-container {
+            display: flex;
+            gap: 20px;
+            padding: 0 10px;
+            width: max-content;
+        }
+        
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 280px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-info {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .view-more-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .view-more-btn {
+            background: var(--reddish-pink);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        
+        .view-more-btn:hover {
+            background: var(--deep-garnet);
+            transform: translateY(-3px);
+        }
+        
+        .full-gallery {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .full-gallery.active {
+            display: block;
         }
         
         /* Products Section - Updated with new color accents */
@@ -1228,7 +1319,7 @@
             font-family: 'Quicksand', sans-serif;
         }
         
-        /* Enhanced Accessibility Controls with ear icon */
+        /* Enhanced Accessibility Controls with eyeball and help button */
         .accessibility-controls {
             position: fixed;
             top: 20px;
@@ -1303,12 +1394,12 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
-        .voice-btn {
-            background: var(--deep-garnet);
+        .eye-btn {
+            background: var(--dark-silver);
         }
         
-        .voice-btn::before {
-            content: "👂"; /* Ear icon for accessibility */
+        .eye-btn::before {
+            content: "👁"; /* Eyeball icon for vision settings */
         }
         
         .dark-btn {
@@ -1319,8 +1410,12 @@
             background: var(--pure-red);
         }
         
-        .info-btn {
+        .help-btn {
             background: var(--reddish-pink);
+        }
+        
+        .help-btn::before {
+            content: "❓"; /* Help icon */
         }
         
         .minimize-btn {
@@ -1463,6 +1558,23 @@
             z-index: -1;
         }
         
+        /* Section text with contrasting colors */
+        .contrast-text {
+            color: var(--charcoal);
+        }
+        
+        .light-section .contrast-text {
+            color: var(--charcoal);
+        }
+        
+        .dark-section .contrast-text {
+            color: var(--pearl);
+        }
+        
+        .dark-section h2, .dark-section h3 {
+            color: var(--pearl);
+        }
+        
         /* Responsive Styles */
         @media (min-width: 768px) {
             .header-container {
@@ -1569,7 +1681,7 @@
             }
             
             .logo {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
                 padding: 8px 15px;
             }
             
@@ -1649,7 +1761,7 @@
                 <li><strong>Text Size:</strong> Adjust the text size to make it easier to read</li>
                 <li><strong>High Contrast:</strong> Toggle high contrast mode for better visibility</li>
                 <li><strong>Dark Mode:</strong> Switch to a darker color scheme</li>
-                <li><strong>Voice Narration:</strong> Listen to content being read aloud</li>
+                <li><strong>Vision Settings:</strong> Adjust visual elements for better clarity</li>
             </ul>
             <p>These controls are always available in the accessibility panel. You can move it around the screen or minimize it as needed.</p>
             <button class="btn" id="gotItBtn">Got It!</button>
@@ -1664,10 +1776,10 @@
         </div>
     </div>
 
-    <!-- Enhanced Accessibility Controls with ear icon -->
+    <!-- Enhanced Accessibility Controls with eyeball and help button -->
     <div class="accessibility-controls" id="accessibilityControls">
         <div class="control-group">
-            <button class="accessibility-btn voice-btn" id="voiceToggle" aria-label="Toggle voice narration"></button>
+            <button class="accessibility-btn eye-btn" id="eyeToggle" aria-label="Vision settings"></button>
             <button class="accessibility-btn dark-btn" id="darkModeToggle" aria-label="Toggle dark mode">🌙</button>
             <button class="accessibility-btn contrast-btn" id="highContrastToggle" aria-label="Toggle high contrast">⚫</button>
         </div>
@@ -1676,7 +1788,7 @@
             <button class="accessibility-btn" id="resetText" aria-label="Reset text size">A</button>
             <button class="accessibility-btn" id="increaseText" aria-label="Increase text size">A+</button>
         </div>
-        <button class="accessibility-btn info-btn" id="infoBtn" aria-label="Accessibility information">ℹ️</button>
+        <button class="accessibility-btn help-btn" id="helpBtn" aria-label="Accessibility information"></button>
         <button class="accessibility-btn minimize-btn" id="minimizeBtn" aria-label="Minimize accessibility controls">▼</button>
     </div>
 
@@ -1723,202 +1835,250 @@
         </div>
     </section>
 
-    <!-- Products Section - Moved to the top -->
+    <!-- Horizontal Swipe Gallery -->
     <section class="products" id="products">
         <div class="container">
-            <h2 class="section-title">Vase Collection</h2>
-            <div class="view-toggle">
-                <button class="view-btn active" id="gridView">
-                    <span>⏹️</span> Grid View
-                </button>
-                <button class="view-btn" id="listView">
-                    <span>📋</span> List View
+            <h2 class="section-title">Vase Collection Preview</h2>
+            <div class="gallery-preview">
+                <div class="gallery-container">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Spring Blossom Vase">
+                        <div class="gallery-info">
+                            <h3>Spring Blossom</h3>
+                            <p>$45.00</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Modern Geometric Vase">
+                        <div class="gallery-info">
+                            <h3>Modern Geometric</h3>
+                            <p>$52.00</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Forest Whisper Vase">
+                        <div class="gallery-info">
+                            <h3>Forest Whisper</h3>
+                            <p>$48.00</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1548484352-5a8484472cdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Tropical Paradise Vase">
+                        <div class="gallery-info">
+                            <h3>Tropical Paradise</h3>
+                            <p>$55.00</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="River Flow Vase">
+                        <div class="gallery-info">
+                            <h3>River Flow</h3>
+                            <p>$58.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more-container">
+                <button class="view-more-btn" id="viewMoreBtn">
+                    <span>View More</span> ↓
                 </button>
             </div>
-            <div class="product-grid grid-view">
-                <!-- Product 1 -->
-                <div class="product-card fade-in">
-                    <div class="product-image">
-                        <div class="carousel" data-product="1">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Spring Blossom Vase with delicate floral pattern in soft pastels">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of Spring Blossom Vase interior pattern">
-                                </div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="1">❮</button>
-                                <button class="carousel-btn next" data-product="1">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="1" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="1" data-slide="1"></span>
-                            </div>
-                        </div>
-                        <span class="product-tag">Limited Edition</span>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Spring Blossom Vase</h3>
-                        <p class="product-price">$45.00</p>
-                        <p>Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs.</p>
-                        <a href="#" class="btn" aria-label="Add Spring Blossom Vase to cart">🛒 Add to Cart</a>
-                    </div>
+            
+            <!-- Full Product Gallery (initially hidden) -->
+            <div class="full-gallery" id="fullGallery">
+                <div class="view-toggle">
+                    <button class="view-btn active" id="gridView">
+                        <span>⏹️</span> Grid View
+                    </button>
+                    <button class="view-btn" id="listView">
+                        <span>📋</span> List View
+                    </button>
                 </div>
-                
-                <!-- Product 2 -->
-                <div class="product-card fade-in delay-1">
-                    <div class="product-image">
-                        <div class="carousel" data-product="2">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Modern Geometric Vase with bold lines and shapes in contrasting colors">
+                <div class="product-grid grid-view">
+                    <!-- Product 1 -->
+                    <div class="product-card fade-in">
+                        <div class="product-image">
+                            <div class="carousel" data-product="1">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Spring Blossom Vase with delicate floral pattern in soft pastels">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of Spring Blossom Vase interior pattern">
+                                    </div>
                                 </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of Modern Geometric Vase interior pattern">
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="1">❮</button>
+                                    <button class="carousel-btn next" data-product="1">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="1" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="1" data-slide="1"></span>
                                 </div>
                             </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="2">❮</button>
-                                <button class="carousel-btn next" data-product="2">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="2" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="2" data-slide="1"></span>
-                            </div>
+                            <span class="product-tag">Limited Edition</span>
                         </div>
-                        <span class="product-tag">Limited Edition</span>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Modern Geometric Vase</h3>
-                        <p class="product-price">$52.00</p>
-                        <p>Bold lines and angular shapes create a contemporary statement piece inspired by traditional beadwork patterns.</p>
-                        <a href="#" class="btn" aria-label="Add Modern Geometric Vase to cart">🛒 Add to Cart</a>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="product-card fade-in delay-2">
-                    <div class="product-image">
-                        <div class="carousel" data-product="3">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Forest Whisper Vase with earthy tones and organic patterns inspired by woodland elements">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of Forest Whisper Vase interior pattern">
-                                </div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="3">❮</button>
-                                <button class="carousel-btn next" data-product="3">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="3" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="3" data-slide="1"></span>
-                            </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Spring Blossom Vase</h3>
+                            <p class="product-price">$45.00</p>
+                            <p>Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs.</p>
+                            <a href="#" class="btn" aria-label="Add Spring Blossom Vase to cart">🛒 Add to Cart</a>
                         </div>
-                        <span class="product-tag">Sold</span>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Forest Whisper Vase</h3>
-                        <p class="product-price">$48.00</p>
-                        <p>Earthy tones and organic patterns that evoke the tranquility of Michigan's forests and traditional woodland art.</p>
-                        <a href="#" class="btn" aria-label="Add Forest Whisper Vase to cart" style="opacity: 0.6; pointer-events: none;">🛒 Sold Out</a>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="product-card fade-in delay-3">
-                    <div class="product-image">
-                        <div class="carousel" data-product="4">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1548484352-5a8484472cdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tropical Paradise Vase with vibrant tropical flowers in rich colors">
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card fade-in delay-1">
+                        <div class="product-image">
+                            <div class="carousel" data-product="2">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Modern Geometric Vase with bold lines and shapes in contrasting colors">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of Modern Geometric Vase interior pattern">
+                                    </div>
                                 </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1548484352-5a8484472cdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of Tropical Paradise Vase interior pattern">
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="2">❮</button>
+                                    <button class="carousel-btn next" data-product="2">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="2" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="2" data-slide="1"></span>
                                 </div>
                             </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="4">❮</button>
-                                <button class="carousel-btn next" data-product="4">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="4" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="4" data-slide="1"></span>
-                            </div>
+                            <span class="product-tag">Limited Edition</span>
                         </div>
-                        <span class="product-tag">Limited Edition</span>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Tropical Paradise Vase</h3>
-                        <p class="product-price">$55.00</p>
-                        <p>Vibrant tropical flowers painted in rich, saturated colors with influences from indigenous art forms.</p>
-                        <a href="#" class="btn" aria-label="Add Tropical Paradise Vase to cart">🛒 Add to Cart</a>
-                    </div>
-                </div>
-                
-                <!-- Product 5 -->
-                <div class="product-card fade-in">
-                    <div class="product-image">
-                        <div class="carousel" data-product="5">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="River Flow Vase with flowing blue patterns inspired by Michigan rivers">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of River Flow Vase interior pattern">
-                                </div>
-                            </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="5">❮</button>
-                                <button class="carousel-btn next" data-product="5">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="5" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="5" data-slide="1"></span>
-                            </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Modern Geometric Vase</h3>
+                            <p class="product-price">$52.00</p>
+                            <p>Bold lines and angular shapes create a contemporary statement piece inspired by traditional beadwork patterns.</p>
+                            <a href="#" class="btn" aria-label="Add Modern Geometric Vase to cart">🛒 Add to Cart</a>
                         </div>
-                        <span class="product-tag">New</span>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">River Flow Vase</h3>
-                        <p class="product-price">$58.00</p>
-                        <p>Flowing blue patterns inspired by Michigan's rivers and traditional water symbolism in Native art.</p>
-                        <a href="#" class="btn" aria-label="Add River Flow Vase to cart">🛒 Add to Cart</a>
-                    </div>
-                </div>
-                
-                <!-- Product 6 -->
-                <div class="product-card fade-in delay-1">
-                    <div class="product-image">
-                        <div class="carousel" data-product="6">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="https://images.unsplash.com/photo-1578507618937-31612381921c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Sunset Horizon Vase with warm sunset colors and gradient effects">
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card fade-in delay-2">
+                        <div class="product-image">
+                            <div class="carousel" data-product="3">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Forest Whisper Vase with earthy tones and organic patterns inspired by woodland elements">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of Forest Whisper Vase interior pattern">
+                                    </div>
                                 </div>
-                                <div class="carousel-item">
-                                    <img src="https://images.unsplash.com/photo-1578507618937-31612381921c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Close-up of Sunset Horizon Vase interior pattern">
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="3">❮</button>
+                                    <button class="carousel-btn next" data-product="3">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="3" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="3" data-slide="1"></span>
                                 </div>
                             </div>
-                            <div class="carousel-controls">
-                                <button class="carousel-btn prev" data-product="6">❮</button>
-                                <button class="carousel-btn next" data-product="6">❯</button>
-                            </div>
-                            <div class="carousel-indicators">
-                                <span class="carousel-indicator active" data-product="6" data-slide="0"></span>
-                                <span class="carousel-indicator" data-product="6" data-slide="1"></span>
-                            </div>
+                            <span class="product-tag">Sold</span>
                         </div>
-                        <span class="product-tag">Bidding</span>
+                        <div class="product-info">
+                            <h3 class="product-title">Forest Whisper Vase</h3>
+                            <p class="product-price">$48.00</p>
+                            <p>Earthy tones and organic patterns that evoke the tranquility of Michigan's forests and traditional woodland art.</p>
+                            <a href="#" class="btn" aria-label="Add Forest Whisper Vase to cart" style="opacity: 0.6; pointer-events: none;">🛒 Sold Out</a>
+                        </div>
                     </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Sunset Horizon Vase</h3>
-                        <p class="product-price">$65.00</p>
-                        <p>Warm sunset colors with gradient effects, capturing the beauty of Michigan's Great Lakes sunsets.</p>
-                        <a href="#" class="btn btn-garnet" aria-label="Bid on Sunset Horizon Vase">💰 Place Bid</a>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card fade-in delay-3">
+                        <div class="product-image">
+                            <div class="carousel" data-product="4">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1548484352-5a8484472cdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Tropical Paradise Vase with vibrant tropical flowers in rich colors">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1548484352-5a8484472cdc?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of Tropical Paradise Vase interior pattern">
+                                    </div>
+                                </div>
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="4">❮</button>
+                                    <button class="carousel-btn next" data-product="4">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="4" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="4" data-slide="1"></span>
+                                </div>
+                            </div>
+                            <span class="product-tag">Limited Edition</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Tropical Paradise Vase</h3>
+                            <p class="product-price">$55.00</p>
+                            <p>Vibrant tropical flowers painted in rich, saturated colors with influences from indigenous art forms.</p>
+                            <a href="#" class="btn" aria-label="Add Tropical Paradise Vase to cart">🛒 Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 5 -->
+                    <div class="product-card fade-in">
+                        <div class="product-image">
+                            <div class="carousel" data-product="5">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="River Flow Vase with flowing blue patterns inspired by Michigan rivers">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1578507610017-0e1ac1df63a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of River Flow Vase interior pattern">
+                                    </div>
+                                </div>
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="5">❮</button>
+                                    <button class="carousel-btn next" data-product="5">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="5" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="5" data-slide="1"></span>
+                                </div>
+                            </div>
+                            <span class="product-tag">New</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">River Flow Vase</h3>
+                            <p class="product-price">$58.00</p>
+                            <p>Flowing blue patterns inspired by Michigan's rivers and traditional water symbolism in Native art.</p>
+                            <a href="#" class="btn" aria-label="Add River Flow Vase to cart">🛒 Add to Cart</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 6 -->
+                    <div class="product-card fade-in delay-1">
+                        <div class="product-image">
+                            <div class="carousel" data-product="6">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://images.unsplash.com/photo-1578507618937-31612381921c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Sunset Horizon Vase with warm sunset colors and gradient effects">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://images.unsplash.com/photo-1578507618937-31612381921c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Close-up of Sunset Horizon Vase interior pattern">
+                                    </div>
+                                </div>
+                                <div class="carousel-controls">
+                                    <button class="carousel-btn prev" data-product="6">❮</button>
+                                    <button class="carousel-btn next" data-product="6">❯</button>
+                                </div>
+                                <div class="carousel-indicators">
+                                    <span class="carousel-indicator active" data-product="6" data-slide="0"></span>
+                                    <span class="carousel-indicator" data-product="6" data-slide="1"></span>
+                                </div>
+                            </div>
+                            <span class="product-tag">Bidding</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Sunset Horizon Vase</h3>
+                            <p class="product-price">$65.00</p>
+                            <p>Warm sunset colors with gradient effects, capturing the beauty of Michigan's Great Lakes sunsets.</p>
+                            <a href="#" class="btn btn-garnet" aria-label="Bid on Sunset Horizon Vase">💰 Place Bid</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1928,7 +2088,7 @@
     <div class="pattern-divider"></div>
 
     <!-- Collapsible About Section -->
-    <section class="about" id="about">
+    <section class="about light-section" id="about">
         <div class="container">
             <h2 class="section-title">About Native Flair</h2>
             <div class="collapsible-section">
@@ -1940,12 +2100,12 @@
                     <div class="content-wrapper">
                         <div class="about-content">
                             <div class="about-text">
-                                <p>Native Flair is the creative passion of a talented artist who finds beauty in transforming ordinary vases into extraordinary works of art. Despite visual challenges, she pours her heart and soul into each piece, creating stunning interior paintings that captivate and inspire.</p>
-                                <p>Every vase tells a story, with colors and patterns that reflect nature's beauty and the artist's unique perspective. The intricate designs are carefully painted on the inside of each vase, creating a delightful surprise when viewed from different angles.</p>
+                                <p class="contrast-text">Native Flair is the creative passion of a talented artist who finds beauty in transforming ordinary vases into extraordinary works of art. Despite visual challenges, she pours her heart and soul into each piece, creating stunning interior paintings that captivate and inspire.</p>
+                                <p class="contrast-text">Every vase tells a story, with colors and patterns that reflect nature's beauty and the artist's unique perspective. The intricate designs are carefully painted on the inside of each vase, creating a delightful surprise when viewed from different angles.</p>
                                 <a href="#contact" class="btn" aria-label="Contact Native Flair">📞 Contact Native Flair</a>
                             </div>
                             <div class="about-image">
-                                <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Artist at work painting the inside of a vase with careful attention to detail">
+                                <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Artist at work painting the inside of a vase with careful attention to detail">
                             </div>
                         </div>
                     </div>
@@ -1955,19 +2115,19 @@
     </section>
 
     <!-- Quote Banner -->
-    <section class="quote-banner">
+    <section class="quote-banner dark-section">
         <div class="container">
-            <blockquote>
+            <blockquote class="contrast-text">
                 "I believe that beauty should be accessible to everyone. Each vase I create is made with love and attention to detail, bringing a piece of nature's wonder into your home."
             </blockquote>
-            <cite>— The Artist, Native Flair</cite>
+            <cite class="contrast-text">— The Artist, Native Flair</cite>
         </div>
     </section>
 
     <div class="pattern-divider"></div>
 
     <!-- Collapsible Tribal Info Section -->
-    <section class="tribal-info" id="tribal">
+    <section class="tribal-info dark-section" id="tribal">
         <div class="container">
             <h2 class="section-title">Saginaw Chippewa Tribal Inspiration</h2>
             <div class="collapsible-section">
@@ -1979,13 +2139,13 @@
                     <div class="content-wrapper">
                         <div class="tribal-content">
                             <div class="tribal-text">
-                                <p>The Saginaw Chippewa Indian Tribe of Michigan has a rich cultural heritage that inspires the Native Flair collection. Based in the Great Lakes region, the tribe's traditional artistry, beadwork, and connection to nature influence many of the designs.</p>
-                                <p>Traditional Anishinaabe floral patterns, woodland imagery, and earth-toned color palettes pay homage to the tribe's artistic traditions while creating contemporary pieces for modern homes.</p>
-                                <p>Each vase incorporates elements inspired by Michigan's natural landscapes - the flowing rivers, forest textures, and seasonal changes that have shaped the Saginaw people's way of life for generations.</p>
+                                <p class="contrast-text">The Saginaw Chippewa Indian Tribe of Michigan has a rich cultural heritage that inspires the Native Flair collection. Based in the Great Lakes region, the tribe's traditional artistry, beadwork, and connection to nature influence many of the designs.</p>
+                                <p class="contrast-text">Traditional Anishinaabe floral patterns, woodland imagery, and earth-toned color palettes pay homage to the tribe's artistic traditions while creating contemporary pieces for modern homes.</p>
+                                <p class="contrast-text">Each vase incorporates elements inspired by Michigan's natural landscapes - the flowing rivers, forest textures, and seasonal changes that have shaped the Saginaw people's way of life for generations.</p>
                                 <a href="#products" class="btn btn-gold" aria-label="View tribal inspired vases">🌾 Tribal Collection</a>
                             </div>
                             <div class="tribal-image">
-                                <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Traditional Native American beadwork and patterns">
+                                <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Traditional Native American beadwork and patterns">
                             </div>
                         </div>
                     </div>
@@ -1995,21 +2155,21 @@
     </section>
 
     <!-- Commission Section -->
-    <section class="commission" id="commission">
+    <section class="commission light-section" id="commission">
         <div class="container">
             <h2 class="section-title">Custom Commissions</h2>
             <div class="commission-content">
                 <div class="commission-text">
-                    <h3>Request a Custom Piece</h3>
-                    <p>Looking for something unique? Native Flair accepts custom commission work for special occasions, gifts, or to match your specific home decor.</p>
-                    <p>Commissioned pieces start at $75 and can include personalized colors, patterns, sizes, and design elements. Each custom vase comes with a certificate of authenticity and the story behind its creation.</p>
+                    <h3 class="contrast-text">Request a Custom Piece</h3>
+                    <p class="contrast-text">Looking for something unique? Native Flair accepts custom commission work for special occasions, gifts, or to match your specific home decor.</p>
+                    <p class="contrast-text">Commissioned pieces start at $75 and can include personalized colors, patterns, sizes, and design elements. Each custom vase comes with a certificate of authenticity and the story behind its creation.</p>
                     <div class="pricing-info">
-                        <h4>Commission Pricing:</h4>
+                        <h4 class="contrast-text">Commission Pricing:</h4>
                         <ul>
-                            <li>Small Vase (up to 6"): Starting at $75</li>
-                            <li>Medium Vase (6-10"): Starting at $100</li>
-                            <li>Large Vase (10"+): Starting at $150</li>
-                            <li>Complex Designs: Additional $25-50</li>
+                            <li class="contrast-text">Small Vase (up to 6"): Starting at $75</li>
+                            <li class="contrast-text">Medium Vase (6-10"): Starting at $100</li>
+                            <li class="contrast-text">Large Vase (10"+): Starting at $150</li>
+                            <li class="contrast-text">Complex Designs: Additional $25-50</li>
                         </ul>
                     </div>
                 </div>
@@ -2054,7 +2214,7 @@
     </section>
 
     <!-- Collapsible Process Section -->
-    <section class="process" id="process">
+    <section class="process light-section" id="process">
         <div class="container">
             <h2 class="section-title">Our Creative Process</h2>
             <div class="collapsible-section">
@@ -2067,23 +2227,23 @@
                         <div class="process-steps">
                             <div class="step fade-in">
                                 <div class="step-icon">🎨</div>
-                                <h3 class="step-title">Design Inspiration</h3>
-                                <p>Each design begins with inspiration from nature, tribal patterns, and colors that speak to the artist's heritage and creative vision.</p>
+                                <h3 class="step-title contrast-text">Design Inspiration</h3>
+                                <p class="contrast-text">Each design begins with inspiration from nature, tribal patterns, and colors that speak to the artist's heritage and creative vision.</p>
                             </div>
                             <div class="step fade-in delay-1">
                                 <div class="step-icon">✍️</div>
-                                <h3 class="step-title">Interior Painting</h3>
-                                <p>Using specialized techniques, the interior of each vase is carefully painted with precision, often requiring multiple layers and careful attention to detail.</p>
+                                <h3 class="step-title contrast-text">Interior Painting</h3>
+                                <p class="contrast-text">Using specialized techniques, the interior of each vase is carefully painted with precision, often requiring multiple layers and careful attention to detail.</p>
                             </div>
                             <div class="step fade-in delay-2">
                                 <div class="step-icon">🔥</div>
-                                <h3 class="step-title">Curing Process</h3>
-                                <p>The painted vases undergo a careful curing process to ensure durability and longevity of the artwork, preserving it for generations.</p>
+                                <h3 class="step-title contrast-text">Curing Process</h3>
+                                <p class="contrast-text">The painted vases undergo a careful curing process to ensure durability and longevity of the artwork, preserving it for generations.</p>
                             </div>
                             <div class="step fade-in delay-3">
                                 <div class="step-icon">📦</div>
-                                <h3 class="step-title">Careful Packaging</h3>
-                                <p>Each vase is carefully packaged with eco-friendly materials to ensure it arrives safely at your doorstep, ready to display.</p>
+                                <h3 class="step-title contrast-text">Careful Packaging</h3>
+                                <p class="contrast-text">Each vase is carefully packaged with eco-friendly materials to ensure it arrives safely at your doorstep, ready to display.</p>
                             </div>
                         </div>
                     </div>
@@ -2095,16 +2255,16 @@
     <div class="pattern-divider"></div>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact light-section" id="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p>Have questions about our vases or want to request a custom design? We'd love to hear from you!</p>
-                    <p><strong>Email:</strong> info@nativeflair.com</p>
-                    <p><strong>Phone:</strong> (555) 123-4567</p>
-                    <p><strong>Studio:</strong> Based in Michigan, honoring Saginaw Chippewa traditions</p>
+                    <h3 class="contrast-text">Contact Information</h3>
+                    <p class="contrast-text">Have questions about our vases or want to request a custom design? We'd love to hear from you!</p>
+                    <p class="contrast-text"><strong>Email:</strong> info@nativeflair.com</p>
+                    <p class="contrast-text"><strong>Phone:</strong> (555) 123-4567</p>
+                    <p class="contrast-text"><strong>Studio:</strong> Based in Michigan, honoring Saginaw Chippewa traditions</p>
                     <div class="social-links">
                         <a href="#" class="btn btn-secondary" aria-label="Follow on Facebook">📘 Facebook</a>
                         <a href="#" class="btn btn-secondary" aria-label="Follow on Instagram">📷 Instagram</a>
@@ -2142,12 +2302,12 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="dark-section">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Native Flair</h3>
-                    <p>Hand-painted vases with unique interior designs that bring artistry and beauty to your home. Honoring Saginaw Chippewa traditions with every piece.</p>
+                    <p class="contrast-text">Hand-painted vases with unique interior designs that bring artistry and beauty to your home. Honoring Saginaw Chippewa traditions with every piece.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Quick Links</h3>
@@ -2198,9 +2358,9 @@
         const accessibilityPopup = document.getElementById('accessibilityPopup');
         const closePopup = document.getElementById('closePopup');
         const gotItBtn = document.getElementById('gotItBtn');
-        const infoBtn = document.getElementById('infoBtn');
+        const helpBtn = document.getElementById('helpBtn');
         
-        infoBtn.addEventListener('click', () => {
+        helpBtn.addEventListener('click', () => {
             accessibilityPopup.style.display = 'flex';
         });
         
@@ -2212,51 +2372,17 @@
             accessibilityPopup.style.display = 'none';
         });
         
-        // Enhanced text-to-speech functionality
-        const voiceToggle = document.getElementById('voiceToggle');
-        let speechActive = false;
-        let speech = null;
+        // View More functionality
+        const viewMoreBtn = document.getElementById('viewMoreBtn');
+        const fullGallery = document.getElementById('fullGallery');
         
-        voiceToggle.addEventListener('click', () => {
-            if (!speechActive) {
-                // Start speech
-                if ('speechSynthesis' in window) {
-                    speech = new SpeechSynthesisUtterance();
-                    speech.text = document.body.innerText;
-                    speech.rate = 0.8;
-                    speech.pitch = 1;
-                    speech.volume = 0.8;
-                    window.speechSynthesis.speak(speech);
-                    speechActive = true;
-                    voiceToggle.style.backgroundColor = 'var(--reddish-pink)';
-                } else {
-                    alert('Text-to-speech is not supported in your browser.');
-                }
+        viewMoreBtn.addEventListener('click', () => {
+            fullGallery.classList.toggle('active');
+            if (fullGallery.classList.contains('active')) {
+                viewMoreBtn.innerHTML = '<span>View Less</span> ↑';
             } else {
-                // Stop speech
-                window.speechSynthesis.cancel();
-                speechActive = false;
-                voiceToggle.style.backgroundColor = 'var(--deep-garnet)';
+                viewMoreBtn.innerHTML = '<span>View More</span> ↓';
             }
-        });
-        
-        // Enhanced animations on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        document.querySelectorAll('section, .product-card, .step').forEach(el => {
-            observer.observe(el);
         });
         
         // Text size controls
@@ -2413,6 +2539,7 @@
         // Accessibility features
         const highContrastToggle = document.getElementById('highContrastToggle');
         const darkModeToggle = document.getElementById('darkModeToggle');
+        const eyeToggle = document.getElementById('eyeToggle');
         const minimizeBtn = document.getElementById('minimizeBtn');
         const accessibilityControls = document.getElementById('accessibilityControls');
         
@@ -2422,6 +2549,12 @@
         
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+        });
+        
+        eyeToggle.addEventListener('click', () => {
+            // Toggle visual clarity settings
+            document.body.classList.toggle('visual-clarity');
+            alert('Visual clarity settings adjusted for better viewing experience.');
         });
         
         minimizeBtn.addEventListener('click', () => {
