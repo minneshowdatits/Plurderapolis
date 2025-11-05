@@ -6,7 +6,7 @@
     <title>Native Flair - Authentic Native American Art</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Nunito+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Nunito+Sans:wght@300;400;500;600&family=Cinzel:wght@400;500;600&family=Quicksand:wght@400;500;600&family=Dancing+Script:wght@500;600&family=Noto+Sans+Symbols:wght@300;400;500&family=Almendra+SC&display=swap" rel="stylesheet">
     <style>
         /* CSS Variables for consistent styling */
         :root {
@@ -82,6 +82,12 @@
             font-weight: 600;
         }
         
+        .cursive-title {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            font-size: 2.5rem;
+        }
+        
         .container {
             width: 90%;
             max-width: 1200px;
@@ -91,7 +97,7 @@
         
         /* Header */
         header {
-            background: var(--sandstone);
+            background: linear-gradient(135deg, var(--deep-garnet) 0%, var(--dark-purple) 100%);
             padding: 12px 0;
             border-bottom: 1px solid var(--gold-vermeil);
             position: sticky;
@@ -116,7 +122,7 @@
         }
         
         .logo {
-            font-family: 'Cinzel', serif;
+            font-family: 'Almendra SC', serif;
             font-size: 2.2rem;
             font-weight: 700;
             color: var(--pearl);
@@ -186,8 +192,11 @@
         
         /* Hero Section */
         .hero {
-            background: var(--sandstone);
-            color: var(--charcoal);
+            background: 
+                linear-gradient(rgba(77, 39, 89, 0.7), rgba(77, 39, 89, 0.7)), 
+                url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: var(--pearl);
             padding: 40px 0;
             text-align: center;
             position: relative;
@@ -203,7 +212,7 @@
         .hero h1 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--charcoal);
+            color: var(--pearl);
             font-family: 'Cinzel', serif;
         }
         
@@ -826,6 +835,252 @@
             top: 0;
         }
         
+        /* Product Detail Modal */
+        .product-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .product-detail-content {
+            background: white;
+            border-radius: var(--radius);
+            max-width: 1000px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        .product-detail-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--deep-garnet);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .product-detail-close:focus {
+            outline: 2px solid var(--gold-vermeil);
+            outline-offset: 2px;
+        }
+        
+        .product-detail-body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-detail-image {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-detail-info {
+            padding: 30px;
+        }
+        
+        /* You May Also Like Section */
+        .related-products {
+            margin-top: 50px;
+            padding-top: 50px;
+            border-top: 1px solid rgba(201, 166, 70, 0.3);
+        }
+        
+        .related-products h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .related-card {
+            background-color: rgba(40, 40, 40, 0.95);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--gold-vermeil);
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        
+        .related-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .related-info {
+            padding: 15px;
+        }
+        
+        .related-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+        }
+        
+        .related-price {
+            font-weight: 700;
+            color: var(--deep-garnet);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        
+        /* Product Story Section */
+        .product-story {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--gold-vermeil);
+        }
+        
+        .story-toggle {
+            background: none;
+            border: none;
+            color: var(--tribal-turquoise);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .story-toggle:focus {
+            outline: 2px solid var(--tribal-turquoise);
+            outline-offset: 2px;
+        }
+        
+        .story-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .story-content.active {
+            max-height: 2000px;
+        }
+        
+        /* Care Instructions */
+        .care-instructions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--gold-vermeil);
+        }
+        
+        .care-toggle {
+            background: none;
+            border: none;
+            color: var(--tribal-turquoise);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .care-toggle:focus {
+            outline: 2px solid var(--tribal-turquoise);
+            outline-offset: 2px;
+        }
+        
+        .care-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            font-size: 0.9rem;
+        }
+        
+        .care-content.active {
+            max-height: 2000px;
+        }
+        
+        /* Social Proof Icons */
+        .social-proof {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .proof-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(201, 166, 70, 0.3);
+        }
+        
+        /* Alternative Purchase Method */
+        .alternative-purchase {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--tribal-turquoise);
+        }
+        
+        .alternative-purchase p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
         /* Responsive Styles */
         @media (min-width: 768px) {
             .header-container {
@@ -902,6 +1157,23 @@
             .control-group {
                 flex: 1;
             }
+            
+            .product-detail-body {
+                flex-direction: row;
+            }
+            
+            .product-detail-image {
+                width: 50%;
+                height: auto;
+            }
+            
+            .product-detail-info {
+                width: 50%;
+            }
+            
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (min-width: 992px) {
@@ -911,6 +1183,10 @@
             
             .process-steps {
                 grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .related-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
         
@@ -981,6 +1257,55 @@
         </div>
     </div>
 
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-content">
+            <button class="product-detail-close" id="productDetailClose" aria-label="Close product details">&times;</button>
+            <div class="product-detail-body">
+                <div class="product-detail-image">
+                    <img src="" alt="" id="detailImage">
+                </div>
+                <div class="product-detail-info">
+                    <h2 id="detailTitle"></h2>
+                    <p class="product-price" id="detailPrice"></p>
+                    <p id="detailDescription"></p>
+                    <div class="product-story">
+                        <button class="story-toggle" id="detailStoryToggle">
+                            <span>Story Behind This Piece</span>
+                            <span class="collapsible-icon">+</span>
+                        </button>
+                        <div class="story-content" id="detailStoryContent">
+                            <p id="detailStoryText"></p>
+                        </div>
+                    </div>
+                    <div class="care-instructions">
+                        <button class="care-toggle" id="detailCareToggle">
+                            <span>Care Instructions</span>
+                            <span class="collapsible-icon">+</span>
+                        </button>
+                        <div class="care-content" id="detailCareContent">
+                            <p id="detailCareText"></p>
+                        </div>
+                    </div>
+                    <div class="social-proof">
+                        <span class="proof-badge">🖐️ Handmade</span>
+                        <span class="proof-badge">🎨 Limited Edition</span>
+                        <span class="proof-badge">👩‍🎨 Support Small Artist</span>
+                    </div>
+                    <a href="#" class="btn" id="detailBuyBtn"><span>🏺 Adopt This Vase</span></a>
+                    
+                    <!-- You May Also Like Section -->
+                    <div class="related-products">
+                        <h3>You May Also Like</h3>
+                        <div class="related-grid" id="relatedProducts">
+                            <!-- Related products will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Working Back to top button -->
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
@@ -988,7 +1313,7 @@
     <header id="home">
         <div class="container header-container">
             <div class="logo-container">
-                <div class="logo title-font">Native Flair</div>
+                <div class="logo">Native Flair</div>
                 <div class="logo-subtitle">Authentic Native American Art</div>
             </div>
             <div class="nav-container" id="navContainer">
@@ -1009,7 +1334,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1 class="title-font">Hand-Painted Vases with Native Flair</h1>
+            <h1 class="cursive-title">Hand-Painted Vases with Native Flair</h1>
             <p>Each vase is uniquely crafted with intricate interior paintings, bringing beauty and artistry to your home.</p>
             <div class="hero-btns">
                 <a href="#products" class="btn" aria-label="Shop the vase collection">Shop Vases</a>
@@ -1022,11 +1347,11 @@
     <!-- Products Section -->
     <section class="products" id="products">
         <div class="container">
-            <h2 class="section-title title-font">Vase Collection</h2>
+            <h2 class="section-title cursive-title">Vase Collection</h2>
             
             <div class="product-grid grid-view" id="main-content">
                 <!-- Product 1 -->
-                <div class="product-card">
+                <div class="product-card" data-id="1">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Spring Blossom Vase with delicate floral pattern">
                     </div>
@@ -1034,12 +1359,48 @@
                         <h3 class="product-title">Spring Blossom Vase</h3>
                         <p class="product-price">$45.00</p>
                         <p>Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs.</p>
-                        <a href="#" class="btn">Adopt This Vase</a>
+                        
+                        <!-- Story Behind This Piece -->
+                        <div class="product-story">
+                            <button class="story-toggle" id="storyToggle1">
+                                <span>Story Behind This Piece</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="story-content" id="storyContent1">
+                                <p>Inspired by the first spring blossoms along the Saginaw River, this design incorporates traditional Anishinaabe floral motifs with a contemporary color palette. Each flower represents new beginnings and the renewal of life in the Great Lakes region.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Care Instructions -->
+                        <div class="care-instructions">
+                            <button class="care-toggle" id="careToggle1">
+                                <span>Care Instructions</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="care-content" id="careContent1">
+                                <p>• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Proof Icons -->
+                        <div class="social-proof">
+                            <span class="proof-badge">🖐️ Handmade</span>
+                            <span class="proof-badge">🎨 Limited Edition</span>
+                            <span class="proof-badge">👩‍🎨 Support Small Artist</span>
+                        </div>
+                        
+                        <button class="btn view-detail-btn" data-id="1" aria-label="View details of Spring Blossom Vase">View Details</button>
+                        
+                        <!-- Alternative Purchase Method -->
+                        <div class="alternative-purchase">
+                            <p><strong>Having trouble with our cart?</strong></p>
+                            <p>Call us at (555) 123-4567 or email info@nativeflair.com to place your order.</p>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Product 2 -->
-                <div class="product-card">
+                <div class="product-card" data-id="2">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Modern Geometric Vase with bold lines">
                     </div>
@@ -1047,12 +1408,49 @@
                         <h3 class="product-title">Modern Geometric Vase</h3>
                         <p class="product-price">$52.00</p>
                         <p>Bold lines and angular shapes create a contemporary statement piece inspired by traditional beadwork patterns.</p>
-                        <a href="#" class="btn">Adopt This Vase</a>
+                        
+                        <!-- Story Behind This Piece -->
+                        <div class="product-story">
+                            <button class="story-toggle" id="storyToggle2">
+                                <span>Story Behind This Piece</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="story-content" id="storyContent2">
+                                <p>This design draws inspiration from traditional Anishinaabe beadwork patterns, reimagined in a contemporary geometric style. The intersecting lines represent the connections between past and present, tradition and innovation.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Care Instructions -->
+                        <div class="care-instructions">
+                            <button class="care-toggle" id="careToggle2">
+                                <span>Care Instructions</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="care-content" id="careContent2">
+                                <p>• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Proof Icons -->
+                        <div class="social-proof">
+                            <span class="proof-badge">🖐️ Handmade</span>
+                            <span class="proof-badge">🎨 Limited Edition</span>
+                            <span class="proof-badge">👩‍🎨 Support Small Artist</span>
+                            <span class="proof-badge">🌾 Indigenous Inspired</span>
+                        </div>
+                        
+                        <button class="btn view-detail-btn" data-id="2" aria-label="View details of Modern Geometric Vase">View Details</button>
+                        
+                        <!-- Alternative Purchase Method -->
+                        <div class="alternative-purchase">
+                            <p><strong>Having trouble with our cart?</strong></p>
+                            <p>Call us at (555) 123-4567 or email info@nativeflair.com to place your order.</p>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Product 3 -->
-                <div class="product-card">
+                <div class="product-card" data-id="3">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Forest Whisper Vase with earthy tones">
                     </div>
@@ -1060,7 +1458,36 @@
                         <h3 class="product-title">Forest Whisper Vase</h3>
                         <p class="product-price">$48.00</p>
                         <p>Earthy tones and organic patterns that evoke the tranquility of Michigan's forests and traditional woodland art.</p>
-                        <a href="#" class="btn">Adopt This Vase</a>
+                        
+                        <!-- Story Behind This Piece -->
+                        <div class="product-story">
+                            <button class="story-toggle" id="storyToggle3">
+                                <span>Story Behind This Piece</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="story-content" id="storyContent3">
+                                <p>Inspired by the deep forests of Michigan's Upper Peninsula, this design captures the quiet beauty of woodland trails and the sacred connection between the Anishinaabe people and the natural world. The patterns represent the interconnectedness of all living things.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Care Instructions -->
+                        <div class="care-instructions">
+                            <button class="care-toggle" id="careToggle3">
+                                <span>Care Instructions</span>
+                                <span class="collapsible-icon">+</span>
+                            </button>
+                            <div class="care-content" id="careContent3">
+                                <p>• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Proof Icons -->
+                        <div class="social-proof">
+                            <span class="proof-badge">🖐️ Handmade</span>
+                            <span class="proof-badge">🌾 Indigenous Inspired</span>
+                        </div>
+                        
+                        <button class="btn view-detail-btn" data-id="3" aria-label="View details of Forest Whisper Vase">View Details</button>
                     </div>
                 </div>
             </div>
@@ -1074,7 +1501,7 @@
     <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title title-font">About Native Flair</h2>
+            <h2 class="section-title cursive-title">About Native Flair</h2>
             <div class="about-content">
                 <div class="about-text">
                     <p>Native Flair is the creative passion of one talented Native American artist based in Minnesota. As a one-woman operation, she pours her heart and soul into transforming ordinary objects into extraordinary works of art.</p>
@@ -1104,7 +1531,7 @@
     <!-- Tribal Info Section -->
     <section class="tribal-info" id="tribal">
         <div class="container">
-            <h2 class="section-title title-font">Tribal Inspiration</h2>
+            <h2 class="section-title cursive-title">Tribal Inspiration</h2>
             <div class="tribal-content">
                 <div class="tribal-text">
                     <p>The Saginaw Chippewa Indian Tribe of Michigan has a rich cultural heritage that inspires the Native Flair collection. Based in the Great Lakes region, the tribe's traditional artistry, beadwork, and connection to nature influence many of the designs.</p>
@@ -1124,7 +1551,7 @@
     <!-- Commission Section -->
     <section class="commission" id="commission">
         <div class="container">
-            <h2 class="section-title title-font">Custom Commissions</h2>
+            <h2 class="section-title cursive-title">Custom Commissions</h2>
             <div class="commission-content">
                 <div class="commission-text">
                     <h3>Request a Custom Piece</h3>
@@ -1158,7 +1585,7 @@
     <!-- Process Section -->
     <section class="process" id="process">
         <div class="container">
-            <h2 class="section-title title-font">Our Creative Process</h2>
+            <h2 class="section-title cursive-title">Our Creative Process</h2>
             <div class="process-steps">
                 <div class="step">
                     <div class="step-icon">🎨</div>
@@ -1187,7 +1614,7 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title title-font">Contact</h2>
+            <h2 class="section-title cursive-title">Contact</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Contact Information</h3>
@@ -1256,6 +1683,43 @@
     </footer>
 
     <script>
+        // Product data for cross-selling functionality
+        const products = [
+            {
+                id: 1,
+                title: "Spring Blossom Vase",
+                price: "$45.00",
+                description: "Delicate floral patterns in soft pastels, inspired by spring's first blooms and traditional Anishinaabe floral motifs. Made from high-quality ceramic with a glossy finish. Measures 8 inches tall.",
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                story: "Inspired by the first spring blossoms along the Saginaw River, this design incorporates traditional Anishinaabe floral motifs with a contemporary color palette. Each flower represents new beginnings and the renewal of life in the Great Lakes region.",
+                care: "• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting",
+                category: "floral",
+                tags: ["new", "limited", "gift"]
+            },
+            {
+                id: 2,
+                title: "Modern Geometric Vase",
+                price: "$52.00",
+                description: "Bold lines and angular shapes create a contemporary statement piece inspired by traditional beadwork patterns. Crafted from stoneware with a matte finish. Measures 10 inches tall.",
+                image: "https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                story: "This design draws inspiration from traditional Anishinaabe beadwork patterns, reimagined in a contemporary geometric style. The intersecting lines represent the connections between past and present, tradition and innovation.",
+                care: "• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting",
+                category: "geometric",
+                tags: ["new", "limited", "gift"]
+            },
+            {
+                id: 3,
+                title: "Forest Whisper Vase",
+                price: "$48.00",
+                description: "Earthy tones and organic patterns that evoke the tranquility of Michigan's forests and traditional woodland art. Made from hand-thrown pottery with a natural finish. Measures 9 inches tall.",
+                image: "https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                story: "Inspired by the deep forests of Michigan's Upper Peninsula, this design captures the quiet beauty of woodland trails and the sacred connection between the Anishinaabe people and the natural world. The patterns represent the interconnectedness of all living things.",
+                care: "• Hand wash only with mild soap<br>• Avoid extreme temperatures<br>• Display away from direct sunlight<br>• Use a soft cloth for dusting",
+                category: "natural",
+                tags: ["sold-out"]
+            }
+        ];
+
         // Back to top functionality
         const backToTopBtn = document.getElementById('backToTop');
         
@@ -1339,6 +1803,168 @@
             e.preventDefault();
             alert('Thank you for your commission request! We will review your project and contact you within 2 business days.');
             this.reset();
+        });
+        
+        // Story and Care toggle functionality
+        const storyToggles = document.querySelectorAll('.story-toggle');
+        const careToggles = document.querySelectorAll('.care-toggle');
+        
+        storyToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const id = toggle.id.replace('storyToggle', 'storyContent');
+                const content = document.getElementById(id);
+                const icon = toggle.querySelector('.collapsible-icon');
+                
+                content.classList.toggle('active');
+                
+                if (content.classList.contains('active')) {
+                    icon.textContent = '-';
+                } else {
+                    icon.textContent = '+';
+                }
+            });
+        });
+        
+        careToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const id = toggle.id.replace('careToggle', 'careContent');
+                const content = document.getElementById(id);
+                const icon = toggle.querySelector('.collapsible-icon');
+                
+                content.classList.toggle('active');
+                
+                if (content.classList.contains('active')) {
+                    icon.textContent = '-';
+                } else {
+                    icon.textContent = '+';
+                }
+            });
+        });
+        
+        // Product Detail Modal Functionality
+        const productDetailModal = document.getElementById('productDetailModal');
+        const productDetailClose = document.getElementById('productDetailClose');
+        const detailImage = document.getElementById('detailImage');
+        const detailTitle = document.getElementById('detailTitle');
+        const detailPrice = document.getElementById('detailPrice');
+        const detailDescription = document.getElementById('detailDescription');
+        const detailStoryText = document.getElementById('detailStoryText');
+        const detailCareText = document.getElementById('detailCareText');
+        const detailBuyBtn = document.getElementById('detailBuyBtn');
+        const relatedProductsContainer = document.getElementById('relatedProducts');
+        const viewDetailBtns = document.querySelectorAll('.view-detail-btn');
+        
+        // Function to open product detail modal
+        function openProductDetail(productId) {
+            const product = products.find(p => p.id == productId);
+            if (!product) return;
+            
+            // Set product details
+            detailImage.src = product.image;
+            detailImage.alt = product.title;
+            detailTitle.textContent = product.title;
+            detailPrice.textContent = product.price;
+            detailDescription.textContent = product.description;
+            detailStoryText.innerHTML = product.story;
+            detailCareText.innerHTML = product.care;
+            detailBuyBtn.href = "#";
+            
+            // Generate related products
+            generateRelatedProducts(product);
+            
+            // Open modal
+            productDetailModal.style.display = 'flex';
+        }
+        
+        // Function to generate related products
+        function generateRelatedProducts(currentProduct) {
+            // Clear previous content
+            relatedProductsContainer.innerHTML = '';
+            
+            // Find related products (excluding current product)
+            const related = products
+                .filter(p => p.id !== currentProduct.id && p.category === currentProduct.category)
+                .slice(0, 3); // Get up to 3 related products
+            
+            // If not enough related products from same category, add others
+            if (related.length < 3) {
+                const additional = products
+                    .filter(p => p.id !== currentProduct.id && !related.includes(p))
+                    .slice(0, 3 - related.length);
+                related.push(...additional);
+            }
+            
+            // Create related product cards
+            related.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'related-card';
+                card.innerHTML = `
+                    <div class="related-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="related-info">
+                        <h4 class="related-title">${product.title}</h4>
+                        <p class="related-price">${product.price}</p>
+                        <button class="btn view-related-btn" data-id="${product.id}">View Details</button>
+                    </div>
+                `;
+                relatedProductsContainer.appendChild(card);
+            });
+            
+            // Add event listeners to related product buttons
+            document.querySelectorAll('.view-related-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const productId = btn.getAttribute('data-id');
+                    openProductDetail(productId);
+                });
+            });
+        }
+        
+        // Add event listeners to view detail buttons
+        viewDetailBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productId = btn.getAttribute('data-id');
+                openProductDetail(productId);
+            });
+        });
+        
+        // Close product detail modal
+        productDetailClose.addEventListener('click', () => {
+            productDetailModal.style.display = 'none';
+        });
+        
+        productDetailModal.addEventListener('click', (e) => {
+            if (e.target === productDetailModal) {
+                productDetailModal.style.display = 'none';
+            }
+        });
+        
+        // Detail modal story toggle
+        const detailStoryToggle = document.getElementById('detailStoryToggle');
+        const detailStoryContent = document.getElementById('detailStoryContent');
+        
+        detailStoryToggle.addEventListener('click', () => {
+            detailStoryContent.classList.toggle('active');
+            const icon = detailStoryToggle.querySelector('.collapsible-icon');
+            if (detailStoryContent.classList.contains('active')) {
+                icon.textContent = '-';
+            } else {
+                icon.textContent = '+';
+            }
+        });
+        
+        // Detail modal care toggle
+        const detailCareToggle = document.getElementById('detailCareToggle');
+        const detailCareContent = document.getElementById('detailCareContent');
+        
+        detailCareToggle.addEventListener('click', () => {
+            detailCareContent.classList.toggle('active');
+            const icon = detailCareToggle.querySelector('.collapsible-icon');
+            if (detailCareContent.classList.contains('active')) {
+                icon.textContent = '-';
+            } else {
+                icon.textContent = '+';
+            }
         });
     </script>
 </body>
