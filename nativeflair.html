@@ -55,6 +55,54 @@
             background-color: var(--sandstone);
             line-height: var(--line-height);
             font-size: 1rem;
+            position: relative;
+        }
+        
+        /* Tribal Patterns and Textures */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(201, 166, 70, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(45, 125, 125, 0.05) 0%, transparent 20%),
+                linear-gradient(45deg, transparent 49%, rgba(125, 44, 65, 0.02) 50%, transparent 51%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .section-divider {
+            height: 80px;
+            width: 100%;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='100' height='40' viewBox='0 0 100 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 Q25 10,50 20 T100 20' stroke='%237D2C41' fill='none' stroke-width='2' opacity='0.3'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg width='120' height='40' viewBox='0 0 120 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 25 Q30 15,60 25 T120 25' stroke='%23C9A646' fill='none' stroke-width='1.5' opacity='0.2'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: center;
+            margin: 30px 0;
+        }
+        
+        .tribal-border {
+            border: 8px solid transparent;
+            border-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,10 Q25,5,40,10 T70,10 T90,10 Q95,25,90,40 T90,70 T90,90 Q75,95,60,90 T30,90 T10,90 Q5,75,10,60 T10,30 T10,10' fill='none' stroke='%237D2C41' stroke-width='2'/%3E%3C/svg%3E") 20 stretch;
+            padding: 20px;
+        }
+        
+        .watercolor-bg {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(201, 166, 70, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45, 125, 125, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(125, 44, 65, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        .canvas-texture {
+            background-image: 
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L100 0 L100 100 L0 100 Z' fill='none' stroke='%23E7D7C1' stroke-width='0.5' opacity='0.3'/%3E%3C/svg%3E");
+            background-size: 20px 20px;
         }
         
         /* Skip to content link */
@@ -348,6 +396,16 @@
             text-align: center;
             margin-bottom: 40px;
             position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--deep-garnet), var(--gold-vermeil));
+            margin: 15px auto 0;
+            border-radius: 2px;
         }
         
         /* Products Section */
@@ -1134,6 +1192,28 @@
             border-radius: 12px;
             box-shadow: var(--shadow);
             border: 2px solid var(--gold-vermeil);
+            transition: var(--transition);
+            max-width: 300px;
+        }
+        
+        .accessibility-controls.minimized {
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            padding: 5px;
+        }
+        
+        .accessibility-controls.minimized .control-group,
+        .accessibility-controls.minimized .text-size-controls,
+        .accessibility-controls.minimized .accessibility-summary {
+            display: none;
+        }
+        
+        .accessibility-controls.minimized .help-btn,
+        .accessibility-controls.minimized .minimize-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
         }
         
         .control-group {
@@ -1201,6 +1281,13 @@
         .minimize-btn {
             background: var(--gold-vermeil);
             color: var(--charcoal);
+        }
+        
+        .accessibility-summary {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--dark-silver);
         }
         
         /* High contrast mode */
@@ -1450,6 +1537,106 @@
             color: var(--pearl);
         }
         
+        /* Gallery Slideshow */
+        .gallery-slideshow {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .slideshow-container {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slideshow-slide.active {
+            opacity: 1;
+        }
+        
+        .slideshow-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slideshow-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .slideshow-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slideshow-dot.active {
+            background: var(--pearl);
+            transform: scale(1.2);
+        }
+        
+        .slideshow-prev, .slideshow-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.7);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            color: var(--charcoal);
+        }
+        
+        .slideshow-prev {
+            left: 15px;
+        }
+        
+        .slideshow-next {
+            right: 15px;
+        }
+        
+        .slideshow-prev:hover, .slideshow-next:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .gallery-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 15px;
+        }
+        
         /* Responsive Styles */
         @media (min-width: 768px) {
             .header-container {
@@ -1676,6 +1863,9 @@
         </div>
         <button class="accessibility-btn help-btn" id="helpBtn" aria-label="Accessibility information"></button>
         <button class="accessibility-btn minimize-btn" id="minimizeBtn" aria-label="Minimize accessibility controls">▼</button>
+        <div class="accessibility-summary">
+            <p>Adjust text size, contrast, and more</p>
+        </div>
     </div>
 
     <!-- Working Back to top button -->
@@ -1699,6 +1889,7 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#products">Vase Collection</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
                         <li><a href="#about">About Native Flair</a></li>
                         <li><a href="#tribal">Tribal Inspiration</a></li>
                         <li><a href="#commission">Custom Commissions</a></li>
@@ -1712,19 +1903,64 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero watercolor-bg">
         <div class="container">
             <h1>Hand-Painted Vases with Native Flair</h1>
             <p>Each vase is uniquely crafted with intricate interior paintings, bringing beauty and artistry to your home.</p>
             <div class="hero-btns">
                 <a href="#products" class="btn" aria-label="Shop the vase collection">🛍 Shop Vases</a>
+                <a href="#gallery" class="btn btn-secondary" aria-label="View gallery">🖼 View Gallery</a>
                 <a href="#commission" class="btn btn-secondary" aria-label="Commission a custom piece">🎨 Custom Order</a>
             </div>
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- Gallery Section -->
+    <section class="products light-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Art Gallery</h2>
+            <p class="text-center" style="text-align: center; margin-bottom: 30px;">Explore our collection of hand-painted vases featuring intricate interior designs</p>
+            
+            <div class="gallery-slideshow">
+                <div class="slideshow-container">
+                    <div class="slideshow-slide active">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Spring Blossom Vase with delicate floral pattern in soft pastels">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://images.unsplash.com/photo-1578506750687-21c6d4d73b9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Modern Geometric Vase with bold lines and shapes in contrasting colors">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://images.unsplash.com/photo-1581784368655-0b6f4ac2d5c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Forest Whisper Vase with earthy tones and organic patterns inspired by woodland elements">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Traditional Native American patterns and beadwork">
+                    </div>
+                    
+                    <button class="slideshow-prev" aria-label="Previous image">❮</button>
+                    <button class="slideshow-next" aria-label="Next image">❯</button>
+                    
+                    <div class="slideshow-nav">
+                        <span class="slideshow-dot active" data-slide="0"></span>
+                        <span class="slideshow-dot" data-slide="1"></span>
+                        <span class="slideshow-dot" data-slide="2"></span>
+                        <span class="slideshow-dot" data-slide="3"></span>
+                    </div>
+                </div>
+                
+                <div class="gallery-controls">
+                    <button class="btn" id="seeMoreBtn">See More Images</button>
+                    <button class="btn btn-secondary" id="viewAllBtn">View All Collection</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
     <!-- Products Section -->
-    <section class="products" id="products">
+    <section class="products canvas-texture" id="products">
         <div class="container">
             <h2 class="section-title">Vase Collection</h2>
             
@@ -1936,11 +2172,17 @@
                     </div>
                 </div>
             </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#gallery" class="btn btn-garnet">🖼 View Full Gallery</a>
+            </div>
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- About Section -->
-    <section class="about light-section" id="about">
+    <section class="about light-section watercolor-bg" id="about">
         <div class="container">
             <h2 class="section-title">About Native Flair</h2>
             <div class="collapsible-section">
@@ -1954,7 +2196,10 @@
                             <p class="contrast-text">Native Flair is the creative passion of a talented artist who finds beauty in transforming ordinary vases into extraordinary works of art. Despite visual challenges, she pours her heart and soul into each piece, creating stunning interior paintings that captivate and inspire.</p>
                             <p class="contrast-text">Every vase tells a story, with colors and patterns that reflect nature's beauty and the artist's unique perspective. The intricate designs are carefully painted on the inside of each vase, creating a delightful surprise when viewed from different angles.</p>
                             <p class="contrast-text">Our work is inspired by the rich artistic traditions of the Saginaw Chippewa Indian Tribe, while also incorporating contemporary design elements. As an independent artist, we honor these traditions with respect and admiration, celebrating the beauty of Native American art forms.</p>
-                            <a href="#contact" class="btn" aria-label="Contact Native Flair">📞 Contact Native Flair</a>
+                            <div style="margin-top: 30px;">
+                                <a href="#contact" class="btn" aria-label="Contact Native Flair">📞 Contact Native Flair</a>
+                                <a href="#commission" class="btn btn-secondary" aria-label="Request a custom commission">🎨 Request Commission</a>
+                            </div>
                         </div>
                         <div class="about-image">
                             <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Artist at work painting the inside of a vase with careful attention to detail">
@@ -1975,6 +2220,8 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Tribal Info Section -->
     <section class="tribal-info dark-section" id="tribal">
         <div class="container">
@@ -1991,7 +2238,10 @@
                             <p class="contrast-text">Traditional Anishinaabe floral patterns, woodland imagery, and earth-toned color palettes pay homage to the tribe's artistic traditions while creating contemporary pieces for modern homes.</p>
                             <p class="contrast-text">Each vase incorporates elements inspired by Michigan's natural landscapes - the flowing rivers, forest textures, and seasonal changes that have shaped the Saginaw people's way of life for generations.</p>
                             <p class="contrast-text"><strong>Note:</strong> While our work is inspired by Saginaw Chippewa traditions, we are an independent artist respectfully drawing from these cultural influences rather than official tribal representatives.</p>
-                            <a href="#products" class="btn btn-gold" aria-label="View tribal inspired vases">🌾 Tribal Collection</a>
+                            <div style="margin-top: 30px;">
+                                <a href="#products" class="btn btn-gold" aria-label="View tribal inspired vases">🌾 Tribal Collection</a>
+                                <a href="#gallery" class="btn btn-secondary" aria-label="View gallery of tribal designs">🖼 View Gallery</a>
+                            </div>
                         </div>
                         <div class="tribal-image">
                             <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Traditional Native American beadwork and patterns">
@@ -2002,8 +2252,10 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Commission Section -->
-    <section class="commission light-section" id="commission">
+    <section class="commission light-section canvas-texture" id="commission">
         <div class="container">
             <h2 class="section-title">Custom Commissions</h2>
             <div class="commission-content">
@@ -2019,6 +2271,9 @@
                             <li class="contrast-text">Large Vase (10"+): Starting at $150</li>
                             <li class="contrast-text">Complex Designs: Additional $25-50</li>
                         </ul>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <a href="#contact" class="btn btn-garnet" aria-label="Contact us for a custom commission">📞 Contact Us</a>
                     </div>
                 </div>
                 <div class="commission-form">
@@ -2061,8 +2316,10 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- FAQ Section -->
-    <section class="faq-section light-section" id="faq">
+    <section class="faq-section light-section watercolor-bg" id="faq">
         <div class="container">
             <h2 class="section-title">Frequently Asked Questions</h2>
             <div class="faq-container">
@@ -2106,11 +2363,15 @@
                     </div>
                 </div>
             </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#contact" class="btn">📞 Contact Us for More Questions</a>
+            </div>
         </div>
     </section>
 
     <!-- Accessibility Statement Section -->
-    <section class="accessibility-statement light-section" id="accessibility">
+    <section class="accessibility-statement light-section canvas-texture" id="accessibility">
         <div class="container">
             <h2 class="section-title">Accessibility Statement</h2>
             <div class="accessibility-content">
@@ -2128,8 +2389,10 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Process Section -->
-    <section class="process light-section" id="process">
+    <section class="process light-section watercolor-bg" id="process">
         <div class="container">
             <h2 class="section-title">Our Creative Process</h2>
             <div class="process-steps">
@@ -2157,8 +2420,10 @@
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- Contact Section -->
-    <section class="contact light-section" id="contact">
+    <section class="contact light-section canvas-texture" id="contact">
         <div class="container">
             <h2 class="section-title">Contact</h2>
             <div class="contact-content">
@@ -2168,7 +2433,7 @@
                     <p class="contrast-text"><strong>Email:</strong> info@nativeflair.com</p>
                     <p class="contrast-text"><strong>Phone:</strong> (555) 123-4567</p>
                     <p class="contrast-text"><strong>Studio:</strong> Based in Michigan, honoring Saginaw Chippewa traditions</p>
-                    <div class="social-links">
+                    <div class="social-links" style="margin-top: 20px;">
                         <a href="#" class="btn btn-secondary" aria-label="Follow on Facebook">📘 Facebook</a>
                         <a href="#" class="btn btn-secondary" aria-label="Follow on Instagram">📷 Instagram</a>
                     </div>
@@ -2218,6 +2483,7 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#products">Vase Collection</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
                         <li><a href="#about">About Native Flair</a></li>
                         <li><a href="#tribal">Tribal Inspiration</a></li>
                         <li><a href="#commission">Custom Commissions</a></li>
@@ -2560,6 +2826,118 @@
                 listenBtn.style.backgroundColor = 'var(--tribal-turquoise)';
             }
         });
+        
+        // Gallery slideshow functionality
+        const slideshowSlides = document.querySelectorAll('.slideshow-slide');
+        const slideshowDots = document.querySelectorAll('.slideshow-dot');
+        const slideshowPrev = document.querySelector('.slideshow-prev');
+        const slideshowNext = document.querySelector('.slideshow-next');
+        const seeMoreBtn = document.getElementById('seeMoreBtn');
+        const viewAllBtn = document.getElementById('viewAllBtn');
+        
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            // Hide all slides
+            slideshowSlides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Remove active class from all dots
+            slideshowDots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show current slide and activate corresponding dot
+            slideshowSlides[index].classList.add('active');
+            slideshowDots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+        
+        // Next slide
+        slideshowNext.addEventListener('click', () => {
+            let nextSlide = currentSlide + 1;
+            if (nextSlide >= slideshowSlides.length) {
+                nextSlide = 0;
+            }
+            showSlide(nextSlide);
+        });
+        
+        // Previous slide
+        slideshowPrev.addEventListener('click', () => {
+            let prevSlide = currentSlide - 1;
+            if (prevSlide < 0) {
+                prevSlide = slideshowSlides.length - 1;
+            }
+            showSlide(prevSlide);
+        });
+        
+        // Dot navigation
+        slideshowDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto-advance slides
+        let slideInterval = setInterval(() => {
+            let nextSlide = currentSlide + 1;
+            if (nextSlide >= slideshowSlides.length) {
+                nextSlide = 0;
+            }
+            showSlide(nextSlide);
+        }, 5000);
+        
+        // Pause auto-advance on hover
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        slideshowContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        slideshowContainer.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => {
+                let nextSlide = currentSlide + 1;
+                if (nextSlide >= slideshowSlides.length) {
+                    nextSlide = 0;
+                }
+                showSlide(nextSlide);
+            }, 5000);
+        });
+        
+        // See More and View All buttons
+        seeMoreBtn.addEventListener('click', () => {
+            alert('Opening expanded gallery view with more images...');
+            // In a real implementation, this would open a modal or navigate to a gallery page
+        });
+        
+        viewAllBtn.addEventListener('click', () => {
+            // Scroll to products section
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Minimize accessibility controls
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const accessibilityControls = document.getElementById('accessibilityControls');
+        
+        minimizeBtn.addEventListener('click', () => {
+            accessibilityControls.classList.toggle('minimized');
+            
+            if (accessibilityControls.classList.contains('minimized')) {
+                minimizeBtn.innerHTML = '▲';
+                minimizeBtn.setAttribute('aria-label', 'Expand accessibility controls');
+            } else {
+                minimizeBtn.innerHTML = '▼';
+                minimizeBtn.setAttribute('aria-label', 'Minimize accessibility controls');
+            }
+        });
+        
+        // Auto-close accessibility popup after 10 seconds
+        setTimeout(() => {
+            if (accessibilityPopup.style.display !== 'none') {
+                accessibilityPopup.style.display = 'none';
+            }
+        }, 10000);
     </script>
 </body>
 </html>
