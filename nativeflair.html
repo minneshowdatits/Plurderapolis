@@ -74,6 +74,426 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
         
+        /* Product Modal Styles */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .product-modal-content {
+            background-color: var(--sandstone);
+            border-radius: var(--radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--silver-accent);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .product-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--silver-accent);
+            padding-bottom: 15px;
+        }
+        
+        .product-modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--charcoal);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-modal-body {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .product-modal-body {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .product-modal-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+        
+        .product-modal-image {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        
+        .product-modal-image.zoomed {
+            transform: scale(1.5);
+            cursor: zoom-out;
+        }
+        
+        .product-modal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .product-modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--charcoal);
+        }
+        
+        .product-modal-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--deep-garnet);
+        }
+        
+        .product-modal-description {
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+        
+        .product-modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .product-modal-bid-section {
+            background: rgba(40, 40, 40, 0.1);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-top: 15px;
+        }
+        
+        .bid-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .bid-input {
+            padding: 10px;
+            border: 1px solid var(--silver-accent);
+            border-radius: 8px;
+            background: var(--sandstone);
+            color: var(--charcoal);
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .bid-info {
+            font-size: 0.9rem;
+            color: var(--charcoal);
+            margin-top: 10px;
+        }
+        
+        /* Product Card Enhancements */
+        .product-card {
+            background-color: rgba(40, 40, 40, 0.95);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--silver-accent);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-image-zoom {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 0;
+            z-index: 10;
+        }
+        
+        .product-image:hover .product-image-zoom {
+            opacity: 1;
+        }
+        
+        .product-image-zoom:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        .product-tags {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            z-index: 10;
+        }
+        
+        .product-tag {
+            background: var(--deep-garnet);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 18px;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+        }
+        
+        .product-price {
+            font-weight: 700;
+            color: var(--deep-plum);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            min-height: auto;
+        }
+        
+        /* Text-to-speech button */
+        .tts-btn {
+            background: var(--tribal-turquoise);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .tts-btn:hover {
+            transform: scale(1.1);
+            background: #1a5f5f;
+        }
+        
+        /* Share modal */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1003;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .share-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .share-modal-content {
+            background-color: var(--sandstone);
+            border-radius: var(--radius);
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--silver-accent);
+            position: relative;
+        }
+        
+        .share-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--charcoal);
+        }
+        
+        .share-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .share-option {
+            background: var(--dark-turquoise);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .share-option:hover {
+            transform: scale(1.1);
+            background: #145050;
+        }
+        
+        /* Light/Dark mode toggle for individual products */
+        .product-theme-toggle {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            opacity: 0;
+        }
+        
+        .product-card:hover .product-theme-toggle {
+            opacity: 1;
+        }
+        
+        .product-theme-toggle:hover {
+            transform: scale(1.1);
+            background: white;
+        }
+        
+        /* Light mode product styling */
+        .product-card.light-mode {
+            background-color: rgba(245, 240, 230, 0.95);
+            border: 1px solid #d4c9b1;
+        }
+        
+        .product-card.light-mode .product-title,
+        .product-card.light-mode .product-price,
+        .product-card.light-mode p {
+            color: #333333;
+        }
+        
+        /* Cart notification */
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--deep-garnet);
+            color: white;
+            padding: 15px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        
+        .cart-notification.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Rest of your existing CSS styles */
+        /* ... (all your existing CSS remains the same) ... */
+        
         /* High Contrast Mode */
         body.high-contrast {
             --sandstone: #000000;
@@ -904,129 +1324,6 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
         
-        /* Enhanced Product Cards with Hover Effects */
-        .product-card {
-            background-color: rgba(40, 40, 40, 0.95);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            transition: var(--transition);
-            position: relative;
-            border: 1px solid var(--silver-accent);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-        
-        .product-image {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-        
-        /* Individual Item Display Controls */
-        .item-display-controls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 10;
-        }
-        
-        .display-control-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        
-        .display-control-btn:focus {
-            outline: 2px solid var(--gold-vermeil);
-            outline-offset: 2px;
-        }
-        
-        .display-control-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        
-        .display-control-btn.active {
-            background: var(--tribal-turquoise);
-            color: white;
-        }
-        
-        /* Individual Item Display Modes */
-        .item-night-mode .product-image {
-            background-color: #1a1a1a;
-        }
-        
-        .item-night-mode .product-info {
-            background-color: #2d2d2d;
-        }
-        
-        .item-night-mode .product-title,
-        .item-night-mode .product-price,
-        .item-night-mode p {
-            color: #f0f0f0;
-        }
-        
-        .item-high-contrast .product-image {
-            background-color: #000;
-        }
-        
-        .item-high-contrast .product-info {
-            background-color: #000;
-            border: 2px solid #fff;
-        }
-        
-        .item-high-contrast .product-title,
-        .item-high-contrast .product-price,
-        .item-high-contrast p {
-            color: #fff;
-            font-weight: bold;
-        }
-        
-        .product-info {
-            padding: 18px;
-        }
-        
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            font-family: 'Playfair Display', serif;
-            color: var(--charcoal);
-        }
-        
-        .product-price {
-            font-weight: 700;
-            color: var(--deep-plum);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-        
         /* About Section */
         .about {
             background-color: var(--sandstone);
@@ -1150,8 +1447,8 @@
         @media (min-width: 992px) {
             .gemstone-products {
                 grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1000px;
+                gap: 30px;
+                max-width: 1000px;
                 margin: 0 auto;
             }
         }
@@ -1865,6 +2162,62 @@
         </div>
     </div>
 
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 class="product-modal-title" id="modalProductTitle">Product Title</h2>
+                <button class="product-modal-close" id="closeProductModal" aria-label="Close product details">×</button>
+            </div>
+            <div class="product-modal-body">
+                <div class="product-modal-image-container">
+                    <img src="" alt="" class="product-modal-image" id="modalProductImage">
+                    <button class="product-image-zoom" id="modalImageZoom" aria-label="Zoom image">🔍</button>
+                </div>
+                <div class="product-modal-info">
+                    <p class="product-modal-price" id="modalProductPrice">$0.00</p>
+                    <p class="product-modal-description" id="modalProductDescription">Product description goes here.</p>
+                    
+                    <!-- Bid Section -->
+                    <div class="product-modal-bid-section" id="modalBidSection" style="display: none;">
+                        <h3>Place a Bid</h3>
+                        <div class="bid-form">
+                            <input type="number" class="bid-input" id="bidAmount" placeholder="Enter bid amount">
+                            <button class="btn btn-small" id="placeBidBtn">Place Bid</button>
+                        </div>
+                        <p class="bid-info" id="bidInfo">Current bid: $0.00</p>
+                    </div>
+                    
+                    <div class="product-modal-actions">
+                        <button class="btn" id="modalAddToCart">Add to Cart</button>
+                        <button class="btn btn-secondary" id="modalShareBtn">Share</button>
+                        <button class="tts-btn" id="modalTtsBtn" aria-label="Read description aloud">🔊</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <button class="share-modal-close" id="closeShareModal" aria-label="Close share options">×</button>
+            <h3>Share This Product</h3>
+            <div class="share-options">
+                <button class="share-option" id="shareFacebook" aria-label="Share on Facebook">f</button>
+                <button class="share-option" id="shareTwitter" aria-label="Share on Twitter">t</button>
+                <button class="share-option" id="sharePinterest" aria-label="Share on Pinterest">p</button>
+                <button class="share-option" id="copyLink" aria-label="Copy link">🔗</button>
+                <button class="share-option" id="shareSms" aria-label="Share via SMS">💬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        Product added to cart!
+    </div>
+
     <!-- Sticky Header with Dark Mode Toggle -->
     <header id="home">
         <div class="container header-container">
@@ -2480,6 +2833,9 @@
             }
         ];
 
+        // Current product being viewed in modal
+        let currentProduct = null;
+
         // Dark Mode Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
         const html = document.documentElement;
@@ -2829,59 +3185,69 @@
                 card.innerHTML = `
                     <div class="product-image">
                         <img src="${product.image}" alt="${product.title} - ${product.description.substring(0, 100)}">
-                        <div class="item-display-controls">
-                            <button class="display-control-btn night-mode-toggle" aria-label="Toggle night mode for ${product.title}">🌙</button>
-                            <button class="display-control-btn high-contrast-toggle" aria-label="Toggle high contrast for ${product.title}">⚫</button>
+                        <button class="product-image-zoom" aria-label="Zoom image">🔍</button>
+                        <button class="product-theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+                        <div class="product-tags">
+                            ${product.tags.includes('sold-out') ? '<span class="product-tag">Sold Out</span>' : ''}
+                            ${product.tags.includes('new') ? '<span class="product-tag">New</span>' : ''}
+                            ${product.tags.includes('limited') ? '<span class="product-tag">Limited</span>' : ''}
                         </div>
-                        ${product.tags.includes('sold-out') ? '<span class="product-tag">Sold Out</span>' : ''}
-                        ${product.tags.includes('new') ? '<span class="product-tag">New</span>' : ''}
-                        ${product.tags.includes('limited') ? '<span class="product-tag">Limited</span>' : ''}
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.title}</h3>
                         <p class="product-price">${product.price}</p>
                         <p>${product.description.substring(0, 100)}...</p>
-                        <div class="product-attributes">
-                            <p><strong>Type:</strong> ${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</p>
-                            <p><strong>Vibe:</strong> ${product.vibe.charAt(0).toUpperCase() + product.vibe.slice(1)}</p>
+                        <div class="product-actions">
+                            <button class="btn btn-small view-detail-btn" data-id="${product.id}">${icon} View Details</button>
+                            <button class="btn btn-small add-to-cart-btn" data-id="${product.id}">🛒 Add to Cart</button>
+                            <button class="tts-btn" data-id="${product.id}" aria-label="Read description aloud">🔊</button>
                         </div>
-                        <button class="btn view-detail-btn" data-id="${product.id}">${icon} View Details</button>
                     </div>
                 `;
                 
                 productGrid.appendChild(card);
             });
             
-            // Add event listeners to display control buttons
-            document.querySelectorAll('.night-mode-toggle').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const productCard = this.closest('.product-card');
-                    productCard.classList.toggle('item-night-mode');
-                    this.classList.toggle('active');
-                    
-                    // If night mode is activated, ensure high contrast is deactivated
-                    if (productCard.classList.contains('item-night-mode')) {
-                        productCard.classList.remove('item-high-contrast');
-                        const highContrastBtn = productCard.querySelector('.high-contrast-toggle');
-                        highContrastBtn.classList.remove('active');
+            // Add event listeners to product cards
+            document.querySelectorAll('.view-detail-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    openProductModal(productId);
+                });
+            });
+            
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+            
+            document.querySelectorAll('.tts-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    const product = products.find(p => p.id === productId);
+                    if (product) {
+                        speakText(product.description);
                     }
                 });
             });
             
-            document.querySelectorAll('.high-contrast-toggle').forEach(btn => {
+            document.querySelectorAll('.product-image-zoom').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const productCard = this.closest('.product-card');
-                    productCard.classList.toggle('item-high-contrast');
-                    this.classList.toggle('active');
-                    
-                    // If high contrast is activated, ensure night mode is deactivated
-                    if (productCard.classList.contains('item-high-contrast')) {
-                        productCard.classList.remove('item-night-mode');
-                        const nightModeBtn = productCard.querySelector('.night-mode-toggle');
-                        nightModeBtn.classList.remove('active');
-                    }
+                    const productImage = productCard.querySelector('img');
+                    productImage.style.transform = productImage.style.transform === 'scale(1.5)' ? 'scale(1)' : 'scale(1.5)';
+                });
+            });
+            
+            document.querySelectorAll('.product-theme-toggle').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const productCard = this.closest('.product-card');
+                    productCard.classList.toggle('light-mode');
+                    this.textContent = productCard.classList.contains('light-mode') ? '🌙' : '☀️';
                 });
             });
         }
@@ -3037,12 +3403,14 @@
                 card.innerHTML = `
                     <div class="product-image">
                         <img src="${product.image}" alt="${product.title} - ${product.description.substring(0, 100)}">
+                        <button class="product-image-zoom" aria-label="Zoom image">🔍</button>
+                        <button class="product-theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${product.title}</h3>
                         <p class="product-price">${product.price}</p>
                         <p>${product.description.substring(0, 100)}...</p>
-                        <button class="btn" onclick="scrollToProduct(${product.id})">${icon} View Details</button>
+                        <button class="btn" onclick="openProductModal(${product.id})">${icon} View Details</button>
                     </div>
                 `;
                 
@@ -3054,13 +3422,6 @@
                 gemstoneProductsContainer.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">No products found in this collection.</p>';
             }
         }
-        
-        // Function to scroll to a specific product in the main products section
-        window.scrollToProduct = function(productId) {
-            // This would typically scroll to the product in the main products section
-            // For now, we'll just scroll to the products section
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-        };
         
         // Set up gemstone category event listeners
         gemstoneCategories.forEach(category => {
@@ -3083,6 +3444,211 @@
         filterToggle.addEventListener('click', () => {
             filterContainer.classList.toggle('collapsed');
         });
+        
+        // Product Modal Functionality
+        const productModal = document.getElementById('productModal');
+        const closeProductModal = document.getElementById('closeProductModal');
+        const modalProductTitle = document.getElementById('modalProductTitle');
+        const modalProductPrice = document.getElementById('modalProductPrice');
+        const modalProductDescription = document.getElementById('modalProductDescription');
+        const modalProductImage = document.getElementById('modalProductImage');
+        const modalAddToCart = document.getElementById('modalAddToCart');
+        const modalShareBtn = document.getElementById('modalShareBtn');
+        const modalTtsBtn = document.getElementById('modalTtsBtn');
+        const modalBidSection = document.getElementById('modalBidSection');
+        const bidAmount = document.getElementById('bidAmount');
+        const placeBidBtn = document.getElementById('placeBidBtn');
+        const bidInfo = document.getElementById('bidInfo');
+        const modalImageZoom = document.getElementById('modalImageZoom');
+        
+        // Open product modal
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProduct = product;
+            
+            // Populate modal with product data
+            modalProductTitle.textContent = product.title;
+            modalProductPrice.textContent = product.price;
+            modalProductDescription.textContent = product.description;
+            modalProductImage.src = product.image;
+            modalProductImage.alt = product.title;
+            
+            // Set up bid section if product has bidding enabled
+            if (product.bidEnabled) {
+                modalBidSection.style.display = 'block';
+                bidInfo.textContent = `Current bid: $${product.currentBid}.00 | Bidding ends: ${product.bidEndDate}`;
+                bidAmount.value = product.currentBid + 5;
+            } else {
+                modalBidSection.style.display = 'none';
+            }
+            
+            // Show modal
+            productModal.classList.add('active');
+        }
+        
+        // Close product modal
+        closeProductModal.addEventListener('click', () => {
+            productModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === productModal) {
+                productModal.classList.remove('active');
+            }
+        });
+        
+        // Add to cart from modal
+        modalAddToCart.addEventListener('click', () => {
+            if (currentProduct) {
+                addToCart(currentProduct.id);
+            }
+        });
+        
+        // Share product from modal
+        modalShareBtn.addEventListener('click', () => {
+            openShareModal();
+        });
+        
+        // Text-to-speech from modal
+        modalTtsBtn.addEventListener('click', () => {
+            if (currentProduct) {
+                speakText(currentProduct.description);
+            }
+        });
+        
+        // Place bid
+        placeBidBtn.addEventListener('click', () => {
+            if (!currentProduct || !currentProduct.bidEnabled) return;
+            
+            const bidValue = parseFloat(bidAmount.value);
+            if (isNaN(bidValue) || bidValue <= currentProduct.currentBid) {
+                alert(`Your bid must be higher than the current bid of $${currentProduct.currentBid}.00`);
+                return;
+            }
+            
+            currentProduct.currentBid = bidValue;
+            bidInfo.textContent = `Current bid: $${currentProduct.currentBid}.00 | Bidding ends: ${currentProduct.bidEndDate}`;
+            alert(`Thank you for your bid of $${bidValue}.00!`);
+        });
+        
+        // Modal image zoom
+        modalImageZoom.addEventListener('click', () => {
+            modalProductImage.classList.toggle('zoomed');
+            modalImageZoom.textContent = modalProductImage.classList.contains('zoomed') ? '🔍-' : '🔍+';
+        });
+        
+        // Share Modal Functionality
+        const shareModal = document.getElementById('shareModal');
+        const closeShareModal = document.getElementById('closeShareModal');
+        const shareFacebook = document.getElementById('shareFacebook');
+        const shareTwitter = document.getElementById('shareTwitter');
+        const sharePinterest = document.getElementById('sharePinterest');
+        const copyLink = document.getElementById('copyLink');
+        const shareSms = document.getElementById('shareSms');
+        
+        function openShareModal() {
+            shareModal.classList.add('active');
+        }
+        
+        closeShareModal.addEventListener('click', () => {
+            shareModal.classList.remove('active');
+        });
+        
+        // Close share modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === shareModal) {
+                shareModal.classList.remove('active');
+            }
+        });
+        
+        // Share functionality
+        shareFacebook.addEventListener('click', () => {
+            alert('Sharing on Facebook (functionality would be implemented in a real application)');
+        });
+        
+        shareTwitter.addEventListener('click', () => {
+            alert('Sharing on Twitter (functionality would be implemented in a real application)');
+        });
+        
+        sharePinterest.addEventListener('click', () => {
+            alert('Sharing on Pinterest (functionality would be implemented in a real application)');
+        });
+        
+        copyLink.addEventListener('click', () => {
+            const productUrl = window.location.href.split('#')[0] + '#product-' + (currentProduct ? currentProduct.id : '');
+            navigator.clipboard.writeText(productUrl).then(() => {
+                alert('Product link copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy link: ' + err);
+            });
+        });
+        
+        shareSms.addEventListener('click', () => {
+            const productUrl = window.location.href.split('#')[0] + '#product-' + (currentProduct ? currentProduct.id : '');
+            const message = `Check out this product from Native Flair: ${currentProduct ? currentProduct.title : 'Amazing Art'} - ${productUrl}`;
+            const smsUrl = `sms:?body=${encodeURIComponent(message)}`;
+            window.open(smsUrl, '_blank');
+        });
+        
+        // Cart functionality
+        const cartNotification = document.getElementById('cartNotification');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Check if product is already in cart
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Show notification
+            cartNotification.textContent = `${product.title} added to cart!`;
+            cartNotification.classList.add('active');
+            
+            setTimeout(() => {
+                cartNotification.classList.remove('active');
+            }, 3000);
+        }
+        
+        // Text-to-speech functionality
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                // Stop any ongoing speech
+                window.speechSynthesis.cancel();
+                
+                // Create speech utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                // Speak the text
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Text-to-speech is not supported in your browser.');
+            }
+        }
+        
+        // Global function to open product modal (for gemstone section)
+        window.openProductModal = openProductModal;
         
         // Initialize the page
         initializeProductGrid();
