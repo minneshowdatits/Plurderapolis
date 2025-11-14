@@ -230,7 +230,7 @@
   .legend span{display:inline-flex;gap:6px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem; transition: all 0.3s ease;}
   .legend span:hover {transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);}
   
-  /* Matrix Key Section - Now Collapsible */
+  /* Matrix Key Section */
   .matrix-key {
     background: var(--card-gradient);
     border-radius: 12px;
@@ -356,58 +356,6 @@
   @keyframes accordionOpen {
     from { opacity: 0; max-height: 0; }
     to { opacity: 1; max-height: 500px; }
-  }
-  
-  /* Collapsible Matrix Key */
-  details.matrix-key-collapsible {
-    background: var(--card-gradient);
-    border-radius: 12px;
-    margin: 20px 0;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow);
-    animation: fadeIn 0.8s ease-out;
-    overflow: hidden;
-  }
-  
-  details.matrix-key-collapsible[open] {
-    animation: accordionOpen 0.5s ease-out;
-  }
-  
-  details.matrix-key-collapsible summary {
-    cursor: pointer;
-    font-weight: 800;
-    list-style: none;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    font-size: 1.1rem;
-    color: var(--accent-2);
-  }
-  
-  details.matrix-key-collapsible summary::marker, 
-  details.matrix-key-collapsible summary::-webkit-details-marker {
-    display: none;
-  }
-  
-  details.matrix-key-collapsible summary::after {
-    content: '\f078';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    transition: transform 0.3s ease;
-  }
-  
-  details.matrix-key-collapsible[open] summary::after {
-    transform: rotate(180deg);
-  }
-  
-  details.matrix-key-collapsible summary:hover {
-    background: rgba(191, 0, 191, 0.1);
-  }
-  
-  details.matrix-key-collapsible .matrix-key-content {
-    padding: 0 20px 20px;
   }
   
   /* Back to top button */
@@ -796,13 +744,13 @@
           <i class="fas fa-search-plus"></i>
           <span>Interaction Checker</span>
         </a>
-        <a href="#matrix" class="mobile-nav-link">
-          <i class="fas fa-table"></i>
-          <span>Risk Matrix</span>
-        </a>
         <a href="#matrix-key" class="mobile-nav-link">
           <i class="fas fa-key"></i>
           <span>Matrix Key</span>
+        </a>
+        <a href="#matrix" class="mobile-nav-link">
+          <i class="fas fa-table"></i>
+          <span>Risk Matrix</span>
         </a>
         <a href="#tips" class="mobile-nav-link">
           <i class="fas fa-lightbulb"></i>
@@ -892,7 +840,56 @@
       </div>
     </section>
 
-    <!-- ===== Matrix ===== -->
+    <!-- ===== Matrix Key ===== -->
+    <div class="section-heading" id="matrix-key">
+      <i class="fas fa-key"></i> Matrix Risk Key
+    </div>
+
+    <div class="matrix-key">
+      <h3><i class="fas fa-info-circle"></i> Understanding the Risk Levels</h3>
+      <div class="key-items">
+        <div class="key-item low">
+          <div class="key-header">
+            <span class="key-icon">🌈</span>
+            <span class="key-title">Low Risk (🌈)</span>
+          </div>
+          <p><strong>Minimal interaction concerns</strong> - These substances typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
+          <p><strong>Harm Reduction Tips:</strong> Start with lower doses than you would take individually, stay hydrated, and have a sober friend present if trying this combination for the first time.</p>
+        </div>
+        
+        <div class="key-item caution">
+          <div class="key-header">
+            <span class="key-icon">⚡</span>
+            <span class="key-title">Caution (⚡)</span>
+          </div>
+          <p><strong>Moderate interaction concerns</strong> - These combinations may increase side effects or intensify experiences beyond comfortable levels. Requires careful dosing and monitoring.</p>
+          <p><strong>Potential Concerns:</strong> Increased heart rate, blood pressure changes, anxiety, or unexpected psychological effects.</p>
+          <p><strong>Harm Reduction Tips:</strong> Use significantly lower doses than you would take individually, wait longer between doses to assess effects, and avoid operating vehicles or machinery.</p>
+        </div>
+        
+        <div class="key-item strong">
+          <div class="key-header">
+            <span class="key-icon">💊</span>
+            <span class="key-title">Strong Caution (💊)</span>
+          </div>
+          <p><strong>Significant interaction risk</strong> - These substances have known pharmacological interactions that can significantly increase risks. Should be approached with extreme caution.</p>
+          <p><strong>Specific Risks:</strong> Potential for serotonin syndrome, respiratory depression, cardiovascular stress, or unpredictable psychological effects.</p>
+          <p><strong>Harm Reduction Tips:</strong> Avoid this combination if possible. If combining, use minimal doses and have medical supervision available. Do not use alone.</p>
+        </div>
+        
+        <div class="key-item danger">
+          <div class="key-header">
+            <span class="key-icon">💀</span>
+            <span class="key-title">Dangerous (💀)</span>
+          </div>
+          <p><strong>High risk of severe harm or death</strong> - These combinations create a high risk of fatal overdose, severe medical complications, or permanent harm. Among the most dangerous drug combinations known.</p>
+          <p><strong>Specific Life-Threatening Risks:</strong> Profound respiratory depression, cardiac arrest, seizure risk, extreme hyperthermia, or coma.</p>
+          <p><strong>CRITICAL SAFETY INFORMATION:</strong> DO NOT COMBINE THESE SUBSTANCES. If accidental exposure occurs, call emergency services immediately.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Controls + Matrix ===== -->
     <div class="swipe-indicator">
       <i class="fas fa-arrows-left-right"></i> Swipe left/right to explore the full matrix
     </div>
@@ -909,57 +906,6 @@
     <div class="matrix" role="region" aria-label="Combo Risk Matrix">
       <table id="matrixTable"></table>
     </div>
-
-    <!-- ===== Matrix Key (Now Collapsible) ===== -->
-    <div class="section-heading" id="matrix-key">
-      <i class="fas fa-key"></i> Matrix Risk Key
-    </div>
-
-    <details class="matrix-key-collapsible" open>
-      <summary><i class="fas fa-info-circle"></i> Understanding the Risk Levels</summary>
-      <div class="matrix-key-content">
-        <div class="key-items">
-          <div class="key-item low">
-            <div class="key-header">
-              <span class="key-icon">🌈</span>
-              <span class="key-title">Low Risk (🌈)</span>
-            </div>
-            <p><strong>Minimal interaction concerns</strong> - These substances typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
-            <p><strong>Harm Reduction Tips:</strong> Start with lower doses than you would take individually, stay hydrated, and have a sober friend present if trying this combination for the first time.</p>
-          </div>
-          
-          <div class="key-item caution">
-            <div class="key-header">
-              <span class="key-icon">⚡</span>
-              <span class="key-title">Caution (⚡)</span>
-            </div>
-            <p><strong>Moderate interaction concerns</strong> - These combinations may increase side effects or intensify experiences beyond comfortable levels. Requires careful dosing and monitoring.</p>
-            <p><strong>Potential Concerns:</strong> Increased heart rate, blood pressure changes, anxiety, or unexpected psychological effects.</p>
-            <p><strong>Harm Reduction Tips:</strong> Use significantly lower doses than you would take individually, wait longer between doses to assess effects, and avoid operating vehicles or machinery.</p>
-          </div>
-          
-          <div class="key-item strong">
-            <div class="key-header">
-              <span class="key-icon">💊</span>
-              <span class="key-title">Strong Caution (💊)</span>
-            </div>
-            <p><strong>Significant interaction risk</strong> - These substances have known pharmacological interactions that can significantly increase risks. Should be approached with extreme caution.</p>
-            <p><strong>Specific Risks:</strong> Potential for serotonin syndrome, respiratory depression, cardiovascular stress, or unpredictable psychological effects.</p>
-            <p><strong>Harm Reduction Tips:</strong> Avoid this combination if possible. If combining, use minimal doses and have medical supervision available. Do not use alone.</p>
-          </div>
-          
-          <div class="key-item danger">
-            <div class="key-header">
-              <span class="key-icon">💀</span>
-              <span class="key-title">Dangerous (💀)</span>
-            </div>
-            <p><strong>High risk of severe harm or death</strong> - These combinations create a high risk of fatal overdose, severe medical complications, or permanent harm. Among the most dangerous drug combinations known.</p>
-            <p><strong>Specific Life-Threatening Risks:</strong> Profound respiratory depression, cardiac arrest, seizure risk, extreme hyperthermia, or coma.</p>
-            <p><strong>CRITICAL SAFETY INFORMATION:</strong> DO NOT COMBINE THESE SUBSTANCES. If accidental exposure occurs, call emergency services immediately.</p>
-          </div>
-        </div>
-      </div>
-    </details>
 
     <!-- ===== Tips (quick) ===== -->
     <details class="info" open id="tips">
@@ -1110,135 +1056,235 @@ document.getElementById('homeLink').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Substance list - comprehensive from your original matrix
-const substances = [
-  "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", 
-  "GHB / Opioids", "Benzos", "SSRIs", "SNRIs", "ADHD Meds", 
-  "Antipsychotics", "Mood Stabilizers", "Wellbutrin", "Trazodone", 
-  "Gabapentin", "LSD", "Shrooms", "Nitrous", "DMT", "GHB"
+// Interaction data based on provided information
+const interactionData = {
+  "Cannabis|LSD": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|Mushrooms": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|DMT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|Mescaline": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|DOx": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|NBOMes": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|2C-x": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|2C-T-x": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|αMT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics. Small amounts can reduce nausea with aMT but take care." },
+  "Cannabis|5-MeO-xxT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Amphetamines|LSD": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Mushrooms": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|DMT": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Mescaline": { risk: "⚡", desc: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops." },
+  "Amphetamines|DOx": { risk: "💊", desc: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of amphetamine can easily lead to thought loops. Coming down from amphetamines while the DOx is still active can be quite anxiogenic." },
+  "Amphetamines|NBOMes": { risk: "💊", desc: "Amphetamines and NBOMes both provide considerable stimulation. When combined they can result in tachycardia, hypertension, vasoconstriction and in extreme cases heart failure. The anxiogenic and focusing effects of stimulants are also not good in combination with psychedelics as they can lead to unpleasant thought loops. NBOMes are known to cause seizures and stimulants can increase this risk." },
+  "Amphetamines|2C-x": { risk: "⚡", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally uneccessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
+  "Amphetamines|2C-T-x": { risk: "💊", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences. In extreme cases, they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Amphetamines|5-MeO-xxT": { risk: "💊", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
+  "Amphetamines|Cannabis": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Ketamine": { risk: "⚡", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "Amphetamines|MXE": { risk: "⚡", desc: "Risk of tachycardia, hypertension, and manic states." },
+  "Amphetamines|DXM": { risk: "💊", desc: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues." },
+  "Amphetamines|PCP": { risk: "💊", desc: "This combination can easily lead to hypermanic states." },
+  "Amphetamines|MDMA": { risk: "🌈", desc: "Amphetamines increase the neurotoxic effects of MDMA." },
+  "Cocaine|LSD": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Mushrooms": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|DMT": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Mescaline": { risk: "⚡", desc: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops." },
+  "Cocaine|DOx": { risk: "💊", desc: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of cocaine can easily lead to thought loops. Coming down from cocaine while the DOx is still active can be quite anxiogenic." },
+  "Cocaine|NBOMes": { risk: "💊", desc: "Cocaine and NBOMes both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Cocaine|2C-x": { risk: "⚡", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
+  "Cocaine|2C-T-x": { risk: "💊", desc: "Cocaine and 2c-t-x both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Cocaine|5-MeO-xxT": { risk: "💊", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
+  "Cocaine|Cannabis": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Ketamine": { risk: "⚡", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "Cocaine|MXE": { risk: "⚡", desc: "Stimulants taken with MXE can lead to hypermanic states much more easily, especially if sleep is avoided." },
+  "Cocaine|DXM": { risk: "💊", desc: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues." },
+  "Cocaine|PCP": { risk: "💊", desc: "This combination can easily lead to hypermanic states." },
+  "Cocaine|MDMA": { risk: "⚡", desc: "Cocaine blocks some of the desirable effects of MDMA while increasing the risk of heart attack." },
+  "Cocaine|Amphetamines": { risk: "⚡", desc: "This combination of stimulants will increase strain on the heart. It is not generally worth it as cocaine has a mild blocking effect on dopamine releasers like amphetamine." },
+  "Tramadol|LSD": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|Mushrooms": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|DMT": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|Mescaline": { risk: "💊", desc: "This combination can cause seizures due to the lowering of the threshold by tramadol and the potential of mescaline to cause seziures." },
+  "Tramadol|DOx": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|NBOMes": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and NBOMes have also shown a tendency to cause severe seizures." },
+  "Tramadol|2C-x": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics raise the risk of seizures." },
+  "Tramadol|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Tramadol|Amphetamines": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|MDMA": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|Cocaine": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|Alcohol": { risk: "💀", desc: "Heavy CNS depressants, risk of seizures. Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely." },
+  "Tramadol|GHB": { risk: "💀", desc: "The sedative effects of this combination can lead to dangerous respiratory depression." },
+  "Tramadol|Opioids": { risk: "💀", desc: "Concomitant use of tramadol increases the seizure risk in patients taking other opioids. These agents are often individually epileptogenic and may have additive effects on seizure threshold during coadministration. Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present." },
+  "Tramadol|Benzodiazepines": { risk: "💀", desc: "Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present. Vomit aspiration a risk when passed out, lay down in recovery position if ingested." },
+  "MDMA|Cannabis": { risk: "🌈", desc: "Large amounts of either or both may cause strong and somewhat unpredictable experiences, which can be as intense as psychedelics. Consider rather Set and Setting are good, before you combine these. Cannabis should be saved for towards the end of the MDMA experience if possible, where the psychedelic alike effect won't come to play." },
+  "MDMA|Ketamine": { risk: "🌈", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "MDMA|MXE": { risk: "⚡", desc: "There have been reports of risky serotonergic interactions when the two are taken at the same time, but MXE taken to the end of an MDMA experience does not appear to cause the same issues." },
+  "MDMA|DOx": { risk: "⚡", desc: "The combined stimulating effects of the two can be uncomfortable. Coming down on the MDMA while the DOx is still active can be quite anxiogenic." },
+  "MDMA|5-MeO-xxT": { risk: "⚡", desc: "Some of the 5-MeO tryptamines are a bit unpredictable and should be mixed with MDMA with care." },
+  "MDMA|Alcohol": { risk: "⚡", desc: "Both MDMA and alcohol cause dehydration. Approach this combination with caution, moderation and sufficient hydration. More than a small amount of alcohol will dull the euphoria of MDMA." },
+  "MDMA|GHB": { risk: "⚡", desc: "Large amounts of GHB/GBL may overwhelm the effects of MDMA on the comedown." },
+  "MDMA|MAOIs": { risk: "💀", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably. MAO-A inhibitors with MDMA will lead to hypertensive crises." },
+  "Alcohol|Cannabis": { risk: "🌈", desc: "In excess, this combination can cause nausea." },
+  "Alcohol|Ketamine": { risk: "💀", desc: "Both substances cause ataxia and bring a very high risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "Alcohol|MXE": { risk: "💀", desc: "There is a high risk of memory loss, vomiting and severe ataxia from this combination." },
+  "Alcohol|DXM": { risk: "💀", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Additionally CNS depression can lead to difficulty breathing. Avoid on anything higher than 1st plateau." },
+  "Alcohol|PCP": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "Alcohol|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Alcohol|DOx": { risk: "🌈", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk." },
+  "Alcohol|2C-T-x": { risk: "🌈", desc: "Both these classes of compound can interact unpredictably. Caution should be exercised." },
+  "Alcohol|αMT": { risk: "⚡", desc: "αMT has a broad mechanism of action in the brain and so does alcohol so the combination can be unpredictable." },
+  "Alcohol|Amphetamines": { risk: "⚡", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol and the stimulant less. Extended release formulations may severely impede sleep, further worsening the hangover." },
+  "Alcohol|Cocaine": { risk: "💊", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol less. Cocaine is potentiated somewhat by alcohol because of the formation of cocaethylene." },
+  "Alcohol|GHB": { risk: "💀", desc: "Even in very low doses this combination rapidly leads to memory loss, severe ataxia and unconsciousness. There is a high risk of vomit aspiration while unconscious." },
+  "Alcohol|Opioids": { risk: "💀", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely." },
+  "Alcohol|Benzodiazepines": { risk: "💀", desc: "Ethanol ingestion may potentiate the CNS effects of many benzodiazepines. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Blacking out and memory loss is almost certain." },
+  "Alcohol|MAOIs": { risk: "💊", desc: "Tyramine found in many alcoholic beverages can have dangerous reactions with MAOIs, causing an increase in blood pressure." },
+  "Alcohol|SSRIs": { risk: "⚡", desc: "Alcohol may potentiate some of the pharmacologic effects of CNS-active agents. Use in combination may result in additive central nervous system depression and/or impairment of judgment, thinking, and psychomotor skills." },
+  "GHB|Ketamine": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "GHB|MXE": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "GHB|DXM": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position. This combination is hard to predict." },
+  "GHB|PCP": { risk: "💀", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "GHB|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "GHB|Amphetamines": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "GHB|Cocaine": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest. Likewise the G can wear off and leave a dangerous concentration of cocaine behind." },
+  "GHB|Opioids": { risk: "💀", desc: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "GHB|Benzodiazepines": { risk: "💀", desc: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Opioids|Ketamine": { risk: "💀", desc: "Both substances bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "Opioids|MXE": { risk: "💀", desc: "This combination can potentiate the effects of the opioid." },
+  "Opioids|DXM": { risk: "💀", desc: "CNS depression, difficult breathing, heart issues, hepatoxic, just very unsafe combination all around. Additionally if one takes dxm, their tolerance of opiates goes down slightly, thus causing additional synergistic effects." },
+  "Opioids|PCP": { risk: "⚡", desc: "PCP can reduce opioid tolerance, increasing the risk of overdose." },
+  "Opioids|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Opioids|DOx": { risk: "🌈", desc: "No unexpected interactions." },
+  "Opioids|2C-T-x": { risk: "🌈", desc: "No expected interactions, some opioids have serotonin action, and could lead to Serotonin Syndrome or a seizure. These are pretty much only to Pentazocine, Methadone, Tramadol, Tapenatdol." },
+  "Opioids|αMT": { risk: "🌈", desc: "No unexpected interactions." },
+  "Opioids|Amphetamines": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "Opioids|Cocaine": { risk: "💀", desc: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "Opioids|Benzodiazepines": { risk: "💀", desc: "Central nervous system and/or respiratory-depressant effects may be additively or synergistically present. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position Blackouts/memory loss likely." },
+  "Opioids|MAOIs": { risk: "⚡", desc: "Coadministration of monoamine oxidase inhibitors (MAOIs) with certain opioids has been associated with rare reports of severe and fatal adverse reactions. There appear to be two types of interaction, an excitatory and a depressive one. Symptoms of the excitatory reaction may include agitation, headache, diaphoresis, hyperpyrexia, flushing, shivering, myoclonus, rigidity, tremor, diarrhea, hypertension, tachycardia, seizures, and coma. Death has occurred in some cases." },
+  "Opioids|SSRIs": { risk: "🌈", desc: "There have been very infrequent reports of a risk of serotonin syndrome with this combination, though this should not be a practical concern." },
+  "Benzodiazepines|Ketamine": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Benzodiazepines|MXE": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess." },
+  "Benzodiazepines|DXM": { risk: "⚡", desc: "Small doses of benzos can end a bad trip, but both substances potentiate the ataxia and sedation caused by the other and this can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Benzodiazepines|PCP": { risk: "💊", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Benzodiazepines|Amphetamines": { risk: "🌈", desc: "Both can dull each other's effects, so if one wears off before the other it's possible to overdose due to the lack of counteraction." },
+  "MAOIs|Ketamine": { risk: "⚡", desc: "MAO-B inhibitors appear to increase the potency of Ketamine. MAO-A inhbitors have some negative reports associated with the combination but there isn't much information available." },
+  "MAOIs|MXE": { risk: "💊", desc: "MAO-B inhibitors appear to increase the potency of MXE. MAO-A inhbitors have some negative reports associated with the combination but there isn't much information available." },
+  "MAOIs|DXM": { risk: "💀", desc: "High risk of serotonin syndrome." },
+  "MAOIs|PCP": { risk: "💀", desc: "This combination is very poorly explored." },
+  "MAOIs|DOx": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|NBOMes": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|2C-x": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|2C-T-x": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably, which could be dangerous given the unpredictability of the 2C-T-x series." },
+  "MAOIs|αMT": { risk: "💀", desc: "αMT is an MAOI on its own. Using enzyme inhibitors can greatly reduce predictability of effects." },
+  "MAOIs|Amphetamines": { risk: "💀", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably. MAO-A inhibitors with amphetamine can lead to hypertensive crises." },
+  "MAOIs|Cocaine": { risk: "💀", desc: "This combination is poorly explored." },
+  "SSRIs|MXE": { risk: "⚡", desc: "Depending on the SSRI this combination can be unpredictable." },
+  "SSRIs|DXM": { risk: "💀", desc: "High risk of serotonin syndrome." },
+  "SSRIs|PCP": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "SSRIs|Cocaine": { risk: "🌈", desc: "May reduce each others' effectiveness. Cocaine can reduce mental stability and therefore exacerbate conditions which SSRIs are used to treat." },
+  "Ketamine|DOx": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|LSD": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|Mushrooms": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|DMT": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|Mescaline": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "MXE|DOx": { risk: "⚡", desc: "As an NMDA antagonist MXE potentiates DOx which can be unpleasantly intense." },
+  "MXE|NBOMes": { risk: "⚡", desc: "As an NMDA antagonist MXE potentiates NBOMes which can be unpleasantly intense." },
+  "MXE|5-MeO-xxT": { risk: "🌈", desc: "Little information exists about this combination." },
+  "DXM|DOx": { risk: "💊", desc: "The DOx class as psychedelic stimulants have the potential to mask the effects of DXM and could lead to redosing to an unsafe level. DXM can also potentiate DOx resulting in an unpleasantly intense experience." },
+  "DXM|5-MeO-xxT": { risk: "💊", desc: "Little information exists about this combination." },
+  "PCP|DOx": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "PCP|MXE": { risk: "⚡", desc: "There are no reports available about this combination." },
+  "Caffeine|Mescaline": { risk: "🌈", desc: "High doses of caffeine are uncomfortable and this will be magnified by psychedelics." },
+  "Caffeine|DOx": { risk: "⚡", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating it may cause some physical discomfort." },
+  "Caffeine|NBOMes": { risk: "⚡", desc: "Caffiene can bring out the natural stimulation from psychedelic drugs to make it uncomfortable. High doses can cause anxiety which is hard to handle while tripping." },
+  "Caffeine|2C-x": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|2C-T-x": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|αMT": { risk: "⚡", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|5-MeO-xxT": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|Ketamine": { risk: "🌈", desc: "No unexpected interactions." },
+  "Caffeine|MXE": { risk: "🌈", desc: "No likely interactions." },
+  "Caffeine|DXM": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|PCP": { risk: "⚡", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "Caffeine|Amphetamines": { risk: "⚡", desc: "This combination of stimulants is not generally necessary and may increase strain on the heart, as well as potentially causing anxiety and greater physical discomfort." },
+  "Caffeine|MDMA": { risk: "⚡", desc: "Caffiene is not really necessary with MDMA and increases any neurotoxic effects from MDMA." },
+  "Caffeine|Cocaine": { risk: "⚡", desc: "Both stimulants, risk of tachycardia, hypertension, and in extreme cases heart failure." },
+  "5-MeO-xxT|Mescaline": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions." },
+  "5-MeO-xxT|DOx": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions, particularly increasing the risk of unpleasant physical side effects." },
+  "5-MeO-xxT|NBOMes": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions and the NBOMes are known to be unpredictable even alone. This combination is best avoided." },
+  "5-MeO-xxT|2C-x": { risk: "⚡", desc: "The 5-MeO psychedelics can interact unpredictably to potentiate other psychedelics." },
+  "5-MeO-xxT|2C-T-x": { risk: "⚡", desc: "Both classes of compounds can be unpredictable alone." }
+};
+
+// All substances in the database
+const allSubstances = [
+  "Cannabis", "LSD", "Mushrooms", "DMT", "Mescaline", "DOx", "NBOMes", "2C-x", "2C-T-x", "αMT", "5-MeO-xxT",
+  "Amphetamines", "Cocaine", "Tramadol", "MDMA", "Alcohol", "GHB", "Opioids", "Benzodiazepines", "MAOIs", "SSRIs",
+  "Ketamine", "MXE", "DXM", "PCP", "Nitrous", "Caffeine"
 ];
 
-// Risk matrix data based on your original table
-const riskMatrix = {
-  "Cannabis": ["—", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "🟡", "🟡", "🟢", "🟢", "🟢", "🔴", "🔴", "🟢", "🔴", "🔴"],
-  "Ketamine": ["🟡", "—", "❌", "❌", "❌", "❌", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "❌", "🟡", "❌", "❌"],
-  "MDMA": ["🔴", "❌", "—", "🔴", "🔴", "❌", "🔴", "🔴", "❌", "❌", "❌", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌"],
-  "Cocaine": ["🔴", "❌", "🔴", "—", "🔴", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌"],
-  "Alcohol": ["🔴", "❌", "🔴", "🔴", "—", "❌", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "☠️"],
-  "GHB / Opioids": ["🔴", "❌", "❌", "❌", "☠️", "—", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "⚠️", "☠️", "—"],
-  "Benzos": ["🔴", "🟡", "🔴", "🔴", "☠️", "☠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "☠️", "⚠️"],
-  "SSRIs": ["🟡", "🟡", "🔴", "🔴", "⚠️", "⚠️", "⚠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "SNRIs": ["🟡", "🟡", "❌", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "ADHD Meds": ["🟢", "🟡", "❌", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "—", "🟡", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Antipsychotics": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "—", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Mood Stabilizers": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "—", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Wellbutrin": ["🟢", "🟡", "❌", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "—", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Trazodone": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "—", "🟢", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Gabapentin": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "🟢", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "LSD": ["🔴", "🟡", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "—", "🟢", "🟡", "🟡", "🔴"],
-  "Shrooms": ["🔴", "❌", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟢", "⚠️", "🟢", "—", "🟡", "🟡", "🔴"],
-  "Nitrous": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "—", "⚠️", "⚠️"],
-  "DMT": ["🔴", "❌", "❌", "❌", "❌", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "—", "☠️"],
-  "GHB": ["🔴", "❌", "❌", "☠️", "☠️", "—", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "☠️", "—"]
-};
+// Fill select dropdowns
+function fillSelect(id) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">— Select —</option>' + allSubstances.map(s => `<option>${s}</option>`).join('');
+}
+["drugA", "drugB", "drugC"].forEach(fillSelect);
 
-// Detailed interaction descriptions
-const interactionDetails = {
-  "Cannabis|Ketamine": { risk: "🟡", desc: "Mild risk: may increase sedation or dizziness." },
-  "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
-  "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
-  "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
-  "Cannabis|GHB / Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
-  "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
-  "Cannabis|SSRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-  "Cannabis|SNRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-  "Cannabis|ADHD Meds": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Antipsychotics": { risk: "🟡", desc: "May affect mental state; use cautiously." },
-  "Cannabis|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-  "Cannabis|Wellbutrin": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Trazodone": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Gabapentin": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|LSD": { risk: "🔴", desc: "May intensify effects and anxiety." },
-  "Cannabis|Shrooms": { risk: "🔴", desc: "May intensify effects and anxiety." },
-  "Cannabis|Nitrous": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|DMT": { risk: "🔴", desc: "May increase anxiety and cardiovascular strain." },
-  "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
+// Render matrix table with clickable cells
+function renderMatrix() {
+  const tbl = document.getElementById("matrixTable");
+  const thead = document.createElement("thead");
+  const hrow = document.createElement("tr");
+  hrow.appendChild(document.createElement("th")).textContent = "↓ / →";
+  allSubstances.forEach(h => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    hrow.appendChild(th);
+  });
+  thead.appendChild(hrow);
+  const tbody = document.createElement("tbody");
+  allSubstances.forEach(r => {
+    const tr = document.createElement("tr");
+    const rowTh = document.createElement("th");
+    rowTh.textContent = r;
+    tr.appendChild(rowTh);
+    allSubstances.forEach(c => {
+      const td = document.createElement("td");
+      td.setAttribute("data-label", c);
+      let val = "🌈"; // Default to low risk
+      let desc = "No specific interaction data available.";
 
-  "Ketamine|MDMA": { risk: "❌", desc: "Dangerous combo: high risk of respiratory failure." },
-  "Ketamine|Cocaine": { risk: "❌", desc: "Dangerous combo: high risk of heart issues." },
-  "Ketamine|Alcohol": { risk: "❌", desc: "Dangerous combo: respiratory depression risk." },
-  "Ketamine|GHB / Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
-  "Ketamine|Benzos": { risk: "🟡", desc: "Increased sedation." },
-  "Ketamine|SSRIs": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|SNRIs": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|ADHD Meds": { risk: "🔴", desc: "Possible heart strain." },
-  "Ketamine|Antipsychotics": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Wellbutrin": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Trazodone": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Gabapentin": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|LSD": { risk: "❌", desc: "High risk of confusion, panic." },
-  "Ketamine|Shrooms": { risk: "❌", desc: "High risk of confusion, panic." },
-  "Ketamine|Nitrous": { risk: "🟡", desc: "Mild sedation increase." },
-  "Ketamine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-  "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
+      // Check for interaction data
+      const key1 = `${r}|${c}`;
+      const key2 = `${c}|${r}`;
+      
+      if (interactionData[key1]) {
+        val = interactionData[key1].risk;
+        desc = interactionData[key1].desc;
+      } else if (interactionData[key2]) {
+        val = interactionData[key2].risk;
+        desc = interactionData[key2].desc;
+      } else if (r === c) {
+        val = "—";
+        desc = "Same substance - no interaction data needed.";
+      }
 
-  "MDMA|Cocaine": { risk: "🔴", desc: "High heart strain risk." },
-  "MDMA|Alcohol": { risk: "🔴", desc: "Dehydration, liver strain." },
-  "MDMA|GHB / Opioids": { risk: "❌", desc: "Very dangerous: respiratory failure risk." },
-  "MDMA|Benzos": { risk: "🔴", desc: "Mixed effects; sedation and stimulation." },
-  "MDMA|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "MDMA|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-  "MDMA|ADHD Meds": { risk: "❌", desc: "Heart strain and serotonin syndrome risk." },
-  "MDMA|Antipsychotics": { risk: "❌", desc: "Potentially dangerous interaction." },
-  "MDMA|Mood Stabilizers": { risk: "❌", desc: "Potentially dangerous interaction." },
-  "MDMA|Wellbutrin": { risk: "❌", desc: "Seizure risk." },
-  "MDMA|Trazodone": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "MDMA|Gabapentin": { risk: "🔴", desc: "Mixed effects." },
-  "MDMA|LSD": { risk: "🔴", desc: "Sensory overload, panic." },
-  "MDMA|Shrooms": { risk: "🔴", desc: "Sensory overload, panic." },
-  "MDMA|Nitrous": { risk: "🔴", desc: "Oxygen deprivation risk." },
-  "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo." },
-  "MDMA|GHB": { risk: "❌", desc: "High overdose risk." },
+      td.textContent = val;
+      td.className = getRiskClass(val);
+      td.title = `${r} + ${c}: ${desc}`;
 
-  "Cocaine|Alcohol": { risk: "🔴", desc: "Creates cocaethylene: very toxic to heart and liver." },
-  "Cocaine|Benzos": { risk: "🔴", desc: "Risk of heart issues and sedation conflict." },
-  "Cocaine|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "Cocaine|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-  "Cocaine|ADHD Meds": { risk: "❌", desc: "Severe heart strain risk." },
-  "Cocaine|Antipsychotics": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Mood Stabilizers": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Wellbutrin": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Trazodone": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Gabapentin": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|LSD": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-  "Cocaine|Shrooms": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-  "Cocaine|Nitrous": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-  "Cocaine|GHB": { risk: "☠️", desc: "Extremely dangerous combo; fatal overdose risk." },
+      // Add click event to show detailed explanation
+      td.addEventListener('click', () => {
+        showMatrixDetail(r, c, val, desc);
+      });
 
-  "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-  "Alcohol|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-  "Benzos|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(thead);
+  tbl.appendChild(tbody);
+}
 
-  "SSRIs|SNRIs": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SSRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SNRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." }
-};
-
-// Map risk icons to simplified versions for the current UI
-const riskIconMap = {
-  "🟢": "🌈", // Low Risk
-  "🟡": "⚡", // Caution
-  "🔴": "💊", // Strong Caution
-  "❌": "💀", // Dangerous
-  "☠️": "💀", // Deadly
-  "⚠️": "⚡"  // Warning (map to caution)
-};
-
-// Map risk to CSS class
-function getRiskClass(risk) {
-  switch(risk) {
+function getRiskClass(icon) {
+  switch (icon) {
     case "🌈": return "risk-low";
     case "⚡": return "risk-caution";
     case "💊": return "risk-strong";
@@ -1247,74 +1293,29 @@ function getRiskClass(risk) {
   }
 }
 
-// Fill select dropdowns
-function fillSelect(id) {
-  const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">— Select —</option>' + 
-    substances.map(s => `<option value="${s}">${s}</option>`).join('');
-}
-
-// Initialize the matrix table
-function initializeMatrix() {
-  const table = document.getElementById('matrixTable');
-  let html = '<thead><tr><th>↓ / →</th>';
-  
-  // Create header row
-  substances.forEach(substance => {
-    html += `<th>${substance}</th>`;
-  });
-  html += '</tr></thead><tbody>';
-  
-  // Create data rows
-  substances.forEach(rowSubstance => {
-    html += `<tr><th>${rowSubstance}</th>`;
-    substances.forEach(colSubstance => {
-      let risk = "—";
-      if (rowSubstance !== colSubstance) {
-        risk = riskMatrix[rowSubstance][substances.indexOf(colSubstance)];
-      }
-      const simpleRisk = riskIconMap[risk] || risk;
-      const riskClass = getRiskClass(simpleRisk);
-      html += `<td class="${riskClass}" data-row="${rowSubstance}" data-col="${colSubstance}">${simpleRisk}</td>`;
-    });
-    html += '</tr>';
-  });
-  
-  html += '</tbody>';
-  table.innerHTML = html;
-  
-  // Add click events to cells
-  table.querySelectorAll('td').forEach(cell => {
-    if (cell.textContent !== "—") {
-      cell.addEventListener('click', () => {
-        const rowSubstance = cell.getAttribute('data-row');
-        const colSubstance = cell.getAttribute('data-col');
-        showMatrixDetail(rowSubstance, colSubstance);
-      });
-    }
-  });
+function iconExplain(x) {
+  switch (x) {
+    case "🌈": return "Low concern / typical co-use profile reported";
+    case "⚡": return "Caution — increased side-effect potential; go slow";
+    case "💊": return "Strong caution — meaningful interaction risk";
+    case "💀": return "Danger — avoid / high overdose or medical risk";
+    default: return "—";
+  }
 }
 
 // Show matrix detail modal
-function showMatrixDetail(substanceA, substanceB) {
+function showMatrixDetail(substanceA, substanceB, riskLevel, description) {
   const modal = document.getElementById('matrixModal');
   const modalTitle = document.getElementById('matrixModalTitle');
   const modalBody = document.getElementById('matrixModalBody');
-  
-  // Get the risk level
-  let risk = "—";
-  if (substanceA !== substanceB) {
-    risk = riskMatrix[substanceA][substances.indexOf(substanceB)];
-  }
-  const simpleRisk = riskIconMap[risk] || risk;
-  
-  modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${substanceA} + ${substanceB} → ${simpleRisk}`;
-  
+
+  modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${substanceA} + ${substanceB} → ${riskLevel}`;
+
   let content = '';
-  
+
   if (substanceA === substanceB) {
     content = `
-      <div class="pair-detail ${getRiskClass(simpleRisk)}">
+      <div class="pair-detail ${getRiskClass(riskLevel)}">
         <p><strong>Same Substance Combination:</strong> Using ${substanceA} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
         <p><strong>Harm Reduction Tips:</strong></p>
         <ul>
@@ -1325,149 +1326,12 @@ function showMatrixDetail(substanceA, substanceB) {
       </div>
     `;
   } else {
-    // Look up detailed interaction info
-    const key1 = `${substanceA}|${substanceB}`;
-    const key2 = `${substanceB}|${substanceA}`;
-    const interaction = interactionDetails[key1] || interactionDetails[key2];
-    
-    if (interaction) {
-      const simpleRiskIcon = riskIconMap[interaction.risk] || interaction.risk;
-      content = `
-        <div class="pair-detail ${getRiskClass(simpleRiskIcon)}">
-          <p><strong>${interaction.risk} Risk:</strong> ${interaction.desc}</p>
-        </div>
-      `;
-    } else {
-      // Generic description based on risk level
-      let genericDesc = '';
-      switch(simpleRisk) {
-        case "🌈":
-          genericDesc = "Minimal interaction risk. Still practice standard harm reduction measures.";
-          break;
-        case "⚡":
-          genericDesc = "Moderate interaction risk. Use caution, start with low doses, and monitor effects carefully.";
-          break;
-        case "💊":
-          genericDesc = "Significant interaction risk. Consider avoiding this combination or use extreme caution with medical supervision.";
-          break;
-        case "💀":
-          genericDesc = "High risk combination. Avoid this combination due to potential for severe harm or fatal overdose.";
-          break;
-        default:
-          genericDesc = "Interaction risk unknown. Always exercise caution when combining substances.";
-      }
-      
-      content = `
-        <div class="pair-detail ${getRiskClass(simpleRisk)}">
-          <p><strong>${simpleRisk} Risk:</strong> ${genericDesc}</p>
-          <p>No specific interaction data available. This does not mean the combination is safe. Always exercise caution and start with low doses when combining substances.</p>
-        </div>
-      `;
-    }
+    content = detailedExplanations[riskLevel](substanceA, substanceB, description);
   }
-  
+
   modalBody.innerHTML = content;
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-}
-
-// Check interactions for selected substances
-function checkInteractions() {
-  const drugA = document.getElementById('drugA').value;
-  const drugB = document.getElementById('drugB').value;
-  const drugC = document.getElementById('drugC').value;
-  const resultBox = document.getElementById('resultBox');
-  
-  if (!drugA || !drugB) {
-    resultBox.innerHTML = `<h3>Please select at least two substances.</h3>`;
-    document.getElementById('shareResults').style.display = 'none';
-    return;
-  }
-  
-  const selectedSubstances = [drugA, drugB];
-  if (drugC) selectedSubstances.push(drugC);
-  
-  let content = `<h3><i class="fas fa-clipboard-check"></i> Interaction Analysis</h3>`;
-  let highestRisk = "🌈";
-  
-  // Check each pair
-  for (let i = 0; i < selectedSubstances.length; i++) {
-    for (let j = i + 1; j < selectedSubstances.length; j++) {
-      const substanceA = selectedSubstances[i];
-      const substanceB = selectedSubstances[j];
-      
-      let risk = "—";
-      if (substanceA !== substanceB) {
-        risk = riskMatrix[substanceA][substances.indexOf(substanceB)];
-      }
-      const simpleRisk = riskIconMap[risk] || risk;
-      const riskClass = getRiskClass(simpleRisk);
-      
-      // Update highest risk
-      const riskOrder = {"🌈": 1, "⚡": 2, "💊": 3, "💀": 4};
-      if (riskOrder[simpleRisk] > riskOrder[highestRisk]) {
-        highestRisk = simpleRisk;
-      }
-      
-      // Look up detailed info
-      const key1 = `${substanceA}|${substanceB}`;
-      const key2 = `${substanceB}|${substanceA}`;
-      const interaction = interactionDetails[key1] || interactionDetails[key2];
-      
-      let description = "No specific interaction data available. Exercise caution.";
-      if (interaction) {
-        description = interaction.desc;
-      }
-      
-      content += `
-        <div class="pair-detail ${riskClass}">
-          <div class="risk-icon">${simpleRisk}</div>
-          <h4>${substanceA} + ${substanceB}</h4>
-          <p>${description}</p>
-        </div>
-      `;
-    }
-  }
-  
-  // Add overall risk summary for 3+ substances
-  if (selectedSubstances.length >= 3) {
-    let overallRiskDesc = "";
-    switch(highestRisk) {
-      case "🌈":
-        overallRiskDesc = "Overall low risk combination, but still practice harm reduction.";
-        break;
-      case "⚡":
-        overallRiskDesc = "Overall moderate risk combination. Use caution with dosing and monitoring.";
-        break;
-      case "💊":
-        overallRiskDesc = "Overall high risk combination. Consider avoiding or use extreme caution.";
-        break;
-      case "💀":
-        overallRiskDesc = "Overall dangerous combination. Strongly recommend avoiding this combination.";
-        break;
-    }
-    
-    content += `
-      <div class="pair-detail ${getRiskClass(highestRisk)}">
-        <div class="risk-icon">${highestRisk}</div>
-        <h4>Overall Combination Risk: ${selectedSubstances.join(" + ")}</h4>
-        <p>${overallRiskDesc}</p>
-        <p><strong>Additional precautions for multiple substances:</strong></p>
-        <ul>
-          <li>Start with much lower doses than you would take individually</li>
-          <li>Space out consumption to assess effects</li>
-          <li>Have a sober trip sitter present</li>
-          <li>Be prepared for unexpected interactions</li>
-        </ul>
-      </div>
-    `;
-  }
-  
-  content += `<p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">Remember: individual responses vary based on dosage, tolerance, metabolism, and underlying health conditions. This information is for harm reduction purposes only.</p>`;
-  
-  resultBox.innerHTML = content;
-  document.getElementById('shareResults').style.display = 'flex';
-  resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Close matrix modal
@@ -1484,18 +1348,132 @@ document.getElementById('matrixModal').addEventListener('click', (e) => {
   }
 });
 
-// Save page functionality
-const saveModal = document.getElementById('saveModal');
-const savePageBtn = document.getElementById('savePageBtn');
-const closeModal = document.getElementById('closeModal');
+// Detailed explanations for each interaction
+const detailedExplanations = {
+  "🌈": (a, b, desc) => `
+    <div class="pair-detail risk-low">
+      <p><strong>Low Risk Interaction:</strong> ${a} and ${b} typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Start with lower doses than you would take individually</li>
+        <li>Stay hydrated and in a safe environment</li>
+        <li>Have a sober friend present if trying this combination for the first time</li>
+      </ul>
+    </div>
+  `,
+  "⚡": (a, b, desc) => `
+    <div class="pair-detail risk-caution">
+      <p><strong>Caution Advised:</strong> Combining ${a} and ${b} may increase side effects or intensify experiences beyond comfortable levels. This combination requires careful dosing and monitoring.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Use significantly lower doses than you would take individually</li>
+        <li>Wait longer between doses to assess effects</li>
+        <li>Have benzodiazepines available if anxiety becomes overwhelming (only if prescribed)</li>
+        <li>Avoid operating vehicles or machinery</li>
+      </ul>
+    </div>
+  `,
+  "💊": (a, b, desc) => `
+    <div class="pair-detail risk-strong">
+      <p><strong>Strong Caution - Significant Interaction Risk:</strong> ${a} and ${b} have known pharmacological interactions that can significantly increase risks. This combination should be approached with extreme caution.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Avoid this combination if possible</li>
+        <li>If combining, use minimal doses and have medical supervision available</li>
+        <li>Be aware of signs of overdose or adverse reactions</li>
+        <li>Have naloxone available if opioids are involved</li>
+        <li>Do not use alone</li>
+      </ul>
+    </div>
+  `,
+  "💀": (a, b, desc) => `
+    <div class="pair-detail risk-danger">
+      <p><strong>DANGEROUS COMBINATION - AVOID:</strong> Combining ${a} and ${b} creates a high risk of fatal overdose, severe medical complications, or permanent harm. This is one of the most dangerous drug combinations known.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>CRITICAL SAFETY INFORMATION:</strong></p>
+      <ul>
+        <li><strong>DO NOT COMBINE THESE SUBSTANCES</strong></li>
+        <li>If accidental exposure occurs, call emergency services immediately</li>
+        <li>Have multiple doses of naloxone available if opioids are involved</li>
+        <li>This combination has resulted in numerous fatal overdoses</li>
+        <li>Consider alternative substances that don't carry this extreme risk</li>
+      </ul>
+    </div>
+  `,
+  "—": (a, b, desc) => `
+    <div class="pair-detail">
+      <p><strong>Same Substance:</strong> Using ${a} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Be mindful of cumulative dosing and tolerance</li>
+        <li>Follow standard harm reduction practices for this substance</li>
+        <li>Remember that redosing increases risks even with the same substance</li>
+      </ul>
+    </div>
+  `
+};
 
-savePageBtn.addEventListener('click', () => {
-  saveModal.style.display = 'flex';
+// Check button functionality
+document.getElementById("checkBtn").addEventListener("click", () => {
+  const sel = ["drugA", "drugB", "drugC"].map(id => document.getElementById(id).value).filter(Boolean);
+  const box = document.getElementById("resultBox");
+  if (sel.length < 2) {
+    box.innerHTML = `<h3>Please select at least two substances.</h3>`;
+    document.getElementById("shareResults").style.display = "none";
+    return;
+  }
+
+  let content = `<h3><i class="fas fa-clipboard-check"></i> Interaction Analysis</h3>`;
+
+  // Add detailed explanations for each pair
+  for (let i = 0; i < sel.length; i++) {
+    for (let j = i + 1; j < sel.length; j++) {
+      const a = sel[i], b = sel[j];
+      let v = "🌈"; // Default to low risk
+      let desc = "No specific interaction data available.";
+
+      // Check for interaction data
+      const key1 = `${a}|${b}`;
+      const key2 = `${b}|${a}`;
+      
+      if (interactionData[key1]) {
+        v = interactionData[key1].risk;
+        desc = interactionData[key1].desc;
+      } else if (interactionData[key2]) {
+        v = interactionData[key2].risk;
+        desc = interactionData[key2].desc;
+      }
+
+      content += detailedExplanations[v](a, b, desc);
+    }
+  }
+
+  content += `<p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">Remember: individual responses vary based on dosage, tolerance, metabolism, and underlying health conditions. This information is for harm reduction purposes only.</p>`;
+
+  box.innerHTML = content;
+
+  // Show share buttons
+  document.getElementById("shareResults").style.display = "flex";
+
+  // Scroll to results
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+// Save page functionality
+const saveModal = document.getElementById("saveModal");
+const savePageBtn = document.getElementById("savePageBtn");
+const closeModal = document.getElementById("closeModal");
+
+savePageBtn.addEventListener("click", () => {
+  saveModal.style.display = "flex";
   document.body.style.overflow = 'hidden';
 });
 
-closeModal.addEventListener('click', () => {
-  saveModal.style.display = 'none';
+closeModal.addEventListener("click", () => {
+  saveModal.style.display = "none";
   document.body.style.overflow = 'auto';
 });
 
@@ -1545,16 +1523,7 @@ function createParticles() {
 
 // Initialize everything when the page loads
 window.addEventListener('DOMContentLoaded', () => {
-  // Fill dropdowns
-  ['drugA', 'drugB', 'drugC'].forEach(fillSelect);
-  
-  // Initialize matrix
-  initializeMatrix();
-  
-  // Set up event listeners
-  document.getElementById('checkBtn').addEventListener('click', checkInteractions);
-  
-  // Create particles
+  renderMatrix();
   createParticles();
 });
 </script>
