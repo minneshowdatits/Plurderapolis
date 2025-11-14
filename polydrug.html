@@ -1056,207 +1056,223 @@ document.getElementById('homeLink').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Drug interaction data based on the provided information
+// Interaction data based on provided information
 const interactionData = {
-  "cannabis & lsd": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & lsd": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "cocaine & lsd": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "tramadol & lsd": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
-  "cannabis & mushrooms": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & mushrooms": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "cocaine & mushrooms": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "tramadol & mushrooms": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
-  "cannabis & dmt": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & dmt": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "cocaine & dmt": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "tramadol & dmt": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
-  "cannabis & mescaline": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & mescaline": { status: "Caution", note: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops" },
-  "cocaine & mescaline": { status: "Caution", note: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops" },
-  "caffeine & mescaline": { status: "Low Risk & No Synergy", note: "High doses of caffeine are uncomfortable and this will be magnified by psychedelics" },
-  "tramadol & mescaline": { status: "Unsafe", note: "This combination can cause seizures due to the lowering of the threshold by tramadol and the potential of mescaline to cause seziures." },
-  "cannabis & dox": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "ketamine & dox": { status: "Low Risk & Synergy", note: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
-  "amphetamines & dox": { status: "Unsafe", note: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of amphetamine can easily lead to thought loops. Coming down from amphetamines while the DOx is still active can be quite anxiogenic." },
-  "mdma & dox": { status: "Caution", note: "The combined stimulating effects of the two can be uncomfortable. Coming down on the MDMA while the DOx is still active can be quite anxiogenic." },
-  "cocaine & dox": { status: "Unsafe", note: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of cocaine can easily lead to thought loops. Coming down from cocaine while the DOx is still active can be quite anxiogenic" },
-  "caffeine & dox": { status: "Caution", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating it may cause some physical discomfort." },
-  "alcohol & dox": { status: "Low Risk & Decrease", note: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk." },
-  "opioids & dox": { status: "Low Risk & No Synergy", note: "No unexpected interactions." },
-  "tramadol & dox": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
-  "cannabis & nbomes": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & nbomes": { status: "Unsafe", note: "Amphetamines and NBOMes both provide considerable stimulation. When combined they can result in tachycardia, hypertension, vasoconstriction and in extreme cases heart failure. The anxiogenic and focusing effects of stimulants are also not good in combination with psychedelics as they can lead to unpleasant thought loops. NBOMes are known to cause seizures and stimulants can increase this risk." },
-  "cocaine & nbomes": { status: "Unsafe", note: "Cocaine and NBOMes both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
-  "caffeine & nbomes": { status: "Caution", note: "Caffiene can bring out the natural stimulation from psychedelic drugs to make it uncomfortable. High doses can cause anxiety which is hard to handle while tripping" },
-  "tramadol & nbomes": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and NBOMes have also shown a tendency to cause severe seizures" },
-  "cannabis & 2c-x": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & 2c-x": { status: "Caution", note: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally uneccessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
-  "cocaine & 2c-x": { status: "Caution", note: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
-  "caffeine & 2c-x": { status: "Low Risk & No Synergy", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
-  "tramadol & 2c-x": { status: "Unsafe", note: "Tramadol is well known to lower seizure threshold and psychedelics raise the risk of seizures." },
-  "cannabis & 2c-t-x": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & 2c-t-x": { status: "Unsafe", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences. In extreme cases, they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
-  "cocaine & 2c-t-x": { status: "Unsafe", note: "Cocaine and 2c-t-x both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
-  "caffeine & 2c-t-x": { status: "Low Risk & No Synergy", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
-  "alcohol & 2c-t-x": { status: "Low Risk & Decrease", note: "Both these classes of compound can interact unpredictably. Caution should be exercised." },
-  "opioids & 2c-t-x": { status: "Low Risk & No Synergy", note: "No expected interactions, some opioids have serotonin action, and could lead to Serotonin Syndrome or a seizure. These are pretty much only to Pentazocine, Methadone, Tramadol, Tapenatdol." },
-  "cannabis & amt": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics. Small amounts can reduce nausea with aMT but take care." },
-  "caffeine & amt": { status: "Caution", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
-  "alcohol & amt": { status: "Caution", note: "aMT has a broad mechanism of action in the brain and so does alcohol so the combination can be unpredictable" },
-  "opioids & amt": { status: "Low Risk & No Synergy", note: "No unexpected interactions" },
-  "cannabis & 5-meo-xxt": { status: "Caution", note: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
-  "amphetamines & 5-meo-xxt": { status: "Unsafe", note: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
-  "mdma & 5-meo-xxt": { status: "Caution", note: "Some of the 5-MeO tryptamines are a bit unpredictable and should be mixed with MDMA with care" },
-  "cocaine & 5-meo-xxt": { status: "Unsafe", note: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
-  "caffeine & 5-meo-xxt": { status: "Low Risk & No Synergy", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
-  "amphetamines & cannabis": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "mdma & cannabis": { status: "Low Risk & Synergy", note: "Large amounts of either or both may cause strong and somewhat unpredictable experiences, which can be as intense as psychedelics. Consider rather Set and Setting are good, before you combine these. Cannabis should be saved for towards the end of the MDMA experience if possible, where the psychedelic alike effect won't come to play." },
-  "cocaine & cannabis": { status: "Caution", note: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences" },
-  "alcohol & cannabis": { status: "Low Risk & Synergy", note: "In excess, this combination can cause nausea." },
-  "amphetamines & ketamine": { status: "Caution", note: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
-  "mdma & ketamine": { status: "Low Risk & Synergy", note: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
-  "cocaine & ketamine": { status: "Caution", note: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
-  "caffeine & ketamine": { status: "Low Risk & No Synergy", note: "No unexpected interactions." },
-  "alcohol & ketamine": { status: "Dangerous", note: "Both substances cause ataxia and bring a very high risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
-  "ghb/gbl & ketamine": { status: "Dangerous", note: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
-  "opioids & ketamine": { status: "Dangerous", note: "Both substances bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
-  "benzodiazepines & ketamine": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
-  "amphetamines & mxe": { status: "Caution", note: "Risk of tachycardia, hypertension, and manic states" },
-  "mdma & mxe": { status: "Caution", note: "There have been reports of risky serotonergic interactions when the two are taken at the same time, but MXE taken to the end of an MDMA experience does not appear to cause the same issues." },
-  "cocaine & mxe": { status: "Caution", note: "Stimulants taken with MXE can lead to hypermanic states much more easily, especially if sleep is avoided." },
-  "caffeine & mxe": { status: "Low Risk & No Synergy", note: "No likely interactions" },
-  "alcohol & mxe": { status: "Dangerous", note: "There is a high risk of memory loss, vomiting and severe ataxia from this combination." },
-  "ghb/gbl & mxe": { status: "Dangerous", note: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
-  "opioids & mxe": { status: "Dangerous", note: "This combination can potentiate the effects of the opioid" },
-  "benzodiazepines & mxe": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess." },
-  "amphetamines & dxm": { status: "Unsafe", note: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues." },
-  "cocaine & dxm": { status: "Unsafe", note: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues" },
-  "caffeine & dxm": { status: "Low Risk & No Synergy", note: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
-  "alcohol & dxm": { status: "Dangerous", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Additionally CNS depression can lead to difficulty breathing. Avoid on anything higher than 1st plateau." },
-  "ghb/gbl & dxm": { status: "Dangerous", note: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position. This combination is hard to predict" },
-  "opioids & dxm": { status: "Dangerous", note: "CNS depression, difficult breathing, heart issues, hepatoxic, just very unsafe combination all around. Additionally if one takes dxm, their tolerance of opiates goes down slightly, thus causing additional synergistic effects." },
-  "benzodiazepines & dxm": { status: "Caution", note: "Small doses of benzos can end a bad trip, but both substances potentiate the ataxia and sedation caused by the other and this can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
-  "alcohol & nitrous": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
-  "ghb/gbl & nitrous": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
-  "opioids & nitrous": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
-  "tramadol & nitrous": { status: "Caution", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
-  "mdma & amphetamines": { status: "Low Risk & Synergy", note: "Amphetamines increase the neurotoxic effects of MDMA" },
-  "cocaine & amphetamines": { status: "Caution", note: "This combination of stimulants will increase strain on the heart. It is not generally worth it as cocaine has a mild blocking effect on dopamine releasers like amphetamine" },
-  "caffeine & amphetamines": { status: "Caution", note: "This combination of stimulants is not generally necessary and may increase strain on the heart, as well as potentially causing anxiety and greater physical discomfort." },
-  "alcohol & amphetamines": { status: "Caution", note: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol and the stimulant less. Extended release formulations may severely impede sleep, further worsening the hangover." },
-  "ghb/gbl & amphetamines": { status: "Caution", note: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
-  "opioids & amphetamines": { status: "Caution", note: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
-  "tramadol & amphetamines": { status: "Dangerous", note: "Tramadol and stimulants both increase the risk of seizures." },
-  "benzodiazepines & amphetamines": { status: "Low Risk & Decrease", note: "Both can dull each other's effects, so if one wears off before the other it's possible to overdose due to the lack of counteraction" },
-  "cocaine & mdma": { status: "Caution", note: "Cocaine blocks some of the desirable effects of MDMA while increasing the risk of heart attack." },
-  "caffeine & mdma": { status: "Caution", note: "Caffiene is not really necessary with MDMA and increases any neurotoxic effects from MDMA" },
-  "alcohol & mdma": { status: "Caution", note: "Both MDMA and alcohol cause dehydration. Approach this combination with caution, moderation and sufficient hydration. More than a small amount of alcohol will dull the euphoria of MDMA" },
-  "ghb/gbl & mdma": { status: "Caution", note: "Large amounts of GHB/GBL may overwhelm the effects of MDMA on the comedown." },
-  "tramadol & mdma": { status: "Dangerous", note: "Tramadol and stimulants both increase the risk of seizures." },
-  "caffeine & cocaine": { status: "Caution", note: "Both stimulants, risk of tachycardia, hypertension, and in extreme cases heart failure." },
-  "alcohol & cocaine": { status: "Unsafe", note: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol less. Cocaine is potentiated somewhat by alcohol because of the formation of cocaethylene." },
-  "ghb/gbl & cocaine": { status: "Caution", note: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest. Likewise the G can wear off and leave a dangerous concentration of cocaine behind" },
-  "opioids & cocaine": { status: "Dangerous", note: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
-  "tramadol & cocaine": { status: "Dangerous", note: "Tramadol and stimulants both increase the risk of seizures." },
-  "ssris & cocaine": { status: "Low Risk & No Synergy", note: "May reduce each others' effectiveness. Cocaine can reduce mental stability and therefore exacerbate conditions which SSRIs are used to treat." },
-  "ghb/gbl & alcohol": { status: "Dangerous", note: "Even in very low doses this combination rapidly leads to memory loss, severe ataxia and unconsciousness. There is a high risk of vomit aspiration while unconscious." },
-  "opioids & alcohol": { status: "Dangerous", note: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely" },
-  "tramadol & alcohol": { status: "Dangerous", note: "Heavy CNS depressants, risk of seizures. Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely." },
-  "benzodiazepines & alcohol": { status: "Dangerous", note: "Ethanol ingestion may potentiate the CNS effects of many benzodiazepines. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Blacking out and memory loss is almost certain." },
-  "ssris & alcohol": { status: "Caution", note: "Alcohol may potentiate some of the pharmacologic effects of CNS-active agents. Use in combination may result in additive central nervous system depression and/or impairment of judgment, thinking, and psychomotor skills." },
-  "opioids & ghb/gbl": { status: "Dangerous", note: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position" },
-  "tramadol & ghb/gbl": { status: "Dangerous", note: "The sedative effects of this combination can lead to dangerous respiratory depression." },
-  "benzodiazepines & ghb/gbl": { status: "Dangerous", note: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
-  "tramadol & opioids": { status: "Dangerous", note: "Concomitant use of tramadol increases the seizure risk in patients taking other opioids. These agents are often individually epileptogenic and may have additive effects on seizure threshold during coadministration. Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present" },
-  "benzodiazepines & opioids": { status: "Dangerous", note: "Central nervous system and/or respiratory-depressant effects may be additively or synergistically present. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position Blackouts/memory loss likely" },
-  "ssris & opioids": { status: "Low Risk & No Synergy", note: "There have been very infrequent reports of a risk of serotonin syndrome with this combination, though this should not be a practical concern." },
-  "benzodiazepines & tramadol": { status: "Dangerous", note: "Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present. Vomit aspiration a risk when passed out, lay down in recovery position if ingested." }
+  "Cannabis|LSD": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|Mushrooms": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|DMT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|Mescaline": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|DOx": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|NBOMes": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|2C-x": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|2C-T-x": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Cannabis|αMT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics. Small amounts can reduce nausea with aMT but take care." },
+  "Cannabis|5-MeO-xxT": { risk: "⚡", desc: "Cannabis has an unexpectedly strong and somewhat unpredictable synergy with psychedelics." },
+  "Amphetamines|LSD": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Mushrooms": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|DMT": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Mescaline": { risk: "⚡", desc: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops." },
+  "Amphetamines|DOx": { risk: "💊", desc: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of amphetamine can easily lead to thought loops. Coming down from amphetamines while the DOx is still active can be quite anxiogenic." },
+  "Amphetamines|NBOMes": { risk: "💊", desc: "Amphetamines and NBOMes both provide considerable stimulation. When combined they can result in tachycardia, hypertension, vasoconstriction and in extreme cases heart failure. The anxiogenic and focusing effects of stimulants are also not good in combination with psychedelics as they can lead to unpleasant thought loops. NBOMes are known to cause seizures and stimulants can increase this risk." },
+  "Amphetamines|2C-x": { risk: "⚡", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally uneccessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
+  "Amphetamines|2C-T-x": { risk: "💊", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences. In extreme cases, they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Amphetamines|5-MeO-xxT": { risk: "💊", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
+  "Amphetamines|Cannabis": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Amphetamines|Ketamine": { risk: "⚡", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "Amphetamines|MXE": { risk: "⚡", desc: "Risk of tachycardia, hypertension, and manic states." },
+  "Amphetamines|DXM": { risk: "💊", desc: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues." },
+  "Amphetamines|PCP": { risk: "💊", desc: "This combination can easily lead to hypermanic states." },
+  "Amphetamines|MDMA": { risk: "🌈", desc: "Amphetamines increase the neurotoxic effects of MDMA." },
+  "Cocaine|LSD": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Mushrooms": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|DMT": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Mescaline": { risk: "⚡", desc: "The focus and anxiety caused by stimulants is magnified by psychedelics and results in an increased risk of thought loops." },
+  "Cocaine|DOx": { risk: "💊", desc: "The combined stimulating effects of the two can lead to an uncomfortable body-load, while the focusing effects of cocaine can easily lead to thought loops. Coming down from cocaine while the DOx is still active can be quite anxiogenic." },
+  "Cocaine|NBOMes": { risk: "💊", desc: "Cocaine and NBOMes both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Cocaine|2C-x": { risk: "⚡", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics. Combination of the stimulating effects may be uncomfortable." },
+  "Cocaine|2C-T-x": { risk: "💊", desc: "Cocaine and 2c-t-x both provide considerable stimulation. When combined they can result in severe vasoconstriction, tachycardia, hypertension, and in extreme cases heart failure." },
+  "Cocaine|5-MeO-xxT": { risk: "💊", desc: "The anxiogenic and focusing effects of stimulants increase the chance of unpleasant thought loops. The combination is generally unnecessary because of the stimulating effects of psychedelics." },
+  "Cocaine|Cannabis": { risk: "⚡", desc: "Stimulants increase anxiety levels and the risk of thought loops which can lead to negative experiences." },
+  "Cocaine|Ketamine": { risk: "⚡", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "Cocaine|MXE": { risk: "⚡", desc: "Stimulants taken with MXE can lead to hypermanic states much more easily, especially if sleep is avoided." },
+  "Cocaine|DXM": { risk: "💊", desc: "Both substances raise heart rate, in extreme cases, panic attacks caused by these drugs have led to more serious heart issues." },
+  "Cocaine|PCP": { risk: "💊", desc: "This combination can easily lead to hypermanic states." },
+  "Cocaine|MDMA": { risk: "⚡", desc: "Cocaine blocks some of the desirable effects of MDMA while increasing the risk of heart attack." },
+  "Cocaine|Amphetamines": { risk: "⚡", desc: "This combination of stimulants will increase strain on the heart. It is not generally worth it as cocaine has a mild blocking effect on dopamine releasers like amphetamine." },
+  "Tramadol|LSD": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|Mushrooms": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|DMT": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|Mescaline": { risk: "💊", desc: "This combination can cause seizures due to the lowering of the threshold by tramadol and the potential of mescaline to cause seziures." },
+  "Tramadol|DOx": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics also cause occasional seizures." },
+  "Tramadol|NBOMes": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and NBOMes have also shown a tendency to cause severe seizures." },
+  "Tramadol|2C-x": { risk: "💊", desc: "Tramadol is well known to lower seizure threshold and psychedelics raise the risk of seizures." },
+  "Tramadol|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Tramadol|Amphetamines": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|MDMA": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|Cocaine": { risk: "💀", desc: "Tramadol and stimulants both increase the risk of seizures." },
+  "Tramadol|Alcohol": { risk: "💀", desc: "Heavy CNS depressants, risk of seizures. Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely." },
+  "Tramadol|GHB": { risk: "💀", desc: "The sedative effects of this combination can lead to dangerous respiratory depression." },
+  "Tramadol|Opioids": { risk: "💀", desc: "Concomitant use of tramadol increases the seizure risk in patients taking other opioids. These agents are often individually epileptogenic and may have additive effects on seizure threshold during coadministration. Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present." },
+  "Tramadol|Benzodiazepines": { risk: "💀", desc: "Central nervous system- and/or respiratory-depressant effects may be additively or synergistically present. Vomit aspiration a risk when passed out, lay down in recovery position if ingested." },
+  "MDMA|Cannabis": { risk: "🌈", desc: "Large amounts of either or both may cause strong and somewhat unpredictable experiences, which can be as intense as psychedelics. Consider rather Set and Setting are good, before you combine these. Cannabis should be saved for towards the end of the MDMA experience if possible, where the psychedelic alike effect won't come to play." },
+  "MDMA|Ketamine": { risk: "🌈", desc: "No unexpected interactions, though likely to increase blood pressure but not an issue with sensible doses. Moving around on high doses of this combination may be ill advised due to risk of physical injury." },
+  "MDMA|MXE": { risk: "⚡", desc: "There have been reports of risky serotonergic interactions when the two are taken at the same time, but MXE taken to the end of an MDMA experience does not appear to cause the same issues." },
+  "MDMA|DOx": { risk: "⚡", desc: "The combined stimulating effects of the two can be uncomfortable. Coming down on the MDMA while the DOx is still active can be quite anxiogenic." },
+  "MDMA|5-MeO-xxT": { risk: "⚡", desc: "Some of the 5-MeO tryptamines are a bit unpredictable and should be mixed with MDMA with care." },
+  "MDMA|Alcohol": { risk: "⚡", desc: "Both MDMA and alcohol cause dehydration. Approach this combination with caution, moderation and sufficient hydration. More than a small amount of alcohol will dull the euphoria of MDMA." },
+  "MDMA|GHB": { risk: "⚡", desc: "Large amounts of GHB/GBL may overwhelm the effects of MDMA on the comedown." },
+  "MDMA|MAOIs": { risk: "💀", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably. MAO-A inhibitors with MDMA will lead to hypertensive crises." },
+  "Alcohol|Cannabis": { risk: "🌈", desc: "In excess, this combination can cause nausea." },
+  "Alcohol|Ketamine": { risk: "💀", desc: "Both substances cause ataxia and bring a very high risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "Alcohol|MXE": { risk: "💀", desc: "There is a high risk of memory loss, vomiting and severe ataxia from this combination." },
+  "Alcohol|DXM": { risk: "💀", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Additionally CNS depression can lead to difficulty breathing. Avoid on anything higher than 1st plateau." },
+  "Alcohol|PCP": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "Alcohol|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Alcohol|DOx": { risk: "🌈", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk." },
+  "Alcohol|2C-T-x": { risk: "🌈", desc: "Both these classes of compound can interact unpredictably. Caution should be exercised." },
+  "Alcohol|αMT": { risk: "⚡", desc: "αMT has a broad mechanism of action in the brain and so does alcohol so the combination can be unpredictable." },
+  "Alcohol|Amphetamines": { risk: "⚡", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol and the stimulant less. Extended release formulations may severely impede sleep, further worsening the hangover." },
+  "Alcohol|Cocaine": { risk: "💊", desc: "Drinking on stimulants is risky because the sedative effects of the alcohol are reduced, and these are what the body uses to gauge drunkenness. This typically leads to excessive drinking with greatly reduced inhibitions, high risk of liver damage and increased dehydration. They will also allow you to drink past a point where you might normally pass out, increasing the risk. If you do decide to do this then you should set a limit of how much you will drink each hour and stick to it, bearing in mind that you will feel the alcohol less. Cocaine is potentiated somewhat by alcohol because of the formation of cocaethylene." },
+  "Alcohol|GHB": { risk: "💀", desc: "Even in very low doses this combination rapidly leads to memory loss, severe ataxia and unconsciousness. There is a high risk of vomit aspiration while unconscious." },
+  "Alcohol|Opioids": { risk: "💀", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess. Memory blackouts are likely." },
+  "Alcohol|Benzodiazepines": { risk: "💀", desc: "Ethanol ingestion may potentiate the CNS effects of many benzodiazepines. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Blacking out and memory loss is almost certain." },
+  "Alcohol|MAOIs": { risk: "💊", desc: "Tyramine found in many alcoholic beverages can have dangerous reactions with MAOIs, causing an increase in blood pressure." },
+  "Alcohol|SSRIs": { risk: "⚡", desc: "Alcohol may potentiate some of the pharmacologic effects of CNS-active agents. Use in combination may result in additive central nervous system depression and/or impairment of judgment, thinking, and psychomotor skills." },
+  "GHB|Ketamine": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "GHB|MXE": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "GHB|DXM": { risk: "💀", desc: "Both substances cause ataxia and bring a risk of vomiting and unconsciousness. If the patient falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position. This combination is hard to predict." },
+  "GHB|PCP": { risk: "💀", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "GHB|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "GHB|Amphetamines": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "GHB|Cocaine": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of sedatives. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest. Likewise the G can wear off and leave a dangerous concentration of cocaine behind." },
+  "GHB|Opioids": { risk: "💀", desc: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "GHB|Benzodiazepines": { risk: "💀", desc: "The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Opioids|Ketamine": { risk: "💀", desc: "Both substances bring a risk of vomiting and unconsciousness. If the user falls unconscious while under the influence there is a severe risk of vomit aspiration if they are not placed in the recovery position." },
+  "Opioids|MXE": { risk: "💀", desc: "This combination can potentiate the effects of the opioid." },
+  "Opioids|DXM": { risk: "💀", desc: "CNS depression, difficult breathing, heart issues, hepatoxic, just very unsafe combination all around. Additionally if one takes dxm, their tolerance of opiates goes down slightly, thus causing additional synergistic effects." },
+  "Opioids|PCP": { risk: "⚡", desc: "PCP can reduce opioid tolerance, increasing the risk of overdose." },
+  "Opioids|Nitrous": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Opioids|DOx": { risk: "🌈", desc: "No unexpected interactions." },
+  "Opioids|2C-T-x": { risk: "🌈", desc: "No expected interactions, some opioids have serotonin action, and could lead to Serotonin Syndrome or a seizure. These are pretty much only to Pentazocine, Methadone, Tramadol, Tapenatdol." },
+  "Opioids|αMT": { risk: "🌈", desc: "No unexpected interactions." },
+  "Opioids|Amphetamines": { risk: "⚡", desc: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "Opioids|Cocaine": { risk: "💀", desc: "Stimulants increase respiration rate allowing a higher dose of opiates. If the stimulant wears off first then the opiate may overcome the patient and cause respiratory arrest." },
+  "Opioids|Benzodiazepines": { risk: "💀", desc: "Central nervous system and/or respiratory-depressant effects may be additively or synergistically present. The two substances potentiate each other strongly and unpredictably, very rapidly leading to unconsciousness. While unconscious, vomit aspiration is a risk if not placed in the recovery position Blackouts/memory loss likely." },
+  "Opioids|MAOIs": { risk: "⚡", desc: "Coadministration of monoamine oxidase inhibitors (MAOIs) with certain opioids has been associated with rare reports of severe and fatal adverse reactions. There appear to be two types of interaction, an excitatory and a depressive one. Symptoms of the excitatory reaction may include agitation, headache, diaphoresis, hyperpyrexia, flushing, shivering, myoclonus, rigidity, tremor, diarrhea, hypertension, tachycardia, seizures, and coma. Death has occurred in some cases." },
+  "Opioids|SSRIs": { risk: "🌈", desc: "There have been very infrequent reports of a risk of serotonin syndrome with this combination, though this should not be a practical concern." },
+  "Benzodiazepines|Ketamine": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Benzodiazepines|MXE": { risk: "⚡", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. Place affected patients in the recovery position to prevent vomit aspiration from excess." },
+  "Benzodiazepines|DXM": { risk: "⚡", desc: "Small doses of benzos can end a bad trip, but both substances potentiate the ataxia and sedation caused by the other and this can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position." },
+  "Benzodiazepines|PCP": { risk: "💊", desc: "Both substances potentiate the ataxia and sedation caused by the other and can lead to unexpected loss of consciousness at high doses. While unconscious, vomit aspiration is a risk if not placed in the recovery position. Memory blackouts are likely." },
+  "Benzodiazepines|Amphetamines": { risk: "🌈", desc: "Both can dull each other's effects, so if one wears off before the other it's possible to overdose due to the lack of counteraction." },
+  "MAOIs|Ketamine": { risk: "⚡", desc: "MAO-B inhibitors appear to increase the potency of Ketamine. MAO-A inhbitors have some negative reports associated with the combination but there isn't much information available." },
+  "MAOIs|MXE": { risk: "💊", desc: "MAO-B inhibitors appear to increase the potency of MXE. MAO-A inhbitors have some negative reports associated with the combination but there isn't much information available." },
+  "MAOIs|DXM": { risk: "💀", desc: "High risk of serotonin syndrome." },
+  "MAOIs|PCP": { risk: "💀", desc: "This combination is very poorly explored." },
+  "MAOIs|DOx": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|NBOMes": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|2C-x": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably." },
+  "MAOIs|2C-T-x": { risk: "⚡", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably, which could be dangerous given the unpredictability of the 2C-T-x series." },
+  "MAOIs|αMT": { risk: "💀", desc: "αMT is an MAOI on its own. Using enzyme inhibitors can greatly reduce predictability of effects." },
+  "MAOIs|Amphetamines": { risk: "💀", desc: "MAO-B inhibitors can increase the potency and duration of phenethylamines unpredictably. MAO-A inhibitors with amphetamine can lead to hypertensive crises." },
+  "MAOIs|Cocaine": { risk: "💀", desc: "This combination is poorly explored." },
+  "SSRIs|MXE": { risk: "⚡", desc: "Depending on the SSRI this combination can be unpredictable." },
+  "SSRIs|DXM": { risk: "💀", desc: "High risk of serotonin syndrome." },
+  "SSRIs|PCP": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "SSRIs|Cocaine": { risk: "🌈", desc: "May reduce each others' effectiveness. Cocaine can reduce mental stability and therefore exacerbate conditions which SSRIs are used to treat." },
+  "Ketamine|DOx": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|LSD": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|Mushrooms": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|DMT": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "Ketamine|Mescaline": { risk: "🌈", desc: "Ketamine and psychedelics tend to potentiate each other - go slowly." },
+  "MXE|DOx": { risk: "⚡", desc: "As an NMDA antagonist MXE potentiates DOx which can be unpleasantly intense." },
+  "MXE|NBOMes": { risk: "⚡", desc: "As an NMDA antagonist MXE potentiates NBOMes which can be unpleasantly intense." },
+  "MXE|5-MeO-xxT": { risk: "🌈", desc: "Little information exists about this combination." },
+  "DXM|DOx": { risk: "💊", desc: "The DOx class as psychedelic stimulants have the potential to mask the effects of DXM and could lead to redosing to an unsafe level. DXM can also potentiate DOx resulting in an unpleasantly intense experience." },
+  "DXM|5-MeO-xxT": { risk: "💊", desc: "Little information exists about this combination." },
+  "PCP|DOx": { risk: "💊", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "PCP|MXE": { risk: "⚡", desc: "There are no reports available about this combination." },
+  "Caffeine|Mescaline": { risk: "🌈", desc: "High doses of caffeine are uncomfortable and this will be magnified by psychedelics." },
+  "Caffeine|DOx": { risk: "⚡", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating it may cause some physical discomfort." },
+  "Caffeine|NBOMes": { risk: "⚡", desc: "Caffiene can bring out the natural stimulation from psychedelic drugs to make it uncomfortable. High doses can cause anxiety which is hard to handle while tripping." },
+  "Caffeine|2C-x": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|2C-T-x": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|αMT": { risk: "⚡", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|5-MeO-xxT": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|Ketamine": { risk: "🌈", desc: "No unexpected interactions." },
+  "Caffeine|MXE": { risk: "🌈", desc: "No likely interactions." },
+  "Caffeine|DXM": { risk: "🌈", desc: "High doses of caffeine may cause anxiety which is less manageable when tripping, and since both are stimulating the combination may cause some physical discomfort." },
+  "Caffeine|PCP": { risk: "⚡", desc: "Details of this combination are not well understood but PCP generally interacts in an unpredictable manner." },
+  "Caffeine|Amphetamines": { risk: "⚡", desc: "This combination of stimulants is not generally necessary and may increase strain on the heart, as well as potentially causing anxiety and greater physical discomfort." },
+  "Caffeine|MDMA": { risk: "⚡", desc: "Caffiene is not really necessary with MDMA and increases any neurotoxic effects from MDMA." },
+  "Caffeine|Cocaine": { risk: "⚡", desc: "Both stimulants, risk of tachycardia, hypertension, and in extreme cases heart failure." },
+  "5-MeO-xxT|Mescaline": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions." },
+  "5-MeO-xxT|DOx": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions, particularly increasing the risk of unpleasant physical side effects." },
+  "5-MeO-xxT|NBOMes": { risk: "⚡", desc: "The 5-MeO class of tryptamines can be unpredictable in their interactions and the NBOMes are known to be unpredictable even alone. This combination is best avoided." },
+  "5-MeO-xxT|2C-x": { risk: "⚡", desc: "The 5-MeO psychedelics can interact unpredictably to potentiate other psychedelics." },
+  "5-MeO-xxT|2C-T-x": { risk: "⚡", desc: "Both classes of compounds can be unpredictable alone." }
 };
 
-// Map status to risk icons
-const statusToIcon = {
-  "Low Risk & No Synergy": "🌈",
-  "Low Risk & Synergy": "🌈", 
-  "Low Risk & Decrease": "🌈",
-  "Caution": "⚡",
-  "Unsafe": "💊",
-  "Dangerous": "💀"
-};
-
-// Map status to risk class
-const statusToRiskClass = {
-  "Low Risk & No Synergy": "risk-low",
-  "Low Risk & Synergy": "risk-low",
-  "Low Risk & Decrease": "risk-low",
-  "Caution": "risk-caution",
-  "Unsafe": "risk-strong",
-  "Dangerous": "risk-danger"
-};
-
-const headers = ["Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", "GHB", "Opioids", "Benzos", "SSRIs", "ADHD Meds", "LSD", "Shrooms", "Nitrous", "DMT", "Viagra"];
-const mini = new Map();
-
-// Fill the matrix with actual data
-function initializeMatrix() {
-  for (const r of headers) {
-    for (const c of headers) {
-      if (r === c) {
-        mini.set(`${r}|${c}`, "🌈");
-      } else {
-        // Look up interaction in our data
-        const key1 = `${r.toLowerCase()} & ${c.toLowerCase()}`;
-        const key2 = `${c.toLowerCase()} & ${r.toLowerCase()}`;
-        
-        if (interactionData[key1]) {
-          mini.set(`${r}|${c}`, statusToIcon[interactionData[key1].status] || "🌈");
-        } else if (interactionData[key2]) {
-          mini.set(`${r}|${c}`, statusToIcon[interactionData[key2].status] || "🌈");
-        } else {
-          // Default to low risk if no data
-          mini.set(`${r}|${c}`, "🌈");
-        }
-      }
-    }
-  }
-}
+// All substances in the database
+const allSubstances = [
+  "Cannabis", "LSD", "Mushrooms", "DMT", "Mescaline", "DOx", "NBOMes", "2C-x", "2C-T-x", "αMT", "5-MeO-xxT",
+  "Amphetamines", "Cocaine", "Tramadol", "MDMA", "Alcohol", "GHB", "Opioids", "Benzodiazepines", "MAOIs", "SSRIs",
+  "Ketamine", "MXE", "DXM", "PCP", "Nitrous", "Caffeine"
+];
 
 // Fill select dropdowns
 function fillSelect(id) {
   const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">— Select —</option>' + headers.map(s => `<option>${s}</option>`).join('');
+  sel.innerHTML = '<option value="">— Select —</option>' + allSubstances.map(s => `<option>${s}</option>`).join('');
 }
 ["drugA", "drugB", "drugC"].forEach(fillSelect);
 
 // Render matrix table with clickable cells
 function renderMatrix() {
   const tbl = document.getElementById("matrixTable");
-  tbl.innerHTML = '';
   const thead = document.createElement("thead");
   const hrow = document.createElement("tr");
   hrow.appendChild(document.createElement("th")).textContent = "↓ / →";
-  headers.forEach(h => {
+  allSubstances.forEach(h => {
     const th = document.createElement("th");
     th.textContent = h;
     hrow.appendChild(th);
   });
   thead.appendChild(hrow);
   const tbody = document.createElement("tbody");
-  headers.forEach(r => {
+  allSubstances.forEach(r => {
     const tr = document.createElement("tr");
     const rowTh = document.createElement("th");
     rowTh.textContent = r;
     tr.appendChild(rowTh);
-    headers.forEach(c => {
+    allSubstances.forEach(c => {
       const td = document.createElement("td");
       td.setAttribute("data-label", c);
-      const val = mini.get(`${r}|${c}`) ?? mini.get(`${c}|${r}`) ?? "🌈";
+      let val = "🌈"; // Default to low risk
+      let desc = "No specific interaction data available.";
+
+      // Check for interaction data
+      const key1 = `${r}|${c}`;
+      const key2 = `${c}|${r}`;
+      
+      if (interactionData[key1]) {
+        val = interactionData[key1].risk;
+        desc = interactionData[key1].desc;
+      } else if (interactionData[key2]) {
+        val = interactionData[key2].risk;
+        desc = interactionData[key2].desc;
+      } else if (r === c) {
+        val = "—";
+        desc = "Same substance - no interaction data needed.";
+      }
+
       td.textContent = val;
       td.className = getRiskClass(val);
-      td.title = `${r} + ${c}: ${iconExplain(val)}`;
+      td.title = `${r} + ${c}: ${desc}`;
 
       // Add click event to show detailed explanation
       td.addEventListener('click', () => {
-        showMatrixDetail(r, c, val);
+        showMatrixDetail(r, c, val, desc);
       });
 
       tr.appendChild(td);
@@ -1288,7 +1304,7 @@ function iconExplain(x) {
 }
 
 // Show matrix detail modal
-function showMatrixDetail(substanceA, substanceB, riskLevel) {
+function showMatrixDetail(substanceA, substanceB, riskLevel, description) {
   const modal = document.getElementById('matrixModal');
   const modalTitle = document.getElementById('matrixModalTitle');
   const modalBody = document.getElementById('matrixModalBody');
@@ -1310,25 +1326,7 @@ function showMatrixDetail(substanceA, substanceB, riskLevel) {
       </div>
     `;
   } else {
-    // Look up the actual interaction data
-    const key1 = `${substanceA.toLowerCase()} & ${substanceB.toLowerCase()}`;
-    const key2 = `${substanceB.toLowerCase()} & ${substanceA.toLowerCase()}`;
-    
-    const interaction = interactionData[key1] || interactionData[key2];
-    
-    if (interaction) {
-      content = `
-        <div class="pair-detail ${statusToRiskClass[interaction.status] || getRiskClass(riskLevel)}">
-          <p><strong>${interaction.status}:</strong> ${interaction.note}</p>
-        </div>
-      `;
-    } else {
-      content = `
-        <div class="pair-detail ${getRiskClass(riskLevel)}">
-          <p>No specific interaction data available for ${substanceA} and ${substanceB}. This does not mean the combination is safe. Always exercise caution and start with low doses when combining substances.</p>
-        </div>
-      `;
-    }
+    content = detailedExplanations[riskLevel](substanceA, substanceB, description);
   }
 
   modalBody.innerHTML = content;
@@ -1350,6 +1348,74 @@ document.getElementById('matrixModal').addEventListener('click', (e) => {
   }
 });
 
+// Detailed explanations for each interaction
+const detailedExplanations = {
+  "🌈": (a, b, desc) => `
+    <div class="pair-detail risk-low">
+      <p><strong>Low Risk Interaction:</strong> ${a} and ${b} typically have minimal negative interactions when used together. However, individual responses can vary based on dosage, tolerance, and personal health factors.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Start with lower doses than you would take individually</li>
+        <li>Stay hydrated and in a safe environment</li>
+        <li>Have a sober friend present if trying this combination for the first time</li>
+      </ul>
+    </div>
+  `,
+  "⚡": (a, b, desc) => `
+    <div class="pair-detail risk-caution">
+      <p><strong>Caution Advised:</strong> Combining ${a} and ${b} may increase side effects or intensify experiences beyond comfortable levels. This combination requires careful dosing and monitoring.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Use significantly lower doses than you would take individually</li>
+        <li>Wait longer between doses to assess effects</li>
+        <li>Have benzodiazepines available if anxiety becomes overwhelming (only if prescribed)</li>
+        <li>Avoid operating vehicles or machinery</li>
+      </ul>
+    </div>
+  `,
+  "💊": (a, b, desc) => `
+    <div class="pair-detail risk-strong">
+      <p><strong>Strong Caution - Significant Interaction Risk:</strong> ${a} and ${b} have known pharmacological interactions that can significantly increase risks. This combination should be approached with extreme caution.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Avoid this combination if possible</li>
+        <li>If combining, use minimal doses and have medical supervision available</li>
+        <li>Be aware of signs of overdose or adverse reactions</li>
+        <li>Have naloxone available if opioids are involved</li>
+        <li>Do not use alone</li>
+      </ul>
+    </div>
+  `,
+  "💀": (a, b, desc) => `
+    <div class="pair-detail risk-danger">
+      <p><strong>DANGEROUS COMBINATION - AVOID:</strong> Combining ${a} and ${b} creates a high risk of fatal overdose, severe medical complications, or permanent harm. This is one of the most dangerous drug combinations known.</p>
+      <p><strong>Note:</strong> ${desc}</p>
+      <p><strong>CRITICAL SAFETY INFORMATION:</strong></p>
+      <ul>
+        <li><strong>DO NOT COMBINE THESE SUBSTANCES</strong></li>
+        <li>If accidental exposure occurs, call emergency services immediately</li>
+        <li>Have multiple doses of naloxone available if opioids are involved</li>
+        <li>This combination has resulted in numerous fatal overdoses</li>
+        <li>Consider alternative substances that don't carry this extreme risk</li>
+      </ul>
+    </div>
+  `,
+  "—": (a, b, desc) => `
+    <div class="pair-detail">
+      <p><strong>Same Substance:</strong> Using ${a} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
+      <p><strong>Harm Reduction Tips:</strong></p>
+      <ul>
+        <li>Be mindful of cumulative dosing and tolerance</li>
+        <li>Follow standard harm reduction practices for this substance</li>
+        <li>Remember that redosing increases risks even with the same substance</li>
+      </ul>
+    </div>
+  `
+};
+
 // Check button functionality
 document.getElementById("checkBtn").addEventListener("click", () => {
   const sel = ["drugA", "drugB", "drugC"].map(id => document.getElementById(id).value).filter(Boolean);
@@ -1366,49 +1432,23 @@ document.getElementById("checkBtn").addEventListener("click", () => {
   for (let i = 0; i < sel.length; i++) {
     for (let j = i + 1; j < sel.length; j++) {
       const a = sel[i], b = sel[j];
-      const key1 = `${a.toLowerCase()} & ${b.toLowerCase()}`;
-      const key2 = `${b.toLowerCase()} & ${a.toLowerCase()}`;
-      const interaction = interactionData[key1] || interactionData[key2];
-      
-      if (interaction) {
-        const riskIcon = statusToIcon[interaction.status] || "🌈";
-        const riskClass = statusToRiskClass[interaction.status] || "risk-low";
-        
-        content += `
-          <div class="pair-detail ${riskClass}">
-            <div class="risk-icon">${riskIcon}</div>
-            <h4>${a} + ${b}</h4>
-            <p><strong>${interaction.status}:</strong> ${interaction.note}</p>
-          </div>
-        `;
-      } else {
-        content += `
-          <div class="pair-detail risk-low">
-            <div class="risk-icon">🌈</div>
-            <h4>${a} + ${b}</h4>
-            <p>No specific interaction data available. This does not mean the combination is safe. Always exercise caution and start with low doses when combining substances.</p>
-          </div>
-        `;
-      }
-    }
-  }
+      let v = "🌈"; // Default to low risk
+      let desc = "No specific interaction data available.";
 
-  // Add general harm reduction advice for the combination
-  if (sel.length === 3) {
-    content += `
-      <div class="pair-detail risk-caution">
-        <div class="risk-icon">⚡</div>
-        <h4>General Advice for ${sel.join(" + ")}</h4>
-        <p><strong>Triple Combination Warning:</strong> Combining three substances significantly increases complexity and risk. Effects can be unpredictable and synergistic.</p>
-        <ul>
-          <li>Start with much lower doses than you would take individually</li>
-          <li>Have a sober trip sitter present</li>
-          <li>Space out consumption to assess effects</li>
-          <li>Be prepared for unexpected interactions</li>
-          <li>Have emergency contacts and naloxone available if opioids are involved</li>
-        </ul>
-      </div>
-    `;
+      // Check for interaction data
+      const key1 = `${a}|${b}`;
+      const key2 = `${b}|${a}`;
+      
+      if (interactionData[key1]) {
+        v = interactionData[key1].risk;
+        desc = interactionData[key1].desc;
+      } else if (interactionData[key2]) {
+        v = interactionData[key2].risk;
+        desc = interactionData[key2].desc;
+      }
+
+      content += detailedExplanations[v](a, b, desc);
+    }
   }
 
   content += `<p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">Remember: individual responses vary based on dosage, tolerance, metabolism, and underlying health conditions. This information is for harm reduction purposes only.</p>`;
@@ -1483,7 +1523,6 @@ function createParticles() {
 
 // Initialize everything when the page loads
 window.addEventListener('DOMContentLoaded', () => {
-  initializeMatrix();
   renderMatrix();
   createParticles();
 });
