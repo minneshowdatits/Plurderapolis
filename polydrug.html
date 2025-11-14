@@ -1056,130 +1056,152 @@ document.getElementById('homeLink').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Substance list - comprehensive from your original matrix
+// Substance list
 const substances = [
   "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", 
-  "GHB / Opioids", "Benzos", "SSRIs", "SNRIs", "ADHD Meds", 
-  "Antipsychotics", "Mood Stabilizers", "Wellbutrin", "Trazodone", 
-  "Gabapentin", "LSD", "Shrooms", "Nitrous", "DMT", "GHB"
+  "GHB", "Opioids", "Benzos", "SSRIs", "ADHD Meds", 
+  "LSD", "Shrooms", "Nitrous", "DMT", "Viagra"
 ];
 
-// Risk matrix data based on your original table
+// Risk matrix data
 const riskMatrix = {
-  "Cannabis": ["—", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "🟡", "🟡", "🟢", "🟢", "🟢", "🔴", "🔴", "🟢", "🔴", "🔴"],
-  "Ketamine": ["🟡", "—", "❌", "❌", "❌", "❌", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "❌", "🟡", "❌", "❌"],
-  "MDMA": ["🔴", "❌", "—", "🔴", "🔴", "❌", "🔴", "🔴", "❌", "❌", "❌", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌"],
-  "Cocaine": ["🔴", "❌", "🔴", "—", "🔴", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌"],
-  "Alcohol": ["🔴", "❌", "🔴", "🔴", "—", "❌", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "☠️"],
-  "GHB / Opioids": ["🔴", "❌", "❌", "❌", "☠️", "—", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "⚠️", "☠️", "—"],
-  "Benzos": ["🔴", "🟡", "🔴", "🔴", "☠️", "☠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "☠️", "⚠️"],
-  "SSRIs": ["🟡", "🟡", "🔴", "🔴", "⚠️", "⚠️", "⚠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "SNRIs": ["🟡", "🟡", "❌", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "ADHD Meds": ["🟢", "🟡", "❌", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "—", "🟡", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Antipsychotics": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "—", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Mood Stabilizers": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "—", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Wellbutrin": ["🟢", "🟡", "❌", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "—", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Trazodone": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "—", "🟢", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Gabapentin": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "🟢", "—", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "LSD": ["🔴", "🟡", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "—", "🟢", "🟡", "🟡", "🔴"],
-  "Shrooms": ["🔴", "❌", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟢", "⚠️", "🟢", "—", "🟡", "🟡", "🔴"],
-  "Nitrous": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "—", "⚠️", "⚠️"],
-  "DMT": ["🔴", "❌", "❌", "❌", "❌", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "—", "☠️"],
-  "GHB": ["🔴", "❌", "❌", "☠️", "☠️", "—", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "☠️", "—"]
+  "Cannabis": ["—", "⚡", "💊", "💊", "💊", "💊", "💊", "💊", "⚡", "🌈", "💊", "💊", "🌈", "💊", "⚡"],
+  "Ketamine": ["⚡", "—", "💀", "💀", "💀", "💀", "💀", "⚡", "⚡", "💊", "💀", "💀", "⚡", "💀", "⚡"],
+  "MDMA": ["💊", "💀", "—", "💊", "💊", "💀", "💀", "💊", "💊", "💀", "💊", "💊", "💊", "💀", "💊"],
+  "Cocaine": ["💊", "💀", "💊", "—", "💊", "💀", "💀", "💊", "💊", "💀", "💊", "💊", "💊", "💀", "💀"],
+  "Alcohol": ["💊", "💀", "💊", "💊", "—", "💀", "💀", "💀", "⚡", "⚡", "💊", "💊", "💀", "💀", "⚡"],
+  "GHB": ["💊", "💀", "💀", "💀", "💀", "—", "💀", "💀", "⚡", "⚡", "💀", "💀", "⚡", "💀", "⚡"],
+  "Opioids": ["💊", "💀", "💀", "💀", "💀", "💀", "—", "💀", "⚡", "⚡", "💀", "💀", "⚡", "💀", "⚡"],
+  "Benzos": ["💊", "⚡", "💊", "💊", "💀", "💀", "💀", "—", "⚡", "⚡", "⚡", "⚡", "⚡", "💀", "⚡"],
+  "SSRIs": ["⚡", "⚡", "💊", "💊", "⚡", "⚡", "⚡", "⚡", "—", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡"],
+  "ADHD Meds": ["🌈", "⚡", "💀", "💀", "⚡", "⚡", "⚡", "⚡", "⚡", "—", "⚡", "⚡", "⚡", "⚡", "💊"],
+  "LSD": ["💊", "💀", "💊", "💊", "💊", "💀", "💀", "⚡", "⚡", "⚡", "—", "🌈", "⚡", "⚡", "⚡"],
+  "Shrooms": ["💊", "💀", "💊", "💊", "💊", "💀", "💀", "⚡", "⚡", "⚡", "🌈", "—", "⚡", "⚡", "⚡"],
+  "Nitrous": ["🌈", "⚡", "💊", "💊", "💀", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "—", "⚡", "⚡"],
+  "DMT": ["💊", "💀", "💀", "💀", "💀", "💀", "💀", "💀", "⚡", "⚡", "⚡", "⚡", "⚡", "—", "⚡"],
+  "Viagra": ["⚡", "⚡", "💊", "💀", "⚡", "⚡", "⚡", "⚡", "⚡", "💊", "⚡", "⚡", "⚡", "⚡", "—"]
 };
 
 // Detailed interaction descriptions
 const interactionDetails = {
-  "Cannabis|Ketamine": { risk: "🟡", desc: "Mild risk: may increase sedation or dizziness." },
-  "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
-  "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
-  "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
-  "Cannabis|GHB / Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
-  "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
-  "Cannabis|SSRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-  "Cannabis|SNRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
-  "Cannabis|ADHD Meds": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Antipsychotics": { risk: "🟡", desc: "May affect mental state; use cautiously." },
-  "Cannabis|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-  "Cannabis|Wellbutrin": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Trazodone": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|Gabapentin": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|LSD": { risk: "🔴", desc: "May intensify effects and anxiety." },
-  "Cannabis|Shrooms": { risk: "🔴", desc: "May intensify effects and anxiety." },
-  "Cannabis|Nitrous": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|DMT": { risk: "🔴", desc: "May increase anxiety and cardiovascular strain." },
-  "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
-
-  "Ketamine|MDMA": { risk: "❌", desc: "Dangerous combo: high risk of respiratory failure." },
-  "Ketamine|Cocaine": { risk: "❌", desc: "Dangerous combo: high risk of heart issues." },
-  "Ketamine|Alcohol": { risk: "❌", desc: "Dangerous combo: respiratory depression risk." },
-  "Ketamine|GHB / Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
-  "Ketamine|Benzos": { risk: "🟡", desc: "Increased sedation." },
-  "Ketamine|SSRIs": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|SNRIs": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|ADHD Meds": { risk: "🔴", desc: "Possible heart strain." },
-  "Ketamine|Antipsychotics": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Mood Stabilizers": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Wellbutrin": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Trazodone": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|Gabapentin": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|LSD": { risk: "❌", desc: "High risk of confusion, panic." },
-  "Ketamine|Shrooms": { risk: "❌", desc: "High risk of confusion, panic." },
-  "Ketamine|Nitrous": { risk: "🟡", desc: "Mild sedation increase." },
-  "Ketamine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-  "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
-
-  "MDMA|Cocaine": { risk: "🔴", desc: "High heart strain risk." },
-  "MDMA|Alcohol": { risk: "🔴", desc: "Dehydration, liver strain." },
-  "MDMA|GHB / Opioids": { risk: "❌", desc: "Very dangerous: respiratory failure risk." },
-  "MDMA|Benzos": { risk: "🔴", desc: "Mixed effects; sedation and stimulation." },
-  "MDMA|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "MDMA|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-  "MDMA|ADHD Meds": { risk: "❌", desc: "Heart strain and serotonin syndrome risk." },
-  "MDMA|Antipsychotics": { risk: "❌", desc: "Potentially dangerous interaction." },
-  "MDMA|Mood Stabilizers": { risk: "❌", desc: "Potentially dangerous interaction." },
-  "MDMA|Wellbutrin": { risk: "❌", desc: "Seizure risk." },
-  "MDMA|Trazodone": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "MDMA|Gabapentin": { risk: "🔴", desc: "Mixed effects." },
-  "MDMA|LSD": { risk: "🔴", desc: "Sensory overload, panic." },
-  "MDMA|Shrooms": { risk: "🔴", desc: "Sensory overload, panic." },
-  "MDMA|Nitrous": { risk: "🔴", desc: "Oxygen deprivation risk." },
-  "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo." },
-  "MDMA|GHB": { risk: "❌", desc: "High overdose risk." },
-
-  "Cocaine|Alcohol": { risk: "🔴", desc: "Creates cocaethylene: very toxic to heart and liver." },
-  "Cocaine|Benzos": { risk: "🔴", desc: "Risk of heart issues and sedation conflict." },
-  "Cocaine|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "Cocaine|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
-  "Cocaine|ADHD Meds": { risk: "❌", desc: "Severe heart strain risk." },
-  "Cocaine|Antipsychotics": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Mood Stabilizers": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Wellbutrin": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Trazodone": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|Gabapentin": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|LSD": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-  "Cocaine|Shrooms": { risk: "🔴", desc: "Possible anxiety and heart strain." },
-  "Cocaine|Nitrous": { risk: "🔴", desc: "Possible heart strain." },
-  "Cocaine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
-  "Cocaine|GHB": { risk: "☠️", desc: "Extremely dangerous combo; fatal overdose risk." },
-
-  "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-  "Alcohol|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-  "Benzos|GHB / Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-
-  "SSRIs|SNRIs": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SSRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SNRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." }
-};
-
-// Map risk icons to simplified versions for the current UI
-const riskIconMap = {
-  "🟢": "🌈", // Low Risk
-  "🟡": "⚡", // Caution
-  "🔴": "💊", // Strong Caution
-  "❌": "💀", // Dangerous
-  "☠️": "💀", // Deadly
-  "⚠️": "⚡"  // Warning (map to caution)
+  "Cannabis|Ketamine": "Mild risk: may increase sedation or dizziness. Use with caution.",
+  "Cannabis|MDMA": "Increased heart strain and anxiety risk. Monitor heart rate.",
+  "Cannabis|Cocaine": "Increased cardiovascular strain. Avoid high doses.",
+  "Cannabis|Alcohol": "Increased sedation and nausea. Moderate consumption.",
+  "Cannabis|GHB": "Heightened sedation; risk of breathing suppression. Avoid.",
+  "Cannabis|Opioids": "Severe respiratory depression risk. Dangerous combination.",
+  "Cannabis|Benzos": "Increased sedation, cognitive impairment. Use extreme caution.",
+  "Cannabis|SSRIs": "Mild interaction; usually safe but monitor for changes.",
+  "Cannabis|ADHD Meds": "Generally safe combination with minimal interaction.",
+  "Cannabis|LSD": "May intensify effects and anxiety. Start with low doses.",
+  "Cannabis|Shrooms": "May intensify effects and anxiety. Start with low doses.",
+  "Cannabis|Nitrous": "Generally safe combination with minimal interaction.",
+  "Cannabis|DMT": "May increase anxiety and cardiovascular strain. Use caution.",
+  "Cannabis|Viagra": "Mild interaction; monitor blood pressure.",
+  
+  "Ketamine|MDMA": "Dangerous combo: high risk of respiratory failure. AVOID.",
+  "Ketamine|Cocaine": "Dangerous combo: high risk of heart issues. AVOID.",
+  "Ketamine|Alcohol": "Dangerous combo: respiratory depression risk. AVOID.",
+  "Ketamine|GHB": "Dangerous combo: high overdose risk. AVOID.",
+  "Ketamine|Opioids": "Dangerous combo: high overdose risk. AVOID.",
+  "Ketamine|Benzos": "Increased sedation. Use with caution.",
+  "Ketamine|SSRIs": "Mild interaction. Generally safe.",
+  "Ketamine|ADHD Meds": "Possible heart strain. Use with caution.",
+  "Ketamine|LSD": "High risk of confusion, panic. AVOID.",
+  "Ketamine|Shrooms": "High risk of confusion, panic. AVOID.",
+  "Ketamine|Nitrous": "Mild sedation increase. Use with caution.",
+  "Ketamine|DMT": "High risk; avoid combo. AVOID.",
+  "Ketamine|Viagra": "Mild interaction. Generally safe.",
+  
+  "MDMA|Cocaine": "High heart strain risk. Avoid combination.",
+  "MDMA|Alcohol": "Dehydration, liver strain. Moderate consumption.",
+  "MDMA|GHB": "Very dangerous: respiratory failure risk. AVOID.",
+  "MDMA|Opioids": "Very dangerous: respiratory failure risk. AVOID.",
+  "MDMA|Benzos": "Mixed effects; sedation and stimulation. Use caution.",
+  "MDMA|SSRIs": "Serotonin syndrome risk. Use extreme caution.",
+  "MDMA|ADHD Meds": "Heart strain and serotonin syndrome risk. AVOID.",
+  "MDMA|LSD": "Sensory overload, panic. Use extreme caution.",
+  "MDMA|Shrooms": "Sensory overload, panic. Use extreme caution.",
+  "MDMA|Nitrous": "Oxygen deprivation risk. Use caution.",
+  "MDMA|DMT": "High risk, avoid combo. AVOID.",
+  "MDMA|Viagra": "Cardiovascular strain. Use with caution.",
+  
+  "Cocaine|Alcohol": "Creates cocaethylene: very toxic to heart and liver. AVOID.",
+  "Cocaine|GHB": "Extremely dangerous combo; fatal overdose risk. AVOID.",
+  "Cocaine|Opioids": "Extremely dangerous combo; fatal overdose risk. AVOID.",
+  "Cocaine|Benzos": "Risk of heart issues and sedation conflict. AVOID.",
+  "Cocaine|SSRIs": "Serotonin syndrome risk. Use caution.",
+  "Cocaine|ADHD Meds": "Severe heart strain risk. AVOID.",
+  "Cocaine|LSD": "Possible anxiety and heart strain. AVOID.",
+  "Cocaine|Shrooms": "Possible anxiety and heart strain. AVOID.",
+  "Cocaine|Nitrous": "Possible heart strain. AVOID.",
+  "Cocaine|DMT": "High risk; avoid combo. AVOID.",
+  "Cocaine|Viagra": "Severe cardiovascular strain. AVOID.",
+  
+  "Alcohol|GHB": "Deadly combo: respiratory arrest risk. AVOID.",
+  "Alcohol|Opioids": "Deadly combo: respiratory arrest risk. AVOID.",
+  "Alcohol|Benzos": "Deadly combo: respiratory arrest risk. AVOID.",
+  "Alcohol|SSRIs": "Increased sedation and liver strain. Use caution.",
+  "Alcohol|ADHD Meds": "Increased heart strain and sedation. Use caution.",
+  "Alcohol|LSD": "Increased nausea and anxiety. Use caution.",
+  "Alcohol|Shrooms": "Increased nausea and anxiety. Use caution.",
+  "Alcohol|Nitrous": "Increased sedation and oxygen deprivation risk. AVOID.",
+  "Alcohol|DMT": "Increased nausea and unpredictable effects. AVOID.",
+  "Alcohol|Viagra": "Blood pressure changes. Use caution.",
+  
+  "GHB|Opioids": "Deadly combo: respiratory arrest risk. AVOID.",
+  "GHB|Benzos": "Deadly combo: respiratory arrest risk. AVOID.",
+  "GHB|SSRIs": "Increased sedation. Use extreme caution.",
+  "GHB|ADHD Meds": "Conflicting effects. Use extreme caution.",
+  "GHB|LSD": "Unpredictable effects. AVOID.",
+  "GHB|Shrooms": "Unpredictable effects. AVOID.",
+  "GHB|Nitrous": "Increased sedation. AVOID.",
+  "GHB|DMT": "Unpredictable effects. AVOID.",
+  "GHB|Viagra": "Blood pressure changes. Use caution.",
+  
+  "Opioids|Benzos": "Deadly combo: respiratory arrest risk. AVOID.",
+  "Opioids|SSRIs": "Increased sedation. Use extreme caution.",
+  "Opioids|ADHD Meds": "Conflicting effects. Use extreme caution.",
+  "Opioids|LSD": "Unpredictable effects. AVOID.",
+  "Opioids|Shrooms": "Unpredictable effects. AVOID.",
+  "Opioids|Nitrous": "Increased sedation. AVOID.",
+  "Opioids|DMT": "Unpredictable effects. AVOID.",
+  "Opioids|Viagra": "Blood pressure changes. Use caution.",
+  
+  "Benzos|SSRIs": "Increased sedation. Use caution.",
+  "Benzos|ADHD Meds": "Conflicting effects. Use caution.",
+  "Benzos|LSD": "May reduce anxiety but increase confusion. Use caution.",
+  "Benzos|Shrooms": "May reduce anxiety but increase confusion. Use caution.",
+  "Benzos|Nitrous": "Increased sedation. Use caution.",
+  "Benzos|DMT": "Unpredictable effects. AVOID.",
+  "Benzos|Viagra": "Blood pressure changes. Use caution.",
+  
+  "SSRIs|ADHD Meds": "Serotonin syndrome risk. Use caution.",
+  "SSRIs|LSD": "Reduced effects or unpredictable response. Use caution.",
+  "SSRIs|Shrooms": "Reduced effects or unpredictable response. Use caution.",
+  "SSRIs|Nitrous": "Generally safe with minimal interaction.",
+  "SSRIs|DMT": "Unpredictable effects. Use caution.",
+  "SSRIs|Viagra": "Generally safe with minimal interaction.",
+  
+  "ADHD Meds|LSD": "Increased anxiety and cardiovascular strain. Use caution.",
+  "ADHD Meds|Shrooms": "Increased anxiety and cardiovascular strain. Use caution.",
+  "ADHD Meds|Nitrous": "Generally safe with minimal interaction.",
+  "ADHD Meds|DMT": "Increased cardiovascular strain. Use caution.",
+  "ADHD Meds|Viagra": "Cardiovascular strain. Use caution.",
+  
+  "LSD|Shrooms": "Generally safe with potential for intensified experience.",
+  "LSD|Nitrous": "May intensify experience. Use with caution.",
+  "LSD|DMT": "Intense experience. Use with extreme caution.",
+  "LSD|Viagra": "Generally safe with minimal interaction.",
+  
+  "Shrooms|Nitrous": "May intensify experience. Use with caution.",
+  "Shrooms|DMT": "Intense experience. Use with extreme caution.",
+  "Shrooms|Viagra": "Generally safe with minimal interaction.",
+  
+  "Nitrous|DMT": "Unpredictable effects. Use caution.",
+  "Nitrous|Viagra": "Generally safe with minimal interaction.",
+  
+  "DMT|Viagra": "Blood pressure changes. Use caution."
 };
 
 // Map risk to CSS class
@@ -1219,9 +1241,8 @@ function initializeMatrix() {
       if (rowSubstance !== colSubstance) {
         risk = riskMatrix[rowSubstance][substances.indexOf(colSubstance)];
       }
-      const simpleRisk = riskIconMap[risk] || risk;
-      const riskClass = getRiskClass(simpleRisk);
-      html += `<td class="${riskClass}" data-row="${rowSubstance}" data-col="${colSubstance}">${simpleRisk}</td>`;
+      const riskClass = getRiskClass(risk);
+      html += `<td class="${riskClass}" data-row="${rowSubstance}" data-col="${colSubstance}">${risk}</td>`;
     });
     html += '</tr>';
   });
@@ -1252,15 +1273,14 @@ function showMatrixDetail(substanceA, substanceB) {
   if (substanceA !== substanceB) {
     risk = riskMatrix[substanceA][substances.indexOf(substanceB)];
   }
-  const simpleRisk = riskIconMap[risk] || risk;
   
-  modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${substanceA} + ${substanceB} → ${simpleRisk}`;
+  modalTitle.innerHTML = `<i class="fas fa-info-circle"></i> ${substanceA} + ${substanceB} → ${risk}`;
   
   let content = '';
   
   if (substanceA === substanceB) {
     content = `
-      <div class="pair-detail ${getRiskClass(simpleRisk)}">
+      <div class="pair-detail ${getRiskClass(risk)}">
         <p><strong>Same Substance Combination:</strong> Using ${substanceA} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
         <p><strong>Harm Reduction Tips:</strong></p>
         <ul>
@@ -1277,16 +1297,15 @@ function showMatrixDetail(substanceA, substanceB) {
     const interaction = interactionDetails[key1] || interactionDetails[key2];
     
     if (interaction) {
-      const simpleRiskIcon = riskIconMap[interaction.risk] || interaction.risk;
       content = `
-        <div class="pair-detail ${getRiskClass(simpleRiskIcon)}">
-          <p><strong>${interaction.risk} Risk:</strong> ${interaction.desc}</p>
+        <div class="pair-detail ${getRiskClass(risk)}">
+          <p><strong>${risk} Risk:</strong> ${interaction}</p>
         </div>
       `;
     } else {
       // Generic description based on risk level
       let genericDesc = '';
-      switch(simpleRisk) {
+      switch(risk) {
         case "🌈":
           genericDesc = "Minimal interaction risk. Still practice standard harm reduction measures.";
           break;
@@ -1304,8 +1323,8 @@ function showMatrixDetail(substanceA, substanceB) {
       }
       
       content = `
-        <div class="pair-detail ${getRiskClass(simpleRisk)}">
-          <p><strong>${simpleRisk} Risk:</strong> ${genericDesc}</p>
+        <div class="pair-detail ${getRiskClass(risk)}">
+          <p><strong>${risk} Risk:</strong> ${genericDesc}</p>
           <p>No specific interaction data available. This does not mean the combination is safe. Always exercise caution and start with low doses when combining substances.</p>
         </div>
       `;
@@ -1346,13 +1365,12 @@ function checkInteractions() {
       if (substanceA !== substanceB) {
         risk = riskMatrix[substanceA][substances.indexOf(substanceB)];
       }
-      const simpleRisk = riskIconMap[risk] || risk;
-      const riskClass = getRiskClass(simpleRisk);
+      const riskClass = getRiskClass(risk);
       
       // Update highest risk
       const riskOrder = {"🌈": 1, "⚡": 2, "💊": 3, "💀": 4};
-      if (riskOrder[simpleRisk] > riskOrder[highestRisk]) {
-        highestRisk = simpleRisk;
+      if (riskOrder[risk] > riskOrder[highestRisk]) {
+        highestRisk = risk;
       }
       
       // Look up detailed info
@@ -1362,12 +1380,12 @@ function checkInteractions() {
       
       let description = "No specific interaction data available. Exercise caution.";
       if (interaction) {
-        description = interaction.desc;
+        description = interaction;
       }
       
       content += `
         <div class="pair-detail ${riskClass}">
-          <div class="risk-icon">${simpleRisk}</div>
+          <div class="risk-icon">${risk}</div>
           <h4>${substanceA} + ${substanceB}</h4>
           <p>${description}</p>
         </div>
@@ -1488,6 +1506,31 @@ function createParticles() {
     particlesContainer.appendChild(particle);
   }
 }
+
+// Share page functionality
+document.getElementById('shareBtn').addEventListener('click', () => {
+  if (navigator.share) {
+    navigator.share({
+      title: 'PLURderapolis Polydrug Interaction Checker',
+      text: 'Check drug combination risks with this harm reduction tool',
+      url: window.location.href
+    })
+    .catch(err => console.log('Error sharing:', err));
+  } else {
+    // Fallback for browsers that don't support Web Share API
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => alert('Page URL copied to clipboard!'))
+      .catch(err => console.log('Error copying URL:', err));
+  }
+});
+
+// Copy results functionality
+document.getElementById('copyResults').addEventListener('click', () => {
+  const resultText = document.getElementById('resultBox').innerText;
+  navigator.clipboard.writeText(resultText)
+    .then(() => alert('Results copied to clipboard!'))
+    .catch(err => console.log('Error copying results:', err));
+});
 
 // Initialize everything when the page loads
 window.addEventListener('DOMContentLoaded', () => {
