@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Symptom Detective | PLURderapolis</title>
+    <!-- Title updated to Plurderapolis -->
+    <title>Plurderapolis</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Comic+Neue:wght@400;700&display=swap">
     <!-- Animate.css for pre-built animations -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -85,6 +86,7 @@
             margin: 0 auto;
         }
 
+        /* Updated Header: Now a clickable link to the homepage */
         .pg-header {
             display: flex;
             gap: 16px;
@@ -98,6 +100,15 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
+        }
+
+        .pg-header > a {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
         }
 
         .pg-header::before {
@@ -392,48 +403,6 @@
             animation: shimmer 2s infinite;
         }
 
-        /* PLUR Mascot */
-        .plur-mascot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--plur-unity), var(--plur-love));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 100;
-            transition: transform 0.3s ease;
-            animation: bounce 3s infinite;
-        }
-
-        .plur-mascot:hover {
-            transform: scale(1.1);
-        }
-
-        /* Celebration animation */
-        .plur-celebration {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--plur-love);
-            opacity: 0;
-            z-index: 1000;
-            border-radius: 50%;
-        }
-
-        .plur-celebration:nth-child(odd) {
-            background: var(--plur-peace);
-        }
-        .plur-celebration:nth-child(3n) {
-            background: var(--plur-respect);
-        }
-
         /* Enhanced Animations */
         @keyframes pulse-plur {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 104, 238, 0.7); }
@@ -491,19 +460,126 @@
             transform: translateY(20px);
         }
 
+        /* ==========================================================================
+           PANIC BUTTON (Peach) Styles - copied and adapted from plurderapolis.org
+           ========================================================================== */
+        #peachWrap {
+            position: fixed;
+            bottom: 20px;
+            right: 15px;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            touch-action: none;
+            cursor: move;
+        }
+
+        #panicButton {
+            width: 60px;
+            height: 60px;
+            font-size: 2.5rem;
+            background: radial-gradient(circle at 35% 35%, #ffb07c, #ff6f91);
+            border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #00f7e0;
+            animation: emojiPulse 2.5s infinite;
+            user-select: none;
+        }
+
+        #panicButton::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 22px;
+            width: 15px;
+            height: 12px;
+            background: linear-gradient(135deg, #ff9a7a, #ff7a5a);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+
+        #panicButton:hover {
+            transform: scale(1.15);
+            animation: none;
+        }
+
+        .help-text {
+            color: #ff9a7a;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 154, 122, 0.6);
+            font-size: 0.85rem;
+            text-align: center;
+            animation: blink 3s infinite;
+        }
+
+        @keyframes emojiPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ==========================================================================
+           Footer Navigation Links
+           ========================================================================== */
+        .site-footer {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(45, 43, 85, 0.85);
+            border-radius: 20px;
+            border: 1px solid rgba(123, 104, 238, 0.3);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--plur-love);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--plur-peace);
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+
         @media (max-width: 600px) {
-            .plur-mascot {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-                bottom: 10px;
-                right: 10px;
-            }
-            
             .pg-header {
                 flex-direction: column;
                 text-align: center;
                 gap: 12px;
+            }
+            .pg-header > a {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links {
+                gap: 0.75rem;
             }
         }
     </style>
@@ -516,16 +592,22 @@
     <div class="plur-particle" style="top: 40%; left: 90%; width: 8px; height: 8px; animation-delay: 7s;"></div>
     <div class="plur-particle" style="top: 80%; left: 15%; width: 14px; height: 14px; animation-delay: 10s;"></div>
     
-    <!-- PLUR Mascot -->
-    <div class="plur-mascot" onclick="plurCelebrate()">❤️</div>
+    <!-- PANIC BUTTON (Peach) - Replaces the heart mascot -->
+    <div id="peachWrap">
+        <a href="/panic.html" id="panicButton">🍑</a>
+        <div class="help-text">HELP!</div>
+    </div>
     
     <div id="plur-game">
+        <!-- Updated Header: Clickable link to the homepage -->
         <div class="pg-header animate__animated animate__fadeInDown">
-            <div class="pg-logo">PL</div>
-            <div>
-                <div class="pg-title">Symptom Detective — Quick Triage Game</div>
-                <div class="pg-subtitle">Tap through 6-10 fast questions. If at any time the person is not breathing or unresponsive — CALL 911.</div>
-            </div>
+            <a href="https://plurderapolis.org" title="Go to homepage">
+                <div class="pg-logo">PL</div>
+                <div>
+                    <div class="pg-title">Plurderapolis</div>
+                    <div class="pg-subtitle">Symptom Detective — Quick Triage Game</div>
+                </div>
+            </a>
         </div>
 
         <div class="progress-container">
@@ -537,6 +619,21 @@
         <div class="legal-disclaimer">
             <strong>Disclaimer:</strong> This tool is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of qualified health providers with any questions you may have regarding a medical condition. In case of emergency, call 911 immediately.
         </div>
+
+        <!-- Added Footer with Navigation Links -->
+        <footer class="site-footer">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/panic.html">Panic Center</a>
+                <a href="/emergency.html">Emergency Response</a>
+                <a href="/drug-interactions.html">Drug Interactions</a>
+                <a href="/raver-survival-guide.html">Raver Survival Guide</a>
+                <a href="/sober-ravers.html">Sober Ravers</a>
+                <a href="/about.html">About Us</a>
+                <a href="/disclaimer.html">Disclaimer</a>
+            </div>
+            <p class="footer-copyright">PLURderapolis — Harm Reduction for Minnesota Ravers</p>
+        </footer>
 
         <div class="foot-note" id="foot-note" style="display:none">
             <strong>Sources:</strong> CDC naloxone & overdose guidance; Hunter criteria for serotonin syndrome; CDC/NIOSH heat guidance; NIAAA/Mayo Clinic on alcohol poisoning; Poison Help (1-800-222-1222). Use as field guidance — not a substitute for EMS.
