@@ -4,21 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="PLURderapolis harm reduction guide: Learn about drug testing, overdose response, and verified resources. Stay safe with evidence-based information." />
+  <meta name="keywords" content="harm reduction, drug testing, fentanyl, xylazine, naloxone, overdose response, PLURderapolis, Minnesota resources" />
   <title>Is Your Shit Real? | PLURderapolis - Harm Reduction & Drug Safety Guide</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root {
       --plum: #5D3A7D;
       --pink: #E040FB;
       --teal: #00CED1;
-      --charcoal: #1C1C1C;
+      --charcoal: #121212;
       --offwhite: #F5F5F5;
       --warning-red: #FF4444;
-      --dark-bg: #2D2D2D;
-      --card-bg: #3A3A3A;
+      --dark-bg: #1E1E1E;
+      --card-bg: #2A2A2A;
       --light-plum: rgba(93, 58, 125, 0.15);
-      --animation-timing: 0.3s ease;
+      --animation-timing: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
       --section-testing: #E040FB;
       --section-response: #FF4444;
       --section-resources: #00CED1;
@@ -26,6 +27,7 @@
       --neon-purple: #B026FF;
       --neon-blue: #00F7FF;
       --neon-pink: #FF2A9C;
+      --sidebar-width: 280px;
     }
     
     * { 
@@ -36,6 +38,7 @@
     
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 100px;
     }
     
     body {
@@ -46,94 +49,55 @@
       line-height: 1.7;
       font-size: 1.05rem;
       overflow-x: hidden;
-      background: linear-gradient(135deg, var(--charcoal) 0%, #2a2a2a 100%);
+      background: radial-gradient(ellipse at top, #2a2a2a 0%, #121212 70%);
+      min-height: 100vh;
     }
     
-    .container { 
-      max-width: 1000px; 
-      margin: 0 auto; 
-      padding: 15px; 
-    }
-    
-    /* Mobile Navigation */
-    .topnav {
-      overflow: hidden;
-      background-color: var(--dark-bg);
+    /* Main layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
       position: relative;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      display: none;
     }
     
-    .topnav #myLinks {
-      display: none;
-    }
-    
-    .topnav a {
-      color: var(--offwhite);
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 17px;
-      display: block;
-      transition: all var(--animation-timing);
-    }
-    
-    .topnav a.icon {
-      background: var(--plum);
-      display: block;
-      position: absolute;
-      right: 0;
+    /* Sidebar navigation */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(93, 58, 125, 0.3);
+      position: fixed;
       top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform var(--animation-timing);
+      box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
     }
     
-    .topnav a:hover {
-      background-color: var(--light-plum);
-      color: var(--teal);
+    .sidebar.active {
+      transform: translateX(0);
     }
     
-    .active {
-      background-color: var(--pink);
-      color: var(--offwhite);
-    }
-    
-    /* Enhanced Header */
-    header { 
-      background: linear-gradient(135deg, var(--plum) 0%, var(--pink) 100%); 
-      padding: 20px 15px; 
-      text-align: center; 
-      margin-bottom: 25px; 
-      border-radius: 0 0 12px 12px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 5px 25px rgba(93, 58, 125, 0.5);
-    }
-    
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: rotate(45deg);
-      animation: shimmer 6s infinite linear;
-    }
-    
-    @keyframes shimmer {
-      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    .sidebar-header {
+      padding: 25px 20px 15px;
+      border-bottom: 1px solid rgba(93, 58, 125, 0.3);
+      text-align: center;
     }
     
     .logo-container {
-      position: relative;
+      display: block;
       margin: 0 auto 15px;
-      display: inline-block;
       transition: all 0.4s ease;
+      position: relative;
     }
     
     .logo {
-      max-width: 220px;
+      max-width: 180px;
       height: auto;
       display: block;
       filter: drop-shadow(0 0 10px rgba(224, 64, 251, 0.5));
@@ -144,10 +108,6 @@
     @keyframes logoGlow {
       0% { filter: drop-shadow(0 0 5px rgba(224, 64, 251, 0.5)); }
       100% { filter: drop-shadow(0 0 15px rgba(224, 64, 251, 0.8)); }
-    }
-    
-    .logo-container:hover {
-      transform: scale(1.05);
     }
     
     .logo-container:hover .logo {
@@ -161,179 +121,254 @@
       100% { transform: scale(1); }
     }
     
-    /* Text Hierarchy */
-    h1, h2, h3, h4 { 
-      font-family: "Montserrat", sans-serif; 
-      margin-bottom: 1rem; 
-      line-height: 1.3;
+    .sidebar-nav {
+      flex-grow: 1;
+      padding: 20px 0;
     }
     
-    h1 { 
-      font-size: 1.8rem; 
-      color: white; 
-      margin-bottom: 0.5rem;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1s ease, titleGlow 4s ease-in-out infinite alternate;
+    .nav-item {
+      display: block;
+      padding: 15px 25px;
+      color: var(--offwhite);
+      text-decoration: none;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+      position: relative;
+      overflow: hidden;
     }
     
-    @keyframes titleGlow {
-      0% { text-shadow: 0 0 5px rgba(255,255,255,0.5); }
-      100% { text-shadow: 0 0 15px rgba(255,255,255,0.8), 0 0 20px rgba(224, 64, 251, 0.6); }
+    .nav-item:hover, .nav-item.active {
+      background: rgba(93, 58, 125, 0.2);
+      border-left-color: var(--pink);
+      color: var(--teal);
+      padding-left: 30px;
     }
     
-    h2 { 
-      font-size: 1.5rem; 
-      border-bottom: 2px solid var(--plum); 
-      padding-bottom: 0.5rem; 
-      margin-top: 0; 
-      color: var(--pink); 
-      cursor: pointer;
+    .nav-item i {
+      margin-right: 12px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid rgba(93, 58, 125, 0.3);
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    
+    /* Main content */
+    .main-content {
+      flex: 1;
+      margin-left: 0;
+      padding: 20px;
+      max-width: 100%;
+      transition: margin-left var(--animation-timing);
+    }
+    
+    /* Header */
+    .main-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all var(--animation-timing);
-      position: relative;
+      margin-bottom: 30px;
+      padding: 15px 20px;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(93, 58, 125, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 15px;
+      z-index: 100;
     }
     
-    h2::before {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--teal), var(--pink));
-      transition: width 0.5s ease;
-    }
-    
-    h2:hover::before {
-      width: 100%;
-    }
-    
-    h2:hover {
-      color: var(--teal);
-      transform: translateX(5px);
-    }
-    
-    h2 i {
-      transition: transform var(--animation-timing);
-    }
-    
-    h3 { 
-      font-size: 1.2rem; 
-      color: var(--teal); 
-      margin-bottom: 0.8rem; 
-      margin-top: 1.8rem;
-      position: relative;
-      padding-left: 15px;
-    }
-    
-    h3::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 5px;
-      height: 20px;
-      background: linear-gradient(to bottom, var(--pink), var(--teal));
-      border-radius: 3px;
-    }
-    
-    h4 {
-      font-size: 1.1rem;
-      color: var(--offwhite);
-      margin-bottom: 0.5rem;
-      margin-top: 1.2rem;
-    }
-    
-    p { 
-      margin-bottom: 1.2rem; 
-      color: var(--offwhite);
-    }
-    
-    a { 
-      color: var(--teal); 
-      text-decoration: none; 
-      font-weight: 600; 
-      transition: all 0.2s ease;
-      position: relative;
-    }
-    
-    a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--pink);
-      transition: width 0.3s ease;
-    }
-    
-    a:hover::after, a:focus::after {
-      width: 100%;
-    }
-    
-    a:hover, a:focus { 
-      color: var(--pink); 
-      text-decoration: none;
-    }
-    
-    .card { 
-      background-color: var(--card-bg); 
-      border-radius: 12px; 
-      padding: 20px; 
-      margin-bottom: 15px; 
-      box-shadow: 0 5px 15px rgba(0,0,0,.3);
-      border: 1px solid rgba(93, 58, 125, 0.5);
-      border-top: 4px solid var(--pink);
-      transition: all var(--animation-timing);
-      overflow: hidden;
-      position: relative;
-    }
-    
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.7s ease;
-    }
-    
-    .card:hover::before {
-      left: 100%;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(93, 58, 125, 0.5);
-    }
-    
-    .card-header { 
-      display: flex; 
-      align-items: center; 
-      gap: 15px; 
-      margin-bottom: 15px; 
-    }
-    
-    .card-header i { 
-      font-size: 22px; 
-      color: var(--pink); 
-      background: rgba(224, 64, 251, 0.1);
-      padding: 10px;
+    .menu-toggle {
+      background: linear-gradient(to right, var(--plum), var(--pink));
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      width: 42px;
-      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: pulse 2s infinite;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(93, 58, 125, 0.4);
+    }
+    
+    .menu-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(224, 64, 251, 0.5);
+    }
+    
+    .header-title {
+      flex-grow: 1;
+      text-align: center;
+    }
+    
+    .header-title h1 {
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(224, 64, 251, 0.5);
+      animation: titleGlow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes titleGlow {
+      0% { text-shadow: 0 0 5px rgba(224, 64, 251, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(224, 64, 251, 0.8), 0 0 20px rgba(224, 64, 251, 0.6); }
+    }
+    
+    .header-title p {
+      font-size: 0.95rem;
+      color: #ddd;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .action-btn {
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px solid rgba(93, 58, 125, 0.5);
+      color: var(--offwhite);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .action-btn:hover {
+      background: rgba(93, 58, 125, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(93, 58, 125, 0.3);
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(135deg, rgba(93, 58, 125, 0.2), rgba(224, 64, 251, 0.1));
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      text-align: center;
+      border: 1px solid rgba(224, 64, 251, 0.2);
       position: relative;
-      z-index: 1;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(224, 64, 251, 0.05), transparent);
+      transform: rotate(45deg);
+      animation: shimmer 8s infinite linear;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .hero h2 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      color: white;
+      position: relative;
+    }
+    
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 25px;
+      color: #ddd;
+      position: relative;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 30px;
+      position: relative;
+    }
+    
+    .stat-item {
+      background: rgba(30, 30, 30, 0.7);
+      border-radius: 12px;
+      padding: 20px;
+      min-width: 180px;
+      border: 1px solid rgba(93, 58, 125, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--pink);
+      box-shadow: 0 10px 20px rgba(93, 58, 125, 0.3);
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--pink);
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    
+    /* Content sections */
+    .content-section {
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .content-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(93, 58, 125, 0.5);
+    }
+    
+    .section-icon {
+      background: linear-gradient(to right, var(--plum), var(--pink));
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      font-size: 1.5rem;
+      box-shadow: 0 5px 15px rgba(93, 58, 125, 0.4);
+      animation: pulse 2s infinite;
     }
     
     @keyframes pulse {
@@ -351,712 +386,452 @@
       }
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    details {
-      margin-bottom: 10px;
-      border-radius: 8px;
-      overflow: hidden;
-      animation: fadeIn 0.5s ease;
-      border-left: 4px solid var(--plum);
-      transition: all 0.4s ease;
-    }
-    
-    details:hover {
-      border-left-color: var(--pink);
-    }
-    
-    details[open] {
-      background-color: rgba(58, 58, 58, 0.5);
-      transform: translateX(5px);
-    }
-    
-    summary {
-      padding: 15px;
-      cursor: pointer;
-      outline: none;
-      transition: background-color 0.3s;
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.2rem;
+    .section-title {
+      font-size: 1.8rem;
       color: var(--offwhite);
-      background: linear-gradient(to right, rgba(93, 58, 125, 0.2), transparent);
-      position: relative;
+      margin: 0;
     }
     
-    summary:hover {
-      background-color: rgba(93, 58, 125, 0.3);
-    }
-    
-    summary::-webkit-details-marker {
-      display: none;
-    }
-    
-    summary i {
-      margin-right: 10px;
-      transition: transform 0.3s;
-    }
-    
-    details[open] summary i {
-      transform: rotate(90deg);
-    }
-    
-    .card-content {
-      padding: 0 15px 15px 15px;
-      animation: slideDown 0.5s ease;
-    }
-    
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    ul, ol { 
-      padding-left: 1.5rem; 
-      margin-bottom: 1.5rem; 
-    }
-    
-    ul li, ol li { 
-      margin-bottom: 0.8rem; 
-      padding-left: 0.5rem;
-      position: relative;
-    }
-    
-    ul li::before {
-      content: '•';
-      color: var(--pink);
-      font-weight: bold;
-      position: absolute;
-      left: -15px;
-    }
-    
-    ul li::marker {
-      color: var(--pink);
-    }
-    
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin: 1.5rem 0; 
-      background: var(--dark-bg); 
-      border-radius: 10px; 
-      overflow: hidden; 
-      box-shadow: 0 4px 10px rgba(0,0,0,.2);
-      animation: fadeIn 0.8s ease;
-    }
-    
-    th, td { 
-      padding: 1rem; 
-      border: 1px solid rgba(93,58,125,.2); 
-      text-align: left; 
-      color: var(--offwhite); 
-      transition: all 0.3s ease;
-    }
-    
-    tr:hover td {
-      background-color: rgba(93, 58, 125, 0.2);
-    }
-    
-    th { 
-      background: rgba(93,58,125,.3); 
-      font-weight: 700; 
+    .section-subtitle {
       font-size: 1rem;
+      color: #aaa;
+      margin-top: 5px;
     }
     
-    tr:nth-child(even) {
-      background-color: rgba(93, 58, 125, 0.1);
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 25px;
     }
     
-    .warning { 
-      background-color: rgba(255,68,68,0.15); 
-      border-left: 5px solid var(--warning-red); 
-      padding: 15px; 
-      border-radius: 0 10px 10px 0; 
-      margin: 15px 0; 
-      font-weight: 600;
-      animation: pulse 2s infinite, shake 0.5s ease-in-out 3;
+    .card {
+      background: rgba(42, 42, 42, 0.7);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(93, 58, 125, 0.3);
+      transition: all var(--animation-timing);
       position: relative;
       overflow: hidden;
     }
     
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--plum), var(--pink));
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(224, 64, 251, 0.5);
+    }
+    
+    .card h3 {
+      font-size: 1.4rem;
+      color: var(--teal);
+      margin-bottom: 15px;
+      position: relative;
+      padding-left: 15px;
+    }
+    
+    .card h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 20px;
+      background: linear-gradient(to bottom, var(--pink), var(--teal));
+      border-radius: 3px;
+    }
+    
+    .card p {
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+    
+    /* Resources grid */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    
+    .resource-card {
+      background: linear-gradient(145deg, rgba(42, 42, 42, 0.9), rgba(30, 30, 30, 0.9));
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(0, 206, 209, 0.2);
+      transition: all var(--animation-timing);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--teal);
+      box-shadow: 0 10px 25px rgba(0, 206, 209, 0.2);
+    }
+    
+    .resource-icon {
+      font-size: 2rem;
+      color: var(--teal);
+      margin-bottom: 15px;
+      background: rgba(0, 206, 209, 0.1);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .resource-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--offwhite);
+    }
+    
+    .resource-card p {
+      flex-grow: 1;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+    
+    .resource-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(to right, var(--plum), var(--pink));
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .resource-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 15px rgba(224, 64, 251, 0.4);
+    }
+    
+    /* Warning boxes */
+    .warning {
+      background: rgba(255, 68, 68, 0.1);
+      border-left: 5px solid var(--warning-red);
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin: 25px 0;
+      position: relative;
+      overflow: hidden;
     }
     
     .warning::before {
       content: '⚠️';
       position: absolute;
-      right: 15px;
+      right: 20px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
     
-    .resource-grid { 
-      display: grid; 
-      grid-template-columns: 1fr; 
-      gap: 18px; 
-      margin: 22px 0; 
+    .warning h4 {
+      color: var(--warning-red);
+      margin-bottom: 10px;
     }
     
-    .resource-card { 
-      background: linear-gradient(to bottom, var(--card-bg), var(--dark-bg)); 
-      border-radius: 10px; 
-      padding: 18px; 
-      text-align: left; 
-      transition: all 0.3s ease;
-      border: 1px solid rgba(93,58,125,.3);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .resource-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
+    /* Tables */
+    table {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(93,58,125,0.1) 0%, rgba(224,64,251,0.1) 100%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .resource-card:hover::before {
-      opacity: 1;
-    }
-    
-    .resource-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 10px 20px rgba(0,0,0,.4);
-    }
-    
-    .resource-card i { 
-      font-size: 28px; 
-      color: var(--teal); 
-      margin-bottom: 12px; 
-      display: inline-block; 
-      background: rgba(0, 206, 209, 0.1);
-      padding: 12px;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(30, 30, 30, 0.7);
       border-radius: 12px;
-      position: relative;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
-    
-    .resource-card:hover i {
-      transform: rotate(10deg) scale(1.1);
-      color: var(--pink);
-    }
-    
-    .btn { 
-      display: inline-block; 
-      background: linear-gradient(to right, var(--plum), var(--pink)); 
-      color: #fff; 
-      padding: 10px 18px; 
-      border-radius: 50px; 
-      text-decoration: none; 
-      font-weight: 700; 
-      margin-top: 10px; 
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-      font-size: 0.9rem;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .btn:hover::before {
-      left: 100%;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 7px 15px rgba(224, 64, 251, 0.5);
-      text-decoration: none;
-    }
-    
-    .btn-outline { 
-      background: transparent; 
-      border: 2px solid var(--plum); 
-      color: var(--offwhite); 
-      padding: 8px 15px; 
-      border-radius: 50px; 
-      text-decoration: none; 
-      font-weight: 700; 
-      transition: all 0.2s ease;
-      font-size: 0.9rem;
-      position: relative;
       overflow: hidden;
     }
     
-    .btn-outline::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: var(--plum);
-      transition: width 0.3s ease;
-      z-index: -1;
-    }
-    
-    .btn-outline:hover::before {
-      width: 100%;
-    }
-    
-    .btn-outline:hover {
-      background: var(--plum);
-      transform: translateY(-2px);
-    }
-    
-    .nav-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 25px;
-      background: var(--dark-bg);
+    th, td {
       padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,.2);
-      animation: fadeIn 0.8s ease;
+      text-align: left;
+      border-bottom: 1px solid rgba(93, 58, 125, 0.2);
     }
     
-    .nav-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .disclaimer { 
-      font-size: 0.9rem; 
-      color: #bbb; 
-      margin-top: 25px; 
-      padding-top: 15px; 
-      border-top: 1px solid rgba(93,58,125,.3); 
-      line-height: 1.6;
-      animation: fadeIn 1s ease;
-    }
-    
-    footer { 
-      text-align: center; 
-      padding: 20px; 
-      margin-top: 30px; 
-      background: var(--dark-bg); 
-      border-radius: 12px; 
-      box-shadow: 0 -5px 15px rgba(0,0,0,.2);
-      animation: fadeIn 1.2s ease;
-    }
-    
-    strong {
-      color: var(--teal);
+    th {
+      background: rgba(93, 58, 125, 0.3);
       font-weight: 700;
+      color: var(--offwhite);
     }
     
-    /* Section-specific styling */
-    #why {
-      border-left-color: var(--plum);
+    tr:hover {
+      background: rgba(93, 58, 125, 0.1);
     }
     
-    #testing {
-      border-left-color: var(--section-testing);
+    /* Footer */
+    .main-footer {
+      margin-top: 60px;
+      padding: 30px;
+      background: rgba(30, 30, 30, 0.9);
+      border-radius: 16px;
+      border-top: 1px solid rgba(93, 58, 125, 0.3);
     }
     
-    #how {
-      border-left-color: var(--section-resources);
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
     }
     
-    #spotting {
-      border-left-color: var(--section-tips);
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
     }
     
-    #overdose {
-      border-left-color: var(--section-response);
+    .footer-section h3 {
+      color: var(--teal);
+      margin-bottom: 20px;
+      font-size: 1.2rem;
     }
     
-    #resources {
-      border-left-color: var(--section-resources);
+    .footer-links {
+      list-style: none;
     }
     
-    #downloads {
-      border-left-color: var(--section-tips);
+    .footer-links li {
+      margin-bottom: 10px;
     }
     
-    #tips {
-      border-left-color: var(--section-testing);
+    .footer-links a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s ease;
     }
     
-    #final {
-      border-left-color: var(--plum);
+    .footer-links a:hover {
+      color: var(--teal);
+      padding-left: 5px;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(93, 58, 125, 0.3);
+      color: #888;
+      font-size: 0.9rem;
     }
     
     /* Scroll to top button */
     #scrollToTopBtn {
-      display: none;
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 99;
-      border: none;
-      outline: none;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
       background: linear-gradient(to right, var(--plum), var(--pink));
       color: white;
-      cursor: pointer;
-      padding: 12px;
+      border: none;
       border-radius: 50%;
-      font-size: 16px;
-      width: 50px;
-      height: 50px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 5px 20px rgba(93, 58, 125, 0.5);
+      z-index: 999;
       transition: all 0.3s ease;
-      animation: pulse 2s infinite;
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    #scrollToTopBtn.show {
+      opacity: 1;
+      visibility: visible;
     }
     
     #scrollToTopBtn:hover {
       transform: translateY(-5px) scale(1.1);
-      box-shadow: 0 8px 20px rgba(224, 64, 251, 0.5);
+      box-shadow: 0 8px 25px rgba(224, 64, 251, 0.6);
     }
     
-    /* Dropdown navigation */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropbtn {
-      background: linear-gradient(to right, var(--plum), var(--pink));
-      color: white;
-      padding: 10px 16px;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      border-radius: 50px;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .dropbtn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .dropbtn:hover::before {
-      left: 100%;
-    }
-    
-    .dropbtn:hover {
-      background: linear-gradient(to right, var(--pink), var(--plum));
-      transform: translateY(-2px);
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: var(--dark-bg);
-      min-width: 180px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-      z-index: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      top: 100%;
-      left: 0;
-      margin-top: 5px;
-      animation: dropdownFade 0.3s ease;
-    }
-    
-    @keyframes dropdownFade {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .dropdown-content a {
-      color: var(--offwhite);
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      transition: all 0.2s ease;
-      border-left: 3px solid transparent;
-    }
-    
-    .dropdown-content a:hover {
-      background-color: rgba(93, 58, 125, 0.3);
-      border-left: 3px solid var(--pink);
-      padding-left: 20px;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    
-    .dropdown:hover .dropbtn {
-      background: linear-gradient(to right, var(--pink), var(--plum));
-    }
-    
-    /* Share buttons */
-    .share-buttons {
-      display: flex;
-      gap: 8px;
-      margin-top: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 50px;
-      background: var(--dark-bg);
-      color: var(--offwhite);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(93, 58, 125, 0.5);
-      font-size: 0.9rem;
-    }
-    
-    .share-btn:hover {
-      background: rgba(93, 58, 125, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    /* Quick nav */
-    .quick-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-      justify-content: center;
-      animation: fadeIn 0.8s ease;
-    }
-    
-    .quick-nav-btn {
-      padding: 8px 12px;
-      background: var(--dark-bg);
-      color: var(--offwhite);
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(93, 58, 125, 0.3);
-    }
-    
-    .quick-nav-btn:hover {
-      background: rgba(93, 58, 125, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    /* Floating particles */
-    .particles {
+    /* Overlay for mobile */
+    .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: -1;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--animation-timing);
     }
     
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--pink);
-      border-radius: 50%;
-      animation: float 15s infinite linear;
-      opacity: 0.3;
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
     
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) translateX(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.3;
-      }
-      90% {
-        opacity: 0.3;
-      }
-      100% {
-        transform: translateY(-100px) translateX(100px);
-        opacity: 0;
-      }
-    }
-    
-    /* Mobile responsiveness */
-    @media (min-width: 768px) { 
-      .container {
-        padding: 20px;
+    /* Responsive design */
+    @media (min-width: 992px) {
+      .main-content {
+        margin-left: var(--sidebar-width);
+        padding: 30px;
       }
       
-      header {
-        padding: 25px 20px;
-        margin-bottom: 30px;
+      .sidebar {
+        transform: translateX(0);
       }
       
-      h1 {
-        font-size: 2.2rem;
-      }
-      
-      h2 {
-        font-size: 1.7rem;
-      }
-      
-      .resource-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-      }
-      
-      .card {
-        padding: 25px;
-        margin-bottom: 20px;
-      }
-      
-      .btn, .btn-outline {
-        font-size: 1rem;
-      }
-      
-      #scrollToTopBtn {
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        padding: 15px;
-      }
-    }
-    
-    @media (max-width: 767px) {
-      .topnav {
-        display: block;
-      }
-      
-      .nav-container {
+      .menu-toggle {
         display: none;
       }
     }
     
+    @media (max-width: 991px) {
+      .main-header {
+        flex-wrap: wrap;
+      }
+      
+      .header-title {
+        order: 2;
+        width: 100%;
+        margin-top: 15px;
+      }
+      
+      .quick-actions {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 15px;
+      }
+      
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero-stats {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stat-item {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .section-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+    
     @media (max-width: 480px) {
-      .container {
-        padding: 10px;
+      .main-content {
+        padding: 15px;
       }
       
-      header {
-        padding: 15px 10px;
-      }
-      
-      h1 {
-        font-size: 1.6rem;
-      }
-      
-      h2 {
-        font-size: 1.3rem;
-      }
-      
-      summary {
-        font-size: 1.1rem;
-        padding: 12px;
+      .hero {
+        padding: 20px;
       }
       
       .card {
-        padding: 15px 10px;
+        padding: 20px;
       }
       
-      .card-content {
-        padding: 0 10px 10px 10px;
+      .resource-card {
+        padding: 20px;
       }
-      
-      .nav-buttons {
-        flex-direction: column;
-        width: 100%;
-      }
-      
-      .btn, .btn-outline {
-        width: 100%;
-      }
-      
-      .dropdown {
-        width: 100%;
-      }
-      
-      .dropbtn {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .dropdown-content {
-        position: fixed;
-        top: auto;
-        bottom: 80px;
-        left: 10px;
-        right: 10px;
-        min-width: auto;
-      }
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate {
+      animation: fadeIn 0.6s ease forwards;
+    }
+    
+    /* Additional interactive elements */
+    .progress-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--plum), var(--pink));
+      z-index: 1001;
+      transition: width 0.3s ease;
+    }
+    
+    .section-nav {
+      position: sticky;
+      top: 100px;
+      background: rgba(30, 30, 30, 0.9);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      z-index: 99;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(93, 58, 125, 0.3);
+    }
+    
+    .section-nav a {
+      padding: 8px 15px;
+      background: rgba(93, 58, 125, 0.2);
+      border-radius: 20px;
+      color: var(--offwhite);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .section-nav a:hover, .section-nav a.active {
+      background: linear-gradient(to right, var(--plum), var(--pink));
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <!-- Floating particles -->
-  <div class="particles" id="particles"></div>
-
-  <!-- Mobile Navigation Menu -->
-  <div class="topnav">
-    <a href="index.html" class="active">PLURderapolis</a>
-    <div id="myLinks">
-      <a href="polydrug.html"><i class="fas fa-pills"></i> Polydrug Tool</a>
-      <a href="emergency.html"><i class="fas fa-plus-circle"></i> Emergency</a>
-      <a href="resources.html"><i class="fas fa-book-open"></i> All Resources</a>
-      <a href="rx-combo.html"><i class="fas fa-prescription-bottle"></i> RX Combo</a>
-      <hr style="border: none; border-top: 1px solid rgba(93,58,125,.3); margin: 8px 0;">
-      <a href="#why">Why This Matters</a>
-      <a href="#testing">Testing</a>
-      <a href="#how">How To Test</a>
-      <a href="#overdose">Overdose Response</a>
-      <a href="#resources">Resources</a>
-    </div>
-    <a href="javascript:void(0);" class="icon" onclick="toggleMobileMenu()">
-      <i class="fa fa-bars"></i>
-    </a>
-  </div>
-
-  <header>
-    <div class="container">
-      <!-- PLURderapolis Logo -->
+  <!-- Progress indicator -->
+  <div class="progress-indicator" id="progressIndicator"></div>
+  
+  <!-- Overlay for mobile menu -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Sidebar navigation -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
       <a href="https://plurderapolis.org/index.html" class="logo-container">
         <svg class="logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -1072,500 +847,656 @@
           <text x="20" y="40" font-family="Montserrat, sans-serif" font-weight="700" font-size="36" fill="url(#logoGradient)" filter="url(#glow)">PLURderapolis</text>
         </svg>
       </a>
-      <h1>Is Your Shit Real?</h1>
-      <p style="color:#fff; margin-top:8px; font-size: 1rem;">Updated guidance & verified resources for testing, naloxone access, and safer use — Minnesota & national.</p>
+      <p style="color: #aaa; font-size: 0.9rem;">Harm Reduction & Safety Guide</p>
     </div>
-  </header>
-
-  <main class="container" role="main" aria-labelledby="main-heading">
-    <div class="nav-container">
-      <div class="nav-buttons">
-        <a href="index.html" class="btn-outline"><i class="fas fa-arrow-left"></i> Home</a>
-        <a href="polydrug.html" class="btn"><i class="fas fa-pills"></i> Polydrug Tool</a>
-        <a href="emergency.html" class="btn"><i class="fas fa-plus-circle"></i> Emergency</a>
+    
+    <nav class="sidebar-nav">
+      <a href="#hero" class="nav-item active" data-section="hero"><i class="fas fa-home"></i> Home</a>
+      <a href="#why" class="nav-item" data-section="why"><i class="fas fa-exclamation-triangle"></i> Why This Matters</a>
+      <a href="#testing" class="nav-item" data-section="testing"><i class="fas fa-vial"></i> Testing Methods</a>
+      <a href="#how" class="nav-item" data-section="how"><i class="fas fa-tools"></i> How To Test</a>
+      <a href="#spotting" class="nav-item" data-section="spotting"><i class="fas fa-eye"></i> Visual Cues</a>
+      <a href="#overdose" class="nav-item" data-section="overdose"><i class="fas fa-heartbeat"></i> Overdose Response</a>
+      <a href="#resources" class="nav-item" data-section="resources"><i class="fas fa-map-marker-alt"></i> Resources</a>
+      <a href="#tips" class="nav-item" data-section="tips"><i class="fas fa-lightbulb"></i> Safety Tips</a>
+      
+      <div style="padding: 20px 25px; margin-top: 20px; border-top: 1px solid rgba(93,58,125,.3);">
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 15px;">Quick Links:</p>
+        <a href="polydrug.html" class="nav-item" style="font-size: 0.9rem;"><i class="fas fa-pills"></i> Polydrug Tool</a>
+        <a href="emergency.html" class="nav-item" style="font-size: 0.9rem;"><i class="fas fa-plus-circle"></i> Emergency</a>
+        <a href="resources.html" class="nav-item" style="font-size: 0.9rem;"><i class="fas fa-book-open"></i> All Resources</a>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <p style="margin-bottom: 10px;">Stay safe. Look out for each other.</p>
+      <p style="font-size: 0.8rem;">Last updated: Oct 2025</p>
+    </div>
+  </div>
+  
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <!-- Header -->
+    <header class="main-header">
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="header-title">
+        <h1>Is Your Shit Real?</h1>
+        <p>Updated guidance & verified resources for testing, naloxone access, and safer use — Minnesota & national.</p>
+      </div>
+      
+      <div class="quick-actions">
+        <button class="action-btn" title="Search" id="searchBtn">
+          <i class="fas fa-search"></i>
+        </button>
+        <button class="action-btn" title="Share" id="shareBtn">
+          <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="action-btn" title="Print" id="printBtn">
+          <i class="fas fa-print"></i>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Section navigation -->
+    <div class="section-nav" id="sectionNav">
+      <a href="#why">Why</a>
+      <a href="#testing">Testing</a>
+      <a href="#how">How To</a>
+      <a href="#overdose">Response</a>
+      <a href="#resources">Resources</a>
+      <a href="#tips">Tips</a>
+    </div>
+    
+    <!-- Hero section -->
+    <section class="hero" id="hero">
+      <h2>Harm Reduction & Drug Safety</h2>
+      <p>Counterfeit "prescription" pills and unexpected adulterants (like fentanyl and xylazine) are widespread. Learn how to test substances, recognize overdose signs, and access verified resources to stay safe.</p>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-value">70%+</div>
+          <div class="stat-label">of overdose deaths involve synthetic opioids</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">1 in 4</div>
+          <div class="stat-label">counterfeit pills contain lethal fentanyl doses</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">preventable with proper education & resources</div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Why This Matters -->
+    <section class="content-section" id="why">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Why This Matters</h2>
+          <p class="section-subtitle">Understanding the risks of counterfeit substances</p>
+        </div>
+      </div>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Understanding the Risks</h3>
+          <p><strong>Counterfeit "prescription" pills and unexpected adulterants (like fentanyl and xylazine) are widespread.</strong> Fentanyl is a potent synthetic opioid that has driven large increases in overdose deaths. Xylazine ("tranq") is a non-opioid veterinary sedative that does <strong>not</strong> respond to naloxone and increases risk of severe wounds and prolonged sedation. Treat unknown pills as potentially lethal.</p>
+          
+          <h4>Key Statistics</h4>
+          <ul>
+            <li>Over 70% of drug overdose deaths involve synthetic opioids like fentanyl</li>
+            <li>Xylazine-positive overdose deaths increased significantly in recent years</li>
+            <li>Many counterfeit pills contain lethal doses of fentanyl</li>
+          </ul>
+          
+          <p>Sources: <a href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC — Fentanyl Testing Guidance</a>, <a href="https://www.cdc.gov/overdose-prevention/about/what-you-should-know-about-xylazine.html" target="_blank" rel="noopener">CDC — Xylazine</a>, <a href="https://www.health.state.mn.us/communities/opioids/index.html" target="_blank" rel="noopener">MN Dept of Health — Drug Overdose Prevention</a>.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Testing -->
+    <section class="content-section" id="testing">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-vial"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Testing — What Works & What Doesn't</h2>
+          <p class="section-subtitle">Understanding different testing methods and their limitations</p>
+        </div>
+      </div>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Fentanyl Test Strips (FTS)</h3>
+          <p>FTS are a fast, low-cost tool to check for fentanyl in pills, powders, or residue. They can lower risk by informing choices — but they are not perfect.</p>
+          <ul>
+            <li>Follow manufacturer instructions exactly (sample size, dilution). Improper use is a common cause of false results.</li>
+            <li>FTS can miss some fentanyl analogs depending on strip sensitivity and sample concentration — a negative result is not a guarantee of safety.</li>
+            <li>FTS do <em>not</em> detect xylazine; xylazine test strips (XTS) exist but are newer and not yet as widely distributed.</li>
+          </ul>
+        </div>
         
-        <div class="dropdown">
-          <button class="dropbtn"><i class="fas fa-bars"></i> More</button>
-          <div class="dropdown-content">
-            <a href="resources.html"><i class="fas fa-book-open"></i> All Resources</a>
-            <a href="rx-combo.html"><i class="fas fa-prescription-bottle"></i> RX Combo</a>
-            <hr style="border: none; border-top: 1px solid rgba(93,58,125,.3); margin: 8px 0;">
-            <a href="#why">Why This Matters</a>
-            <a href="#testing">Testing</a>
-            <a href="#how">How To Test</a>
-            <a href="#overdose">Overdose Response</a>
-            <a href="#resources">Resources</a>
+        <div class="card">
+          <h3>Reagent Kits & FTIR</h3>
+          <p><strong>Reagent color tests</strong> (Marquis, Mecke, Mandelin) can indicate some drug classes (MDMA, some opioids, certain stimulants) but <strong>cannot reliably detect fentanyl</strong> and can be fooled by carefully pressed counterfeits. Use reagents as one tool — not the only tool.</p>
+          <p><strong>FTIR / laboratory & event-based checking</strong> (spectrometers) identify a broader range of substances and are the most informative option when available. Many harm-reduction programs and some festivals offer FTIR or GC-MS testing events.</p>
+        </div>
+        
+        <div class="warning">
+          <h4>Important:</h4>
+          <p>No testing method is 100% accurate. Always use multiple harm reduction strategies together.</p>
+        </div>
+        
+        <div class="card">
+          <p>Source: <a href="https://dancesafe.org" target="_blank" rel="noopener">DanceSafe — testing resources & reagent supplies</a>, <a href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">SAMHSA Overdose Prevention & Response Toolkit (PDF)</a>.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- How To Test -->
+    <section class="content-section" id="how">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+        <div>
+          <h2 class="section-title">How To Test — Practical Steps</h2>
+          <p class="section-subtitle">Step-by-step guide to testing substances safely</p>
+        </div>
+      </div>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Step-by-Step Testing Process</h3>
+          <ol>
+            <li><strong>Prepare a clean surface & tools.</strong> Use a sterile container, clean utensil, and fresh water for dissolving samples.</li>
+            <li><strong>Take only a tiny sample.</strong> For pills: scrape a very small corner (do not consume the scraped powder). For powders: use a pea-size amount.</li>
+            <li><strong>Use FTS first</strong> (if available): dissolve the tiny sample in water exactly per strip instructions and apply the strip. Wait the specified time before reading.</li>
+            <li><strong>If available, get FTIR testing.</strong> If an FTIR or lab service is available (SSP, event testing, safe recovery sites), submit the sample for a more complete reading.</li>
+            <li><strong>Remember limitations:</strong> Negative FTS does not equal safe; reagent tests don't detect fentanyl reliably; xylazine requires separate testing.</li>
+          </ol>
+        </div>
+        
+        <div class="warning">
+          <h4>If you don't have reliable testing:</h4>
+          <p>Do not assume safety. Consider not using the substance. If someone chooses to use, use a very small test dose, do not use alone, avoid mixing depressants (alcohol, benzodiazepines), and have naloxone and a sober person present.</p>
+        </div>
+        
+        <div class="card">
+          <h3>Testing Best Practices</h3>
+          <ul>
+            <li>Always test a small amount first</li>
+            <li>Use multiple testing methods when possible</li>
+            <li>Understand the limitations of each test</li>
+            <li>Never use a substance that tests positive for unexpected substances</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Visual Cues -->
+    <section class="content-section" id="spotting">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-eye"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Visual Cues — Helpful But Not Definitive</h2>
+          <p class="section-subtitle">Identifying counterfeit pills through visual inspection</p>
+        </div>
+      </div>
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Identifying Counterfeit Pills</h3>
+          <p>Counterfeiters often copy shapes, logos, and coatings. Visual checks can sometimes catch obvious fakes (misprinted logos, off colors, uneven edges), but modern counterfeits are frequently indistinguishable from authentic pills. Always test.</p>
+        </div>
+        
+        <div class="card">
+          <h3>Fake Pill Indicators</h3>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr><th>Pill/Type</th><th>Possible Red Flags</th><th>Why Visuals Aren't Enough</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>M30 oxycodone</strong></td><td>Off-color shade, fuzzy or incorrect imprint, uneven edges</td><td>Pressing techniques can reproduce imprints & coatings — testing required.</td></tr>
+                <tr><td><strong>"Xanax" bars</strong></td><td>Crumbling, wrong score, wrong spacing in imprint</td><td>Fake bars are often visually convincing — may contain fentanyl or other sedatives.</td></tr>
+                <tr><td><strong>"Adderall" / stimulants</strong></td><td>Odd taste, unusual dust, inconsistent capsule contents</td><td>Stimulant counterfeits may contain meth, fentanyl, or other adulterants.</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
+        
+        <div class="card">
+          <h3>Visual Inspection Tips</h3>
+          <ul>
+            <li>Compare with known authentic pills when possible</li>
+            <li>Look for inconsistencies in color, texture, and markings</li>
+            <li>Be suspicious of pills sold outside pharmacies</li>
+            <li>Remember: visual inspection alone is never sufficient</li>
+          </ul>
+        </div>
       </div>
-    </div>
-
-    <!-- Quick navigation -->
-    <div class="quick-nav">
-      <a href="#why" class="quick-nav-btn">Why</a>
-      <a href="#testing" class="quick-nav-btn">Testing</a>
-      <a href="#how" class="quick-nav-btn">How To</a>
-      <a href="#overdose" class="quick-nav-btn">Response</a>
-      <a href="#resources" class="quick-nav-btn">Resources</a>
-    </div>
-
-    <!-- WHY -->
-    <details id="why">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-exclamation-triangle"></i> Why This Matters</summary>
-      <div class="card-content">
-        <h2>Understanding the Risks</h2>
-        <p><strong>Counterfeit "prescription" pills and unexpected adulterants (like fentanyl and xylazine) are widespread.</strong> Fentanyl is a potent synthetic opioid that has driven large increases in overdose deaths. Xylazine ("tranq") is a non-opioid veterinary sedative that does <strong>not</strong> respond to naloxone and increases risk of severe wounds and prolonged sedation. Treat unknown pills as potentially lethal.</p>
-        
-        <h3>Key Statistics</h3>
-        <ul>
-          <li>Over 70% of drug overdose deaths involve synthetic opioids like fentanyl</li>
-          <li>Xylazine-positive overdose deaths increased significantly in recent years</li>
-          <li>Many counterfeit pills contain lethal doses of fentanyl</li>
-        </ul>
-        
-        <p>Sources: <a href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC — Fentanyl Testing Guidance</a>, <a href="https://www.cdc.gov/overdose-prevention/about/what-you-should-know-about-xylazine.html" target="_blank" rel="noopener">CDC — Xylazine</a>, <a href="https://www.health.state.mn.us/communities/opioids/index.html" target="_blank" rel="noopener">MN Dept of Health — Drug Overdose Prevention</a>.</p>
+    </section>
+    
+    <!-- Overdose Response -->
+    <section class="content-section" id="overdose">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Overdose Response — Quick Checklist</h2>
+          <p class="section-subtitle">Emergency protocol for suspected overdose</p>
+        </div>
       </div>
-    </details>
-
-    <!-- TESTING -->
-    <details id="testing">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-vial"></i> Testing — What Works & What Doesn't</summary>
-      <div class="card-content">
-        <h2>Testing Methods Overview</h2>
-        
-        <h3>Fentanyl Test Strips (FTS)</h3>
-        <p>FTS are a fast, low-cost tool to check for fentanyl in pills, powders, or residue. They can lower risk by informing choices — but they are not perfect.</p>
-        <ul>
-          <li>Follow manufacturer instructions exactly (sample size, dilution). Improper use is a common cause of false results.</li>
-          <li>FTS can miss some fentanyl analogs depending on strip sensitivity and sample concentration — a negative result is not a guarantee of safety.</li>
-          <li>FTS do <em>not</em> detect xylazine; xylazine test strips (XTS) exist but are newer and not yet as widely distributed.</li>
-        </ul>
-        
-        <h3>Reagent Kits & FTIR</h3>
-        <p><strong>Reagent color tests</strong> (Marquis, Mecke, Mandelin) can indicate some drug classes (MDMA, some opioids, certain stimulants) but <strong>cannot reliably detect fentanyl</strong> and can be fooled by carefully pressed counterfeits. Use reagents as one tool — not the only tool.</p>
-        <p><strong>FTIR / laboratory & event-based checking</strong> (spectrometers) identify a broader range of substances and are the most informative option when available. Many harm-reduction programs and some festivals offer FTIR or GC-MS testing events.</p>
-        
-        <div class="warning">
-          <strong>Important:</strong> No testing method is 100% accurate. Always use multiple harm reduction strategies together.
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Emergency Response Protocol</h3>
+          <ol>
+            <li><strong>Call 911 immediately.</strong> Tell dispatch: "Suspected overdose; not breathing" and give the location.</li>
+            <li><strong>Give naloxone (Narcan) if available.</strong> Nasal or injectable naloxone reverses opioid effects (including fentanyl) and should be given right away.</li>
+            <li><strong>Start rescue breathing</strong> or CPR if the person is not breathing or has inadequate breathing.</li>
+            <li><strong>Place in recovery position</strong> (on their side) if they are breathing after naloxone, and stay until EMS arrives.</li>
+            <li><strong>Give additional naloxone doses</strong> every 2–3 minutes if there is no response, and continue until help arrives.</li>
+          </ol>
         </div>
         
-        <p>Source: <a href="https://dancesafe.org" target="_blank" rel="noopener">DanceSafe — testing resources & reagent supplies</a>, <a href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">SAMHSA Overdose Prevention & Response Toolkit (PDF)</a>.</p>
-      </div>
-    </details>
-
-    <!-- HOW TO USE -->
-    <details id="how">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-tools"></i> How To Test — Practical Steps</summary>
-      <div class="card-content">
-        <h2>Step-by-Step Testing Process</h2>
-        
-        <ol>
-          <li><strong>Prepare a clean surface & tools.</strong> Use a sterile container, clean utensil, and fresh water for dissolving samples.</li>
-          <li><strong>Take only a tiny sample.</strong> For pills: scrape a very small corner (do not consume the scraped powder). For powders: use a pea-size amount.</li>
-          <li><strong>Use FTS first</strong> (if available): dissolve the tiny sample in water exactly per strip instructions and apply the strip. Wait the specified time before reading.</li>
-          <li><strong>If available, get FTIR testing.</strong> If an FTIR or lab service is available (SSP, event testing, safe recovery sites), submit the sample for a more complete reading.</li>
-          <li><strong>Remember limitations:</strong> Negative FTS does not equal safe; reagent tests don't detect fentanyl reliably; xylazine requires separate testing.</li>
-        </ol>
-
-        <div class="warning">
-          <strong>If you don't have reliable testing:</strong> Do not assume safety. Consider not using the substance. If someone chooses to use, use a very small test dose, do not use alone, avoid mixing depressants (alcohol, benzodiazepines), and have naloxone and a sober person present.
+        <div class="card">
+          <h3>Recognizing Overdose Symptoms</h3>
+          <ul>
+            <li>Unresponsiveness or cannot be woken up</li>
+            <li>Slow, shallow, or stopped breathing</li>
+            <li>Blue or gray lips/fingernails</li>
+            <li>Gurgling sounds or snoring</li>
+            <li>Cold, clammy skin</li>
+          </ul>
         </div>
         
-        <h3>Testing Best Practices</h3>
-        <ul>
-          <li>Always test a small amount first</li>
-          <li>Use multiple testing methods when possible</li>
-          <li>Understand the limitations of each test</li>
-          <li>Never use a substance that tests positive for unexpected substances</li>
-        </ul>
-      </div>
-    </details>
-
-    <!-- SPOTTING -->
-    <details id="spotting">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-eye"></i> Visual Cues — Helpful But Not Definitive</summary>
-      <div class="card-content">
-        <h2>Identifying Counterfeit Pills</h2>
-        <p>Counterfeiters often copy shapes, logos, and coatings. Visual checks can sometimes catch obvious fakes (misprinted logos, off colors, uneven edges), but modern counterfeits are frequently indistinguishable from authentic pills. Always test.</p>
-
-        <div style="overflow-x: auto;">
-          <table role="table" aria-label="Fake pill indicators">
-            <thead>
-              <tr><th>Pill/Type</th><th>Possible Red Flags</th><th>Why Visuals Aren't Enough</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>M30 oxycodone</strong></td><td>Off-color shade, fuzzy or incorrect imprint, uneven edges</td><td>Pressing techniques can reproduce imprints & coatings — testing required.</td></tr>
-              <tr><td><strong>"Xanax" bars</strong></td><td>Crumbling, wrong score, wrong spacing in imprint</td><td>Fake bars are often visually convincing — may contain fentanyl or other sedatives.</td></tr>
-              <tr><td><strong>"Adderall" / stimulants</strong></td><td>Odd taste, unusual dust, inconsistent capsule contents</td><td>Stimulant counterfeits may contain meth, fentanyl, or other adulterants.</td></tr>
-            </tbody>
-          </table>
+        <div class="card">
+          <h3>Legal Protections</h3>
+          <p><strong>Legal protections:</strong> Minnesota's Good Samaritan / overdose immunity laws protect callers from certain drug possession charges when they call for medical assistance during an overdose. See Minnesota statute: <a href="https://www.revisor.mn.gov/statutes/cite/604A.05" target="_blank" rel="noopener">Minn. Stat. §604A.05</a>.</p>
+          <p>Sources: <a href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">SAMHSA Overdose Prevention & Response Toolkit (PDF, 2025)</a>, <a href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC testing guidance</a>.</p>
         </div>
-        
-        <h3>Visual Inspection Tips</h3>
-        <ul>
-          <li>Compare with known authentic pills when possible</li>
-          <li>Look for inconsistencies in color, texture, and markings</li>
-          <li>Be suspicious of pills sold outside pharmacies</li>
-          <li>Remember: visual inspection alone is never sufficient</li>
-        </ul>
       </div>
-    </details>
-
-    <!-- OVERDOSE RESPONSE -->
-    <details id="overdose">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-heartbeat"></i> Overdose Response — Quick Checklist</summary>
-      <div class="card-content">
-        <h2>Emergency Response Protocol</h2>
-        
-        <ol>
-          <li><strong>Call 911 immediately.</strong> Tell dispatch: "Suspected overdose; not breathing" and give the location.</li>
-          <li><strong>Give naloxone (Narcan) if available.</strong> Nasal or injectable naloxone reverses opioid effects (including fentanyl) and should be given right away.</li>
-          <li><strong>Start rescue breathing</strong> or CPR if the person is not breathing or has inadequate breathing.</li>
-          <li><strong>Place in recovery position</strong> (on their side) if they are breathing after naloxone, and stay until EMS arrives.</li>
-          <li><strong>Give additional naloxone doses</strong> every 2–3 minutes if there is no response, and continue until help arrives.</li>
-        </ol>
-
-        <h3>Recognizing Overdose Symptoms</h3>
-        <ul>
-          <li>Unresponsiveness or cannot be woken up</li>
-          <li>Slow, shallow, or stopped breathing</li>
-          <li>Blue or gray lips/fingernails</li>
-          <li>Gurgling sounds or snoring</li>
-          <li>Cold, clammy skin</li>
-        </ul>
-
-        <p><strong>Legal protections:</strong> Minnesota's Good Samaritan / overdose immunity laws protect callers from certain drug possession charges when they call for medical assistance during an overdose. See Minnesota statute: <a href="https://www.revisor.mn.gov/statutes/cite/604A.05" target="_blank" rel="noopener">Minn. Stat. §604A.05</a>.</p>
-
-        <p>Sources: <a href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">SAMHSA Overdose Prevention & Response Toolkit (PDF, 2025)</a>, <a href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC testing guidance</a>.</p>
+    </section>
+    
+    <!-- Resources -->
+    <section class="content-section" id="resources">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Verified Resources — Minnesota & National</h2>
+          <p class="section-subtitle">Trusted organizations, guides, and programs</p>
+        </div>
       </div>
-    </details>
-
-    <!-- RESOURCES -->
-    <details id="resources">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-map-marker-alt"></i> Verified Resources — Minnesota & National</summary>
-      <div class="card-content">
-        <h2>Trusted Organizations & Programs</h2>
-        <p>Below are trusted organizations, guides, and programs you can link to or contact. All links go to official resource pages.</p>
-
-        <div class="resource-grid" role="list">
-          <div class="resource-card" role="listitem">
+      
+      <div class="resources-grid">
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-file-pdf"></i>
-            <h3>SAMHSA — Overdose Prevention & Response Toolkit (2025)</h3>
-            <p>Comprehensive, up-to-date guidance for preventing & responding to overdose. PDF guide for peers, programs, clinicians.</p>
-            <a class="btn" href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">Open SAMHSA PDF</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>SAMHSA — Overdose Prevention & Response Toolkit (2025)</h4>
+          <p>Comprehensive, up-to-date guidance for preventing & responding to overdose. PDF guide for peers, programs, clinicians.</p>
+          <a class="resource-link" href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">Open SAMHSA PDF</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-hospital"></i>
-            <h3>Minnesota Dept. of Health — Overdose & Opioids</h3>
-            <p>State dashboards, harm reduction program info, xylazine resources.</p>
-            <a class="btn" href="https://www.health.state.mn.us/communities/opioids/index.html" target="_blank" rel="noopener">MN Dept. of Health</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>Minnesota Dept. of Health — Overdose & Opioids</h4>
+          <p>State dashboards, harm reduction program info, xylazine resources.</p>
+          <a class="resource-link" href="https://www.health.state.mn.us/communities/opioids/index.html" target="_blank" rel="noopener">MN Dept. of Health</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-hand-holding-medical"></i>
-            <h3>Steve Rummler HOPE Network (MN)</h3>
-            <p>Statewide Naloxone Access Points, mail naloxone, trainings, and FTS distribution.</p>
-            <a class="btn" href="https://steverummlerhopenetwork.org" target="_blank" rel="noopener">Steve Rummler HOPE Network</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>Steve Rummler HOPE Network (MN)</h4>
+          <p>Statewide Naloxone Access Points, mail naloxone, trainings, and FTS distribution.</p>
+          <a class="resource-link" href="https://steverummlerhopenetwork.org" target="_blank" rel="noopener">Steve Rummler HOPE Network</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-shield-alt"></i>
-            <h3>Minnesota DHS — Safe Recovery Sites</h3>
-            <p>State program information and implementation updates for safer recovery sites and supervised services.</p>
-            <a class="btn" href="https://mn.gov/dhs/people-we-serve/adults/health-care/alcohol-drugs-addictions/programs-and-services/safe-recovery-sites.jsp" target="_blank" rel="noopener">MN DHS — Safe Recovery Sites</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>Minnesota DHS — Safe Recovery Sites</h4>
+          <p>State program information and implementation updates for safer recovery sites and supervised services.</p>
+          <a class="resource-link" href="https://mn.gov/dhs/people-we-serve/adults/health-care/alcohol-drugs-addictions/programs-and-services/safe-recovery-sites.jsp" target="_blank" rel="noopener">MN DHS — Safe Recovery Sites</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-tools"></i>
-            <h3>DanceSafe — Test Strips & Reagent Supplies</h3>
-            <p>Reagent color charts, FTS, and testing supplies for peer programs and individuals.</p>
-            <a class="btn" href="https://dancesafe.org/shop/" target="_blank" rel="noopener">DanceSafe Shop & Resources</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>DanceSafe — Test Strips & Reagent Supplies</h4>
+          <p>Reagent color charts, FTS, and testing supplies for peer programs and individuals.</p>
+          <a class="resource-link" href="https://dancesafe.org/shop/" target="_blank" rel="noopener">DanceSafe Shop & Resources</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-phone"></i>
-            <h3>Never Use Alone (Remote Spotting)</h3>
-            <p>Peer-run line to stay on the phone with someone while they use and call for help if needed.</p>
-            <a class="btn" href="https://neverusealone.com/" target="_blank" rel="noopener">NeverUseAlone.com</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>Never Use Alone (Remote Spotting)</h4>
+          <p>Peer-run line to stay on the phone with someone while they use and call for help if needed.</p>
+          <a class="resource-link" href="https://neverusealone.com/" target="_blank" rel="noopener">NeverUseAlone.com</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-globe"></i>
-            <h3>CDC — Fentanyl & Xylazine Info</h3>
-            <p>Practical guidance on testing, xylazine harms, and public health alerts.</p>
-            <a class="btn" href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC — Testing & Safety</a>
           </div>
-
-          <div class="resource-card" role="listitem">
+          <h4>CDC — Fentanyl & Xylazine Info</h4>
+          <p>Practical guidance on testing, xylazine harms, and public health alerts.</p>
+          <a class="resource-link" href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC — Testing & Safety</a>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">
             <i class="fas fa-info-circle"></i>
-            <h3>Harm Reduction Coalition — Resource Center</h3>
-            <p>Training materials, policy guides, and technical assistance for programs.</p>
-            <a class="btn" href="https://harmreduction.org/resource-center/" target="_blank" rel="noopener">Harm Reduction Coalition</a>
           </div>
+          <h4>Harm Reduction Coalition — Resource Center</h4>
+          <p>Training materials, policy guides, and technical assistance for programs.</p>
+          <a class="resource-link" href="https://harmreduction.org/resource-center/" target="_blank" rel="noopener">Harm Reduction Coalition</a>
         </div>
       </div>
-    </details>
-
-    <!-- DOWNLOADS -->
-    <details id="downloads">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-download"></i> Downloadable, Verified Guides</summary>
-      <div class="card-content">
-        <h2>Printable Resources</h2>
-        
-        <ul>
-          <li><a href="https://library.samhsa.gov/sites/default/files/overdose-prevention-response-kit-pep23-03-00-001.pdf" target="_blank" rel="noopener">SAMHSA — Overdose Prevention & Response Toolkit (PDF, 2025)</a></li>
-          <li><a href="https://www.cdc.gov/stop-overdose/safety/index.html" target="_blank" rel="noopener">CDC — What You Can Do to Test for Fentanyl (web guide)</a></li>
-          <li><a href="https://dancesafe.org/wp-content/uploads/2019/06/Reagent-Test-Kits-Color-Reference-Chart.pdf" target="_blank" rel="noopener">DanceSafe — Reagent Test Color Chart (PDF)</a></li>
-          <li><a href="https://www.health.state.mn.us/communities/opioids/index.html" target="_blank" rel="noopener">MN Dept. of Health — Overdose Prevention Resources (state pages)</a></li>
-        </ul>
-
-        <p style="margin-top: 15px;"><strong>Note:</strong> These are official guidance documents and practical quick-reads you can print and hand out at booths or events.</p>
+    </section>
+    
+    <!-- Safety Tips -->
+    <section class="content-section" id="tips">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div>
+          <h2 class="section-title">Practical Harm-Reduction Tips</h2>
+          <p class="section-subtitle">Essential safety practices for reducing risks</p>
+        </div>
       </div>
-    </details>
-
-    <!-- PRACTICAL TIPS -->
-    <details id="tips">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-lightbulb"></i> Practical Harm-Reduction Tips</summary>
-      <div class="card-content">
-        <h2>Essential Safety Practices</h2>
-        
-        <ul>
-          <li><strong>Carry naloxone</strong> every time. In Minnesota, naloxone is available through pharmacies and statewide programs.</li>
-          <li><strong>Start low & go slow.</strong> If you choose to use, test a tiny amount first and wait at least 30–60 minutes before considering more.</li>
-          <li><strong>Don't mix depressants.</strong> Opioids + benzodiazepines or alcohol greatly increase overdose risk.</li>
-          <li><strong>Don't use alone.</strong> Use with a trusted person or a service like Never Use Alone.</li>
-          <li><strong>Watch for wounds</strong> with xylazine exposure — xylazine can cause severe skin ulcers; seek wound care early.</li>
-          <li><strong>Have a safety plan</strong> and make sure someone knows where you are.</li>
-          <li><strong>Stay hydrated</strong> but avoid overhydration.</li>
-          <li><strong>Take breaks</strong> and listen to your body.</li>
-        </ul>
-        
-        <h3>Creating a Safety Plan</h3>
-        <ol>
-          <li>Identify a sober friend to check on you</li>
-          <li>Have naloxone readily available</li>
-          <li>Know the signs of overdose</li>
-          <li>Have emergency contacts saved in your phone</li>
-          <li>Know your location to provide to 911 if needed</li>
-        </ol>
-      </div>
-    </details>
-
-    <!-- FINAL WORDS -->
-    <details id="final">
-      <summary><i class="fas fa-chevron-right"></i> <i class="fas fa-comment"></i> Final Words — Short And Important</summary>
-      <div class="card-content">
-        <h2>Key Takeaways</h2>
-        
-        <p>No pill is worth your life. Test what you can, carry naloxone, never use alone, and call 911 if someone is overdosing. If you want, PLURderapolis can print pocket cards or run trainings at your booth — get in touch through our contact page.</p>
-        
-        <div class="warning">
-          <strong>Remember:</strong> Your safety and the safety of those around you is the highest priority. When in doubt, don't use. When concerned, call for help.
+      
+      <div class="card-grid">
+        <div class="card">
+          <h3>Essential Safety Practices</h3>
+          <ul>
+            <li><strong>Carry naloxone</strong> every time. In Minnesota, naloxone is available through pharmacies and statewide programs.</li>
+            <li><strong>Start low & go slow.</strong> If you choose to use, test a tiny amount first and wait at least 30–60 minutes before considering more.</li>
+            <li><strong>Don't mix depressants.</strong> Opioids + benzodiazepines or alcohol greatly increase overdose risk.</li>
+            <li><strong>Don't use alone.</strong> Use with a trusted person or a service like Never Use Alone.</li>
+            <li><strong>Watch for wounds</strong> with xylazine exposure — xylazine can cause severe skin ulcers; seek wound care early.</li>
+            <li><strong>Have a safety plan</strong> and make sure someone knows where you are.</li>
+            <li><strong>Stay hydrated</strong> but avoid overhydration.</li>
+            <li><strong>Take breaks</strong> and listen to your body.</li>
+          </ul>
         </div>
         
-        <h3>Community Support</h3>
-        <p>PLURderapolis is committed to providing evidence-based harm reduction information and resources. We believe in meeting people where they're at and reducing the risks associated with drug use without judgment.</p>
+        <div class="card">
+          <h3>Creating a Safety Plan</h3>
+          <ol>
+            <li>Identify a sober friend to check on you</li>
+            <li>Have naloxone readily available</li>
+            <li>Know the signs of overdose</li>
+            <li>Have emergency contacts saved in your phone</li>
+            <li>Know your location to provide to 911 if needed</li>
+          </ol>
+        </div>
+        
+        <div class="card">
+          <h3>Key Takeaways</h3>
+          <p>No pill is worth your life. Test what you can, carry naloxone, never use alone, and call 911 if someone is overdosing. If you want, PLURderapolis can print pocket cards or run trainings at your booth — get in touch through our contact page.</p>
+          
+          <div class="warning">
+            <h4>Remember:</h4>
+            <p>Your safety and the safety of those around you is the highest priority. When in doubt, don't use. When concerned, call for help.</p>
+          </div>
+          
+          <h4>Community Support</h4>
+          <p>PLURderapolis is committed to providing evidence-based harm reduction information and resources. We believe in meeting people where they're at and reducing the risks associated with drug use without judgment.</p>
+        </div>
       </div>
-    </details>
-
-    <!-- Enhanced Legal Disclaimer -->
-    <div class="disclaimer">
-      <h3>Legal & Health Disclaimer</h3>
-      <p><strong>Medical Disclaimer:</strong> The information provided on this website is for educational and harm reduction purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition or substance use. Never disregard professional medical advice or delay in seeking it because of something you have read on this website.</p>
-      
-      <p><strong>No Professional-Client Relationship:</strong> Use of this website does not establish any form of professional-client relationship. The content is provided for informational purposes only and should not be relied upon as medical, legal, or other professional advice.</p>
-      
-      <p><strong>Use at Your Own Risk:</strong> Harm reduction strategies can reduce but not eliminate risks associated with substance use. Any actions you take based on the information provided on this website are strictly at your own risk. PLURderapolis, its affiliates, and contributors are not liable for any damages or losses resulting from reliance on the information provided.</p>
-      
-      <p><strong>Legal Compliance:</strong> This website provides information about substances that may be illegal in some jurisdictions. It is your responsibility to know and comply with the laws in your area. PLURderapolis does not encourage illegal activities.</p>
-      
-      <p><strong>Emergency Situations:</strong> If you are experiencing a medical emergency, call 911 or your local emergency number immediately. For substance use treatment referrals, contact SAMHSA's National Helpline at 1-800-662-HELP (4357) or visit <a href="https://findtreatment.gov" target="_blank" rel="noopener">FindTreatment.gov</a>.</p>
-      
-      <p><strong>External Links:</strong> This site contains links to external websites. PLURderapolis is not responsible for the content of external sites and provides these links for informational purposes only.</p>
-      
-      <p><em>Last updated: October 2025</em></p>
-      
-      <!-- Share buttons -->
-      <div class="share-buttons">
-        <a href="#" class="share-btn" onclick="sharePage('facebook')"><i class="fab fa-facebook-f"></i> Share</a>
-        <a href="#" class="share-btn" onclick="sharePage('twitter')"><i class="fab fa-twitter"></i> Tweet</a>
-        <a href="#" class="share-btn" onclick="sharePage('linkedin')"><i class="fab fa-linkedin-in"></i> Share</a>
-        <a href="#" class="share-btn" onclick="copyLink()"><i class="fas fa-link"></i> Copy Link</a>
-        <a href="#" class="share-btn" onclick="savePage()"><i class="fas fa-save"></i> Save</a>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About PLURderapolis</h3>
+          <p>PLURderapolis provides evidence-based harm reduction information and resources. We believe in meeting people where they're at and reducing the risks associated with drug use without judgment.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polydrug.html">Polydrug Tool</a></li>
+            <li><a href="emergency.html">Emergency Response</a></li>
+            <li><a href="resources.html">All Resources</a></li>
+            <li><a href="rx-combo.html">RX Combo Guide</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Legal & Health Disclaimer</h3>
+          <p style="font-size: 0.9rem; color: #bbb;">The information provided is for educational and harm reduction purposes only and is not intended as a substitute for professional medical advice. Always seek the advice of your physician or other qualified health provider with any questions.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="nav-container">
-      <a href="index.html" class="btn-outline"><i class="fas fa-arrow-left"></i> Back to Home</a>
-      <a href="resources.html" class="btn"><i class="fas fa-book-open"></i> More Resources</a>
-      <a href="rx-combo.html" class="btn"><i class="fas fa-prescription-bottle"></i> RX Combo</a>
-    </div>
-  </main>
-
-  <footer>
-    <div class="container">
-      <p style="margin-bottom:10px; font-size: 1rem;">Stay safe. Look out for each other. — PLURderapolis</p>
-      <small style="color:#bbb;">Last checked: Sept 18, 2025. Key sources: CDC, SAMHSA, Minnesota Dept. of Health/DHS, Steve Rummler HOPE Network, DanceSafe.</small>
-    </div>
-  </footer>
-
+      
+      <div class="copyright">
+        <p>Stay safe. Look out for each other. — PLURderapolis</p>
+        <p style="margin-top: 10px;">Last checked: Sept 18, 2025. Key sources: CDC, SAMHSA, Minnesota Dept. of Health/DHS, Steve Rummler HOPE Network, DanceSafe.</p>
+      </div>
+    </footer>
+  </div>
+  
   <!-- Scroll to top button -->
   <button id="scrollToTopBtn" title="Go to top"><i class="fas fa-chevron-up"></i></button>
-
+  
   <script>
-    // Mobile menu functionality
-    function toggleMobileMenu() {
-      var x = document.getElementById("myLinks");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      } else {
-        x.style.display = "block";
-      }
-    }
+    // DOM elements
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const overlay = document.getElementById('overlay');
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    const progressIndicator = document.getElementById('progressIndicator');
+    const sectionNav = document.getElementById('sectionNav');
+    const navItems = document.querySelectorAll('.nav-item');
+    const contentSections = document.querySelectorAll('.content-section');
+    const searchBtn = document.getElementById('searchBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const printBtn = document.getElementById('printBtn');
+    
+    // Toggle sidebar
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    });
+    
+    // Close sidebar when clicking overlay
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
     
     // Scroll to top functionality
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-    
-    window.onscroll = function() {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        scrollToTopBtn.style.display = "block";
+    window.addEventListener('scroll', () => {
+      // Show/hide scroll to top button
+      if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('show');
       } else {
-        scrollToTopBtn.style.display = "none";
-      }
-    };
-    
-    scrollToTopBtn.addEventListener("click", function() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-    
-    // Share functionality
-    function sharePage(platform) {
-      const url = encodeURIComponent(window.location.href);
-      const title = encodeURIComponent(document.title);
-      let shareUrl;
-      
-      switch(platform) {
-        case 'facebook':
-          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-          break;
-        case 'twitter':
-          shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-          break;
-        case 'linkedin':
-          shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-          break;
-        default:
-          return;
+        scrollToTopBtn.classList.remove('show');
       }
       
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
-    
-    function copyLink() {
-      const url = window.location.href;
-      navigator.clipboard.writeText(url).then(function() {
-        alert('Link copied to clipboard!');
-      }, function(err) {
-        console.error('Could not copy text: ', err);
-      });
-    }
-    
-    // Save page functionality
-    function savePage() {
-      // Create a printable version of the page
-      const printWindow = window.open('', '_blank');
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>${document.title}</title>
-            <style>
-              body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
-              h1, h2, h3 { color: #5D3A7D; }
-              .warning { background-color: #ffe6e6; border-left: 5px solid #ff4444; padding: 10px; margin: 10px 0; }
-              table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-              th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-              th { background-color: #f2f2f2; }
-              a { color: #00CED1; }
-              .disclaimer { font-size: 0.9rem; color: #666; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; }
-            </style>
-          </head>
-          <body>
-            <h1>${document.querySelector('h1').textContent}</h1>
-            <p>${document.querySelector('header p').textContent}</p>
-            ${Array.from(document.querySelectorAll('details')).map(detail => `
-              <h2>${detail.querySelector('summary').textContent.trim()}</h2>
-              <div>${detail.querySelector('.card-content').innerHTML}</div>
-            `).join('')}
-            <div class="disclaimer">${document.querySelector('.disclaimer').innerHTML}</div>
-            <p><strong>Source:</strong> PLURderapolis.org - ${new Date().toLocaleDateString()}</p>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-      printWindow.print();
-    }
-    
-    // Animation on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animation = `fadeIn 0.5s ease forwards`;
+      // Update progress indicator
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressIndicator.style.width = scrolled + "%";
+      
+      // Update active section in sidebar
+      let currentSection = '';
+      contentSections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          currentSection = section.id;
         }
       });
-    }, observerOptions);
-    
-    // Observe all details elements for animation
-    document.querySelectorAll('details').forEach(detail => {
-      observer.observe(detail);
+      
+      // Update active nav item
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-section') === currentSection) {
+          item.classList.add('active');
+        }
+      });
+      
+      // Update section nav active state
+      const sectionNavLinks = sectionNav.querySelectorAll('a');
+      sectionNavLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+      
+      // Trigger animations when sections come into view
+      contentSections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (sectionTop < windowHeight * 0.85) {
+          section.classList.add('visible');
+        }
+      });
     });
     
-    // Create floating particles
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 30;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Random position
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-        
-        // Random size
-        const size = Math.random() * 3 + 1;
-        
-        // Random animation delay and duration
-        const delay = Math.random() * 15;
-        const duration = Math.random() * 10 + 10;
-        
-        // Random color
-        const colors = ['#E040FB', '#00CED1', '#5D3A7D', '#FF2A9C'];
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        
-        particle.style.left = `${posX}%`;
-        particle.style.top = `${posY}%`;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.background = color;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.animationDuration = `${duration}s`;
-        
-        particlesContainer.appendChild(particle);
-      }
-    }
+    // Scroll to top when button is clicked
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
     
-    // Initialize particles
-    createParticles();
+    // Smooth scroll for nav items
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('data-section');
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          window.scrollTo({
+            top: targetSection.offsetTop - 100,
+            behavior: 'smooth'
+          });
+          
+          // Close sidebar on mobile after clicking
+          if (window.innerWidth < 992) {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+    
+    // Smooth scroll for section nav
+    sectionNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          window.scrollTo({
+            top: targetSection.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Action buttons functionality
+    searchBtn.addEventListener('click', () => {
+      alert('Search functionality would be implemented here. This is a demo.');
+    });
+    
+    shareBtn.addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: 'Check out this harm reduction guide from PLURderapolis',
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    });
+    
+    printBtn.addEventListener('click', () => {
+      window.print();
+    });
+    
+    // Initialize animations for sections in view on load
+    window.addEventListener('load', () => {
+      contentSections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (sectionTop < windowHeight * 0.85) {
+          section.classList.add('visible');
+        }
+      });
+    });
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Ctrl/Cmd + S to toggle sidebar
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+      }
+      
+      // Escape to close sidebar
+      if (e.key === 'Escape') {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.card, .resource-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+      });
+    });
+    
+    // Initialize with hero section visible
+    document.getElementById('hero').classList.add('visible');
   </script>
 </body>
 </html>
