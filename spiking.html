@@ -2,14 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Drink Spiking Awareness | PLURderapolis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Drink Spiking Awareness & Prevention | PLURderapolis Community Safety</title>
+  <meta name="description" content="Essential guide to recognizing, preventing, and responding to drink spiking. Learn signs, symptoms, and immediate actions to stay safe in your community.">
+  <meta name="keywords" content="drink spiking, safety, prevention, symptoms, drug-facilitated assault, community safety, harm reduction, PLURderapolis">
+  <meta property="og:title" content="Drink Spiking Awareness & Prevention | PLURderapolis">
+  <meta property="og:description" content="Essential guide to recognizing, preventing, and responding to drink spiking.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary-bg: #2e003e;
-      --section-bg: #3a0052;
+      --primary-purple: #2e003e;
+      --dark-purple: #1a0029;
+      --light-purple: #3a0052;
       --accent-teal: #00f7e0;
       --accent-pink: #ff6ec7;
       --accent-purple: #a23dff;
@@ -17,12 +24,13 @@
       --text-light: #f8f8f8;
       --text-muted: #cccccc;
       --emergency-red: #ff3860;
-      --safe-green: #4caf50;
+      --safe-green: #2ecc71;
       --gradient-1: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
       --gradient-2: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
-      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.2);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --gradient-hero: linear-gradient(135deg, var(--primary-purple), #4a0073);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.3);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     
     * {
@@ -33,11 +41,11 @@
     
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 80px;
+      scroll-padding-top: 100px;
     }
     
     body {
-      background-color: var(--primary-bg);
+      background-color: var(--dark-purple);
       color: var(--text-light);
       font-family: 'Roboto', sans-serif;
       line-height: 1.7;
@@ -48,36 +56,50 @@
         radial-gradient(circle at 90% 80%, rgba(255, 110, 199, 0.15) 0%, transparent 25%),
         radial-gradient(circle at 50% 50%, rgba(0, 247, 224, 0.05) 0%, transparent 50%);
       min-height: 100vh;
-      opacity: 0;
-      animation: pageLoad 0.8s ease-out forwards;
+      overflow-x: hidden;
     }
     
-    @keyframes pageLoad {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Skip to main content for accessibility */
+    .skip-to-main {
+      position: absolute;
+      top: -50px;
+      left: 10px;
+      background: var(--accent-teal);
+      color: var(--primary-purple);
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 700;
+      z-index: 1001;
+      transition: top 0.3s ease;
     }
     
+    .skip-to-main:focus {
+      top: 10px;
+    }
+    
+    /* Main Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
     
-    /* Header & Navigation */
-    .header {
-      background: linear-gradient(135deg, rgba(46, 0, 62, 0.95), rgba(58, 0, 82, 0.95));
-      padding: 1rem 1.5rem;
+    /* Brand Header */
+    .brand-header {
+      background: rgba(30, 0, 46, 0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 1rem 2rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: var(--shadow-md);
+      border-bottom: 3px solid var(--accent-teal);
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       animation: slideDown 0.5s ease-out;
-      border-bottom: 2px solid var(--accent-teal);
     }
     
     @keyframes slideDown {
@@ -85,328 +107,282 @@
       to { transform: translateY(0); opacity: 1; }
     }
     
-    .logo {
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: 1.4rem;
-      color: var(--accent-teal);
+      gap: 1rem;
       text-decoration: none;
-      transition: all 0.3s ease;
     }
     
-    .logo:hover {
-      transform: scale(1.05);
-      text-shadow: 0 0 15px rgba(0, 247, 224, 0.5);
-    }
-    
-    .logo i {
-      font-size: 1.8rem;
-      transition: transform 0.5s ease;
-    }
-    
-    .logo:hover i {
-      transform: rotate(15deg) scale(1.2);
-    }
-    
-    .back-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-light);
-      padding: 0.6rem 1rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .back-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateX(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-    
-    /* Section Navigation Map */
-    .section-map {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 900;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      background: rgba(58, 0, 82, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 15px 10px;
-      border-radius: 20px;
-      border: 2px solid var(--accent-teal);
-      box-shadow: var(--shadow-lg);
-      opacity: 0.9;
-      transition: all 0.3s ease;
-      max-height: 70vh;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent-teal) transparent;
-    }
-    
-    .section-map:hover {
-      opacity: 1;
-      transform: translateY(-50%) scale(1.05);
-    }
-    
-    .section-map::-webkit-scrollbar {
-      width: 4px;
-    }
-    
-    .section-map::-webkit-scrollbar-thumb {
-      background: var(--accent-teal);
-      border-radius: 10px;
-    }
-    
-    .map-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-light);
-      text-decoration: none;
-      padding: 8px 12px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      font-size: 0.9rem;
-    }
-    
-    .map-item i {
-      color: var(--accent-teal);
-      font-size: 1rem;
-      min-width: 20px;
-      text-align: center;
-    }
-    
-    .map-item:hover {
-      background: rgba(0, 247, 224, 0.2);
-      transform: translateX(-5px);
-    }
-    
-    .map-item.active {
-      background: rgba(0, 247, 224, 0.3);
-      color: var(--accent-teal);
-      font-weight: 600;
-    }
-    
-    .map-item.active i {
-      color: var(--accent-teal);
-    }
-    
-    .map-toggle {
-      display: none;
-      position: fixed;
-      bottom: 120px;
-      right: 20px;
+    .logo-icon {
+      background: var(--gradient-2);
       width: 50px;
       height: 50px;
-      background: var(--gradient-2);
-      color: white;
       border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      z-index: 901;
-      box-shadow: var(--shadow-md);
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 247, 224, 0.4);
+      animation: logoPulse 4s infinite;
     }
     
-    .map-toggle:hover {
-      transform: scale(1.1);
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 247, 224, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 247, 224, 0.6); }
     }
     
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 3rem 1rem 2.5rem;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 150%;
-      height: 150%;
-      background: radial-gradient(circle, rgba(0, 247, 224, 0.1) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      animation: pulse 8s infinite alternate;
-    }
-    
-    @keyframes pulse {
-      0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
-    }
-    
-    .hero h1 {
+    .logo-text {
+      display: flex;
+      flex-direction: column;
       font-family: 'Montserrat', sans-serif;
-      font-size: 3rem;
-      background: var(--gradient-1);
+    }
+    
+    .logo-primary {
+      font-weight: 900;
+      font-size: 1.8rem;
+      background: var(--gradient-2);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1.2rem;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      line-height: 1.2;
-      animation: fadeInUp 0.8s ease-out 0.2s both;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
     
-    .hero-subtitle {
-      font-size: 1.3rem;
+    .logo-tagline {
+      font-size: 0.8rem;
       color: var(--accent-teal);
-      margin-bottom: 0.5rem;
       font-weight: 600;
-      animation: fadeInUp 0.8s ease-out 0.4s both;
+      letter-spacing: 1px;
     }
     
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 800px;
-      margin: 0 auto;
-      color: var(--text-muted);
-      animation: fadeInUp 0.8s ease-out 0.6s both;
-    }
-    
-    /* Emergency Bar - Enhanced */
-    .emergency-bar {
-      background: linear-gradient(135deg, var(--emergency-red), #ff6b6b);
-      color: white;
-      padding: 1rem 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      margin: 2rem 0 3rem;
-      border-radius: 12px;
+    /* Main Navigation */
+    .main-nav {
       display: flex;
-      justify-content: space-between;
+      gap: 1.5rem;
       align-items: center;
-      gap: 1rem;
-      animation: emergencyPulse 2s infinite, slideIn 0.6s ease-out;
-      box-shadow: 0 8px 25px rgba(255, 56, 96, 0.4);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .nav-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
     
-    .emergency-bar::before {
+    .nav-link::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to right,
-        transparent 20%,
-        rgba(255, 255, 255, 0.3) 50%,
-        transparent 80%
-      );
-      transform: rotate(30deg);
-      animation: shine 3s infinite linear;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--accent-teal);
+      transition: width 0.3s ease;
     }
     
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(30deg); }
-      100% { transform: translateX(100%) rotate(30deg); }
+    .nav-link:hover, .nav-link.active {
+      color: var(--accent-teal);
     }
     
-    @keyframes emergencyPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 56, 96, 0.4); }
-      50% { transform: scale(1.02); box-shadow: 0 12px 35px rgba(255, 56, 96, 0.6); }
+    .nav-link:hover::before, .nav-link.active::before {
+      width: 80%;
     }
     
-    .emergency-call {
-      background: white;
-      color: var(--emergency-red);
+    .nav-button {
+      background: var(--gradient-2);
+      color: white;
       padding: 0.7rem 1.5rem;
       border-radius: 50px;
-      font-weight: 800;
+      font-weight: 700;
       text-decoration: none;
-      font-size: 1rem;
-      white-space: nowrap;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      position: relative;
-      z-index: 2;
-    }
-    
-    .emergency-call:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-      border-color: white;
-    }
-    
-    /* Quick Actions - Enhanced Grid */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    
-    .quick-action-card {
-      background: var(--section-bg);
-      border-radius: 16px;
-      padding: 2rem 1.5rem;
-      text-align: center;
+      transition: all 0.3s ease;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: fadeInUp 0.6s ease-out;
-      animation-fill-mode: both;
-      border: 2px solid transparent;
-      background-clip: padding-box;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 247, 224, 0.3);
+    }
+    
+    .nav-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 247, 224, 0.5);
+    }
+    
+    /* Mobile Navigation Toggle */
+    .mobile-nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--accent-teal);
+      font-size: 1.8rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: var(--gradient-hero);
+      padding: 4rem 2rem;
+      text-align: center;
       position: relative;
       overflow: hidden;
+      margin-bottom: 2rem;
+      border-radius: 0 0 30px 30px;
+      box-shadow: var(--shadow-lg);
     }
     
-    .quick-action-card::before {
+    .hero-section::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: var(--gradient-2);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
     }
     
-    .quick-action-card:hover::before {
-      transform: scaleX(1);
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      animation: fadeInUp 0.8s ease-out;
+      line-height: 1.1;
     }
     
-    .quick-action-card:nth-child(1) { animation-delay: 0.1s; }
-    .quick-action-card:nth-child(2) { animation-delay: 0.2s; }
-    .quick-action-card:nth-child(3) { animation-delay: 0.3s; }
-    .quick-action-card:nth-child(4) { animation-delay: 0.4s; }
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: var(--accent-teal);
+      margin-bottom: 2rem;
+      font-weight: 600;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
     
-    .quick-action-card:hover {
+    .hero-description {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Emergency Alert */
+    .emergency-alert {
+      background: linear-gradient(135deg, var(--emergency-red), #ff6b6b);
+      color: white;
+      padding: 1.2rem 2rem;
+      margin: 2rem 0 3rem;
+      border-radius: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      animation: alertPulse 2s infinite, slideIn 0.6s ease-out;
+      box-shadow: 0 10px 30px rgba(255, 56, 96, 0.5);
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .emergency-alert::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: alertShine 3s infinite;
+    }
+    
+    @keyframes alertShine {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    
+    @keyframes alertPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(255, 56, 96, 0.5); }
+      50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(255, 56, 96, 0.7); }
+    }
+    
+    .emergency-call-button {
+      background: white;
+      color: var(--emergency-red);
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 900;
+      text-decoration: none;
+      font-size: 1.1rem;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    
+    .emergency-call-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
+      border-color: white;
+    }
+    
+    /* Content Navigation Grid */
+    .content-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    
+    .nav-card {
+      background: var(--light-purple);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 3px solid transparent;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .nav-card:nth-child(1) { animation-delay: 0.1s; }
+    .nav-card:nth-child(2) { animation-delay: 0.2s; }
+    .nav-card:nth-child(3) { animation-delay: 0.3s; }
+    .nav-card:nth-child(4) { animation-delay: 0.4s; }
+    .nav-card:nth-child(5) { animation-delay: 0.5s; }
+    .nav-card:nth-child(6) { animation-delay: 0.6s; }
+    
+    .nav-card:hover {
       transform: translateY(-10px);
       box-shadow: var(--shadow-lg);
       border-color: var(--accent-teal);
     }
     
-    .action-icon {
-      font-size: 3rem;
-      margin-bottom: 1.2rem;
+    .nav-card-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
       background: var(--gradient-2);
       -webkit-background-clip: text;
       background-clip: text;
@@ -414,18 +390,24 @@
       transition: transform 0.5s ease;
     }
     
-    .quick-action-card:hover .action-icon {
+    .nav-card:hover .nav-card-icon {
       transform: scale(1.2) rotate(10deg);
     }
     
-    .quick-action-card h3 {
+    .nav-card-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
       color: var(--accent-teal);
     }
     
-    .action-button {
+    .nav-card-description {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    
+    .nav-card-button {
       display: inline-block;
       background: var(--gradient-2);
       color: white;
@@ -433,203 +415,106 @@
       border-radius: 50px;
       font-weight: 700;
       text-decoration: none;
-      margin-top: 1.2rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 100%;
-      font-size: 1rem;
+      transition: all 0.3s ease;
       border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
     }
     
-    .action-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
-      z-index: -1;
-    }
-    
-    .action-button:hover::before {
-      left: 100%;
-    }
-    
-    .action-button:hover {
+    .nav-card-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 247, 224, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 247, 224, 0.4);
       border-color: var(--accent-teal);
     }
     
-    .action-button.emergency {
-      background: linear-gradient(135deg, var(--emergency-red), #ff6b6b);
-    }
-    
-    /* Content Sections */
-    .section {
-      background-color: var(--section-bg);
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border-radius: 16px;
+    /* Main Content Sections */
+    .content-section {
+      background: var(--light-purple);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-bottom: 3rem;
       box-shadow: var(--shadow-md);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: fadeInUp 0.6s ease-out;
-      animation-fill-mode: both;
-      border-left: 5px solid var(--accent-teal);
-      position: relative;
-      overflow: hidden;
-      scroll-margin-top: 80px;
+      transition: all 0.3s ease;
+      border-left: 8px solid var(--accent-teal);
+      scroll-margin-top: 120px;
+      animation: fadeInUp 0.8s ease-out;
     }
     
-    .section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, rgba(0, 247, 224, 0.1) 0%, transparent 70%);
-      transform: translate(50%, -50%);
-    }
-    
-    .section:nth-child(1) { animation-delay: 0.1s; border-left-color: var(--accent-teal); }
-    .section:nth-child(2) { animation-delay: 0.2s; border-left-color: var(--accent-pink); }
-    .section:nth-child(3) { animation-delay: 0.3s; border-left-color: var(--accent-purple); }
-    .section:nth-child(4) { animation-delay: 0.4s; border-left-color: var(--accent-orange); }
-    .section:nth-child(5) { animation-delay: 0.5s; border-left-color: var(--accent-teal); }
-    .section:nth-child(6) { animation-delay: 0.6s; border-left-color: var(--accent-pink); }
-    
-    @keyframes fadeInUp {
-      from { 
-        opacity: 0; 
-        transform: translateY(40px); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
-    }
-    
-    .section:hover {
+    .content-section:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
     }
     
     .section-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      padding-right: 1rem;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(0, 247, 224, 0.2);
     }
     
-    .section-header h2 {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--accent-teal);
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      transition: color 0.3s ease;
-    }
-    
-    .section:hover .section-header h2 {
-      color: var(--accent-pink);
-    }
-    
-    .section-content {
-      display: none;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease;
-    }
-    
-    .section-content.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .toggle-icon {
-      font-size: 1.5rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    .section-icon {
+      font-size: 2.5rem;
       color: var(--accent-teal);
       background: rgba(0, 247, 224, 0.1);
-      width: 36px;
-      height: 36px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 50%;
     }
     
-    .toggle-icon.rotated {
-      transform: rotate(180deg);
-      background: rgba(255, 110, 199, 0.2);
-    }
-    
-    ul, ol {
-      padding-left: 1.5rem;
-      margin: 1.2rem 0;
-    }
-    
-    li {
-      margin-bottom: 1rem;
-      position: relative;
-    }
-    
-    ol li::before {
-      content: counter(list-item) '.';
-      position: absolute;
-      left: -1.5rem;
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
       color: var(--accent-teal);
-      font-weight: 700;
+      flex: 1;
     }
     
+    .section-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    /* Checklist Items */
     .checklist {
       list-style: none;
-      padding-left: 0;
+      margin: 2rem 0;
     }
     
-    .checklist li {
+    .checklist-item {
       display: flex;
       align-items: flex-start;
       gap: 1rem;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.03);
-      border-left: 3px solid transparent;
+      border-left: 4px solid transparent;
     }
     
-    .checklist li:hover {
-      background: rgba(0, 247, 224, 0.08);
+    .checklist-item:hover {
+      background: rgba(0, 247, 224, 0.1);
       border-left-color: var(--accent-teal);
       transform: translateX(5px);
     }
     
-    .checklist i {
+    .checklist-icon {
       color: var(--accent-teal);
+      font-size: 1.5rem;
       margin-top: 0.2rem;
       flex-shrink: 0;
-      font-size: 1.2rem;
     }
     
-    .warning {
+    /* Warning Box */
+    .warning-box {
       background: linear-gradient(135deg, rgba(255, 100, 100, 0.2), rgba(255, 56, 96, 0.3));
-      border-left: 4px solid var(--emergency-red);
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      border-radius: 10px;
+      border-left: 6px solid var(--emergency-red);
+      padding: 2rem;
+      margin: 2rem 0;
+      border-radius: 12px;
       animation: warningPulse 3s infinite;
-      position: relative;
-      overflow: hidden;
     }
     
     @keyframes warningPulse {
@@ -637,217 +522,205 @@
       50% { box-shadow: 0 0 0 10px rgba(255, 56, 96, 0); }
     }
     
-    .warning h3 {
+    .warning-box h3 {
       color: white;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    /* Quick Actions */
+    .quick-actions-bar {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .quick-action {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--gradient-2);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .quick-action:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 247, 224, 0.4);
+      border-color: var(--accent-teal);
+    }
+    
+    /* Resources Section */
+    .resources-section {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+      padding: 3rem;
+      margin-top: 4rem;
+      border: 3px solid var(--accent-teal);
+    }
+    
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
     
     .resource-card {
-      background: linear-gradient(135deg, rgba(0, 247, 224, 0.1), rgba(162, 61, 255, 0.1));
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin: 1rem 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(0, 247, 224, 0.2);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .resource-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--gradient-2);
+      background: rgba(0, 247, 224, 0.1);
+      border-radius: 15px;
+      padding: 1.8rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
     }
     
     .resource-card:hover {
-      transform: translateX(10px) translateY(-5px);
+      transform: translateY(-5px);
+      border-color: var(--accent-teal);
       box-shadow: var(--shadow-md);
     }
     
     .resource-card h3 {
       color: var(--accent-teal);
-      margin-bottom: 0.8rem;
-      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
     }
     
-    /* Share and Download Section */
-    .share-download {
-      display: flex;
-      justify-content: space-between;
-      margin: 3rem 0;
-      gap: 1.5rem;
-    }
-    
-    .share-btn, .download-btn {
-      flex: 1;
+    .resource-link {
+      color: var(--text-light);
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      padding: 1.2rem;
-      border-radius: 12px;
-      background: var(--gradient-1);
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      font-size: 1.1rem;
-      position: relative;
-      overflow: hidden;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+      transition: color 0.3s ease;
     }
     
-    .download-btn {
-      background: var(--gradient-2);
-    }
-    
-    .share-btn:hover, .download-btn:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-    
-    /* Call to Action Section */
-    .cta-section {
-      background: var(--gradient-1);
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      text-align: center;
-      margin: 3rem 0;
-      color: white;
-      position: relative;
-      overflow: hidden;
-      animation: ctaFloat 6s ease-in-out infinite;
-    }
-    
-    @keyframes ctaFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .cta-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      animation: ctaShine 8s infinite linear;
-    }
-    
-    @keyframes ctaShine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    
-    .cta-section h2 {
-      margin-bottom: 1.2rem;
-      font-size: 2rem;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      position: relative;
-      z-index: 1;
-    }
-    
-    .cta-section p {
-      margin-bottom: 2rem;
-      font-size: 1.2rem;
-      opacity: 0.9;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .cta-buttons {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .cta-button {
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      background: white;
-      color: var(--primary-bg);
-      text-decoration: none;
-      font-weight: 800;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
-      min-width: 180px;
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      border-color: white;
-      color: var(--accent-purple);
-    }
-    
-    /* Symptoms Checker Highlight */
-    .symptoms-highlight {
-      background: linear-gradient(135deg, rgba(0, 247, 224, 0.15), rgba(162, 61, 255, 0.15));
-      border: 2px dashed var(--accent-teal);
-      border-radius: 16px;
-      padding: 2rem;
-      margin: 2.5rem 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      animation: highlightPulse 4s infinite alternate;
-    }
-    
-    @keyframes highlightPulse {
-      0% { box-shadow: 0 0 0 0 rgba(0, 247, 224, 0.3); }
-      100% { box-shadow: 0 0 0 20px rgba(0, 247, 224, 0); }
-    }
-    
-    .symptoms-highlight h3 {
+    .resource-link:hover {
       color: var(--accent-teal);
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      font-family: 'Montserrat', sans-serif;
     }
     
-    .symptoms-highlight p {
+    /* Footer */
+    .main-footer {
+      background: rgba(20, 0, 30, 0.9);
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+      border-top: 5px solid var(--accent-teal);
+      border-radius: 30px 30px 0 0;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+    
+    .footer-brand {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 2.2rem;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-tagline {
       color: var(--text-muted);
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
     }
     
-    .symptoms-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: var(--gradient-2);
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .footer-link {
+      color: var(--text-muted);
       text-decoration: none;
-      font-weight: 700;
-      font-size: 1.2rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid transparent;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
     }
     
-    .symptoms-btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0, 247, 224, 0.4);
-      border-color: var(--accent-teal);
+    .footer-link:hover {
+      color: var(--accent-teal);
     }
     
-    /* Scroll to Top Button */
-    .scroll-top {
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile Navigation */
+    .mobile-nav {
       position: fixed;
-      bottom: 80px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(30, 0, 46, 0.95);
+      backdrop-filter: blur(15px);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.8rem 0;
+      z-index: 1000;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+      border-top: 3px solid var(--accent-teal);
+      display: none;
+    }
+    
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 10px;
+      min-width: 70px;
+    }
+    
+    .mobile-nav-item i {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .mobile-nav-item.active, .mobile-nav-item:hover {
+      color: var(--accent-teal);
+      background: rgba(0, 247, 224, 0.1);
+    }
+    
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 100px;
       right: 25px;
       width: 60px;
       height: 60px;
@@ -857,334 +730,216 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       cursor: pointer;
       box-shadow: var(--shadow-lg);
       z-index: 999;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      border: 3px solid rgba(255, 255, 255, 0.3);
     }
     
-    .scroll-top.show {
+    .back-to-top.show {
       opacity: 1;
       visibility: visible;
     }
     
-    .scroll-top:hover {
-      transform: translateY(-8px) scale(1.1);
-      box-shadow: 0 20px 40px rgba(0, 247, 224, 0.4);
+    .back-to-top:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 15px 35px rgba(0, 247, 224, 0.5);
     }
     
-    /* Footer */
-    footer {
-      margin-top: 4rem;
-      padding: 3rem 2rem;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 20px;
-      margin-bottom: 80px;
-      border-top: 3px solid var(--accent-teal);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gradient-1);
-      animation: footerGlow 4s infinite linear;
-    }
-    
-    @keyframes footerGlow {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    
-    footer p {
-      margin: 1rem 0;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    
-    .brand {
-      color: var(--accent-teal);
-      font-weight: 800;
-      text-shadow: 0 0 10px rgba(0, 247, 224, 0.3);
-    }
-    
-    /* Mobile Navigation */
-    .mobile-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(58, 0, 82, 0.95);
-      display: flex;
-      justify-content: space-around;
-      padding: 0.8rem 0;
-      z-index: 1000;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-top: 2px solid var(--accent-teal);
-    }
-    
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      transition: all 0.3s ease;
-      padding: 0.5rem;
-      border-radius: 12px;
-      min-width: 70px;
-      position: relative;
-    }
-    
-    .nav-item i {
-      font-size: 1.4rem;
-      margin-bottom: 0.3rem;
-      transition: transform 0.3s ease;
-    }
-    
-    .nav-item.active, .nav-item:hover {
-      color: var(--accent-teal);
-      background: rgba(0, 247, 224, 0.15);
-    }
-    
-    .nav-item.active i, .nav-item:hover i {
-      transform: translateY(-3px);
-    }
-    
-    .nav-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      width: 5px;
-      height: 5px;
-      background: var(--accent-teal);
-      border-radius: 50%;
-    }
-    
-    /* Progress Indicator */
-    .progress-container {
+    /* Progress Bar */
+    .progress-bar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
+      height: 5px;
       background: transparent;
       z-index: 1001;
     }
     
-    .progress-bar {
+    .progress-bar-fill {
       height: 100%;
-      background: var(--gradient-1);
+      background: var(--gradient-2);
       width: 0%;
       transition: width 0.3s ease;
-      border-radius: 0 4px 4px 0;
     }
     
     /* Responsive Design */
-    @media (max-width: 1200px) {
-      .section-map {
-        right: 10px;
-        padding: 12px 8px;
+    @media (max-width: 1100px) {
+      .hero-title {
+        font-size: 2.8rem;
       }
       
-      .map-item span {
-        display: none;
-      }
-      
-      .map-item {
-        padding: 10px;
-        justify-content: center;
-      }
-      
-      .map-item i {
-        font-size: 1.2rem;
-      }
-    }
-    
-    @media (max-width: 992px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .quick-actions {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      }
-      
-      .share-download {
-        flex-direction: column;
-      }
-      
-      .section-map {
-        display: none;
-      }
-      
-      .map-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      .mobile-section-map {
-        position: fixed;
-        bottom: 180px;
-        right: 20px;
-        background: rgba(58, 0, 82, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 902;
-        box-shadow: var(--shadow-lg);
-        border: 2px solid var(--accent-teal);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-      }
-      
-      .mobile-section-map.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
+      .content-nav-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      .hero-subtitle {
-        font-size: 1.1rem;
-      }
-      
-      .hero p {
-        font-size: 1rem;
-      }
-      
-      .quick-actions {
-        grid-template-columns: 1fr;
-      }
-      
-      .header {
-        padding: 0.8rem 1rem;
-      }
-      
-      .logo {
-        font-size: 1.1rem;
-      }
-      
-      .emergency-bar {
+      /* Mobile Navigation */
+      .main-nav {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(30, 0, 46, 0.98);
+        backdrop-filter: blur(20px);
         flex-direction: column;
+        padding: 2rem;
         gap: 1rem;
-        text-align: center;
-        padding: 1.2rem;
+        transition: transform 0.4s ease;
+        z-index: 999;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-top: 3px solid var(--accent-teal);
       }
       
-      .section-header h2 {
+      .main-nav.open {
+        transform: translateY(-100%);
+      }
+      
+      .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
         font-size: 1.2rem;
       }
       
-      .cta-buttons {
+      .mobile-nav-toggle {
+        display: block;
+      }
+      
+      .mobile-nav {
+        display: flex;
+      }
+      
+      .back-to-top {
+        bottom: 90px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+      }
+      
+      /* Hero Section */
+      .hero-section {
+        padding: 3rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .hero-description {
+        font-size: 1rem;
+      }
+      
+      /* Emergency Alert */
+      .emergency-alert {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      
+      /* Content Navigation */
+      .content-nav-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Content Sections */
+      .content-section {
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+      
+      /* Quick Actions */
+      .quick-actions-bar {
         flex-direction: column;
         align-items: center;
       }
       
-      .cta-button {
+      .quick-action {
         width: 100%;
-        max-width: 280px;
+        max-width: 300px;
+        justify-content: center;
       }
       
-      .symptoms-highlight {
-        padding: 1.5rem;
+      /* Resources */
+      .resources-grid {
+        grid-template-columns: 1fr;
       }
       
-      .symptoms-highlight h3 {
-        font-size: 1.5rem;
+      /* Footer */
+      .footer-content {
+        flex-direction: column;
+        gap: 2rem;
       }
       
-      .mobile-nav {
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-      }
-      
-      .scroll-top {
-        bottom: 70px;
-        right: 20px;
-      }
-      
-      .map-toggle {
-        bottom: 130px;
+      .footer-brand {
+        min-width: 100%;
       }
     }
     
     @media (max-width: 480px) {
-      .hero {
-        padding: 2rem 1rem;
+      .container {
+        padding: 0 1rem;
       }
       
-      .hero h1 {
+      .brand-header {
+        padding: 1rem;
+      }
+      
+      .logo-primary {
+        font-size: 1.5rem;
+      }
+      
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+      
+      .hero-title {
         font-size: 1.8rem;
       }
       
-      .section {
+      .content-section {
         padding: 1.5rem;
       }
       
-      .cta-section {
-        padding: 2rem 1.5rem;
+      .section-title {
+        font-size: 1.5rem;
       }
       
-      .scroll-top {
-        width: 50px;
-        height: 50px;
-        bottom: 70px;
-        right: 15px;
+      .mobile-nav-item {
+        min-width: 60px;
+        font-size: 0.7rem;
       }
       
-      .map-toggle {
-        bottom: 130px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-      }
-      
-      .mobile-section-map {
-        bottom: 190px;
-        right: 15px;
-        left: 15px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      
-      .mobile-map-item {
-        flex: 0 0 calc(50% - 10px);
-        text-align: center;
-        padding: 10px;
+      .mobile-nav-item i {
+        font-size: 1.2rem;
       }
     }
     
     /* Print Styles */
     @media print {
-      .header, .quick-actions, .emergency-bar, .mobile-nav, .scroll-top, .share-download, .cta-section, .symptoms-highlight, .progress-container, .section-map, .map-toggle {
+      .brand-header, .mobile-nav, .back-to-top, .progress-bar, .quick-actions-bar, .mobile-nav-toggle {
         display: none;
       }
       
@@ -1193,461 +948,623 @@
         color: black;
       }
       
-      .section {
+      .content-section {
         break-inside: avoid;
         border: 1px solid #ddd;
         box-shadow: none;
       }
       
-      .section-content {
-        display: block !important;
-        opacity: 1 !important;
+      .hero-section {
+        background: white;
+        color: black;
+        box-shadow: none;
       }
       
-      footer {
-        margin-bottom: 0;
+      .hero-title {
+        color: black;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Progress Indicator -->
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-to-main">Skip to main content</a>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressBar"></div>
   </div>
 
-  <div class="container">
-    <!-- Header with Back Button -->
-    <header class="header">
-      <a href="https://plurderapolis.org" class="logo">
+  <!-- Brand Header -->
+  <header class="brand-header">
+    <a href="https://plurderapolis.org" class="brand-logo">
+      <div class="logo-icon">
         <i class="fas fa-hands-holding-heart"></i>
-        <span>PLURderapolis</span>
-      </a>
-      <a href="javascript:history.back()" class="back-button">
-        <i class="fas fa-arrow-left"></i>
-        Back to Safety
-      </a>
-    </header>
+      </div>
+      <div class="logo-text">
+        <div class="logo-primary">PLURderapolis</div>
+        <div class="logo-tagline">COMMUNITY SAFETY</div>
+      </div>
+    </a>
 
+    <!-- Desktop Navigation -->
+    <nav class="main-nav" id="mainNav">
+      <a href="#overview" class="nav-link active">Overview</a>
+      <a href="#signs" class="nav-link">Warning Signs</a>
+      <a href="#symptoms" class="nav-link">Symptoms</a>
+      <a href="#actions" class="nav-link">Take Action</a>
+      <a href="#prevention" class="nav-link">Prevention</a>
+      <a href="https://plurderapolis.org/symtoms.html" class="nav-button" target="_blank">
+        <i class="fas fa-heartbeat"></i> Symptoms Checker
+      </a>
+    </nav>
+
+    <!-- Mobile Navigation Toggle -->
+    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-icon"></div>
-      <h1>Drink Spiking Awareness & Response</h1>
-      <p class="hero-subtitle">Protect Yourself and Your Community</p>
-      <p>Essential information to recognize, respond to, and prevent drink spiking in our community. Stay informed, stay safe.</p>
+    <section class="hero-section">
+      <h1 class="hero-title">Drink Spiking Awareness & Prevention</h1>
+      <p class="hero-subtitle">Protect Yourself and Your Community from Drug-Facilitated Assault</p>
+      <p class="hero-description">Essential information to recognize the signs, understand the symptoms, and take immediate action to prevent drink spiking in social settings.</p>
     </section>
 
-    <!-- Emergency Bar -->
-    <div class="emergency-bar">
-      <i class="fas fa-exclamation-triangle fa-shake"></i>
-      <span>In immediate danger? Don't hesitate — Call 911 immediately</span>
-      <a href="tel:911" class="emergency-call">CALL 911 NOW</a>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <div class="quick-action-card">
-        <div class="action-icon">
-          <i class="fas fa-first-aid"></i>
+    <!-- Emergency Alert -->
+    <div class="container">
+      <div class="emergency-alert">
+        <div>
+          <i class="fas fa-exclamation-triangle fa-shake" style="font-size: 1.8rem; margin-right: 1rem;"></i>
+          <span style="font-size: 1.2rem; font-weight: 700;">In immediate danger? Don't hesitate — Call 911 immediately</span>
         </div>
-        <h3>Need Immediate Help?</h3>
-        <p>Get medical assistance and support right away</p>
-        <a href="#immediate-actions" class="action-button">Get Help Now</a>
+        <a href="tel:911" class="emergency-call-button">
+          <i class="fas fa-phone"></i> CALL 911 NOW
+        </a>
+      </div>
+
+      <!-- Content Navigation Grid -->
+      <div class="content-nav-grid">
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-question-circle"></i>
+          </div>
+          <h3 class="nav-card-title">What is Drink Spiking?</h3>
+          <p class="nav-card-description">Learn about drink spiking, how it happens, and why it's dangerous.</p>
+          <a href="#overview" class="nav-card-button">Learn More</a>
+        </div>
+
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h3 class="nav-card-title">Warning Signs</h3>
+          <p class="nav-card-description">Recognize the physical signs that a drink may have been tampered with.</p>
+          <a href="#signs" class="nav-card-button">View Signs</a>
+        </div>
+
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <h3 class="nav-card-title">Symptoms</h3>
+          <p class="nav-card-description">Identify the physical and mental symptoms of being spiked.</p>
+          <a href="#symptoms" class="nav-card-button">Check Symptoms</a>
+        </div>
+
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-first-aid"></i>
+          </div>
+          <h3 class="nav-card-title">Take Immediate Action</h3>
+          <p class="nav-card-description">Know exactly what to do if you suspect drink spiking.</p>
+          <a href="#actions" class="nav-card-button">Action Steps</a>
+        </div>
+
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="nav-card-title">Prevention Guide</h3>
+          <p class="nav-card-description">Learn how to protect yourself and others from drink spiking.</p>
+          <a href="#prevention" class="nav-card-button">Prevention Tips</a>
+        </div>
+
+        <div class="nav-card">
+          <div class="nav-card-icon">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <h3 class="nav-card-title">Symptoms Checker</h3>
+          <p class="nav-card-description">Use our interactive tool to assess possible drink spiking.</p>
+          <a href="https://plurderapolis.org/symtoms.html" class="nav-card-button" target="_blank">Check Now</a>
+        </div>
+      </div>
+
+      <!-- Content Sections -->
+      <section id="overview" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-question-circle"></i>
+          </div>
+          <h2 class="section-title">What is Drink Spiking?</h2>
+        </div>
+        <div class="section-content">
+          <p>Drink spiking occurs when someone adds alcohol, drugs, or other substances to another person's drink <strong>without their knowledge or consent</strong>. These substances are often colorless, odorless, and tasteless, making them difficult to detect. In some cases, substances may even be applied to the outside of cans or bottles.</p>
+          
+          <p>Drink spiking is a serious crime that can lead to:</p>
+          
+          <ul class="checklist">
+            <li class="checklist-item">
+              <i class="fas fa-exclamation-circle checklist-icon"></i>
+              <div>
+                <strong>Sexual assault or rape</strong> - Perpetrators often use spiking to incapacitate victims
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-exclamation-circle checklist-icon"></i>
+              <div>
+                <strong>Robbery or theft</strong> - Taking advantage of impaired consciousness
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-exclamation-circle checklist-icon"></i>
+              <div>
+                <strong>Physical harm or injury</strong> - Due to loss of coordination and consciousness
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-exclamation-circle checklist-icon"></i>
+              <div>
+                <strong>Severe health consequences</strong> - Including overdose, allergic reactions, or long-term effects
+              </div>
+            </li>
+          </ul>
+          
+          <div class="warning-box">
+            <h3><i class="fas fa-exclamation-triangle"></i> Trust Your Instincts</h3>
+            <p>You may never get a clear warning sign until it's too late. If something feels off about your drink, your environment, or how you're feeling, <strong>trust your gut immediately</strong>. Your safety is more important than being polite or not wanting to make a scene.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="signs" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <h2 class="section-title">Signs Your Drink May Have Been Tampered With</h2>
+        </div>
+        <div class="section-content">
+          <p>Being able to recognize the warning signs of drink tampering can help you stay safe. Look for these indicators:</p>
+          
+          <ul class="checklist">
+            <li class="checklist-item">
+              <i class="fas fa-tint checklist-icon"></i>
+              <div>
+                <strong>Change in taste</strong> - Bitter, salty, or metallic taste that wasn't there before
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-cloud checklist-icon"></i>
+              <div>
+                <strong>Cloudy or foggy appearance</strong> - Especially in drinks that should be clear
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-bubbles checklist-icon"></i>
+              <div>
+                <strong>Excessive or unusual bubbles</strong> - In non-carbonated beverages
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-ice-cream checklist-icon"></i>
+              <div>
+                <strong>Ice behaving oddly</strong> - Sinking when it should float, or discoloration
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-wind checklist-icon"></i>
+              <div>
+                <strong>Unexpected smell changes</strong> - Even subtle odor differences
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-eye checklist-icon"></i>
+              <div>
+                <strong>Film or residue</strong> - On the surface of the drink or around the rim
+              </div>
+            </li>
+          </ul>
+          
+          <div class="warning-box">
+            <h3><i class="fas fa-exclamation-circle"></i> Important Safety Note</h3>
+            <p><strong>Many date rape drugs have no odor, taste, or color.</strong> Always trust your instincts over these physical signs. If you feel uneasy about your drink for any reason, <strong>stop drinking it immediately</strong> and get a new, sealed beverage.</p>
+          </div>
+          
+          <!-- Quick Action to Symptoms Checker -->
+          <div class="quick-actions-bar">
+            <a href="https://plurderapolis.org/symtoms.html" class="quick-action" target="_blank">
+              <i class="fas fa-heartbeat"></i>
+              <span>Not sure about symptoms? Use our Symptoms Checker</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="symptoms" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <h2 class="section-title">Symptoms of Being Spiked</h2>
+        </div>
+        <div class="section-content">
+          <p>The effects of drink spiking can vary depending on the substance used, but common symptoms include:</p>
+          
+          <ul class="checklist">
+            <li class="checklist-item">
+              <i class="fas fa-glass-cheers checklist-icon"></i>
+              <div>
+                <strong>Feeling disproportionately drunk</strong> - Much more intoxicated than the amount consumed would suggest
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-bed checklist-icon"></i>
+              <div>
+                <strong>Sudden drowsiness or fatigue</strong> - Overwhelming need to sleep
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-brain checklist-icon"></i>
+              <div>
+                <strong>Confusion or disorientation</strong> - Not knowing where you are or what's happening
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-comment-slash checklist-icon"></i>
+              <div>
+                <strong>Slurred speech</strong> - Difficulty forming words clearly
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-walking checklist-icon"></i>
+              <div>
+                <strong>Loss of balance or coordination</strong> - Difficulty walking or standing
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-lungs checklist-icon"></i>
+              <div>
+                <strong>Nausea or vomiting</strong> - Especially if you haven't consumed much alcohol
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-eye checklist-icon"></i>
+              <div>
+                <strong>Visual disturbances</strong> - Blurred vision, double vision, or dizziness
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-memory checklist-icon"></i>
+              <div>
+                <strong>Memory loss or blackouts</strong> - Gaps in memory of recent events
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-temperature-high checklist-icon"></i>
+              <div>
+                <strong>Unusual body temperature</strong> - Feeling excessively hot or cold
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-heartbeat checklist-icon"></i>
+              <div>
+                <strong>Breathing difficulties</strong> - Shallow breathing or feeling breathless
+              </div>
+            </li>
+          </ul>
+          
+          <div class="warning-box">
+            <h3><i class="fas fa-stethoscope"></i> Medical Attention is Crucial</h3>
+            <p>If you or someone you know is experiencing these symptoms, <strong>seek medical attention immediately</strong>. Some substances used in drink spiking can be life-threatening, and prompt medical care is essential.</p>
+          </div>
+          
+          <!-- Symptoms Checker CTA -->
+          <div style="text-align: center; margin-top: 3rem;">
+            <a href="https://plurderapolis.org/symtoms.html" class="nav-card-button" style="font-size: 1.2rem; padding: 1rem 2.5rem;" target="_blank">
+              <i class="fas fa-clipboard-check"></i> Use Our Interactive Symptoms Checker
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="actions" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-first-aid"></i>
+          </div>
+          <h2 class="section-title">Immediate Action Steps</h2>
+        </div>
+        <div class="section-content">
+          <p>If you suspect you or someone else has been spiked, take these steps immediately:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+            <div style="background: rgba(0, 247, 224, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-teal);">
+              <h3 style="color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-ban"></i> Step 1: Stop Drinking
+              </h3>
+              <p>Do not take another sip. If possible, cover or set the drink aside to preserve evidence.</p>
+            </div>
+            
+            <div style="background: rgba(0, 247, 224, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-teal);">
+              <h3 style="color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-user-shield"></i> Step 2: Get to Safety
+              </h3>
+              <p>Move away from crowds and stay with trusted friends. Avoid being alone.</p>
+            </div>
+            
+            <div style="background: rgba(0, 247, 224, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-teal);">
+              <h3 style="color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-ambulance"></i> Step 3: Seek Medical Help
+              </h3>
+              <p>Call 911 or go to the nearest emergency room, especially for serious symptoms.</p>
+            </div>
+            
+            <div style="background: rgba(0, 247, 224, 0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-teal);">
+              <h3 style="color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;">
+                <i class="fas fa-fingerprint"></i> Step 4: Preserve Evidence
+              </h3>
+              <p>Save the drink and container. Keep clothing in a paper bag. Don't shower or wash.</p>
+            </div>
+          </div>
+          
+          <div class="warning-box">
+            <h3><i class="fas fa-shield-alt"></i> Minnesota Good Samaritan Law Protection</h3>
+            <p>You're protected under <strong>Minnesota's Good Samaritan Law (MN Stat § 604A.05)</strong>. If someone needs help, call 911. You're doing the right thing — and you're legally safe from prosecution for minor drug or alcohol violations when seeking medical assistance.</p>
+          </div>
+          
+          <div class="quick-actions-bar">
+            <a href="sms:?&body=Hey%2C%20just%20letting%20you%20know%20I%27m%20safe%20now.%20Thanks%20for%20looking%20out%20%F0%9F%92%9A%20-%20via%20PLURderapolis%20Safety" class="quick-action">
+              <i class="fas fa-comments"></i>
+              <span>Send "I'm Safe" Text to Friends</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="prevention" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h2 class="section-title">Prevention & Safety Tips</h2>
+        </div>
+        <div class="section-content">
+          <p>Protect yourself and your friends with these evidence-based prevention strategies:</p>
+          
+          <ul class="checklist">
+            <li class="checklist-item">
+              <i class="fas fa-eye checklist-icon"></i>
+              <div>
+                <strong>Never leave your drink unattended</strong> - If you do, discard it immediately
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-wine-bottle checklist-icon"></i>
+              <div>
+                <strong>Watch your drink being prepared</strong> - Accept only drinks you see being opened or poured
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-capsules checklist-icon"></i>
+              <div>
+                <strong>Use drink covers or lids</strong> - Specialized covers can prevent tampering
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-users checklist-icon"></i>
+              <div>
+                <strong>Practice the buddy system</strong> - Go out in groups and watch out for each other
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-user-friends checklist-icon"></i>
+              <div>
+                <strong>Designate a drink watcher</strong> - When someone steps away, have a friend watch their drink
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-user-secret checklist-icon"></i>
+              <div>
+                <strong>Be cautious with strangers</strong> - Avoid accepting drinks from people you don't know well
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-bullhorn checklist-icon"></i>
+              <div>
+                <strong>Speak up if you suspect something</strong> - Notify venue staff immediately
+              </div>
+            </li>
+            <li class="checklist-item">
+              <i class="fas fa-glass-whiskey checklist-icon"></i>
+              <div>
+                <strong>Stick to bottled drinks with secure lids</strong> - Harder to tamper with than open cups
+              </div>
+            </li>
+          </ul>
+          
+          <div style="background: rgba(162, 61, 255, 0.1); padding: 2rem; border-radius: 12px; margin: 2rem 0; border-left: 4px solid var(--accent-purple);">
+            <h3 style="color: var(--accent-purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem;">
+              <i class="fas fa-users-cog"></i> Community Protection Strategies
+            </h3>
+            <p><strong>Look out for others:</strong> If you see someone who appears overly intoxicated or in distress, check on them. Offer to call a friend or taxi. <strong>Venue staff training:</strong> Ask your favorite venues about their staff training on drink spicking prevention and response.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resources Section -->
+      <section class="resources-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h2 class="section-title">Resources & Support</h2>
+        </div>
+        <div class="section-content">
+          <p>If you or someone you know has been affected by drink spiking, these resources can provide help and support:</p>
+          
+          <div class="resources-grid">
+            <div class="resource-card">
+              <h3>Immediate Crisis Support</h3>
+              <a href="tel:911" class="resource-link">
+                <i class="fas fa-phone"></i> Emergency Services: 911
+              </a>
+              <a href="tel:1-800-222-1222" class="resource-link">
+                <i class="fas fa-pills"></i> Poison Control: 1-800-222-1222
+              </a>
+              <a href="tel:1-866-223-1111" class="resource-link">
+                <i class="fas fa-life-ring"></i> MN Day One Helpline: 1-866-223-1111
+              </a>
+            </div>
+            
+            <div class="resource-card">
+              <h3>Medical & Forensic Services</h3>
+              <a href="https://aurora.umn.edu" class="resource-link" target="_blank">
+                <i class="fas fa-hospital"></i> Aurora Center (UMN Forensic Exams)
+              </a>
+              <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing" class="resource-link" target="_blank">
+                <i class="fas fa-microscope"></i> MN Bureau of Criminal Apprehension
+              </a>
+              <a href="tel:6512661000" class="resource-link">
+                <i class="fas fa-user-md"></i> SOS Sexual Violence Services: 651-266-1000
+              </a>
+            </div>
+            
+            <div class="resource-card">
+              <h3>PLURderapolis Resources</h3>
+              <a href="https://plurderapolis.org/symtoms.html" class="resource-link" target="_blank">
+                <i class="fas fa-clipboard-check"></i> Interactive Symptoms Checker
+              </a>
+              <a href="https://plurderapolis.org/emergency.html" class="resource-link" target="_blank">
+                <i class="fas fa-ambulance"></i> Emergency Response Guide
+              </a>
+              <a href="https://plurderapolis.org" class="resource-link" target="_blank">
+                <i class="fas fa-home"></i> PLURderapolis Homepage
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">PLURderapolis</div>
+          <p class="footer-tagline">Community-driven harm reduction and safety education for everyone.</p>
+          <div class="footer-links">
+            <a href="https://plurderapolis.org" class="footer-link" target="_blank">
+              <i class="fas fa-home"></i> Home
+            </a>
+            <a href="https://plurderapolis.org/symtoms.html" class="footer-link" target="_blank">
+              <i class="fas fa-heartbeat"></i> Symptoms Checker
+            </a>
+            <a href="https://plurderapolis.org/resources.html" class="footer-link" target="_blank">
+              <i class="fas fa-hands-helping"></i> All Resources
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 style="color: var(--accent-teal); margin-bottom: 1.5rem; font-size: 1.3rem;">Safety First</h3>
+          <div class="footer-links">
+            <a href="#overview" class="footer-link">
+              <i class="fas fa-info-circle"></i> Drink Spiking Overview
+            </a>
+            <a href="#prevention" class="footer-link">
+              <i class="fas fa-shield-alt"></i> Prevention Guide
+            </a>
+            <a href="#actions" class="footer-link">
+              <i class="fas fa-first-aid"></i> Immediate Actions
+            </a>
+            <a href="tel:911" class="footer-link">
+              <i class="fas fa-phone"></i> Emergency: 911
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 style="color: var(--accent-teal); margin-bottom: 1.5rem; font-size: 1.3rem;">Legal & Medical</h3>
+          <div class="footer-links">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">PLURderapolis is a community harm reduction initiative. We are not medical or legal professionals.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">This site provides education and support but is not a substitute for professional care.</p>
+          </div>
+        </div>
       </div>
       
-      <div class="quick-action-card">
-        <div class="action-icon">
-          <i class="fas fa-shield-alt"></i>
-        </div>
-        <h3>Prevention Guide</h3>
-        <p>Learn how to protect yourself and others</p>
-        <a href="#prevention" class="action-button">Prevention Tips</a>
-      </div>
-      
-      <div class="quick-action-card">
-        <div class="action-icon">
-          <i class="fas fa-comments"></i>
-        </div>
-        <h3>I'm Safe</h3>
-        <p>Let your friends know you're okay</p>
-        <a href="sms:?&body=Hey%2C%20just%20letting%20you%20know%20I%27m%20safe%20now.%20Thanks%20for%20looking%20out%20%F0%9F%92%9A%20-%20via%20PLURderapolis%20Safety" class="action-button">Send I'm Safe Text</a>
-      </div>
-      
-      <div class="quick-action-card">
-        <div class="action-icon">
-          <i class="fas fa-clipboard-check"></i>
-        </div>
-        <h3>Check Symptoms</h3>
-        <p>Quick assessment tool for drink spiking</p>
-        <a href="https://plurderapolis.org/symtoms.html" class="action-button">Check Now</a>
+      <div class="copyright">
+        <p>&copy; 2025 PLURderapolis Community Safety Initiative. All information is provided for educational purposes.</p>
+        <p>In an emergency, always call 911 immediately.</p>
       </div>
     </div>
-
-    <!-- Symptoms Checker Highlight -->
-    <div class="symptoms-highlight">
-      <h3><i class="fas fa-stethoscope"></i> Not Sure About Symptoms?</h3>
-      <p>Use our interactive symptoms checker to assess if you or a friend might have been affected</p>
-      <a href="https://plurderapolis.org/symtoms.html" class="symptoms-btn">
-        <i class="fas fa-heartbeat"></i>
-        Check Symptoms Tool
-      </a>
-    </div>
-
-    <!-- Share and Download Buttons -->
-    <div class="share-download">
-      <a href="#" class="share-btn" id="shareBtn">
-        <i class="fas fa-share-alt"></i> Share This Resource
-      </a>
-      <a href="#" class="download-btn" id="downloadBtn">
-        <i class="fas fa-download"></i> Download Safety Guide
-      </a>
-    </div>
-
-    <!-- What is Drink Spiking -->
-    <div class="section" id="what-is">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-question-circle"></i> What is Drink Spiking?</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content active">
-        <p>Drink spiking happens when someone adds alcohol, drugs, or other substances into another person's drink without their knowledge or consent. The substances may be colorless, odorless, and tasteless. Sometimes substances are even added to the outside of cans or bottles.</p>
-        <div class="warning">
-          <h3><i class="fas fa-exclamation-triangle"></i> Trust Your Instincts</h3>
-          <p>You may never get a clue until it's too late. If something feels off about your drink, trust your gut feeling immediately.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Signs of Tampering -->
-    <div class="section" id="signs">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-flask"></i> Signs Your Drink May Have Been Tampered With</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content">
-        <ul class="checklist">
-          <li><i class="fas fa-tint"></i> Change in taste: bitter or salty taste when you didn't expect it</li>
-          <li><i class="fas fa-cloud"></i> Cloudy, foggy, or bloated appearance in a drink that was clear before</li>
-          <li><i class="fas fa-bubbles"></i> Excessive or unusual bubbles in non-carbonated drinks</li>
-          <li><i class="fas fa-ice-cream"></i> Ice behaving oddly (e.g. sinking when it usually floats) or discoloration</li>
-          <li><i class="fas fa-wind"></i> Unexpected smell changes (even subtle) or odor you can't place</li>
-        </ul>
-        <div class="warning">
-          <p><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Many drugs have no odor, taste, or color. Always trust your instincts over these signs.</p>
-        </div>
-        <div class="symptoms-highlight" style="margin-top: 1.5rem; padding: 1.5rem;">
-          <p><strong>Suspect you've been spiked? Use our symptoms checker:</strong></p>
-          <a href="https://plurderapolis.org/symtoms.html" class="action-button" style="margin-top: 0.5rem;">
-            <i class="fas fa-stethoscope"></i> Symptoms Checker
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Symptoms -->
-    <div class="section" id="symptoms">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-heartbeat"></i> Symptoms of Being Spiked</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content">
-        <ul class="checklist">
-          <li><i class="fas fa-glass-cheers"></i> Feeling drunk, woozy, or "out of it" much faster than usual</li>
-          <li><i class="fas fa-bed"></i> Sudden drowsiness, fatigue, confusion, slurred speech</li>
-          <li><i class="fas fa-brain"></i> Memory loss — not remembering what happened recently</li>
-          <li><i class="fas fa-walking"></i> Loss of balance, coordination, difficulty walking</li>
-          <li><i class="fas fa-lungs"></i> Nausea, vomiting, breathing difficulty</li>
-          <li><i class="fas fa-eye"></i> Visual problems (blurred vision), dizziness</li>
-          <li><i class="fas fa-exclamation-triangle"></i> Lowered inhibitions, sudden anxiety, disorientation</li>
-          <li><i class="fas fa-dizzy"></i> Seizures, muscle spasms, unusual physical reactions</li>
-          <li><i class="fas fa-head-side-virus"></i> Unusually severe or long hangover after little alcohol</li>
-        </ul>
-        <div class="symptoms-highlight" style="margin-top: 1.5rem; padding: 1.5rem;">
-          <p><strong>Use our symptoms checker if you're experiencing any of these:</strong></p>
-          <a href="https://plurderapolis.org/symtoms.html" class="action-button" style="margin-top: 0.5rem;">
-            <i class="fas fa-stethoscope"></i> Check Symptoms Online
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Immediate Actions -->
-    <div class="section" id="immediate-actions">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-first-aid"></i> Immediate Action Steps</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content">
-        <ol>
-          <li><strong>Stop drinking immediately.</strong> Do not take another sip. If possible, cover or set the drink aside.</li>
-          <li><strong>Get somewhere safe & stay with people you trust.</strong> Move away from crowds, avoid being alone.</li>
-          <li><strong>Seek medical attention right away</strong> especially for serious symptoms (unconsciousness, breathing problems, seizures).</li>
-          <li><strong>Preserve evidence:</strong> Save the drink and its container, keep clothing in a paper bag, don't shower.</li>
-          <li><strong>Consider a medical forensic exam</strong> ("rape kit"), even if unsure about reporting to police.</li>
-          <li><strong>Reach out for support:</strong> crisis hotlines, trusted friends, or sexual violence advocacy services.</li>
-          <li><strong>Report when you feel safe to:</strong> to venue staff, law enforcement, or via anonymous options.</li>
-        </ol>
-        
-        <div class="warning">
-          <h3><i class="fas fa-shield-alt"></i> Good Samaritan Law Protection</h3>
-          <p>You're protected under Minnesota's Good Samaritan Law (MN Stat § 604A.05). If someone needs help, call 911. You're doing the right thing — and you're legally safe.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Prevention -->
-    <div class="section" id="prevention">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-shield-alt"></i> Prevention Tips</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content">
-        <ul class="checklist">
-          <li><i class="fas fa-eye"></i> Never leave your drink unattended. If you do, throw it out.</li>
-          <li><i class="fas fa-wine-bottle"></i> Only accept drinks you see being opened or poured.</li>
-          <li><i class="fas fa-capsules"></i> Use bottles with screw-tops, drink lids, or covers.</li>
-          <li><i class="fas fa-users"></i> Go out in groups. Use a buddy system.</li>
-          <li><i class="fas fa-user-secret"></i> Avoid accepting drinks from strangers.</li>
-          <li><i class="fas fa-user-friends"></i> If you need to step away, have someone watch your drink.</li>
-          <li><i class="fas fa-bullhorn"></i> Speak up if you suspect something - notify venue staff.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Call to Action Section -->
-    <div class="cta-section">
-      <h2>Your Safety Matters</h2>
-      <p>Explore our additional resources for harm reduction and community safety</p>
-      <div class="cta-buttons">
-        <a href="https://plurderapolis.org/polydrug.html" class="cta-button">
-          <i class="fas fa-pills"></i> Polydrug Safety
-        </a>
-        <a href="https://plurderapolis.org/emergency.html" class="cta-button">
-          <i class="fas fa-ambulance"></i> Emergency Guide
-        </a>
-        <a href="https://plurderapolis.org/panic.html" class="cta-button">
-          <i class="fas fa-heart"></i> Panic Attack Help
-        </a>
-        <a href="https://plurderapolis.org/symtoms.html" class="cta-button">
-          <i class="fas fa-clipboard-check"></i> Symptoms Checker
-        </a>
-      </div>
-    </div>
-
-    <!-- Resources -->
-    <div class="section" id="resources">
-      <div class="section-header" onclick="toggleSection(this)">
-        <h2><i class="fas fa-hands-helping"></i> Minnesota Resources & Help</h2>
-        <span class="toggle-icon">▼</span>
-      </div>
-      <div class="section-content">
-        <div class="resource-card">
-          <h3>Minnesota Day One (statewide sexual violence helpline):</h3>
-          <p><i class="fas fa-phone"></i> <a href="tel:1-866-223-1111" style="color: var(--accent-teal);">1-866-223-1111</a> • <i class="fas fa-sms"></i> <a href="sms:6123999995" style="color: var(--accent-teal);">Text: 612-399-9995</a></p>
-          <p><i class="fas fa-globe"></i> <a href="https://dayoneservices.org" target="_blank" style="color: var(--accent-teal);">dayoneservices.org</a></p>
-        </div>
-        
-        <div class="resource-card">
-          <h3>Aurora Center (University of Minnesota):</h3>
-          <p>Offers medical forensic exams</p>
-          <p><i class="fas fa-globe"></i> <a href="https://aurora.umn.edu" target="_blank" style="color: var(--accent-teal);">aurora.umn.edu</a></p>
-        </div>
-        
-        <div class="resource-card">
-          <h3>Minnesota Bureau of Criminal Apprehension:</h3>
-          <p>Forensic testing information</p>
-          <p><i class="fas fa-globe"></i> <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing" target="_blank" style="color: var(--accent-teal);">dps.mn.gov</a></p>
-        </div>
-        
-        <div class="resource-card">
-          <h3>SOS Sexual Violence Services (Ramsey County):</h3>
-          <p><i class="fas fa-phone"></i> <a href="tel:6512661000" style="color: var(--accent-teal);">651-266-1000</a></p>
-        </div>
-        
-        <div class="resource-card">
-          <h3>Poison Control (USA):</h3>
-          <p><i class="fas fa-phone"></i> <a href="tel:1-800-222-1222" style="color: var(--accent-teal);">1-800-222-1222</a> (24/7)</p>
-        </div>
-        
-        <div class="resource-card">
-          <h3>PLURderapolis Symptoms Checker:</h3>
-          <p>Interactive tool to assess possible drink spiking</p>
-          <p><i class="fas fa-globe"></i> <a href="https://plurderapolis.org/symtoms.html" target="_blank" style="color: var(--accent-teal);">plurderapolis.org/symtoms.html</a></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2025 <span class="brand">PLURderapolis</span>. Mutual aid and harm reduction for our community.</p>
-      <p>PLURderapolis is a community harm reduction initiative. We are not medical professionals.</p>
-      <p>This site provides education and support but is not a substitute for professional care.</p>
-      <p>In an emergency, call 911 immediately.</p>
-      <div style="margin-top: 1.5rem;">
-        <a href="https://plurderapolis.org" style="color: var(--accent-teal); margin: 0 10px;">Home</a>
-        <a href="https://plurderapolis.org/symtoms.html" style="color: var(--accent-teal); margin: 0 10px;">Symptoms Checker</a>
-        <a href="https://plurderapolis.org/emergency.html" style="color: var(--accent-teal); margin: 0 10px;">Emergency Guide</a>
-        <a href="https://plurderapolis.org/resources.html" style="color: var(--accent-teal); margin: 0 10px;">Resources</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Section Navigation Map -->
-  <nav class="section-map" id="sectionMap">
-    <a href="#top" class="map-item">
-      <i class="fas fa-home"></i>
-      <span>Top</span>
-    </a>
-    <a href="#what-is" class="map-item">
-      <i class="fas fa-question-circle"></i>
-      <span>What is Drink Spiking?</span>
-    </a>
-    <a href="#signs" class="map-item">
-      <i class="fas fa-flask"></i>
-      <span>Signs of Tampering</span>
-    </a>
-    <a href="#symptoms" class="map-item">
-      <i class="fas fa-heartbeat"></i>
-      <span>Symptoms</span>
-    </a>
-    <a href="#immediate-actions" class="map-item">
-      <i class="fas fa-first-aid"></i>
-      <span>Immediate Actions</span>
-    </a>
-    <a href="#prevention" class="map-item">
-      <i class="fas fa-shield-alt"></i>
-      <span>Prevention</span>
-    </a>
-    <a href="#resources" class="map-item">
-      <i class="fas fa-hands-helping"></i>
-      <span>Resources</span>
-    </a>
-    <a href="https://plurderapolis.org/symtoms.html" class="map-item" target="_blank">
-      <i class="fas fa-clipboard-check"></i>
-      <span>Symptoms Checker</span>
-    </a>
-  </nav>
-
-  <!-- Mobile Navigation Map -->
-  <div class="mobile-section-map" id="mobileSectionMap">
-    <a href="#top" class="mobile-map-item map-item">
-      <i class="fas fa-home"></i>
-      <span>Top</span>
-    </a>
-    <a href="#what-is" class="mobile-map-item map-item">
-      <i class="fas fa-question-circle"></i>
-      <span>What is Drink Spiking?</span>
-    </a>
-    <a href="#signs" class="mobile-map-item map-item">
-      <i class="fas fa-flask"></i>
-      <span>Signs</span>
-    </a>
-    <a href="#symptoms" class="mobile-map-item map-item">
-      <i class="fas fa-heartbeat"></i>
-      <span>Symptoms</span>
-    </a>
-    <a href="#immediate-actions" class="mobile-map-item map-item">
-      <i class="fas fa-first-aid"></i>
-      <span>Actions</span>
-    </a>
-    <a href="#prevention" class="mobile-map-item map-item">
-      <i class="fas fa-shield-alt"></i>
-      <span>Prevention</span>
-    </a>
-    <a href="#resources" class="mobile-map-item map-item">
-      <i class="fas fa-hands-helping"></i>
-      <span>Resources</span>
-    </a>
-    <a href="https://plurderapolis.org/symtoms.html" class="mobile-map-item map-item" target="_blank">
-      <i class="fas fa-clipboard-check"></i>
-      <span>Checker</span>
-    </a>
-  </div>
-
-  <!-- Map Toggle Button for Mobile -->
-  <button class="map-toggle" id="mapToggle">
-    <i class="fas fa-map"></i>
-  </button>
+  </footer>
 
   <!-- Mobile Navigation -->
   <nav class="mobile-nav">
-    <a href="#top" class="nav-item active">
-      <i class="fas fa-home"></i>
-      <span>Home</span>
+    <a href="#overview" class="mobile-nav-item">
+      <i class="fas fa-info-circle"></i>
+      <span>Overview</span>
     </a>
-    <a href="#prevention" class="nav-item">
-      <i class="fas fa-shield-alt"></i>
-      <span>Prevention</span>
+    <a href="#signs" class="mobile-nav-item">
+      <i class="fas fa-flask"></i>
+      <span>Signs</span>
     </a>
-    <a href="#resources" class="nav-item">
-      <i class="fas fa-hands-helping"></i>
-      <span>Resources</span>
-    </a>
-    <a href="https://plurderapolis.org/symtoms.html" class="nav-item" target="_blank">
+    <a href="#symptoms" class="mobile-nav-item">
       <i class="fas fa-heartbeat"></i>
       <span>Symptoms</span>
     </a>
-    <a href="https://plurderapolis.org/emergency.html" class="nav-item" target="_blank">
-      <i class="fas fa-ambulance"></i>
-      <span>Emergency</span>
+    <a href="https://plurderapolis.org/symtoms.html" class="mobile-nav-item" target="_blank">
+      <i class="fas fa-clipboard-check"></i>
+      <span>Checker</span>
+    </a>
+    <a href="#actions" class="mobile-nav-item">
+      <i class="fas fa-first-aid"></i>
+      <span>Actions</span>
     </a>
   </nav>
 
-  <!-- Scroll to Top Button -->
-  <div class="scroll-top" id="scrollTop">
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
   </div>
 
   <script>
-    // Page load animation
-    document.addEventListener('DOMContentLoaded', () => {
-      // Animate hero elements sequentially
-      const heroElements = document.querySelectorAll('.hero h1, .hero-subtitle, .hero p');
-      heroElements.forEach((el, index) => {
-        el.style.animationDelay = `${0.2 + (index * 0.2)}s`;
-      });
-      
-      // Initialize section map
-      updateSectionMap();
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mainNav = document.getElementById('mainNav');
+    
+    mobileNavToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+      mobileNavToggle.innerHTML = mainNav.classList.contains('open') 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
     });
-
-    // Toggle section content with smooth animation
-    function toggleSection(element) {
-      const content = element.parentElement.querySelector('.section-content');
-      const icon = element.querySelector('.toggle-icon');
-      
-      if (content.classList.contains('active')) {
-        content.style.opacity = '0';
-        content.style.transform = 'translateY(10px)';
-        setTimeout(() => {
-          content.classList.remove('active');
-        }, 300);
-      } else {
-        content.classList.add('active');
-        setTimeout(() => {
-          content.style.opacity = '1';
-          content.style.transform = 'translateY(0)';
-        }, 10);
-      }
-      
-      icon.classList.toggle('rotated');
-      
-      // Add haptic feedback on mobile
-      if ('vibrate' in navigator) {
-        navigator.vibrate(50);
-      }
-    }
     
-    // Make all sections expandable on mobile for easier navigation
-    if (window.innerWidth < 768) {
-      document.querySelectorAll('.section-content').forEach(content => {
-        if (!content.classList.contains('active')) {
-          content.classList.remove('active');
-        }
+    // Close mobile nav when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        mobileNavToggle.innerHTML = '<i class="fas fa-bars"></i>';
       });
-    }
+    });
     
-    // Scroll progress indicator
+    // Scroll Progress Indicator
     const progressBar = document.getElementById('progressBar');
     
     window.addEventListener('scroll', () => {
@@ -1655,182 +1572,75 @@
       const scrolled = (window.scrollY / windowHeight) * 100;
       progressBar.style.width = `${scrolled}%`;
       
-      // Show/hide scroll to top button
-      const scrollTopBtn = document.getElementById('scrollTop');
+      // Show/hide back to top button
+      const backToTop = document.getElementById('backToTop');
       if (window.pageYOffset > 500) {
-        scrollTopBtn.classList.add('show');
+        backToTop.classList.add('show');
       } else {
-        scrollTopBtn.classList.remove('show');
+        backToTop.classList.remove('show');
       }
       
-      // Update active section in map
-      updateSectionMap();
+      // Update active navigation
+      updateActiveNav();
     });
     
-    // Scroll to top functionality
-    const scrollTopBtn = document.getElementById('scrollTop');
-    
-    scrollTopBtn.addEventListener('click', () => {
+    // Back to top functionality
+    document.getElementById('backToTop').addEventListener('click', () => {
       window.scrollTo({ 
         top: 0, 
         behavior: 'smooth' 
       });
     });
     
-    // Share functionality
-    document.getElementById('shareBtn').addEventListener('click', async (e) => {
-      e.preventDefault();
+    // Update active navigation based on scroll position
+    function updateActiveNav() {
+      const sections = document.querySelectorAll('.content-section, .hero-section');
+      const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-item');
+      const scrollPosition = window.scrollY + 150;
       
-      const shareData = {
-        title: 'Drink Spiking Awareness - PLURderapolis',
-        text: 'Important information about drink spiking awareness and prevention. Stay safe!',
-        url: window.location.href
-      };
-      
-      if (navigator.share && navigator.canShare(shareData)) {
-        try {
-          await navigator.share(shareData);
-          console.log('Shared successfully');
-        } catch (err) {
-          console.log('Error sharing:', err);
-          fallbackShare();
-        }
-      } else {
-        fallbackShare();
-      }
-      
-      function fallbackShare() {
-        // Fallback for browsers that don't support the Web Share API
-        navigator.clipboard.writeText(shareData.url).then(() => {
-          alert('Link copied to clipboard! Share this important resource with friends.');
-        }).catch(err => {
-          // Final fallback
-          prompt('Copy this link to share:', shareData.url);
-        });
-      }
-    });
-    
-    // Download functionality
-    document.getElementById('downloadBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      // Create a formatted text version of the content
-      const title = document.querySelector('.hero h1').textContent;
-      const subtitle = document.querySelector('.hero-subtitle').textContent;
-      const emergency = document.querySelector('.emergency-bar').textContent.trim();
-      let content = `${title}\n${subtitle}\n\n`;
-      content += `EMERGENCY: ${emergency}\n\n`;
-      content += `Downloaded from: ${window.location.href}\n`;
-      content += `Date: ${new Date().toLocaleDateString()}\n\n`;
-      content += '='.repeat(50) + '\n\n';
-      
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(section => {
-        const header = section.querySelector('.section-header h2').textContent;
-        const sectionContent = section.querySelector('.section-content').textContent;
-        content += `${header}\n${sectionContent}\n\n`;
-        content += '-'.repeat(30) + '\n\n';
-      });
-      
-      content += `\n\nRESOURCES:\n`;
-      content += `• Symptoms Checker: https://plurderapolis.org/symtoms.html\n`;
-      content += `• Emergency Guide: https://plurderapolis.org/emergency.html\n`;
-      content += `• Polydrug Safety: https://plurderapolis.org/polydrug.html\n`;
-      content += `• Panic Attack Help: https://plurderapolis.org/panic.html\n`;
-      content += `• Home Page: https://plurderapolis.org\n\n`;
-      
-      content += `\nIn an emergency, always call 911 first!\n`;
-      
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'drink-spiking-safety-guide.txt';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      // Show feedback
-      const originalText = e.target.innerHTML;
-      e.target.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
-      setTimeout(() => {
-        e.target.innerHTML = originalText;
-      }, 2000);
-    });
-    
-    // Mobile nav highlighting with intersection observer
-    const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.section, .hero, .cta-section');
-    const mapItems = document.querySelectorAll('.map-item');
-    
-    function updateSectionMap() {
-      const scrollPosition = window.scrollY + 100;
-      
-      // Reset all map items
-      mapItems.forEach(item => {
-        item.classList.remove('active');
-      });
-      
-      // Find current section
       let currentSection = '';
+      
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
         
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          currentSection = section.id || 'top';
+          currentSection = section.id || 'overview';
         }
       });
       
-      // If at top, highlight top link
-      if (scrollPosition < 100) {
-        document.querySelector('.map-item[href="#top"]').classList.add('active');
-      } else if (currentSection) {
-        // Highlight current section in map
-        const activeMapItem = document.querySelector(`.map-item[href="#${currentSection}"]`);
-        if (activeMapItem) {
-          activeMapItem.classList.add('active');
+      // Update desktop nav
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        
+        if (href === `#${currentSection}` || (currentSection === 'overview' && href === '#overview')) {
+          link.classList.add('active');
         }
-      }
+        
+        // Special case for hero section
+        if (scrollPosition < 300 && href === '#overview') {
+          link.classList.add('active');
+        }
+      });
       
       // Update mobile nav
-      navItems.forEach(item => {
-        item.classList.remove('active');
+      document.querySelectorAll('.mobile-nav-item').forEach(item => {
         const href = item.getAttribute('href');
-        if (href === '#top' && scrollPosition < 100) {
+        if (href === `#${currentSection}` || (currentSection === 'overview' && href === '#overview')) {
           item.classList.add('active');
-        } else if (href === `#${currentSection}`) {
+        } else {
+          item.classList.remove('active');
+        }
+        
+        // Special case for hero section
+        if (scrollPosition < 300 && href === '#overview') {
           item.classList.add('active');
         }
       });
     }
     
-    // Initialize intersection observer for animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id || entry.target.className.split(' ')[0];
-          
-          // Add animation to sections as they come into view
-          if (!entry.target.classList.contains('animated')) {
-            entry.target.classList.add('animated');
-            entry.target.style.animation = 'fadeInUp 0.6s ease-out';
-          }
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    });
-    
-    // Observe sections for animation
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-    
-    // Smooth scroll for anchor links
+    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const targetId = this.getAttribute('href');
@@ -1840,22 +1650,64 @@
         if (targetElement) {
           e.preventDefault();
           window.scrollTo({
-            top: targetElement.offsetTop - 80,
+            top: targetElement.offsetTop - 100,
             behavior: 'smooth'
           });
-          
-          // Close mobile map if open
-          if (window.innerWidth <= 992) {
-            document.getElementById('mobileSectionMap').classList.remove('show');
-          }
         }
       });
     });
     
+    // Share functionality
+    document.querySelectorAll('.share-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Drink Spiking Awareness - PLURderapolis',
+              text: 'Important information about drink spiking awareness and prevention. Stay safe!',
+              url: window.location.href
+            });
+          } catch (err) {
+            console.log('Error sharing:', err);
+          }
+        } else {
+          // Fallback for browsers that don't support Web Share API
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            alert('Link copied to clipboard! Share this important resource with friends.');
+          });
+        }
+      });
+    });
+    
+    // Initialize animations on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.content-section, .nav-card').forEach(el => {
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+    
     // Add hover effects to interactive elements
-    document.querySelectorAll('.action-button, .cta-button, .resource-card, .symptoms-btn').forEach(el => {
+    document.querySelectorAll('.nav-card-button, .quick-action, .resource-link').forEach(el => {
       el.addEventListener('mouseenter', () => {
-        el.style.transform = 'translateY(-5px)';
+        el.style.transform = 'translateY(-3px)';
       });
       
       el.addEventListener('mouseleave', () => {
@@ -1863,53 +1715,27 @@
       });
     });
     
-    // Initialize all section contents as visible on desktop
-    if (window.innerWidth >= 768) {
-      document.querySelectorAll('.section-content').forEach(content => {
-        content.classList.add('active');
-        content.style.opacity = '1';
-        content.style.transform = 'translateY(0)';
+    // Emergency button animation
+    const emergencyButton = document.querySelector('.emergency-call-button');
+    if (emergencyButton) {
+      emergencyButton.addEventListener('mouseenter', () => {
+        emergencyButton.style.animation = 'none';
+        setTimeout(() => {
+          emergencyButton.style.animation = '';
+        }, 10);
       });
     }
     
-    // Toggle mobile section map
-    const mapToggle = document.getElementById('mapToggle');
-    const mobileSectionMap = document.getElementById('mobileSectionMap');
-    
-    if (mapToggle && mobileSectionMap) {
-      mapToggle.addEventListener('click', () => {
-        mobileSectionMap.classList.toggle('show');
-      });
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set initial active nav
+      updateActiveNav();
       
-      // Close mobile map when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!mobileSectionMap.contains(e.target) && !mapToggle.contains(e.target) && mobileSectionMap.classList.contains('show')) {
-          mobileSectionMap.classList.remove('show');
-        }
-      });
-      
-      // Close mobile map on scroll
-      window.addEventListener('scroll', () => {
-        if (mobileSectionMap.classList.contains('show')) {
-          mobileSectionMap.classList.remove('show');
-        }
-      });
-    }
-    
-    // Handle external links
-    document.querySelectorAll('a[href^="http"]').forEach(link => {
-      if (!link.href.includes(window.location.hostname)) {
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
+      // Add loading animation to hero
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        heroTitle.style.animation = 'fadeInUp 0.8s ease-out';
       }
-    });
-    
-    // Add click tracking for analytics (optional)
-    document.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', function() {
-        console.log(`Link clicked: ${this.href}`);
-        // Here you could add actual analytics tracking
-      });
     });
   </script>
 </body>
