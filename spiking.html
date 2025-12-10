@@ -13,10 +13,16 @@
       --accent-teal: #00f7e0;
       --accent-pink: #ff6ec7;
       --accent-purple: #a23dff;
+      --accent-orange: #ff9e5d;
       --text-light: #f8f8f8;
       --text-muted: #cccccc;
       --emergency-red: #ff3860;
       --safe-green: #4caf50;
+      --gradient-1: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      --gradient-2: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.2);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
     
     * {
@@ -27,272 +33,394 @@
     
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 80px;
     }
     
     body {
       background-color: var(--primary-bg);
       color: var(--text-light);
       font-family: 'Roboto', sans-serif;
-      line-height: 1.6;
+      line-height: 1.7;
       padding: 0;
       margin: 0;
       background-image: 
-        radial-gradient(circle at 20% 30%, rgba(162, 61, 255, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255, 110, 199, 0.1) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(162, 61, 255, 0.2) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(255, 110, 199, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(0, 247, 224, 0.05) 0%, transparent 50%);
+      min-height: 100vh;
+      opacity: 0;
+      animation: pageLoad 0.8s ease-out forwards;
+    }
+    
+    @keyframes pageLoad {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
     
     /* Header & Navigation */
     .header {
-      background: linear-gradient(to right, #2e003e, #3a0052);
-      padding: 1rem;
+      background: linear-gradient(135deg, rgba(46, 0, 62, 0.95), rgba(58, 0, 82, 0.95));
+      padding: 1rem 1.5rem;
       position: sticky;
       top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: slideDown 0.5s ease-out;
+      border-bottom: 2px solid var(--accent-teal);
+    }
+    
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
     
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: var(--accent-teal);
       text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 15px rgba(0, 247, 224, 0.5);
     }
     
     .logo i {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      transition: transform 0.5s ease;
+    }
+    
+    .logo:hover i {
+      transform: rotate(15deg) scale(1.2);
     }
     
     .back-button {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.5rem;
       background: rgba(255, 255, 255, 0.1);
       color: var(--text-light);
-      padding: 0.4rem 0.8rem;
+      padding: 0.6rem 1rem;
       border-radius: 50px;
       text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .back-button:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: translateX(-3px);
-    }
-    
-    /* Mobile Navigation */
-    .mobile-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--section-bg);
-      display: flex;
-      justify-content: space-around;
-      padding: 0.8rem 0;
-      z-index: 1000;
-      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-    }
-    
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      transition: all 0.3s ease;
-      padding: 0.3rem;
-      border-radius: 10px;
-      min-width: 60px;
-    }
-    
-    .nav-item i {
-      font-size: 1.2rem;
-      margin-bottom: 0.2rem;
-    }
-    
-    .nav-item.active, .nav-item:hover {
-      color: var(--accent-teal);
-      background: rgba(0, 247, 224, 0.1);
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
     /* Hero Section */
     .hero {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 3rem 1rem 2.5rem;
       margin-bottom: 2rem;
-      animation: fadeIn 1s ease-out;
+      position: relative;
+      overflow: hidden;
     }
     
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(0, 247, 224, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      animation: pulse 8s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
     }
     
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2.2rem;
+      font-size: 3rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.3rem;
       color: var(--accent-teal);
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
     }
     
     .hero p {
-      font-size: 1.1rem;
-      max-width: 700px;
+      font-size: 1.2rem;
+      max-width: 800px;
       margin: 0 auto;
       color: var(--text-muted);
+      animation: fadeInUp 0.8s ease-out 0.6s both;
     }
     
-    /* Emergency Bar - Made smaller for mobile */
+    /* Emergency Bar - Enhanced */
     .emergency-bar {
-      background: var(--emergency-red);
+      background: linear-gradient(135deg, var(--emergency-red), #ff6b6b);
       color: white;
-      padding: 0.6rem;
+      padding: 1rem 1.5rem;
       text-align: center;
       font-weight: 700;
-      margin: 1rem 0;
-      border-radius: 8px;
+      margin: 2rem 0 3rem;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
-      animation: pulse 2s infinite;
-      font-size: 0.9rem;
+      gap: 1rem;
+      animation: emergencyPulse 2s infinite, slideIn 0.6s ease-out;
+      box-shadow: 0 8px 25px rgba(255, 56, 96, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
-    @keyframes pulse {
-      0% { opacity: 0.9; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: 0.9; transform: scale(1); }
+    .emergency-bar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        transparent 20%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 80%
+      );
+      transform: rotate(30deg);
+      animation: shine 3s infinite linear;
+    }
+    
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(30deg); }
+      100% { transform: translateX(100%) rotate(30deg); }
+    }
+    
+    @keyframes emergencyPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 56, 96, 0.4); }
+      50% { transform: scale(1.02); box-shadow: 0 12px 35px rgba(255, 56, 96, 0.6); }
     }
     
     .emergency-call {
       background: white;
       color: var(--emergency-red);
-      padding: 0.4rem 0.8rem;
+      padding: 0.7rem 1.5rem;
       border-radius: 50px;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 1rem;
       white-space: nowrap;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      position: relative;
+      z-index: 2;
     }
     
     .emergency-call:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+      border-color: white;
     }
     
-    /* Quick Actions */
+    /* Quick Actions - Enhanced Grid */
     .quick-actions {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
     }
     
     .quick-action-card {
       background: var(--section-bg);
-      border-radius: 12px;
-      padding: 1.2rem;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: slideUp 0.5s ease-out;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.6s ease-out;
       animation-fill-mode: both;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .quick-action-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-2);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    
+    .quick-action-card:hover::before {
+      transform: scaleX(1);
     }
     
     .quick-action-card:nth-child(1) { animation-delay: 0.1s; }
     .quick-action-card:nth-child(2) { animation-delay: 0.2s; }
     .quick-action-card:nth-child(3) { animation-delay: 0.3s; }
-    
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .quick-action-card:nth-child(4) { animation-delay: 0.4s; }
     
     .quick-action-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-teal);
     }
     
     .action-icon {
-      font-size: 2rem;
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+      background: var(--gradient-2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: transform 0.5s ease;
+    }
+    
+    .quick-action-card:hover .action-icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+    
+    .quick-action-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
       margin-bottom: 0.8rem;
       color: var(--accent-teal);
     }
     
     .action-button {
       display: inline-block;
-      background: var(--accent-teal);
-      color: var(--primary-bg);
-      padding: 0.6rem 1.2rem;
+      background: var(--gradient-2);
+      color: white;
+      padding: 0.8rem 1.8rem;
       border-radius: 50px;
       font-weight: 700;
       text-decoration: none;
-      margin-top: 0.8rem;
-      transition: all 0.3s ease;
+      margin-top: 1.2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       width: 100%;
-      font-size: 0.9rem;
+      font-size: 1rem;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .action-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+      z-index: -1;
+    }
+    
+    .action-button:hover::before {
+      left: 100%;
     }
     
     .action-button:hover {
-      background: var(--accent-pink);
-      transform: scale(1.05);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 247, 224, 0.3);
+      border-color: var(--accent-teal);
     }
     
     .action-button.emergency {
-      background: var(--emergency-red);
-      color: white;
+      background: linear-gradient(135deg, var(--emergency-red), #ff6b6b);
     }
     
     /* Content Sections */
     .section {
       background-color: var(--section-bg);
-      padding: 1.2rem;
-      margin-bottom: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       animation: fadeInUp 0.6s ease-out;
       animation-fill-mode: both;
+      border-left: 5px solid var(--accent-teal);
+      position: relative;
+      overflow: hidden;
     }
     
-    .section:nth-child(1) { animation-delay: 0.1s; }
-    .section:nth-child(2) { animation-delay: 0.2s; }
-    .section:nth-child(3) { animation-delay: 0.3s; }
-    .section:nth-child(4) { animation-delay: 0.4s; }
-    .section:nth-child(5) { animation-delay: 0.5s; }
-    .section:nth-child(6) { animation-delay: 0.6s; }
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(0, 247, 224, 0.1) 0%, transparent 70%);
+      transform: translate(50%, -50%);
+    }
+    
+    .section:nth-child(1) { animation-delay: 0.1s; border-left-color: var(--accent-teal); }
+    .section:nth-child(2) { animation-delay: 0.2s; border-left-color: var(--accent-pink); }
+    .section:nth-child(3) { animation-delay: 0.3s; border-left-color: var(--accent-purple); }
+    .section:nth-child(4) { animation-delay: 0.4s; border-left-color: var(--accent-orange); }
+    .section:nth-child(5) { animation-delay: 0.5s; border-left-color: var(--accent-teal); }
+    .section:nth-child(6) { animation-delay: 0.6s; border-left-color: var(--accent-pink); }
     
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { 
+        opacity: 0; 
+        transform: translateY(40px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
     }
     
     .section:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
     
     .section-header {
@@ -301,42 +429,70 @@
       align-items: center;
       cursor: pointer;
       margin-bottom: 1rem;
+      padding-right: 1rem;
     }
     
     .section-header h2 {
       font-family: 'Montserrat', sans-serif;
       color: var(--accent-teal);
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
+      transition: color 0.3s ease;
+    }
+    
+    .section:hover .section-header h2 {
+      color: var(--accent-pink);
     }
     
     .section-content {
       display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
     }
     
     .section-content.active {
       display: block;
-      animation: fadeIn 0.5s ease-out;
+      opacity: 1;
+      transform: translateY(0);
     }
     
     .toggle-icon {
-      font-size: 1.3rem;
-      transition: transform 0.3s ease;
+      font-size: 1.5rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--accent-teal);
+      background: rgba(0, 247, 224, 0.1);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
     
     .toggle-icon.rotated {
       transform: rotate(180deg);
+      background: rgba(255, 110, 199, 0.2);
     }
     
     ul, ol {
-      padding-left: 1.2rem;
-      margin: 1rem 0;
+      padding-left: 1.5rem;
+      margin: 1.2rem 0;
     }
     
     li {
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    
+    ol li::before {
+      content: counter(list-item) '.';
+      position: absolute;
+      left: -1.5rem;
+      color: var(--accent-teal);
+      font-weight: 700;
     }
     
     .checklist {
@@ -347,55 +503,90 @@
     .checklist li {
       display: flex;
       align-items: flex-start;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-      padding: 0.5rem;
-      border-radius: 8px;
-      transition: background 0.3s ease;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid transparent;
     }
     
     .checklist li:hover {
-      background: rgba(0, 247, 224, 0.05);
+      background: rgba(0, 247, 224, 0.08);
+      border-left-color: var(--accent-teal);
+      transform: translateX(5px);
     }
     
     .checklist i {
       color: var(--accent-teal);
       margin-top: 0.2rem;
       flex-shrink: 0;
+      font-size: 1.2rem;
     }
     
     .warning {
-      background: rgba(255, 100, 100, 0.2);
+      background: linear-gradient(135deg, rgba(255, 100, 100, 0.2), rgba(255, 56, 96, 0.3));
       border-left: 4px solid var(--emergency-red);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 4px;
-      animation: pulse 3s infinite;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      animation: warningPulse 3s infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    @keyframes warningPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 56, 96, 0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(255, 56, 96, 0); }
+    }
+    
+    .warning h3 {
+      color: white;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     
     .resource-card {
-      background: rgba(0, 247, 224, 0.1);
-      border-radius: 8px;
-      padding: 1rem;
-      margin: 0.5rem 0;
-      transition: transform 0.3s ease;
+      background: linear-gradient(135deg, rgba(0, 247, 224, 0.1), rgba(162, 61, 255, 0.1));
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(0, 247, 224, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-2);
     }
     
     .resource-card:hover {
-      transform: translateX(5px);
+      transform: translateX(10px) translateY(-5px);
+      box-shadow: var(--shadow-md);
     }
     
     .resource-card h3 {
       color: var(--accent-teal);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
     }
     
     /* Share and Download Section */
     .share-download {
       display: flex;
       justify-content: space-between;
-      margin: 2rem 0;
-      gap: 1rem;
+      margin: 3rem 0;
+      gap: 1.5rem;
     }
     
     .share-btn, .download-btn {
@@ -403,84 +594,181 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.8rem;
-      border-radius: 50px;
-      background: var(--accent-purple);
+      gap: 0.8rem;
+      padding: 1.2rem;
+      border-radius: 12px;
+      background: var(--gradient-1);
       color: white;
       text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      font-size: 1.1rem;
+      position: relative;
+      overflow: hidden;
     }
     
     .download-btn {
-      background: var(--accent-teal);
-      color: var(--primary-bg);
+      background: var(--gradient-2);
     }
     
     .share-btn:hover, .download-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(255, 255, 255, 0.3);
     }
     
     /* Call to Action Section */
     .cta-section {
-      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-      padding: 2rem;
-      border-radius: 15px;
+      background: var(--gradient-1);
+      padding: 3rem 2rem;
+      border-radius: 20px;
       text-align: center;
-      margin: 2rem 0;
+      margin: 3rem 0;
       color: white;
-      animation: pulse 4s infinite;
+      position: relative;
+      overflow: hidden;
+      animation: ctaFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes ctaFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: ctaShine 8s infinite linear;
+    }
+    
+    @keyframes ctaShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
     
     .cta-section h2 {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+      font-size: 2rem;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .cta-section p {
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
     }
     
     .cta-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       justify-content: center;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
     }
     
     .cta-button {
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 2rem;
       border-radius: 50px;
       background: white;
       color: var(--primary-bg);
       text-decoration: none;
-      font-weight: 700;
-      transition: all 0.3s ease;
+      font-weight: 800;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      min-width: 180px;
     }
     
     .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      border-color: white;
+      color: var(--accent-purple);
+    }
+    
+    /* Symptoms Checker Highlight */
+    .symptoms-highlight {
+      background: linear-gradient(135deg, rgba(0, 247, 224, 0.15), rgba(162, 61, 255, 0.15));
+      border: 2px dashed var(--accent-teal);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: highlightPulse 4s infinite alternate;
+    }
+    
+    @keyframes highlightPulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 247, 224, 0.3); }
+      100% { box-shadow: 0 0 0 20px rgba(0, 247, 224, 0); }
+    }
+    
+    .symptoms-highlight h3 {
+      color: var(--accent-teal);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .symptoms-highlight p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .symptoms-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--gradient-2);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+    }
+    
+    .symptoms-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 247, 224, 0.4);
+      border-color: var(--accent-teal);
     }
     
     /* Scroll to Top Button */
     .scroll-top {
       position: fixed;
-      bottom: 70px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: var(--accent-teal);
-      color: var(--primary-bg);
+      bottom: 80px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-2);
+      color: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-lg);
       z-index: 999;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255, 255, 255, 0.3);
     }
     
     .scroll-top.show {
@@ -489,34 +777,150 @@
     }
     
     .scroll-top:hover {
-      transform: translateY(-5px);
-      background: var(--accent-pink);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 20px 40px rgba(0, 247, 224, 0.4);
     }
     
     /* Footer */
     footer {
-      margin-top: 3rem;
-      padding: 2rem 1rem;
+      margin-top: 4rem;
+      padding: 3rem 2rem;
       text-align: center;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      margin-bottom: 70px; /* Space for mobile nav */
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      margin-bottom: 80px;
+      border-top: 3px solid var(--accent-teal);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-1);
+      animation: footerGlow 4s infinite linear;
+    }
+    
+    @keyframes footerGlow {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
     }
     
     footer p {
-      margin: 0.5rem 0;
+      margin: 1rem 0;
       color: var(--text-muted);
+      line-height: 1.6;
     }
     
     .brand {
       color: var(--accent-teal);
-      font-weight: 700;
+      font-weight: 800;
+      text-shadow: 0 0 10px rgba(0, 247, 224, 0.3);
+    }
+    
+    /* Mobile Navigation */
+    .mobile-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(58, 0, 82, 0.95);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.8rem 0;
+      z-index: 1000;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 2px solid var(--accent-teal);
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 12px;
+      min-width: 70px;
+      position: relative;
+    }
+    
+    .nav-item i {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-item.active, .nav-item:hover {
+      color: var(--accent-teal);
+      background: rgba(0, 247, 224, 0.15);
+    }
+    
+    .nav-item.active i, .nav-item:hover i {
+      transform: translateY(-3px);
+    }
+    
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      width: 5px;
+      height: 5px;
+      background: var(--accent-teal);
+      border-radius: 50%;
+    }
+    
+    /* Progress Indicator */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 1001;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--gradient-1);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 0 4px 4px 0;
     }
     
     /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .quick-actions {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+      
+      .share-download {
+        flex-direction: column;
+      }
+    }
+    
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
       }
       
       .hero p {
@@ -528,26 +932,22 @@
       }
       
       .header {
-        padding: 0.8rem;
+        padding: 0.8rem 1rem;
       }
       
       .logo {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
       
       .emergency-bar {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
         text-align: center;
-        padding: 0.8rem;
+        padding: 1.2rem;
       }
       
       .section-header h2 {
-        font-size: 1.1rem;
-      }
-      
-      .share-download {
-        flex-direction: column;
+        font-size: 1.2rem;
       }
       
       .cta-buttons {
@@ -557,13 +957,51 @@
       
       .cta-button {
         width: 100%;
-        max-width: 250px;
+        max-width: 280px;
+      }
+      
+      .symptoms-highlight {
+        padding: 1.5rem;
+      }
+      
+      .symptoms-highlight h3 {
+        font-size: 1.5rem;
+      }
+      
+      .mobile-nav {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero {
+        padding: 2rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .section {
+        padding: 1.5rem;
+      }
+      
+      .cta-section {
+        padding: 2rem 1.5rem;
+      }
+      
+      .scroll-top {
+        width: 50px;
+        height: 50px;
+        bottom: 70px;
+        right: 15px;
       }
     }
     
     /* Print Styles */
     @media print {
-      .header, .quick-actions, .emergency-bar, .mobile-nav, .scroll-top, .share-download, .cta-section {
+      .header, .quick-actions, .emergency-bar, .mobile-nav, .scroll-top, .share-download, .cta-section, .symptoms-highlight, .progress-container {
         display: none;
       }
       
@@ -575,10 +1013,12 @@
       .section {
         break-inside: avoid;
         border: 1px solid #ddd;
+        box-shadow: none;
       }
       
       .section-content {
         display: block !important;
+        opacity: 1 !important;
       }
       
       footer {
@@ -588,6 +1028,11 @@
   </style>
 </head>
 <body>
+  <!-- Progress Indicator -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
   <div class="container">
     <!-- Header with Back Button -->
     <header class="header">
@@ -597,21 +1042,23 @@
       </a>
       <a href="javascript:history.back()" class="back-button">
         <i class="fas fa-arrow-left"></i>
-        Back
+        Back to Safety
       </a>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
+      <div class="hero-icon"></div>
       <h1>Drink Spiking Awareness & Response</h1>
-      <p>Essential information to recognize, respond to, and prevent drink spiking in our community</p>
+      <p class="hero-subtitle">Protect Yourself and Your Community</p>
+      <p>Essential information to recognize, respond to, and prevent drink spiking in our community. Stay informed, stay safe.</p>
     </section>
 
-    <!-- Emergency Bar - Made smaller -->
+    <!-- Emergency Bar -->
     <div class="emergency-bar">
-      <i class="fas fa-exclamation-triangle"></i>
-      <span>In immediate danger? Call 911</span>
-      <a href="tel:911" class="emergency-call">Call 911</a>
+      <i class="fas fa-exclamation-triangle fa-shake"></i>
+      <span>In immediate danger? Don't hesitate — Call 911 immediately</span>
+      <a href="tel:911" class="emergency-call">CALL 911 NOW</a>
     </div>
 
     <!-- Quick Actions -->
@@ -642,15 +1089,34 @@
         <p>Let your friends know you're okay</p>
         <a href="sms:?&body=Hey, just letting you know I'm safe now. Thanks for looking out 💚" class="action-button">Send I'm Safe Text</a>
       </div>
+      
+      <div class="quick-action-card">
+        <div class="action-icon">
+          <i class="fas fa-clipboard-check"></i>
+        </div>
+        <h3>Check Symptoms</h3>
+        <p>Quick assessment tool for drink spiking</p>
+        <a href="https://plurderapolis.org/symptom" class="action-button">Check Now</a>
+      </div>
+    </div>
+
+    <!-- Symptoms Checker Highlight -->
+    <div class="symptoms-highlight">
+      <h3><i class="fas fa-stethoscope"></i> Not Sure About Symptoms?</h3>
+      <p>Use our interactive symptoms checker to assess if you or a friend might have been affected</p>
+      <a href="https://plurderapolis.org/symptom" class="symptoms-btn">
+        <i class="fas fa-heartbeat"></i>
+        Check Symptoms Tool
+      </a>
     </div>
 
     <!-- Share and Download Buttons -->
     <div class="share-download">
       <a href="#" class="share-btn" id="shareBtn">
-        <i class="fas fa-share-alt"></i> Share Info
+        <i class="fas fa-share-alt"></i> Share This Resource
       </a>
       <a href="#" class="download-btn" id="downloadBtn">
-        <i class="fas fa-download"></i> Download Guide
+        <i class="fas fa-download"></i> Download Safety Guide
       </a>
     </div>
 
@@ -662,7 +1128,10 @@
       </div>
       <div class="section-content active">
         <p>Drink spiking happens when someone adds alcohol, drugs, or other substances into another person's drink without their knowledge or consent. The substances may be colorless, odorless, and tasteless. Sometimes substances are even added to the outside of cans or bottles.</p>
-        <p class="warning"><i class="fas fa-exclamation-triangle"></i> You may never get a clue until it's too late. Trust your instincts.</p>
+        <div class="warning">
+          <h3><i class="fas fa-exclamation-triangle"></i> Trust Your Instincts</h3>
+          <p>You may never get a clue until it's too late. If something feels off about your drink, trust your gut feeling immediately.</p>
+        </div>
       </div>
     </div>
 
@@ -674,13 +1143,15 @@
       </div>
       <div class="section-content">
         <ul class="checklist">
-          <li><i class="fas fa-check-circle"></i> Change in taste: bitter or salty taste when you didn't expect it</li>
-          <li><i class="fas fa-check-circle"></i> Cloudy, foggy, or bloated appearance in a drink that was clear before</li>
-          <li><i class="fas fa-check-circle"></i> Excessive or unusual bubbles in non-carbonated drinks</li>
-          <li><i class="fas fa-check-circle"></i> Ice behaving oddly (e.g. sinking when it usually floats) or discoloration</li>
-          <li><i class="fas fa-check-circle"></i> Unexpected smell changes (even subtle) or odor you can't place</li>
+          <li><i class="fas fa-tint"></i> Change in taste: bitter or salty taste when you didn't expect it</li>
+          <li><i class="fas fa-cloud"></i> Cloudy, foggy, or bloated appearance in a drink that was clear before</li>
+          <li><i class="fas fa-bubbles"></i> Excessive or unusual bubbles in non-carbonated drinks</li>
+          <li><i class="fas fa-ice-cream"></i> Ice behaving oddly (e.g. sinking when it usually floats) or discoloration</li>
+          <li><i class="fas fa-wind"></i> Unexpected smell changes (even subtle) or odor you can't place</li>
         </ul>
-        <p class="warning"><i class="fas fa-exclamation-triangle"></i> Many drugs have no odor, taste, or color. Always trust your instincts over these signs.</p>
+        <div class="warning">
+          <p><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Many drugs have no odor, taste, or color. Always trust your instincts over these signs.</p>
+        </div>
       </div>
     </div>
 
@@ -692,16 +1163,22 @@
       </div>
       <div class="section-content">
         <ul class="checklist">
-          <li><i class="fas fa-exclamation-circle"></i> Feeling drunk, woozy, or "out of it" much faster than usual</li>
-          <li><i class="fas fa-exclamation-circle"></i> Sudden drowsiness, fatigue, confusion, slurred speech</li>
-          <li><i class="fas fa-exclamation-circle"></i> Memory loss — not remembering what happened recently</li>
-          <li><i class="fas fa-exclamation-circle"></i> Loss of balance, coordination, difficulty walking</li>
-          <li><i class="fas fa-exclamation-circle"></i> Nausea, vomiting</li>
-          <li><i class="fas fa-exclamation-circle"></i> Visual problems (blurred vision), dizziness</li>
-          <li><i class="fas fa-exclamation-circle"></i> Lowered inhibitions, sudden anxiety, disorientation</li>
-          <li><i class="fas fa-exclamation-circle"></i> Seizures, muscle spasms, breathing difficulty</li>
-          <li><i class="fas fa-exclamation-circle"></i> Unusually severe or long hangover after little alcohol</li>
+          <li><i class="fas fa-glass-cheers"></i> Feeling drunk, woozy, or "out of it" much faster than usual</li>
+          <li><i class="fas fa-bed"></i> Sudden drowsiness, fatigue, confusion, slurred speech</li>
+          <li><i class="fas fa-brain"></i> Memory loss — not remembering what happened recently</li>
+          <li><i class="fas fa-walking"></i> Loss of balance, coordination, difficulty walking</li>
+          <li><i class="fas fa-lungs"></i> Nausea, vomiting, breathing difficulty</li>
+          <li><i class="fas fa-eye"></i> Visual problems (blurred vision), dizziness</li>
+          <li><i class="fas fa-exclamation-triangle"></i> Lowered inhibitions, sudden anxiety, disorientation</li>
+          <li><i class="fas fa-dizzy"></i> Seizures, muscle spasms, unusual physical reactions</li>
+          <li><i class="fas fa-head-side-virus"></i> Unusually severe or long hangover after little alcohol</li>
         </ul>
+        <div class="symptoms-highlight" style="margin-top: 1.5rem; padding: 1.5rem;">
+          <p><strong>Use our symptoms checker if you're unsure:</strong></p>
+          <a href="https://plurderapolis.org/symptom" class="action-button" style="margin-top: 0.5rem;">
+            <i class="fas fa-stethoscope"></i> Check Symptoms Online
+          </a>
+        </div>
       </div>
     </div>
 
@@ -723,7 +1200,7 @@
         </ol>
         
         <div class="warning">
-          <h3><i class="fas fa-lightbulb"></i> Good Samaritan Law Protection</h3>
+          <h3><i class="fas fa-shield-alt"></i> Good Samaritan Law Protection</h3>
           <p>You're protected under Minnesota's Good Samaritan Law (MN Stat § 604A.05). If someone needs help, call 911. You're doing the right thing — and you're legally safe.</p>
         </div>
       </div>
@@ -737,25 +1214,34 @@
       </div>
       <div class="section-content">
         <ul class="checklist">
-          <li><i class="fas fa-check"></i> Never leave your drink unattended. If you do, throw it out.</li>
-          <li><i class="fas fa-check"></i> Only accept drinks you see being opened or poured.</li>
-          <li><i class="fas fa-check"></i> Use bottles with screw-tops, drink lids, or covers.</li>
-          <li><i class="fas fa-check"></i> Go out in groups. Use a buddy system.</li>
-          <li><i class="fas fa-check"></i> Avoid accepting drinks from strangers.</li>
-          <li><i class="fas fa-check"></i> If you need to step away, have someone watch your drink.</li>
-          <li><i class="fas fa-check"></i> Speak up if you suspect something - notify venue staff.</li>
+          <li><i class="fas fa-eye"></i> Never leave your drink unattended. If you do, throw it out.</li>
+          <li><i class="fas fa-wine-bottle"></i> Only accept drinks you see being opened or poured.</li>
+          <li><i class="fas fa-capsules"></i> Use bottles with screw-tops, drink lids, or covers.</li>
+          <li><i class="fas fa-users"></i> Go out in groups. Use a buddy system.</li>
+          <li><i class="fas fa-user-secret"></i> Avoid accepting drinks from strangers.</li>
+          <li><i class="fas fa-user-friends"></i> If you need to step away, have someone watch your drink.</li>
+          <li><i class="fas fa-bullhorn"></i> Speak up if you suspect something - notify venue staff.</li>
         </ul>
       </div>
     </div>
 
     <!-- Call to Action Section -->
     <div class="cta-section">
-      <h2>Need More Information?</h2>
-      <p>Explore our additional resources for harm reduction and safety</p>
+      <h2>Your Safety Matters</h2>
+      <p>Explore our additional resources for harm reduction and community safety</p>
       <div class="cta-buttons">
-        <a href="polydrug.html" class="cta-button">Polydrug Safety</a>
-        <a href="emergency.html" class="cta-button">Emergency Guide</a>
-        <a href="panic.html" class="cta-button">Panic Attack Help</a>
+        <a href="polydrug.html" class="cta-button">
+          <i class="fas fa-pills"></i> Polydrug Safety
+        </a>
+        <a href="emergency.html" class="cta-button">
+          <i class="fas fa-ambulance"></i> Emergency Guide
+        </a>
+        <a href="panic.html" class="cta-button">
+          <i class="fas fa-heart"></i> Panic Attack Help
+        </a>
+        <a href="https://plurderapolis.org/symptom" class="cta-button">
+          <i class="fas fa-clipboard-check"></i> Symptoms Checker
+        </a>
       </div>
     </div>
 
@@ -769,19 +1255,19 @@
         <div class="resource-card">
           <h3>Minnesota Day One (statewide sexual violence helpline):</h3>
           <p><i class="fas fa-phone"></i> 1-866-223-1111 • <i class="fas fa-sms"></i> Text: 612-399-9995</p>
-          <p><i class="fas fa-globe"></i> <a href="https://dayoneservices.org">dayoneservices.org</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://dayoneservices.org" style="color: var(--accent-teal);">dayoneservices.org</a></p>
         </div>
         
         <div class="resource-card">
           <h3>Aurora Center (University of Minnesota):</h3>
           <p>Offers medical forensic exams</p>
-          <p><i class="fas fa-globe"></i> <a href="https://aurora.umn.edu">aurora.umn.edu</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://aurora.umn.edu" style="color: var(--accent-teal);">aurora.umn.edu</a></p>
         </div>
         
         <div class="resource-card">
           <h3>Minnesota Bureau of Criminal Apprehension:</h3>
           <p>Forensic testing information</p>
-          <p><i class="fas fa-globe"></i> <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing">dps.mn.gov</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing" style="color: var(--accent-teal);">dps.mn.gov</a></p>
         </div>
         
         <div class="resource-card">
@@ -801,7 +1287,7 @@
       <p>&copy; 2025 <span class="brand">PLURderapolis</span>. Mutual aid and harm reduction for our community.</p>
       <p>PLURderapolis is a community harm reduction initiative. We are not medical professionals.</p>
       <p>This site provides education and support but is not a substitute for professional care.</p>
-      <p>In an emergency, call 911.</p>
+      <p>In an emergency, call 911 immediately.</p>
     </footer>
   </div>
 
@@ -819,9 +1305,9 @@
       <i class="fas fa-hands-helping"></i>
       <span>Resources</span>
     </a>
-    <a href="polydrug.html" class="nav-item">
-      <i class="fas fa-pills"></i>
-      <span>Polydrug</span>
+    <a href="https://plurderapolis.org/symptom" class="nav-item">
+      <i class="fas fa-heartbeat"></i>
+      <span>Symptoms</span>
     </a>
     <a href="emergency.html" class="nav-item">
       <i class="fas fa-ambulance"></i>
@@ -835,35 +1321,76 @@
   </div>
 
   <script>
-    // Toggle section content
+    // Page load animation
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate hero elements sequentially
+      const heroElements = document.querySelectorAll('.hero h1, .hero-subtitle, .hero p');
+      heroElements.forEach((el, index) => {
+        el.style.animationDelay = `${0.2 + (index * 0.2)}s`;
+      });
+    });
+
+    // Toggle section content with smooth animation
     function toggleSection(element) {
       const content = element.parentElement.querySelector('.section-content');
       const icon = element.querySelector('.toggle-icon');
       
-      content.classList.toggle('active');
+      if (content.classList.contains('active')) {
+        content.style.opacity = '0';
+        content.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+          content.classList.remove('active');
+        }, 300);
+      } else {
+        content.classList.add('active');
+        setTimeout(() => {
+          content.style.opacity = '1';
+          content.style.transform = 'translateY(0)';
+        }, 10);
+      }
+      
       icon.classList.toggle('rotated');
+      
+      // Add haptic feedback on mobile
+      if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+      }
     }
     
     // Make all sections expandable on mobile for easier navigation
     if (window.innerWidth < 768) {
       document.querySelectorAll('.section-content').forEach(content => {
-        content.classList.remove('active');
+        if (!content.classList.contains('active')) {
+          content.classList.remove('active');
+        }
       });
     }
     
-    // Scroll to top functionality
-    const scrollTopBtn = document.getElementById('scrollTop');
+    // Scroll progress indicator
+    const progressBar = document.getElementById('progressBar');
     
     window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 300) {
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (window.scrollY / windowHeight) * 100;
+      progressBar.style.width = `${scrolled}%`;
+      
+      // Show/hide scroll to top button
+      const scrollTopBtn = document.getElementById('scrollTop');
+      if (window.pageYOffset > 500) {
         scrollTopBtn.classList.add('show');
       } else {
         scrollTopBtn.classList.remove('show');
       }
     });
     
+    // Scroll to top functionality
+    const scrollTopBtn = document.getElementById('scrollTop');
+    
     scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+      });
     });
     
     // Share functionality
@@ -873,8 +1400,8 @@
       if (navigator.share) {
         try {
           await navigator.share({
-            title: 'Drink Spiking Awareness',
-            text: 'Important information about drink spiking awareness and prevention',
+            title: 'Drink Spiking Awareness - PLURderapolis',
+            text: 'Important information about drink spiking awareness and prevention. Stay safe!',
             url: window.location.href
           });
         } catch (err) {
@@ -883,7 +1410,7 @@
       } else {
         // Fallback for browsers that don't support the Web Share API
         navigator.clipboard.writeText(window.location.href).then(() => {
-          alert('Link copied to clipboard!');
+          alert('Link copied to clipboard! Share this important resource with friends.');
         });
       }
     });
@@ -892,66 +1419,106 @@
     document.getElementById('downloadBtn').addEventListener('click', (e) => {
       e.preventDefault();
       
-      // Create a text version of the content
-      const content = document.querySelector('.container').innerText;
+      // Create a formatted text version of the content
+      const title = document.querySelector('.hero h1').textContent;
+      const sections = document.querySelectorAll('.section');
+      let content = `${title}\n\n`;
+      
+      sections.forEach(section => {
+        const header = section.querySelector('.section-header h2').textContent;
+        const sectionContent = section.querySelector('.section-content').textContent;
+        content += `${header}\n${sectionContent}\n\n`;
+      });
+      
       const blob = new Blob([content], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'drink-spiking-awareness-guide.txt';
+      a.download = 'drink-spiking-safety-guide.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      
+      // Show feedback
+      const originalText = e.target.innerHTML;
+      e.target.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+      setTimeout(() => {
+        e.target.innerHTML = originalText;
+      }, 2000);
     });
     
-    // Mobile nav highlighting
+    // Mobile nav highlighting with intersection observer
     const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.section');
-    
-    window.addEventListener('scroll', () => {
-      let current = '';
-      
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (pageYOffset >= (sectionTop - 200)) {
-          current = section.getAttribute('id');
-        }
-      });
-      
-      navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href').substring(1) === current) {
-          item.classList.add('active');
-        }
-      });
-    });
-    
-    // Add animations on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+    const sections = document.querySelectorAll('.section, .hero, .cta-section');
     
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = 1;
-          entry.target.style.transform = 'translateY(0)';
+          const id = entry.target.id || entry.target.className.split(' ')[0];
+          
+          navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href').includes(id)) {
+              item.classList.add('active');
+            }
+          });
+          
+          // Add animation to sections as they come into view
+          if (!entry.target.classList.contains('animated')) {
+            entry.target.classList.add('animated');
+            entry.target.style.animation = 'fadeInUp 0.6s ease-out';
+          }
         }
       });
-    }, observerOptions);
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    });
     
-    // Observe sections for animation
-    document.querySelectorAll('.section').forEach(section => {
-      section.style.opacity = 0;
-      section.style.transform = 'translateY(20px)';
-      section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    // Observe sections for animation and nav highlighting
+    sections.forEach(section => {
       observer.observe(section);
     });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Add hover effects to interactive elements
+    document.querySelectorAll('.action-button, .cta-button, .resource-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        el.style.transform = 'translateY(-5px)';
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'translateY(0)';
+      });
+    });
+    
+    // Initialize all section contents as visible on desktop
+    if (window.innerWidth >= 768) {
+      document.querySelectorAll('.section-content').forEach(content => {
+        content.classList.add('active');
+        content.style.opacity = '1';
+        content.style.transform = 'translateY(0)';
+      });
+    }
   </script>
 </body>
 </html>
