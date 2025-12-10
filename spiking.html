@@ -132,6 +132,101 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
     
+    /* Section Navigation Map */
+    .section-map {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 900;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(58, 0, 82, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 15px 10px;
+      border-radius: 20px;
+      border: 2px solid var(--accent-teal);
+      box-shadow: var(--shadow-lg);
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      max-height: 70vh;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-teal) transparent;
+    }
+    
+    .section-map:hover {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.05);
+    }
+    
+    .section-map::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .section-map::-webkit-scrollbar-thumb {
+      background: var(--accent-teal);
+      border-radius: 10px;
+    }
+    
+    .map-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-light);
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      font-size: 0.9rem;
+    }
+    
+    .map-item i {
+      color: var(--accent-teal);
+      font-size: 1rem;
+      min-width: 20px;
+      text-align: center;
+    }
+    
+    .map-item:hover {
+      background: rgba(0, 247, 224, 0.2);
+      transform: translateX(-5px);
+    }
+    
+    .map-item.active {
+      background: rgba(0, 247, 224, 0.3);
+      color: var(--accent-teal);
+      font-weight: 600;
+    }
+    
+    .map-item.active i {
+      color: var(--accent-teal);
+    }
+    
+    .map-toggle {
+      display: none;
+      position: fixed;
+      bottom: 120px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-2);
+      color: white;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      z-index: 901;
+      box-shadow: var(--shadow-md);
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .map-toggle:hover {
+      transform: scale(1.1);
+    }
+    
     /* Hero Section */
     .hero {
       text-align: center;
@@ -387,6 +482,7 @@
       border-left: 5px solid var(--accent-teal);
       position: relative;
       overflow: hidden;
+      scroll-margin-top: 80px;
     }
     
     .section::before {
@@ -900,6 +996,26 @@
     }
     
     /* Responsive Design */
+    @media (max-width: 1200px) {
+      .section-map {
+        right: 10px;
+        padding: 12px 8px;
+      }
+      
+      .map-item span {
+        display: none;
+      }
+      
+      .map-item {
+        padding: 10px;
+        justify-content: center;
+      }
+      
+      .map-item i {
+        font-size: 1.2rem;
+      }
+    }
+    
     @media (max-width: 992px) {
       .hero h1 {
         font-size: 2.5rem;
@@ -911,6 +1027,42 @@
       
       .share-download {
         flex-direction: column;
+      }
+      
+      .section-map {
+        display: none;
+      }
+      
+      .map-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .mobile-section-map {
+        position: fixed;
+        bottom: 180px;
+        right: 20px;
+        background: rgba(58, 0, 82, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 902;
+        box-shadow: var(--shadow-lg);
+        border: 2px solid var(--accent-teal);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+      }
+      
+      .mobile-section-map.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
       }
     }
     
@@ -972,6 +1124,15 @@
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
       }
+      
+      .scroll-top {
+        bottom: 70px;
+        right: 20px;
+      }
+      
+      .map-toggle {
+        bottom: 130px;
+      }
     }
     
     @media (max-width: 480px) {
@@ -997,11 +1158,33 @@
         bottom: 70px;
         right: 15px;
       }
+      
+      .map-toggle {
+        bottom: 130px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+      }
+      
+      .mobile-section-map {
+        bottom: 190px;
+        right: 15px;
+        left: 15px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .mobile-map-item {
+        flex: 0 0 calc(50% - 10px);
+        text-align: center;
+        padding: 10px;
+      }
     }
     
     /* Print Styles */
     @media print {
-      .header, .quick-actions, .emergency-bar, .mobile-nav, .scroll-top, .share-download, .cta-section, .symptoms-highlight, .progress-container {
+      .header, .quick-actions, .emergency-bar, .mobile-nav, .scroll-top, .share-download, .cta-section, .symptoms-highlight, .progress-container, .section-map, .map-toggle {
         display: none;
       }
       
@@ -1069,7 +1252,7 @@
         </div>
         <h3>Need Immediate Help?</h3>
         <p>Get medical assistance and support right away</p>
-        <a href="#help" class="action-button">Get Help Now</a>
+        <a href="#immediate-actions" class="action-button">Get Help Now</a>
       </div>
       
       <div class="quick-action-card">
@@ -1087,7 +1270,7 @@
         </div>
         <h3>I'm Safe</h3>
         <p>Let your friends know you're okay</p>
-        <a href="sms:?&body=Hey, just letting you know I'm safe now. Thanks for looking out 💚" class="action-button">Send I'm Safe Text</a>
+        <a href="sms:?&body=Hey%2C%20just%20letting%20you%20know%20I%27m%20safe%20now.%20Thanks%20for%20looking%20out%20%F0%9F%92%9A%20-%20via%20PLURderapolis%20Safety" class="action-button">Send I'm Safe Text</a>
       </div>
       
       <div class="quick-action-card">
@@ -1096,7 +1279,7 @@
         </div>
         <h3>Check Symptoms</h3>
         <p>Quick assessment tool for drink spiking</p>
-        <a href="https://plurderapolis.org/symptom" class="action-button">Check Now</a>
+        <a href="https://plurderapolis.org/symtoms.html" class="action-button">Check Now</a>
       </div>
     </div>
 
@@ -1104,7 +1287,7 @@
     <div class="symptoms-highlight">
       <h3><i class="fas fa-stethoscope"></i> Not Sure About Symptoms?</h3>
       <p>Use our interactive symptoms checker to assess if you or a friend might have been affected</p>
-      <a href="https://plurderapolis.org/symptom" class="symptoms-btn">
+      <a href="https://plurderapolis.org/symtoms.html" class="symptoms-btn">
         <i class="fas fa-heartbeat"></i>
         Check Symptoms Tool
       </a>
@@ -1121,7 +1304,7 @@
     </div>
 
     <!-- What is Drink Spiking -->
-    <div class="section">
+    <div class="section" id="what-is">
       <div class="section-header" onclick="toggleSection(this)">
         <h2><i class="fas fa-question-circle"></i> What is Drink Spiking?</h2>
         <span class="toggle-icon">▼</span>
@@ -1136,7 +1319,7 @@
     </div>
 
     <!-- Signs of Tampering -->
-    <div class="section">
+    <div class="section" id="signs">
       <div class="section-header" onclick="toggleSection(this)">
         <h2><i class="fas fa-flask"></i> Signs Your Drink May Have Been Tampered With</h2>
         <span class="toggle-icon">▼</span>
@@ -1152,11 +1335,17 @@
         <div class="warning">
           <p><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Many drugs have no odor, taste, or color. Always trust your instincts over these signs.</p>
         </div>
+        <div class="symptoms-highlight" style="margin-top: 1.5rem; padding: 1.5rem;">
+          <p><strong>Suspect you've been spiked? Use our symptoms checker:</strong></p>
+          <a href="https://plurderapolis.org/symtoms.html" class="action-button" style="margin-top: 0.5rem;">
+            <i class="fas fa-stethoscope"></i> Symptoms Checker
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- Symptoms -->
-    <div class="section">
+    <div class="section" id="symptoms">
       <div class="section-header" onclick="toggleSection(this)">
         <h2><i class="fas fa-heartbeat"></i> Symptoms of Being Spiked</h2>
         <span class="toggle-icon">▼</span>
@@ -1174,8 +1363,8 @@
           <li><i class="fas fa-head-side-virus"></i> Unusually severe or long hangover after little alcohol</li>
         </ul>
         <div class="symptoms-highlight" style="margin-top: 1.5rem; padding: 1.5rem;">
-          <p><strong>Use our symptoms checker if you're unsure:</strong></p>
-          <a href="https://plurderapolis.org/symptom" class="action-button" style="margin-top: 0.5rem;">
+          <p><strong>Use our symptoms checker if you're experiencing any of these:</strong></p>
+          <a href="https://plurderapolis.org/symtoms.html" class="action-button" style="margin-top: 0.5rem;">
             <i class="fas fa-stethoscope"></i> Check Symptoms Online
           </a>
         </div>
@@ -1183,7 +1372,7 @@
     </div>
 
     <!-- Immediate Actions -->
-    <div class="section">
+    <div class="section" id="immediate-actions">
       <div class="section-header" onclick="toggleSection(this)">
         <h2><i class="fas fa-first-aid"></i> Immediate Action Steps</h2>
         <span class="toggle-icon">▼</span>
@@ -1230,23 +1419,23 @@
       <h2>Your Safety Matters</h2>
       <p>Explore our additional resources for harm reduction and community safety</p>
       <div class="cta-buttons">
-        <a href="polydrug.html" class="cta-button">
+        <a href="https://plurderapolis.org/polydrug.html" class="cta-button">
           <i class="fas fa-pills"></i> Polydrug Safety
         </a>
-        <a href="emergency.html" class="cta-button">
+        <a href="https://plurderapolis.org/emergency.html" class="cta-button">
           <i class="fas fa-ambulance"></i> Emergency Guide
         </a>
-        <a href="panic.html" class="cta-button">
+        <a href="https://plurderapolis.org/panic.html" class="cta-button">
           <i class="fas fa-heart"></i> Panic Attack Help
         </a>
-        <a href="https://plurderapolis.org/symptom" class="cta-button">
+        <a href="https://plurderapolis.org/symtoms.html" class="cta-button">
           <i class="fas fa-clipboard-check"></i> Symptoms Checker
         </a>
       </div>
     </div>
 
     <!-- Resources -->
-    <div class="section" id="help">
+    <div class="section" id="resources">
       <div class="section-header" onclick="toggleSection(this)">
         <h2><i class="fas fa-hands-helping"></i> Minnesota Resources & Help</h2>
         <span class="toggle-icon">▼</span>
@@ -1254,30 +1443,36 @@
       <div class="section-content">
         <div class="resource-card">
           <h3>Minnesota Day One (statewide sexual violence helpline):</h3>
-          <p><i class="fas fa-phone"></i> 1-866-223-1111 • <i class="fas fa-sms"></i> Text: 612-399-9995</p>
-          <p><i class="fas fa-globe"></i> <a href="https://dayoneservices.org" style="color: var(--accent-teal);">dayoneservices.org</a></p>
+          <p><i class="fas fa-phone"></i> <a href="tel:1-866-223-1111" style="color: var(--accent-teal);">1-866-223-1111</a> • <i class="fas fa-sms"></i> <a href="sms:6123999995" style="color: var(--accent-teal);">Text: 612-399-9995</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://dayoneservices.org" target="_blank" style="color: var(--accent-teal);">dayoneservices.org</a></p>
         </div>
         
         <div class="resource-card">
           <h3>Aurora Center (University of Minnesota):</h3>
           <p>Offers medical forensic exams</p>
-          <p><i class="fas fa-globe"></i> <a href="https://aurora.umn.edu" style="color: var(--accent-teal);">aurora.umn.edu</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://aurora.umn.edu" target="_blank" style="color: var(--accent-teal);">aurora.umn.edu</a></p>
         </div>
         
         <div class="resource-card">
           <h3>Minnesota Bureau of Criminal Apprehension:</h3>
           <p>Forensic testing information</p>
-          <p><i class="fas fa-globe"></i> <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing" style="color: var(--accent-teal);">dps.mn.gov</a></p>
+          <p><i class="fas fa-globe"></i> <a href="https://dps.mn.gov/divisions/bca/bca-divisions/fss/forensic-testing" target="_blank" style="color: var(--accent-teal);">dps.mn.gov</a></p>
         </div>
         
         <div class="resource-card">
           <h3>SOS Sexual Violence Services (Ramsey County):</h3>
-          <p><i class="fas fa-phone"></i> 651-266-1000</p>
+          <p><i class="fas fa-phone"></i> <a href="tel:6512661000" style="color: var(--accent-teal);">651-266-1000</a></p>
         </div>
         
         <div class="resource-card">
           <h3>Poison Control (USA):</h3>
-          <p><i class="fas fa-phone"></i> 1-800-222-1222 (24/7)</p>
+          <p><i class="fas fa-phone"></i> <a href="tel:1-800-222-1222" style="color: var(--accent-teal);">1-800-222-1222</a> (24/7)</p>
+        </div>
+        
+        <div class="resource-card">
+          <h3>PLURderapolis Symptoms Checker:</h3>
+          <p>Interactive tool to assess possible drink spiking</p>
+          <p><i class="fas fa-globe"></i> <a href="https://plurderapolis.org/symtoms.html" target="_blank" style="color: var(--accent-teal);">plurderapolis.org/symtoms.html</a></p>
         </div>
       </div>
     </div>
@@ -1288,8 +1483,91 @@
       <p>PLURderapolis is a community harm reduction initiative. We are not medical professionals.</p>
       <p>This site provides education and support but is not a substitute for professional care.</p>
       <p>In an emergency, call 911 immediately.</p>
+      <div style="margin-top: 1.5rem;">
+        <a href="https://plurderapolis.org" style="color: var(--accent-teal); margin: 0 10px;">Home</a>
+        <a href="https://plurderapolis.org/symtoms.html" style="color: var(--accent-teal); margin: 0 10px;">Symptoms Checker</a>
+        <a href="https://plurderapolis.org/emergency.html" style="color: var(--accent-teal); margin: 0 10px;">Emergency Guide</a>
+        <a href="https://plurderapolis.org/resources.html" style="color: var(--accent-teal); margin: 0 10px;">Resources</a>
+      </div>
     </footer>
   </div>
+
+  <!-- Section Navigation Map -->
+  <nav class="section-map" id="sectionMap">
+    <a href="#top" class="map-item">
+      <i class="fas fa-home"></i>
+      <span>Top</span>
+    </a>
+    <a href="#what-is" class="map-item">
+      <i class="fas fa-question-circle"></i>
+      <span>What is Drink Spiking?</span>
+    </a>
+    <a href="#signs" class="map-item">
+      <i class="fas fa-flask"></i>
+      <span>Signs of Tampering</span>
+    </a>
+    <a href="#symptoms" class="map-item">
+      <i class="fas fa-heartbeat"></i>
+      <span>Symptoms</span>
+    </a>
+    <a href="#immediate-actions" class="map-item">
+      <i class="fas fa-first-aid"></i>
+      <span>Immediate Actions</span>
+    </a>
+    <a href="#prevention" class="map-item">
+      <i class="fas fa-shield-alt"></i>
+      <span>Prevention</span>
+    </a>
+    <a href="#resources" class="map-item">
+      <i class="fas fa-hands-helping"></i>
+      <span>Resources</span>
+    </a>
+    <a href="https://plurderapolis.org/symtoms.html" class="map-item" target="_blank">
+      <i class="fas fa-clipboard-check"></i>
+      <span>Symptoms Checker</span>
+    </a>
+  </nav>
+
+  <!-- Mobile Navigation Map -->
+  <div class="mobile-section-map" id="mobileSectionMap">
+    <a href="#top" class="mobile-map-item map-item">
+      <i class="fas fa-home"></i>
+      <span>Top</span>
+    </a>
+    <a href="#what-is" class="mobile-map-item map-item">
+      <i class="fas fa-question-circle"></i>
+      <span>What is Drink Spiking?</span>
+    </a>
+    <a href="#signs" class="mobile-map-item map-item">
+      <i class="fas fa-flask"></i>
+      <span>Signs</span>
+    </a>
+    <a href="#symptoms" class="mobile-map-item map-item">
+      <i class="fas fa-heartbeat"></i>
+      <span>Symptoms</span>
+    </a>
+    <a href="#immediate-actions" class="mobile-map-item map-item">
+      <i class="fas fa-first-aid"></i>
+      <span>Actions</span>
+    </a>
+    <a href="#prevention" class="mobile-map-item map-item">
+      <i class="fas fa-shield-alt"></i>
+      <span>Prevention</span>
+    </a>
+    <a href="#resources" class="mobile-map-item map-item">
+      <i class="fas fa-hands-helping"></i>
+      <span>Resources</span>
+    </a>
+    <a href="https://plurderapolis.org/symtoms.html" class="mobile-map-item map-item" target="_blank">
+      <i class="fas fa-clipboard-check"></i>
+      <span>Checker</span>
+    </a>
+  </div>
+
+  <!-- Map Toggle Button for Mobile -->
+  <button class="map-toggle" id="mapToggle">
+    <i class="fas fa-map"></i>
+  </button>
 
   <!-- Mobile Navigation -->
   <nav class="mobile-nav">
@@ -1301,15 +1579,15 @@
       <i class="fas fa-shield-alt"></i>
       <span>Prevention</span>
     </a>
-    <a href="#help" class="nav-item">
+    <a href="#resources" class="nav-item">
       <i class="fas fa-hands-helping"></i>
       <span>Resources</span>
     </a>
-    <a href="https://plurderapolis.org/symptom" class="nav-item">
+    <a href="https://plurderapolis.org/symtoms.html" class="nav-item" target="_blank">
       <i class="fas fa-heartbeat"></i>
       <span>Symptoms</span>
     </a>
-    <a href="emergency.html" class="nav-item">
+    <a href="https://plurderapolis.org/emergency.html" class="nav-item" target="_blank">
       <i class="fas fa-ambulance"></i>
       <span>Emergency</span>
     </a>
@@ -1328,6 +1606,9 @@
       heroElements.forEach((el, index) => {
         el.style.animationDelay = `${0.2 + (index * 0.2)}s`;
       });
+      
+      // Initialize section map
+      updateSectionMap();
     });
 
     // Toggle section content with smooth animation
@@ -1381,6 +1662,9 @@
       } else {
         scrollTopBtn.classList.remove('show');
       }
+      
+      // Update active section in map
+      updateSectionMap();
     });
     
     // Scroll to top functionality
@@ -1397,20 +1681,31 @@
     document.getElementById('shareBtn').addEventListener('click', async (e) => {
       e.preventDefault();
       
-      if (navigator.share) {
+      const shareData = {
+        title: 'Drink Spiking Awareness - PLURderapolis',
+        text: 'Important information about drink spiking awareness and prevention. Stay safe!',
+        url: window.location.href
+      };
+      
+      if (navigator.share && navigator.canShare(shareData)) {
         try {
-          await navigator.share({
-            title: 'Drink Spiking Awareness - PLURderapolis',
-            text: 'Important information about drink spiking awareness and prevention. Stay safe!',
-            url: window.location.href
-          });
+          await navigator.share(shareData);
+          console.log('Shared successfully');
         } catch (err) {
           console.log('Error sharing:', err);
+          fallbackShare();
         }
       } else {
+        fallbackShare();
+      }
+      
+      function fallbackShare() {
         // Fallback for browsers that don't support the Web Share API
-        navigator.clipboard.writeText(window.location.href).then(() => {
+        navigator.clipboard.writeText(shareData.url).then(() => {
           alert('Link copied to clipboard! Share this important resource with friends.');
+        }).catch(err => {
+          // Final fallback
+          prompt('Copy this link to share:', shareData.url);
         });
       }
     });
@@ -1421,16 +1716,32 @@
       
       // Create a formatted text version of the content
       const title = document.querySelector('.hero h1').textContent;
-      const sections = document.querySelectorAll('.section');
-      let content = `${title}\n\n`;
+      const subtitle = document.querySelector('.hero-subtitle').textContent;
+      const emergency = document.querySelector('.emergency-bar').textContent.trim();
+      let content = `${title}\n${subtitle}\n\n`;
+      content += `EMERGENCY: ${emergency}\n\n`;
+      content += `Downloaded from: ${window.location.href}\n`;
+      content += `Date: ${new Date().toLocaleDateString()}\n\n`;
+      content += '='.repeat(50) + '\n\n';
       
+      const sections = document.querySelectorAll('.section');
       sections.forEach(section => {
         const header = section.querySelector('.section-header h2').textContent;
         const sectionContent = section.querySelector('.section-content').textContent;
         content += `${header}\n${sectionContent}\n\n`;
+        content += '-'.repeat(30) + '\n\n';
       });
       
-      const blob = new Blob([content], { type: 'text/plain' });
+      content += `\n\nRESOURCES:\n`;
+      content += `• Symptoms Checker: https://plurderapolis.org/symtoms.html\n`;
+      content += `• Emergency Guide: https://plurderapolis.org/emergency.html\n`;
+      content += `• Polydrug Safety: https://plurderapolis.org/polydrug.html\n`;
+      content += `• Panic Attack Help: https://plurderapolis.org/panic.html\n`;
+      content += `• Home Page: https://plurderapolis.org\n\n`;
+      
+      content += `\nIn an emergency, always call 911 first!\n`;
+      
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       
       const a = document.createElement('a');
@@ -1452,18 +1763,55 @@
     // Mobile nav highlighting with intersection observer
     const navItems = document.querySelectorAll('.nav-item');
     const sections = document.querySelectorAll('.section, .hero, .cta-section');
+    const mapItems = document.querySelectorAll('.map-item');
     
+    function updateSectionMap() {
+      const scrollPosition = window.scrollY + 100;
+      
+      // Reset all map items
+      mapItems.forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Find current section
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = section.id || 'top';
+        }
+      });
+      
+      // If at top, highlight top link
+      if (scrollPosition < 100) {
+        document.querySelector('.map-item[href="#top"]').classList.add('active');
+      } else if (currentSection) {
+        // Highlight current section in map
+        const activeMapItem = document.querySelector(`.map-item[href="#${currentSection}"]`);
+        if (activeMapItem) {
+          activeMapItem.classList.add('active');
+        }
+      }
+      
+      // Update mobile nav
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        const href = item.getAttribute('href');
+        if (href === '#top' && scrollPosition < 100) {
+          item.classList.add('active');
+        } else if (href === `#${currentSection}`) {
+          item.classList.add('active');
+        }
+      });
+    }
+    
+    // Initialize intersection observer for animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const id = entry.target.id || entry.target.className.split(' ')[0];
-          
-          navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href').includes(id)) {
-              item.classList.add('active');
-            }
-          });
           
           // Add animation to sections as they come into view
           if (!entry.target.classList.contains('animated')) {
@@ -1473,11 +1821,11 @@
         }
       });
     }, {
-      threshold: 0.2,
+      threshold: 0.1,
       rootMargin: '0px 0px -100px 0px'
     });
     
-    // Observe sections for animation and nav highlighting
+    // Observe sections for animation
     sections.forEach(section => {
       observer.observe(section);
     });
@@ -1485,23 +1833,27 @@
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
         
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
+          e.preventDefault();
           window.scrollTo({
             top: targetElement.offsetTop - 80,
             behavior: 'smooth'
           });
+          
+          // Close mobile map if open
+          if (window.innerWidth <= 992) {
+            document.getElementById('mobileSectionMap').classList.remove('show');
+          }
         }
       });
     });
     
     // Add hover effects to interactive elements
-    document.querySelectorAll('.action-button, .cta-button, .resource-card').forEach(el => {
+    document.querySelectorAll('.action-button, .cta-button, .resource-card, .symptoms-btn').forEach(el => {
       el.addEventListener('mouseenter', () => {
         el.style.transform = 'translateY(-5px)';
       });
@@ -1519,6 +1871,46 @@
         content.style.transform = 'translateY(0)';
       });
     }
+    
+    // Toggle mobile section map
+    const mapToggle = document.getElementById('mapToggle');
+    const mobileSectionMap = document.getElementById('mobileSectionMap');
+    
+    if (mapToggle && mobileSectionMap) {
+      mapToggle.addEventListener('click', () => {
+        mobileSectionMap.classList.toggle('show');
+      });
+      
+      // Close mobile map when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileSectionMap.contains(e.target) && !mapToggle.contains(e.target) && mobileSectionMap.classList.contains('show')) {
+          mobileSectionMap.classList.remove('show');
+        }
+      });
+      
+      // Close mobile map on scroll
+      window.addEventListener('scroll', () => {
+        if (mobileSectionMap.classList.contains('show')) {
+          mobileSectionMap.classList.remove('show');
+        }
+      });
+    }
+    
+    // Handle external links
+    document.querySelectorAll('a[href^="http"]').forEach(link => {
+      if (!link.href.includes(window.location.hostname)) {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+    
+    // Add click tracking for analytics (optional)
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        console.log(`Link clicked: ${this.href}`);
+        // Here you could add actual analytics tracking
+      });
+    });
   </script>
 </body>
 </html>
