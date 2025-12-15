@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bad Trip Guide — PLURderapolis</title>
+<title>PLURderapolis — Bad Trip Guide</title>
 <meta name="description" content="A safe space for grounding during difficult psychedelic experiences">
 <meta name="theme-color" content="#1c0028">
 <link rel="manifest" href="manifest.json">
@@ -18,6 +18,18 @@
     --text:#eee;
     --soft-purple:#3a0055;
     --light-purple:#4a0066;
+    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  /* Fade in entire page */
+  @keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  body {
+    animation: pageFadeIn 0.8s ease-out;
   }
   
   * {
@@ -46,12 +58,34 @@
     margin:0;
   }
   
-  h1{
+  /* Main Title with Link */
+  .main-title {
     font-size:1.8rem; 
     color:var(--mint); 
     text-shadow:0 0 8px #00f7e0aa;
     font-weight:700;
     margin-bottom:1rem;
+    text-align: center;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+  }
+  
+  .main-title:hover {
+    background: rgba(0, 247, 224, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 247, 224, 0.2);
+  }
+  
+  .main-title a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
   
   h2{
@@ -63,11 +97,11 @@
     background:var(--soft-purple);
     margin:0.5rem 0;
     cursor:pointer;
-    transition:all 0.3s ease;
+    transition:var(--transition-smooth);
     position:relative;
     display:flex;
     align-items:center;
-    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
   }
   
   h2:after {
@@ -75,25 +109,45 @@
     position:absolute;
     right:1rem;
     font-size:1.5rem;
-    transition:transform 0.3s ease;
+    transition:transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
   h2.open:after {
-    transform:rotate(45deg);
+    transform:rotate(45deg) scale(1.2);
   }
   
   h2:hover{
     background:var(--light-purple);
-    transform:translateY(-2px);
+    transform:translateY(-3px);
+    box-shadow:0 6px 16px rgba(0,0,0,0.2);
+  }
+  
+  /* Smooth opening animation for sections */
+  @keyframes gentleSlideDown {
+    0% { 
+      opacity: 0;
+      transform: translateY(-15px) scale(0.98);
+      max-height: 0;
+    }
+    70% {
+      opacity: 0.7;
+      transform: translateY(5px) scale(1);
+    }
+    100% { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      max-height: 2000px;
+    }
   }
   
   main{
     max-width:780px; 
     margin:0 auto;
     padding:1rem;
+    animation: pageFadeIn 0.8s ease-out 0.1s both;
   }
   
-  /* Landing page */
+  /* Enhanced Landing page */
   #landing {
     text-align: center;
     padding: 2rem 1rem;
@@ -102,12 +156,24 @@
     justify-content:center;
     min-height:100vh;
     background: radial-gradient(ellipse at center, rgba(42,0,64,0.4) 0%, rgba(28,0,40,0) 70%);
+    animation: gentlePulse 6s ease-in-out infinite;
+  }
+  
+  @keyframes gentlePulse {
+    0%, 100% { background-size: 100% 100%; }
+    50% { background-size: 110% 110%; }
   }
   
   .landing-icon {
     font-size:4rem;
     margin-bottom:1rem;
     filter: drop-shadow(0 0 10px rgba(0,247,224,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
   }
   
   .landing-message {
@@ -116,6 +182,18 @@
     font-weight: 500;
     color: var(--mint);
     line-height:1.5;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
   .landing-buttons {
@@ -124,6 +202,7 @@
     gap: 1rem;
     max-width: 300px;
     margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
   }
   
   .landing-btn {
@@ -135,53 +214,69 @@
     border-radius: 50px;
     padding: 1rem 1.5rem;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,247,224,0.3);
+    box-shadow: 0 4px 12px rgba(0,247,224,0.3);
     font-size: 1.1rem;
-    transition: all 0.3s ease;
+    transition: var(--transition-bounce);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .landing-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
   }
   
   .landing-btn:hover {
     background: #00d6c7;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,247,224,0.4);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,247,224,0.4);
+  }
+  
+  .landing-btn:hover::after {
+    width: 300px;
+    height: 300px;
   }
   
   .landing-btn.secondary {
     background: var(--accent);
-    box-shadow: 0 4px 8px rgba(255,110,199,0.3);
+    box-shadow: 0 4px 12px rgba(255,110,199,0.3);
   }
   
   .landing-btn.secondary:hover {
     background: #ff49b2;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(255,110,199,0.4);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255,110,199,0.4);
   }
   
   /* Main Guide Content */
   #guideContent {
     display:none;
-    animation: fadeIn 0.5s ease;
+    animation: gentleSlideDown 0.6s ease-out;
   }
   
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
-  /* Collapsible */
+  /* Enhanced Collapsible */
   .collapsible-content{
     display:none; 
     padding:1.5rem; 
     margin:.5rem 0 1.2rem; 
     background:var(--card); 
     border-radius:12px; 
-    box-shadow:0 4px 12px rgba(0,0,0,0.2);
-    animation: slideDown 0.3s ease;
-  }
-  
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+    animation: gentleSlideDown 0.5s ease-out;
+    overflow: hidden;
   }
   
   .collapsible-content.open{
@@ -206,14 +301,14 @@
     border-radius:25px;
     padding:.7rem 1.2rem;
     cursor:pointer;
-    box-shadow:0 4px 8px rgba(0,247,224,0.3);
-    transition:all 0.3s ease;
+    box-shadow:0 4px 12px rgba(0,247,224,0.3);
+    transition:var(--transition-bounce);
   }
   
   .mode-btn:hover{
     background:#00d6c7;
-    transform:translateY(-2px);
-    box-shadow:0 6px 12px rgba(0,247,224,0.4);
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 8px 16px rgba(0,247,224,0.4);
   }
   
   /* progress */
@@ -221,9 +316,10 @@
     width:100%;
     background:rgba(255,255,255,0.1);
     border-radius:50px;
-    height:10px;
+    height:12px;
     margin:1.5rem 0;
     overflow:hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
   }
   
   #progressBar{
@@ -231,10 +327,33 @@
     height:100%;
     background:linear-gradient(90deg, var(--mint), var(--accent));
     border-radius:50px;
-    transition:width .6s ease;
+    transition:width .8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
   }
   
-  /* breathing */
+  #progressBar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  
+  /* Enhanced breathing */
   .breathing-container{
     display:flex;
     flex-direction:column;
@@ -248,21 +367,22 @@
     height:150px;
     border-radius:50%;
     background:radial-gradient(circle, var(--accent) 0%, var(--soft-purple) 70%);
-    box-shadow:0 0 30px rgba(255,110,199,0.6);
-    animation:breathe 8s infinite ease-in-out;
+    box-shadow:0 0 40px rgba(255,110,199,0.8);
+    animation:breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
     display:flex;
     align-items:center;
     justify-content:center;
     color:#fff;
     font-weight:700;
     font-size:1.2rem;
+    transition: var(--transition-smooth);
   }
   
   @keyframes breathe{
-    0%{transform:scale(1); opacity:0.7}
-    40%{transform:scale(1.4); opacity:1}
-    60%{transform:scale(1.4); opacity:1}
-    100%{transform:scale(1); opacity:0.7}
+    0%{transform:scale(1) rotate(0deg); opacity:0.7; box-shadow:0 0 30px rgba(255,110,199,0.6);}
+    40%{transform:scale(1.4) rotate(5deg); opacity:1; box-shadow:0 0 60px rgba(255,110,199,0.9);}
+    60%{transform:scale(1.4) rotate(-5deg); opacity:1; box-shadow:0 0 60px rgba(255,110,199,0.9);}
+    100%{transform:scale(1) rotate(0deg); opacity:0.7; box-shadow:0 0 30px rgba(255,110,199,0.6);}
   }
   
   .breathing-controls {
@@ -292,8 +412,8 @@
     border:none; 
     cursor:pointer; 
     font-weight:600;
-    box-shadow:0 4px 8px rgba(0,247,224,0.3);
-    transition:all 0.3s ease;
+    box-shadow:0 4px 12px rgba(0,247,224,0.3);
+    transition:var(--transition-bounce);
     text-align:left;
     display:flex;
     align-items:center;
@@ -308,6 +428,12 @@
     border-radius:50%;
     background:rgba(255,255,255,0.3);
     flex-shrink:0;
+    transition: var(--transition-smooth);
+  }
+  
+  .ground-btn:hover {
+    transform: translateX(5px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0,247,224,0.4);
   }
   
   .ground-btn.done{
@@ -316,6 +442,7 @@
     text-decoration:line-through;
     box-shadow:none;
     cursor:default;
+    transform: translateX(0) scale(1);
   }
   
   .ground-btn.done:before {
@@ -327,6 +454,7 @@
     justify-content:center;
     font-size:0.8rem;
     font-weight:bold;
+    transform: scale(1.2);
   }
   
   .grounding-alternative {
@@ -351,23 +479,29 @@
     color:#112;
     cursor:pointer;
     font-weight:600;
-    box-shadow:0 4px 8px rgba(0,247,224,0.3);
-    transition:all 0.3s ease;
+    box-shadow:0 4px 12px rgba(0,247,224,0.3);
+    transition:var(--transition-bounce);
   }
   
   .audio-btn.playing{
     background:var(--accent); 
     color:#111;
     transform:scale(0.98);
+    animation: pulseGlow 2s infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 4px 12px rgba(255,110,199,0.3); }
+    50% { box-shadow: 0 4px 20px rgba(255,110,199,0.6); }
   }
   
   .audio-btn:hover{
-    transform:translateY(-2px);
+    transform:translateY(-3px) scale(1.05);
   }
   
   .audio-btn.mute {
     background: #666;
-    box-shadow: 0 4px 8px rgba(102,102,102,0.3);
+    box-shadow: 0 4px 12px rgba(102,102,102,0.3);
     grid-column: 1 / -1;
     margin-top:0.5rem;
   }
@@ -390,13 +524,18 @@
     background:rgba(255,255,255,0.05);
     cursor:pointer;
     width:100%;
-    transition:all 0.3s ease;
-    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    transition:var(--transition-bounce);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .mantra-text:hover{
     background:rgba(255,255,255,0.08);
-    transform:translateY(-3px);
+    transform:translateY(-4px) scale(1.02);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
   }
   
   .mantra-next{
@@ -406,15 +545,15 @@
     background:var(--accent);
     color:#111;
     font-weight:700;
-    box-shadow:0 4px 8px rgba(255,110,199,0.3);
+    box-shadow:0 4px 12px rgba(255,110,199,0.3);
     cursor:pointer;
-    transition:all 0.3s ease;
+    transition:var(--transition-bounce);
   }
   
   .mantra-next:hover{
     background:#ff49b2;
-    transform:translateY(-3px);
-    box-shadow:0 6px 12px rgba(255,110,199,0.4);
+    transform:translateY(-4px) scale(1.1);
+    box-shadow:0 8px 20px rgba(255,110,199,0.4);
   }
   
   /* timer */
@@ -424,8 +563,14 @@
     color:var(--accent);
     text-align:center;
     margin:1.5rem 0;
-    text-shadow:0 0 15px rgba(255,110,199,0.7);
+    text-shadow:0 0 20px rgba(255,110,199,0.8);
     font-family:'Montserrat', sans-serif;
+    animation: gentlePulseTimer 2s infinite;
+  }
+  
+  @keyframes gentlePulseTimer {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
   }
   
   .timer-controls{
@@ -442,14 +587,14 @@
     background:var(--mint);
     color:#111;
     font-weight:600;
-    box-shadow:0 4px 8px rgba(0,247,224,0.3);
-    transition:all 0.3s ease;
+    box-shadow:0 4px 12px rgba(0,247,224,0.3);
+    transition:var(--transition-bounce);
   }
   
   .timer-btn:hover{
     background:#00d6c7;
-    transform:translateY(-2px);
-    box-shadow:0 6px 12px rgba(0,247,224,0.4);
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 8px 16px rgba(0,247,224,0.4);
   }
   
   .timer-message {
@@ -458,6 +603,7 @@
     font-style: italic;
     color: var(--mint);
     font-size:1.1rem;
+    animation: fadeIn 1s ease-out;
   }
   
   /* resources */
@@ -473,14 +619,14 @@
     margin:.5rem 0;
     text-align:center;
     text-decoration:none;
-    box-shadow:0 4px 8px rgba(255,110,199,0.3);
-    transition:all 0.3s ease;
+    box-shadow:0 4px 12px rgba(255,110,199,0.3);
+    transition:var(--transition-bounce);
   }
   
   .resource-btn:hover{
     background:#ff49b2;
-    transform:translateY(-3px);
-    box-shadow:0 6px 12px rgba(255,110,199,0.4);
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:0 8px 20px rgba(255,110,199,0.4);
   }
   
   /* encouraging */
@@ -493,12 +639,23 @@
     padding:1rem;
     background:rgba(0,247,224,0.1);
     border-radius:12px;
-    animation:pulse 2s infinite;
+    animation:pulse 2s infinite, slideInUp 0.5s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
   @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(0,247,224,0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(0,247,224,0); }
+    70% { box-shadow: 0 0 0 15px rgba(0,247,224,0); }
     100% { box-shadow: 0 0 0 0 rgba(0,247,224,0); }
   }
   
@@ -508,6 +665,12 @@
     padding: 1.5rem;
     background: rgba(255,255,255,0.05);
     border-radius: 12px;
+    transition: var(--transition-smooth);
+  }
+  
+  .aftercare-prompt:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
   }
   
   textarea {
@@ -522,20 +685,45 @@
     font-size:1rem;
     resize:vertical;
     margin-top:0.5rem;
+    transition: var(--transition-smooth);
   }
   
   textarea:focus {
     outline:none;
     border-color:var(--mint);
-    box-shadow:0 0 0 2px rgba(0,247,224,0.2);
+    box-shadow:0 0 0 3px rgba(0,247,224,0.2);
+    transform: translateY(-2px);
   }
   
+  /* Enhanced Footer with Legal Disclaimer */
   footer{
     color:#aaa;
     text-align:center;
     margin:3rem 0 1rem;
     font-size:.9rem;
     padding:1rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeIn 1s ease-out 0.5s both;
+  }
+  
+  .legal-disclaimer {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    line-height: 1.4;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .legal-disclaimer strong {
+    color: var(--mint);
+    display: block;
+    margin-bottom: 0.5rem;
   }
   
   /* Floating action button for mobile */
@@ -551,16 +739,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(255,110,199,0.4);
+    box-shadow: 0 4px 20px rgba(255,110,199,0.4);
     cursor: pointer;
     z-index: 100;
     font-size: 1.5rem;
-    transition: all 0.3s ease;
+    transition: var(--transition-bounce);
   }
   
   .fab:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(255,110,199,0.5);
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 8px 25px rgba(255,110,199,0.6);
   }
   
   /* Sensory safe mode */
@@ -576,11 +764,17 @@
   
   .sensory-safe .breathing-shape {
     animation-duration: 12s;
-    box-shadow: 0 0 15px rgba(204,90,163,0.4);
+    box-shadow: 0 0 20px rgba(204,90,163,0.4);
   }
   
   .sensory-safe h2 {
     box-shadow: none;
+  }
+  
+  .sensory-safe .mantra-text:hover,
+  .sensory-safe .ground-btn:hover,
+  .sensory-safe .mode-btn:hover {
+    transform: none;
   }
   
   /* responsive */
@@ -643,10 +837,10 @@
     background: var(--card);
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     z-index: 100;
     display: none;
-    animation: slideUp 0.3s ease;
+    animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   
   @keyframes slideUp {
@@ -663,6 +857,11 @@
     margin-left: 0.5rem;
     cursor: pointer;
     font-weight: 600;
+    transition: var(--transition-smooth);
+  }
+  
+  .install-prompt button:hover {
+    transform: translateY(-2px);
   }
   
   /* Back to top button */
@@ -678,11 +877,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,247,224,0.4);
+    box-shadow: 0 4px 20px rgba(0,247,224,0.4);
     cursor: pointer;
     z-index: 99;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: var(--transition-bounce);
   }
   
   .back-to-top.visible {
@@ -690,8 +889,8 @@
   }
   
   .back-to-top:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0,247,224,0.5);
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0,247,224,0.5);
   }
 </style>
 </head>
@@ -700,7 +899,11 @@
     <!-- Landing Page -->
     <section id="landing">
       <div class="landing-icon">🍑</div>
-      <h1>Bad Trip Guide — PLURderapolis</h1>
+      <h1 class="main-title">
+        <a href="https://plurderapolis.org" title="Return to PLURderapolis Home">
+          Bad Trip Guide — PLURderapolis
+        </a>
+      </h1>
       <div class="landing-message">
         <p>You are safe. If you can, take 3 slow breaths now.</p>
         <p>This space is designed to help you through difficult moments.</p>
@@ -714,7 +917,11 @@
     <!-- Main Guide Content (initially hidden) -->
     <div id="guideContent">
       <header>
-        <h1>🍑 Bad Trip Guide — PLURderapolis</h1>
+        <h1 class="main-title">
+          <a href="https://plurderapolis.org" title="Return to PLURderapolis Home">
+            🍑 Bad Trip Guide — PLURderapolis
+          </a>
+        </h1>
         <div class="top-controls" role="toolbar" aria-label="Top controls">
           <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe Mode</button>
           <button id="guidedMode" class="mode-btn">➡️ Guided Experience</button>
@@ -765,7 +972,7 @@
             <p><strong>Alternative version:</strong> Name 3 things you like, 3 favorite colors, or 3 comforting objects.</p>
             <button id="startAlternative" class="ground-btn">Start Alternative Grounding</button>
           </div>
-          <p id="groundingComplete" style="display:none;margin-top:1.5rem;font-weight:900;color:var(--accent);text-align:center; font-size:1.2rem;">✅ Grounding complete — you're safe.</p>
+          <p id="groundingComplete" style="display:none;margin-top:1.5rem;font-weight:900;color:var(--accent);text-align:center; font-size:1.2rem; animation: pulse 2s infinite;">✅ Grounding complete — you're safe.</p>
         </div>
       </section>
 
@@ -879,6 +1086,10 @@
 
     <footer>
       <small>PLURderapolis • Your partners in shine 🍑</small>
+      <div class="legal-disclaimer">
+        <strong>Disclaimer:</strong>
+        This guide is provided for educational and harm reduction purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. If you are experiencing a medical emergency, please call emergency services immediately. PLURderapolis is not responsible for any actions taken based on the information provided on this site. Use responsibly.
+      </div>
     </footer>
   </main>
 
@@ -922,7 +1133,9 @@ const dismissInstall = document.getElementById('dismissInstall');
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installPrompt.style.display = 'block';
+  setTimeout(() => {
+    installPrompt.style.display = 'block';
+  }, 3000); // Show after 3 seconds
 });
 
 installBtn.addEventListener('click', () => {
@@ -944,28 +1157,51 @@ const startGuided = document.getElementById('startGuided');
 const startModular = document.getElementById('startModular');
 const fab = document.getElementById('fab');
 
-startGuided.addEventListener('click', () => {
-  landing.style.display = 'none';
-  guideContent.style.display = 'block';
-  fab.style.display = 'flex';
-  // Start guided mode after a brief delay
+// Smooth transition function
+function smoothTransition(callback) {
+  document.body.style.opacity = '0.8';
+  document.body.style.transform = 'scale(0.98)';
+  document.body.style.transition = 'all 0.3s ease';
+  
   setTimeout(() => {
-    document.getElementById('guidedMode').click();
-  }, 500);
+    callback();
+    setTimeout(() => {
+      document.body.style.opacity = '1';
+      document.body.style.transform = 'scale(1)';
+    }, 50);
+  }, 300);
+}
+
+startGuided.addEventListener('click', () => {
+  smoothTransition(() => {
+    landing.style.display = 'none';
+    guideContent.style.display = 'block';
+    fab.style.display = 'flex';
+    // Start guided mode after a brief delay
+    setTimeout(() => {
+      document.getElementById('guidedMode').click();
+    }, 500);
+  });
 });
 
 startModular.addEventListener('click', () => {
-  landing.style.display = 'none';
-  guideContent.style.display = 'block';
-  fab.style.display = 'flex';
-  // Start modular mode after a brief delay
-  setTimeout(() => {
-    document.getElementById('modularMode').click();
-  }, 500);
+  smoothTransition(() => {
+    landing.style.display = 'none';
+    guideContent.style.display = 'block';
+    fab.style.display = 'flex';
+    // Start modular mode after a brief delay
+    setTimeout(() => {
+      document.getElementById('modularMode').click();
+    }, 500);
+  });
 });
 
-// FAB functionality
+// FAB functionality with bounce animation
 fab.addEventListener('click', () => {
+  fab.style.animation = 'none';
+  setTimeout(() => {
+    fab.style.animation = 'pulseGlow 0.5s';
+  }, 10);
   document.getElementById('backup').scrollIntoView({ behavior: 'smooth' });
 });
 
@@ -1076,34 +1312,53 @@ function stopAllAudio() {
   updateAudioButtons();
 }
 
-/* --- Collapsible logic (headers open/close) --- */
+/* --- Enhanced Collapsible logic with smooth animations --- */
 document.querySelectorAll('section h2').forEach(header => {
   header.addEventListener('click', () => {
     const id = header.getAttribute('aria-controls');
     const content = document.getElementById(id);
     if (!content) return;
     
-    // Close all other sections
+    // Smooth close for other sections
     document.querySelectorAll('.collapsible-content').forEach(c => {
-      if (c !== content) {
-        c.classList.remove('open');
-        c.setAttribute('aria-hidden', 'true');
-        c.previousElementSibling.classList.remove('open');
-        c.previousElementSibling.setAttribute('aria-expanded', 'false');
+      if (c !== content && c.classList.contains('open')) {
+        c.style.animation = 'none';
+        setTimeout(() => {
+          c.style.animation = 'slideUp 0.3s ease';
+        }, 10);
+        
+        setTimeout(() => {
+          c.classList.remove('open');
+          c.setAttribute('aria-hidden', 'true');
+          c.previousElementSibling.classList.remove('open');
+          c.previousElementSibling.setAttribute('aria-expanded', 'false');
+          c.style.animation = '';
+        }, 280);
       }
     });
     
-    // Toggle current section
-    const opened = content.classList.toggle('open');
-    header.classList.toggle('open', opened);
-    header.setAttribute('aria-expanded', opened);
-    content.setAttribute('aria-hidden', !opened);
+    // Toggle current section with smooth animation
+    if (!content.classList.contains('open')) {
+      content.classList.add('open');
+      header.classList.add('open');
+      header.setAttribute('aria-expanded', 'true');
+      content.setAttribute('aria-hidden', 'false');
+    } else {
+      content.style.animation = 'slideUp 0.3s ease';
+      setTimeout(() => {
+        content.classList.remove('open');
+        header.classList.remove('open');
+        header.setAttribute('aria-expanded', 'false');
+        content.setAttribute('aria-hidden', 'true');
+        content.style.animation = '';
+      }, 280);
+    }
     
     updateProgress();
     maybeEncourage();
     
-    // Scroll to the opened section
-    if (opened) {
+    // Scroll to the opened section with smooth animation
+    if (content.classList.contains('open')) {
       setTimeout(() => {
         header.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 300);
@@ -1115,13 +1370,37 @@ document.querySelectorAll('section h2').forEach(header => {
   });
 });
 
+// Animation for slide up
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideUp {
+    from { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      max-height: 2000px;
+    }
+    to { 
+      opacity: 0;
+      transform: translateY(-15px) scale(0.98);
+      max-height: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
+
 /* --- Start from here button --- */
 document.getElementById('startFromHere').addEventListener('click', () => {
   document.querySelectorAll('.collapsible-content').forEach(c => {
-    c.classList.remove('open');
-    c.setAttribute('aria-hidden', 'true');
-    c.previousElementSibling.classList.remove('open');
-    c.previousElementSibling.setAttribute('aria-expanded', 'false');
+    if (c.classList.contains('open')) {
+      c.style.animation = 'slideUp 0.3s ease';
+      setTimeout(() => {
+        c.classList.remove('open');
+        c.setAttribute('aria-hidden', 'true');
+        c.previousElementSibling.classList.remove('open');
+        c.previousElementSibling.setAttribute('aria-expanded', 'false');
+        c.style.animation = '';
+      }, 280);
+    }
   });
   
   // Open the first section (Breathing)
@@ -1129,17 +1408,19 @@ document.getElementById('startFromHere').addEventListener('click', () => {
   const firstHeader = firstSection.querySelector('h2');
   const firstContent = firstSection.querySelector('.collapsible-content');
   
-  firstContent.classList.add('open');
-  firstHeader.classList.add('open');
-  firstHeader.setAttribute('aria-expanded', 'true');
-  firstContent.setAttribute('aria-hidden', 'false');
-  
-  updateProgress();
-  maybeEncourage();
-  
-  // Scroll to the first section
   setTimeout(() => {
-    firstHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    firstContent.classList.add('open');
+    firstHeader.classList.add('open');
+    firstHeader.setAttribute('aria-expanded', 'true');
+    firstContent.setAttribute('aria-hidden', 'false');
+    
+    updateProgress();
+    maybeEncourage();
+    
+    // Scroll to the first section
+    setTimeout(() => {
+      firstHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
   }, 300);
 });
 
@@ -1149,16 +1430,27 @@ safeBtn.addEventListener('click', () => {
   const on = document.body.classList.toggle('sensory-safe');
   safeBtn.setAttribute('aria-pressed', on);
   safeBtn.textContent = on ? '🌙 Sensory Safe Mode (On)' : '🌙 Sensory Safe Mode';
+  // Add transition effect
+  safeBtn.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    safeBtn.style.transform = 'scale(1)';
+  }, 150);
   // stop all audio on safe mode on
   if (on) stopAllAudio();
 });
 
 /* --- Guided / Modular Modes --- */
 document.getElementById('guidedMode').addEventListener('click', () => {
-  // close all first
-  document.querySelectorAll('.collapsible-content').forEach(c => { 
-    c.classList.remove('open'); 
-    c.setAttribute('aria-hidden','true'); 
+  // Smooth close all first
+  document.querySelectorAll('.collapsible-content').forEach(c => {
+    if (c.classList.contains('open')) {
+      c.style.animation = 'slideUp 0.3s ease';
+      setTimeout(() => {
+        c.classList.remove('open'); 
+        c.setAttribute('aria-hidden','true'); 
+        c.style.animation = '';
+      }, 280);
+    }
   });
   document.querySelectorAll('section h2').forEach(h => {
     h.classList.remove('open');
@@ -1172,29 +1464,38 @@ document.getElementById('guidedMode').addEventListener('click', () => {
     const content = sec.querySelector('.collapsible-content');
     const header = sec.querySelector('h2');
     
-    content.classList.add('open');
-    content.setAttribute('aria-hidden','false');
-    header.classList.add('open');
-    header.setAttribute('aria-expanded','true');
-    
-    updateProgress();
-    maybeEncourage();
-    
-    // Scroll to the current section
     setTimeout(() => {
-      header.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
+      content.classList.add('open');
+      content.setAttribute('aria-hidden','false');
+      header.classList.add('open');
+      header.setAttribute('aria-expanded','true');
+      
+      updateProgress();
+      maybeEncourage();
+      
+      // Scroll to the current section
+      setTimeout(() => {
+        header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }, 100);
     
     i++;
-    setTimeout(openStep, 3000); // 3 second pause between steps
+    setTimeout(openStep, 4000); // 4 second pause between steps
   }
-  openStep();
+  setTimeout(openStep, 500);
 });
 
 document.getElementById('modularMode').addEventListener('click', () => {
-  document.querySelectorAll('.collapsible-content').forEach(c => { 
-    c.classList.remove('open'); 
-    c.setAttribute('aria-hidden','true'); 
+  // Smooth close all
+  document.querySelectorAll('.collapsible-content').forEach(c => {
+    if (c.classList.contains('open')) {
+      c.style.animation = 'slideUp 0.3s ease';
+      setTimeout(() => {
+        c.classList.remove('open'); 
+        c.setAttribute('aria-hidden','true'); 
+        c.style.animation = '';
+      }, 280);
+    }
   });
   document.querySelectorAll('section h2').forEach(h => {
     h.classList.remove('open');
@@ -1234,10 +1535,14 @@ breathShape.className = 'breathing-shape';
 
 // Skip breathing button
 document.getElementById('skipBreathing').addEventListener('click', () => {
-  document.getElementById('breathing').classList.remove('open');
-  document.querySelector('[aria-controls="breathing"]').classList.remove('open');
-  document.querySelector('[aria-controls="breathing"]').setAttribute('aria-expanded', 'false');
-  updateProgress();
+  document.getElementById('breathing').style.animation = 'slideUp 0.3s ease';
+  setTimeout(() => {
+    document.getElementById('breathing').classList.remove('open');
+    document.querySelector('[aria-controls="breathing"]').classList.remove('open');
+    document.querySelector('[aria-controls="breathing"]').setAttribute('aria-expanded', 'false');
+    document.getElementById('breathing').style.animation = '';
+    updateProgress();
+  }, 280);
 });
 
 /* --- Grounding buttons (interactive) --- */
@@ -1247,6 +1552,13 @@ let groundedCount = 0;
 groundButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.classList.contains('done')) return;
+    
+    // Add click animation
+    btn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      btn.style.transform = '';
+    }, 150);
+    
     btn.classList.add('done');
     groundedCount++;
     // show textual cue
@@ -1294,7 +1606,10 @@ const audioButtons = document.querySelectorAll('.audio-btn');
 audioButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const id = btn.dataset.sound;
-    if (id === 'stopAll') { stopAllAudio(); return; }
+    if (id === 'stopAll') { 
+      stopAllAudio(); 
+      return; 
+    }
     
     // Check if this sound is already playing
     if (btn.classList.contains('playing')) {
@@ -1319,11 +1634,14 @@ const nextMantra = document.getElementById('nextMantra');
 
 function showNextMantra() {
   mantraIndex = (mantraIndex + 1) % mantras.length;
-  mantraText.textContent = mantras[mantraIndex];
-  // Add a subtle animation
-  mantraText.style.transform = 'scale(0.95)';
+  mantraText.style.opacity = '0.5';
+  mantraText.style.transform = 'translateY(10px)';
+  
   setTimeout(() => {
-    mantraText.style.transform = 'scale(1)';
+    mantraText.textContent = mantras[mantraIndex];
+    mantraText.style.opacity = '1';
+    mantraText.style.transform = 'translateY(0)';
+    mantraText.style.transition = 'all 0.3s ease';
   }, 150);
 }
 nextMantra.addEventListener('click', showNextMantra);
@@ -1332,10 +1650,14 @@ mantraText.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key 
 
 /* --- Skip Check-in --- */
 document.getElementById('skipCheckin').addEventListener('click', () => {
-  document.getElementById('checkin').classList.remove('open');
-  document.querySelector('[aria-controls="checkin"]').classList.remove('open');
-  document.querySelector('[aria-controls="checkin"]').setAttribute('aria-expanded', 'false');
-  updateProgress();
+  document.getElementById('checkin').style.animation = 'slideUp 0.3s ease';
+  setTimeout(() => {
+    document.getElementById('checkin').classList.remove('open');
+    document.querySelector('[aria-controls="checkin"]').classList.remove('open');
+    document.querySelector('[aria-controls="checkin"]').setAttribute('aria-expanded', 'false');
+    document.getElementById('checkin').style.animation = '';
+    updateProgress();
+  }, 280);
 });
 
 /* --- Timer logic (15 minutes default) --- */
@@ -1364,6 +1686,13 @@ function updateTimerDisplay() {
 
 startBtn.addEventListener('click', () => {
   if (timer) return; // already running
+  
+  // Button animation
+  startBtn.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    startBtn.style.transform = '';
+  }, 150);
+  
   timer = setInterval(() => {
     if (timeLeft <= 0) { 
       clearInterval(timer); 
@@ -1379,7 +1708,15 @@ startBtn.addEventListener('click', () => {
 });
 
 pauseBtn.addEventListener('click', () => {
-  if (timer) { clearInterval(timer); timer = null; }
+  if (timer) { 
+    clearInterval(timer); 
+    timer = null; 
+    // Button animation
+    pauseBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      pauseBtn.style.transform = '';
+    }, 150);
+  }
 });
 resetBtn.addEventListener('click', () => { 
   clearInterval(timer); 
@@ -1388,6 +1725,12 @@ resetBtn.addEventListener('click', () => {
   updateTimerDisplay();
   timerMessage.textContent = "Many people find things stabilize after ~10-20 min";
   progressMessage.style.display = 'none';
+  
+  // Button animation
+  resetBtn.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    resetBtn.style.transform = '';
+  }, 150);
 });
 
 updateTimerDisplay();
@@ -1405,6 +1748,11 @@ window.addEventListener('scroll', () => {
 
 backToTop.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Button animation
+  backToTop.style.transform = 'scale(0.9)';
+  setTimeout(() => {
+    backToTop.style.transform = '';
+  }, 150);
 });
 
 /* --- Initialize --- */
@@ -1412,6 +1760,51 @@ backToTop.addEventListener('click', () => {
   // Set default breathing shape
   breathShape.className = 'breathing-shape';
   updateProgress();
+  
+  // Add ripple effect to buttons
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('.mode-btn, .landing-btn, .timer-btn, .audio-btn, .mantra-next, .ground-btn, .resource-btn')) {
+      const btn = e.target;
+      const ripple = document.createElement('span');
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        width: ${size}px;
+        height: ${size}px;
+        top: ${y}px;
+        left: ${x}px;
+        pointer-events: none;
+      `;
+      
+      btn.style.position = 'relative';
+      btn.style.overflow = 'hidden';
+      btn.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    }
+  });
+  
+  // Add ripple animation
+  const rippleStyle = document.createElement('style');
+  rippleStyle.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(rippleStyle);
 })();
 </script>
 
