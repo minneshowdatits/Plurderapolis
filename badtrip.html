@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#1c0028">
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   /* Base theme */
   :root{
@@ -18,65 +19,59 @@
     --text:#eee;
     --soft-purple:#3a0055;
     --light-purple:#4a0066;
-    --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --sidebar-width: 280px;
   }
   
   /* Fade in entire page */
   @keyframes pageFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  
-  body {
-    animation: pageFadeIn 0.8s ease-out;
   }
   
   * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   
-  html,body{
-    height:100%;
+  html, body {
+    height: 100%;
     scroll-behavior: smooth;
   }
   
   body{
-    margin:0; 
-    padding:0; 
-    font-family:'Roboto',sans-serif;
-    background:var(--bg); 
-    color:var(--text); 
-    -webkit-font-smoothing:antialiased;
-    line-height:1.6;
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg); 
+    color: var(--text);
+    line-height: 1.6;
     overflow-x: hidden;
     background: radial-gradient(ellipse at top, #2a0040 0%, #1c0028 100%);
+    animation: pageFadeIn 0.8s ease-out;
   }
   
-  h1,h2,h3{
-    font-family:'Montserrat',sans-serif; 
-    margin:0;
+  h1, h2, h3, h4 {
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 600;
+    margin-bottom: 0.5rem;
   }
   
-  /* Main Title with Link */
+  .container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  /* Main Title */
   .main-title {
-    font-size:1.8rem; 
-    color:var(--mint); 
-    text-shadow:0 0 8px #00f7e0aa;
-    font-weight:700;
-    margin-bottom:1rem;
-    text-align: center;
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 12px;
-  }
-  
-  .main-title:hover {
-    background: rgba(0, 247, 224, 0.1);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 247, 224, 0.2);
+    font-size: 1.8rem; 
+    color: var(--mint); 
+    text-shadow: 0 0 8px rgba(0, 247, 224, 0.6);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--soft-purple);
   }
   
   .main-title a {
@@ -84,305 +79,207 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-  
-  h2{
-    font-size:1.3rem;
-    color:var(--text);
-    font-weight:600;
-    padding:1rem;
-    border-radius:12px;
-    background:var(--soft-purple);
-    margin:0.5rem 0;
-    cursor:pointer;
-    transition:var(--transition-smooth);
-    position:relative;
-    display:flex;
-    align-items:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-  }
-  
-  h2:after {
-    content: '+';
-    position:absolute;
-    right:1rem;
-    font-size:1.5rem;
-    transition:transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  
-  h2.open:after {
-    transform:rotate(45deg) scale(1.2);
-  }
-  
-  h2:hover{
-    background:var(--light-purple);
-    transform:translateY(-3px);
-    box-shadow:0 6px 16px rgba(0,0,0,0.2);
-  }
-  
-  /* Smooth opening animation for sections */
-  @keyframes gentleSlideDown {
-    0% { 
-      opacity: 0;
-      transform: translateY(-15px) scale(0.98);
-      max-height: 0;
-    }
-    70% {
-      opacity: 0.7;
-      transform: translateY(5px) scale(1);
-    }
-    100% { 
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      max-height: 2000px;
-    }
-  }
-  
-  main{
-    max-width:780px; 
-    margin:0 auto;
-    padding:1rem;
-    animation: pageFadeIn 0.8s ease-out 0.1s both;
-  }
-  
-  /* Enhanced Landing page */
-  #landing {
-    text-align: center;
-    padding: 2rem 1rem;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    min-height:100vh;
-    background: radial-gradient(ellipse at center, rgba(42,0,64,0.4) 0%, rgba(28,0,40,0) 70%);
-    animation: gentlePulse 6s ease-in-out infinite;
-  }
-  
-  @keyframes gentlePulse {
-    0%, 100% { background-size: 100% 100%; }
-    50% { background-size: 110% 110%; }
-  }
-  
-  .landing-icon {
-    font-size:4rem;
-    margin-bottom:1rem;
-    filter: drop-shadow(0 0 10px rgba(0,247,224,0.5));
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-  }
-  
-  .landing-message {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    font-weight: 500;
-    color: var(--mint);
-    line-height:1.5;
-    animation: fadeInUp 0.8s ease-out 0.3s both;
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .landing-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 300px;
-    margin: 0 auto;
-    animation: fadeInUp 0.8s ease-out 0.5s both;
-  }
-  
-  .landing-btn {
-    background: var(--mint);
-    color: #111;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    border: none;
-    border-radius: 50px;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,247,224,0.3);
-    font-size: 1.1rem;
-    transition: var(--transition-bounce);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .landing-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-  
-  .landing-btn:hover {
-    background: #00d6c7;
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,247,224,0.4);
-  }
-  
-  .landing-btn:hover::after {
-    width: 300px;
-    height: 300px;
-  }
-  
-  .landing-btn.secondary {
-    background: var(--accent);
-    box-shadow: 0 4px 12px rgba(255,110,199,0.3);
-  }
-  
-  .landing-btn.secondary:hover {
-    background: #ff49b2;
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(255,110,199,0.4);
-  }
-  
-  /* Main Guide Content */
-  #guideContent {
-    display:none;
-    animation: gentleSlideDown 0.6s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Enhanced Collapsible */
-  .collapsible-content{
-    display:none; 
-    padding:1.5rem; 
-    margin:.5rem 0 1.2rem; 
-    background:var(--card); 
-    border-radius:12px; 
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
-    animation: gentleSlideDown 0.5s ease-out;
-    overflow: hidden;
-  }
-  
-  .collapsible-content.open{
-    display:block;
-  }
-  
-  /* Controls */
-  .top-controls{
-    display:flex;
-    gap:1rem;
-    justify-content:center;
-    margin:1.5rem 0;
-    flex-wrap:wrap;
-  }
-  
-  .mode-btn{
-    background:var(--mint); 
-    color:#111; 
-    font-family:'Montserrat',sans-serif; 
-    font-weight:600;
-    border:none;
-    border-radius:25px;
-    padding:.7rem 1.2rem;
-    cursor:pointer;
-    box-shadow:0 4px 12px rgba(0,247,224,0.3);
-    transition:var(--transition-bounce);
-  }
-  
-  .mode-btn:hover{
-    background:#00d6c7;
-    transform:translateY(-3px) scale(1.05);
-    box-shadow:0 8px 16px rgba(0,247,224,0.4);
-  }
-  
-  /* progress */
-  #progressContainer{
-    width:100%;
-    background:rgba(255,255,255,0.1);
-    border-radius:50px;
-    height:12px;
-    margin:1.5rem 0;
-    overflow:hidden;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-  }
-  
-  #progressBar{
-    width:0;
-    height:100%;
-    background:linear-gradient(90deg, var(--mint), var(--accent));
-    border-radius:50px;
-    transition:width .8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  #progressBar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    animation: shimmer 2s infinite;
-  }
-  
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-  
-  /* Enhanced breathing */
-  .breathing-container{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:1.5rem;
-    margin:0 auto;
-  }
-  
-  .breathing-shape{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    background:radial-gradient(circle, var(--accent) 0%, var(--soft-purple) 70%);
-    box-shadow:0 0 40px rgba(255,110,199,0.8);
-    animation:breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-weight:700;
-    font-size:1.2rem;
+    gap: 0.75rem;
     transition: var(--transition-smooth);
   }
   
-  @keyframes breathe{
-    0%{transform:scale(1) rotate(0deg); opacity:0.7; box-shadow:0 0 30px rgba(255,110,199,0.6);}
-    40%{transform:scale(1.4) rotate(5deg); opacity:1; box-shadow:0 0 60px rgba(255,110,199,0.9);}
-    60%{transform:scale(1.4) rotate(-5deg); opacity:1; box-shadow:0 0 60px rgba(255,110,199,0.9);}
-    100%{transform:scale(1) rotate(0deg); opacity:0.7; box-shadow:0 0 30px rgba(255,110,199,0.6);}
+  .main-title a:hover {
+    color: #fff;
+    text-shadow: 0 0 12px rgba(0, 247, 224, 0.8);
+  }
+  
+  /* Sidebar Navigation */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: var(--card);
+    padding: 1.5rem;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar-header {
+    margin-bottom: 2rem;
+  }
+  
+  .site-links {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .site-links h3 {
+    font-size: 1rem;
+    color: var(--mint);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .site-link {
+    display: block;
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+  }
+  
+  .site-link:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+    color: var(--mint);
+  }
+  
+  .nav-category {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 1.5rem 0 0.75rem;
+    padding-left: 0.5rem;
+  }
+  
+  .nav-item {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: var(--transition-smooth);
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid transparent;
+  }
+  
+  .nav-item:hover, .nav-item.active {
+    background: rgba(255,255,255,0.08);
+    border-left-color: var(--mint);
+    color: var(--mint);
+    transform: translateX(5px);
+  }
+  
+  .nav-item i {
+    width: 24px;
+    text-align: center;
+    margin-right: 0.5rem;
+  }
+  
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #111;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(255,110,199,0.4);
+    cursor: pointer;
+    transition: var(--transition-bounce);
+  }
+  
+  .menu-toggle:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Tool Grid Layout */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .tool-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    border-color: var(--soft-purple);
+  }
+  
+  .tool-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .tool-icon {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    color: var(--mint);
+  }
+  
+  .tool-title {
+    font-size: 1.3rem;
+    color: var(--text);
+  }
+  
+  .tool-desc {
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Breathing Tool */
+  .breathing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0 auto;
+  }
+  
+  .breathing-shape {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent) 0%, var(--soft-purple) 70%);
+    box-shadow: 0 0 40px rgba(255,110,199,0.8);
+    animation: breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: var(--transition-smooth);
+  }
+  
+  @keyframes breathe {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.7; box-shadow: 0 0 30px rgba(255,110,199,0.6); }
+    40% { transform: scale(1.4) rotate(5deg); opacity: 1; box-shadow: 0 0 60px rgba(255,110,199,0.9); }
+    60% { transform: scale(1.4) rotate(-5deg); opacity: 1; box-shadow: 0 0 60px rgba(255,110,199,0.9); }
+    100% { transform: scale(1) rotate(0deg); opacity: 0.7; box-shadow: 0 0 30px rgba(255,110,199,0.6); }
   }
   
   .breathing-controls {
@@ -390,320 +287,257 @@
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
+    flex-wrap: wrap;
   }
   
-  /* grounding */
-  .ground-list{
-    list-style:disc;
-    padding-left:1.1rem;
+  /* Grounding Tool */
+  .ground-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
   }
   
-  .ground-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:.8rem;
-  }
-  
-  .ground-btn{
-    background:var(--mint); 
-    color:#111; 
-    padding:.8rem 1rem; 
-    border-radius:20px; 
-    border:none; 
-    cursor:pointer; 
-    font-weight:600;
-    box-shadow:0 4px 12px rgba(0,247,224,0.3);
-    transition:var(--transition-bounce);
-    text-align:left;
-    display:flex;
-    align-items:center;
-    gap:0.5rem;
-  }
-  
-  .ground-btn:before {
-    content: '';
-    display:inline-block;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.3);
-    flex-shrink:0;
+  .ground-btn {
+    background: var(--soft-purple);
+    color: var(--text);
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     transition: var(--transition-smooth);
+    border-left: 4px solid var(--mint);
   }
   
   .ground-btn:hover {
-    transform: translateX(5px) scale(1.02);
-    box-shadow: 0 6px 16px rgba(0,247,224,0.4);
+    background: var(--light-purple);
+    transform: translateX(5px);
   }
   
-  .ground-btn.done{
-    background:#444;
-    color:#ccc;
-    text-decoration:line-through;
-    box-shadow:none;
-    cursor:default;
-    transform: translateX(0) scale(1);
+  .ground-btn.done {
+    background: rgba(0, 247, 224, 0.1);
+    color: var(--mint);
+    text-decoration: line-through;
   }
   
   .ground-btn.done:before {
     content: '✓';
-    background:var(--mint);
-    color:#111;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:0.8rem;
-    font-weight:bold;
-    transform: scale(1.2);
+    font-weight: bold;
+    color: var(--mint);
   }
   
-  .grounding-alternative {
+  .grounding-complete {
+    text-align: center;
     margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem;
+    background: rgba(0, 247, 224, 0.1);
+    border-radius: 10px;
+    color: var(--mint);
+    font-weight: 600;
+    display: none;
   }
   
-  /* sounds */
-  .audio-controls{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:.8rem;
-    margin-top:.5rem;
+  /* Audio Tool */
+  .audio-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.8rem;
+    margin-top: 1rem;
   }
   
-  .audio-btn{
-    padding:.7rem .8rem;
-    border-radius:20px;
-    border:none;
-    background:var(--mint);
-    color:#112;
-    cursor:pointer;
-    font-weight:600;
-    box-shadow:0 4px 12px rgba(0,247,224,0.3);
-    transition:var(--transition-bounce);
+  .audio-btn {
+    padding: 0.9rem 0.5rem;
+    border-radius: 10px;
+    border: none;
+    background: var(--soft-purple);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
   
-  .audio-btn.playing{
-    background:var(--accent); 
-    color:#111;
-    transform:scale(0.98);
-    animation: pulseGlow 2s infinite;
+  .audio-btn:hover {
+    background: var(--light-purple);
+    transform: translateY(-3px);
   }
   
-  @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 4px 12px rgba(255,110,199,0.3); }
-    50% { box-shadow: 0 4px 20px rgba(255,110,199,0.6); }
+  .audio-btn.playing {
+    background: var(--accent);
+    color: #111;
+    box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
   }
   
-  .audio-btn:hover{
-    transform:translateY(-3px) scale(1.05);
+  .audio-btn i {
+    font-size: 1.2rem;
   }
   
-  .audio-btn.mute {
-    background: #666;
-    box-shadow: 0 4px 12px rgba(102,102,102,0.3);
-    grid-column: 1 / -1;
-    margin-top:0.5rem;
+  /* Mantra Tool */
+  .mantra-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
   
-  /* mantras */
-  .mantra-box{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:1rem;
-  }
-  
-  .mantra-text{
-    font-weight:600;
-    color:var(--mint);
-    font-size:1.2rem;
-    text-align:center;
-    padding:1.5rem;
-    border-radius:12px;
-    background:rgba(255,255,255,0.05);
-    cursor:pointer;
-    width:100%;
-    transition:var(--transition-bounce);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    min-height: 80px;
+  .mantra-text {
+    font-weight: 600;
+    color: var(--mint);
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    width: 100%;
+    transition: var(--transition-smooth);
+    min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1.5;
   }
   
-  .mantra-text:hover{
-    background:rgba(255,255,255,0.08);
-    transform:translateY(-4px) scale(1.02);
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  .mantra-text:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.02);
   }
   
-  .mantra-next{
-    padding:.7rem 1.5rem;
-    border-radius:50px;
-    border:none;
-    background:var(--accent);
-    color:#111;
-    font-weight:700;
-    box-shadow:0 4px 12px rgba(255,110,199,0.3);
-    cursor:pointer;
-    transition:var(--transition-bounce);
+  .mantra-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
   }
   
-  .mantra-next:hover{
-    background:#ff49b2;
-    transform:translateY(-4px) scale(1.1);
-    box-shadow:0 8px 20px rgba(255,110,199,0.4);
-  }
-  
-  /* timer */
-  .timer-display{
-    font-size:3rem;
-    font-weight:800;
-    color:var(--accent);
-    text-align:center;
-    margin:1.5rem 0;
-    text-shadow:0 0 20px rgba(255,110,199,0.8);
-    font-family:'Montserrat', sans-serif;
-    animation: gentlePulseTimer 2s infinite;
-  }
-  
-  @keyframes gentlePulseTimer {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-  }
-  
-  .timer-controls{
-    display:flex;
-    gap:.8rem;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
-  
-  .timer-btn{
-    padding:.7rem 1.2rem;
-    border-radius:50px;
-    border:none;
-    background:var(--mint);
-    color:#111;
-    font-weight:600;
-    box-shadow:0 4px 12px rgba(0,247,224,0.3);
-    transition:var(--transition-bounce);
-  }
-  
-  .timer-btn:hover{
-    background:#00d6c7;
-    transform:translateY(-3px) scale(1.05);
-    box-shadow:0 8px 16px rgba(0,247,224,0.4);
-  }
-  
-  .timer-message {
+  /* Timer Tool */
+  .timer-display {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent);
     text-align: center;
-    margin-top: 1.5rem;
-    font-style: italic;
-    color: var(--mint);
-    font-size:1.1rem;
-    animation: fadeIn 1s ease-out;
-  }
-  
-  /* resources */
-  .resource-btn{
-    display:block;
-    width:100%;
-    padding:.8rem 1rem;
-    border-radius:20px;
-    border:none;
-    background:var(--accent);
-    color:#111;
-    font-weight:700;
-    margin:.5rem 0;
-    text-align:center;
-    text-decoration:none;
-    box-shadow:0 4px 12px rgba(255,110,199,0.3);
-    transition:var(--transition-bounce);
-  }
-  
-  .resource-btn:hover{
-    background:#ff49b2;
-    transform:translateY(-4px) scale(1.03);
-    box-shadow:0 8px 20px rgba(255,110,199,0.4);
-  }
-  
-  /* encouraging */
-  .encouragement{
-    display:none;
-    text-align:center;
-    font-weight:700;
-    color:var(--mint);
-    margin:1rem 0;
-    padding:1rem;
-    background:rgba(0,247,224,0.1);
-    border-radius:12px;
-    animation:pulse 2s infinite, slideInUp 0.5s ease-out;
-  }
-  
-  @keyframes slideInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0,247,224,0.4); }
-    70% { box-shadow: 0 0 0 15px rgba(0,247,224,0); }
-    100% { box-shadow: 0 0 0 0 rgba(0,247,224,0); }
-  }
-  
-  /* aftercare */
-  .aftercare-prompt {
     margin: 1.5rem 0;
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.05);
+    text-shadow: 0 0 20px rgba(255, 110, 199, 0.8);
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .timer-controls {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .btn-primary {
+    background: var(--mint);
+    color: #111;
+    box-shadow: 0 4px 12px rgba(0, 247, 224, 0.3);
+  }
+  
+  .btn-primary:hover {
+    background: #00d6c7;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 247, 224, 0.4);
+  }
+  
+  .btn-secondary {
+    background: var(--accent);
+    color: #111;
+    box-shadow: 0 4px 12px rgba(255, 110, 199, 0.3);
+  }
+  
+  .btn-secondary:hover {
+    background: #ff49b2;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 110, 199, 0.4);
+  }
+  
+  .btn-outline {
+    background: transparent;
+    color: var(--mint);
+    border: 2px solid var(--mint);
+  }
+  
+  .btn-outline:hover {
+    background: rgba(0, 247, 224, 0.1);
+    transform: translateY(-3px);
+  }
+  
+  /* Cheat Sheet Section */
+  .cheat-sheet {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(255,255,255,0.03);
     border-radius: 12px;
-    transition: var(--transition-smooth);
+    border: 1px solid rgba(0, 247, 224, 0.2);
   }
   
-  .aftercare-prompt:hover {
-    background: rgba(255,255,255,0.08);
-    transform: translateY(-2px);
+  .cheat-sheet h2 {
+    color: var(--mint);
+    margin-bottom: 1rem;
   }
   
-  textarea {
-    width:100%;
-    min-height:100px;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.2);
-    border-radius:12px;
-    color:var(--text);
-    padding:1rem;
-    font-family:'Roboto', sans-serif;
-    font-size:1rem;
-    resize:vertical;
-    margin-top:0.5rem;
-    transition: var(--transition-smooth);
+  .cheat-sheet-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
   }
   
-  textarea:focus {
-    outline:none;
-    border-color:var(--mint);
-    box-shadow:0 0 0 3px rgba(0,247,224,0.2);
-    transform: translateY(-2px);
+  .cheat-item {
+    background: rgba(0,0,0,0.2);
+    padding: 1.2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
   }
   
-  /* Enhanced Footer with Legal Disclaimer */
-  footer{
-    color:#aaa;
-    text-align:center;
-    margin:3rem 0 1rem;
-    font-size:.9rem;
-    padding:1rem;
+  .cheat-item h4 {
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Mode Toggle */
+  .mode-toggle {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 99;
+  }
+  
+  .mode-toggle .btn {
+    border-radius: 50px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
     border-top: 1px solid rgba(255,255,255,0.1);
-    animation: fadeIn 1s ease-out 0.5s both;
+    color: #aaa;
+    font-size: 0.9rem;
   }
   
   .legal-disclaimer {
@@ -715,9 +549,6 @@
     border-radius: 8px;
     line-height: 1.4;
     text-align: left;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
   }
   
   .legal-disclaimer strong {
@@ -726,32 +557,7 @@
     margin-bottom: 0.5rem;
   }
   
-  /* Floating action button for mobile */
-  .fab {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(255,110,199,0.4);
-    cursor: pointer;
-    z-index: 100;
-    font-size: 1.5rem;
-    transition: var(--transition-bounce);
-  }
-  
-  .fab:hover {
-    transform: scale(1.15) rotate(10deg);
-    box-shadow: 0 8px 25px rgba(255,110,199,0.6);
-  }
-  
-  /* Sensory safe mode */
+  /* Sensory Safe Mode */
   .sensory-safe {
     --bg: #0a0014;
     --card: #150020;
@@ -767,466 +573,676 @@
     box-shadow: 0 0 20px rgba(204,90,163,0.4);
   }
   
-  .sensory-safe h2 {
-    box-shadow: none;
-  }
-  
-  .sensory-safe .mantra-text:hover,
-  .sensory-safe .ground-btn:hover,
-  .sensory-safe .mode-btn:hover {
-    transform: none;
-  }
-  
-  /* responsive */
-  @media (min-width: 520px){
-    .ground-grid{
-      grid-template-columns:1fr 1fr;
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .sidebar {
+      transform: translateX(-100%);
+      width: 280px;
     }
     
-    .audio-controls{
-      grid-template-columns:1fr 1fr 1fr;
+    .sidebar.open {
+      transform: translateX(0);
     }
     
-    .audio-btn.mute {
-      grid-column: auto;
-      margin-top:0;
+    .main-content {
+      margin-left: 0;
+      padding: 1rem;
+    }
+    
+    .menu-toggle {
+      display: block;
+    }
+    
+    .tool-grid {
+      grid-template-columns: 1fr;
     }
   }
   
-  @media (max-width: 520px){
-    h1 {
+  @media (max-width: 768px) {
+    .main-title {
       font-size: 1.5rem;
-    }
-    
-    h2 {
-      font-size: 1.1rem;
-      padding: 0.8rem 1rem;
-    }
-    
-    .breathing-shape{
-      width:120px;
-      height:120px;
-      font-size:1rem;
-    }
-    
-    .landing-buttons {
-      max-width: 100%;
-    }
-    
-    .top-controls {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .mode-btn {
-      width: 100%;
-      max-width: 250px;
     }
     
     .timer-display {
       font-size: 2.5rem;
     }
+    
+    .breathing-shape {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .audio-controls {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .mantra-text {
+      font-size: 1.2rem;
+      padding: 1.5rem;
+    }
   }
   
-  /* PWA install prompt */
-  .install-prompt {
-    position: fixed;
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    background: var(--card);
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    z-index: 100;
-    display: none;
-    animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  @media (max-width: 480px) {
+    .main-content {
+      padding: 1rem 0.75rem;
+    }
+    
+    .tool-card {
+      padding: 1.2rem;
+    }
+    
+    .btn {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.9rem;
+    }
+    
+    .timer-controls, .breathing-controls, .mantra-controls {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .timer-controls .btn, .breathing-controls .btn, .mantra-controls .btn {
+      width: 100%;
+    }
   }
   
-  @keyframes slideUp {
-    from { transform: translateY(100px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+  /* Smooth scrolling anchor offset */
+  :target {
+    scroll-margin-top: 2rem;
   }
   
-  .install-prompt button {
-    background: var(--mint);
-    color: #111;
-    border: none;
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition-smooth);
+  /* Animation for tool cards */
+  @keyframes cardAppear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
-  .install-prompt button:hover {
-    transform: translateY(-2px);
+  .tool-card {
+    animation: cardAppear 0.5s ease-out forwards;
   }
   
-  /* Back to top button */
-  .back-to-top {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--mint);
-    color: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(0,247,224,0.4);
-    cursor: pointer;
-    z-index: 99;
-    opacity: 0;
-    transition: var(--transition-bounce);
-  }
-  
-  .back-to-top.visible {
-    opacity: 1;
-  }
-  
-  .back-to-top:hover {
-    transform: translateY(-4px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(0,247,224,0.5);
-  }
+  .tool-card:nth-child(1) { animation-delay: 0.1s; }
+  .tool-card:nth-child(2) { animation-delay: 0.2s; }
+  .tool-card:nth-child(3) { animation-delay: 0.3s; }
+  .tool-card:nth-child(4) { animation-delay: 0.4s; }
+  .tool-card:nth-child(5) { animation-delay: 0.5s; }
+  .tool-card:nth-child(6) { animation-delay: 0.6s; }
+  .tool-card:nth-child(7) { animation-delay: 0.7s; }
+  .tool-card:nth-child(8) { animation-delay: 0.8s; }
+  .tool-card:nth-child(9) { animation-delay: 0.9s; }
 </style>
 </head>
 <body>
-  <main>
-    <!-- Landing Page -->
-    <section id="landing">
-      <div class="landing-icon">🍑</div>
-      <h1 class="main-title">
-        <a href="https://plurderapolis.org" title="Return to PLURderapolis Home">
-          Bad Trip Guide — PLURderapolis
-        </a>
-      </h1>
-      <div class="landing-message">
-        <p>You are safe. If you can, take 3 slow breaths now.</p>
-        <p>This space is designed to help you through difficult moments.</p>
-      </div>
-      <div class="landing-buttons">
-        <button id="startGuided" class="landing-btn">➡️ Guided Experience</button>
-        <button id="startModular" class="landing-btn secondary">🔀 Choose What I Need</button>
-      </div>
-    </section>
-
-    <!-- Main Guide Content (initially hidden) -->
-    <div id="guideContent">
-      <header>
+  <!-- Mobile Menu Toggle -->
+  <button class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
         <h1 class="main-title">
-          <a href="https://plurderapolis.org" title="Return to PLURderapolis Home">
-            🍑 Bad Trip Guide — PLURderapolis
+          <a href="https://plurderapolis.org">
+            <i class="fas fa-peach"></i>
+            Bad Trip Guide
           </a>
         </h1>
-        <div class="top-controls" role="toolbar" aria-label="Top controls">
-          <button id="toggleSafe" class="mode-btn" aria-pressed="false">🌙 Sensory Safe Mode</button>
-          <button id="guidedMode" class="mode-btn">➡️ Guided Experience</button>
-          <button id="modularMode" class="mode-btn">🔀 Choose Tools</button>
+        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1rem;">
+          A safe space for grounding during difficult psychedelic experiences
+        </p>
+      </div>
+      
+      <div class="nav-category">Immediate Help</div>
+      <a href="#breathing" class="nav-item active">
+        <i class="fas fa-wind"></i> Breathing
+      </a>
+      <a href="#grounding" class="nav-item">
+        <i class="fas fa-mountain"></i> Grounding
+      </a>
+      <a href="#sounds" class="nav-item">
+        <i class="fas fa-music"></i> Soothing Sounds
+      </a>
+      
+      <div class="nav-category">Self-Care</div>
+      <a href="#checkin" class="nav-item">
+        <i class="fas fa-heart"></i> Self Check-In
+      </a>
+      <a href="#mantras" class="nav-item">
+        <i class="fas fa-brain"></i> Mantras
+      </a>
+      <a href="#timer" class="nav-item">
+        <i class="fas fa-hourglass-half"></i> Calm Timer
+      </a>
+      
+      <div class="nav-category">Event Safety</div>
+      <a href="#shows" class="nav-item">
+        <i class="fas fa-headphones-alt"></i> At Shows
+      </a>
+      
+      <div class="nav-category">Aftercare</div>
+      <a href="#aftercare" class="nav-item">
+        <i class="fas fa-comment-medical"></i> Reflection
+      </a>
+      <a href="#resources" class="nav-item">
+        <i class="fas fa-life-ring"></i> Emergency Resources
+      </a>
+      
+      <div class="site-links">
+        <h3>More from PLURderapolis</h3>
+        <a href="https://plurderapolis.org" class="site-link">
+          <i class="fas fa-home"></i> Home Page
+        </a>
+        <a href="https://plurderapolis.org/panic.html" class="site-link">
+          <i class="fas fa-exclamation-triangle"></i> Panic Button
+        </a>
+        <a href="https://plurderapolis.org/emergency.html" class="site-link">
+          <i class="fas fa-ambulance"></i> Emergency Help
+        </a>
+        <a href="https://plurderapolis.org/harm-reduction.html" class="site-link">
+          <i class="fas fa-shield-alt"></i> Harm Reduction
+        </a>
+        <a href="https://plurderapolis.org/community.html" class="site-link">
+          <i class="fas fa-users"></i> Community
+        </a>
+      </div>
+      
+      <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <button id="downloadCheatSheet" class="btn btn-outline" style="width: 100%;">
+          <i class="fas fa-download"></i> Download Cheat Sheet
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header with current location -->
+      <div style="margin-bottom: 2rem;">
+        <div id="breadcrumb" style="font-size: 0.9rem; color: var(--mint); margin-bottom: 0.5rem;">
+          <a href="#breathing" style="color: var(--mint); text-decoration: none;">Bad Trip Guide</a> 
+          <span style="margin: 0 0.5rem;">/</span> 
+          <span id="currentSection">Breathing Exercise</span>
         </div>
-        <div id="progressContainer" aria-hidden="true"><div id="progressBar"></div></div>
-      </header>
-
-      <!-- Start Here (intro) -->
-      <section class="step-section" data-step="0">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="intro">🌟 Start Here</h2>
-        <div id="intro" class="collapsible-content" aria-hidden="true">
-          <p style="font-weight:600; text-align:center; font-size:1.1rem;">You are safe. This page will walk you through grounding and calming tools — either step-by-step or pick what helps.</p>
-          <p style="text-align:center">If things feel intense: slow your breath, drink water, and use the emergency links at the bottom.</p>
-          <div style="text-align:center; margin-top:1.5rem;">
-            <button class="mode-btn" id="startFromHere">Start Here</button>
+        <h1 style="color: var(--text); font-size: 2rem;">Bad Trip Grounding Tools</h1>
+        <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">
+          You are safe. These tools are designed to help you through difficult moments. 
+          Use what feels right for you.
+        </p>
+      </div>
+      
+      <!-- Tool Grid -->
+      <div class="tool-grid">
+        <!-- Breathing Tool -->
+        <div class="tool-card" id="breathing">
+          <div class="tool-header">
+            <div class="tool-icon">💨</div>
+            <h2 class="tool-title">Breathing Exercise</h2>
           </div>
-        </div>
-      </section>
-
-      <!-- Breathing -->
-      <section class="step-section" data-step="1">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="breathing">💨 Breathing Exercise</h2>
-        <div id="breathing" class="collapsible-content" aria-hidden="true">
-          <div class="breathing-container" aria-hidden="false">
+          <p class="tool-desc">
+            Follow the circle with your breath. Inhale as it expands, exhale as it contracts. 
+            This helps regulate your nervous system.
+          </p>
+          <div class="breathing-container">
             <div id="breathShape" class="breathing-shape">Breathe</div>
-            <div style="text-align:center;font-weight:600;color:var(--mint); font-size:1.1rem;">Breathe with the circle — inhale as it expands, exhale as it shrinks. Repeat 5–7 cycles.</div>
+            <div style="text-align:center;font-weight:600;color:var(--mint); font-size:1.1rem;">
+              Breathe with the circle — inhale as it expands, exhale as it shrinks.
+            </div>
             <div class="breathing-controls">
-              <button id="skipBreathing" class="mode-btn">Skip Breathing</button>
+              <button id="pauseBreathing" class="btn btn-primary">
+                <i class="fas fa-pause"></i> Pause
+              </button>
+              <button id="resumeBreathing" class="btn btn-secondary">
+                <i class="fas fa-play"></i> Resume
+              </button>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- Grounding -->
-      <section class="step-section" data-step="2">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="grounding">🪨 Ground Yourself — 5-4-3-2-1</h2>
-        <div id="grounding" class="collapsible-content" aria-hidden="true">
-          <p>Click each item as you name it. When all five are done you'll see a completion message.</p>
-          <div class="ground-grid" aria-live="polite">
-            <button class="ground-btn" data-count="5">👀 Name 5 things you can see</button>
-            <button class="ground-btn" data-count="4">✋ Name 4 things you can touch</button>
-            <button class="ground-btn" data-count="3">👂 Name 3 things you can hear</button>
-            <button class="ground-btn" data-count="2">👃 Name 2 things you can smell</button>
-            <button class="ground-btn" data-count="1">👅 Name 1 thing you can taste</button>
+        
+        <!-- Grounding Tool -->
+        <div class="tool-card" id="grounding">
+          <div class="tool-header">
+            <div class="tool-icon">🪨</div>
+            <h2 class="tool-title">5-4-3-2-1 Grounding</h2>
           </div>
-          <div class="grounding-alternative">
-            <p><strong>Alternative version:</strong> Name 3 things you like, 3 favorite colors, or 3 comforting objects.</p>
-            <button id="startAlternative" class="ground-btn">Start Alternative Grounding</button>
+          <p class="tool-desc">
+            Engage your senses to bring yourself to the present moment. 
+            Click each item as you name it.
+          </p>
+          <div class="ground-grid">
+            <button class="ground-btn" data-count="5">
+              <i class="fas fa-eye"></i> 5 things you can see
+            </button>
+            <button class="ground-btn" data-count="4">
+              <i class="fas fa-hand-paper"></i> 4 things you can touch
+            </button>
+            <button class="ground-btn" data-count="3">
+              <i class="fas fa-assistive-listening-systems"></i> 3 things you can hear
+            </button>
+            <button class="ground-btn" data-count="2">
+              <i class="fas fa-wind"></i> 2 things you can smell
+            </button>
+            <button class="ground-btn" data-count="1">
+              <i class="fas fa-lemon"></i> 1 thing you can taste
+            </button>
           </div>
-          <p id="groundingComplete" style="display:none;margin-top:1.5rem;font-weight:900;color:var(--accent);text-align:center; font-size:1.2rem; animation: pulse 2s infinite;">✅ Grounding complete — you're safe.</p>
-        </div>
-      </section>
-
-      <!-- Soothing Sounds -->
-      <section class="step-section" data-step="3">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="sounds">🎶 Soothing Sounds</h2>
-        <div id="sounds" class="collapsible-content" aria-hidden="true">
-          <p style="text-align:center">Tap a sound to toggle play/pause. Only one sound plays at a time. Use Mute All to end every sound.</p>
-          <div class="audio-controls" role="group" aria-label="Sound options">
-            <button class="audio-btn" data-sound="whiteNoise">White Noise</button>
-            <button class="audio-btn" data-sound="ocean">Ocean Waves</button>
-            <button class="audio-btn" data-sound="forest">Forest / Birds</button>
-            <button class="audio-btn mute" id="stopAll">🔇 Mute All</button>
+          <div class="grounding-complete" id="groundingComplete">
+            ✅ Grounding complete — you're anchored in the present.
           </div>
-        </div>
-      </section>
-
-      <!-- Check-In -->
-      <section class="step-section" data-step="4">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="checkin">🧍 Check-In With Yourself</h2>
-        <div id="checkin" class="collapsible-content" aria-hidden="true">
-          <ul class="ground-list">
-            <li>Am I hydrated? Slowly sip water.</li>
-            <li>Can I talk to a trusted friend or sitter? Call or text them.</li>
-            <li>Can I sit or lie down safely? Slow deep breaths help.</li>
-            <li>Are my clothes comfortable? Remove tight layers if needed.</li>
-          </ul>
-          <p style="text-align:center;margin-top:1.5rem;font-style:italic">If you cannot do any of these, that's okay — move to next.</p>
-          <div style="text-align:center;margin-top:1.5rem;">
-            <button id="skipCheckin" class="mode-btn">Continue</button>
+          <div style="margin-top: 1rem; text-align: center;">
+            <button id="resetGrounding" class="btn btn-outline">
+              <i class="fas fa-redo"></i> Reset Grounding
+            </button>
           </div>
         </div>
-      </section>
-
-      <!-- Tripping at Shows -->
-      <section class="step-section" data-step="5">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="shows">🎵 Tripping at Shows — Stay Safe</h2>
-        <div id="shows" class="collapsible-content" aria-hidden="true">
-          <ul class="ground-list">
-            <li><strong>Hydrate:</strong> sip water slowly and often. Avoid chugging or sugary drinks.</li>
-            <li><strong>Eat:</strong> light carbs or fruit help; avoid heavy greasy foods if you're nauseous.</li>
-            <li><strong>Environment:</strong> step outside or to a chill zone if overwhelmed — quiet spaces help a lot.</li>
-            <li><strong>Buddy system:</strong> stay with someone you trust; check in every 10 minutes.</li>
-            <li><strong>Avoid:</strong> mixing substances or lots of alcohol; don't push your body (dance breaks are fine).</li>
-            <li><strong>Tools:</strong> sunglasses, earplugs, a small bottle of water, and breathing exercises.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Wait / Calm Timer -->
-      <section class="step-section" data-step="6">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="wait">⏳ Just Wait — Calm Timer</h2>
-        <div id="wait" class="collapsible-content" aria-hidden="true">
-          <p style="text-align:center">Settle in. Panic often drops after 10–20 minutes. Use the timer below.</p>
-          <div id="timerDisplay" class="timer-display" aria-live="polite">15:00</div>
-          <div class="timer-controls">
-            <button id="startTimer" class="timer-btn">Start</button>
-            <button id="pauseTimer" class="timer-btn">Pause</button>
-            <button id="resetTimer" class="timer-btn">Reset</button>
+        
+        <!-- Soothing Sounds -->
+        <div class="tool-card" id="sounds">
+          <div class="tool-header">
+            <div class="tool-icon">🎶</div>
+            <h2 class="tool-title">Soothing Sounds</h2>
           </div>
-          <div id="timerMessage" class="timer-message">Many people find things stabilize after ~10-20 min</div>
-          <div id="progressMessage" style="display:none;text-align:center;margin-top:1.5rem;color:var(--mint);font-weight:700; font-size:1.1rem;">
-            You're doing your part by waiting. This will pass.
+          <p class="tool-desc">
+            Calm auditory environments to help soothe anxiety. 
+            Only one sound plays at a time.
+          </p>
+          <div class="audio-controls">
+            <button class="audio-btn" data-sound="whiteNoise">
+              <i class="fas fa-volume-up"></i>
+              <span>White Noise</span>
+            </button>
+            <button class="audio-btn" data-sound="ocean">
+              <i class="fas fa-water"></i>
+              <span>Ocean Waves</span>
+            </button>
+            <button class="audio-btn" data-sound="forest">
+              <i class="fas fa-tree"></i>
+              <span>Forest & Birds</span>
+            </button>
+            <button class="audio-btn" data-sound="rain">
+              <i class="fas fa-cloud-rain"></i>
+              <span>Gentle Rain</span>
+            </button>
+          </div>
+          <div style="margin-top: 1rem; text-align: center;">
+            <button id="stopAllAudio" class="btn btn-outline">
+              <i class="fas fa-volume-mute"></i> Mute All Sounds
+            </button>
           </div>
         </div>
-      </section>
-
-      <!-- Mantras -->
-      <section class="step-section" data-step="7">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="mantras">🧠 Mantras to Remember</h2>
-        <div id="mantras" class="collapsible-content" aria-hidden="true">
+        
+        <!-- Self Check-In -->
+        <div class="tool-card" id="checkin">
+          <div class="tool-header">
+            <div class="tool-icon">🧍</div>
+            <h2 class="tool-title">Self Check-In</h2>
+          </div>
+          <p class="tool-desc">
+            A quick checklist to assess your basic needs and comfort.
+          </p>
+          <div class="ground-grid">
+            <button class="ground-btn" data-check="hydration">
+              <i class="fas fa-tint"></i> Hydration: Sip water slowly
+            </button>
+            <button class="ground-btn" data-check="comfort">
+              <i class="fas fa-tshirt"></i> Comfort: Adjust clothing
+            </button>
+            <button class="ground-btn" data-check="position">
+              <i class="fas fa-couch"></i> Position: Sit or lie down
+            </button>
+            <button class="ground-btn" data-check="connection">
+              <i class="fas fa-user-friends"></i> Connection: Reach out if needed
+            </button>
+            <button class="ground-btn" data-check="temperature">
+              <i class="fas fa-thermometer-half"></i> Temperature: Adjust if needed
+            </button>
+          </div>
+          <div style="margin-top: 1rem; font-style: italic; color: var(--mint); text-align: center;">
+            If you can't do any of these, that's okay. Just breathe.
+          </div>
+        </div>
+        
+        <!-- Mantras -->
+        <div class="tool-card" id="mantras">
+          <div class="tool-header">
+            <div class="tool-icon">🧠</div>
+            <h2 class="tool-title">Calming Mantras</h2>
+          </div>
+          <p class="tool-desc">
+            Repeating affirmations can help shift your mindset. 
+            Tap the mantra to change it.
+          </p>
           <div class="mantra-box">
-            <div id="mantraText" class="mantra-text" role="button" tabindex="0" aria-pressed="false">I am safe and this will pass.</div>
-            <button id="nextMantra" class="mantra-next">Next Mantra</button>
+            <div id="mantraText" class="mantra-text">
+              I am safe and this will pass.
+            </div>
+            <div class="mantra-controls">
+              <button id="prevMantra" class="btn btn-outline">
+                <i class="fas fa-chevron-left"></i> Previous
+              </button>
+              <button id="nextMantra" class="btn btn-secondary">
+                Next <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- Aftercare / Reflection -->
-      <section class="step-section" data-step="8">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="aftercare">💭 Aftercare & Reflection</h2>
-        <div id="aftercare" class="collapsible-content" aria-hidden="true">
-          <div class="aftercare-prompt">
-            <p><strong>What helped during this experience?</strong></p>
-            <textarea placeholder="Jot down what worked for you..."></textarea>
+        
+        <!-- Timer -->
+        <div class="tool-card" id="timer">
+          <div class="tool-header">
+            <div class="tool-icon">⏳</div>
+            <h2 class="tool-title">Calm Timer</h2>
           </div>
-          <div class="aftercare-prompt">
-            <p><strong>What would I try next time?</strong></p>
-            <textarea placeholder="Note any insights..."></textarea>
+          <p class="tool-desc">
+            Intense moments often pass within 10-20 minutes. 
+            Use this timer to wait it out safely.
+          </p>
+          <div id="timerDisplay" class="timer-display">15:00</div>
+          <div class="timer-controls">
+            <button id="startTimer" class="btn btn-primary">
+              <i class="fas fa-play"></i> Start
+            </button>
+            <button id="pauseTimer" class="btn btn-outline">
+              <i class="fas fa-pause"></i> Pause
+            </button>
+            <button id="resetTimer" class="btn btn-secondary">
+              <i class="fas fa-redo"></i> Reset
+            </button>
           </div>
-          <p style="text-align:center">Remember to rest, practice self-care, and reach out to supportive friends.</p>
+          <div id="timerMessage" style="text-align:center; margin-top:1.5rem; color:var(--mint);">
+            Many people find things stabilize after ~10-20 minutes
+          </div>
         </div>
-      </section>
-
-      <!-- Emergency / Resources -->
-      <section class="step-section" data-step="9">
-        <h2 tabindex="0" role="button" aria-expanded="false" aria-controls="backup">📞 Need Backup?</h2>
-        <div id="backup" class="collapsible-content" aria-hidden="true">
-          <p style="text-align:center">If you need human support right now, these resources are available:</p>
-          <a class="resource-btn" href="https://tripsit.me/" target="_blank" rel="noopener">TripSit — Live Chat & Resources</a>
-          <a class="resource-btn" href="https://firesideproject.org/" target="_blank" rel="noopener">Fireside Project — Support Line</a>
-          <a class="resource-btn" href="https://neverusealone.com/" target="_blank" rel="noopener">Never Use Alone — Phone Check</a>
-          <a class="resource-btn" href="/panic.html">🚨 Panic Button (your site)</a>
-          <a class="resource-btn" href="/emergency.html">🚑 Emergency Help (your site)</a>
-          <a class="resource-btn" href="index.html">🏠 I'm Feeling Better — Back Home</a>
+        
+        <!-- At Shows -->
+        <div class="tool-card" id="shows">
+          <div class="tool-header">
+            <div class="tool-icon">🎵</div>
+            <h2 class="tool-title">Tripping at Shows</h2>
+          </div>
+          <p class="tool-desc">
+            Safety tips for managing difficult experiences at music events.
+          </p>
+          <ul style="padding-left: 1.2rem; margin-bottom: 1.5rem;">
+            <li style="margin-bottom: 0.75rem;"><strong>Hydrate:</strong> Sip water slowly and often</li>
+            <li style="margin-bottom: 0.75rem;"><strong>Chill Zone:</strong> Find a quiet space if overwhelmed</li>
+            <li style="margin-bottom: 0.75rem;"><strong>Buddy System:</strong> Stay with someone you trust</li>
+            <li style="margin-bottom: 0.75rem;"><strong>Earplugs/Sunglasses:</strong> Reduce sensory input</li>
+            <li style="margin-bottom: 0.75rem;"><strong>Know Staff:</strong> Locate medical/security teams</li>
+            <li><strong>No Mixing:</strong> Avoid combining substances</li>
+          </ul>
+          <div style="text-align: center; margin-top: 1rem;">
+            <button id="findChillZone" class="btn btn-outline">
+              <i class="fas fa-map-marker-alt"></i> I need a chill zone
+            </button>
+          </div>
         </div>
-      </section>
-
-      <p id="encouragement" class="encouragement" role="status" aria-live="polite"></p>
-    </div>
-
-    <footer>
-      <small>PLURderapolis • Your partners in shine 🍑</small>
-      <div class="legal-disclaimer">
-        <strong>Disclaimer:</strong>
-        This guide is provided for educational and harm reduction purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. If you are experiencing a medical emergency, please call emergency services immediately. PLURderapolis is not responsible for any actions taken based on the information provided on this site. Use responsibly.
+        
+        <!-- Aftercare -->
+        <div class="tool-card" id="aftercare">
+          <div class="tool-header">
+            <div class="tool-icon">💭</div>
+            <h2 class="tool-title">Reflection & Aftercare</h2>
+          </div>
+          <p class="tool-desc">
+            After the experience passes, reflection can help integrate insights.
+          </p>
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: var(--mint); margin-bottom: 0.5rem;">What helped during this experience?</h4>
+            <textarea id="reflection1" placeholder="Jot down what worked for you..." 
+              style="width:100%; min-height:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); padding:0.75rem; font-family:'Roboto', sans-serif;"></textarea>
+          </div>
+          <div>
+            <h4 style="color: var(--mint); margin-bottom: 0.5rem;">What would I try next time?</h4>
+            <textarea id="reflection2" placeholder="Note any insights or changes..." 
+              style="width:100%; min-height:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); padding:0.75rem; font-family:'Roboto', sans-serif;"></textarea>
+          </div>
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <button id="saveReflections" class="btn btn-secondary">
+              <i class="fas fa-save"></i> Save Reflections
+            </button>
+          </div>
+        </div>
+        
+        <!-- Emergency Resources -->
+        <div class="tool-card" id="resources">
+          <div class="tool-header">
+            <div class="tool-icon">📞</div>
+            <h2 class="tool-title">Emergency Resources</h2>
+          </div>
+          <p class="tool-desc">
+            If you need human support right now, these resources are available.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <a href="https://tripsit.me/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
+              <i class="fas fa-comments"></i> TripSit Live Chat
+            </a>
+            <a href="https://firesideproject.org/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
+              <i class="fas fa-phone-alt"></i> Fireside Project
+            </a>
+            <a href="https://neverusealone.com/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
+              <i class="fas fa-user-check"></i> Never Use Alone
+            </a>
+            <a href="https://plurderapolis.org/panic.html" class="btn btn-secondary" style="text-align: center; text-decoration: none;">
+              <i class="fas fa-exclamation-triangle"></i> Panic Button
+            </a>
+          </div>
+          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,110,199,0.1); border-radius: 8px; text-align: center;">
+            <strong>Medical Emergency?</strong> Call 911 or local emergency services immediately.
+          </div>
+        </div>
       </div>
-    </footer>
-  </main>
-
-  <!-- Floating Action Button -->
-  <div class="fab" id="fab" style="display:none">
-    🍑
-  </div>
-
-  <!-- Back to Top Button -->
-  <div class="back-to-top" id="backToTop">
-    ↑
-  </div>
-
-  <!-- PWA Install Prompt -->
-  <div class="install-prompt" id="installPrompt">
-    <span>Add to home screen for quick access</span>
-    <button id="installBtn">Add</button>
-    <button id="dismissInstall">Dismiss</button>
+      
+      <!-- Cheat Sheet Section -->
+      <div class="cheat-sheet">
+        <h2><i class="fas fa-file-download"></i> Bad Trip Guide Cheat Sheet</h2>
+        <p>Download a summary of all the tools on this page for offline use or quick reference.</p>
+        
+        <div class="cheat-sheet-content">
+          <div class="cheat-item">
+            <h4>Breathing (4-7-8)</h4>
+            <p>Inhale 4 sec, hold 7 sec, exhale 8 sec. Repeat 5x.</p>
+          </div>
+          <div class="cheat-item">
+            <h4>5-4-3-2-1 Grounding</h4>
+            <p>5 things you see, 4 feel, 3 hear, 2 smell, 1 taste.</p>
+          </div>
+          <div class="cheat-item">
+            <h4>Self Check-In</h4>
+            <p>Hydrate, comfort, position, connection, temperature.</p>
+          </div>
+          <div class="cheat-item">
+            <h4>Key Mantras</h4>
+            <p>"This will pass." "I am safe." "I am not my thoughts."</p>
+          </div>
+          <div class="cheat-item">
+            <h4>At Shows</h4>
+            <p>Find chill zone, buddy system, hydrate, ear protection.</p>
+          </div>
+          <div class="cheat-item">
+            <h4>Emergency Contacts</h4>
+            <p>TripSit, Fireside Project, Never Use Alone, 911.</p>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+          <button id="generateCheatSheet" class="btn btn-primary">
+            <i class="fas fa-file-pdf"></i> Generate & Download Cheat Sheet
+          </button>
+          <p style="margin-top: 0.75rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+            Creates an HTML file you can save or print
+          </p>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <footer>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <div>
+            <h3 style="color: var(--mint); margin-bottom: 0.5rem;">PLURderapolis</h3>
+            <p style="color: rgba(255,255,255,0.7);">Your partners in shine 🍑</p>
+          </div>
+          <div class="mode-toggle">
+            <button id="toggleSafe" class="btn btn-outline" aria-pressed="false">
+              <i class="fas fa-moon"></i> Sensory Safe Mode
+            </button>
+          </div>
+        </div>
+        
+        <div class="legal-disclaimer">
+          <strong>Disclaimer:</strong>
+          This guide is provided for educational and harm reduction purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. If you are experiencing a medical emergency, please call emergency services immediately. PLURderapolis is not responsible for any actions taken based on the information provided on this site. Use responsibly.
+        </div>
+      </footer>
+    </main>
   </div>
 
 <script>
-// PWA Manifest
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
-}
+// Menu Toggle for Mobile
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
 
-// Install prompt
-let deferredPrompt;
-const installPrompt = document.getElementById('installPrompt');
-const installBtn = document.getElementById('installBtn');
-const dismissInstall = document.getElementById('dismissInstall');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  setTimeout(() => {
-    installPrompt.style.display = 'block';
-  }, 3000); // Show after 3 seconds
+menuToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  menuToggle.innerHTML = sidebar.classList.contains('open') 
+    ? '<i class="fas fa-times"></i>' 
+    : '<i class="fas fa-bars"></i>';
 });
 
-installBtn.addEventListener('click', () => {
-  installPrompt.style.display = 'none';
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then((choiceResult) => {
-    deferredPrompt = null;
+// Close sidebar when clicking on a link (for mobile)
+document.querySelectorAll('.nav-item, .site-link').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 992) {
+      sidebar.classList.remove('open');
+      menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    }
   });
 });
 
-dismissInstall.addEventListener('click', () => {
-  installPrompt.style.display = 'none';
-});
-
-/* --- Landing Page Logic --- */
-const landing = document.getElementById('landing');
-const guideContent = document.getElementById('guideContent');
-const startGuided = document.getElementById('startGuided');
-const startModular = document.getElementById('startModular');
-const fab = document.getElementById('fab');
-
-// Smooth transition function
-function smoothTransition(callback) {
-  document.body.style.opacity = '0.8';
-  document.body.style.transform = 'scale(0.98)';
-  document.body.style.transition = 'all 0.3s ease';
+// Update breadcrumb based on scroll position
+function updateBreadcrumb() {
+  const sections = document.querySelectorAll('.tool-card');
+  let currentSection = sections[0];
   
-  setTimeout(() => {
-    callback();
-    setTimeout(() => {
-      document.body.style.opacity = '1';
-      document.body.style.transform = 'scale(1)';
-    }, 50);
-  }, 300);
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 100 && rect.bottom >= 100) {
+      currentSection = section;
+    }
+  });
+  
+  const sectionName = currentSection.querySelector('.tool-title').textContent;
+  document.getElementById('currentSection').textContent = sectionName;
+  
+  // Update active nav item
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('href') === `#${currentSection.id}`) {
+      item.classList.add('active');
+    }
+  });
 }
 
-startGuided.addEventListener('click', () => {
-  smoothTransition(() => {
-    landing.style.display = 'none';
-    guideContent.style.display = 'block';
-    fab.style.display = 'flex';
-    // Start guided mode after a brief delay
-    setTimeout(() => {
-      document.getElementById('guidedMode').click();
-    }, 500);
+window.addEventListener('scroll', updateBreadcrumb);
+window.addEventListener('load', updateBreadcrumb);
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 20,
+        behavior: 'smooth'
+      });
+    }
   });
 });
 
-startModular.addEventListener('click', () => {
-  smoothTransition(() => {
-    landing.style.display = 'none';
-    guideContent.style.display = 'block';
-    fab.style.display = 'flex';
-    // Start modular mode after a brief delay
+// Breathing Tool
+const breathShape = document.getElementById('breathShape');
+let breathingPaused = false;
+let breathAnimation;
+
+function initBreathing() {
+  if (breathAnimation) {
+    breathShape.style.animation = 'none';
     setTimeout(() => {
-      document.getElementById('modularMode').click();
-    }, 500);
+      breathShape.style.animation = 'breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1)';
+    }, 10);
+  }
+}
+
+document.getElementById('pauseBreathing').addEventListener('click', () => {
+  breathingPaused = true;
+  breathShape.style.animationPlayState = 'paused';
+  breathShape.textContent = 'Paused';
+});
+
+document.getElementById('resumeBreathing').addEventListener('click', () => {
+  breathingPaused = false;
+  breathShape.style.animationPlayState = 'running';
+  breathShape.textContent = 'Breathe';
+});
+
+// Initialize breathing animation
+window.addEventListener('load', initBreathing);
+
+// Grounding Tool
+const groundButtons = document.querySelectorAll('.ground-btn');
+const groundingComplete = document.getElementById('groundingComplete');
+let groundedCount = 0;
+
+groundButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('done')) return;
+    
+    btn.classList.add('done');
+    groundedCount++;
+    
+    // Add visual feedback
+    btn.style.transform = 'scale(0.98)';
+    setTimeout(() => {
+      btn.style.transform = '';
+    }, 150);
+    
+    if (groundedCount >= groundButtons.length) {
+      groundingComplete.style.display = 'block';
+      groundingComplete.style.animation = 'cardAppear 0.5s ease-out';
+    }
   });
 });
 
-// FAB functionality with bounce animation
-fab.addEventListener('click', () => {
-  fab.style.animation = 'none';
-  setTimeout(() => {
-    fab.style.animation = 'pulseGlow 0.5s';
-  }, 10);
-  document.getElementById('backup').scrollIntoView({ behavior: 'smooth' });
+document.getElementById('resetGrounding').addEventListener('click', () => {
+  groundButtons.forEach(btn => {
+    btn.classList.remove('done');
+  });
+  groundedCount = 0;
+  groundingComplete.style.display = 'none';
 });
 
-/* --- Helper & State --- */
-const sections = Array.from(document.querySelectorAll('.step-section'));
-const progressBar = document.getElementById('progressBar');
-const encouragement = document.getElementById('encouragement');
-let mantraIndex = 0;
-const mantras = [
-  "I am safe and this will pass.",
-  "This feeling is temporary — I can wait.",
-  "I can breathe. I can slow down.",
-  "I have survived this before. I will again.",
-  "Small steps. One breath at a time.",
-  "I am not my thoughts. I am the observer.",
-  "This too shall pass. Everything changes.",
-  "I am exactly where I need to be.",
-  "I release what I cannot control.",
-  "I am supported by the universe."
-];
+// Self Check-In Tool
+const checkButtons = document.querySelectorAll('[data-check]');
+checkButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('done');
+  });
+});
 
-/* --- Audio Context and Frequency Generators --- */
+// Audio Tool
 let audioContext = null;
 let currentOscillator = null;
 let currentGainNode = null;
+let currentPlaying = null;
 
 function initAudioContext() {
   if (!audioContext) {
@@ -1234,11 +1250,18 @@ function initAudioContext() {
   }
 }
 
-function createFrequencySound(type) {
+function playSound(type) {
   // Stop any currently playing sound
   stopAllAudio();
   
   initAudioContext();
+  
+  // Update UI
+  document.querySelectorAll('.audio-btn').forEach(btn => {
+    btn.classList.remove('playing');
+  });
+  event.target.classList.add('playing');
+  currentPlaying = event.target;
   
   // Create oscillator and gain node
   currentOscillator = audioContext.createOscillator();
@@ -1266,10 +1289,22 @@ function createFrequencySound(type) {
       currentOscillator.type = 'sine';
       currentOscillator.frequency.value = 500;
       break;
+    case 'rain':
+      currentOscillator.type = 'sine';
+      currentOscillator.frequency.value = 300;
+      // Add random modulation for rain effect
+      const rainLFO = audioContext.createOscillator();
+      rainLFO.frequency.value = 0.5;
+      const rainGain = audioContext.createGain();
+      rainGain.gain.value = 50;
+      rainLFO.connect(rainGain);
+      rainGain.connect(currentOscillator.frequency);
+      rainLFO.start();
+      break;
   }
   
   // Set volume
-  currentGainNode.gain.value = 0.2;
+  currentGainNode.gain.value = 0.1;
   
   // Connect and start
   currentOscillator.connect(currentGainNode);
@@ -1309,517 +1344,483 @@ function stopAllAudio() {
     currentGainNode.disconnect();
     currentGainNode = null;
   }
-  updateAudioButtons();
+  
+  // Update UI
+  document.querySelectorAll('.audio-btn').forEach(btn => {
+    btn.classList.remove('playing');
+  });
+  currentPlaying = null;
 }
 
-/* --- Enhanced Collapsible logic with smooth animations --- */
-document.querySelectorAll('section h2').forEach(header => {
-  header.addEventListener('click', () => {
-    const id = header.getAttribute('aria-controls');
-    const content = document.getElementById(id);
-    if (!content) return;
+// Audio button event listeners
+document.querySelectorAll('.audio-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const soundType = this.getAttribute('data-sound');
     
-    // Smooth close for other sections
-    document.querySelectorAll('.collapsible-content').forEach(c => {
-      if (c !== content && c.classList.contains('open')) {
-        c.style.animation = 'none';
-        setTimeout(() => {
-          c.style.animation = 'slideUp 0.3s ease';
-        }, 10);
-        
-        setTimeout(() => {
-          c.classList.remove('open');
-          c.setAttribute('aria-hidden', 'true');
-          c.previousElementSibling.classList.remove('open');
-          c.previousElementSibling.setAttribute('aria-expanded', 'false');
-          c.style.animation = '';
-        }, 280);
-      }
-    });
-    
-    // Toggle current section with smooth animation
-    if (!content.classList.contains('open')) {
-      content.classList.add('open');
-      header.classList.add('open');
-      header.setAttribute('aria-expanded', 'true');
-      content.setAttribute('aria-hidden', 'false');
-    } else {
-      content.style.animation = 'slideUp 0.3s ease';
-      setTimeout(() => {
-        content.classList.remove('open');
-        header.classList.remove('open');
-        header.setAttribute('aria-expanded', 'false');
-        content.setAttribute('aria-hidden', 'true');
-        content.style.animation = '';
-      }, 280);
-    }
-    
-    updateProgress();
-    maybeEncourage();
-    
-    // Scroll to the opened section with smooth animation
-    if (content.classList.contains('open')) {
-      setTimeout(() => {
-        header.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
-    }
-  });
-  
-  header.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') header.click();
-  });
-});
-
-// Animation for slide up
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes slideUp {
-    from { 
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      max-height: 2000px;
-    }
-    to { 
-      opacity: 0;
-      transform: translateY(-15px) scale(0.98);
-      max-height: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
-
-/* --- Start from here button --- */
-document.getElementById('startFromHere').addEventListener('click', () => {
-  document.querySelectorAll('.collapsible-content').forEach(c => {
-    if (c.classList.contains('open')) {
-      c.style.animation = 'slideUp 0.3s ease';
-      setTimeout(() => {
-        c.classList.remove('open');
-        c.setAttribute('aria-hidden', 'true');
-        c.previousElementSibling.classList.remove('open');
-        c.previousElementSibling.setAttribute('aria-expanded', 'false');
-        c.style.animation = '';
-      }, 280);
-    }
-  });
-  
-  // Open the first section (Breathing)
-  const firstSection = document.querySelector('[data-step="1"]');
-  const firstHeader = firstSection.querySelector('h2');
-  const firstContent = firstSection.querySelector('.collapsible-content');
-  
-  setTimeout(() => {
-    firstContent.classList.add('open');
-    firstHeader.classList.add('open');
-    firstHeader.setAttribute('aria-expanded', 'true');
-    firstContent.setAttribute('aria-hidden', 'false');
-    
-    updateProgress();
-    maybeEncourage();
-    
-    // Scroll to the first section
-    setTimeout(() => {
-      firstHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
-  }, 300);
-});
-
-/* --- Sensory Safe Mode --- */
-const safeBtn = document.getElementById('toggleSafe');
-safeBtn.addEventListener('click', () => {
-  const on = document.body.classList.toggle('sensory-safe');
-  safeBtn.setAttribute('aria-pressed', on);
-  safeBtn.textContent = on ? '🌙 Sensory Safe Mode (On)' : '🌙 Sensory Safe Mode';
-  // Add transition effect
-  safeBtn.style.transform = 'scale(0.95)';
-  setTimeout(() => {
-    safeBtn.style.transform = 'scale(1)';
-  }, 150);
-  // stop all audio on safe mode on
-  if (on) stopAllAudio();
-});
-
-/* --- Guided / Modular Modes --- */
-document.getElementById('guidedMode').addEventListener('click', () => {
-  // Smooth close all first
-  document.querySelectorAll('.collapsible-content').forEach(c => {
-    if (c.classList.contains('open')) {
-      c.style.animation = 'slideUp 0.3s ease';
-      setTimeout(() => {
-        c.classList.remove('open'); 
-        c.setAttribute('aria-hidden','true'); 
-        c.style.animation = '';
-      }, 280);
-    }
-  });
-  document.querySelectorAll('section h2').forEach(h => {
-    h.classList.remove('open');
-    h.setAttribute('aria-expanded','false');
-  });
-  
-  let i = 0;
-  function openStep() {
-    if (i >= sections.length) return;
-    const sec = sections[i];
-    const content = sec.querySelector('.collapsible-content');
-    const header = sec.querySelector('h2');
-    
-    setTimeout(() => {
-      content.classList.add('open');
-      content.setAttribute('aria-hidden','false');
-      header.classList.add('open');
-      header.setAttribute('aria-expanded','true');
-      
-      updateProgress();
-      maybeEncourage();
-      
-      // Scroll to the current section
-      setTimeout(() => {
-        header.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
-    }, 100);
-    
-    i++;
-    setTimeout(openStep, 4000); // 4 second pause between steps
-  }
-  setTimeout(openStep, 500);
-});
-
-document.getElementById('modularMode').addEventListener('click', () => {
-  // Smooth close all
-  document.querySelectorAll('.collapsible-content').forEach(c => {
-    if (c.classList.contains('open')) {
-      c.style.animation = 'slideUp 0.3s ease';
-      setTimeout(() => {
-        c.classList.remove('open'); 
-        c.setAttribute('aria-hidden','true'); 
-        c.style.animation = '';
-      }, 280);
-    }
-  });
-  document.querySelectorAll('section h2').forEach(h => {
-    h.classList.remove('open');
-    h.setAttribute('aria-expanded','false');
-  });
-  updateProgress();
-});
-
-/* --- Progress bar --- */
-function updateProgress() {
-  const total = sections.length;
-  const openCount = sections.filter(s => s.querySelector('.collapsible-content').classList.contains('open')).length;
-  const pct = Math.round((openCount / total) * 100);
-  progressBar.style.width = pct + '%';
-}
-
-/* --- Encouragement messages --- */
-function maybeEncourage() {
-  encouragement.style.display = 'block';
-  const msgs = [
-    "🌟 Keep going — you're doing great.",
-    "✅ Small steps. You're safe.",
-    "💛 Breathe. You got this.",
-    "✨ Nice work — keep using the tools.",
-    "🪷 You are exactly where you need to be.",
-    "🌊 This will pass like a wave.",
-    "🕊️ Peace is available in this moment."
-  ];
-  encouragement.textContent = msgs[Math.floor(Math.random() * msgs.length)];
-  setTimeout(()=> encouragement.style.display = 'none', 4000);
-}
-
-/* --- Breathing visuals - only circle remains --- */
-const breathShape = document.getElementById('breathShape');
-// Set the default to circle
-breathShape.className = 'breathing-shape';
-
-// Skip breathing button
-document.getElementById('skipBreathing').addEventListener('click', () => {
-  document.getElementById('breathing').style.animation = 'slideUp 0.3s ease';
-  setTimeout(() => {
-    document.getElementById('breathing').classList.remove('open');
-    document.querySelector('[aria-controls="breathing"]').classList.remove('open');
-    document.querySelector('[aria-controls="breathing"]').setAttribute('aria-expanded', 'false');
-    document.getElementById('breathing').style.animation = '';
-    updateProgress();
-  }, 280);
-});
-
-/* --- Grounding buttons (interactive) --- */
-const groundButtons = document.querySelectorAll('.ground-btn');
-const groundingCompleteEl = document.getElementById('groundingComplete');
-let groundedCount = 0;
-groundButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (btn.classList.contains('done')) return;
-    
-    // Add click animation
-    btn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      btn.style.transform = '';
-    }, 150);
-    
-    btn.classList.add('done');
-    groundedCount++;
-    // show textual cue
-    maybeEncourage();
-    if (groundedCount >= groundButtons.length) {
-      groundingCompleteEl.style.display = 'block';
-      groundingCompleteEl.setAttribute('aria-hidden', 'false');
-    }
-  });
-});
-
-// Alternative grounding
-document.getElementById('startAlternative').addEventListener('click', () => {
-  const alternatives = [
-    "Name 3 things you like",
-    "Name 3 favorite colors",
-    "Name 3 comforting objects",
-    "Name 3 people who care about you",
-    "Name 3 places that feel safe",
-    "Name 3 songs that calm you",
-    "Name 3 things you're grateful for"
-  ];
-  
-  let altIndex = 0;
-  const interval = setInterval(() => {
-    if (altIndex >= alternatives.length) {
-      clearInterval(interval);
-      groundingCompleteEl.style.display = 'block';
-      groundingCompleteEl.setAttribute('aria-hidden', 'false');
-      return;
-    }
-    
-    encouragement.style.display = 'block';
-    encouragement.textContent = alternatives[altIndex];
-    altIndex++;
-    
-    setTimeout(() => {
-      encouragement.style.display = 'none';
-    }, 3000);
-  }, 3500);
-});
-
-/* --- Audio controls (one plays at a time) --- */
-const audioButtons = document.querySelectorAll('.audio-btn');
-audioButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.dataset.sound;
-    if (id === 'stopAll') { 
-      stopAllAudio(); 
-      return; 
-    }
-    
-    // Check if this sound is already playing
-    if (btn.classList.contains('playing')) {
+    // If this sound is already playing, stop it
+    if (this.classList.contains('playing')) {
       stopAllAudio();
     } else {
-      // Stop any other playing audio
-      stopAllAudio();
-      // Start the selected sound
-      createFrequencySound(id);
-      btn.classList.add('playing');
+      playSound(soundType);
     }
   });
 });
 
-function updateAudioButtons() {
-  audioButtons.forEach(b => b.classList.remove('playing'));
-}
+document.getElementById('stopAllAudio').addEventListener('click', stopAllAudio);
 
-/* --- Mantra: tap to change & Next button --- */
+// Mantra Tool
+let mantraIndex = 0;
+const mantras = [
+  "I am safe and this will pass.",
+  "This feeling is temporary — I can wait.",
+  "I can breathe. I can slow down.",
+  "I have survived this before. I will again.",
+  "Small steps. One breath at a time.",
+  "I am not my thoughts. I am the observer.",
+  "This too shall pass. Everything changes.",
+  "I am exactly where I need to be.",
+  "I release what I cannot control.",
+  "I am supported by the universe."
+];
+
 const mantraText = document.getElementById('mantraText');
-const nextMantra = document.getElementById('nextMantra');
 
-function showNextMantra() {
-  mantraIndex = (mantraIndex + 1) % mantras.length;
+function showMantra(index) {
   mantraText.style.opacity = '0.5';
   mantraText.style.transform = 'translateY(10px)';
   
   setTimeout(() => {
-    mantraText.textContent = mantras[mantraIndex];
+    mantraText.textContent = mantras[index];
     mantraText.style.opacity = '1';
     mantraText.style.transform = 'translateY(0)';
     mantraText.style.transition = 'all 0.3s ease';
   }, 150);
 }
-nextMantra.addEventListener('click', showNextMantra);
-mantraText.addEventListener('click', showNextMantra);
-mantraText.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') showNextMantra(); });
 
-/* --- Skip Check-in --- */
-document.getElementById('skipCheckin').addEventListener('click', () => {
-  document.getElementById('checkin').style.animation = 'slideUp 0.3s ease';
-  setTimeout(() => {
-    document.getElementById('checkin').classList.remove('open');
-    document.querySelector('[aria-controls="checkin"]').classList.remove('open');
-    document.querySelector('[aria-controls="checkin"]').setAttribute('aria-expanded', 'false');
-    document.getElementById('checkin').style.animation = '';
-    updateProgress();
-  }, 280);
+document.getElementById('nextMantra').addEventListener('click', () => {
+  mantraIndex = (mantraIndex + 1) % mantras.length;
+  showMantra(mantraIndex);
 });
 
-/* --- Timer logic (15 minutes default) --- */
+document.getElementById('prevMantra').addEventListener('click', () => {
+  mantraIndex = (mantraIndex - 1 + mantras.length) % mantras.length;
+  showMantra(mantraIndex);
+});
+
+mantraText.addEventListener('click', () => {
+  mantraIndex = (mantraIndex + 1) % mantras.length;
+  showMantra(mantraIndex);
+});
+
+// Timer Tool
 let timer = null;
-let timeLeft = 900; // seconds
+let timeLeft = 900; // 15 minutes in seconds
 const timerDisplay = document.getElementById('timerDisplay');
-const startBtn = document.getElementById('startTimer');
-const pauseBtn = document.getElementById('pauseTimer');
-const resetBtn = document.getElementById('resetTimer');
 const timerMessage = document.getElementById('timerMessage');
-const progressMessage = document.getElementById('progressMessage');
 
 function updateTimerDisplay() {
-  const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-  const s = String(timeLeft % 60).padStart(2, '0');
-  timerDisplay.textContent = `${m}:${s}`;
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   
-  // Update messages based on time left
-  if (timeLeft <= 600 && timeLeft > 300) { // 10-5 minutes left
-    timerMessage.textContent = "You're halfway there. Keep breathing.";
-  } else if (timeLeft <= 300) { // 5 minutes or less
+  // Update message based on time left
+  if (timeLeft === 600) { // 10 minutes left
+    timerMessage.textContent = "You're about halfway there. Keep breathing.";
+  } else if (timeLeft === 300) { // 5 minutes left
     timerMessage.textContent = "Almost there. This will pass soon.";
-    progressMessage.style.display = 'block';
+  } else if (timeLeft === 0) {
+    timerMessage.textContent = "Time's up. How are you feeling now?";
   }
 }
 
-startBtn.addEventListener('click', () => {
-  if (timer) return; // already running
-  
-  // Button animation
-  startBtn.style.transform = 'scale(0.95)';
-  setTimeout(() => {
-    startBtn.style.transform = '';
-  }, 150);
+document.getElementById('startTimer').addEventListener('click', () => {
+  if (timer) return; // Already running
   
   timer = setInterval(() => {
-    if (timeLeft <= 0) { 
-      clearInterval(timer); 
-      timer = null; 
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      timer = null;
+      // Play a gentle sound or show message
       timerMessage.textContent = "Time's up. How are you feeling now?";
-      progressMessage.style.display = 'none';
-      maybeEncourage(); 
-      return; 
+      return;
     }
     timeLeft--;
     updateTimerDisplay();
   }, 1000);
+  
+  timerMessage.textContent = "Timer started. Many people find things stabilize after ~10-20 minutes";
 });
 
-pauseBtn.addEventListener('click', () => {
-  if (timer) { 
-    clearInterval(timer); 
-    timer = null; 
-    // Button animation
-    pauseBtn.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      pauseBtn.style.transform = '';
-    }, 150);
+document.getElementById('pauseTimer').addEventListener('click', () => {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+    timerMessage.textContent = "Timer paused. Resume when ready.";
   }
 });
-resetBtn.addEventListener('click', () => { 
-  clearInterval(timer); 
-  timer = null; 
-  timeLeft = 900; 
+
+document.getElementById('resetTimer').addEventListener('click', () => {
+  clearInterval(timer);
+  timer = null;
+  timeLeft = 900;
   updateTimerDisplay();
-  timerMessage.textContent = "Many people find things stabilize after ~10-20 min";
-  progressMessage.style.display = 'none';
-  
-  // Button animation
-  resetBtn.style.transform = 'scale(0.95)';
-  setTimeout(() => {
-    resetBtn.style.transform = '';
-  }, 150);
+  timerMessage.textContent = "Timer reset. Many people find things stabilize after ~10-20 minutes";
 });
 
+// Initialize timer display
 updateTimerDisplay();
 
-/* --- Back to top button --- */
-const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    backToTop.classList.add('visible');
+// Sensory Safe Mode
+const toggleSafeBtn = document.getElementById('toggleSafe');
+toggleSafeBtn.addEventListener('click', () => {
+  const isSafeMode = document.body.classList.toggle('sensory-safe');
+  toggleSafeBtn.setAttribute('aria-pressed', isSafeMode);
+  toggleSafeBtn.innerHTML = isSafeMode 
+    ? '<i class="fas fa-moon"></i> Sensory Safe Mode (On)' 
+    : '<i class="fas fa-moon"></i> Sensory Safe Mode';
+  
+  // Stop all audio when entering safe mode
+  if (isSafeMode) {
+    stopAllAudio();
+  }
+  
+  // Reduce animations in safe mode
+  if (isSafeMode) {
+    breathShape.style.animationDuration = '12s';
   } else {
-    backToTop.classList.remove('visible');
+    breathShape.style.animationDuration = '8s';
   }
 });
 
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Button animation
-  backToTop.style.transform = 'scale(0.9)';
-  setTimeout(() => {
-    backToTop.style.transform = '';
-  }, 150);
+// Save Reflections
+document.getElementById('saveReflections').addEventListener('click', () => {
+  const reflection1 = document.getElementById('reflection1').value;
+  const reflection2 = document.getElementById('reflection2').value;
+  
+  // In a real app, you would save to local storage or a server
+  // For now, we'll just show a confirmation
+  alert('Reflections saved! In a real implementation, these would be stored for your future reference.');
+  
+  // Reset the textareas
+  document.getElementById('reflection1').value = '';
+  document.getElementById('reflection2').value = '';
 });
 
-/* --- Initialize --- */
-(function init(){
-  // Set default breathing shape
-  breathShape.className = 'breathing-shape';
-  updateProgress();
-  
-  // Add ripple effect to buttons
-  document.addEventListener('click', function(e) {
-    if (e.target.matches('.mode-btn, .landing-btn, .timer-btn, .audio-btn, .mantra-next, .ground-btn, .resource-btn')) {
-      const btn = e.target;
-      const ripple = document.createElement('span');
-      const rect = btn.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height);
-      const x = e.clientX - rect.left - size / 2;
-      const y = e.clientY - rect.top - size / 2;
-      
-      ripple.style.cssText = `
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple 0.6s linear;
-        width: ${size}px;
-        height: ${size}px;
-        top: ${y}px;
-        left: ${x}px;
-        pointer-events: none;
-      `;
-      
-      btn.style.position = 'relative';
-      btn.style.overflow = 'hidden';
-      btn.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    }
-  });
-  
-  // Add ripple animation
-  const rippleStyle = document.createElement('style');
-  rippleStyle.textContent = `
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-  `;
-  document.head.appendChild(rippleStyle);
-})();
-</script>
+// Chill Zone Button
+document.getElementById('findChillZone').addEventListener('click', () => {
+  alert("At an event: Look for medical tents, 'safe spaces', or 'chill zones'. Ask staff for help finding a quiet area. If at home, find a comfortable, dimly lit room.");
+});
 
-<!-- PWA Service Worker -->
-<script>
-// Simple service worker for caching
+// Generate Cheat Sheet
+document.getElementById('generateCheatSheet').addEventListener('click', generateCheatSheet);
+document.getElementById('downloadCheatSheet').addEventListener('click', generateCheatSheet);
+
+function generateCheatSheet() {
+  const cheatSheetContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLURderapolis Bad Trip Guide Cheat Sheet</title>
+<style>
+  body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background: #f5f5f5;
+    color: #333;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  h1, h2, h3 {
+    color: #2a0040;
+  }
+  h1 {
+    border-bottom: 3px solid #00f7e0;
+    padding-bottom: 10px;
+  }
+  .section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .emergency {
+    background: #fff0f0;
+    border-left: 4px solid #ff6ec7;
+    padding: 15px;
+    margin: 20px 0;
+  }
+  .tip {
+    background: #f0fff9;
+    border-left: 4px solid #00f7e0;
+    padding: 15px;
+    margin: 15px 0;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .header img {
+    max-width: 150px;
+    margin-bottom: 10px;
+  }
+  @media print {
+    body {
+      background: white;
+    }
+    .container {
+      box-shadow: none;
+    }
+    .no-print {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🍑 PLURderapolis Bad Trip Guide Cheat Sheet</h1>
+      <p><strong>Quick reference for difficult psychedelic experiences</strong></p>
+      <p class="no-print">Generated on ${new Date().toLocaleDateString()}</p>
+    </div>
+    
+    <div class="section">
+      <h2>🌬️ Immediate Breathing Technique (4-7-8)</h2>
+      <div class="tip">
+        <ol>
+          <li>Inhale quietly through your nose for 4 seconds</li>
+          <li>Hold your breath for 7 seconds</li>
+          <li>Exhale completely through your mouth for 8 seconds</li>
+          <li>Repeat 4-5 times</li>
+        </ol>
+        <p><em>This activates your parasympathetic nervous system.</em></p>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>🪨 5-4-3-2-1 Grounding Method</h2>
+      <div class="tip">
+        <p>Engage your senses to return to the present:</p>
+        <ul>
+          <li><strong>5</strong> things you can SEE</li>
+          <li><strong>4</strong> things you can TOUCH or FEEL</li>
+          <li><strong>3</strong> things you can HEAR</li>
+          <li><strong>2</strong> things you can SMELL</li>
+          <li><strong>1</strong> thing you can TASTE</li>
+        </ul>
+        <p><em>Alternative: Name 3 favorite colors, 3 comforting objects, or 3 people who care about you.</em></p>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>🧍 Self Check-In Checklist</h2>
+      <ul>
+        <li>✅ <strong>Hydrate:</strong> Sip water slowly (not too fast)</li>
+        <li>✅ <strong>Comfort:</strong> Adjust clothing, remove anything tight</li>
+        <li>✅ <strong>Position:</strong> Sit or lie down in a safe place</li>
+        <li>✅ <strong>Connection:</strong> Reach out to a trusted person if possible</li>
+        <li>✅ <strong>Temperature:</strong> Adjust if too hot or cold</li>
+        <li>✅ <strong>Environment:</strong> Dim lights, reduce noise if possible</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h2>🧠 Calming Mantras</h2>
+      <div class="tip">
+        <p>Repeat these phrases slowly:</p>
+        <ul>
+          <li>"I am safe and this will pass."</li>
+          <li>"This feeling is temporary — I can wait."</li>
+          <li>"I can breathe. I can slow down."</li>
+          <li>"I have survived this before. I will again."</li>
+          <li>"I am not my thoughts. I am the observer."</li>
+          <li>"This too shall pass. Everything changes."</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>🎵 At Music Events/Shows</h2>
+      <ul>
+        <li><strong>Hydrate:</strong> Sip water slowly and often</li>
+        <li><strong>Chill Zone:</strong> Find designated quiet spaces</li>
+        <li><strong>Buddy System:</strong> Stay with someone you trust</li>
+        <li><strong>Sensory Protection:</strong> Earplugs, sunglasses</li>
+        <li><strong>Know Staff:</strong> Locate medical/security teams</li>
+        <li><strong>No Mixing:</strong> Avoid combining substances</li>
+        <li><strong>Eat Light:</strong> Simple carbs or fruit if possible</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h2>⏳ The 20-Minute Rule</h2>
+      <div class="tip">
+        <p>Most intense moments pass within 10-20 minutes.</p>
+        <p><strong>Set a timer for 15 minutes</strong> and focus on breathing.</p>
+        <p>Remind yourself: "I just need to get through these next few minutes."</p>
+      </div>
+    </div>
+    
+    <div class="emergency">
+      <h2>🚨 Emergency Resources</h2>
+      <p><strong>If you need immediate human support:</strong></p>
+      <ul>
+        <li><strong>TripSit:</strong> tripsit.me (live chat & resources)</li>
+        <li><strong>Fireside Project:</strong> firesideproject.org (peer support line)</li>
+        <li><strong>Never Use Alone:</strong> neverusealone.com (phone check-in service)</li>
+        <li><strong>PLURderapolis Panic Button:</strong> plurderapolis.org/panic.html</li>
+        <li><strong>Medical Emergency:</strong> Call 911 or local emergency services</li>
+      </ul>
+      <p><strong>Remember:</strong> You are not alone. Reaching out is a sign of strength.</p>
+    </div>
+    
+    <div class="section">
+      <h2>💭 Aftercare & Integration</h2>
+      <p>After the experience passes:</p>
+      <ul>
+        <li>Rest and hydrate</li>
+        <li>Eat nourishing, simple food</li>
+        <li>Talk to someone you trust about the experience</li>
+        <li>Write down insights or what helped</li>
+        <li>Be gentle with yourself for the next 24-48 hours</li>
+      </ul>
+    </div>
+    
+    <div class="section no-print">
+      <h2>📱 Full Interactive Guide</h2>
+      <p>For the complete interactive guide with breathing animations, soothing sounds, and more tools, visit:</p>
+      <p style="text-align: center; font-size: 1.2rem;"><strong>plurderapolis.org/bad-trip-guide</strong></p>
+    </div>
+    
+    <div class="section" style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee;">
+      <p><strong>PLURderapolis — Your partners in shine 🍑</strong></p>
+      <p><em>Harm reduction education & community support</em></p>
+      <p style="font-size: 0.9rem; color: #666; margin-top: 20px;">
+        This guide is for harm reduction purposes only. Not medical advice. 
+        If experiencing a medical emergency, call emergency services immediately.
+      </p>
+    </div>
+  </div>
+  
+  <div class="no-print" style="text-align: center; margin-top: 20px;">
+    <button onclick="window.print()" style="padding: 10px 20px; background: #00f7e0; color: #111; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+      Print This Cheat Sheet
+    </button>
+    <p style="margin-top: 10px; color: #666;">Save as PDF: Print → Select "Save as PDF" as printer</p>
+  </div>
+</body>
+</html>
+`;
+
+  // Create a Blob with the HTML content
+  const blob = new Blob([cheatSheetContent], { type: 'text/html' });
+  
+  // Create a temporary link to download the file
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'PLURderapolis_Bad_Trip_Guide_Cheat_Sheet.html';
+  
+  // Trigger download
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  // Show confirmation
+  alert('Cheat sheet downloaded! Open the file to view and print it.');
+}
+
+// Initialize audio context on first user interaction
+document.addEventListener('click', function initAudioOnInteraction() {
+  if (!audioContext) {
+    initAudioContext();
+  }
+  document.removeEventListener('click', initAudioOnInteraction);
+}, { once: true });
+
+// PWA Support
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-      console.log('ServiceWorker registration successful');
-    }, function(err) {
-      console.log('ServiceWorker registration failed: ', err);
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => {
+      console.log('Service Worker registration failed: ', err);
     });
   });
 }
+
+// Install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // You could show an install button here if desired
+});
+
+// Add ripple effect to buttons
+document.addEventListener('click', function(e) {
+  if (e.target.matches('.btn, .ground-btn, .audio-btn, .nav-item')) {
+    const btn = e.target;
+    const ripple = document.createElement('span');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      width: ${size}px;
+      height: ${size}px;
+      top: ${y}px;
+      left: ${x}px;
+      pointer-events: none;
+    `;
+    
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.appendChild(ripple);
+    
+    setTimeout(() => {
+      ripple.remove();
+    }, 600);
+  }
+});
+
+// Add ripple animation CSS
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(rippleStyle);
+
+// Initialize everything when page loads
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('PLURderapolis Bad Trip Guide loaded');
+  
+  // Set initial active section
+  updateBreadcrumb();
+});
 </script>
 </body>
 </html>
