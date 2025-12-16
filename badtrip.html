@@ -21,170 +21,80 @@
     --light-purple:#4a0066;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --sidebar-width: 280px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+    --section-spacing: 1.5rem;
   }
   
-  /* Fade in entire page */
-  @keyframes pageFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
+  /* Reset and base styles */
   * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
   
-  html, body {
-    height: 100%;
+  html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
   
-  body{
+  body {
     font-family: 'Roboto', sans-serif;
-    background: var(--bg); 
+    background: var(--bg);
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
-    background: radial-gradient(ellipse at top, #2a0040 0%, #1c0028 100%);
-    animation: pageFadeIn 0.8s ease-out;
-  }
-  
-  h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .container {
-    display: flex;
     min-height: 100vh;
-    position: relative;
+    background: radial-gradient(ellipse at top, #2a0040 0%, #1c0028 100%);
+    padding-top: 60px; /* Space for fixed header */
   }
   
-  /* Main Title */
+  /* Header */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(28, 0, 40, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
   .main-title {
-    font-size: 1.8rem; 
-    color: var(--mint); 
-    text-shadow: 0 0 8px rgba(0, 247, 224, 0.6);
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--soft-purple);
-  }
-  
-  .main-title a {
-    color: inherit;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    color: var(--mint);
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    transition: var(--transition-smooth);
+    gap: 0.5rem;
+    font-weight: 700;
   }
   
-  .main-title a:hover {
+  .main-title:hover {
     color: #fff;
-    text-shadow: 0 0 12px rgba(0, 247, 224, 0.8);
   }
   
-  /* Sidebar Navigation */
-  .sidebar {
-    width: var(--sidebar-width);
-    background: var(--card);
-    padding: 1.5rem;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
-    z-index: 100;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
-  }
-  
-  .sidebar-header {
-    margin-bottom: 2rem;
-  }
-  
-  .site-links {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  
-  .site-links h3 {
-    font-size: 1rem;
-    color: var(--mint);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .site-link {
-    display: block;
-    color: var(--text);
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: var(--transition-smooth);
-  }
-  
-  .site-link:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateX(5px);
-    color: var(--mint);
-  }
-  
-  .nav-category {
-    color: var(--accent);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 1.5rem 0 0.75rem;
-    padding-left: 0.5rem;
-  }
-  
-  .nav-item {
-    display: block;
-    padding: 0.75rem 1rem;
-    color: var(--text);
-    text-decoration: none;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-    transition: var(--transition-smooth);
-    background: rgba(255,255,255,0.03);
-    border-left: 3px solid transparent;
-  }
-  
-  .nav-item:hover, .nav-item.active {
-    background: rgba(255,255,255,0.08);
-    border-left-color: var(--mint);
-    color: var(--mint);
-    transform: translateX(5px);
-  }
-  
-  .nav-item i {
-    width: 24px;
-    text-align: center;
-    margin-right: 0.5rem;
-  }
-  
-  /* Mobile Menu Toggle */
+  /* Mobile menu toggle */
   .menu-toggle {
     display: none;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 1000;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
     background: var(--accent);
     color: #111;
     border: none;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 12px rgba(255,110,199,0.4);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: var(--transition-bounce);
   }
@@ -193,70 +103,190 @@
     transform: scale(1.1);
   }
   
-  /* Main Content */
-  .main-content {
-    flex: 1;
-    margin-left: var(--sidebar-width);
-    padding: 2rem;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  
-  /* Tool Grid Layout */
-  .tool-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .tool-card {
-    background: var(--card);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    transition: var(--transition-smooth);
-    border: 1px solid rgba(255,255,255,0.05);
-  }
-  
-  .tool-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-    border-color: var(--soft-purple);
-  }
-  
-  .tool-header {
+  /* Navigation */
+  .nav-links {
     display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    gap: 1rem;
+    list-style: none;
   }
   
-  .tool-icon {
-    font-size: 1.8rem;
-    margin-right: 1rem;
+  .nav-link {
+    color: var(--text);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: var(--transition-smooth);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
     color: var(--mint);
   }
   
-  .tool-title {
+  /* Main container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+  }
+  
+  .sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .sidebar::-webkit-scrollbar-thumb {
+    background: var(--mint);
+    border-radius: 2px;
+  }
+  
+  .section-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .section-btn {
+    background: transparent;
+    color: var(--text);
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.95rem;
+    position: relative;
+  }
+  
+  .section-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+    color: var(--mint);
+  }
+  
+  .section-btn.active {
+    background: rgba(0, 247, 224, 0.1);
+    color: var(--mint);
+    border-left: 3px solid var(--mint);
+    padding-left: calc(1rem - 3px);
+  }
+  
+  .section-btn i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  
+  /* Main content */
+  .main-content {
+    min-height: 100vh;
+  }
+  
+  .section {
+    background: var(--card);
+    border-radius: 12px;
+    margin-bottom: var(--section-spacing);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: sectionFadeIn 0.5s ease-out forwards;
+  }
+  
+  @keyframes sectionFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Section header (collapsible) */
+  .section-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, var(--soft-purple), var(--card));
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition-smooth);
+  }
+  
+  .section-header:hover {
+    background: linear-gradient(135deg, var(--light-purple), var(--soft-purple));
+  }
+  
+  .section-header h2 {
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
     color: var(--text);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
   
-  .tool-desc {
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
+  .section-icon {
+    font-size: 1.2rem;
+    color: var(--mint);
   }
   
-  /* Breathing Tool */
+  .toggle-icon {
+    color: var(--mint);
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .section.open .toggle-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Section content */
+  .section-content {
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+  }
+  
+  .section.open .section-content {
+    padding: 1.5rem;
+    max-height: 5000px;
+  }
+  
+  /* Tool-specific styles */
+  /* Breathing */
   .breathing-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
-    margin: 0 auto;
+    padding: 1rem 0;
   }
   
   .breathing-shape {
@@ -264,7 +294,7 @@
     height: 150px;
     border-radius: 50%;
     background: radial-gradient(circle, var(--accent) 0%, var(--soft-purple) 70%);
-    box-shadow: 0 0 40px rgba(255,110,199,0.8);
+    box-shadow: 0 0 40px rgba(255, 110, 199, 0.8);
     animation: breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
@@ -272,7 +302,6 @@
     color: #fff;
     font-weight: 700;
     font-size: 1.2rem;
-    transition: var(--transition-smooth);
   }
   
   @keyframes breathe {
@@ -282,86 +311,77 @@
     100% { transform: scale(1) rotate(0deg); opacity: 0.7; box-shadow: 0 0 30px rgba(255,110,199,0.6); }
   }
   
-  .breathing-controls {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  /* Grounding Tool */
-  .ground-grid {
+  /* Grounding */
+  .grounding-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
   }
   
-  .ground-btn {
+  .grounding-item {
     background: var(--soft-purple);
-    color: var(--text);
-    padding: 1rem 1.2rem;
     border-radius: 10px;
-    border: none;
+    padding: 1.25rem;
     cursor: pointer;
-    font-weight: 500;
-    text-align: left;
+    transition: var(--transition-smooth);
+    border: 2px solid transparent;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    transition: var(--transition-smooth);
-    border-left: 4px solid var(--mint);
+    gap: 1rem;
   }
   
-  .ground-btn:hover {
+  .grounding-item:hover {
     background: var(--light-purple);
-    transform: translateX(5px);
+    transform: translateY(-3px);
+    border-color: var(--mint);
   }
   
-  .ground-btn.done {
+  .grounding-item.completed {
     background: rgba(0, 247, 224, 0.1);
-    color: var(--mint);
-    text-decoration: line-through;
+    border-color: var(--mint);
   }
   
-  .ground-btn.done:before {
-    content: '✓';
+  .grounding-number {
+    background: var(--mint);
+    color: #111;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
-    color: var(--mint);
+    font-size: 1.1rem;
+    flex-shrink: 0;
   }
   
-  .grounding-complete {
-    text-align: center;
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: rgba(0, 247, 224, 0.1);
-    border-radius: 10px;
-    color: var(--mint);
-    font-weight: 600;
-    display: none;
+  .grounding-text {
+    font-weight: 500;
   }
   
-  /* Audio Tool */
-  .audio-controls {
+  /* Audio */
+  .audio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
     margin-top: 1rem;
   }
   
   .audio-btn {
-    padding: 0.9rem 0.5rem;
-    border-radius: 10px;
-    border: none;
     background: var(--soft-purple);
+    border: none;
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
     color: var(--text);
     cursor: pointer;
-    font-weight: 500;
     transition: var(--transition-smooth);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
   }
   
   .audio-btn:hover {
@@ -369,75 +389,96 @@
     transform: translateY(-3px);
   }
   
-  .audio-btn.playing {
+  .audio-btn.active {
     background: var(--accent);
     color: #111;
-    box-shadow: 0 0 15px rgba(255, 110, 199, 0.4);
+    box-shadow: 0 0 20px rgba(255, 110, 199, 0.4);
   }
   
   .audio-btn i {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
   
-  /* Mantra Tool */
-  .mantra-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+  .audio-label {
+    font-weight: 500;
+    font-size: 0.95rem;
   }
   
-  .mantra-text {
-    font-weight: 600;
-    color: var(--mint);
-    font-size: 1.4rem;
-    text-align: center;
-    padding: 2rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    cursor: pointer;
-    width: 100%;
-    transition: var(--transition-smooth);
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.5;
-  }
-  
-  .mantra-text:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: scale(1.02);
-  }
-  
-  .mantra-controls {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-  
-  /* Timer Tool */
+  /* Timer */
   .timer-display {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: 800;
     color: var(--accent);
     text-align: center;
     margin: 1.5rem 0;
-    text-shadow: 0 0 20px rgba(255, 110, 199, 0.8);
     font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 0 20px rgba(255, 110, 199, 0.4);
   }
   
   .timer-controls {
     display: flex;
-    gap: 0.8rem;
+    gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  
+  /* Mantras */
+  .mantra-container {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .mantra-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mint);
+    margin-bottom: 2rem;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(0, 247, 224, 0.05);
+    border-radius: 12px;
+    border: 2px solid rgba(0, 247, 224, 0.2);
+    line-height: 1.5;
+  }
+  
+  /* Resource links */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .resource-link {
+    display: block;
+    background: var(--soft-purple);
+    color: var(--text);
+    text-decoration: none;
+    padding: 1.25rem;
+    border-radius: 10px;
+    transition: var(--transition-smooth);
+    border: 2px solid transparent;
+  }
+  
+  .resource-link:hover {
+    background: var(--light-purple);
+    transform: translateY(-3px);
+    border-color: var(--mint);
+  }
+  
+  .resource-link i {
+    color: var(--mint);
+    margin-right: 0.5rem;
   }
   
   /* Buttons */
   .btn {
-    padding: 0.8rem 1.5rem;
-    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
     border: none;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
@@ -445,32 +486,30 @@
     transition: var(--transition-bounce);
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 0.5rem;
+    font-size: 0.95rem;
   }
   
   .btn-primary {
     background: var(--mint);
     color: #111;
-    box-shadow: 0 4px 12px rgba(0, 247, 224, 0.3);
   }
   
   .btn-primary:hover {
     background: #00d6c7;
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 247, 224, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 247, 224, 0.3);
   }
   
   .btn-secondary {
     background: var(--accent);
     color: #111;
-    box-shadow: 0 4px 12px rgba(255, 110, 199, 0.3);
   }
   
   .btn-secondary:hover {
     background: #ff49b2;
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(255, 110, 199, 0.4);
+    box-shadow: 0 8px 20px rgba(255, 110, 199, 0.3);
   }
   
   .btn-outline {
@@ -484,50 +523,36 @@
     transform: translateY(-3px);
   }
   
-  /* Cheat Sheet Section */
-  .cheat-sheet {
-    margin-top: 3rem;
-    padding: 2rem;
-    background: rgba(255,255,255,0.03);
-    border-radius: 12px;
-    border: 1px solid rgba(0, 247, 224, 0.2);
-  }
-  
-  .cheat-sheet h2 {
+  /* Progress indicator */
+  .progress-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--card);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    font-weight: bold;
     color: var(--mint);
-    margin-bottom: 1rem;
+    border: 2px solid var(--mint);
   }
   
-  .cheat-sheet-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .cheat-item {
-    background: rgba(0,0,0,0.2);
-    padding: 1.2rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--accent);
-  }
-  
-  .cheat-item h4 {
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Mode Toggle */
+  /* Mode toggle */
   .mode-toggle {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 99;
+    bottom: 80px;
+    right: 20px;
+    z-index: 100;
   }
   
   .mode-toggle .btn {
-    border-radius: 50px;
-    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    padding: 0.75rem 1.25rem;
     font-size: 0.9rem;
   }
   
@@ -538,6 +563,7 @@
     border-top: 1px solid rgba(255,255,255,0.1);
     color: #aaa;
     font-size: 0.9rem;
+    grid-column: 1 / -1;
   }
   
   .legal-disclaimer {
@@ -548,7 +574,6 @@
     background: rgba(0,0,0,0.2);
     border-radius: 8px;
     line-height: 1.4;
-    text-align: left;
   }
   
   .legal-disclaimer strong {
@@ -574,33 +599,62 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 992px) {
-    .sidebar {
-      transform: translateX(-100%);
-      width: 280px;
-    }
-    
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    
-    .main-content {
-      margin-left: 0;
-      padding: 1rem;
-    }
-    
-    .menu-toggle {
-      display: block;
-    }
-    
-    .tool-grid {
+  @media (max-width: 1024px) {
+    .container {
       grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .sidebar {
+      position: static;
+      height: auto;
+      top: 0;
+    }
+    
+    body {
+      padding-top: 80px;
     }
   }
   
   @media (max-width: 768px) {
-    .main-title {
-      font-size: 1.5rem;
+    .header-content {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .menu-toggle {
+      display: block;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+    
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    .nav-links.show {
+      display: flex;
+    }
+    
+    .nav-link {
+      padding: 0.75rem 1rem;
+    }
+    
+    .section-header h2 {
+      font-size: 1.1rem;
+    }
+    
+    .grounding-grid,
+    .audio-grid,
+    .resource-grid {
+      grid-template-columns: 1fr;
     }
     
     .timer-display {
@@ -612,337 +666,379 @@
       height: 120px;
     }
     
-    .audio-controls {
-      grid-template-columns: 1fr 1fr;
-    }
-    
     .mantra-text {
       font-size: 1.2rem;
-      padding: 1.5rem;
+      padding: 1rem;
+    }
+    
+    .section {
+      margin-bottom: 1rem;
+    }
+    
+    .section.open .section-content {
+      padding: 1rem;
     }
   }
   
   @media (max-width: 480px) {
-    .main-content {
-      padding: 1rem 0.75rem;
+    .header {
+      padding: 0.75rem;
     }
     
-    .tool-card {
-      padding: 1.2rem;
+    .main-title {
+      font-size: 1.2rem;
+    }
+    
+    .container {
+      padding: 0.75rem;
+    }
+    
+    .timer-controls {
+      flex-direction: column;
     }
     
     .btn {
-      padding: 0.7rem 1.2rem;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .mode-toggle {
+      bottom: 70px;
+      right: 10px;
+    }
+    
+    .progress-indicator {
+      bottom: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
       font-size: 0.9rem;
     }
-    
-    .timer-controls, .breathing-controls, .mantra-controls {
-      flex-direction: column;
-      width: 100%;
-    }
-    
-    .timer-controls .btn, .breathing-controls .btn, .mantra-controls .btn {
-      width: 100%;
-    }
   }
   
-  /* Smooth scrolling anchor offset */
-  :target {
-    scroll-margin-top: 2rem;
-  }
-  
-  /* Animation for tool cards */
-  @keyframes cardAppear {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .tool-card {
-    animation: cardAppear 0.5s ease-out forwards;
-  }
-  
-  .tool-card:nth-child(1) { animation-delay: 0.1s; }
-  .tool-card:nth-child(2) { animation-delay: 0.2s; }
-  .tool-card:nth-child(3) { animation-delay: 0.3s; }
-  .tool-card:nth-child(4) { animation-delay: 0.4s; }
-  .tool-card:nth-child(5) { animation-delay: 0.5s; }
-  .tool-card:nth-child(6) { animation-delay: 0.6s; }
-  .tool-card:nth-child(7) { animation-delay: 0.7s; }
-  .tool-card:nth-child(8) { animation-delay: 0.8s; }
-  .tool-card:nth-child(9) { animation-delay: 0.9s; }
+  /* Animation delays for sections */
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+  .section:nth-child(5) { animation-delay: 0.5s; }
+  .section:nth-child(6) { animation-delay: 0.6s; }
+  .section:nth-child(7) { animation-delay: 0.7s; }
+  .section:nth-child(8) { animation-delay: 0.8s; }
+  .section:nth-child(9) { animation-delay: 0.9s; }
+  .section:nth-child(10) { animation-delay: 1s; }
 </style>
 </head>
 <body>
-  <!-- Mobile Menu Toggle -->
-  <button class="menu-toggle" id="menuToggle">
-    <i class="fas fa-bars"></i>
-  </button>
-  
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <a href="https://plurderapolis.org" class="main-title">
+        <i class="fas fa-peach"></i>
+        PLURderapolis Bad Trip Guide
+      </a>
+      
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#breathing" class="nav-link">Breathing</a></li>
+        <li><a href="#grounding" class="nav-link">Grounding</a></li>
+        <li><a href="#sounds" class="nav-link">Sounds</a></li>
+        <li><a href="#checkin" class="nav-link">Check-In</a></li>
+        <li><a href="#shows" class="nav-link">At Shows</a></li>
+        <li><a href="#timer" class="nav-link">Timer</a></li>
+        <li><a href="#mantras" class="nav-link">Mantras</a></li>
+        <li><a href="#aftercare" class="nav-link">Aftercare</a></li>
+        <li><a href="#resources" class="nav-link">Resources</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Container -->
   <div class="container">
     <!-- Sidebar Navigation -->
-    <nav class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <h1 class="main-title">
-          <a href="https://plurderapolis.org">
-            <i class="fas fa-peach"></i>
-            Bad Trip Guide
-          </a>
-        </h1>
-        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1rem;">
-          A safe space for grounding during difficult psychedelic experiences
-        </p>
-      </div>
-      
-      <div class="nav-category">Immediate Help</div>
-      <a href="#breathing" class="nav-item active">
-        <i class="fas fa-wind"></i> Breathing
-      </a>
-      <a href="#grounding" class="nav-item">
-        <i class="fas fa-mountain"></i> Grounding
-      </a>
-      <a href="#sounds" class="nav-item">
-        <i class="fas fa-music"></i> Soothing Sounds
-      </a>
-      
-      <div class="nav-category">Self-Care</div>
-      <a href="#checkin" class="nav-item">
-        <i class="fas fa-heart"></i> Self Check-In
-      </a>
-      <a href="#mantras" class="nav-item">
-        <i class="fas fa-brain"></i> Mantras
-      </a>
-      <a href="#timer" class="nav-item">
-        <i class="fas fa-hourglass-half"></i> Calm Timer
-      </a>
-      
-      <div class="nav-category">Event Safety</div>
-      <a href="#shows" class="nav-item">
-        <i class="fas fa-headphones-alt"></i> At Shows
-      </a>
-      
-      <div class="nav-category">Aftercare</div>
-      <a href="#aftercare" class="nav-item">
-        <i class="fas fa-comment-medical"></i> Reflection
-      </a>
-      <a href="#resources" class="nav-item">
-        <i class="fas fa-life-ring"></i> Emergency Resources
-      </a>
-      
-      <div class="site-links">
-        <h3>More from PLURderapolis</h3>
-        <a href="https://plurderapolis.org" class="site-link">
-          <i class="fas fa-home"></i> Home Page
-        </a>
-        <a href="https://plurderapolis.org/panic.html" class="site-link">
-          <i class="fas fa-exclamation-triangle"></i> Panic Button
-        </a>
-        <a href="https://plurderapolis.org/emergency.html" class="site-link">
-          <i class="fas fa-ambulance"></i> Emergency Help
-        </a>
-        <a href="https://plurderapolis.org/harm-reduction.html" class="site-link">
-          <i class="fas fa-shield-alt"></i> Harm Reduction
-        </a>
-        <a href="https://plurderapolis.org/community.html" class="site-link">
-          <i class="fas fa-users"></i> Community
-        </a>
-      </div>
-      
-      <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <button id="downloadCheatSheet" class="btn btn-outline" style="width: 100%;">
-          <i class="fas fa-download"></i> Download Cheat Sheet
+    <aside class="sidebar">
+      <div class="section-nav">
+        <button class="section-btn active" data-target="breathing">
+          <i class="fas fa-wind"></i>
+          Breathing Exercise
         </button>
+        <button class="section-btn" data-target="grounding">
+          <i class="fas fa-mountain"></i>
+          5-4-3-2-1 Grounding
+        </button>
+        <button class="section-btn" data-target="sounds">
+          <i class="fas fa-music"></i>
+          Soothing Sounds
+        </button>
+        <button class="section-btn" data-target="checkin">
+          <i class="fas fa-heartbeat"></i>
+          Self Check-In
+        </button>
+        <button class="section-btn" data-target="shows">
+          <i class="fas fa-headphones"></i>
+          Tripping at Shows
+        </button>
+        <button class="section-btn" data-target="timer">
+          <i class="fas fa-hourglass-half"></i>
+          Calm Timer
+        </button>
+        <button class="section-btn" data-target="mantras">
+          <i class="fas fa-brain"></i>
+          Calming Mantras
+        </button>
+        <button class="section-btn" data-target="aftercare">
+          <i class="fas fa-comment-medical"></i>
+          Reflection & Aftercare
+        </button>
+        <button class="section-btn" data-target="resources">
+          <i class="fas fa-life-ring"></i>
+          Emergency Resources
+        </button>
+        
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+          <h3 style="color: var(--mint); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">Quick Links</h3>
+          <a href="https://plurderapolis.org" class="section-btn" style="text-decoration: none; color: inherit;">
+            <i class="fas fa-home"></i>
+            PLURderapolis Home
+          </a>
+          <a href="https://plurderapolis.org/panic.html" class="section-btn" style="text-decoration: none; color: inherit;">
+            <i class="fas fa-exclamation-triangle"></i>
+            Panic Button
+          </a>
+          <a href="https://plurderapolis.org/emergency.html" class="section-btn" style="text-decoration: none; color: inherit;">
+            <i class="fas fa-ambulance"></i>
+            Emergency Help
+          </a>
+          <button id="downloadCheat" class="section-btn" style="background: var(--mint); color: #111; margin-top: 0.5rem;">
+            <i class="fas fa-download"></i>
+            Download Cheat Sheet
+          </button>
+        </div>
       </div>
-    </nav>
-    
+    </aside>
+
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Header with current location -->
-      <div style="margin-bottom: 2rem;">
-        <div id="breadcrumb" style="font-size: 0.9rem; color: var(--mint); margin-bottom: 0.5rem;">
-          <a href="#breathing" style="color: var(--mint); text-decoration: none;">Bad Trip Guide</a> 
-          <span style="margin: 0 0.5rem;">/</span> 
-          <span id="currentSection">Breathing Exercise</span>
+      <!-- Breathing Section -->
+      <section id="breathing" class="section open">
+        <div class="section-header">
+          <h2><i class="fas fa-wind section-icon"></i> Breathing Exercise</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-        <h1 style="color: var(--text); font-size: 2rem;">Bad Trip Grounding Tools</h1>
-        <p style="color: rgba(255,255,255,0.8); margin-top: 0.5rem;">
-          You are safe. These tools are designed to help you through difficult moments. 
-          Use what feels right for you.
-        </p>
-      </div>
-      
-      <!-- Tool Grid -->
-      <div class="tool-grid">
-        <!-- Breathing Tool -->
-        <div class="tool-card" id="breathing">
-          <div class="tool-header">
-            <div class="tool-icon">💨</div>
-            <h2 class="tool-title">Breathing Exercise</h2>
-          </div>
-          <p class="tool-desc">
-            Follow the circle with your breath. Inhale as it expands, exhale as it contracts. 
-            This helps regulate your nervous system.
-          </p>
+        <div class="section-content">
           <div class="breathing-container">
             <div id="breathShape" class="breathing-shape">Breathe</div>
-            <div style="text-align:center;font-weight:600;color:var(--mint); font-size:1.1rem;">
-              Breathe with the circle — inhale as it expands, exhale as it shrinks.
-            </div>
-            <div class="breathing-controls">
-              <button id="pauseBreathing" class="btn btn-primary">
+            <p style="text-align: center; color: var(--mint); font-weight: 600; max-width: 500px; margin: 0 auto;">
+              Follow the circle with your breath. Inhale as it expands, exhale as it contracts. This helps regulate your nervous system.
+            </p>
+            <div class="timer-controls">
+              <button id="pauseBreath" class="btn btn-primary">
                 <i class="fas fa-pause"></i> Pause
               </button>
-              <button id="resumeBreathing" class="btn btn-secondary">
+              <button id="resumeBreath" class="btn btn-secondary">
                 <i class="fas fa-play"></i> Resume
+              </button>
+              <button id="stopBreath" class="btn btn-outline">
+                <i class="fas fa-stop"></i> Stop
               </button>
             </div>
           </div>
         </div>
-        
-        <!-- Grounding Tool -->
-        <div class="tool-card" id="grounding">
-          <div class="tool-header">
-            <div class="tool-icon">🪨</div>
-            <h2 class="tool-title">5-4-3-2-1 Grounding</h2>
+      </section>
+
+      <!-- Grounding Section -->
+      <section id="grounding" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-mountain section-icon"></i> 5-4-3-2-1 Grounding</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">Engage your senses to bring yourself to the present moment. Click each item as you notice it.</p>
+          
+          <div class="grounding-grid">
+            <div class="grounding-item" data-sense="see">
+              <div class="grounding-number">5</div>
+              <div class="grounding-text">Things you can SEE</div>
+            </div>
+            <div class="grounding-item" data-sense="touch">
+              <div class="grounding-number">4</div>
+              <div class="grounding-text">Things you can TOUCH</div>
+            </div>
+            <div class="grounding-item" data-sense="hear">
+              <div class="grounding-number">3</div>
+              <div class="grounding-text">Things you can HEAR</div>
+            </div>
+            <div class="grounding-item" data-sense="smell">
+              <div class="grounding-number">2</div>
+              <div class="grounding-text">Things you can SMELL</div>
+            </div>
+            <div class="grounding-item" data-sense="taste">
+              <div class="grounding-number">1</div>
+              <div class="grounding-text">Thing you can TASTE</div>
+            </div>
           </div>
-          <p class="tool-desc">
-            Engage your senses to bring yourself to the present moment. 
-            Click each item as you name it.
-          </p>
-          <div class="ground-grid">
-            <button class="ground-btn" data-count="5">
-              <i class="fas fa-eye"></i> 5 things you can see
-            </button>
-            <button class="ground-btn" data-count="4">
-              <i class="fas fa-hand-paper"></i> 4 things you can touch
-            </button>
-            <button class="ground-btn" data-count="3">
-              <i class="fas fa-assistive-listening-systems"></i> 3 things you can hear
-            </button>
-            <button class="ground-btn" data-count="2">
-              <i class="fas fa-wind"></i> 2 things you can smell
-            </button>
-            <button class="ground-btn" data-count="1">
-              <i class="fas fa-lemon"></i> 1 thing you can taste
-            </button>
+          
+          <div id="groundingComplete" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: rgba(0, 247, 224, 0.1); border-radius: 10px; text-align: center;">
+            <h3 style="color: var(--mint); margin-bottom: 0.5rem;">✅ Grounding Complete!</h3>
+            <p>You're anchored in the present moment. Well done.</p>
           </div>
-          <div class="grounding-complete" id="groundingComplete">
-            ✅ Grounding complete — you're anchored in the present.
-          </div>
-          <div style="margin-top: 1rem; text-align: center;">
+          
+          <div style="text-align: center; margin-top: 1.5rem;">
             <button id="resetGrounding" class="btn btn-outline">
               <i class="fas fa-redo"></i> Reset Grounding
             </button>
           </div>
         </div>
-        
-        <!-- Soothing Sounds -->
-        <div class="tool-card" id="sounds">
-          <div class="tool-header">
-            <div class="tool-icon">🎶</div>
-            <h2 class="tool-title">Soothing Sounds</h2>
-          </div>
-          <p class="tool-desc">
-            Calm auditory environments to help soothe anxiety. 
-            Only one sound plays at a time.
-          </p>
-          <div class="audio-controls">
+      </section>
+
+      <!-- Sounds Section -->
+      <section id="sounds" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-music section-icon"></i> Soothing Sounds</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">Calm auditory environments to help soothe anxiety. Only one sound plays at a time.</p>
+          
+          <div class="audio-grid">
             <button class="audio-btn" data-sound="whiteNoise">
               <i class="fas fa-volume-up"></i>
-              <span>White Noise</span>
+              <span class="audio-label">White Noise</span>
             </button>
             <button class="audio-btn" data-sound="ocean">
               <i class="fas fa-water"></i>
-              <span>Ocean Waves</span>
+              <span class="audio-label">Ocean Waves</span>
             </button>
             <button class="audio-btn" data-sound="forest">
               <i class="fas fa-tree"></i>
-              <span>Forest & Birds</span>
+              <span class="audio-label">Forest & Birds</span>
             </button>
             <button class="audio-btn" data-sound="rain">
               <i class="fas fa-cloud-rain"></i>
-              <span>Gentle Rain</span>
+              <span class="audio-label">Gentle Rain</span>
+            </button>
+            <button class="audio-btn" data-sound="heartbeat">
+              <i class="fas fa-heartbeat"></i>
+              <span class="audio-label">Calm Heartbeat</span>
+            </button>
+            <button class="audio-btn" data-sound="brownNoise">
+              <i class="fas fa-sliders-h"></i>
+              <span class="audio-label">Brown Noise</span>
             </button>
           </div>
-          <div style="margin-top: 1rem; text-align: center;">
+          
+          <div style="text-align: center; margin-top: 1.5rem;">
             <button id="stopAllAudio" class="btn btn-outline">
-              <i class="fas fa-volume-mute"></i> Mute All Sounds
+              <i class="fas fa-volume-mute"></i> Stop All Sounds
             </button>
-          </div>
-        </div>
-        
-        <!-- Self Check-In -->
-        <div class="tool-card" id="checkin">
-          <div class="tool-header">
-            <div class="tool-icon">🧍</div>
-            <h2 class="tool-title">Self Check-In</h2>
-          </div>
-          <p class="tool-desc">
-            A quick checklist to assess your basic needs and comfort.
-          </p>
-          <div class="ground-grid">
-            <button class="ground-btn" data-check="hydration">
-              <i class="fas fa-tint"></i> Hydration: Sip water slowly
-            </button>
-            <button class="ground-btn" data-check="comfort">
-              <i class="fas fa-tshirt"></i> Comfort: Adjust clothing
-            </button>
-            <button class="ground-btn" data-check="position">
-              <i class="fas fa-couch"></i> Position: Sit or lie down
-            </button>
-            <button class="ground-btn" data-check="connection">
-              <i class="fas fa-user-friends"></i> Connection: Reach out if needed
-            </button>
-            <button class="ground-btn" data-check="temperature">
-              <i class="fas fa-thermometer-half"></i> Temperature: Adjust if needed
-            </button>
-          </div>
-          <div style="margin-top: 1rem; font-style: italic; color: var(--mint); text-align: center;">
-            If you can't do any of these, that's okay. Just breathe.
-          </div>
-        </div>
-        
-        <!-- Mantras -->
-        <div class="tool-card" id="mantras">
-          <div class="tool-header">
-            <div class="tool-icon">🧠</div>
-            <h2 class="tool-title">Calming Mantras</h2>
-          </div>
-          <p class="tool-desc">
-            Repeating affirmations can help shift your mindset. 
-            Tap the mantra to change it.
-          </p>
-          <div class="mantra-box">
-            <div id="mantraText" class="mantra-text">
-              I am safe and this will pass.
-            </div>
-            <div class="mantra-controls">
-              <button id="prevMantra" class="btn btn-outline">
-                <i class="fas fa-chevron-left"></i> Previous
-              </button>
-              <button id="nextMantra" class="btn btn-secondary">
-                Next <i class="fas fa-chevron-right"></i>
-              </button>
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+              <i class="fas fa-info-circle"></i> Adjust volume using your device controls
             </div>
           </div>
         </div>
-        
-        <!-- Timer -->
-        <div class="tool-card" id="timer">
-          <div class="tool-header">
-            <div class="tool-icon">⏳</div>
-            <h2 class="tool-title">Calm Timer</h2>
+      </section>
+
+      <!-- Check-In Section -->
+      <section id="checkin" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-heartbeat section-icon"></i> Self Check-In</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">A quick checklist to assess your basic needs and comfort.</p>
+          
+          <div class="grounding-grid">
+            <div class="grounding-item" data-check="hydration">
+              <div class="grounding-number"><i class="fas fa-tint"></i></div>
+              <div class="grounding-text">Hydration: Sip water slowly</div>
+            </div>
+            <div class="grounding-item" data-check="comfort">
+              <div class="grounding-number"><i class="fas fa-tshirt"></i></div>
+              <div class="grounding-text">Comfort: Adjust clothing if needed</div>
+            </div>
+            <div class="grounding-item" data-check="position">
+              <div class="grounding-number"><i class="fas fa-couch"></i></div>
+              <div class="grounding-text">Position: Sit or lie down safely</div>
+            </div>
+            <div class="grounding-item" data-check="temperature">
+              <div class="grounding-number"><i class="fas fa-thermometer-half"></i></div>
+              <div class="grounding-text">Temperature: Adjust if too hot/cold</div>
+            </div>
+            <div class="grounding-item" data-check="connection">
+              <div class="grounding-number"><i class="fas fa-user-friends"></i></div>
+              <div class="grounding-text">Connection: Reach out if possible</div>
+            </div>
+            <div class="grounding-item" data-check="breathing">
+              <div class="grounding-number"><i class="fas fa-lungs"></i></div>
+              <div class="grounding-text">Breathing: Take 3 deep breaths</div>
+            </div>
           </div>
-          <p class="tool-desc">
-            Intense moments often pass within 10-20 minutes. 
-            Use this timer to wait it out safely.
-          </p>
-          <div id="timerDisplay" class="timer-display">15:00</div>
+          
+          <div style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(255, 110, 199, 0.1); border-radius: 10px;">
+            <h3 style="color: var(--accent); margin-bottom: 0.5rem;"><i class="fas fa-lightbulb"></i> Remember</h3>
+            <p style="margin: 0;">If you can't do any of these right now, that's okay. Just focus on your breathing and know that this will pass.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- At Shows Section -->
+      <section id="shows" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-headphones section-icon"></i> Tripping at Shows</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">Safety tips for managing difficult experiences at music events.</p>
+          
+          <div style="display: grid; gap: 1rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--mint);">
+              <h4 style="color: var(--mint); margin-bottom: 0.5rem;"><i class="fas fa-tint"></i> Hydration</h4>
+              <p style="margin: 0;">Sip water slowly and often. Avoid chugging or sugary drinks.</p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--accent);">
+              <h4 style="color: var(--accent); margin-bottom: 0.5rem;"><i class="fas fa-map-marker-alt"></i> Environment</h4>
+              <p style="margin: 0;">Step outside or find a chill zone if overwhelmed. Quiet spaces help.</p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--mint);">
+              <h4 style="color: var(--mint); margin-bottom: 0.5rem;"><i class="fas fa-user-friends"></i> Buddy System</h4>
+              <p style="margin: 0;">Stay with someone you trust. Check in with each other regularly.</p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--accent);">
+              <h4 style="color: var(--accent); margin-bottom: 0.5rem;"><i class="fas fa-ban"></i> Avoid Mixing</h4>
+              <p style="margin: 0;">Don't mix substances or drink lots of alcohol. Give your body breaks.</p>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 10px; border-left: 4px solid var(--mint);">
+              <h4 style="color: var(--mint); margin-bottom: 0.5rem;"><i class="fas fa-tools"></i> Useful Tools</h4>
+              <p style="margin: 0;">Sunglasses, earplugs, water bottle, and breathing exercises help.</p>
+            </div>
+          </div>
+          
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button id="findHelp" class="btn btn-secondary">
+              <i class="fas fa-hands-helping"></i> I Need Help at an Event
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timer Section -->
+      <section id="timer" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-hourglass-half section-icon"></i> Calm Timer</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="text-align: center; margin-bottom: 1.5rem;">Intense moments often pass within 10-20 minutes. Use this timer to wait it out safely.</p>
+          
+          <div class="timer-display" id="timerDisplay">15:00</div>
+          
           <div class="timer-controls">
             <button id="startTimer" class="btn btn-primary">
               <i class="fas fa-play"></i> Start
@@ -953,145 +1049,145 @@
             <button id="resetTimer" class="btn btn-secondary">
               <i class="fas fa-redo"></i> Reset
             </button>
-          </div>
-          <div id="timerMessage" style="text-align:center; margin-top:1.5rem; color:var(--mint);">
-            Many people find things stabilize after ~10-20 minutes
-          </div>
-        </div>
-        
-        <!-- At Shows -->
-        <div class="tool-card" id="shows">
-          <div class="tool-header">
-            <div class="tool-icon">🎵</div>
-            <h2 class="tool-title">Tripping at Shows</h2>
-          </div>
-          <p class="tool-desc">
-            Safety tips for managing difficult experiences at music events.
-          </p>
-          <ul style="padding-left: 1.2rem; margin-bottom: 1.5rem;">
-            <li style="margin-bottom: 0.75rem;"><strong>Hydrate:</strong> Sip water slowly and often</li>
-            <li style="margin-bottom: 0.75rem;"><strong>Chill Zone:</strong> Find a quiet space if overwhelmed</li>
-            <li style="margin-bottom: 0.75rem;"><strong>Buddy System:</strong> Stay with someone you trust</li>
-            <li style="margin-bottom: 0.75rem;"><strong>Earplugs/Sunglasses:</strong> Reduce sensory input</li>
-            <li style="margin-bottom: 0.75rem;"><strong>Know Staff:</strong> Locate medical/security teams</li>
-            <li><strong>No Mixing:</strong> Avoid combining substances</li>
-          </ul>
-          <div style="text-align: center; margin-top: 1rem;">
-            <button id="findChillZone" class="btn btn-outline">
-              <i class="fas fa-map-marker-alt"></i> I need a chill zone
+            <button id="quick5" class="btn btn-outline">
+              <i class="fas fa-bolt"></i> 5 Min
+            </button>
+            <button id="quick20" class="btn btn-outline">
+              <i class="fas fa-clock"></i> 20 Min
             </button>
           </div>
+          
+          <div id="timerMessage" style="text-align: center; margin-top: 1.5rem; color: var(--mint); font-weight: 500;">
+            Many people find things stabilize after ~10-20 minutes
+          </div>
+          
+          <div style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(0, 247, 224, 0.1); border-radius: 10px;">
+            <h4 style="color: var(--mint); margin-bottom: 0.5rem;"><i class="fas fa-lightbulb"></i> While You Wait</h4>
+            <p style="margin: 0;">Focus on your breathing. Remind yourself: "I just need to get through the next few minutes."</p>
+          </div>
         </div>
-        
-        <!-- Aftercare -->
-        <div class="tool-card" id="aftercare">
-          <div class="tool-header">
-            <div class="tool-icon">💭</div>
-            <h2 class="tool-title">Reflection & Aftercare</h2>
+      </section>
+
+      <!-- Mantras Section -->
+      <section id="mantras" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-brain section-icon"></i> Calming Mantras</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <div class="mantra-container">
+            <div id="mantraText" class="mantra-text">
+              I am safe and this will pass.
+            </div>
+            
+            <div class="timer-controls">
+              <button id="prevMantra" class="btn btn-outline">
+                <i class="fas fa-chevron-left"></i> Previous
+              </button>
+              <button id="nextMantra" class="btn btn-secondary">
+                Next <i class="fas fa-chevron-right"></i>
+              </button>
+              <button id="speakMantra" class="btn btn-primary">
+                <i class="fas fa-volume-up"></i> Speak
+              </button>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+              <p style="text-align: center; color: rgba(255,255,255,0.7); font-size: 0.95rem;">
+                <i class="fas fa-info-circle"></i> Repeat the mantra slowly in your mind or aloud. Tap to change.
+              </p>
+            </div>
           </div>
-          <p class="tool-desc">
-            After the experience passes, reflection can help integrate insights.
-          </p>
+        </div>
+      </section>
+
+      <!-- Aftercare Section -->
+      <section id="aftercare" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-comment-medical section-icon"></i> Reflection & Aftercare</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">After the experience passes, reflection can help integrate insights.</p>
+          
           <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: var(--mint); margin-bottom: 0.5rem;">What helped during this experience?</h4>
+            <h4 style="color: var(--mint); margin-bottom: 0.75rem;">What helped during this experience?</h4>
             <textarea id="reflection1" placeholder="Jot down what worked for you..." 
-              style="width:100%; min-height:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); padding:0.75rem; font-family:'Roboto', sans-serif;"></textarea>
+              style="width:100%; min-height:100px; padding:1rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); font-family:'Roboto', sans-serif; resize:vertical;"></textarea>
           </div>
-          <div>
-            <h4 style="color: var(--mint); margin-bottom: 0.5rem;">What would I try next time?</h4>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: var(--mint); margin-bottom: 0.75rem;">What would I try next time?</h4>
             <textarea id="reflection2" placeholder="Note any insights or changes..." 
-              style="width:100%; min-height:80px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); padding:0.75rem; font-family:'Roboto', sans-serif;"></textarea>
+              style="width:100%; min-height:100px; padding:1rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text); font-family:'Roboto', sans-serif; resize:vertical;"></textarea>
           </div>
-          <div style="margin-top: 1.5rem; text-align: center;">
-            <button id="saveReflections" class="btn btn-secondary">
+          
+          <div style="background: rgba(255, 110, 199, 0.1); padding: 1.25rem; border-radius: 10px; margin-top: 1.5rem;">
+            <h4 style="color: var(--accent); margin-bottom: 0.5rem;"><i class="fas fa-heart"></i> Self-Care After</h4>
+            <ul style="padding-left: 1.25rem; margin: 0;">
+              <li style="margin-bottom: 0.5rem;">Rest and hydrate</li>
+              <li style="margin-bottom: 0.5rem;">Eat nourishing, simple food</li>
+              <li style="margin-bottom: 0.5rem;">Talk to someone you trust</li>
+              <li>Be gentle with yourself for 24-48 hours</li>
+            </ul>
+          </div>
+          
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button id="saveReflection" class="btn btn-secondary">
               <i class="fas fa-save"></i> Save Reflections
             </button>
           </div>
         </div>
-        
-        <!-- Emergency Resources -->
-        <div class="tool-card" id="resources">
-          <div class="tool-header">
-            <div class="tool-icon">📞</div>
-            <h2 class="tool-title">Emergency Resources</h2>
-          </div>
-          <p class="tool-desc">
-            If you need human support right now, these resources are available.
-          </p>
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <a href="https://tripsit.me/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
-              <i class="fas fa-comments"></i> TripSit Live Chat
-            </a>
-            <a href="https://firesideproject.org/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
-              <i class="fas fa-phone-alt"></i> Fireside Project
-            </a>
-            <a href="https://neverusealone.com/" target="_blank" class="btn btn-outline" style="text-align: center; text-decoration: none;">
-              <i class="fas fa-user-check"></i> Never Use Alone
-            </a>
-            <a href="https://plurderapolis.org/panic.html" class="btn btn-secondary" style="text-align: center; text-decoration: none;">
-              <i class="fas fa-exclamation-triangle"></i> Panic Button
-            </a>
-          </div>
-          <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,110,199,0.1); border-radius: 8px; text-align: center;">
-            <strong>Medical Emergency?</strong> Call 911 or local emergency services immediately.
-          </div>
+      </section>
+
+      <!-- Resources Section -->
+      <section id="resources" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-life-ring section-icon"></i> Emergency Resources</h2>
+          <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
-      </div>
-      
-      <!-- Cheat Sheet Section -->
-      <div class="cheat-sheet">
-        <h2><i class="fas fa-file-download"></i> Bad Trip Guide Cheat Sheet</h2>
-        <p>Download a summary of all the tools on this page for offline use or quick reference.</p>
-        
-        <div class="cheat-sheet-content">
-          <div class="cheat-item">
-            <h4>Breathing (4-7-8)</h4>
-            <p>Inhale 4 sec, hold 7 sec, exhale 8 sec. Repeat 5x.</p>
+        <div class="section-content">
+          <p style="margin-bottom: 1.5rem;">If you need human support right now, these resources are available:</p>
+          
+          <div class="resource-grid">
+            <a href="https://tripsit.me/" target="_blank" class="resource-link">
+              <i class="fas fa-comments"></i> TripSit — Live Chat & Resources
+            </a>
+            <a href="https://firesideproject.org/" target="_blank" class="resource-link">
+              <i class="fas fa-phone-alt"></i> Fireside Project — Support Line
+            </a>
+            <a href="https://neverusealone.com/" target="_blank" class="resource-link">
+              <i class="fas fa-user-check"></i> Never Use Alone — Phone Check
+            </a>
+            <a href="https://plurderapolis.org/panic.html" class="resource-link">
+              <i class="fas fa-exclamation-triangle"></i> Panic Button (PLURderapolis)
+            </a>
+            <a href="https://plurderapolis.org/emergency.html" class="resource-link">
+              <i class="fas fa-ambulance"></i> Emergency Help (PLURderapolis)
+            </a>
+            <a href="https://plurderapolis.org" class="resource-link">
+              <i class="fas fa-home"></i> PLURderapolis Home
+            </a>
           </div>
-          <div class="cheat-item">
-            <h4>5-4-3-2-1 Grounding</h4>
-            <p>5 things you see, 4 feel, 3 hear, 2 smell, 1 taste.</p>
+          
+          <div style="background: rgba(255, 50, 50, 0.1); padding: 1.25rem; border-radius: 10px; margin-top: 1.5rem; border: 2px solid rgba(255, 50, 50, 0.3);">
+            <h4 style="color: #ff6b6b; margin-bottom: 0.5rem;"><i class="fas fa-exclamation-circle"></i> Medical Emergency</h4>
+            <p style="margin: 0;">If you or someone else is experiencing a medical emergency, call 911 or your local emergency services immediately.</p>
           </div>
-          <div class="cheat-item">
-            <h4>Self Check-In</h4>
-            <p>Hydrate, comfort, position, connection, temperature.</p>
-          </div>
-          <div class="cheat-item">
-            <h4>Key Mantras</h4>
-            <p>"This will pass." "I am safe." "I am not my thoughts."</p>
-          </div>
-          <div class="cheat-item">
-            <h4>At Shows</h4>
-            <p>Find chill zone, buddy system, hydrate, ear protection.</p>
-          </div>
-          <div class="cheat-item">
-            <h4>Emergency Contacts</h4>
-            <p>TripSit, Fireside Project, Never Use Alone, 911.</p>
-          </div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 2rem;">
-          <button id="generateCheatSheet" class="btn btn-primary">
-            <i class="fas fa-file-pdf"></i> Generate & Download Cheat Sheet
-          </button>
-          <p style="margin-top: 0.75rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-            Creates an HTML file you can save or print
-          </p>
-        </div>
-      </div>
-      
-      <!-- Footer -->
-      <footer>
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-          <div>
-            <h3 style="color: var(--mint); margin-bottom: 0.5rem;">PLURderapolis</h3>
-            <p style="color: rgba(255,255,255,0.7);">Your partners in shine 🍑</p>
-          </div>
-          <div class="mode-toggle">
-            <button id="toggleSafe" class="btn btn-outline" aria-pressed="false">
-              <i class="fas fa-moon"></i> Sensory Safe Mode
+          
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button id="imOk" class="btn btn-primary">
+              <i class="fas fa-smile"></i> I'm Feeling Better Now
             </button>
           </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <h3 style="color: var(--mint); margin-bottom: 0.5rem;">PLURderapolis</h3>
+          <p style="color: rgba(255,255,255,0.7);">Your partners in shine 🍑</p>
         </div>
         
         <div class="legal-disclaimer">
@@ -1102,274 +1198,30 @@
     </main>
   </div>
 
+  <!-- Mode Toggle -->
+  <div class="mode-toggle">
+    <button id="toggleSafe" class="btn btn-outline">
+      <i class="fas fa-moon"></i> Sensory Safe Mode
+    </button>
+  </div>
+
+  <!-- Progress Indicator -->
+  <div class="progress-indicator" id="progressIndicator">
+    1/9
+  </div>
+
 <script>
-// Menu Toggle for Mobile
-const menuToggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('sidebar');
-
-menuToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-  menuToggle.innerHTML = sidebar.classList.contains('open') 
-    ? '<i class="fas fa-times"></i>' 
-    : '<i class="fas fa-bars"></i>';
-});
-
-// Close sidebar when clicking on a link (for mobile)
-document.querySelectorAll('.nav-item, .site-link').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 992) {
-      sidebar.classList.remove('open');
-      menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    }
-  });
-});
-
-// Update breadcrumb based on scroll position
-function updateBreadcrumb() {
-  const sections = document.querySelectorAll('.tool-card');
-  let currentSection = sections[0];
-  
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
-    if (rect.top <= 100 && rect.bottom >= 100) {
-      currentSection = section;
-    }
-  });
-  
-  const sectionName = currentSection.querySelector('.tool-title').textContent;
-  document.getElementById('currentSection').textContent = sectionName;
-  
-  // Update active nav item
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.classList.remove('active');
-    if (item.getAttribute('href') === `#${currentSection.id}`) {
-      item.classList.add('active');
-    }
-  });
-}
-
-window.addEventListener('scroll', updateBreadcrumb);
-window.addEventListener('load', updateBreadcrumb);
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href');
-    if (targetId === '#') return;
-    
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 20,
-        behavior: 'smooth'
-      });
-    }
-  });
-});
-
-// Breathing Tool
-const breathShape = document.getElementById('breathShape');
-let breathingPaused = false;
-let breathAnimation;
-
-function initBreathing() {
-  if (breathAnimation) {
-    breathShape.style.animation = 'none';
-    setTimeout(() => {
-      breathShape.style.animation = 'breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1)';
-    }, 10);
-  }
-}
-
-document.getElementById('pauseBreathing').addEventListener('click', () => {
-  breathingPaused = true;
-  breathShape.style.animationPlayState = 'paused';
-  breathShape.textContent = 'Paused';
-});
-
-document.getElementById('resumeBreathing').addEventListener('click', () => {
-  breathingPaused = false;
-  breathShape.style.animationPlayState = 'running';
-  breathShape.textContent = 'Breathe';
-});
-
-// Initialize breathing animation
-window.addEventListener('load', initBreathing);
-
-// Grounding Tool
-const groundButtons = document.querySelectorAll('.ground-btn');
-const groundingComplete = document.getElementById('groundingComplete');
-let groundedCount = 0;
-
-groundButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (btn.classList.contains('done')) return;
-    
-    btn.classList.add('done');
-    groundedCount++;
-    
-    // Add visual feedback
-    btn.style.transform = 'scale(0.98)';
-    setTimeout(() => {
-      btn.style.transform = '';
-    }, 150);
-    
-    if (groundedCount >= groundButtons.length) {
-      groundingComplete.style.display = 'block';
-      groundingComplete.style.animation = 'cardAppear 0.5s ease-out';
-    }
-  });
-});
-
-document.getElementById('resetGrounding').addEventListener('click', () => {
-  groundButtons.forEach(btn => {
-    btn.classList.remove('done');
-  });
-  groundedCount = 0;
-  groundingComplete.style.display = 'none';
-});
-
-// Self Check-In Tool
-const checkButtons = document.querySelectorAll('[data-check]');
-checkButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('done');
-  });
-});
-
-// Audio Tool
+// Initialize variables
+let currentSection = 'breathing';
 let audioContext = null;
-let currentOscillator = null;
-let currentGainNode = null;
-let currentPlaying = null;
-
-function initAudioContext() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-}
-
-function playSound(type) {
-  // Stop any currently playing sound
-  stopAllAudio();
-  
-  initAudioContext();
-  
-  // Update UI
-  document.querySelectorAll('.audio-btn').forEach(btn => {
-    btn.classList.remove('playing');
-  });
-  event.target.classList.add('playing');
-  currentPlaying = event.target;
-  
-  // Create oscillator and gain node
-  currentOscillator = audioContext.createOscillator();
-  currentGainNode = audioContext.createGain();
-  
-  // Set frequency and type based on the selected sound
-  switch(type) {
-    case 'whiteNoise':
-      // White noise is created with a buffer of random values
-      createWhiteNoise();
-      return;
-    case 'ocean':
-      currentOscillator.type = 'sine';
-      currentOscillator.frequency.value = 110; // Low frequency for ocean-like sound
-      // Add modulation for wave effect
-      const lfo = audioContext.createOscillator();
-      lfo.frequency.value = 0.2; // Slow modulation for wave effect
-      const lfoGain = audioContext.createGain();
-      lfoGain.gain.value = 20; // Modulation depth
-      lfo.connect(lfoGain);
-      lfoGain.connect(currentOscillator.frequency);
-      lfo.start();
-      break;
-    case 'forest':
-      currentOscillator.type = 'sine';
-      currentOscillator.frequency.value = 500;
-      break;
-    case 'rain':
-      currentOscillator.type = 'sine';
-      currentOscillator.frequency.value = 300;
-      // Add random modulation for rain effect
-      const rainLFO = audioContext.createOscillator();
-      rainLFO.frequency.value = 0.5;
-      const rainGain = audioContext.createGain();
-      rainGain.gain.value = 50;
-      rainLFO.connect(rainGain);
-      rainGain.connect(currentOscillator.frequency);
-      rainLFO.start();
-      break;
-  }
-  
-  // Set volume
-  currentGainNode.gain.value = 0.1;
-  
-  // Connect and start
-  currentOscillator.connect(currentGainNode);
-  currentGainNode.connect(audioContext.destination);
-  currentOscillator.start();
-}
-
-function createWhiteNoise() {
-  const bufferSize = 2 * audioContext.sampleRate;
-  const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  
-  currentOscillator = audioContext.createBufferSource();
-  currentOscillator.buffer = noiseBuffer;
-  currentOscillator.loop = true;
-  currentGainNode = audioContext.createGain();
-  currentGainNode.gain.value = 0.05;
-  
-  currentOscillator.connect(currentGainNode);
-  currentGainNode.connect(audioContext.destination);
-  currentOscillator.start();
-}
-
-function stopAllAudio() {
-  if (currentOscillator) {
-    try {
-      currentOscillator.stop();
-      currentOscillator.disconnect();
-    } catch(e) {}
-    currentOscillator = null;
-  }
-  if (currentGainNode) {
-    currentGainNode.disconnect();
-    currentGainNode = null;
-  }
-  
-  // Update UI
-  document.querySelectorAll('.audio-btn').forEach(btn => {
-    btn.classList.remove('playing');
-  });
-  currentPlaying = null;
-}
-
-// Audio button event listeners
-document.querySelectorAll('.audio-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const soundType = this.getAttribute('data-sound');
-    
-    // If this sound is already playing, stop it
-    if (this.classList.contains('playing')) {
-      stopAllAudio();
-    } else {
-      playSound(soundType);
-    }
-  });
-});
-
-document.getElementById('stopAllAudio').addEventListener('click', stopAllAudio);
-
-// Mantra Tool
+let currentSound = null;
+let timerInterval = null;
+let timeLeft = 900; // 15 minutes in seconds
 let mantraIndex = 0;
+let speechSynthesis = window.speechSynthesis;
+let breathingAnimation = null;
+
+// Mantras array
 const mantras = [
   "I am safe and this will pass.",
   "This feeling is temporary — I can wait.",
@@ -1383,444 +1235,861 @@ const mantras = [
   "I am supported by the universe."
 ];
 
-const mantraText = document.getElementById('mantraText');
+// Section order for progress tracking
+const sectionOrder = [
+  'breathing', 'grounding', 'sounds', 'checkin', 
+  'shows', 'timer', 'mantras', 'aftercare', 'resources'
+];
 
-function showMantra(index) {
-  mantraText.style.opacity = '0.5';
-  mantraText.style.transform = 'translateY(10px)';
-  
-  setTimeout(() => {
-    mantraText.textContent = mantras[index];
-    mantraText.style.opacity = '1';
-    mantraText.style.transform = 'translateY(0)';
-    mantraText.style.transition = 'all 0.3s ease';
-  }, 150);
-}
-
-document.getElementById('nextMantra').addEventListener('click', () => {
-  mantraIndex = (mantraIndex + 1) % mantras.length;
-  showMantra(mantraIndex);
+// Initialize page
+document.addEventListener('DOMContentLoaded', () => {
+  initMenu();
+  initSections();
+  initBreathing();
+  initGrounding();
+  initAudio();
+  initTimer();
+  initMantras();
+  initEventListeners();
+  updateProgressIndicator();
 });
 
-document.getElementById('prevMantra').addEventListener('click', () => {
-  mantraIndex = (mantraIndex - 1 + mantras.length) % mantras.length;
-  showMantra(mantraIndex);
-});
-
-mantraText.addEventListener('click', () => {
-  mantraIndex = (mantraIndex + 1) % mantras.length;
-  showMantra(mantraIndex);
-});
-
-// Timer Tool
-let timer = null;
-let timeLeft = 900; // 15 minutes in seconds
-const timerDisplay = document.getElementById('timerDisplay');
-const timerMessage = document.getElementById('timerMessage');
-
-function updateTimerDisplay() {
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+// Mobile menu toggle
+function initMenu() {
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
   
-  // Update message based on time left
-  if (timeLeft === 600) { // 10 minutes left
-    timerMessage.textContent = "You're about halfway there. Keep breathing.";
-  } else if (timeLeft === 300) { // 5 minutes left
-    timerMessage.textContent = "Almost there. This will pass soon.";
-  } else if (timeLeft === 0) {
-    timerMessage.textContent = "Time's up. How are you feeling now?";
-  }
-}
-
-document.getElementById('startTimer').addEventListener('click', () => {
-  if (timer) return; // Already running
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    menuToggle.innerHTML = navLinks.classList.contains('show') 
+      ? '<i class="fas fa-times"></i>' 
+      : '<i class="fas fa-bars"></i>';
+  });
   
-  timer = setInterval(() => {
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      timer = null;
-      // Play a gentle sound or show message
-      timerMessage.textContent = "Time's up. How are you feeling now?";
-      return;
-    }
-    timeLeft--;
-    updateTimerDisplay();
-  }, 1000);
-  
-  timerMessage.textContent = "Timer started. Many people find things stabilize after ~10-20 minutes";
-});
-
-document.getElementById('pauseTimer').addEventListener('click', () => {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-    timerMessage.textContent = "Timer paused. Resume when ready.";
-  }
-});
-
-document.getElementById('resetTimer').addEventListener('click', () => {
-  clearInterval(timer);
-  timer = null;
-  timeLeft = 900;
-  updateTimerDisplay();
-  timerMessage.textContent = "Timer reset. Many people find things stabilize after ~10-20 minutes";
-});
-
-// Initialize timer display
-updateTimerDisplay();
-
-// Sensory Safe Mode
-const toggleSafeBtn = document.getElementById('toggleSafe');
-toggleSafeBtn.addEventListener('click', () => {
-  const isSafeMode = document.body.classList.toggle('sensory-safe');
-  toggleSafeBtn.setAttribute('aria-pressed', isSafeMode);
-  toggleSafeBtn.innerHTML = isSafeMode 
-    ? '<i class="fas fa-moon"></i> Sensory Safe Mode (On)' 
-    : '<i class="fas fa-moon"></i> Sensory Safe Mode';
-  
-  // Stop all audio when entering safe mode
-  if (isSafeMode) {
-    stopAllAudio();
-  }
-  
-  // Reduce animations in safe mode
-  if (isSafeMode) {
-    breathShape.style.animationDuration = '12s';
-  } else {
-    breathShape.style.animationDuration = '8s';
-  }
-});
-
-// Save Reflections
-document.getElementById('saveReflections').addEventListener('click', () => {
-  const reflection1 = document.getElementById('reflection1').value;
-  const reflection2 = document.getElementById('reflection2').value;
-  
-  // In a real app, you would save to local storage or a server
-  // For now, we'll just show a confirmation
-  alert('Reflections saved! In a real implementation, these would be stored for your future reference.');
-  
-  // Reset the textareas
-  document.getElementById('reflection1').value = '';
-  document.getElementById('reflection2').value = '';
-});
-
-// Chill Zone Button
-document.getElementById('findChillZone').addEventListener('click', () => {
-  alert("At an event: Look for medical tents, 'safe spaces', or 'chill zones'. Ask staff for help finding a quiet area. If at home, find a comfortable, dimly lit room.");
-});
-
-// Generate Cheat Sheet
-document.getElementById('generateCheatSheet').addEventListener('click', generateCheatSheet);
-document.getElementById('downloadCheatSheet').addEventListener('click', generateCheatSheet);
-
-function generateCheatSheet() {
-  const cheatSheetContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLURderapolis Bad Trip Guide Cheat Sheet</title>
-<style>
-  body {
-    font-family: 'Helvetica', 'Arial', sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    background: #f5f5f5;
-    color: #333;
-  }
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  h1, h2, h3 {
-    color: #2a0040;
-  }
-  h1 {
-    border-bottom: 3px solid #00f7e0;
-    padding-bottom: 10px;
-  }
-  .section {
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  .emergency {
-    background: #fff0f0;
-    border-left: 4px solid #ff6ec7;
-    padding: 15px;
-    margin: 20px 0;
-  }
-  .tip {
-    background: #f0fff9;
-    border-left: 4px solid #00f7e0;
-    padding: 15px;
-    margin: 15px 0;
-  }
-  ul {
-    padding-left: 20px;
-  }
-  li {
-    margin-bottom: 8px;
-  }
-  .header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .header img {
-    max-width: 150px;
-    margin-bottom: 10px;
-  }
-  @media print {
-    body {
-      background: white;
-    }
-    .container {
-      box-shadow: none;
-    }
-    .no-print {
-      display: none;
-    }
-  }
-</style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>🍑 PLURderapolis Bad Trip Guide Cheat Sheet</h1>
-      <p><strong>Quick reference for difficult psychedelic experiences</strong></p>
-      <p class="no-print">Generated on ${new Date().toLocaleDateString()}</p>
-    </div>
-    
-    <div class="section">
-      <h2>🌬️ Immediate Breathing Technique (4-7-8)</h2>
-      <div class="tip">
-        <ol>
-          <li>Inhale quietly through your nose for 4 seconds</li>
-          <li>Hold your breath for 7 seconds</li>
-          <li>Exhale completely through your mouth for 8 seconds</li>
-          <li>Repeat 4-5 times</li>
-        </ol>
-        <p><em>This activates your parasympathetic nervous system.</em></p>
-      </div>
-    </div>
-    
-    <div class="section">
-      <h2>🪨 5-4-3-2-1 Grounding Method</h2>
-      <div class="tip">
-        <p>Engage your senses to return to the present:</p>
-        <ul>
-          <li><strong>5</strong> things you can SEE</li>
-          <li><strong>4</strong> things you can TOUCH or FEEL</li>
-          <li><strong>3</strong> things you can HEAR</li>
-          <li><strong>2</strong> things you can SMELL</li>
-          <li><strong>1</strong> thing you can TASTE</li>
-        </ul>
-        <p><em>Alternative: Name 3 favorite colors, 3 comforting objects, or 3 people who care about you.</em></p>
-      </div>
-    </div>
-    
-    <div class="section">
-      <h2>🧍 Self Check-In Checklist</h2>
-      <ul>
-        <li>✅ <strong>Hydrate:</strong> Sip water slowly (not too fast)</li>
-        <li>✅ <strong>Comfort:</strong> Adjust clothing, remove anything tight</li>
-        <li>✅ <strong>Position:</strong> Sit or lie down in a safe place</li>
-        <li>✅ <strong>Connection:</strong> Reach out to a trusted person if possible</li>
-        <li>✅ <strong>Temperature:</strong> Adjust if too hot or cold</li>
-        <li>✅ <strong>Environment:</strong> Dim lights, reduce noise if possible</li>
-      </ul>
-    </div>
-    
-    <div class="section">
-      <h2>🧠 Calming Mantras</h2>
-      <div class="tip">
-        <p>Repeat these phrases slowly:</p>
-        <ul>
-          <li>"I am safe and this will pass."</li>
-          <li>"This feeling is temporary — I can wait."</li>
-          <li>"I can breathe. I can slow down."</li>
-          <li>"I have survived this before. I will again."</li>
-          <li>"I am not my thoughts. I am the observer."</li>
-          <li>"This too shall pass. Everything changes."</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="section">
-      <h2>🎵 At Music Events/Shows</h2>
-      <ul>
-        <li><strong>Hydrate:</strong> Sip water slowly and often</li>
-        <li><strong>Chill Zone:</strong> Find designated quiet spaces</li>
-        <li><strong>Buddy System:</strong> Stay with someone you trust</li>
-        <li><strong>Sensory Protection:</strong> Earplugs, sunglasses</li>
-        <li><strong>Know Staff:</strong> Locate medical/security teams</li>
-        <li><strong>No Mixing:</strong> Avoid combining substances</li>
-        <li><strong>Eat Light:</strong> Simple carbs or fruit if possible</li>
-      </ul>
-    </div>
-    
-    <div class="section">
-      <h2>⏳ The 20-Minute Rule</h2>
-      <div class="tip">
-        <p>Most intense moments pass within 10-20 minutes.</p>
-        <p><strong>Set a timer for 15 minutes</strong> and focus on breathing.</p>
-        <p>Remind yourself: "I just need to get through these next few minutes."</p>
-      </div>
-    </div>
-    
-    <div class="emergency">
-      <h2>🚨 Emergency Resources</h2>
-      <p><strong>If you need immediate human support:</strong></p>
-      <ul>
-        <li><strong>TripSit:</strong> tripsit.me (live chat & resources)</li>
-        <li><strong>Fireside Project:</strong> firesideproject.org (peer support line)</li>
-        <li><strong>Never Use Alone:</strong> neverusealone.com (phone check-in service)</li>
-        <li><strong>PLURderapolis Panic Button:</strong> plurderapolis.org/panic.html</li>
-        <li><strong>Medical Emergency:</strong> Call 911 or local emergency services</li>
-      </ul>
-      <p><strong>Remember:</strong> You are not alone. Reaching out is a sign of strength.</p>
-    </div>
-    
-    <div class="section">
-      <h2>💭 Aftercare & Integration</h2>
-      <p>After the experience passes:</p>
-      <ul>
-        <li>Rest and hydrate</li>
-        <li>Eat nourishing, simple food</li>
-        <li>Talk to someone you trust about the experience</li>
-        <li>Write down insights or what helped</li>
-        <li>Be gentle with yourself for the next 24-48 hours</li>
-      </ul>
-    </div>
-    
-    <div class="section no-print">
-      <h2>📱 Full Interactive Guide</h2>
-      <p>For the complete interactive guide with breathing animations, soothing sounds, and more tools, visit:</p>
-      <p style="text-align: center; font-size: 1.2rem;"><strong>plurderapolis.org/bad-trip-guide</strong></p>
-    </div>
-    
-    <div class="section" style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee;">
-      <p><strong>PLURderapolis — Your partners in shine 🍑</strong></p>
-      <p><em>Harm reduction education & community support</em></p>
-      <p style="font-size: 0.9rem; color: #666; margin-top: 20px;">
-        This guide is for harm reduction purposes only. Not medical advice. 
-        If experiencing a medical emergency, call emergency services immediately.
-      </p>
-    </div>
-  </div>
-  
-  <div class="no-print" style="text-align: center; margin-top: 20px;">
-    <button onclick="window.print()" style="padding: 10px 20px; background: #00f7e0; color: #111; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-      Print This Cheat Sheet
-    </button>
-    <p style="margin-top: 10px; color: #666;">Save as PDF: Print → Select "Save as PDF" as printer</p>
-  </div>
-</body>
-</html>
-`;
-
-  // Create a Blob with the HTML content
-  const blob = new Blob([cheatSheetContent], { type: 'text/html' });
-  
-  // Create a temporary link to download the file
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'PLURderapolis_Bad_Trip_Guide_Cheat_Sheet.html';
-  
-  // Trigger download
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  
-  // Show confirmation
-  alert('Cheat sheet downloaded! Open the file to view and print it.');
-}
-
-// Initialize audio context on first user interaction
-document.addEventListener('click', function initAudioOnInteraction() {
-  if (!audioContext) {
-    initAudioContext();
-  }
-  document.removeEventListener('click', initAudioOnInteraction);
-}, { once: true });
-
-// PWA Support
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(err => {
-      console.log('Service Worker registration failed: ', err);
+  // Close menu when clicking a link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('show');
+      menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
     });
   });
 }
 
-// Install prompt
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // You could show an install button here if desired
-});
-
-// Add ripple effect to buttons
-document.addEventListener('click', function(e) {
-  if (e.target.matches('.btn, .ground-btn, .audio-btn, .nav-item')) {
-    const btn = e.target;
-    const ripple = document.createElement('span');
-    const rect = btn.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      width: ${size}px;
-      height: ${size}px;
-      top: ${y}px;
-      left: ${x}px;
-      pointer-events: none;
-    `;
-    
-    btn.style.position = 'relative';
-    btn.style.overflow = 'hidden';
-    btn.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
-  }
-});
-
-// Add ripple animation CSS
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
+// Section management
+function initSections() {
+  // Collapsible section functionality
+  document.querySelectorAll('.section-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const section = header.parentElement;
+      const isOpening = !section.classList.contains('open');
+      
+      // Close all other sections on mobile
+      if (window.innerWidth <= 768 && isOpening) {
+        document.querySelectorAll('.section').forEach(s => {
+          if (s !== section && s.classList.contains('open')) {
+            s.classList.remove('open');
+            updateSectionButton(s.id, false);
+          }
+        });
+      }
+      
+      // Toggle current section
+      section.classList.toggle('open');
+      updateSectionButton(section.id, section.classList.contains('open'));
+      
+      // Update current section and progress
+      if (section.classList.contains('open')) {
+        currentSection = section.id;
+        updateProgressIndicator();
+        
+        // Smooth scroll to section
+        setTimeout(() => {
+          section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 300);
+      }
+    });
+  });
+  
+  // Sidebar navigation
+  document.querySelectorAll('.section-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      
+      // Close all sections on mobile
+      if (window.innerWidth <= 768) {
+        document.querySelectorAll('.section').forEach(section => {
+          section.classList.remove('open');
+          updateSectionButton(section.id, false);
+        });
+      }
+      
+      // Open target section
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.classList.add('open');
+        updateSectionButton(targetId, true);
+        currentSection = targetId;
+        updateProgressIndicator();
+        
+        // Smooth scroll to section
+        setTimeout(() => {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+      
+      // Update active button
+      document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+  
+  // Update section button state
+  function updateSectionButton(sectionId, isOpen) {
+    const btn = document.querySelector(`.section-btn[data-target="${sectionId}"]`);
+    if (btn) {
+      btn.classList.toggle('active', isOpen);
     }
   }
-`;
-document.head.appendChild(rippleStyle);
-
-// Initialize everything when page loads
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('PLURderapolis Bad Trip Guide loaded');
   
-  // Set initial active section
-  updateBreadcrumb();
+  // Intersection Observer for active section tracking
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        const section = entry.target;
+        currentSection = section.id;
+        updateProgressIndicator();
+        
+        // Update active button
+        document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`.section-btn[data-target="${section.id}"]`);
+        if (activeBtn) activeBtn.classList.add('active');
+      }
+    });
+  }, {
+    threshold: 0.5,
+    rootMargin: '-100px 0px -100px 0px'
+  });
+  
+  // Observe all sections
+  document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
+  });
+}
+
+// Breathing functionality
+function initBreathing() {
+  const breathShape = document.getElementById('breathShape');
+  let isBreathing = true;
+  
+  // Start breathing animation
+  breathingAnimation = breathShape.style.animation = 'breathe 8s infinite cubic-bezier(0.4, 0, 0.2, 1)';
+  
+  // Control buttons
+  document.getElementById('pauseBreath').addEventListener('click', () => {
+    breathShape.style.animationPlayState = 'paused';
+    breathShape.textContent = 'Paused';
+  });
+  
+  document.getElementById('resumeBreath').addEventListener('click', () => {
+    breathShape.style.animationPlayState = 'running';
+    breathShape.textContent = 'Breathe';
+  });
+  
+  document.getElementById('stopBreath').addEventListener('click', () => {
+    breathShape.style.animation = 'none';
+    setTimeout(() => {
+      breathShape.style.animation = breathingAnimation;
+    }, 10);
+  });
+}
+
+// Grounding functionality
+function initGrounding() {
+  const groundingItems = document.querySelectorAll('.grounding-item');
+  const groundingComplete = document.getElementById('groundingComplete');
+  let completedCount = 0;
+  
+  groundingItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if (!item.classList.contains('completed')) {
+        item.classList.add('completed');
+        completedCount++;
+        
+        // Add completion animation
+        item.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          item.style.transform = '';
+        }, 200);
+        
+        // Check if all are completed
+        if (completedCount >= groundingItems.length) {
+          groundingComplete.style.display = 'block';
+          setTimeout(() => {
+            groundingComplete.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 500);
+        }
+      }
+    });
+  });
+  
+  // Reset grounding
+  document.getElementById('resetGrounding').addEventListener('click', () => {
+    groundingItems.forEach(item => {
+      item.classList.remove('completed');
+    });
+    groundingComplete.style.display = 'none';
+    completedCount = 0;
+  });
+}
+
+// Audio functionality with improved sounds
+function initAudio() {
+  // Initialize audio context on first user interaction
+  document.addEventListener('click', initAudioContext, { once: true });
+  
+  // Audio button functionality
+  document.querySelectorAll('.audio-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const soundType = this.dataset.sound;
+      
+      // If this sound is already playing, stop it
+      if (this.classList.contains('active')) {
+        stopCurrentSound();
+        return;
+      }
+      
+      // Stop any currently playing sound
+      stopCurrentSound();
+      
+      // Play new sound
+      playSound(soundType);
+      this.classList.add('active');
+    });
+  });
+  
+  // Stop all audio
+  document.getElementById('stopAllAudio').addEventListener('click', stopCurrentSound);
+}
+
+function initAudioContext() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playSound(type) {
+  if (!audioContext) initAudioContext();
+  
+  stopCurrentSound();
+  
+  switch(type) {
+    case 'whiteNoise':
+      currentSound = createWhiteNoise();
+      break;
+    case 'ocean':
+      currentSound = createOceanWaves();
+      break;
+    case 'forest':
+      currentSound = createForestSounds();
+      break;
+    case 'rain':
+      currentSound = createRainSound();
+      break;
+    case 'heartbeat':
+      currentSound = createHeartbeat();
+      break;
+    case 'brownNoise':
+      currentSound = createBrownNoise();
+      break;
+  }
+}
+
+function stopCurrentSound() {
+  if (currentSound) {
+    currentSound.stop();
+    currentSound = null;
+  }
+  
+  // Update button states
+  document.querySelectorAll('.audio-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+}
+
+// Sound generators
+function createWhiteNoise() {
+  const bufferSize = 2 * audioContext.sampleRate;
+  const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+  const data = buffer.getChannelData(0);
+  
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = Math.random() * 2 - 1;
+  }
+  
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+  
+  const gainNode = audioContext.createGain();
+  gainNode.gain.value = 0.1;
+  
+  source.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  source.start();
+  
+  return source;
+}
+
+function createOceanWaves() {
+  // Create main wave oscillator (low frequency)
+  const waveOsc = audioContext.createOscillator();
+  waveOsc.type = 'sine';
+  waveOsc.frequency.value = 60;
+  
+  // Create wave LFO for rolling effect
+  const waveLFO = audioContext.createOscillator();
+  waveLFO.type = 'sine';
+  waveLFO.frequency.value = 0.1;
+  
+  const waveLFOGain = audioContext.createGain();
+  waveLFOGain.gain.value = 20;
+  
+  waveLFO.connect(waveLFOGain);
+  waveLFOGain.connect(waveOsc.frequency);
+  
+  // Create occasional splash sounds
+  const splashNoise = audioContext.createBufferSource();
+  const splashBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.5, audioContext.sampleRate);
+  const splashData = splashBuffer.getChannelData(0);
+  
+  for (let i = 0; i < splashBuffer.length; i++) {
+    splashData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioContext.sampleRate * 0.05));
+  }
+  
+  splashNoise.buffer = splashBuffer;
+  splashNoise.loop = true;
+  
+  const splashGain = audioContext.createGain();
+  splashGain.gain.value = 0.05;
+  
+  // Schedule splashes randomly
+  const scheduleSplash = () => {
+    const now = audioContext.currentTime;
+    const nextSplash = now + 2 + Math.random() * 3;
+    
+    splashGain.gain.setValueAtTime(0, now);
+    splashGain.gain.linearRampToValueAtTime(0.05, nextSplash);
+    splashGain.gain.linearRampToValueAtTime(0, nextSplash + 0.3);
+    
+    setTimeout(scheduleSplash, (nextSplash - now + 0.3) * 1000);
+  };
+  
+  // Connect everything
+  const masterGain = audioContext.createGain();
+  masterGain.gain.value = 0.15;
+  
+  waveOsc.connect(masterGain);
+  splashNoise.connect(splashGain);
+  splashGain.connect(masterGain);
+  masterGain.connect(audioContext.destination);
+  
+  // Start oscillators
+  waveOsc.start();
+  waveLFO.start();
+  splashNoise.start();
+  
+  // Schedule first splash
+  setTimeout(scheduleSplash, 1000);
+  
+  return {
+    stop: () => {
+      waveOsc.stop();
+      waveLFO.stop();
+      splashNoise.stop();
+    }
+  };
+}
+
+function createForestSounds() {
+  // Create background wind noise
+  const windNoise = audioContext.createBufferSource();
+  const windBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
+  const windData = windBuffer.getChannelData(0);
+  
+  for (let i = 0; i < windBuffer.length; i++) {
+    windData[i] = (Math.random() * 2 - 1) * 0.3;
+  }
+  
+  windNoise.buffer = windBuffer;
+  windNoise.loop = true;
+  
+  const windGain = audioContext.createGain();
+  windGain.gain.value = 0.02;
+  
+  // Create bird chirps
+  const createBirdChirp = (freq, time) => {
+    const birdOsc = audioContext.createOscillator();
+    birdOsc.type = 'sine';
+    birdOsc.frequency.value = freq;
+    
+    const birdGain = audioContext.createGain();
+    birdGain.gain.setValueAtTime(0, time);
+    birdGain.gain.linearRampToValueAtTime(0.1, time + 0.05);
+    birdGain.gain.exponentialRampToValueAtTime(0.001, time + 0.3);
+    
+    birdOsc.connect(birdGain);
+    birdGain.connect(audioContext.destination);
+    
+    birdOsc.start(time);
+    birdOsc.stop(time + 0.3);
+  };
+  
+  // Schedule random bird chirps
+  const scheduleBirdChirp = () => {
+    const now = audioContext.currentTime;
+    const nextChirp = now + 0.5 + Math.random() * 2;
+    const freq = 800 + Math.random() * 800;
+    
+    createBirdChirp(freq, nextChirp);
+    setTimeout(scheduleBirdChirp, (nextChirp - now) * 1000);
+  };
+  
+  // Connect wind
+  windNoise.connect(windGain);
+  windGain.connect(audioContext.destination);
+  
+  // Start
+  windNoise.start();
+  
+  // Schedule first bird chirp
+  setTimeout(scheduleBirdChirp, 500);
+  
+  return {
+    stop: () => {
+      windNoise.stop();
+    }
+  };
+}
+
+function createRainSound() {
+  // Create rain noise buffer
+  const rainNoise = audioContext.createBufferSource();
+  const rainBuffer = audioContext.createBuffer(1, audioContext.sampleRate, audioContext.sampleRate);
+  const rainData = rainBuffer.getChannelData(0);
+  
+  for (let i = 0; i < rainBuffer.length; i++) {
+    rainData[i] = (Math.random() * 2 - 1) * 0.5;
+  }
+  
+  rainNoise.buffer = rainBuffer;
+  rainNoise.loop = true;
+  
+  // Create filter for rain sound
+  const filter = audioContext.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 1000;
+  
+  // Create occasional droplet sounds
+  const createDroplet = (time) => {
+    const dropletOsc = audioContext.createOscillator();
+    dropletOsc.type = 'sine';
+    dropletOsc.frequency.value = 400 + Math.random() * 200;
+    
+    const dropletGain = audioContext.createGain();
+    dropletGain.gain.setValueAtTime(0, time);
+    dropletGain.gain.linearRampToValueAtTime(0.05, time + 0.01);
+    dropletGain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
+    
+    dropletOsc.connect(dropletGain);
+    dropletGain.connect(audioContext.destination);
+    
+    dropletOsc.start(time);
+    dropletOsc.stop(time + 0.1);
+  };
+  
+  // Schedule random droplets
+  const scheduleDroplet = () => {
+    const now = audioContext.currentTime;
+    const nextDroplet = now + 0.1 + Math.random() * 0.5;
+    
+    createDroplet(nextDroplet);
+    setTimeout(scheduleDroplet, (nextDroplet - now) * 1000);
+  };
+  
+  // Connect rain noise
+  const rainGain = audioContext.createGain();
+  rainGain.gain.value = 0.08;
+  
+  rainNoise.connect(filter);
+  filter.connect(rainGain);
+  rainGain.connect(audioContext.destination);
+  
+  // Start
+  rainNoise.start();
+  
+  // Schedule first droplet
+  setTimeout(scheduleDroplet, 200);
+  
+  return {
+    stop: () => {
+      rainNoise.stop();
+    }
+  };
+}
+
+function createHeartbeat() {
+  const heartOsc = audioContext.createOscillator();
+  heartOsc.type = 'sine';
+  heartOsc.frequency.value = 60;
+  
+  const heartGain = audioContext.createGain();
+  
+  // Create heartbeat pattern
+  const createBeat = (time) => {
+    heartGain.gain.setValueAtTime(0, time);
+    heartGain.gain.linearRampToValueAtTime(0.1, time + 0.1);
+    heartGain.gain.exponentialRampToValueAtTime(0.001, time + 0.2);
+  };
+  
+  // Schedule beats
+  let beatCount = 0;
+  const scheduleBeat = () => {
+    const now = audioContext.currentTime;
+    const nextBeat = now + (beatCount % 3 === 0 ? 0.8 : 0.4);
+    
+    createBeat(nextBeat);
+    beatCount++;
+    setTimeout(scheduleBeat, (nextBeat - now) * 1000);
+  };
+  
+  // Connect
+  heartOsc.connect(heartGain);
+  heartGain.connect(audioContext.destination);
+  
+  // Start
+  heartOsc.start();
+  
+  // Schedule first beat
+  setTimeout(scheduleBeat, 100);
+  
+  return {
+    stop: () => {
+      heartOsc.stop();
+    }
+  };
+}
+
+function createBrownNoise() {
+  const bufferSize = 2 * audioContext.sampleRate;
+  const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+  const data = buffer.getChannelData(0);
+  
+  let lastOut = 0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    data[i] = (lastOut + (0.02 * white)) / 1.02;
+    lastOut = data[i];
+    data[i] *= 3.5;
+  }
+  
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.loop = true;
+  
+  const filter = audioContext.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 500;
+  
+  const gainNode = audioContext.createGain();
+  gainNode.gain.value = 0.15;
+  
+  source.connect(filter);
+  filter.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  source.start();
+  
+  return source;
+}
+
+// Timer functionality
+function initTimer() {
+  const timerDisplay = document.getElementById('timerDisplay');
+  const timerMessage = document.getElementById('timerMessage');
+  
+  // Update timer display
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Update message based on time
+    if (timeLeft === 600) {
+      timerMessage.textContent = "10 minutes left. You're doing great.";
+    } else if (timeLeft === 300) {
+      timerMessage.textContent = "5 minutes left. Almost there.";
+    } else if (timeLeft === 0) {
+      timerMessage.textContent = "Time's up. How are you feeling now?";
+    }
+  }
+  
+  // Timer controls
+  document.getElementById('startTimer').addEventListener('click', () => {
+    if (timerInterval) return;
+    
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        return;
+      }
+      timeLeft--;
+      updateTimerDisplay();
+    }, 1000);
+    
+    timerMessage.textContent = "Timer started. Focus on your breathing.";
+  });
+  
+  document.getElementById('pauseTimer').addEventListener('click', () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerMessage.textContent = "Timer paused. Resume when ready.";
+    }
+  });
+  
+  document.getElementById('resetTimer').addEventListener('click', () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeLeft = 900;
+    updateTimerDisplay();
+    timerMessage.textContent = "Timer reset. Many people find things stabilize after ~10-20 minutes";
+  });
+  
+  // Quick timer buttons
+  document.getElementById('quick5').addEventListener('click', () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeLeft = 300;
+    updateTimerDisplay();
+    timerMessage.textContent = "Set to 5 minutes. Start when ready.";
+  });
+  
+  document.getElementById('quick20').addEventListener('click', () => {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeLeft = 1200;
+    updateTimerDisplay();
+    timerMessage.textContent = "Set to 20 minutes. Start when ready.";
+  });
+  
+  // Initialize display
+  updateTimerDisplay();
+}
+
+// Mantras functionality
+function initMantras() {
+  const mantraText = document.getElementById('mantraText');
+  
+  // Display current mantra
+  function updateMantra() {
+    mantraText.textContent = mantras[mantraIndex];
+  }
+  
+  // Next mantra
+  document.getElementById('nextMantra').addEventListener('click', () => {
+    mantraIndex = (mantraIndex + 1) % mantras.length;
+    updateMantra();
+  });
+  
+  // Previous mantra
+  document.getElementById('prevMantra').addEventListener('click', () => {
+    mantraIndex = (mantraIndex - 1 + mantras.length) % mantras.length;
+    updateMantra();
+  });
+  
+  // Speak mantra
+  document.getElementById('speakMantra').addEventListener('click', () => {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      return;
+    }
+    
+    const utterance = new SpeechSynthesisUtterance(mantras[mantraIndex]);
+    utterance.rate = 0.8;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    
+    speechSynthesis.speak(utterance);
+  });
+  
+  // Tap mantra to change
+  mantraText.addEventListener('click', () => {
+    mantraIndex = (mantraIndex + 1) % mantras.length;
+    updateMantra();
+  });
+  
+  // Initialize
+  updateMantra();
+}
+
+// Event listeners for various buttons
+function initEventListeners() {
+  // Sensory safe mode
+  document.getElementById('toggleSafe').addEventListener('click', () => {
+    const isSafeMode = document.body.classList.toggle('sensory-safe');
+    const btn = document.getElementById('toggleSafe');
+    btn.innerHTML = isSafeMode 
+      ? '<i class="fas fa-moon"></i> Safe Mode (On)' 
+      : '<i class="fas fa-moon"></i> Sensory Safe Mode';
+    
+    // Stop all audio when entering safe mode
+    if (isSafeMode) {
+      stopCurrentSound();
+    }
+  });
+  
+  // Find help at event
+  document.getElementById('findHelp').addEventListener('click', () => {
+    alert("At an event:\n1. Find medical tent or first aid\n2. Look for 'chill zone' or 'safe space'\n3. Ask staff for help\n4. Call/text a trusted friend\n5. Use breathing exercises");
+  });
+  
+  // Save reflections
+  document.getElementById('saveReflection').addEventListener('click', () => {
+    const reflection1 = document.getElementById('reflection1').value;
+    const reflection2 = document.getElementById('reflection2').value;
+    
+    if (reflection1 || reflection2) {
+      localStorage.setItem('badTripReflection', JSON.stringify({
+        date: new Date().toISOString(),
+        reflection1,
+        reflection2
+      }));
+      
+      alert("Reflections saved locally in your browser.");
+    } else {
+      alert("Please write something before saving.");
+    }
+  });
+  
+  // I'm OK button
+  document.getElementById('imOk').addEventListener('click', () => {
+    if (confirm("Glad you're feeling better! Would you like to visit the PLURderapolis homepage?")) {
+      window.location.href = "https://plurderapolis.org";
+    }
+  });
+  
+  // Download cheat sheet
+  document.getElementById('downloadCheat').addEventListener('click', () => {
+    const cheatSheet = `
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bad Trip Guide Cheat Sheet</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+  h1 { color: #1c0028; }
+  .section { margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 10px; }
+  .emergency { background: #fff0f0; border-left: 4px solid red; }
+</style>
+</head>
+<body>
+  <h1>Bad Trip Guide Cheat Sheet</h1>
+  <p>Generated from PLURderapolis.org on ${new Date().toLocaleDateString()}</p>
+  
+  <div class="section">
+    <h2>🌬️ Breathing (4-7-8 Method)</h2>
+    <p>Inhale 4 sec → Hold 7 sec → Exhale 8 sec</p>
+  </div>
+  
+  <div class="section">
+    <h2>🪨 5-4-3-2-1 Grounding</h2>
+    <p>5 things you SEE, 4 TOUCH, 3 HEAR, 2 SMELL, 1 TASTE</p>
+  </div>
+  
+  <div class="section">
+    <h2>🧍 Self Check-In</h2>
+    <p>Hydrate → Comfort → Position → Temperature → Connection</p>
+  </div>
+  
+  <div class="section emergency">
+    <h2>🚨 Emergency Contacts</h2>
+    <p>TripSit: tripsit.me<br>Fireside: firesideproject.org<br>Never Use Alone: neverusealone.com<br>Medical: Call 911</p>
+  </div>
+  
+  <p>Full guide: https://plurderapolis.org</p>
+</body>
+</html>`;
+    
+    const blob = new Blob([cheatSheet], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Bad_Trip_Guide_Cheat_Sheet.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+}
+
+// Progress indicator
+function updateProgressIndicator() {
+  const index = sectionOrder.indexOf(currentSection);
+  const progress = document.getElementById('progressIndicator');
+  
+  if (index !== -1) {
+    progress.textContent = `${index + 1}/${sectionOrder.length}`;
+    
+    // Pulse animation
+    progress.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+      progress.style.transform = 'scale(1)';
+    }, 200);
+  }
+}
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    const targetSection = document.getElementById(targetId);
+    
+    if (targetSection) {
+      // Open section if closed
+      if (!targetSection.classList.contains('open')) {
+        targetSection.classList.add('open');
+        
+        // Update sidebar button
+        const btn = document.querySelector(`.section-btn[data-target="${targetId}"]`);
+        if (btn) btn.classList.add('active');
+      }
+      
+      // Smooth scroll to section
+      setTimeout(() => {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  });
 });
+
+// Prevent overlapping on resize
+window.addEventListener('resize', () => {
+  // Close sidebar on mobile when opening sections
+  const navLinks = document.getElementById('navLinks');
+  if (window.innerWidth <= 768 && navLinks.classList.contains('show')) {
+    navLinks.classList.remove('show');
+    document.getElementById('menuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+  }
+});
+
+// Initialize audio context on any click (for iOS)
+document.addEventListener('click', () => {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}, { once: true });
 </script>
 </body>
 </html>
