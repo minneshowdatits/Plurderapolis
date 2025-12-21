@@ -7,6 +7,7 @@
     <meta name="description" content="Minnesota's premier harm reduction resource for the electronic music community. Find Narcan, emergency guides, drug safety tools, and support.">
     <meta name="keywords" content="harm reduction, Minnesota, rave, electronic music, drug safety, overdose prevention, Narcan, Naloxone, PLUR, Minneapolis, St. Paul, fentanyl, xylazine, Good Samaritan Law">
     <meta name="author" content="PLURderapolis">
+    
     <!-- Open Graph / Social Meta -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://plurderapolis.org/">
@@ -17,6 +18,7 @@
     <meta property="twitter:title" content="PLURderapolis — Harm Reduction for Minnesota Ravers">
     <meta property="twitter:description" content="Your partners in shine. Find Narcan, emergency guides, and tools for safer nightlife in Minnesota.">
     <meta property="twitter:image" content="https://plurderapolis.org/images/social-preview.jpg">
+    
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -37,193 +39,208 @@
         }
     }
     </script>
+    
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
+    
     <!-- Fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
     </noscript>
+    
     <style>
         /* ========== CSS RESET & ROOT VARIABLES ========== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
         :root {
             /* New Color Palette */
-            --electric-periwinkle: #8A82FF; /* Headings, CTA highlights */
-            --neon-aqua: #00F0FF;          /* Accent */
-            --deep-violet: #1A0B3D;        /* Primary background */
-            --holo-pink: #FF69F0;          /* Highlights, alerts */
-            --body-light: #E3E0FF;         /* Body text on dark */
-            --charcoal-grey: #1E1E2E;      /* Cards, secondary surfaces */
-            --card-bg: rgba(30, 30, 46, 0.7); /* Card background */
-
-            /* Functional Colors */
-            --success: #00C896;
-            --warning: #FFB300;
-            --danger: #FF4757;
-            --accent2: #E051FF;
-            --accent3: #00B7FF;
-            --accent4: #FF9A7A;
-            --accent5: #00C896;
-            --accent6: #FFB300;
+            --electric-periwinkle: #8A82FF;
+            --neon-aqua: #00F0FF;
+            --deep-violet: #1A0B3D;
+            --holo-pink: #FF69F0;
+            --body-light: #E3E0FF;
+            --charcoal-grey: #1E1E2E;
+            --rave-purple: #6A11CB;
+            --psychedelic-blue: #2575FC;
+            --glow-green: #00F7E0;
+            --warning-orange: #FF9500;
+            --danger-red: #FF4757;
+            --success-green: #00C896;
 
             /* Typography */
             --font-heading: 'Montserrat', sans-serif;
             --font-body: 'Inter', sans-serif;
 
             /* Spacing & Effects */
-            --border-radius: 12px;
-            --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --shadow-subtle: 0 8px 30px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 20px rgba(138, 130, 255, 0.4);
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bouncy: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow-subtle: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(138, 130, 255, 0.6);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.2);
+            --shadow-inset: inset 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+        
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 2rem;
+            scroll-padding-top: 80px;
         }
+        
         body {
             font-family: var(--font-body);
-            background-color: var(--deep-violet);
+            background: linear-gradient(135deg, var(--deep-violet) 0%, #0c0633 100%);
             color: var(--body-light);
             line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
             overflow-x: hidden;
-            padding-bottom: 80px; /* For mobile HUD */
         }
 
-        /* ========== ANIMATED BACKGROUND & SKYLINE ========== */
+        /* ========== ANIMATED BACKGROUND ========== */
         .animated-background {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-        .bg-gradient {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 15% 70%, rgba(138, 130, 255, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-                        radial-gradient(circle at 50% 50%, rgba(255, 105, 240, 0.03) 0%, transparent 50%);
-        }
-        .bg-particles {
-            position: absolute;
-            width: 100%; height: 100%;
-        }
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            animation: float 25s infinite linear;
-        }
-        .pulse-dot {
-            position: absolute;
-            width: 4px; height: 4px;
-            border-radius: 50%;
-            background: var(--neon-aqua);
-            animation: pulse 6s infinite ease-in-out;
-            opacity: .5;
-        }
-        .wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200%; height: 8%;
-            background: linear-gradient(90deg, transparent, rgba(0, 247, 224, 0.05), transparent);
-            animation: waveMove 25s infinite linear;
-            transform-origin: center bottom;
-        }
-        .wave:nth-child(2) { animation-delay: -5s; opacity: .3; height: 6%; }
-        .wave:nth-child(3) { animation-delay: -10s; opacity: .2; height: 4%; }
-
-        @keyframes gradientShift { 0% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.05); opacity: .7; } 100% { transform: scale(1); opacity: .5; } }
-        @keyframes float { 0% { transform: translateY(100vh) rotate(0); opacity: 0; } 10%, 90% { opacity: .5; } 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: .3; } 50% { transform: scale(1.5); opacity: .1; } }
-        @keyframes waveMove { 0% { transform: translateX(0) skew(0, 3deg); } 100% { transform: translateX(-50%) skew(0, 3deg); } }
-
-        /* Minneapolis Skyline */
-        .minneapolis-skyline {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 40%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
             overflow: hidden;
-        }
-        .skyline-buildings {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex; align-items: flex-end; justify-content: center;
-        }
-        .building {
-            background: linear-gradient(to top, rgba(42, 15, 84, 0.9), rgba(30, 30, 46, 0.7));
-            margin: 0 1px;
-            position: relative;
-            border-top-left-radius: 4px; border-top-right-radius: 4px;
-            box-shadow: 0 0 5px rgba(138, 130, 255, 0.1);
-            animation: buildingGlow 10s infinite alternate;
-        }
-        .building::before {
-            content: '';
-            position: absolute;
-            top: 10px; left: 5px; right: 5px; bottom: 0;
-            background-image: linear-gradient(90deg, transparent 10%, rgba(0, 247, 224, 0.05) 10%, rgba(0, 247, 224, 0.05) 20%, transparent 20%), linear-gradient(180deg, transparent 10%, rgba(0, 247, 224, 0.05) 10%, rgba(0, 247, 224, 0.05) 20%, transparent 20%);
-            background-size: 20px 20px;
-            opacity: .3;
-        }
-        @keyframes buildingGlow { 0% { box-shadow: 0 0 5px rgba(138, 130, 255, 0.1); } 100% { box-shadow: 0 0 10px rgba(138, 130, 255, 0.2); } }
-
-        .river {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 15%;
-            background: linear-gradient(to top, rgba(0, 183, 255, 0.1), transparent);
+            pointer-events: none;
         }
 
-        /* ========== TYPOGRAPHY HIERARCHY ========== */
-        h1, h2, h3, h4 {
+        .bg-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(138, 130, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 105, 240, 0.08) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(26, 11, 61, 0) 0%, rgba(26, 11, 61, 1) 100%);
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-aqua);
+            border-radius: 50%;
+            animation: floatParticle 15s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ========== TYPOGRAPHY ========== */
+        h1, h2, h3, h4, h5, h6 {
             font-family: var(--font-heading);
             font-weight: 800;
             line-height: 1.2;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
         }
+
         h1 {
-            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-size: clamp(3rem, 8vw, 4.5rem);
             background: linear-gradient(135deg, var(--electric-periwinkle), var(--holo-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 20px rgba(138, 130, 255, 0.3);
+            background-clip: text;
+            text-shadow: 0 4px 30px rgba(138, 130, 255, 0.3);
+            margin-bottom: 0.5rem;
         }
+
         h2 {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(2rem, 5vw, 3rem);
             color: var(--electric-periwinkle);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
         }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-aqua), transparent);
+            border-radius: 2px;
+        }
+
         h3 {
-            font-size: 1.4rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             color: var(--neon-aqua);
+            margin-bottom: 1rem;
         }
+
         h4 {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             color: var(--body-light);
             font-weight: 600;
         }
-        p, li, .text-body {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--body-light);
-            margin-bottom: 1rem;
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
         }
+
+        .lead {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
         .text-small {
-            font-size: 0.875rem;
-            color: rgba(227, 224, 255, 0.8);
+            font-size: 0.9rem;
+            opacity: 0.8;
         }
+
         .text-micro {
             font-size: 0.75rem;
-            color: rgba(227, 224, 255, 0.6);
+            opacity: 0.6;
         }
+
         a {
             color: var(--neon-aqua);
             text-decoration: none;
             transition: var(--transition-smooth);
+            position: relative;
         }
+
         a:hover {
             color: var(--holo-pink);
         }
@@ -231,1661 +248,1525 @@
         /* ========== LAYOUT & CONTAINERS ========== */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             position: relative;
-            z-index: 2;
-        }
-        .page-header {
-            text-align: center;
-            padding: 2.5rem 1rem 1.5rem;
-            position: relative;
-        }
-        .tagline {
-            font-family: var(--font-body);
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: var(--neon-aqua);
-            letter-spacing: 0.05em;
-            margin-top: 0.5rem;
-            opacity: 0.9;
+            z-index: 1;
         }
 
-        /* ========== EMERGENCY ALERT BANNER ========== */
-        .emergency-alert {
-            background: linear-gradient(90deg, var(--deep-violet), rgba(255, 105, 240, 0.15), var(--deep-violet));
-            border-top: 1px solid var(--holo-pink);
-            border-bottom: 1px solid var(--holo-pink);
-            padding: 0.75rem 1rem;
-            margin: 0.5rem 0 1.5rem;
-            overflow: hidden;
-            position: relative;
-            height: 2.5rem;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            z-index: 2;
-            backdrop-filter: blur(4px);
-        }
-        .alert-scroll {
-            display: inline-block;
-            white-space: nowrap;
-            padding-left: 100%;
-            animation: scrollAlert 25s linear infinite;
-            color: var(--holo-pink);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        @keyframes scrollAlert {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+        .container-narrow {
+            max-width: 900px;
         }
 
-        /* ========== MOBILE NAVIGATION ========== */
-        .mobile-nav-toggle {
-            position: fixed;
-            top: 16px; left: 16px;
-            z-index: 1100;
-            width: 48px; height: 48px;
-            background: rgba(30, 30, 46, 0.9);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--electric-periwinkle);
-            border-radius: var(--border-radius);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: rgba(30, 30, 46, 0.2);
+        }
+
+        /* ========== HEADER & NAVIGATION ========== */
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 11, 61, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(138, 130, 255, 0.2);
+            padding: 1rem 0;
             transition: var(--transition-smooth);
         }
-        .mobile-nav-toggle span {
-            display: block;
-            width: 24px; height: 3px;
-            background: var(--neon-aqua);
-            border-radius: 3px;
-            margin: 3px 0;
-            transition: var(--transition-smooth);
-        }
-        .mobile-nav-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-        .mobile-nav-toggle.active span:nth-child(2) { opacity: 0; }
-        .mobile-nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-        .mobile-nav-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(10, 5, 30, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1099;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s;
-        }
-        .mobile-nav-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-nav-panel {
-            position: fixed;
-            top: 0; left: -100%;
-            width: 85%; max-width: 320px;
-            height: 100%;
-            background: var(--charcoal-grey);
-            box-shadow: var(--shadow-subtle);
-            z-index: 1100;
-            padding: 5rem 1.5rem 2rem;
-            overflow-y: auto;
-            transition: left 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .mobile-nav-panel.active { left: 0; }
-
-        .nav-category { margin-bottom: 1.5rem; }
-        .nav-category-title {
-            font-family: var(--font-heading);
-            color: var(--electric-periwinkle);
-            font-size: 1.1rem;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid rgba(138, 130, 255, 0.3);
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
         }
-        .nav-category-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        .nav-category.active .nav-category-links {
-            max-height: 500px;
-        }
-        .nav-link {
+
+        .logo {
             display: flex;
             align-items: center;
-            padding: 0.75rem 1rem;
-            background: rgba(42, 15, 84, 0.5);
-            border-radius: 8px;
-            color: var(--body-light);
-            border-left: 4px solid var(--neon-aqua);
-            transition: var(--transition-smooth);
-        }
-        .nav-link:hover {
-            background: rgba(42, 15, 84, 0.8);
-            transform: translateX(8px);
-            border-left-color: var(--holo-pink);
-        }
-        .nav-link-icon { font-size: 1.2rem; margin-right: 10px; }
-
-        /* ========== COLLAPSIBLE CARDS GRID ========== */
-        .sections-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.2rem;
-            padding: 1.2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        @media (min-width: 768px) {
-            .sections-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-            .sections-grid { grid-template-columns: repeat(3, 1fr); }
+            gap: 1rem;
+            text-decoration: none;
         }
 
-        .section-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            border: 1px solid rgba(138, 130, 255, 0.2);
-            transition: var(--transition-smooth);
-            animation: fadeInUp 0.6s ease-out backwards;
-            height: 100%;
+        .logo-emoji {
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 240, 0.5));
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--electric-periwinkle), var(--holo-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
             display: flex;
-            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--body-light);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
-        .section-card::before {
+
+        .nav-link:before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: radial-gradient(circle at 25% 25%, rgba(0, 247, 224, 0.05) 0%, transparent 50%),
-                            radial-gradient(circle at 75% 75%, rgba(255, 105, 240, 0.05) 0%, transparent 50%),
-                            linear-gradient(45deg, transparent 49%, rgba(0, 183, 255, 0.03) 50%, transparent 51%),
-                            linear-gradient(-45deg, transparent 49%, rgba(224, 81, 255, 0.03) 50%, transparent 51%);
-            background-size: 100px 100px, 150px 150px, 20px 20px, 20px 20px;
-            z-index: 0;
-            animation: textureShift 15s infinite linear;
-        }
-        @keyframes textureShift {
-            0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-            100% { background-position: 100px 100px, 150px 150px, 20px 20px, 20px 20px; }
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--neon-aqua);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
         }
 
-        .section-card:nth-child(1) { border-top: 4px solid var(--danger); animation-delay: 0.1s; }
-        .section-card:nth-child(2) { border-top: 4px solid var(--electric-periwinkle); animation-delay: 0.2s; }
-        .section-card:nth-child(3) { border-top: 4px solid var(--success); animation-delay: 0.3s; }
-        .section-card:nth-child(4) { border-top: 4px solid var(--holo-pink); animation-delay: 0.4s; }
-        .section-card:nth-child(5) { border-top: 4px solid var(--warning); animation-delay: 0.5s; }
-        .section-card:nth-child(6) { border-top: 4px solid var(--neon-aqua); animation-delay: 0.6s; }
-        .section-card:nth-child(7) { border-top: 4px solid var(--accent2); animation-delay: 0.7s; }
-        .section-card:nth-child(8) { border-top: 4px solid var(--accent3); animation-delay: 0.8s; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-glow);
-            border-color: rgba(138, 130, 255, 0.5);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
-        }
-        .card-title {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
+        .nav-link:hover {
+            background: rgba(138, 130, 255, 0.1);
             color: var(--neon-aqua);
-            margin-bottom: 0.5rem;
-        }
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
         }
 
-        .collapsible-toggle {
+        .nav-link:hover:before {
+            width: 80%;
+        }
+
+        .mobile-nav-toggle {
+            display: none;
             background: none;
             border: none;
             color: var(--neon-aqua);
             font-size: 1.5rem;
             cursor: pointer;
-            width: 32px; height: 32px;
+            padding: 0.5rem;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 130, 255, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            color: var(--neon-aqua);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-cta {
             display: flex;
-            align-items: center;
+            gap: 1rem;
             justify-content: center;
-            border-radius: 50%;
-            transition: var(--transition-smooth);
-            flex-shrink: 0;
-            position: relative;
-            z-index: 2;
-        }
-        .collapsible-toggle:hover {
-            background: rgba(0, 240, 255, 0.15);
-            transform: scale(1.1) rotate(90deg);
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
-        .section-summary {
-            color: var(--body-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-            transition: all 0.3s ease;
-            max-height: 3rem;
-            overflow: hidden;
-            position: relative;
-            z-index: 2;
-        }
-        .section-card.collapsed .section-summary {
-            max-height: 3rem;
-            opacity: 1;
-        }
-        .section-card.expanded .section-summary {
-            max-height: 0;
-            opacity: 0;
-            margin-bottom: 0;
-        }
-
-        .collapsible-content {
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease 0.1s;
-            padding: 0;
-            transform: translateY(-8px);
-            position: relative;
-            z-index: 2;
-        }
-        .collapsible-content.expanded {
-            max-height: 2000px;
-            opacity: 1;
-            padding-top: 1rem;
-            transform: translateY(0);
-        }
-
-        .link-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        .link-item {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            background: rgba(42, 15, 84, 0.3);
-            border-radius: 8px;
-            color: var(--body-light);
-            transition: var(--transition-smooth);
-        }
-        .link-item:hover {
-            background: rgba(42, 15, 84, 0.6);
-            padding-left: 1rem;
-        }
-        .link-item-icon { margin-right: 10px; font-size: 1.1rem; }
-
+        /* ========== BUTTONS ========== */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 0.9rem 1.5rem;
-            background: linear-gradient(135deg, var(--electric-periwinkle), var(--holo-pink));
-            color: white;
-            border: none;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
             border-radius: var(--border-radius);
             font-family: var(--font-heading);
             font-weight: 700;
             font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-align: center;
-            margin-top: auto;
-            width: 100%;
             text-decoration: none;
+            transition: var(--transition-bouncy);
+            border: none;
+            cursor: pointer;
             position: relative;
-            z-index: 2;
+            overflow: hidden;
         }
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(138, 130, 255, 0.4);
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
-        .btn-donate {
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--electric-periwinkle), var(--holo-pink));
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(138, 130, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(138, 130, 255, 0.1);
+            color: var(--neon-aqua);
+            border: 2px solid var(--electric-periwinkle);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(138, 130, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .btn-danger {
             background: linear-gradient(135deg, #FF3366, var(--holo-pink));
-            animation: pulseDonate 2.5s infinite;
+            color: white;
+            animation: pulse 2s infinite;
         }
-        @keyframes pulseDonate {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 105, 240, 0.5); }
-            70% { box-shadow: 0 0 0 12px rgba(255, 105, 240, 0); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--neon-aqua);
+            border: 2px solid var(--neon-aqua);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 105, 240, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 105, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 105, 240, 0); }
+        }
+
+        /* ========== CARDS ========== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(30, 30, 46, 0.8), rgba(20, 20, 36, 0.9));
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(138, 130, 255, 0.2);
+            transition: var(--transition-bouncy);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--electric-periwinkle), var(--holo-pink));
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(138, 130, 255, 0.5);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px currentColor);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--neon-aqua);
+        }
+
+        .card-content {
+            flex: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            margin-top: auto;
+        }
+
+        /* ========== FEATURED SECTIONS ========== */
+        .featured-section {
+            background: linear-gradient(135deg, rgba(138, 130, 255, 0.1), rgba(0, 240, 255, 0.05));
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(138, 130, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.03) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ========== EMERGENCY ALERT ========== */
+        .emergency-alert {
+            background: linear-gradient(90deg, 
+                rgba(255, 71, 87, 0.2) 0%,
+                rgba(255, 105, 240, 0.3) 50%,
+                rgba(255, 71, 87, 0.2) 100%);
+            border: 1px solid rgba(255, 71, 87, 0.5);
+            border-radius: var(--border-radius-sm);
+            padding: 1rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: alertPulse 2s infinite;
+        }
+
+        @keyframes alertPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+
+        /* ========== PAGE INDEX ========== */
+        .page-index {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .page-category {
+            background: rgba(30, 30, 46, 0.5);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            border: 1px solid rgba(138, 130, 255, 0.2);
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-aqua);
+        }
+
+        .page-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: rgba(42, 15, 84, 0.3);
+            border-radius: var(--border-radius-sm);
+            color: var(--body-light);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            border-left: 3px solid var(--neon-aqua);
+        }
+
+        .page-link:hover {
+            background: rgba(42, 15, 84, 0.6);
+            transform: translateX(5px);
+            border-left-color: var(--holo-pink);
+        }
+
+        .page-link-icon {
+            font-size: 1.2rem;
+        }
+
+        /* ========== RESOURCE HIGHLIGHTS ========== */
+        .resource-highlight {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .resource-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(30, 30, 46, 0.5);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(138, 130, 255, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .resource-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-aqua);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 15px currentColor);
         }
 
         /* ========== TIMER WIDGET ========== */
-        .timer-widget {
-            background: rgba(30, 30, 46, 0.8);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        .water-wave-container {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .water-wave {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200%; height: 20px;
-            background: linear-gradient(90deg, transparent, rgba(0, 183, 255, 0.1), transparent);
-            animation: waveMove 15s infinite linear;
-            opacity: .3;
-        }
-        .water-wave:nth-child(2) { animation-delay: -5s; opacity: .2; height: 15px; }
-        .water-wave:nth-child(3) { animation-delay: -10s; opacity: .1; height: 10px; }
-
-        .timer-card {
-            position: relative;
-            z-index: 2;
-            background: rgba(42, 15, 84, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--accent3);
-        }
-        .timer-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .timer-controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .timer-btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            cursor: pointer;
-            font-size: .85rem;
-            transition: all .2s ease;
-            border: 1px solid rgba(0, 247, 224, 0.3);
-        }
-        .timer-btn:hover {
-            background: var(--neon-aqua);
-            color: var(--deep-violet);
-            transform: translateY(-1px);
-        }
-        .btn-start { background: var(--accent3); color: #fff; }
-        .btn-snooze { background: var(--accent4); color: #fff; }
-        .btn-settings { background: rgba(0, 0, 0, 0.5); }
-        .btn-save { background: var(--accent5); color: #fff; }
-        .btn-send { background: var(--accent2); color: #fff; }
-
-        .customization-panel {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 1px solid rgba(0, 247, 224, 0.2);
-        }
-        .form-group { margin-bottom: 12px; }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: .85rem;
-            color: var(--body-light);
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid rgba(0, 247, 224, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .hidden { display: none; }
-
-        /* ========== PANIC PEACH MODULE ========== */
-        #panicPeachContainer {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            z-index: 1002;
-            touch-action: none;
-            cursor: move;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-        #panicButton {
-            width: 70px; height: 70px;
-            font-size: 3rem;
-            background: radial-gradient(circle at 30% 30%, #FFD166, #FF6B95);
-            border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 25px var(--holo-pink);
-            animation: floatPeach 6s ease-in-out infinite;
-            user-select: none;
-            position: relative;
-            text-decoration: none;
-            color: #fff;
-        }
-        #panicButton::before {
-            content: "";
-            position: absolute;
-            top: -10px; left: 25px;
-            width: 18px; height: 15px;
-            background: linear-gradient(135deg, #FF9A7A, #FF7A5A);
-            border-radius: 50%;
-            transform: rotate(-20deg);
-        }
-        #panicButton:hover {
-            animation: none;
-            transform: scale(1.15);
-            box-shadow: 0 0 35px var(--holo-pink);
-        }
-        @keyframes floatPeach {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-        .panic-help-text {
-            color: #FF9A7A;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            text-shadow: 0 0 8px rgba(255, 154, 122, 0.7);
-            animation: blinkHelp 3s infinite;
-        }
-        @keyframes blinkHelp {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* ========== SEARCH ========== */
-        .search-container {
-            position: relative;
-            width: 90%;
-            max-width: 700px;
-            margin: 2rem auto;
-        }
-        .search-box {
-            display: flex;
-            background: rgba(30, 30, 46, 0.8);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--electric-periwinkle);
-            border-radius: 50px;
-            overflow: hidden;
-            padding: 0.5rem;
-        }
-        .search-box input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 0.9rem 1.5rem;
-            color: var(--body-light);
-            font-size: 1.1rem;
-            outline: none;
-        }
-        .search-box button {
-            background: var(--electric-periwinkle);
-            color: var(--deep-violet);
-            border: none;
-            padding: 0.9rem 1.8rem;
-            border-radius: 40px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-        .search-box button:hover {
-            background: var(--holo-pink);
-        }
-        #searchResults {
-            position: absolute;
-            top: 100%;
-            left: 0; right: 0;
-            background: var(--charcoal-grey);
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--electric-periwinkle);
-            border-top: none;
-            z-index: 1000;
-        }
-        .result-item {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(138, 130, 255, 0.2);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-        }
-        .result-item:hover {
-            background: rgba(138, 130, 255, 0.1);
-        }
-        .result-icon { margin-right: 12px; font-size: 1.2rem; }
-
-        /* ========== MOBILE HUD ========== */
-        .mobile-hud {
-            position: fixed;
-            bottom: 0; left: 0;
-            width: 100%;
-            background: rgba(20, 15, 40, 0.95);
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-around;
-            padding: 0.8rem 0;
-            z-index: 1001;
-            border-top: 1px solid var(--electric-periwinkle);
-        }
-        .hud-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--body-light);
-            padding: 0.5rem;
-            font-size: 0.75rem;
-            flex: 1;
-            text-align: center;
-            transition: var(--transition-smooth);
-            border-radius: 8px;
-            text-decoration: none;
-        }
-        .hud-btn:hover {
-            background: rgba(138, 130, 255, 0.2);
-            color: var(--neon-aqua);
-        }
-        .hud-icon {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-        }
-
-        /* ========== MODALS ========== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        .modal-content {
-            background: var(--charcoal-grey);
+        .timer-container {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(138, 130, 255, 0.1));
             border-radius: var(--border-radius);
             padding: 2rem;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 2px solid var(--neon-aqua);
-            box-shadow: var(--shadow-glow);
-            animation: modalSlideIn 0.4s ease-out;
-        }
-        @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .close-modal {
-            position: absolute;
-            top: 1rem; right: 1rem;
-            background: none;
-            border: none;
-            color: var(--neon-aqua);
-            font-size: 2rem;
-            cursor: pointer;
-            width: 40px; height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: var(--transition-smooth);
-        }
-        .close-modal:hover {
-            background: rgba(0, 240, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        /* ========== SOBER SECTION ========== */
-        .sober-blurb {
-            background: linear-gradient(135deg, rgba(58, 0, 82, 0.7), rgba(0, 199, 150, 0.2));
-            border-radius: 8px;
-            padding: 1.2rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--accent5);
-            text-align: center;
-            transition: all .3s ease;
-        }
-        .sober-blurb:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 199, 150, 0.3);
-        }
-        .mocktail-preview {
-            background: rgba(42, 15, 84, 0.5);
-            border-radius: 6px;
-            padding: 12px;
-            margin: 12px 0;
-            border: 1px solid var(--electric-periwinkle);
-        }
-        .mocktail-scroll-container {
-            overflow-x: auto;
-            padding-bottom: 8px;
-            margin-top: 12px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--neon-aqua) rgba(42, 15, 84, 0.5);
-        }
-        .mocktail-grid {
-            display: flex;
-            gap: 12px;
-            padding: 4px;
-            width: max-content;
-        }
-        .mocktail-card {
-            background: var(--card-bg);
-            border-radius: 5px;
-            padding: 10px;
+            margin: 3rem 0;
             border: 1px solid var(--neon-aqua);
-            transition: transform .2s;
-            min-width: 220px;
-            flex-shrink: 0;
-        }
-        .mocktail-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 3px 8px rgba(0, 247, 224, 0.2);
         }
 
-        /* ========== FOOTER & LEGAL ========== */
-        footer {
-            margin-top: 3rem;
-            padding: 2rem 1.5rem;
-            background: rgba(10, 5, 30, 0.8);
-            border-top: 1px solid var(--electric-periwinkle);
+        .timer-display {
+            font-family: 'Courier New', monospace;
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--neon-aqua);
+            margin: 2rem 0;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
         }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ========== FOOTER ========== */
+        .main-footer {
+            background: rgba(10, 5, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(138, 130, 255, 0.2);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
+
+        .footer-section h4 {
+            color: var(--electric-periwinkle);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
         .footer-links a {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: rgba(227, 224, 255, 0.8);
+            color: var(--body-light);
+            opacity: 0.8;
+            transition: var(--transition-smooth);
         }
+
         .footer-links a:hover {
+            opacity: 1;
             color: var(--neon-aqua);
             padding-left: 5px;
         }
-        .legal-disclaimer {
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid rgba(255, 71, 87, 0.3);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            font-size: 0.85rem;
-        }
+
         .social-links {
             display: flex;
-            justify-content: center;
             gap: 1rem;
-            margin: 1.5rem 0;
+            margin-top: 1.5rem;
         }
+
         .social-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 0.7rem 1.2rem;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
             background: rgba(138, 130, 255, 0.1);
-            border-radius: 30px;
+            border-radius: var(--border-radius-sm);
             color: var(--body-light);
-            transition: var(--transition-smooth);
             text-decoration: none;
+            transition: var(--transition-smooth);
         }
+
         .social-link:hover {
             background: var(--electric-periwinkle);
             color: var(--deep-violet);
             transform: translateY(-3px);
         }
 
-        /* ========== SCROLL TO TOP BUTTON ========== */
-        #scrollTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            z-index: 1001;
-            border: none;
-            outline: none;
-            background-color: var(--neon-aqua);
-            color: var(--deep-violet);
-            cursor: pointer;
-            padding: 10px 14px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            box-shadow: 0 3px 8px rgba(0, 247, 224, 0.3);
-            transition: all .3s ease;
-            animation: bounce 2.5s infinite;
-        }
-        #scrollTopBtn:hover {
-            background-color: #00e6cc;
-            transform: translateY(-2px) scale(1.1);
-            box-shadow: 0 4px 10px rgba(0, 247, 224, 0.5);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-4px); }
-            60% { transform: translateY(-2px); }
+        .legal-disclaimer {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: var(--border-radius-sm);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.9rem;
         }
 
-        /* ========== RESPONSIVE ADJUSTMENTS ========== */
-        @media (max-width: 767px) {
-            .container { padding: 0 1rem; }
-            .sections-grid { padding: 1rem; gap: 1rem; }
-            .section-card { padding: 1.2rem; }
-            .mobile-hud { display: flex; }
-            #panicPeachContainer {
-                bottom: 80px;
-                right: 15px;
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(138, 130, 255, 0.2);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== PANIC PEACH ========== */
+        .panic-peach {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            cursor: move;
+            touch-action: none;
+        }
+
+        .panic-button {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #FFD166, #FF6B95);
+            border-radius: 50% 50% 45% 55% / 60% 55% 45% 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            box-shadow: 
+                0 0 30px var(--holo-pink),
+                0 0 60px rgba(255, 105, 240, 0.3);
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            user-select: none;
+        }
+
+        .panic-button:before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 25px;
+            width: 18px;
+            height: 15px;
+            background: linear-gradient(135deg, #FF9A7A, #FF7A5A);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+
+        .panic-button:hover {
+            animation: none;
+            transform: scale(1.15);
+            box-shadow: 
+                0 0 40px var(--holo-pink),
+                0 0 80px rgba(255, 105, 240, 0.5);
+        }
+
+        .panic-label {
+            color: #FF9A7A;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            text-shadow: 0 0 8px rgba(255, 154, 122, 0.7);
+            animation: blink 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ========== MOBILE HUD ========== */
+        .mobile-hud {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 15, 40, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            justify-content: space-around;
+            padding: 0.75rem 0;
+            z-index: 998;
+            border-top: 1px solid var(--electric-periwinkle);
+        }
+
+        .hud-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--body-light);
+            text-decoration: none;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            transition: var(--transition-smooth);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .hud-button:hover {
+            background: rgba(138, 130, 255, 0.2);
+            color: var(--neon-aqua);
+        }
+
+        .hud-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ========== MODALS ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--charcoal-grey);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid var(--neon-aqua);
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes modalSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-50px) scale(0.9); 
             }
-            #panicButton {
-                width: 60px; height: 60px;
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--neon-aqua);
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition-smooth);
+        }
+
+        .close-modal:hover {
+            background: rgba(0, 240, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            section {
+                padding: 4rem 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+            }
+            
+            .mobile-hud {
+                display: flex;
+            }
+            
+            .panic-peach {
+                bottom: 80px;
+                right: 20px;
+            }
+            
+            .panic-button {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem 0 4rem;
+            }
+            
+            h1 {
+                font-size: clamp(2.5rem, 6vw, 3.5rem);
+            }
+            
+            h2 {
+                font-size: clamp(1.75rem, 4vw, 2.5rem);
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-section {
+                padding: 2rem;
+            }
+            
+            .timer-display {
                 font-size: 2.5rem;
             }
-            .timer-controls { flex-direction: column; }
-        }
-        @media (min-width: 768px) {
-            .mobile-hud { display: none; }
-            #panicPeachContainer {
-                bottom: 30px;
-                right: 30px;
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
             }
-            .mocktail-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
+            
+            .btn {
                 width: 100%;
+                max-width: 300px;
             }
-            .mocktail-card { min-width: auto; }
         }
-        @media (min-width: 1024px) {
-            .page-header { padding: 3.5rem 1rem 2rem; }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .featured-section {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .panic-peach {
+                bottom: 70px;
+                right: 15px;
+            }
         }
 
         /* ========== UTILITY CLASSES ========== */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        .py-3 { padding-top: 3rem; padding-bottom: 3rem; }
         .visually-hidden {
             position: absolute;
-            width: 1px; height: 1px;
-            padding: 0; margin: -1px;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
             overflow: hidden;
             clip: rect(0, 0, 0, 0);
             white-space: nowrap;
             border: 0;
         }
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 1rem; }
-        .mt-2 { margin-top: 2rem; }
-        .mb-1 { margin-bottom: 1rem; }
-        .mb-2 { margin-bottom: 2rem; }
-        .floating { animation: float-card 8s ease-in-out infinite; }
-        .floating-delay-1 { animation-delay: 1.5s; }
-        .floating-delay-2 { animation-delay: 3s; }
-        @keyframes float-card {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
     </style>
 </head>
 <body>
     <!-- Animated Background -->
-    <div class="animated-background" aria-hidden="true">
+    <div class="animated-background">
         <div class="bg-gradient"></div>
-        <div class="bg-particles" id="particles"></div>
-        <div class="wave"></div><div class="wave"></div><div class="wave"></div>
-        <div class="minneapolis-skyline">
-            <div class="skyline-buildings">
-                <div class="building building-1" style="width: 40px; height: 120px;"></div>
-                <div class="building building-2" style="width: 30px; height: 90px;"></div>
-                <div class="building building-3" style="width: 60px; height: 180px;"></div>
-                <div class="building building-4" style="width: 35px; height: 100px;"></div>
-                <div class="building building-5" style="width: 50px; height: 150px;"></div>
-                <div class="building building-6" style="width: 45px; height: 130px;"></div>
-                <div class="building building-7" style="width: 55px; height: 160px;"></div>
-                <div class="building building-8" style="width: 25px; height: 80px;"></div>
-            </div>
-            <div class="river"></div>
-        </div>
+        <div class="particles" id="particles"></div>
     </div>
 
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" title="Go to top">↑</button>
-
-    <!-- Skip to Main Content Link (Accessibility) -->
+    <!-- Skip to Content -->
     <a href="#main-content" class="visually-hidden">Skip to main content</a>
 
-    <!-- Mobile Navigation Toggle -->
-    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
-        <span></span><span></span><span></span>
-    </button>
-    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
-    <nav class="mobile-nav-panel" id="mobileNavPanel" aria-label="Main navigation">
-        <div class="nav-category active">
-            <div class="nav-category-title">
-                🚨 Safety & Emergency
-                <span>▼</span>
-            </div>
-            <div class="nav-category-links">
-                <a href="#panicButton" class="nav-link" onclick="showEmergencyModal()"><span class="nav-link-icon">🚨</span>Panic Button</a>
-                <a href="#emergencyModal" class="nav-link" onclick="showEmergencyModal()"><span class="nav-link-icon">🆘</span>Emergency Guides</a>
-                <a href="#narcanSection" class="nav-link" onclick="scrollToNarcan()"><span class="nav-link-icon">💊</span>Find Narcan</a>
-                <a href="spiking.html" class="nav-link"><span class="nav-link-icon">🚫</span>Drink Spiking</a>
-                <a href="badtrip.html" class="nav-link"><span class="nav-link-icon">🌈</span>Bad Trip Support</a>
-                <a href="ride-safety.html" class="nav-link"><span class="nav-link-icon">🌃</span>Rideshare Safety</a>
-            </div>
-        </div>
-        <div class="nav-category">
-            <div class="nav-category-title">
-                🔬 Drug Information
-                <span>▼</span>
-            </div>
-            <div class="nav-category-links">
-                <a href="polydrug.html" class="nav-link"><span class="nav-link-icon">⚡</span>Polydrug Tool</a>
-                <a href="rx-combos.html" class="nav-link"><span class="nav-link-icon">💊</span>RX + Party Combos</a>
-                <a href="fake.html" class="nav-link"><span class="nav-link-icon">⚠️</span>Fake Drugs & Alerts</a>
-                <a href="health.html" class="nav-link"><span class="nav-link-icon">💚</span>Raver Health</a>
-                <a href="symptoms.html" class="nav-link"><span class="nav-link-icon">🤒</span>Symptom Checker</a>
-            </div>
-        </div>
-        <div class="nav-category">
-            <div class="nav-category-title">
-                🤝 Consent & Community
-                <span>▼</span>
-            </div>
-            <div class="nav-category-links">
-                <a href="consent.html" class="nav-link"><span class="nav-link-icon">✅</span>Consent Basics</a>
-                <a href="accountability.html" class="nav-link"><span class="nav-link-icon">⚖️</span>Accountability</a>
-                <a href="rejection-based-violence.html" class="nav-link"><span class="nav-link-icon">🛡️</span>Violence Prevention</a>
-            </div>
-        </div>
-        <div class="nav-category">
-            <div class="nav-category-title">
-                📍 Local Scene
-                <span>▼</span>
-            </div>
-            <div class="nav-category-links">
-                <a href="venues-guide.html" class="nav-link"><span class="nav-link-icon">🏢</span>Venues Guide</a>
-                <a href="booth.html" class="nav-link"><span class="nav-link-icon">🎉</span>Our Booth</a>
-            </div>
-        </div>
-        <div class="nav-category">
-            <div class="nav-category-title">
-                📚 More Resources
-                <span>▼</span>
-            </div>
-            <div class="nav-category-links">
-                <a href="seasonal-tips.html" class="nav-link"><span class="nav-link-icon">🌞</span>Seasonal Tips</a>
-                <a href="sober.html" class="nav-link"><span class="nav-link-icon">🚫</span>Sober Ravers</a>
-                <a href="resources.html" class="nav-link"><span class="nav-link-icon">📚</span>MN Resources</a>
-            </div>
-        </div>
-        <div class="mt-2">
-            <a href="#donateSection" class="btn btn-donate" onclick="scrollToDonate()">💖 Donate via Venmo</a>
-        </div>
-    </nav>
-
-    <!-- Emergency Alert Banner -->
-    <div class="emergency-alert">
-        <div class="alert-scroll">
-            🚨 URGENT: Minnesota Good Samaritan Law protects you when calling 911 for an overdose. Never hesitate to call. | 🚫 Xylazine ("tranq") present in local drug supply - causes severe wounds & doesn't respond to Narcan. | 💊 Carry multiple doses of Narcan. Find free Narcan near you below. | ⚠️ Fake pills may contain lethal fentanyl. Test your substances. | 🆘 If someone is unresponsive: CALL 911, give Narcan, start rescue breathing.
-        </div>
-    </div>
-
-    <!-- Main Header -->
-    <header class="page-header">
+    <!-- Header -->
+    <header class="main-header">
         <div class="container">
-            <h1>PLURderapolis</h1>
-            <div class="tagline">Harm Reduction for Minnesota Ravers</div>
-            <p class="text-center mt-1">Your partners in shine. Safer nightlife through education, resources, and community care.</p>
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <span class="logo-emoji">🍑</span>
+                    <span class="logo-text">PLURderapolis</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="#emergency" class="nav-link">🚨 Emergency</a>
+                    <a href="#resources" class="nav-link">📚 Resources</a>
+                    <a href="#drug-info" class="nav-link">🔬 Drug Info</a>
+                    <a href="#consent" class="nav-link">🤝 Consent</a>
+                    <a href="#local" class="nav-link">📍 Local</a>
+                    <a href="#support" class="nav-link">💖 Support</a>
+                </nav>
+                
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <span>☰</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Enhanced Search -->
-    <div class="search-container">
-        <div class="search-box">
-            <input type="text" id="siteSearch" placeholder="Search for Narcan, emergency guides, consent, polydrug risks..." aria-label="Search the site">
-            <button onclick="performSearch()" aria-label="Search">🔍 Search</button>
+    <!-- Hero Section -->
+    <section class="hero" id="main-content">
+        <div class="container container-narrow">
+            <h1>PLURderapolis</h1>
+            <p class="hero-tagline">Harm Reduction for Minnesota Ravers</p>
+            <p class="lead">Your partners in shine. Safer nightlife through education, resources, and community care. Serving the Twin Cities and beyond with evidence-based harm reduction.</p>
+            
+            <div class="hero-cta">
+                <a href="#emergency" class="btn btn-primary">🚨 Emergency Tools</a>
+                <a href="#narcan" class="btn btn-secondary">💊 Find Narcan</a>
+                <a href="#support" class="btn btn-danger">💖 Support Our Work</a>
+            </div>
         </div>
-        <div id="searchResults" role="listbox" aria-label="Search results"></div>
+    </section>
+
+    <!-- Emergency Alert -->
+    <div class="container">
+        <div class="emergency-alert">
+            <div class="alert-content">
+                <span>🚨</span>
+                <div>
+                    <strong>URGENT ALERT:</strong> Minnesota Good Samaritan Law protects you when calling 911 for an overdose. Never hesitate to call for help.
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Main Content Grid -->
-    <main id="main-content" class="container">
-        <div class="sections-grid">
+    <!-- Emergency Tools Section -->
+    <section id="emergency">
+        <div class="container">
+            <h2>🚨 Emergency Tools & Resources</h2>
+            <p class="lead">Immediate access to life-saving information and resources. Every second counts.</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🚨</div>
+                    <h3 class="card-title">Panic Button & Emergency Modal</h3>
+                    <div class="card-content">
+                        <p>Instant access to emergency protocols, 911 guidance, and overdose response steps. Includes Minnesota Good Samaritan Law information.</p>
+                        <ul>
+                            <li>One-click emergency access</li>
+                            <li>Step-by-step overdose response</li>
+                            <li>Local emergency contacts</li>
+                            <li>Mobile-optimized for quick access</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="panic.html" class="btn btn-primary">Access Panic Button</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">🆘</div>
+                    <h3 class="card-title">Emergency Guides</h3>
+                    <div class="card-content">
+                        <p>Comprehensive guides for various emergency situations including overdose response, heat stroke, seizures, and bad trips.</p>
+                        <ul>
+                            <li>Overdose response checklist</li>
+                            <li>Recovery position instructions</li>
+                            <li>Bad trip grounding exercises</li>
+                            <li>Seizure first aid</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="emergency.html" class="btn btn-primary">View Emergency Guides</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">💊</div>
+                    <h3 class="card-title" id="narcan">Narcan & Overdose Response</h3>
+                    <div class="card-content">
+                        <p><strong>Naloxone (Narcan®)</strong> is a lifesaving drug that can reverse an opioid overdose in minutes. Anyone should have it on hand.</p>
+                        <ul>
+                            <li>Where to find free Narcan in MN</li>
+                            <li>How to administer Narcan</li>
+                            <li>Overdose recognition signs</li>
+                            <li>MN Good Samaritan Law info</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="showNarcanModal()">Learn About Narcan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- EMERGENCY TOOLS CARD -->
-            <section class="section-card floating collapsed" aria-labelledby="emergency-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">🚨</div>
-                        <h3 class="card-title" id="emergency-title">Emergency Tools</h3>
-                        <div class="section-summary">Quick access to emergency resources when you need them most.</div>
-                    </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="link-list">
-                        <a href="#panicButton" class="link-item" onclick="showEmergencyModal()">
-                            <span class="link-item-icon">🚨</span>Panic Button & Emergency Modal
+    <!-- Drug Information Section -->
+    <section id="drug-info" style="background: rgba(30, 30, 46, 0.3);">
+        <div class="container">
+            <h2>🔬 Drug Information & Safety</h2>
+            <p class="lead">Evidence-based information about substance safety, interactions, and harm reduction strategies.</p>
+            
+            <div class="page-index">
+                <div class="page-category">
+                    <h3 class="category-title">⚡ Drug Interaction Tools</h3>
+                    <div class="page-links">
+                        <a href="polydrug.html" class="page-link">
+                            <span class="page-link-icon">⚡</span>
+                            <span>Polydrug Interaction Tool</span>
                         </a>
-                        <a href="#emergencyModal" class="link-item" onclick="showEmergencyModal()">
-                            <span class="link-item-icon">🆘</span>Step-by-Step Emergency Guides
+                        <a href="rx-combos.html" class="page-link">
+                            <span class="page-link-icon">💊</span>
+                            <span>RX + Party Drug Combos</span>
                         </a>
-                        <a href="#narcanSection" class="link-item" onclick="scrollToNarcan()">
-                            <span class="link-item-icon">💊</span>Find & Use Narcan (Naloxone)
-                        </a>
-                        <a href="badtrip.html" class="link-item">
-                            <span class="link-item-icon">🌈</span>Bad Trip Grounding Exercises
+                        <a href="symptoms.html" class="page-link">
+                            <span class="page-link-icon">🤒</span>
+                            <span>Symptom Checker</span>
                         </a>
                     </div>
-                    <button class="btn" onclick="showEmergencyModal()">🚨 View Emergency Protocol</button>
                 </div>
-            </section>
+                
+                <div class="page-category">
+                    <h3 class="category-title">⚠️ Substance Safety</h3>
+                    <div class="page-links">
+                        <a href="fake.html" class="page-link">
+                            <span class="page-link-icon">⚠️</span>
+                            <span>Fake Drugs & Alerts</span>
+                        </a>
+                        <a href="health.html" class="page-link">
+                            <span class="page-link-icon">💚</span>
+                            <span>Raver Health Guide</span>
+                        </a>
+                        <a href="spiking.html" class="page-link">
+                            <span class="page-link-icon">🚫</span>
+                            <span>Drink Spiking Prevention</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="page-category">
+                    <h3 class="category-title">🌈 Mental Health Support</h3>
+                    <div class="page-links">
+                        <a href="badtrip.html" class="page-link">
+                            <span class="page-link-icon">🌈</span>
+                            <span>Bad Trip Support</span>
+                        </a>
+                        <a href="sober.html" class="page-link">
+                            <span class="page-link-icon">🚫</span>
+                            <span>Sober Ravers Resources</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- NARCAN & OVERDOSE RESPONSE CARD -->
-            <section class="section-card floating floating-delay-1 collapsed" aria-labelledby="narcan-title" id="narcanSection">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">💊</div>
-                        <h3 class="card-title" id="narcan-title">Narcan & Overdose Response</h3>
-                        <div class="section-summary"><strong>Naloxone (Narcan®)</strong> is a lifesaving drug that can reverse an opioid overdose in minutes.</div>
+    <!-- Consent & Community Section -->
+    <section id="consent">
+        <div class="container">
+            <h2>🤝 Consent & Community Safety</h2>
+            <p class="lead">Creating safer spaces through education, accountability, and violence prevention.</p>
+            
+            <div class="featured-section">
+                <h3>Building Safer Communities</h3>
+                <p>We believe that harm reduction extends beyond substance safety to include consent education, boundary setting, and community accountability.</p>
+                
+                <div class="resource-highlight">
+                    <div class="resource-item">
+                        <div class="resource-icon">✅</div>
+                        <h4>Consent Basics</h4>
+                        <p>Understanding and practicing consent in nightlife and festival environments.</p>
+                        <a href="consent.html" class="btn btn-outline">Learn More</a>
                     </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="link-list">
-                        <a href="https://www.health.state.mn.us/communities/overdose/harmreduce/naloxone.html" target="_blank" class="link-item">
-                            <span class="link-item-icon">📍</span>MN Dept. of Health: Naloxone Finder
-                        </a>
-                        <a href="https://boynton.umn.edu/naloxone-locations" target="_blank" class="link-item">
-                            <span class="link-item-icon">🏫</span>UMN Campus Naloxone Locations
-                        </a>
-                        <a href="emergency.html" class="link-item">
-                            <span class="link-item-icon">📋</span>Overdose Response Checklist
-                        </a>
+                    
+                    <div class="resource-item">
+                        <div class="resource-icon">🛡️</div>
+                        <h4>Violence Prevention</h4>
+                        <p>Strategies for preventing rejection-based violence and creating safer spaces.</p>
+                        <a href="rejection-based-violence.html" class="btn btn-outline">Learn More</a>
                     </div>
-                    <div class="timer-widget">
-                        <div class="water-wave-container">
-                            <div class="water-wave"></div><div class="water-wave"></div><div class="water-wave"></div>
-                        </div>
-                        <div class="timer-card">
-                            <div class="timer-title">
-                                <span>💊 Narcan Steps</span>
-                            </div>
-                            <p><strong>1. Call 911</strong> - MN Good Samaritan Law provides protection.</p>
-                            <p><strong>2. Give Narcan</strong> - Nasal spray or injectable. Repeat every 2-3 mins.</p>
-                            <p><strong>3. Rescue Breathing</strong> - If not breathing, provide breaths until help arrives.</p>
-                        </div>
+                    
+                    <div class="resource-item">
+                        <div class="resource-icon">⚖️</div>
+                        <h4>Accountability</h4>
+                        <p>Community accountability processes and restorative justice approaches.</p>
+                        <a href="accountability.html" class="btn btn-outline">Learn More</a>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </section>
 
-            <!-- HYDRATION & CHECK-IN TIMER CARD -->
-            <section class="section-card floating floating-delay-2 collapsed" aria-labelledby="timer-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">💧</div>
-                        <h3 class="card-title" id="timer-title">Hydration & Check-in Timer</h3>
-                        <div class="section-summary">Set customizable reminders to stay hydrated, check on friends, and take care of yourself.</div>
+    <!-- Local Scene Section -->
+    <section id="local" style="background: rgba(30, 30, 46, 0.3);">
+        <div class="container">
+            <h2>📍 Minnesota Local Scene</h2>
+            <p class="lead">Resources and information specific to Minnesota's electronic music community.</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-icon">🏢</div>
+                    <h3 class="card-title">Venue Safety Guide</h3>
+                    <div class="card-content">
+                        <p>Comprehensive guide to Minnesota venues with safety information, harm reduction resources, and accessibility details.</p>
+                        <ul>
+                            <li>Minneapolis venues</li>
+                            <li>St. Paul venues</li>
+                            <li>Festival information</li>
+                            <li>Safety ratings</li>
+                        </ul>
                     </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="timer-widget">
-                        <div class="water-wave-container">
-                            <div class="water-wave"></div><div class="water-wave"></div><div class="water-wave"></div>
-                        </div>
-                        <div class="timer-card" id="water-timer">
-                            <div class="timer-title">
-                                <span>💧 Drink Water</span>
-                                <span id="water-status">--:--</span>
-                            </div>
-                            <p>Time for a hydrating break. Your body will thank you!</p>
-                            <div class="timer-controls">
-                                <button class="timer-btn btn-start" onclick="startTimer('water')">Start Timer</button>
-                                <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('water')">Snooze (10m)</button>
-                            </div>
-                        </div>
-                        <div class="timer-card" id="buddy-timer">
-                            <div class="timer-title">
-                                <span>👥 Check in with Buddy</span>
-                                <span id="buddy-status">--:--</span>
-                            </div>
-                            <p>Reach out to your buddy. A quick chat can make a big difference.</p>
-                            <div class="timer-controls">
-                                <button class="timer-btn btn-start" onclick="startTimer('buddy')">Start Timer</button>
-                                <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('buddy')">Snooze (30m)</button>
-                            </div>
-                        </div>
-                        <div class="timer-card" id="eat-timer">
-                            <div class="timer-title">
-                                <span>🍎 Eat Something</span>
-                                <span id="eat-status">--:--</span>
-                            </div>
-                            <p>Fuel your body with a healthy snack or meal.</p>
-                            <div class="timer-controls">
-                                <button class="timer-btn btn-start" onclick="startTimer('eat')">Start Timer</button>
-                                <button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('eat')">Snooze (20m)</button>
-                            </div>
-                        </div>
-                        <div class="timer-controls">
-                            <button class="timer-btn btn-settings" onclick="toggleCustomization()">Customize Reminders</button>
-                            <button class="timer-btn btn-send" onclick="showSendModal()">Send Timer to Friend</button>
-                        </div>
-                        <div class="customization-panel hidden" id="customization-panel">
-                            <h3>Customize Your Reminders</h3>
-                            <form id="customization-form">
-                                <div class="form-group">
-                                    <label for="water-interval">Water Reminder Interval (minutes)</label>
-                                    <input type="number" id="water-interval" min="15" max="180" value="60">
-                                </div>
-                                <div class="form-group">
-                                    <label for="buddy-interval">Buddy Check-in Interval (minutes)</label>
-                                    <input type="number" id="buddy-interval" min="30" max="480" value="120">
-                                </div>
-                                <div class="form-group">
-                                    <label for="eat-interval">Eat Something Interval (minutes)</label>
-                                    <input type="number" id="eat-interval" min="30" max="360" value="180">
-                                </div>
-                                <div class="form-group">
-                                    <label for="snooze-duration">Default Snooze Time (minutes)</label>
-                                    <input type="number" id="snooze-duration" min="5" max="60" value="10">
-                                </div>
-                            </form>
-                            <button type="button" class="timer-btn btn-save" onclick="saveCustomizations()">Save Settings</button>
-                        </div>
+                    <div class="card-footer">
+                        <a href="venues-guide.html" class="btn btn-primary">View Venue Guide</a>
                     </div>
                 </div>
-            </section>
+                
+                <div class="card">
+                    <div class="card-icon">🎉</div>
+                    <h3 class="card-title">Our Harm Reduction Booth</h3>
+                    <div class="card-content">
+                        <p>Find our harm reduction booth at events across Minnesota. We provide free Narcan, test strips, resources, and support.</p>
+                        <ul>
+                            <li>Event schedule</li>
+                            <li>Booth locations</li>
+                            <li>Available resources</li>
+                            <li>Volunteer opportunities</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="booth.html" class="btn btn-primary">See Booth Schedule</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">🌃</div>
+                    <h3 class="card-title">Rideshare & Travel Safety</h3>
+                    <div class="card-content">
+                        <p>Safety tips for using rideshares and traveling safely in Minnesota nightlife.</p>
+                        <ul>
+                            <li>Rideshare safety tips</li>
+                            <li>Designated driver resources</li>
+                            <li>Public transportation info</li>
+                            <li>Nightlife travel safety</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="ride-safety.html" class="btn btn-primary">Travel Safety Tips</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <!-- DRUG INFORMATION & TESTING CARD -->
-            <section class="section-card floating collapsed" aria-labelledby="druginfo-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">🔬</div>
-                        <h3 class="card-title" id="druginfo-title">Drug Information & Testing</h3>
-                        <div class="section-summary">Over 70% of overdose deaths involve synthetic opioids like fentanyl. Test your substances.</div>
-                    </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="link-list">
-                        <a href="fake.html" class="link-item">
-                            <span class="link-item-icon">⚠️</span>Is Your Substance Real? (Fake Drugs & Alerts)
+    <!-- Resources Section -->
+    <section id="resources">
+        <div class="container">
+            <h2>📚 Comprehensive Resources</h2>
+            <p class="lead">All the harm reduction resources you need in one place.</p>
+            
+            <div class="page-index">
+                <div class="page-category">
+                    <h3 class="category-title">🧭 Navigation & Tools</h3>
+                    <div class="page-links">
+                        <a href="resources.html" class="page-link">
+                            <span class="page-link-icon">📚</span>
+                            <span>MN Resources Directory</span>
                         </a>
-                        <a href="polydrug.html" class="link-item">
-                            <span class="link-item-icon">⚡</span>Polydrug Interaction Tool
+                        <a href="seasonal-tips.html" class="page-link">
+                            <span class="page-link-icon">🌞</span>
+                            <span>Seasonal Safety Tips</span>
                         </a>
-                        <a href="rx-combos.html" class="link-item">
-                            <span class="link-item-icon">💊</span>RX + Party Drug Combos
+                        <a href="legal-disclaimers-terms.html" class="page-link">
+                            <span class="page-link-icon">⚖️</span>
+                            <span>Legal Disclaimers & Terms</span>
                         </a>
-                        <a href="https://www.health.state.mn.us/communities/overdose/response/resources.html" target="_blank" class="link-item">
-                            <span class="link-item-icon">📚</span>MN Overdose Prevention Resources
-                        </a>
-                    </div>
-                    <button class="btn" onclick="window.location.href='fake.html'">🔍 Learn About Testing</button>
-                </div>
-            </section>
-
-            <!-- CONSENT & COMMUNITY SAFETY CARD -->
-            <section class="section-card floating floating-delay-1 collapsed" aria-labelledby="consent-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">🤝</div>
-                        <h3 class="card-title" id="consent-title">Consent & Community Safety</h3>
-                        <div class="section-summary">Creating safer spaces through education, accountability, and violence prevention.</div>
-                    </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="link-list">
-                        <a href="consent.html" class="link-item">
-                            <span class="link-item-icon">✅</span>Consent Basics for Nightlife
-                        </a>
-                        <a href="rejection-based-violence.html" class="link-item">
-                            <span class="link-item-icon">🛡️</span>Rejection Violence Prevention
-                        </a>
-                        <a href="accountability.html" class="link-item">
-                            <span class="link-item-icon">⚖️</span>Community Accountability
-                        </a>
-                        <a href="spiking.html" class="link-item">
-                            <span class="link-item-icon">🚫</span>Drink Spiking Prevention
-                        </a>
-                    </div>
-                    <button class="btn" onclick="window.location.href='consent.html'">✅ Explore Consent Resources</button>
-                </div>
-            </section>
-
-            <!-- SOBER RAVERS CARD -->
-            <section class="section-card floating floating-delay-2 collapsed" aria-labelledby="sober-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">🚫</div>
-                        <h3 class="card-title" id="sober-title">Sober Ravers</h3>
-                        <div class="section-summary">Enjoy the scene without substances with these refreshing mocktail recipes.</div>
-                    </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <div class="sober-blurb">
-                        <h3>🎉 Enjoy the Vibe, Your Way</h3>
-                        <p>Whether you're sober-curious, in recovery, or just taking a break, you're welcome here. We believe great times don't require substances.</p>
-                        <div class="mocktail-preview">
-                            <div class="mocktail-scroll-container">
-                                <div class="mocktail-grid">
-                                    <div class="mocktail-card">
-                                        <h3>🌙 Midnight Mule</h3>
-                                        <ul class="link-list" style="margin: 0; gap: 0.2rem;">
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Ginger beer</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Fresh lime juice</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Mint leaves</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Cucumber slices</li>
-                                        </ul>
-                                    </div>
-                                    <div class="mocktail-card">
-                                        <h3>🌈 PLUR Punch</h3>
-                                        <ul class="link-list" style="margin: 0; gap: 0.2rem;">
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Cranberry juice</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Orange juice</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Club soda</li>
-                                            <li class="link-item" style="padding: 0.3rem; background: transparent;">• Fresh berries</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p><strong>Remember:</strong> Hydration is key to staying energized and healthy throughout the night. 💧</p>
-                        <button class="btn" style="background: var(--accent5)" onclick="window.location.href='sober.html'">Explore Sober Resources</button>
                     </div>
                 </div>
-            </section>
-
-            <!-- DONATION & SUPPORT CARD -->
-            <section class="section-card floating collapsed" aria-labelledby="donate-title" id="donateSection">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">💖</div>
-                        <h3 class="card-title" id="donate-title">Support Our Work</h3>
-                        <div class="section-summary">Your donations fund harm reduction supplies, booth events, and free resources for Minnesota's nightlife community.</div>
+                
+                <div class="page-category">
+                    <h3 class="category-title">💧 Health & Wellness</h3>
+                    <div class="page-links">
+                        <a href="#hydration-timer" class="page-link" onclick="showHydrationModal()">
+                            <span class="page-link-icon">💧</span>
+                            <span>Hydration Timer</span>
+                        </a>
+                        <a href="sober.html" class="page-link">
+                            <span class="page-link-icon">🚫</span>
+                            <span>Sober Ravers Support</span>
+                        </a>
                     </div>
-                    <button class="collapsible-toggle">+</button>
                 </div>
-                <div class="collapsible-content">
-                    <div class="legal-disclaimer" style="margin: 1rem 0; padding: 1rem;">
-                        <strong>⚠️ Venmo Security Alert:</strong> Scammers create fake charity accounts. Always verify the handle before donating.
-                    </div>
-                    <div style="background: rgba(0, 199, 150, 0.2); color: var(--success); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; margin: 1rem 0; text-align: center;">
-                        ✅ Verified <strong>@plurderapolis</strong>
-                    </div>
-                    <p class="text-small">Donations are not tax-deductible. We are a grassroots community organization.</p>
-                    <div class="link-list">
-                        <a href="https://www.venmo.com/u/plurderapolis" target="_blank" class="link-item" onclick="logDonationClick()">
-                            <span class="link-item-icon">💖</span>Donate via Venmo (@plurderapolis)
+                
+                <div class="page-category">
+                    <h3 class="category-title">📋 Quick Access</h3>
+                    <div class="page-links">
+                        <a href="panic.html" class="page-link">
+                            <span class="page-link-icon">🚨</span>
+                            <span>Panic Button</span>
                         </a>
-                        <a href="booth.html" class="link-item">
-                            <span class="link-item-icon">🎉</span>See Where Our Booth Will Be
+                        <a href="emergency.html" class="page-link">
+                            <span class="page-link-icon">🆘</span>
+                            <span>Emergency Guides</span>
+                        </a>
+                        <a href="fake.html" class="page-link">
+                            <span class="page-link-icon">⚠️</span>
+                            <span>Fake Drug Alerts</span>
                         </a>
                     </div>
-                    <button class="btn btn-donate" onclick="window.open('https://www.venmo.com/u/plurderapolis', '_blank'); logDonationClick();">
-                        💖 Donate Now
+                </div>
+            </div>
+            
+            <!-- Hydration Timer Widget -->
+            <div class="timer-container mt-3">
+                <h3>💧 Hydration & Buddy Check-in Timer</h3>
+                <p>Set reminders to stay hydrated and check on your friends throughout the night.</p>
+                
+                <div class="timer-display" id="masterTimer">--:--</div>
+                
+                <div class="timer-controls">
+                    <button class="btn btn-secondary" onclick="startWaterTimer()">
+                        💧 Start Water Timer (45min)
+                    </button>
+                    <button class="btn btn-secondary" onclick="startBuddyTimer()">
+                        👥 Start Buddy Check-in (2hr)
+                    </button>
+                    <button class="btn btn-outline" onclick="pauseAllTimers()">
+                        ⏸️ Pause All
+                    </button>
+                    <button class="btn btn-outline" onclick="resetAllTimers()">
+                        🔄 Reset All
                     </button>
                 </div>
-            </section>
-
-            <!-- ABOUT US CARD -->
-            <section class="section-card floating floating-delay-1 collapsed" aria-labelledby="about-title">
-                <div class="card-header" onclick="toggleCollapse(this)">
-                    <div>
-                        <div class="card-icon">📖</div>
-                        <h3 class="card-title" id="about-title">About Us</h3>
-                        <div class="section-summary">Learn about our grassroots harm reduction work in Minnesota's nightlife and festival community.</div>
-                    </div>
-                    <button class="collapsible-toggle">+</button>
-                </div>
-                <div class="collapsible-content">
-                    <p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p>
-                    <p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p>
-                    <p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p>
-                    <div class="link-list">
-                        <a href="booth.html" class="link-item">
-                            <span class="link-item-icon">🎉</span>Visit Our Harm Reduction Booth
-                        </a>
-                    </div>
-                    <button class="btn" onclick="window.location.href='booth.html'">See Our Booth Schedule</button>
-                </div>
-            </section>
-
-        </div> <!-- End Sections Grid -->
-
-        <!-- Additional Resources Section -->
-        <div class="timer-widget mt-2">
-            <h3 class="text-center">📚 More Minnesota Resources</h3>
-            <p class="text-center">Connect with local organizations for support, treatment, and harm reduction supplies.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-                <div class="timer-card">
-                    <h4>Steve Rummler HOPE Network</h4>
-                    <p class="text-small">Naloxone access & training: 952-943-3937</p>
-                </div>
-                <div class="timer-card">
-                    <h4>MN Poison Control</h4>
-                    <p class="text-small">24/7 overdose assistance: 1-800-222-1222</p>
-                </div>
-                <div class="timer-card">
-                    <h4>Fast Tracker for Treatment</h4>
-                    <p class="text-small">Statewide SUD service openings</p>
+                
+                <div class="mt-2 text-center">
+                    <button class="btn btn-primary" onclick="showTimerSettings()">
+                        ⚙️ Customize Timer Settings
+                    </button>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Anonymous Tip Link -->
-        <div style="text-align:center; margin:2rem 0;">
-            <a href="http://users.smartgb.com/g/g.php?a=s&i=g19-02505-d5" target="_blank" style="color:var(--holo-pink);font-weight:bold;text-decoration:none;font-size:1rem;padding:1rem;border:1px solid var(--holo-pink);border-radius:var(--border-radius);display:inline-block;">
-                💬 Leave an Anonymous Tip
-            </a>
+    <!-- Support Section -->
+    <section id="support" style="background: linear-gradient(135deg, rgba(138, 130, 255, 0.1), rgba(30, 30, 46, 0.9));">
+        <div class="container container-narrow">
+            <h2>💖 Support Our Work</h2>
+            <p class="lead">Your donations fund harm reduction supplies, booth events, and free resources for Minnesota's nightlife community.</p>
+            
+            <div class="featured-section">
+                <div class="alert alert-warning">
+                    <strong>⚠️ Venmo Security Alert:</strong> Scammers create fake charity accounts. Always verify the handle before donating.
+                </div>
+                
+                <div class="text-center mb-3">
+                    <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 199, 150, 0.2); color: var(--success-green); padding: 1rem 2rem; border-radius: var(--border-radius); font-weight: 600;">
+                        <span>✅ Verified</span>
+                        <strong>@plurderapolis</strong>
+                    </div>
+                </div>
+                
+                <p class="text-center">Donations are not tax-deductible. We are a grassroots community organization.</p>
+                
+                <div class="text-center mt-3">
+                    <a href="https://www.venmo.com/u/plurderapolis" target="_blank" class="btn btn-danger" style="font-size: 1.2rem; padding: 1.5rem 3rem;" onclick="logDonationClick()">
+                        💖 Donate via Venmo
+                    </a>
+                </div>
+                
+                <p class="text-small text-center mt-2">
+                    Your support helps us provide free Narcan, test strips, and harm reduction education at events across Minnesota.
+                </p>
+            </div>
         </div>
-
-    </main>
-
-    <!-- Panic Peach Module -->
-    <div id="panicPeachContainer">
-        <div id="panicButton" role="button" aria-label="Emergency panic button" tabindex="0">🍑</div>
-        <div class="panic-help-text">HELP!</div>
-    </div>
-
-    <!-- Mobile Bottom HUD -->
-    <nav class="mobile-hud" aria-label="Quick access toolbar">
-        <a href="#narcanSection" class="hud-btn" onclick="scrollToNarcan()">
-            <span class="hud-icon">💊</span>Narcan
-        </a>
-        <a href="#panicButton" class="hud-btn" onclick="showEmergencyModal()">
-            <span class="hud-icon">🚨</span>Panic
-        </a>
-        <a href="#donateSection" class="hud-btn" onclick="scrollToDonate()">
-            <span class="hud-icon">💖</span>Donate
-        </a>
-        <a href="resources.html" class="hud-btn">
-            <span class="hud-icon">📚</span>Resources
-        </a>
-        <a href="badtrip.html" class="hud-btn">
-            <span class="hud-icon">🌈</span>Bad Trip
-        </a>
-    </nav>
+    </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">
-                <div>
+                <div class="footer-section">
                     <h4>PLURderapolis</h4>
-                    <p class="text-small">Harm reduction for Minnesota's electronic music community. Your partners in shine.</p>
+                    <p>Harm reduction for Minnesota's electronic music community. Your partners in shine.</p>
                     <div class="social-links">
-                        <a href="https://www.instagram.com/plurderapolis" target="_blank" class="social-link">📷 Instagram</a>
-                        <a href="https://www.facebook.com/plurderapolis" target="_blank" class="social-link">📘 Facebook</a>
-                        <a href="mailto:plurderapolis@gmail.com" class="social-link">✉️ Email</a>
+                        <a href="https://www.instagram.com/plurderapolis" target="_blank" class="social-link">
+                            📷 Instagram
+                        </a>
+                        <a href="https://www.facebook.com/plurderapolis" target="_blank" class="social-link">
+                            📘 Facebook
+                        </a>
+                        <a href="mailto:plurderapolis@gmail.com" class="social-link">
+                            ✉️ Email
+                        </a>
                     </div>
                 </div>
-                <div class="footer-links">
+                
+                <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="#panicButton" onclick="showEmergencyModal()">Panic Button</a>
-                    <a href="#emergencyModal" onclick="showEmergencyModal()">Emergency Guides</a>
-                    <a href="fake.html">Fake Drug Alerts</a>
-                    <a href="consent.html">Consent Basics</a>
-                    <a href="booth.html">Our Booth</a>
+                    <div class="footer-links">
+                        <a href="panic.html">Panic Button</a>
+                        <a href="emergency.html">Emergency Guides</a>
+                        <a href="#narcan">Find Narcan</a>
+                        <a href="consent.html">Consent Basics</a>
+                        <a href="booth.html">Our Booth</a>
+                    </div>
                 </div>
-                <div class="footer-links">
+                
+                <div class="footer-section">
                     <h4>Resources</h4>
-                    <a href="resources.html">MN Resources Directory</a>
-                    <a href="sober.html">Sober Ravers</a>
-                    <a href="venues-guide.html">Venue Safety</a>
-                    <a href="seasonal-tips.html">Seasonal Tips</a>
-                    <a href="legal-disclaimers-terms.html">Legal Disclaimers</a>
+                    <div class="footer-links">
+                        <a href="resources.html">MN Resources Directory</a>
+                        <a href="sober.html">Sober Ravers</a>
+                        <a href="venues-guide.html">Venue Safety</a>
+                        <a href="seasonal-tips.html">Seasonal Tips</a>
+                        <a href="legal-disclaimers-terms.html">Legal Disclaimers</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Drug Information</h4>
+                    <div class="footer-links">
+                        <a href="polydrug.html">Polydrug Tool</a>
+                        <a href="fake.html">Fake Drug Alerts</a>
+                        <a href="rx-combos.html">RX Combos</a>
+                        <a href="health.html">Raver Health</a>
+                        <a href="badtrip.html">Bad Trip Support</a>
+                    </div>
                 </div>
             </div>
-
-            <!-- Legal Disclaimer -->
+            
             <div class="legal-disclaimer">
                 <h4>⚠️ Legal & Medical Disclaimer</h4>
-                <p class="text-small">
-                    <strong>PLURderapolis provides harm reduction education and resources only.</strong> This is not medical or legal advice. Always consult with healthcare professionals for medical concerns and legal professionals for legal advice.
-                </p>
-                <p class="text-small">
-                    <strong>Minnesota Good Samaritan Law:</strong> Minnesota Statute §604A.05 provides limited immunity from drug possession charges for individuals who seek medical assistance for an overdose.
-                </p>
-                <p class="text-small">
-                    <strong>Naloxone (Narcan®)</strong> is a medication that can reverse opioid overdoses. It is available at many Minnesota pharmacies and through community programs. Expired naloxone may still be effective in an emergency.
-                </p>
-                <p class="text-small">
-                    Information about the local drug supply (e.g., fentanyl, xylazine) is based on public health reports and may change. Always test substances using multiple methods when possible.
-                </p>
+                <p><strong>PLURderapolis provides harm reduction education and resources only.</strong> This is not medical or legal advice. Always consult with healthcare professionals for medical concerns and legal professionals for legal advice.</p>
+                <p><strong>Minnesota Good Samaritan Law:</strong> Minnesota Statute §604A.05 provides limited immunity from drug possession charges for individuals who seek medical assistance for an overdose.</p>
+                <p><strong>Naloxone (Narcan®)</strong> is a medication that can reverse opioid overdoses. It is available at many Minnesota pharmacies and through community programs.</p>
             </div>
-
-            <div class="text-center mt-2">
-                <p class="text-micro">
-                    &copy; 2025 PLURderapolis — Community Harm Reduction
-                    <br>This site respects your privacy. Usage data is anonymized.
-                    <br><a href="legal-disclaimers-terms.html" style="color: var(--neon-aqua);">Full Legal Disclaimers & Terms</a>
-                </p>
+            
+            <div class="copyright">
+                <p>&copy; 2025 PLURderapolis — Community Harm Reduction</p>
+                <p>This site respects your privacy. Usage data is anonymized.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Emergency Modal -->
-    <div class="modal" id="emergencyModal" role="dialog" aria-labelledby="emergencyModalTitle" aria-modal="true">
+    <!-- Panic Peach -->
+    <div class="panic-peach" id="panicPeach">
+        <div class="panic-button" id="panicButton" role="button" aria-label="Emergency panic button" tabindex="0">
+            🍑
+        </div>
+        <div class="panic-label">HELP!</div>
+    </div>
+
+    <!-- Mobile HUD -->
+    <nav class="mobile-hud">
+        <a href="#emergency" class="hud-button">
+            <span class="hud-icon">🚨</span>
+            <span>Emergency</span>
+        </a>
+        <a href="#narcan" class="hud-button">
+            <span class="hud-icon">💊</span>
+            <span>Narcan</span>
+        </a>
+        <a href="panic.html" class="hud-button">
+            <span class="hud-icon">🍑</span>
+            <span>Panic</span>
+        </a>
+        <a href="#support" class="hud-button">
+            <span class="hud-icon">💖</span>
+            <span>Donate</span>
+        </a>
+        <a href="badtrip.html" class="hud-button">
+            <span class="hud-icon">🌈</span>
+            <span>Bad Trip</span>
+        </a>
+    </nav>
+
+    <!-- Modals -->
+    <div class="modal" id="emergencyModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeEmergencyModal()" aria-label="Close modal">&times;</button>
-            <h2 id="emergencyModalTitle">🚨 Emergency Overdose Response</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                <div class="timer-card">
-                    <h4>1. CALL 911 IMMEDIATELY</h4>
-                    <p class="text-small">Say: "Someone is not breathing, suspected overdose." Give location. Minnesota's Good Samaritan Law provides protections.</p>
+            <button class="close-modal" onclick="closeModal('emergencyModal')">&times;</button>
+            <h2>🚨 Emergency Overdose Response</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                <div style="background: rgba(0, 199, 150, 0.1); padding: 1.5rem; border-radius: var(--border-radius-sm); border-left: 4px solid var(--success-green);">
+                    <h4 style="color: var(--success-green);">1. CALL 911</h4>
+                    <p>Say: "Someone is not breathing, suspected overdose." Give location. Minnesota's Good Samaritan Law provides protections.</p>
                 </div>
-                <div class="timer-card">
-                    <h4>2. CHECK FOR RESPONSIVENESS & BREATHING</h4>
-                    <p class="text-small">Shake and shout. Look for chest movement. If not breathing or breathing is slow/shallow (less than 8 breaths per minute), proceed.</p>
+                
+                <div style="background: rgba(255, 71, 87, 0.1); padding: 1.5rem; border-radius: var(--border-radius-sm); border-left: 4px solid var(--danger-red);">
+                    <h4 style="color: var(--danger-red);">2. GIVE NARCAN</h4>
+                    <p>Nasal spray or injectable. Repeat every 2-3 minutes if no response. Continue rescue breathing.</p>
                 </div>
-                <div class="timer-card">
-                    <h4>3. GIVE NARCAN (Naloxone)</h4>
-                    <p class="text-small">
-                        <strong>Nasal Spray:</strong> Insert tip into one nostril, press plunger firmly.
-                        <br><strong>Injectable:</strong> Inject into muscle (upper arm, thigh).
-                        <br><strong>Repeat every 2-3 minutes</strong> if no response.
-                    </p>
-                </div>
-                <div class="timer-card">
-                    <h4>4. RESCUE BREATHING / CPR</h4>
-                    <p class="text-small">If not breathing: Tilt head back, pinch nose, give 2 slow breaths. Continue 1 breath every 5 seconds.</p>
-                </div>
-                <div class="timer-card">
-                    <h4>5. RECOVERY POSITION & MONITOR</h4>
-                    <p class="text-small">If breathing: place on side to prevent choking. Stay until EMS arrives. Overdose may return as naloxone wears off (30-90 mins).</p>
+                
+                <div style="background: rgba(0, 240, 255, 0.1); padding: 1.5rem; border-radius: var(--border-radius-sm); border-left: 4px solid var(--neon-aqua);">
+                    <h4 style="color: var(--neon-aqua);">3. RESCUE BREATHING</h4>
+                    <p>If not breathing: Tilt head back, pinch nose, give 2 slow breaths. Continue 1 breath every 5 seconds.</p>
                 </div>
             </div>
-            <div class="mt-2">
+            
+            <div class="mt-3">
                 <h4>📞 Minnesota Emergency Resources</h4>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                    <div class="timer-card">
-                        <h4>Poison Control (24/7)</h4>
-                        <p class="text-small">1-800-222-1222</p>
+                    <div style="background: rgba(30, 30, 46, 0.7); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <strong>Poison Control (24/7)</strong>
+                        <div class="text-small">1-800-222-1222</div>
                     </div>
-                    <div class="timer-card">
-                        <h4>Crisis Text Line</h4>
-                        <p class="text-small">Text "HOME" to 741741</p>
+                    <div style="background: rgba(30, 30, 46, 0.7); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <strong>Crisis Text Line</strong>
+                        <div class="text-small">Text "HOME" to 741741</div>
                     </div>
-                    <div class="timer-card">
-                        <h4>Never Use Alone Hotline</h4>
-                        <p class="text-small">1-800-484-3731</p>
+                    <div style="background: rgba(30, 30, 46, 0.7); padding: 1rem; border-radius: var(--border-radius-sm);">
+                        <strong>Never Use Alone Hotline</strong>
+                        <div class="text-small">1-800-484-3731</div>
                     </div>
                 </div>
             </div>
-            <button class="btn mt-2" onclick="window.location.href='emergency.html'">📖 View Full Emergency Guides</button>
+            
+            <button class="btn btn-primary mt-3" style="width: 100%;" onclick="window.location.href='emergency.html'">
+                📖 View Full Emergency Guides
+            </button>
         </div>
     </div>
 
-    <!-- Send Timer Modal -->
-    <div class="modal" id="sendModal" role="dialog" aria-labelledby="shareModalTitle">
+    <!-- Timer Settings Modal -->
+    <div class="modal" id="timerSettingsModal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeSendModal()" aria-label="Close modal">&times;</button>
-            <h2 id="shareModalTitle">🔗 Share Your Timer Settings</h2>
-            <p>Share your hydration and check-in schedule with friends or across devices.</p>
-            <div class="link-list">
-                <div class="link-item">
-                    <span class="link-item-icon">🔗</span>
-                    <div style="flex-grow: 1;">
-                        <div><strong>Shareable Link</strong></div>
-                        <div class="text-small" id="shareableLink">Generating...</div>
+            <button class="close-modal" onclick="closeModal('timerSettingsModal')">&times;</button>
+            <h2>⚙️ Timer Settings</h2>
+            
+            <div style="margin: 2rem 0;">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">💧 Water Reminder Interval (minutes)</label>
+                    <input type="range" min="15" max="120" value="45" class="timer-slider" id="waterInterval" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                        <span class="text-small">15 min</span>
+                        <span id="waterValue" style="font-weight: bold;">45 min</span>
+                        <span class="text-small">120 min</span>
                     </div>
-                    <button class="timer-btn" onclick="copyShareLink()">Copy</button>
                 </div>
-                <div class="link-item">
-                    <span class="link-item-icon">📥</span>
-                    <div style="flex-grow: 1;">
-                        <div><strong>Download Configuration</strong></div>
-                        <div class="text-small">JSON file for backup or import</div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">👥 Buddy Check-in Interval (minutes)</label>
+                    <input type="range" min="30" max="240" value="120" class="timer-slider" id="buddyInterval" style="width: 100%;">
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                        <span class="text-small">30 min</span>
+                        <span id="buddyValue" style="font-weight: bold;">120 min</span>
+                        <span class="text-small">240 min</span>
                     </div>
-                    <button class="timer-btn" onclick="downloadTimerConfig()">Download</button>
                 </div>
             </div>
-            <p class="text-small mt-1">Your timer settings are stored locally in your browser and are not sent to our servers.</p>
+            
+            <button class="btn btn-primary" style="width: 100%;" onclick="saveTimerSettings()">
+                💾 Save Settings
+            </button>
         </div>
     </div>
 
     <script>
         // ========== INITIALIZATION ==========
         document.addEventListener('DOMContentLoaded', function() {
-            initializeParticles();
+            initializeBackground();
             initializeNavigation();
             initializePanicPeach();
-            initializeSearch();
             initializeTimers();
-            initializeCollapsibleCards();
-            initializeScrollToTop();
-            console.log('PLURderapolis combined site initialized.');
+            initializeAnalytics();
+            
+            // Check for hash in URL
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            }
+            
+            console.log('PLURderapolis v3.0 initialized 🍑');
         });
 
-        // ========== ANIMATED BACKGROUND PARTICLES ==========
-        function initializeParticles() {
-            const container = document.getElementById('particles');
-            const colors = ['rgba(138, 130, 255, 0.2)', 'rgba(255, 105, 240, 0.15)', 'rgba(0, 240, 255, 0.15)'];
+        // ========== BACKGROUND PARTICLES ==========
+        function initializeBackground() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
             
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = 1 + 4 * Math.random();
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = 100 * Math.random() + '%';
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.animationDelay = 25 * Math.random() + 's';
-                particle.style.animationDuration = 20 + 15 * Math.random() + 's';
-                container.appendChild(particle);
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = 1 + Math.random() * 3;
+                const duration = 10 + Math.random() * 20;
+                const delay = Math.random() * 30;
+                const color = `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, ${0.2 + Math.random() * 0.3})`;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.background = color;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // ========== NAVIGATION ==========
+        function initializeNavigation() {
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', () => {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '100%';
+                    navLinks.style.left = '0';
+                    navLinks.style.right = '0';
+                    navLinks.style.background = 'rgba(26, 11, 61, 0.95)';
+                    navLinks.style.backdropFilter = 'blur(20px)';
+                    navLinks.style.padding = '2rem';
+                    navLinks.style.gap = '1rem';
+                });
             }
             
-            for (let i = 0; i < 10; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('pulse-dot');
-                dot.style.left = 100 * Math.random() + '%';
-                dot.style.top = 100 * Math.random() + '%';
-                dot.style.animationDelay = 6 * Math.random() + 's';
-                container.appendChild(dot);
-            }
-        }
-
-        // ========== MOBILE NAVIGATION ==========
-        function initializeNavigation() {
-            const toggle = document.getElementById('mobileNavToggle');
-            const panel = document.getElementById('mobileNavPanel');
-            const overlay = document.getElementById('mobileNavOverlay');
-            const categories = document.querySelectorAll('.nav-category');
-
-            toggle.addEventListener('click', () => {
-                toggle.classList.toggle('active');
-                panel.classList.toggle('active');
-                overlay.classList.toggle('active');
-                document.body.style.overflow = panel.classList.contains('active') ? 'hidden' : '';
-            });
-
-            overlay.addEventListener('click', () => {
-                toggle.classList.remove('active');
-                panel.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-
-            categories.forEach(category => {
-                const title = category.querySelector('.nav-category-title');
-                title.addEventListener('click', () => {
-                    category.classList.toggle('active');
-                });
-            });
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    toggle.classList.remove('active');
-                    panel.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
-
-        // ========== COLLAPSIBLE CARDS ==========
-        function initializeCollapsibleCards() {
-            const cards = document.querySelectorAll('.section-card');
-            cards.forEach(card => {
-                const content = card.querySelector('.collapsible-content');
-                const toggle = card.querySelector('.collapsible-toggle');
-                const summary = card.querySelector('.section-summary');
+            // Update active nav link on scroll
+            window.addEventListener('scroll', () => {
+                const sections = ['emergency', 'drug-info', 'consent', 'local', 'resources', 'support'];
+                const scrollPosition = window.scrollY + 100;
                 
-                card.classList.remove('expanded');
-                card.classList.add('collapsed');
-                content.classList.remove('expanded');
-                toggle.textContent = '+';
-                
-                if (summary) {
-                    summary.style.display = 'block';
-                    summary.style.opacity = '1';
-                    summary.style.maxHeight = 'none';
-                }
-            });
-
-            document.querySelectorAll('.collapsible-toggle').forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const card = this.closest('.section-card');
-                    const content = card.querySelector('.collapsible-content');
-                    const summary = card.querySelector('.section-summary');
-                    
-                    if (content.classList.contains('expanded')) {
-                        content.classList.remove('expanded');
-                        this.textContent = '+';
-                        card.classList.add('collapsed');
-                        card.classList.remove('expanded');
-                        if (summary) {
-                            summary.style.opacity = '1';
-                            setTimeout(() => {
-                                summary.style.display = 'block';
-                            }, 300);
-                        }
-                    } else {
-                        content.classList.add('expanded');
-                        this.textContent = '−';
-                        card.classList.remove('collapsed');
-                        card.classList.add('expanded');
-                        if (summary) {
-                            summary.style.opacity = '0';
-                            setTimeout(() => {
-                                summary.style.display = 'none';
-                            }, 300);
+                sections.forEach(section => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const offset = element.offsetTop;
+                        const height = element.offsetHeight;
+                        
+                        if (scrollPosition >= offset && scrollPosition < offset + height) {
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.style.color = 'var(--body-light)';
+                                link.style.background = 'transparent';
+                            });
+                            
+                            const activeLink = document.querySelector(`.nav-link[href="#${section}"]`);
+                            if (activeLink) {
+                                activeLink.style.color = 'var(--neon-aqua)';
+                                activeLink.style.background = 'rgba(138, 130, 255, 0.1)';
+                            }
                         }
                     }
                 });
             });
         }
 
-        function toggleCollapse(header) {
-            const card = header.closest('.section-card');
-            const content = card.querySelector('.collapsible-content');
-            const toggle = card.querySelector('.collapsible-toggle');
-            const summary = card.querySelector('.section-summary');
-            
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                toggle.textContent = '+';
-                card.classList.add('collapsed');
-                card.classList.remove('expanded');
-                if (summary) {
-                    summary.style.opacity = '1';
-                    setTimeout(() => {
-                        summary.style.display = 'block';
-                    }, 300);
-                }
-            } else {
-                content.classList.add('expanded');
-                toggle.textContent = '−';
-                card.classList.remove('collapsed');
-                card.classList.add('expanded');
-                if (summary) {
-                    summary.style.opacity = '0';
-                    setTimeout(() => {
-                        summary.style.display = 'none';
-                    }, 300);
-                }
-            }
-        }
-
-        // ========== PANIC PEACH MODULE ==========
+        // ========== PANIC PEACH ==========
         function initializePanicPeach() {
-            const peach = document.getElementById('panicPeachContainer');
+            const peach = document.getElementById('panicPeach');
             const button = document.getElementById('panicButton');
             let isDragging = false;
             let startX, startY, initialX, initialY;
-
+            
+            // Click for emergency modal
             button.addEventListener('click', (e) => {
                 if (!isDragging) {
-                    showEmergencyModal();
+                    showModal('emergencyModal');
+                    logAnalyticsEvent('panic_button', 'clicked');
                 }
             });
+            
             button.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                    showEmergencyModal();
+                    showModal('emergencyModal');
                 }
             });
-
+            
+            // Drag functionality
             peach.addEventListener('mousedown', startDrag);
             peach.addEventListener('touchstart', startDragTouch);
-
+            
             function startDrag(e) {
                 e.preventDefault();
                 isDragging = true;
@@ -1896,7 +1777,7 @@
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', stopDrag);
             }
-
+            
             function startDragTouch(e) {
                 if (e.touches.length === 1) {
                     e.preventDefault();
@@ -1909,42 +1790,50 @@
                     document.addEventListener('touchend', stopDrag);
                 }
             }
-
+            
             function drag(e) {
                 if (!isDragging) return;
                 const dx = e.clientX - startX;
                 const dy = e.clientY - startY;
                 updatePosition(dx, dy);
             }
-
+            
             function dragTouch(e) {
                 if (!isDragging || e.touches.length !== 1) return;
                 const dx = e.touches[0].clientX - startX;
                 const dy = e.touches[0].clientY - startY;
                 updatePosition(dx, dy);
             }
-
+            
             function updatePosition(dx, dy) {
                 let newX = initialX + dx;
                 let newY = initialY + dy;
+                
+                // Boundary constraints
                 newX = Math.max(10, Math.min(newX, window.innerWidth - peach.offsetWidth - 10));
                 newY = Math.max(10, Math.min(newY, window.innerHeight - peach.offsetHeight - 10));
+                
                 peach.style.left = `${newX}px`;
                 peach.style.top = `${newY}px`;
+                peach.style.right = 'auto';
+                peach.style.bottom = 'auto';
             }
-
+            
             function stopDrag() {
                 isDragging = false;
                 document.removeEventListener('mousemove', drag);
                 document.removeEventListener('touchmove', dragTouch);
                 document.removeEventListener('mouseup', stopDrag);
                 document.removeEventListener('touchend', stopDrag);
+                
+                // Save position
                 localStorage.setItem('peachPosition', JSON.stringify({
                     x: peach.offsetLeft,
                     y: peach.offsetTop
                 }));
             }
-
+            
+            // Load saved position
             const savedPos = localStorage.getItem('peachPosition');
             if (savedPos) {
                 const pos = JSON.parse(savedPos);
@@ -1953,384 +1842,283 @@
             }
         }
 
-        // ========== EMERGENCY MODAL ==========
-        function showEmergencyModal() {
-            const modal = document.getElementById('emergencyModal');
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeEmergencyModal() {
-            const modal = document.getElementById('emergencyModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-        window.addEventListener('click', (e) => {
-            if (e.target === document.getElementById('emergencyModal')) {
-                closeEmergencyModal();
-            }
-        });
-
-        // ========== SEARCH FUNCTIONALITY ==========
-        const siteIndex = [
-            { title: "Home", url: "index.html", category: "Main", icon: "🏠", content: "PLURderapolis homepage with emergency resources, Narcan info, harm reduction tools." },
-            { title: "Panic Button", url: "#panicButton", category: "Emergency", icon: "🚨", content: "Instant emergency access, overdose response, 911 guidance, Good Samaritan Law info." },
-            { title: "Emergency Guides", url: "#emergencyModal", category: "Emergency", icon: "🆘", content: "Step-by-step overdose response, recovery position, heatstroke, seizure guidance." },
-            { title: "Find Narcan", url: "#narcanSection", category: "Emergency", icon: "💊", content: "Naloxone locations in Minnesota, how to use Narcan, overdose reversal steps." },
-            { title: "Is Your Substance Real?", url: "fake.html", category: "Drug Info", icon: "⚠️", content: "Fake drug alerts, fentanyl testing, xylazine info, harm reduction testing methods." },
-            { title: "Polydrug Interaction Tool", url: "polydrug.html", category: "Drug Info", icon: "⚡", content: "Check dangerous drug combinations, risk assessment, safety recommendations." },
-            { title: "Consent Basics", url: "consent.html", category: "Community", icon: "✅", content: "Consent education for nightlife, boundaries, communication, safer spaces." },
-            { title: "Our Harm Reduction Booth", url: "booth.html", category: "Local", icon: "🎉", content: "Event schedule, booth locations, free Narcan, test strips, resources." },
-            { title: "Sober Ravers", url: "sober.html", category: "Resources", icon: "🚫", content: "Support for sober partying, mocktail recipes, substance-free community." },
-            { title: "Venue Safety Guide", url: "venues-guide.html", category: "Local", icon: "🏢", content: "Minnesota venue information, safety tips, harm reduction resources." },
-            { title: "MN Resources Directory", url: "resources.html", category: "Resources", icon: "📚", content: "Minnesota-specific resources: Plan B, clinics, domestic violence support, recovery." }
-        ];
-
-        function initializeSearch() {
-            const input = document.getElementById('siteSearch');
-            const results = document.getElementById('searchResults');
-
-            input.addEventListener('input', debounce(performSearch, 300));
-            input.addEventListener('focus', () => {
-                if (input.value.trim()) performSearch();
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.search-container')) {
-                    results.style.display = 'none';
-                }
-            });
-        }
-
-        function performSearch() {
-            const query = document.getElementById('siteSearch').value.toLowerCase().trim();
-            const results = document.getElementById('searchResults');
-            results.innerHTML = '';
-
-            if (!query) {
-                results.style.display = 'none';
-                return;
-            }
-
-            const matches = siteIndex.filter(item =>
-                item.title.toLowerCase().includes(query) ||
-                item.content.toLowerCase().includes(query) ||
-                item.category.toLowerCase().includes(query)
-            );
-
-            if (matches.length > 0) {
-                matches.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'result-item';
-                    div.innerHTML = `
-                        <span class="result-icon">${item.icon}</span>
-                        <div style="flex-grow: 1;">
-                            <strong>${item.title}</strong>
-                            <div class="text-small">${item.content.substring(0, 80)}...</div>
-                        </div>
-                        <span class="text-micro">${item.category}</span>
-                    `;
-                    div.addEventListener('click', () => {
-                        if (item.url.startsWith('#')) {
-                            const target = document.querySelector(item.url);
-                            if (target) {
-                                if (item.url === '#emergencyModal') {
-                                    showEmergencyModal();
-                                } else if (item.url === '#panicButton') {
-                                    showEmergencyModal();
-                                } else {
-                                    target.scrollIntoView({ behavior: 'smooth' });
-                                }
-                            }
-                        } else {
-                            window.location.href = item.url;
-                        }
-                        results.style.display = 'none';
-                    });
-                    results.appendChild(div);
-                });
-                results.style.display = 'block';
-            } else {
-                results.innerHTML = '<div class="result-item"><span class="result-icon">🔍</span><div>No results found. Try "Narcan", "emergency", or "consent".</div></div>';
-                results.style.display = 'block';
-            }
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
         // ========== TIMER SYSTEM ==========
         let timers = {
-            water: { running: false, endTime: null, interval: 60 },
-            buddy: { running: false, endTime: null, interval: 120 },
-            eat: { running: false, endTime: null, interval: 180 }
+            water: { active: false, interval: 45 * 60 * 1000, remaining: null, startTime: null },
+            buddy: { active: false, interval: 120 * 60 * 1000, remaining: null, startTime: null }
         };
-
+        
+        let masterInterval;
+        
         function initializeTimers() {
             loadTimerSettings();
-            setInterval(() => {
-                Object.keys(timers).forEach(type => {
-                    updateTimerDisplay(type);
-                });
-            }, 1000);
-        }
-
-        function loadTimerSettings() {
-            const saved = localStorage.getItem('plurderapolisTimers');
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                Object.keys(timers).forEach(key => {
-                    if (parsed[key]) {
-                        timers[key] = { ...timers[key], ...parsed[key] };
-                    }
-                });
-            }
+            updateTimerDisplay();
+            masterInterval = setInterval(updateTimerDisplay, 1000);
             
-            const settings = localStorage.getItem('plurderapolisTimerSettings');
-            if (settings) {
-                const parsed = JSON.parse(settings);
-                document.getElementById('water-interval').value = parsed.waterInterval || 60;
-                document.getElementById('buddy-interval').value = parsed.buddyInterval || 120;
-                document.getElementById('eat-interval').value = parsed.eatInterval || 180;
-                document.getElementById('snooze-duration').value = parsed.snoozeDuration || 10;
+            // Initialize slider values
+            const waterSlider = document.getElementById('waterInterval');
+            const buddySlider = document.getElementById('buddyInterval');
+            
+            if (waterSlider && buddySlider) {
+                waterSlider.value = timers.water.interval / 60000;
+                buddySlider.value = timers.buddy.interval / 60000;
                 
-                timers.water.interval = parsed.waterInterval || 60;
-                timers.buddy.interval = parsed.buddyInterval || 120;
-                timers.eat.interval = parsed.eatInterval || 180;
-            }
-        }
-
-        function startTimer(type) {
-            const timer = timers[type];
-            timer.running = true;
-            timer.endTime = Date.now() + 60 * timer.interval * 1000;
-            document.querySelector(`#${type}-timer .btn-snooze`).classList.remove('hidden');
-            saveTimerState();
-            updateTimerDisplay(type);
-        }
-
-        function snoozeTimer(type) {
-            const timer = timers[type];
-            const snoozeMinutes = parseInt(document.getElementById('snooze-duration').value) || 10;
-            timer.endTime = Date.now() + 60 * snoozeMinutes * 1000;
-            saveTimerState();
-            updateTimerDisplay(type);
-        }
-
-        function updateTimerDisplay(type) {
-            const timer = timers[type];
-            const display = document.getElementById(`${type}-status`);
-            
-            if (timer.running && timer.endTime) {
-                const remaining = timer.endTime - Date.now();
-                if (remaining <= 0) {
-                    display.textContent = 'NOW!';
-                    display.style.color = 'var(--holo-pink)';
-                    display.style.fontWeight = 'bold';
-                    
-                    if (Notification.permission === 'granted') {
-                        new Notification(`Time to ${getTimerAction(type)}!`, {
-                            body: getTimerMessage(type),
-                        });
-                    }
-                } else {
-                    const minutes = Math.floor(remaining / 60000);
-                    const seconds = Math.floor((remaining % 60000) / 1000);
-                    display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                    display.style.color = 'var(--neon-aqua)';
-                }
-            } else {
-                display.textContent = '--:--';
-                display.style.color = 'var(--body-light)';
-            }
-        }
-
-        function getTimerAction(type) {
-            switch(type) {
-                case 'water': return 'drink water';
-                case 'buddy': return 'check in with your buddy';
-                case 'eat': return 'eat something';
-                default: return 'take a break';
-            }
-        }
-
-        function getTimerMessage(type) {
-            switch(type) {
-                case 'water': return 'Stay hydrated! Your body will thank you.';
-                case 'buddy': return 'Reach out to your buddy. A quick chat can make a big difference.';
-                case 'eat': return 'Fuel your body with a healthy snack or meal.';
-                default: return 'Time for a break!';
-            }
-        }
-
-        function saveTimerState() {
-            localStorage.setItem('plurderapolisTimers', JSON.stringify(timers));
-        }
-
-        function toggleCustomization() {
-            document.getElementById('customization-panel').classList.toggle('hidden');
-        }
-
-        function saveCustomizations() {
-            const settings = {
-                waterInterval: parseInt(document.getElementById('water-interval').value),
-                buddyInterval: parseInt(document.getElementById('buddy-interval').value),
-                eatInterval: parseInt(document.getElementById('eat-interval').value),
-                snoozeDuration: parseInt(document.getElementById('snooze-duration').value)
-            };
-            
-            timers.water.interval = settings.waterInterval;
-            timers.buddy.interval = settings.buddyInterval;
-            timers.eat.interval = settings.eatInterval;
-            
-            localStorage.setItem('plurderapolisTimerSettings', JSON.stringify(settings));
-            alert('Settings saved!');
-        }
-
-        // ========== SEND TIMER MODAL ==========
-        function showSendModal() {
-            document.getElementById('sendModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            generateShareContent();
-        }
-
-        function closeSendModal() {
-            document.getElementById('sendModal').style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
-        function generateShareContent() {
-            const settings = {
-                water: timers.water.interval,
-                buddy: timers.buddy.interval,
-                eat: timers.eat.interval
-            };
-            
-            const base64 = btoa(JSON.stringify(settings));
-            const shareUrl = `${window.location.origin}${window.location.pathname}?timers=${base64}`;
-            document.getElementById('shareableLink').textContent = shareUrl;
-        }
-
-        function copyShareLink() {
-            const link = document.getElementById('shareableLink').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                alert('Link copied to clipboard!');
-            });
-        }
-
-        function downloadTimerConfig() {
-            const config = {
-                water: timers.water.interval,
-                buddy: timers.buddy.interval,
-                eat: timers.eat.interval,
-                savedAt: new Date().toISOString(),
-                source: 'PLURderapolis Timer'
-            };
-            const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `plurderapolis-timer-${new Date().toISOString().slice(0, 10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        // ========== SCROLL TO TOP ==========
-        function initializeScrollToTop() {
-            const scrollBtn = document.getElementById('scrollTopBtn');
-            window.addEventListener('scroll', function() {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    scrollBtn.style.display = 'block';
-                } else {
-                    scrollBtn.style.display = 'none';
-                }
-            });
-            
-            scrollBtn.addEventListener('click', function() {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+                waterSlider.addEventListener('input', (e) => {
+                    document.getElementById('waterValue').textContent = `${e.target.value} min`;
                 });
-            });
-        }
-
-        // ========== HELPER FUNCTIONS ==========
-        function scrollToNarcan() {
-            document.getElementById('narcanSection').scrollIntoView({ behavior: 'smooth' });
-            const card = document.getElementById('narcanSection').closest('.section-card');
-            const content = card.querySelector('.collapsible-content');
-            const toggle = card.querySelector('.collapsible-toggle');
-            const summary = card.querySelector('.section-summary');
-            
-            if (!content.classList.contains('expanded')) {
-                content.classList.add('expanded');
-                toggle.textContent = '−';
-                card.classList.remove('collapsed');
-                card.classList.add('expanded');
-                if (summary) {
-                    summary.style.opacity = '0';
-                    setTimeout(() => {
-                        summary.style.display = 'none';
-                    }, 300);
-                }
+                
+                buddySlider.addEventListener('input', (e) => {
+                    document.getElementById('buddyValue').textContent = `${e.target.value} min`;
+                });
+                
+                // Set initial display values
+                document.getElementById('waterValue').textContent = `${waterSlider.value} min`;
+                document.getElementById('buddyValue').textContent = `${buddySlider.value} min`;
             }
         }
         
-        function scrollToDonate() {
-            document.getElementById('donateSection').scrollIntoView({ behavior: 'smooth' });
-            const card = document.getElementById('donateSection').closest('.section-card');
-            const content = card.querySelector('.collapsible-content');
-            const toggle = card.querySelector('.collapsible-toggle');
-            const summary = card.querySelector('.section-summary');
+        function startWaterTimer() {
+            startTimer('water');
+        }
+        
+        function startBuddyTimer() {
+            startTimer('buddy');
+        }
+        
+        function startTimer(type) {
+            timers[type].active = true;
+            timers[type].startTime = Date.now();
+            timers[type].remaining = timers[type].interval;
+            saveTimerSettings();
             
-            if (!content.classList.contains('expanded')) {
-                content.classList.add('expanded');
-                toggle.textContent = '−';
-                card.classList.remove('collapsed');
-                card.classList.add('expanded');
-                if (summary) {
-                    summary.style.opacity = '0';
-                    setTimeout(() => {
-                        summary.style.display = 'none';
-                    }, 300);
+            // Show notification
+            const messages = {
+                water: "💧 Water timer started! Drink up every " + (timers.water.interval / 60000) + " minutes.",
+                buddy: "👥 Buddy timer started! Check in every " + (timers.buddy.interval / 60000) + " minutes."
+            };
+            
+            if (Notification.permission === 'granted') {
+                new Notification(messages[type]);
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification(messages[type]);
+                    }
+                });
+            }
+        }
+        
+        function pauseAllTimers() {
+            Object.keys(timers).forEach(type => {
+                if (timers[type].active && timers[type].startTime) {
+                    const elapsed = Date.now() - timers[type].startTime;
+                    timers[type].remaining = Math.max(0, timers[type].remaining - elapsed);
+                    timers[type].active = false;
+                }
+            });
+            saveTimerSettings();
+        }
+        
+        function resetAllTimers() {
+            Object.keys(timers).forEach(type => {
+                timers[type] = { 
+                    active: false, 
+                    interval: type === 'water' ? 45 * 60 * 1000 : 120 * 60 * 1000,
+                    remaining: null, 
+                    startTime: null 
+                };
+            });
+            updateTimerDisplay();
+            saveTimerSettings();
+        }
+        
+        function updateTimerDisplay() {
+            const display = document.getElementById('masterTimer');
+            if (!display) return;
+            
+            const activeTimers = Object.entries(timers).filter(([_, t]) => t.active && t.remaining);
+            
+            if (activeTimers.length > 0) {
+                // Find the next timer to expire
+                const nextTimer = activeTimers.reduce((prev, curr) => {
+                    const prevRemaining = prev[1].remaining - (Date.now() - prev[1].startTime);
+                    const currRemaining = curr[1].remaining - (Date.now() - curr[1].startTime);
+                    return currRemaining < prevRemaining ? curr : prev;
+                });
+                
+                const remaining = Math.max(0, nextTimer[1].remaining - (Date.now() - nextTimer[1].startTime));
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Check if timer has completed
+                if (remaining <= 0) {
+                    timerCompleted(nextTimer[0]);
+                }
+            } else {
+                display.textContent = '--:--';
+            }
+        }
+        
+        function timerCompleted(type) {
+            const messages = {
+                water: "💧 Time to hydrate! Drink some water.",
+                buddy: "👥 Check in with your buddy. Are they doing okay?"
+            };
+            
+            // Alert user
+            alert(messages[type]);
+            
+            // Restart timer automatically
+            timers[type].startTime = Date.now();
+            timers[type].remaining = timers[type].interval;
+            saveTimerSettings();
+        }
+        
+        function showTimerSettings() {
+            showModal('timerSettingsModal');
+        }
+        
+        function saveTimerSettings() {
+            const waterSlider = document.getElementById('waterInterval');
+            const buddySlider = document.getElementById('buddyInterval');
+            
+            if (waterSlider && buddySlider) {
+                timers.water.interval = parseInt(waterSlider.value) * 60 * 1000;
+                timers.buddy.interval = parseInt(buddySlider.value) * 60 * 1000;
+            }
+            
+            localStorage.setItem('plurderapolisTimers', JSON.stringify(timers));
+        }
+        
+        function loadTimerSettings() {
+            const saved = localStorage.getItem('plurderapolisTimers');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    Object.keys(timers).forEach(key => {
+                        if (parsed[key]) {
+                            timers[key] = { ...timers[key], ...parsed[key] };
+                        }
+                    });
+                } catch (e) {
+                    console.warn('Could not load timer settings');
                 }
             }
         }
 
+        // ========== MODAL SYSTEM ==========
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function showNarcanModal() {
+            showModal('emergencyModal');
+        }
+        
+        function showHydrationModal() {
+            showModal('timerSettingsModal');
+        }
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+
+        // ========== ANALYTICS ==========
+        function initializeAnalytics() {
+            // Simple privacy-focused analytics
+            if (!localStorage.getItem('plurderapolis_first_visit')) {
+                localStorage.setItem('plurderapolis_first_visit', new Date().toISOString());
+                logAnalyticsEvent('session', 'first_visit');
+            }
+            
+            logAnalyticsEvent('session', 'pageview');
+            
+            // Track link clicks
+            document.querySelectorAll('a[href^="http"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    logAnalyticsEvent('external_link', link.href);
+                });
+            });
+        }
+        
+        function logAnalyticsEvent(category, action) {
+            // Privacy-focused: Store locally only
+            const key = `plurderapolis_${category}`;
+            const data = JSON.parse(localStorage.getItem(key) || '{"count":0,"last":""}');
+            data.count++;
+            data.last = new Date().toISOString();
+            localStorage.setItem(key, JSON.stringify(data));
+            
+            console.log(`[Analytics] ${category}: ${action}`);
+        }
+        
         function logDonationClick() {
-            console.log('Donation link clicked - analytics would track here');
+            logAnalyticsEvent('donation', 'venmo_link_clicked');
         }
 
+        // ========== UTILITY FUNCTIONS ==========
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                if (href !== '#' && !href.includes('Modal')) {
+                if (href !== '#') {
                     e.preventDefault();
                     const target = document.querySelector(href);
                     if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
+                        target.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 }
             });
         });
-
-        // Close modals with Escape key
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeEmergencyModal();
-                closeSendModal();
+        
+        // Update header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 11, 61, 0.98)';
+                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'rgba(26, 11, 61, 0.95)';
+                header.style.boxShadow = 'none';
             }
+        });
+        
+        // Initialize tooltips
+        document.querySelectorAll('[title]').forEach(element => {
+            element.addEventListener('mouseenter', (e) => {
+                // Could implement custom tooltips here
+            });
         });
     </script>
 </body>
