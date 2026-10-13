@@ -9,6 +9,10 @@ const PRECACHE_URLS = [
   '/badtrip.html',
   '/spiking.html',
   '/panic.html',
+  '/overdose.html',
+  '/mentalhealth.html',
+  '/snorting.html',
+  '/aftercare.html',
   '/offline.html'
 ];
 
