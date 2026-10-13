@@ -741,6 +741,9 @@
 .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#a855f7;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
 .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
 </style>
+<style>
+.offline-badge{display:inline-block;font-size:.8rem;font-weight:700;color:#a7f3d0;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.4);border-radius:999px;padding:.3rem .8rem;margin-bottom:1rem}
+</style>
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -836,6 +839,7 @@
 
     <!-- Main Content -->
     <main id="main-content" class="main-content">
+      <div class="offline-badge">📶 Works offline — this page is saved to your phone</div>
       <!-- Sticky medical-emergency banner: always visible, never minimized -->
       <div class="medical-banner" role="alert">
         <span class="medical-banner-text">🚨 If this feels <strong>medical</strong> — trouble breathing, chest pain, overheating, seizure, can't stay awake — don't wait it out.</span>
@@ -2067,6 +2071,13 @@ function initEventListeners() {
   </div>
   
   <p>Full guide: https://plurderapolis.org</p>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
 </body>
 </html>`;
     
