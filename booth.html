@@ -12,7 +12,7 @@
   <meta property="og:title" content="Harm Reduction Booths for Events | PLURderapolis | Twin Cities EDM & Music Festivals">
   <meta property="og:description" content="Professional safety & harm reduction booths for Minneapolis, St. Paul music events & EDM festivals. Narcan, overdose prevention, hydration since 2019.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://plurderapolis.com/">
+  <meta property="og:url" content="https://plurderapolis.org/booth.html">
   
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Safety booths for Twin Cities EDM festivals & music events. Harm reduction services since 2019.">
   
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://plurderapolis.com/">
+  <link rel="canonical" href="https://plurderapolis.org/booth.html">
   
   <!-- Schema.org Event Markup -->
   <script type="application/ld+json">
@@ -1324,8 +1324,10 @@
           </form>
           <div class="form-success" id="form-success">
             <i class="fas fa-check-circle"></i>
-            <h3>Thank You!</h3>
-            <p>Your booking request has been submitted. We'll be in touch soon.</p>
+            <h3>Almost done!</h3>
+            <p>Your email app should have opened with your booking details addressed to us — just hit send and we'll be in touch soon.</p>
+            <p>Nothing opened? Email us directly at <a href="mailto:plurderapolis@gmail.com">plurderapolis@gmail.com</a>.</p>
+            <p><a href="#" id="form-back">← Back to the form</a></p>
           </div>
         </div>
       </div>
@@ -1550,24 +1552,43 @@
       });
     });
     
-    // Form submission
+    // Form submission — no server on static hosting, so compose a real email
+    // to plurderapolis@gmail.com via the visitor's own email app
     const bookingForm = document.getElementById('booking-form');
     const formSuccess = document.getElementById('form-success');
-    
+
     bookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      // In a real implementation, you would send the form data to a server
-      // For this demo, we'll just show the success message
+
+      const val = (id) => document.getElementById(id).value.trim();
+      const lines = [
+        'Name: ' + val('name'),
+        'Email: ' + val('email'),
+        'Phone: ' + val('phone'),
+        'Event: ' + val('event-name'),
+        'Date: ' + val('event-date'),
+        'Location: ' + val('event-location'),
+        'Type: ' + val('event-type'),
+        'Expected attendance: ' + val('attendees'),
+        '',
+        'Details:',
+        val('message')
+      ];
+      const subject = 'Booth booking request: ' + val('event-name') + ' (' + val('event-date') + ')';
+      window.location.href = 'mailto:plurderapolis@gmail.com?subject='
+        + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(lines.join('\n'));
+
       bookingForm.style.display = 'none';
       formSuccess.style.display = 'block';
-      
-      // Reset form after 5 seconds (for demo purposes)
-      setTimeout(() => {
-        bookingForm.reset();
-        bookingForm.style.display = 'block';
-        formSuccess.style.display = 'none';
-      }, 5000);
+    });
+
+    // Let the visitor start over from the confirmation screen
+    document.getElementById('form-back').addEventListener('click', (e) => {
+      e.preventDefault();
+      bookingForm.reset();
+      bookingForm.style.display = 'block';
+      formSuccess.style.display = 'none';
     });
     
     // Section animation on scroll
