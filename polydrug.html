@@ -968,12 +968,12 @@
     <div class="controls">
       <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
       <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
-      <a class="download" href="/images/polysubstance-matrix.webp" download="polysubstance-interaction-matrix.webp"><i class="fas fa-image"></i> Download matrix</a>
+      <button class="download" id="dlMatrixBtn" type="button"><i class="fas fa-image"></i> Download matrix</button>
       <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
     </div>
     <div class="matrix-share-menu" id="matrixShareMenu" hidden>
       <span class="matrix-share-label">Send the matrix graphic:</span>
-      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy link</button>
+      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy page link</button>
       <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
       <a id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
       <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
@@ -1534,30 +1534,59 @@ saveModal.addEventListener('click', (e) => {
   }
 });
 
-// Matrix graphic download + send
-const MATRIX_URL = new URL('/images/polysubstance-matrix.webp', location.href).href;
+// Matrix graphic download + send (graphic ships as a data URI in /images/matrix-graphic.js;
+// binary uploads are not supported by the push tooling, so it lazy-loads on first use)
+const MATRIX_FILENAME = 'polysubstance-interaction-matrix.webp';
 const MATRIX_TITLE = 'Polysubstance Interaction Matrix - plurderapolis.org';
 
-async function shareMatrixFile() {
-  try {
-    const res = await fetch(MATRIX_URL);
-    if (!res.ok) return false;
-    const blob = await res.blob();
-    const file = new File([blob], 'polysubstance-interaction-matrix.webp', {type: blob.type || 'image/webp'});
-    if (navigator.canShare && navigator.canShare({files: [file]})) {
-      await navigator.share({files: [file], title: MATRIX_TITLE, text: MATRIX_TITLE});
-      return true;
-    }
-  } catch (e) { /* fall through to the menu */ }
-  return false;
+function loadMatrixGraphic() {
+  return new Promise((resolve, reject) => {
+    if (window.MATRIX_DATA_URL) { resolve(window.MATRIX_DATA_URL); return; }
+    const s = document.createElement('script');
+    s.src = '/images/matrix-graphic.js';
+    s.onload = () => resolve(window.MATRIX_DATA_URL);
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
 }
+
+function matrixFile(dataUrl) {
+  const bin = atob(dataUrl.split(',')[1]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new File([bytes], MATRIX_FILENAME, {type: 'image/webp'});
+}
+
+document.getElementById('dlMatrixBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('dlMatrixBtn');
+  try {
+    const dataUrl = await loadMatrixGraphic();
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = MATRIX_FILENAME;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } catch (e) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Try again';
+    setTimeout(() => { btn.innerHTML = orig; }, 1500);
+  }
+});
 
 const sendMatrixBtn = document.getElementById('sendMatrixBtn');
 const matrixShareMenu = document.getElementById('matrixShareMenu');
 sendMatrixBtn.addEventListener('click', async (e) => {
   e.stopPropagation();
-  if (await shareMatrixFile()) return;
-  const msg = MATRIX_TITLE + ' ' + MATRIX_URL;
+  try {
+    const dataUrl = await loadMatrixGraphic();
+    const file = matrixFile(dataUrl);
+    if (navigator.canShare && navigator.canShare({files: [file]})) {
+      await navigator.share({files: [file], title: MATRIX_TITLE, text: MATRIX_TITLE});
+      return;
+    }
+  } catch (err) { /* fall through to the menu */ }
+  const msg = MATRIX_TITLE + ' ' + location.href;
   document.getElementById('mxSms').href = 'sms:?&body=' + encodeURIComponent(msg);
   document.getElementById('mxWa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
   document.getElementById('mxEmail').href = 'mailto:?subject=' + encodeURIComponent(MATRIX_TITLE) + '&body=' + encodeURIComponent(msg);
@@ -1570,18 +1599,18 @@ document.addEventListener('click', (e) => {
 });
 document.getElementById('mxCopyLink').addEventListener('click', async () => {
   const btn = document.getElementById('mxCopyLink');
-  const restore = () => { btn.innerHTML = '<i class="fas fa-link"></i> Copy link'; matrixShareMenu.hidden = true; };
+  const restore = () => { btn.innerHTML = '<i class="fas fa-link"></i> Copy page link'; matrixShareMenu.hidden = true; };
   let ok = false;
-  try { await navigator.clipboard.writeText(MATRIX_URL); ok = true; }
+  try { await navigator.clipboard.writeText(location.href); ok = true; }
   catch (e) {
     const ta = document.createElement('textarea');
-    ta.value = MATRIX_URL;
+    ta.value = location.href;
     document.body.appendChild(ta);
     ta.select();
     try { ok = document.execCommand('copy'); } catch (_) {}
     ta.remove();
   }
-  btn.innerHTML = ok ? '<i class="fas fa-check"></i> Copied' : '<i class="fas fa-link"></i> Copy link';
+  btn.innerHTML = ok ? '<i class="fas fa-check"></i> Copied' : '<i class="fas fa-link"></i> Copy page link';
   setTimeout(restore, 1400);
 });
 
