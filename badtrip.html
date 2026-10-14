@@ -434,6 +434,64 @@
     font-size: 0.95rem;
   }
   
+  .audio-desc {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  
+  .audio-btn.active .audio-desc {
+    opacity: 0.85;
+  }
+  
+  .volume-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+  }
+  
+  .volume-row label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--mint);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .volume-row input[type="range"] {
+    flex: 1;
+    max-width: 320px;
+    accent-color: var(--accent);
+    height: 32px;
+    cursor: pointer;
+  }
+  
+  /* Section pager: linear prev/next navigation at the bottom of each toolkit section */
+  .section-pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  
+  .section-pager .pager-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
   /* Timer */
   .timer-display {
     font-size: 3.5rem;
@@ -639,6 +697,49 @@
       position: static;
       height: auto;
       top: 0;
+      padding: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+    
+    /* Chip bar: the tall stacked nav becomes a compact wrap of tappable chips */
+    .section-nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .section-nav .section-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 0.6rem 0.9rem;
+    }
+    
+    .section-nav .section-btn:hover {
+      transform: none;
+    }
+    
+    .section-nav .section-btn.active {
+      border-color: var(--mint);
+      border-left: 1px solid var(--mint);
+      padding-left: 0.9rem;
+    }
+    
+    .side-quicklinks {
+      width: 100%;
+      margin-top: 0.75rem !important;
+      padding-top: 0.75rem !important;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .side-quicklinks h3 {
+      display: none;
+    }
+    
+    .side-quicklinks .section-btn {
+      margin: 0 !important;
     }
     
     body {
@@ -846,7 +947,7 @@
           Emergency Resources
         </button>
         
-        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="side-quicklinks" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
           <h3 style="color: var(--mint); font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">Quick Links</h3>
           <a href="https://plurderapolis.org" class="section-btn" style="text-decoration: none; color: inherit;">
             <i class="fas fa-home"></i>
@@ -1016,27 +1117,38 @@
             <button class="audio-btn" data-sound="whiteNoise">
               <i class="fas fa-volume-up"></i>
               <span class="audio-label">White Noise</span>
+              <span class="audio-desc">Steady hiss that masks background noise</span>
             </button>
             <button class="audio-btn" data-sound="ocean">
               <i class="fas fa-water"></i>
               <span class="audio-label">Ocean Waves</span>
+              <span class="audio-desc">Slow rolling waves to breathe along with</span>
             </button>
             <button class="audio-btn" data-sound="forest">
               <i class="fas fa-tree"></i>
               <span class="audio-label">Forest & Birds</span>
+              <span class="audio-desc">Soft wind with distant birdsong</span>
             </button>
             <button class="audio-btn" data-sound="rain">
               <i class="fas fa-cloud-rain"></i>
               <span class="audio-label">Gentle Rain</span>
+              <span class="audio-desc">Light rainfall, easy to tune out</span>
             </button>
             <button class="audio-btn" data-sound="heartbeat">
               <i class="fas fa-heartbeat"></i>
               <span class="audio-label">Calm Heartbeat</span>
+              <span class="audio-desc">Slow steady pulse to anchor to</span>
             </button>
             <button class="audio-btn" data-sound="brownNoise">
               <i class="fas fa-sliders-h"></i>
               <span class="audio-label">Brown Noise</span>
+              <span class="audio-desc">Deep rumble, softer than white noise</span>
             </button>
+          </div>
+          
+          <div class="volume-row">
+            <label for="volumeSlider"><i class="fas fa-volume-down"></i> Volume</label>
+            <input type="range" id="volumeSlider" min="0" max="100" value="80" aria-label="Sound volume">
           </div>
           
           <div style="text-align: center; margin-top: 1.5rem;">
@@ -1044,7 +1156,7 @@
               <i class="fas fa-volume-mute"></i> Stop All Sounds
             </button>
             <div style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.7);">
-              <i class="fas fa-info-circle"></i> Adjust volume using your device controls
+              <i class="fas fa-info-circle"></i> Use the slider or your device controls for volume
             </div>
           </div>
         </div>
@@ -1330,6 +1442,7 @@
 // Initialize variables
 let currentSection = 'breathing';
 let audioContext = null;
+let masterGainNode = null;
 let currentSound = null;
 let timerInterval = null;
 let timeLeft = 900; // 15 minutes in seconds
@@ -1501,6 +1614,35 @@ function initSections() {
     }
   }
   
+  // Prev / next footers for linear navigation through the toolkit
+  const sectionLabels = {
+    breathing: 'Breathing Exercise',
+    grounding: '5-4-3-2-1 Grounding',
+    sounds: 'Soothing Sounds',
+    checkin: 'Self Check-In',
+    shows: 'Tripping at Shows',
+    timer: 'Calm Timer',
+    mantras: 'Calming Mantras',
+    aftercare: 'Reflection & Aftercare',
+    resources: 'Emergency Resources'
+  };
+  sectionOrder.forEach((id, i) => {
+    const sec = document.getElementById(id);
+    const content = sec && sec.querySelector('.section-content');
+    if (!content) return;
+    const prev = sectionOrder[i - 1];
+    const next = sectionOrder[i + 1];
+    const nav = document.createElement('div');
+    nav.className = 'section-pager';
+    nav.innerHTML =
+      (prev ? '<button class="btn btn-outline pager-btn" data-goto="' + prev + '"><i class="fas fa-arrow-left"></i> ' + sectionLabels[prev] + '</button>' : '<span></span>') +
+      (next ? '<button class="btn btn-secondary pager-btn" data-goto="' + next + '">' + sectionLabels[next] + ' <i class="fas fa-arrow-right"></i></button>' : '<span></span>');
+    content.appendChild(nav);
+  });
+  document.querySelectorAll('.pager-btn').forEach(btn => {
+    btn.addEventListener('click', () => window.goToSection(btn.dataset.goto, 'start'));
+  });
+  
   // Intersection Observer for active section tracking
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1621,11 +1763,30 @@ function initAudio() {
   
   // Stop all audio
   document.getElementById('stopAllAudio').addEventListener('click', stopCurrentSound);
+  
+  // Volume slider drives the master gain
+  const volumeSlider = document.getElementById('volumeSlider');
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', () => {
+      if (masterGainNode) {
+        masterGainNode.gain.value = volumeSlider.value / 100;
+      }
+    });
+  }
 }
 
 function initAudioContext() {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    masterGainNode = audioContext.createGain();
+    masterGainNode.gain.value = 0.8;
+    masterGainNode.connect(audioContext.destination);
+    const slider = document.getElementById('volumeSlider');
+    if (slider) masterGainNode.gain.value = slider.value / 100;
+  }
+  // iOS may start the context suspended even inside a tap; resume so sound actually plays
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().catch(function(){});
   }
 }
 
@@ -1686,13 +1847,14 @@ function createWhiteNoise() {
   gainNode.gain.value = 0.1;
   
   source.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+  gainNode.connect(masterGainNode);
   source.start();
   
   return source;
 }
 
 function createOceanWaves() {
+  let stopped = false;
   // Create main wave oscillator (low frequency)
   const waveOsc = audioContext.createOscillator();
   waveOsc.type = 'sine';
@@ -1726,6 +1888,7 @@ function createOceanWaves() {
   
   // Schedule splashes randomly
   const scheduleSplash = () => {
+    if (stopped) return;
     const now = audioContext.currentTime;
     const nextSplash = now + 2 + Math.random() * 3;
     
@@ -1737,13 +1900,13 @@ function createOceanWaves() {
   };
   
   // Connect everything
-  const masterGain = audioContext.createGain();
-  masterGain.gain.value = 0.15;
+  const oceanGain = audioContext.createGain();
+  oceanGain.gain.value = 0.15;
   
-  waveOsc.connect(masterGain);
+  waveOsc.connect(oceanGain);
   splashNoise.connect(splashGain);
-  splashGain.connect(masterGain);
-  masterGain.connect(audioContext.destination);
+  splashGain.connect(oceanGain);
+  oceanGain.connect(masterGainNode);
   
   // Start oscillators
   waveOsc.start();
@@ -1755,14 +1918,16 @@ function createOceanWaves() {
   
   return {
     stop: () => {
-      waveOsc.stop();
-      waveLFO.stop();
-      splashNoise.stop();
+      stopped = true;
+      try { waveOsc.stop(); } catch (e) {}
+      try { waveLFO.stop(); } catch (e) {}
+      try { splashNoise.stop(); } catch (e) {}
     }
   };
 }
 
 function createForestSounds() {
+  let stopped = false;
   // Create background wind noise
   const windNoise = audioContext.createBufferSource();
   const windBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 2, audioContext.sampleRate);
@@ -1790,7 +1955,7 @@ function createForestSounds() {
     birdGain.gain.exponentialRampToValueAtTime(0.001, time + 0.3);
     
     birdOsc.connect(birdGain);
-    birdGain.connect(audioContext.destination);
+    birdGain.connect(masterGainNode);
     
     birdOsc.start(time);
     birdOsc.stop(time + 0.3);
@@ -1798,6 +1963,7 @@ function createForestSounds() {
   
   // Schedule random bird chirps
   const scheduleBirdChirp = () => {
+    if (stopped) return;
     const now = audioContext.currentTime;
     const nextChirp = now + 0.5 + Math.random() * 2;
     const freq = 800 + Math.random() * 800;
@@ -1808,7 +1974,7 @@ function createForestSounds() {
   
   // Connect wind
   windNoise.connect(windGain);
-  windGain.connect(audioContext.destination);
+  windGain.connect(masterGainNode);
   
   // Start
   windNoise.start();
@@ -1818,12 +1984,14 @@ function createForestSounds() {
   
   return {
     stop: () => {
-      windNoise.stop();
+      stopped = true;
+      try { windNoise.stop(); } catch (e) {}
     }
   };
 }
 
 function createRainSound() {
+  let stopped = false;
   // Create rain noise buffer
   const rainNoise = audioContext.createBufferSource();
   const rainBuffer = audioContext.createBuffer(1, audioContext.sampleRate, audioContext.sampleRate);
@@ -1853,7 +2021,7 @@ function createRainSound() {
     dropletGain.gain.exponentialRampToValueAtTime(0.001, time + 0.1);
     
     dropletOsc.connect(dropletGain);
-    dropletGain.connect(audioContext.destination);
+    dropletGain.connect(masterGainNode);
     
     dropletOsc.start(time);
     dropletOsc.stop(time + 0.1);
@@ -1861,6 +2029,7 @@ function createRainSound() {
   
   // Schedule random droplets
   const scheduleDroplet = () => {
+    if (stopped) return;
     const now = audioContext.currentTime;
     const nextDroplet = now + 0.1 + Math.random() * 0.5;
     
@@ -1874,7 +2043,7 @@ function createRainSound() {
   
   rainNoise.connect(filter);
   filter.connect(rainGain);
-  rainGain.connect(audioContext.destination);
+  rainGain.connect(masterGainNode);
   
   // Start
   rainNoise.start();
@@ -1884,12 +2053,14 @@ function createRainSound() {
   
   return {
     stop: () => {
-      rainNoise.stop();
+      stopped = true;
+      try { rainNoise.stop(); } catch (e) {}
     }
   };
 }
 
 function createHeartbeat() {
+  let stopped = false;
   const heartOsc = audioContext.createOscillator();
   heartOsc.type = 'sine';
   heartOsc.frequency.value = 60;
@@ -1906,6 +2077,7 @@ function createHeartbeat() {
   // Schedule beats
   let beatCount = 0;
   const scheduleBeat = () => {
+    if (stopped) return;
     const now = audioContext.currentTime;
     const nextBeat = now + (beatCount % 3 === 0 ? 0.8 : 0.4);
     
@@ -1916,7 +2088,7 @@ function createHeartbeat() {
   
   // Connect
   heartOsc.connect(heartGain);
-  heartGain.connect(audioContext.destination);
+  heartGain.connect(masterGainNode);
   
   // Start
   heartOsc.start();
@@ -1926,7 +2098,8 @@ function createHeartbeat() {
   
   return {
     stop: () => {
-      heartOsc.stop();
+      stopped = true;
+      try { heartOsc.stop(); } catch (e) {}
     }
   };
 }
@@ -1957,7 +2130,7 @@ function createBrownNoise() {
   
   source.connect(filter);
   filter.connect(gainNode);
-  gainNode.connect(audioContext.destination);
+  gainNode.connect(masterGainNode);
   
   source.start();
   
@@ -2244,11 +2417,7 @@ window.addEventListener('resize', () => {
 });
 
 // Initialize audio context on any click (for iOS)
-document.addEventListener('click', () => {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-}, { once: true });
+document.addEventListener('click', initAudioContext, { once: true });
 </script>
 <script>
 if ('serviceWorker' in navigator) {
