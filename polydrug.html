@@ -371,6 +371,13 @@
   details.info summary .tag{margin-left:.5rem;opacity:.85; font-size: 0.8rem; background: var(--chip); padding: 2px 8px; border-radius: 10px;}
   details.info summary::after{content:"\25BE";margin-left:auto;flex:none;font-size:.85em;opacity:.8;transition:transform .25s ease; padding-left:.6rem}
   details.info[open] summary::after{transform:rotate(180deg)}
+  /* Matrix Key: make the collapsible affordance unmissable */
+  #matrix-key{border:2px solid var(--accent,#ff69b4);border-radius:14px}
+  #matrix-key summary{font-size:1.15rem}
+  #matrix-key summary::after{display:none}
+  #matrix-key .chev{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:2px solid var(--accent,#ff69b4);color:var(--accent,#ff69b4);font-size:1rem;margin-right:.6rem;transition:transform .25s ease;flex:none}
+  #matrix-key[open] .chev{transform:rotate(180deg)}
+  #matrix-key .collapse-hint{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--accent,#ff69b4);background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:.25rem .75rem;flex:none;white-space:nowrap}
   details.info[open] {animation: accordionOpen 0.5s ease-out;}
   @keyframes accordionOpen {
     from { opacity: 0; max-height: 0; }
@@ -912,9 +919,36 @@
       </div>
     </section>
 
+    <!-- ===== Controls + Matrix ===== -->
+    <div class="swipe-indicator">
+      <i class="fas fa-arrows-left-right"></i> Swipe left/right to explore the full matrix
+    </div>
+    
+    <div class="controls">
+      <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
+      <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
+      <button class="download" id="dlMatrixBtn" type="button"><i class="fas fa-image"></i> Download matrix</button>
+      <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
+    </div>
+    <div class="matrix-share-menu" id="matrixShareMenu" hidden>
+      <span class="matrix-share-label">Send the matrix graphic:</span>
+      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy page link</button>
+      <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
+      <a id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+
+    <div class="section-heading" id="matrix">
+      <i class="fas fa-table"></i> Interaction Matrix
+    </div>
+
+    <div class="matrix" role="region" aria-label="Combo Risk Matrix">
+      <table id="matrixTable"></table>
+    </div>
+
     <!-- ===== Matrix Key ===== -->
-    <details class="info" open id="matrix-key">
-      <summary><i class="fas fa-key"></i> Matrix Risk Key</summary>
+    <details class="info" id="matrix-key">
+      <summary><span class="chev"><i class="fas fa-chevron-down"></i></span><i class="fas fa-key"></i> Matrix Risk Key <span class="collapse-hint">Tap to expand</span></summary>
       <div class="matrix-key">
       <h3><i class="fas fa-info-circle"></i> Understanding the Risk Levels</h3>
       <div class="key-items">
@@ -959,33 +993,6 @@
         </div>
       </div>
     </details>
-
-    <!-- ===== Controls + Matrix ===== -->
-    <div class="swipe-indicator">
-      <i class="fas fa-arrows-left-right"></i> Swipe left/right to explore the full matrix
-    </div>
-    
-    <div class="controls">
-      <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
-      <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
-      <button class="download" id="dlMatrixBtn" type="button"><i class="fas fa-image"></i> Download matrix</button>
-      <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
-    </div>
-    <div class="matrix-share-menu" id="matrixShareMenu" hidden>
-      <span class="matrix-share-label">Send the matrix graphic:</span>
-      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy page link</button>
-      <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
-      <a id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
-    </div>
-
-    <div class="section-heading" id="matrix">
-      <i class="fas fa-table"></i> Interaction Matrix
-    </div>
-
-    <div class="matrix" role="region" aria-label="Combo Risk Matrix">
-      <table id="matrixTable"></table>
-    </div>
 
     <!-- ===== Tips (quick) ===== -->
     <details class="info" open id="tips">
@@ -1677,6 +1684,15 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Create particles
   createParticles();
+
+  // Matrix key: keep the collapse hint pill accurate
+  var mkKey = document.getElementById('matrix-key');
+  if (mkKey) {
+    var mkHint = mkKey.querySelector('.collapse-hint');
+    mkKey.addEventListener('toggle', function(){
+      if (mkHint) mkHint.textContent = mkKey.open ? 'Tap to collapse' : 'Tap to expand';
+    });
+  }
 });
 </script>
 <script>
