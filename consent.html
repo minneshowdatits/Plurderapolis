@@ -831,6 +831,21 @@
 <style>
 .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#a855f7;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
 .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
+
+/* Scenario tap cards */
+.scenario-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin:1.5rem 0}
+.scenario-card{background:var(--card-bg);border:1px solid var(--accent-purple);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:1rem;transition:transform .3s ease,box-shadow .3s ease}
+.scenario-card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(123,44,191,.4)}
+.scenario-card h3{color:var(--plur-cyan);font-family:'Montserrat',sans-serif;font-size:1.15rem;margin:0}
+.scenario-scene{font-size:1rem;margin:0}
+.scenario-reveal-btn{background:linear-gradient(135deg,var(--accent-purple),var(--hot-pink));color:#fff;border:none;border-radius:25px;padding:.7rem 1.4rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;align-self:flex-start;transition:transform .2s ease}
+.scenario-reveal-btn:hover{transform:scale(1.04)}
+.scenario-answer{display:none;border-top:1px solid var(--accent-purple);padding-top:1rem}
+.scenario-card.revealed .scenario-answer{display:block}
+.scenario-card.revealed .scenario-reveal-btn{display:none}
+.verdict{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:800;padding:.3rem .9rem;border-radius:20px;margin-bottom:.6rem;font-size:.9rem}
+.verdict.no{background:rgba(255,20,147,.18);border:1px solid var(--hot-pink);color:#ff7ab8}
+.verdict.yes{background:rgba(0,255,136,.12);border:1px solid var(--plur-green);color:var(--plur-green)}
 </style>
 </head>
 <body>
@@ -856,6 +871,7 @@
         <a href="#ongoing-process" class="quick-nav-item">Ongoing Process</a>
         <a href="#resources" class="quick-nav-item">Resources</a>
         <a href="#quick-tips" class="quick-nav-item">Quick Tips</a>
+        <a href="#scenarios" class="quick-nav-item">Scenarios</a>
       </div>
     </div>
     
@@ -972,6 +988,64 @@
               <li>Consent violations aren't just private drama. They're community safety issues.</li>
             </ul>
             <p style="margin-top: auto;">If you witness or experience a consent violation, report it to event staff or use our <a href="https://plurderapolis.org/accountability.html" style="color: var(--plur-cyan);">accountability process</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Check Section -->
+    <div class="content-section fade-in" id="scenarios">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-clipboard-question section-icon"></i> Scenario Check: Is This Consent?</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <p>Five short scenes from real nights out. Tap each card to see the call.</p>
+        <div class="scenario-grid">
+          <div class="scenario-card">
+            <h3>Scene 1</h3>
+            <p class="scenario-scene">You're dancing with someone. They said yes to dancing, but halfway through they go still and stop responding.</p>
+            <button class="scenario-reveal-btn" type="button">Tap to reveal</button>
+            <div class="scenario-answer">
+              <span class="verdict no">Not consent</span>
+              <p>Freezing is a common stress response, not a yes. Stop, give them space, and check in with words: "Hey, are you okay? Want to take a break?" Only continue with a clear, enthusiastic yes.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <h3>Scene 2</h3>
+            <p class="scenario-scene">Someone is very drunk but seems into it and keeps pulling you closer.</p>
+            <button class="scenario-reveal-btn" type="button">Tap to reveal</button>
+            <div class="scenario-answer">
+              <span class="verdict no">Not consent</span>
+              <p>A person who is heavily intoxicated cannot give informed consent, no matter how into it they seem. Help them get water, find their friends, or get them home safe instead.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <h3>Scene 3</h3>
+            <p class="scenario-scene">They said yes to coming back to your place earlier. Now they're quiet in the car.</p>
+            <button class="scenario-reveal-btn" type="button">Tap to reveal</button>
+            <div class="scenario-answer">
+              <span class="verdict no">Not a yes anymore</span>
+              <p>Consent is reversible and specific to the moment. Check in honestly: "We can just hang out, or I can take you home. What do you want tonight?"</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <h3>Scene 4</h3>
+            <p class="scenario-scene">You put your arm around someone at the rail. They didn't say no.</p>
+            <button class="scenario-reveal-btn" type="button">Tap to reveal</button>
+            <div class="scenario-answer">
+              <span class="verdict no">Not consent</span>
+              <p>Silence is not a yes. Ask first, every time: "Is this okay?" It takes two seconds and it changes everything.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <h3>Scene 5</h3>
+            <p class="scenario-scene">They asked you to dance, keep checking that you're having fun, and ask before trying anything new.</p>
+            <button class="scenario-reveal-btn" type="button">Tap to reveal</button>
+            <div class="scenario-answer">
+              <span class="verdict yes">Yes, this is consent</span>
+              <p>This is what it looks like: enthusiastic, ongoing, and mutual. Match that energy.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1217,6 +1291,13 @@
         if (shareUrl) {
           window.open(shareUrl, '_blank', 'width=600,height=400');
         }
+      });
+    });
+    
+    // Scenario tap-to-reveal cards
+    document.querySelectorAll('.scenario-reveal-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btn.closest('.scenario-card').classList.add('revealed');
       });
     });
     
