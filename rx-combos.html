@@ -474,6 +474,16 @@
 <style>
 .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#a855f7;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
 .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
+/* Promo banner for the installable Combo Checker */
+.install-banner{margin:14px 0}
+.install-banner-inner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1a0930,#241040);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+.install-banner-icon{font-size:1.7em;flex-shrink:0}
+.install-banner-text{flex:1;font-size:.92em;min-width:0}
+.install-banner-text strong{display:block;color:var(--accent3);margin-bottom:3px;font-family:'Montserrat',sans-serif;font-size:.95em}
+.install-banner-text span{color:var(--muted);line-height:1.45}
+.install-btn{background:var(--accent1);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:700;font-family:inherit;font-size:.95em;flex-shrink:0;text-decoration:none;display:inline-block}
+.install-btn:active{transform:scale(.97)}
+.install-dismiss{background:transparent;border:0;color:var(--muted);font-size:1.1em;cursor:pointer;padding:6px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -494,6 +504,18 @@
     </header>
 
     <main id="main-content">
+      <!-- Installable combo checker promo -->
+      <div id="installBanner" class="install-banner" style="display:none" role="note" aria-label="Get the combo checker on your phone">
+        <div class="install-banner-inner">
+          <span class="install-banner-icon" aria-hidden="true">📲</span>
+          <div class="install-banner-text">
+            <strong>Get the Combo Checker on your phone</strong>
+            <span>The full interaction matrix installs as its own home screen icon, and it works with no signal.</span>
+          </div>
+          <a href="/polydrug.html" class="install-btn">Get the Checker</a>
+          <button id="installDismiss" class="install-dismiss" type="button" aria-label="Dismiss">✕</button>
+        </div>
+      </div>
       <!-- Page Map Navigation -->
       <section class="page-map animate">
         <h2><i class="fas fa-map"></i> Page Navigation</h2>
@@ -1147,6 +1169,28 @@
       });
     });
   </script>
+<script>
+/* Combo Checker install promo: shown unless already installed or dismissed. */
+(function(){
+  var banner = document.getElementById('installBanner');
+  if (!banner) return;
+  var isStandalone = false;
+  try {
+    isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                   window.matchMedia('(display-mode: fullscreen)').matches ||
+                   window.navigator.standalone === true;
+  } catch (e) {}
+  if (isStandalone) return;
+  try {
+    if (localStorage.getItem('plurderapolis-install-dismissed') === '1') return;
+  } catch (e) {}
+  document.getElementById('installDismiss').addEventListener('click', function(){
+    banner.style.display = 'none';
+    try { localStorage.setItem('plurderapolis-install-dismissed', '1'); } catch (e) {}
+  });
+  banner.style.display = '';
+})();
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
