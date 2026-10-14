@@ -23,6 +23,7 @@
 <link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>PLURderapolis: Bad Trip Guide</title>
+<meta property="og:image" content="https://plurderapolis.org/images/social-preview.jpg">
 <meta name="description" content="A safe space for grounding during difficult psychedelic experiences">
 <meta name="theme-color" content="#1c0028">
 <link rel="manifest" href="manifest.json">
@@ -982,6 +983,15 @@
       <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
       <!-- Quiet safety note: the old red banner is gone; one calm line keeps 911 findable -->
       <p class="safety-note">Not sure if this is medical? Trouble breathing, chest pain, overheating, seizure, or can't stay awake means don't wait it out: <a href="tel:911">call 911</a> · <a href="emergency.html">emergency guide</a></p>
+      <div class="mode-toggle" role="group" aria-label="Choose your view">
+        <button type="button" class="mode-btn active" id="modeTripper">😰 I need help</button>
+        <button type="button" class="mode-btn" id="modeSitter">🧍 I'm the sitter</button>
+      </div>
+      <style>
+        .mode-toggle{display:flex;gap:.7rem;justify-content:center;margin:0 auto 1.4rem;max-width:640px}
+        .mode-btn{flex:1;padding:.85rem 1rem;border-radius:999px;border:2px solid rgba(0,247,224,.35);background:rgba(255,255,255,.05);color:#eee;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .25s ease}
+        .mode-btn.active{background:linear-gradient(135deg,rgba(0,247,224,.25),rgba(255,110,199,.25));border-color:#5eead4}
+      </style>
       <style>
         .safety-note{max-width:640px;margin:0 auto 1.2rem;text-align:center;font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.5}
         .safety-note a{color:var(--mint,#5eead4);font-weight:600}
@@ -2424,6 +2434,72 @@ window.addEventListener('resize', () => {
 
 // Initialize audio context on any click (for iOS)
 document.addEventListener('click', initAudioContext, { once: true });
+</script>
+<!-- Sitter mode overlay -->
+<style>
+#sitter-overlay{position:fixed;inset:0;z-index:2000;background:rgba(10,0,20,.97);display:none;overflow-y:auto;padding:1.2rem}
+#sitter-overlay.open{display:block}
+.sitter-panel{max-width:680px;margin:0 auto;background:#1c0028;border:1px solid rgba(0,247,224,.25);border-radius:16px;padding:1.8rem 1.5rem}
+.sitter-kicker{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#5eead4;font-size:.8rem;margin:0 0 .4rem}
+.sitter-panel h2{font-family:'Montserrat',sans-serif;color:#fff;margin:0 0 .8rem;font-size:1.6rem}
+.sitter-panel h3{font-family:'Montserrat',sans-serif;color:#5eead4;margin:1.4rem 0 .6rem;font-size:1.1rem}
+.sitter-intro{color:rgba(255,255,255,.85)}
+.sitter-list{margin:0 0 .5rem;padding-left:1.3rem;color:#eee}
+.sitter-list li{margin-bottom:.5rem}
+.sitter-note{font-size:.9rem;color:rgba(255,255,255,.7);margin-top:1rem}
+.sitter-note a{color:#5eead4}
+.sitter-close{display:block;width:100%;margin-top:1.6rem;padding:1rem;border:none;border-radius:12px;background:linear-gradient(135deg,#ff6ec7,#a855f7);color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;cursor:pointer}
+</style>
+<div id="sitter-overlay" aria-hidden="true">
+  <div class="sitter-panel">
+    <p class="sitter-kicker">Sitter mode</p>
+    <h2>You're the anchor right now</h2>
+    <p class="sitter-intro">They're not in danger from the trip itself, but they need one calm person. That's you. Keep your voice low and slow.</p>
+    <h3>💬 Say this</h3>
+    <ul class="sitter-list">
+      <li>"You're safe. I'm right here."</li>
+      <li>"This will pass. I'm not going anywhere."</li>
+      <li>"Let's breathe together. In with me…"</li>
+      <li>"Do you want water? Do you want quiet?"</li>
+    </ul>
+    <h3>🚫 Don't do this</h3>
+    <ul class="sitter-list">
+      <li>Don't say "calm down" or "you're fine" on loop. It doesn't land.</li>
+      <li>Don't grab, hold, or restrain them unless they're about to get hurt.</li>
+      <li>Don't ask complicated questions or make them decide things.</li>
+      <li>Don't gather a crowd. One calm person beats five worried ones.</li>
+      <li>Don't leave them alone.</li>
+    </ul>
+    <h3>🚨 Call 911 if you see</h3>
+    <ul class="sitter-list">
+      <li>Trouble breathing, chest pain, or a seizure</li>
+      <li>Can't be woken up, or dangerously overheated</li>
+      <li>Behavior that could seriously hurt them or someone else</li>
+    </ul>
+    <p class="sitter-note">Minnesota's Good Samaritan law (604A.05) protects people who call 911 for an overdose in good faith. Don't let fear of getting in trouble stop the call.</p>
+    <h3>✅ Sitter checklist</h3>
+    <ul class="sitter-list">
+      <li>One person talks. Everyone else gives space.</li>
+      <li>Low lights, low noise. Move somewhere calmer if you can.</li>
+      <li>Water within reach. No more substances.</li>
+      <li>Give time anchors: "It's 11:40. The set ends at midnight. You've got this."</li>
+      <li>Stay until they're back to baseline, then food, rest, and no driving.</li>
+    </ul>
+    <button type="button" class="sitter-close" id="sitterClose">Back to the guide</button>
+    <p class="sitter-note">Not sure if this is medical? <a href="tel:911">Call 911</a> · <a href="emergency.html">emergency guide</a></p>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay=document.getElementById('sitter-overlay');
+  var bT=document.getElementById('modeTripper');
+  var bS=document.getElementById('modeSitter');
+  var bC=document.getElementById('sitterClose');
+  function openSitter(){overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');bS.classList.add('active');bT.classList.remove('active');document.body.style.overflow='hidden';overlay.scrollTop=0;}
+  function closeSitter(){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');bT.classList.add('active');bS.classList.remove('active');document.body.style.overflow='';}
+  if(bS&&bT){bS.addEventListener('click',openSitter);bT.addEventListener('click',closeSitter);}
+  if(bC){bC.addEventListener('click',closeSitter);}
+})();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
