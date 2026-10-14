@@ -1,6 +1,6 @@
 /* PLURderapolis offline support: keeps the crisis pages usable with zero bars.
    Version the cache name when the precached pages change so updates propagate. */
-const CACHE_NAME = 'plurderapolis-v21';
+const CACHE_NAME = 'plurderapolis-v22';
 
 // The pages someone might need at a festival with no signal.
 const PRECACHE_URLS = [
