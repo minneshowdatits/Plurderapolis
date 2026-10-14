@@ -7,7 +7,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3R9P09YYJC');
 </script>
   <meta charset="UTF-8">
@@ -45,11 +44,11 @@
       --pink: #ff69b4;
       --cyan: #00f7e0;
       --accent: #ff4757;
-      --accent2: #00f7e0;
       --red: #ff4757;
       --text: #ffffff;
       --muted: #b8b8d0;
       --border: #3a3a5c;
+      --green: #2ed573;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -61,23 +60,45 @@
     }
     .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#ff69b4;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
     .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
-    header {
-      background: rgba(18,18,31,.95);
-      backdrop-filter: blur(10px);
-      padding: 1rem 1.5rem;
-      position: sticky; top: 0; z-index: 100;
-      border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo { font-weight: 800; font-size: 1.3rem; color: var(--accent); text-decoration: none; }
-    .logo span { color: var(--pink); }
-    .home-link { color: var(--muted); text-decoration: none; font-weight: 600; }
-    .home-link:hover { color: var(--accent); }
     .container { max-width: 820px; margin: 0 auto; padding: 0 1.25rem; }
-    .hero { text-align: center; padding: 3rem 1rem 2rem; }
+    .hero { text-align: center; padding: 3rem 1rem 1.5rem; }
     .hero h1 { font-size: 2.9rem; font-weight: 800; margin-bottom: .75rem; letter-spacing: -0.01em; text-shadow: 0 0 34px #ff475780; }
     .hero h1 .accent { color: var(--red); }
     .hero p { color: var(--muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+    /* Triage walkthrough */
+    .triage {
+      background: linear-gradient(135deg, #2a0a12, #1c1c28);
+      border: 2px solid var(--red);
+      border-radius: 18px;
+      padding: 1.75rem;
+      margin: 1rem 0 2rem;
+      box-shadow: 0 0 32px #ff475733;
+    }
+    .triage-top { display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; }
+    .triage-pulse { width:14px; height:14px; border-radius:50%; background:var(--red); animation: pulse 1.2s infinite; flex-shrink:0; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.35);opacity:.65} }
+    .triage h2 { font-size:1.25rem; color:#fff; }
+    .triage-sub { color:var(--muted); font-size:.95rem; margin-bottom:1.25rem; }
+    .triage-card { background: rgba(255,255,255,.04); border:1px solid var(--border); border-radius:14px; padding:1.5rem; min-height:220px; }
+    .triage-step-label { font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--pink); font-weight:700; margin-bottom:.4rem; }
+    .triage-card h3 { font-size:1.35rem; margin-bottom:.6rem; }
+    .triage-card p { color:#e8e8f2; margin-bottom:1.25rem; }
+    .triage-btns { display:flex; flex-wrap:wrap; gap:.7rem; }
+    .tbtn {
+      flex:1 1 200px; padding:.9rem 1.1rem; border-radius:12px; border:1px solid var(--border);
+      background:#252536; color:#fff; font-weight:700; font-size:.98rem; cursor:pointer;
+      font-family:inherit; transition:transform .08s ease, background .15s ease;
+    }
+    .tbtn:hover { background:#2f2f45; }
+    .tbtn:active { transform:scale(.98); }
+    .tbtn.primary { background:var(--red); border-color:var(--red); color:#fff; }
+    .tbtn.primary:hover { background:#ff5f6e; }
+    .tbtn.call { background:var(--green); border-color:var(--green); color:#0d0d0d; font-size:1.05rem; }
+    .triage-dots { display:flex; gap:.4rem; margin-top:1rem; justify-content:center; }
+    .triage-dots span { width:8px; height:8px; border-radius:50%; background:#3a3a5c; }
+    .triage-dots span.on { background:var(--pink); }
+
     .pocket {
       background: var(--card);
       border: 2px solid var(--red);
@@ -90,6 +111,7 @@
     .pocket ul { list-style: none; }
     .pocket li { padding: .4rem 0 .4rem 1.75rem; position: relative; }
     .pocket li::before { content: "▸"; color: var(--red); position: absolute; left: 0; font-weight: 800; }
+
     .section {
       background: var(--card);
       border: 1px solid var(--border);
@@ -103,15 +125,90 @@
     .section ol, .section ul { margin: .5rem 0 .9rem 1.25rem; color: #e8e8f2; }
     .section li { margin-bottom: .5rem; }
     .section a { color: var(--accent); }
-    .steps li::marker { color: var(--accent); font-weight: 800; }
-    .dont-box {
-      background: rgba(255,93,93,.08);
-      border: 1px solid var(--red);
-      border-radius: 12px;
-      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-      margin: 1rem 0;
+
+    /* Signs checklist */
+    .signs-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin:1rem 0; }
+    @media(max-width:600px){ .signs-grid{grid-template-columns:1fr} }
+    .sign-card {
+      background:#252536; border:2px solid var(--border); border-radius:14px; padding:1.1rem;
+      cursor:pointer; transition:border-color .15s ease, background .15s ease; text-align:left;
+      font-family:inherit; color:#fff; width:100%;
     }
-    .dont-box h3 { color: var(--red); margin-bottom: .5rem; }
+    .sign-card:hover { border-color:var(--pink); }
+    .sign-card.checked { border-color:var(--red); background:rgba(255,71,87,.12); }
+    .sign-card .sign-num { font-size:.75rem; font-weight:800; color:var(--pink); text-transform:uppercase; letter-spacing:.06em; }
+    .sign-card.checked .sign-num { color:var(--red); }
+    .sign-card h3 { font-size:1.05rem; margin:.3rem 0 .4rem; }
+    .sign-card p { font-size:.9rem; color:var(--muted); margin:0; }
+    .sign-card .check { float:right; width:26px; height:26px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.85rem; }
+    .sign-card.checked .check { background:var(--red); border-color:var(--red); color:#fff; }
+    .signs-progress { background:#252536; border-radius:999px; height:10px; overflow:hidden; margin:.5rem 0 1rem; }
+    .signs-progress div { height:100%; width:0%; background:linear-gradient(90deg,var(--pink),var(--red)); transition:width .25s ease; }
+    .signs-nudge { display:none; background:rgba(255,71,87,.14); border:1px solid var(--red); border-radius:12px; padding:1rem 1.25rem; margin-top:1rem; }
+    .signs-nudge.show { display:block; }
+    .signs-nudge strong { color:var(--red); }
+
+    /* Action stepper */
+    .a-step { border:1px solid var(--border); border-radius:14px; margin-bottom:.8rem; overflow:hidden; background:#252536; }
+    .a-step-head { width:100%; display:flex; align-items:center; gap:.9rem; padding:1.05rem 1.15rem; background:none; border:none; color:#fff; font-family:inherit; cursor:pointer; text-align:left; }
+    .a-step-num { width:36px; height:36px; border-radius:50%; background:#3a3a5c; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+    .a-step.done .a-step-num { background:var(--green); color:#0d0d0d; }
+    .a-step.open .a-step-num { background:var(--pink); color:#0d0d0d; }
+    .a-step-head h3 { font-size:1.02rem; flex:1; }
+    .a-step-head .chev { color:var(--muted); transition:transform .2s ease; }
+    .a-step.open .chev { transform:rotate(180deg); }
+    .a-step-body { display:none; padding:0 1.15rem 1.15rem 4.1rem; color:#e8e8f2; font-size:.96rem; }
+    .a-step.open .a-step-body { display:block; }
+    .a-step-body .a-done-btn { margin-top:.9rem; padding:.7rem 1.2rem; border-radius:10px; border:none; background:var(--pink); color:#0d0d0d; font-weight:800; cursor:pointer; font-family:inherit; }
+    .a-step-body .a-done-btn:hover { filter:brightness(1.1); }
+    .a-progress { display:flex; align-items:center; gap:.6rem; margin-bottom:1rem; font-size:.9rem; color:var(--muted); }
+    .a-progress-bar { flex:1; height:8px; background:#2a2a3a; border-radius:999px; overflow:hidden; }
+    .a-progress-bar div { height:100%; width:0%; background:var(--green); transition:width .25s ease; }
+
+    /* Narcan demo */
+    .narcan-demo { background:#252536; border:1px solid var(--border); border-radius:14px; padding:1.25rem; margin:1rem 0; text-align:center; }
+    .narcan-visual { font-size:3.2rem; margin:.5rem 0; }
+    .narcan-demo h3 { color:var(--cyan); margin-bottom:.4rem; }
+    .narcan-demo p { color:#e8e8f2; font-size:.95rem; min-height:3.2em; }
+    .narcan-nav { display:flex; gap:.6rem; justify-content:center; margin-top:.8rem; }
+    .narcan-nav button { padding:.6rem 1.1rem; border-radius:10px; border:1px solid var(--border); background:#2f2f45; color:#fff; font-weight:700; cursor:pointer; font-family:inherit; }
+    .narcan-nav button:hover { border-color:var(--cyan); }
+    .narcan-dots { display:flex; gap:.4rem; justify-content:center; margin-top:.7rem; }
+    .narcan-dots span { width:9px; height:9px; border-radius:50%; background:#3a3a5c; }
+    .narcan-dots span.on { background:var(--cyan); }
+
+    /* Breathing pacer */
+    .pacer { background:#252536; border:1px solid var(--border); border-radius:14px; padding:1.25rem; margin:1rem 0; text-align:center; }
+    .pacer-circle { width:110px; height:110px; border-radius:50%; background:radial-gradient(circle at 35% 35%, var(--cyan), #009e96); margin:1rem auto; display:flex; align-items:center; justify-content:center; font-weight:800; color:#0d0d0d; transition:transform 2.5s ease-in-out; transform:scale(.72); }
+    .pacer-circle.big { transform:scale(1); }
+    .pacer button { padding:.75rem 1.4rem; border-radius:12px; border:none; background:var(--cyan); color:#0d0d0d; font-weight:800; cursor:pointer; font-family:inherit; font-size:.98rem; }
+    .pacer small { display:block; color:var(--muted); margin-top:.6rem; }
+
+    .dont-grid { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-top:1rem; }
+    @media(max-width:600px){ .dont-grid{grid-template-columns:1fr} }
+    .dont-card { background:rgba(255,71,87,.07); border:1px solid rgba(255,71,87,.35); border-radius:12px; padding:1rem 1.1rem; }
+    .dont-card .x { color:var(--red); font-weight:800; margin-right:.4rem; }
+    .dont-card strong { display:block; margin-bottom:.25rem; }
+    .dont-card p { font-size:.9rem; color:var(--muted); margin:0; }
+
+    /* Tabs */
+    .tabs { display:flex; gap:.5rem; margin-bottom:1rem; }
+    .tab-btn { flex:1; padding:.8rem; border-radius:12px; border:1px solid var(--border); background:#252536; color:#fff; font-weight:700; cursor:pointer; font-family:inherit; }
+    .tab-btn.active { border-color:var(--pink); background:rgba(255,105,180,.14); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    /* Quiz */
+    .quiz-q { background:#252536; border:1px solid var(--border); border-radius:12px; padding:1.1rem 1.2rem; margin-bottom:.8rem; }
+    .quiz-q p { font-weight:700; margin-bottom:.7rem; }
+    .quiz-btns { display:flex; gap:.6rem; }
+    .quiz-btns button { flex:1; padding:.65rem; border-radius:10px; border:1px solid var(--border); background:#2f2f45; color:#fff; font-weight:700; cursor:pointer; font-family:inherit; }
+    .quiz-btns button:hover { border-color:var(--pink); }
+    .quiz-a { display:none; margin-top:.8rem; padding:.8rem 1rem; border-radius:10px; font-size:.92rem; }
+    .quiz-a.show { display:block; }
+    .quiz-a.yes { background:rgba(46,213,115,.12); border:1px solid var(--green); }
+    .quiz-a.no { background:rgba(255,71,87,.1); border:1px solid var(--red); }
+
     .crisis-box {
       background: linear-gradient(135deg, #2a0a12, #1c1c28);
       border: 2px solid var(--red);
@@ -145,36 +242,43 @@
     footer .crisis-line { margin-bottom: 1rem; color: var(--text); }
     footer a { color: var(--accent); }
     footer .disclaimer { max-width: 640px; margin: 1rem auto 0; font-size: .8rem; }
-    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } }
-  
-/* ---- PLURderapolis unified header bar ---- */
-.ph-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #2a2a3a;padding:.6rem 1rem;margin:0}
-.ph-bar .ph-brand{font-family:'Montserrat','Roboto',-apple-system,sans-serif;font-weight:800;font-size:1.05rem;color:#fff;text-decoration:none;white-space:nowrap;line-height:1.2}
-.ph-bar .ph-brand .ph-plur{color:#ff69b4}
-.ph-bar .ph-links{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;-webkit-overflow-scrolling:touch}
-.ph-bar .ph-links::-webkit-scrollbar{display:none}
-.ph-bar .ph-links a{font-family:'Montserrat','Roboto',sans-serif;font-size:.78rem;font-weight:600;color:#b8b8d0;text-decoration:none;padding:.45rem .65rem;border-radius:999px;white-space:nowrap}
-.ph-bar .ph-links a:hover{color:#fff;background:rgba(255,255,255,.08)}@media (max-width:480px){.ph-bar{padding:.5rem .6rem;gap:.45rem}.ph-bar .ph-brand{font-size:.92rem}.ph-bar .ph-links a{font-size:.72rem;padding:.4rem .55rem}}
+    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .triage{padding:1.15rem} }
 
-</style>
+    /* ---- PLURderapolis unified header bar ---- */
+    .ph-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #2a2a3a;padding:.6rem 1rem;margin:0}
+    .ph-bar .ph-brand{font-family:'Montserrat','Roboto',-apple-system,sans-serif;font-weight:800;font-size:1.05rem;color:#fff;text-decoration:none;white-space:nowrap;line-height:1.2;flex-shrink:0;overflow:hidden}
+    .ph-bar .ph-brand .ph-plur{color:#ff69b4}
+    .ph-bar .ph-links{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0;-webkit-overflow-scrolling:touch}
+    .ph-bar .ph-links::-webkit-scrollbar{display:none}
+    .ph-bar .ph-links a{font-family:'Montserrat','Roboto',sans-serif;font-size:.78rem;font-weight:600;color:#b8b8d0;text-decoration:none;padding:.45rem .65rem;border-radius:999px;white-space:nowrap}
+    .ph-bar .ph-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+    @media (max-width:480px){.ph-bar{padding:.5rem .6rem;gap:.45rem}.ph-bar .ph-brand{font-size:.92rem}.ph-bar .ph-links a{font-size:.72rem;padding:.4rem .55rem}}
+  </style>
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
   <header class="ph-bar">
-  <a class="ph-brand" href="/">🍑 <span class="ph-plur">PLUR</span>derapolis</a>
-  <nav class="ph-links" aria-label="Main navigation">
-    <a href="/">Home</a>
-    <a href="/emergency.html">Emergency</a>
-    <a href="/overdose.html">Overdose</a>
-    <a href="/resources.html">Resources</a>
-    <a href="/health.html">Guides</a>
-  </nav>
-</header>
+    <a class="ph-brand" href="/">🍑 <span class="ph-plur">PLUR</span>derapolis</a>
+    <nav class="ph-links" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/emergency.html">Emergency</a>
+      <a href="/overdose.html">Overdose</a>
+      <a href="/resources.html">Resources</a>
+      <a href="/health.html">Guides</a>
+    </nav>
+  </header>
 
   <div class="container">
     <div class="hero">
       <h1 id="main-content">Overdose: <span class="accent">Recognize &amp; Respond</span></h1>
       <p>This is the page to read <em>before</em> you ever need it. Overdoses are survivable when someone nearby knows what to do. That someone can be you.</p>
+    </div>
+
+    <div class="triage" id="triage">
+      <div class="triage-top"><div class="triage-pulse" aria-hidden="true"></div><h2>Happening right now? Let me walk you through it</h2></div>
+      <p class="triage-sub">Tap through — 30 seconds, plain language, no judgment. Stay with them while you do this.</p>
+      <div class="triage-card" id="triage-card" role="region" aria-live="polite"></div>
+      <div class="triage-dots" id="triage-dots" aria-hidden="true"></div>
     </div>
 
     <div class="pocket">
@@ -188,58 +292,161 @@
     </div>
 
     <div class="section">
-      <h2><i class="fas fa-eye"></i> The 4 signs</h2>
-      <p>You don't need a medical degree. Check these, in order:</p>
-      <ol class="steps">
-        <li><strong>Won't wake up.</strong> Shout their name, shake their shoulders hard, rub your knuckles firmly on their breastbone. Someone who's just sleeping will react. Someone overdosing won't.</li>
-        <li><strong>Breathing is wrong.</strong> Watch their chest. Slow, shallow, irregular — or stopped entirely. Gurgling, snoring, or choking sounds while unconscious are a red flag, not "sleeping it off."</li>
-        <li><strong>Color change.</strong> Lips, fingernails, or skin turning blue, gray, or ashy — especially around the mouth. On darker skin, check the lips, gums, and nail beds.</li>
-        <li><strong>Limp body.</strong> Completely unresponsive, muscles slack, pupils tiny (pinpoint) in opioid overdose.</li>
-      </ol>
-      <p>If you see these, stop reading and act. Everything below is the detail — the action is: <strong>call 911 first, then help.</strong></p>
-    </div>
-
-    <div class="section">
-      <h2><i class="fas fa-list-ol"></i> What to do, step by step</h2>
-      <ol class="steps">
-        <li><strong>Call 911 first.</strong> Before anything else. Say "someone is unresponsive and not breathing normally" and give the address. You don't have to say what they took — describe symptoms. Stay on the line.</li>
-        <li><strong>Rescue breathing if they're not breathing.</strong> Tilt the head back, lift the chin, pinch the nose, and breathe into their mouth — one breath every 5 seconds. If they're not breathing normally and you know CPR, start chest compressions: push hard and fast in the center of the chest, with rescue breaths if you're trained. If you don't know how, dispatch will talk you through it. Any breathing help is better than none.</li>
-        <li><strong>Give naloxone (Narcan).</strong> It's a nasal spray: peel open the package, place the tip in one nostril, press the plunger firmly. That's it. If there's no improvement in 2–3 minutes, give a second dose. Naloxone wears off in 30–90 minutes — <strong>the person can overdose again</strong> after it fades, which is why staying until medics arrive matters.</li>
-        <li><strong>Recovery position if they're breathing but unconscious.</strong> Roll them onto their side, top knee bent to keep them stable, head tilted slightly back so the airway stays open. This keeps them from choking if they vomit.</li>
-        <li><strong>Stay.</strong> Until help arrives. Talk to them even if they're out — hearing is the last sense to go, and it's also for you. You did the right thing.</li>
-      </ol>
-      <p>Free Narcan and test strips are available all over Minnesota — see our <a href="https://plurderapolis.org/resources.html">resources page</a> for where to get them. Narcan is also sold over the counter at pharmacies now, no prescription needed. Carry it. It weighs nothing and it saves lives.</p>
-    </div>
-
-    <div class="section">
-      <div class="dont-box">
-        <h3><i class="fas fa-ban"></i> What NOT to do</h3>
-        <ul>
-          <li><strong>No cold water, ice baths, or ice down the pants.</strong> It doesn't reverse an overdose — it causes shock and wastes time.</li>
-          <li><strong>Don't try to "walk them off" or slap them awake.</strong> An overdosing person can't walk, and shaking doesn't fix breathing.</li>
-          <li><strong>Don't leave them alone "to sleep it off."</strong> People die this way. Alone is the most dangerous place to overdose.</li>
-          <li><strong>Don't try to make them vomit.</strong> Choking risk, zero benefit.</li>
-          <li><strong>Don't give them more drugs</strong> (uppers to "balance out" downers, etc.). This kills people.</li>
-        </ul>
+      <h2><i class="fas fa-eye"></i> The 4 signs — tap what you see</h2>
+      <p>You don't need a medical degree. Tap each sign you're seeing. If two or more light up red, treat it as an overdose and call 911.</p>
+      <div class="signs-progress" aria-hidden="true"><div id="signs-bar"></div></div>
+      <p style="font-size:.9rem;color:var(--muted)" id="signs-count">0 of 4 checked</p>
+      <div class="signs-grid" id="signs-grid">
+        <button class="sign-card" data-sign="wake">
+          <span class="check">✓</span>
+          <span class="sign-num">Sign 1</span>
+          <h3>Won't wake up</h3>
+          <p>Shout name, shake shoulders hard, knuckles on breastbone. Sleeping people react. Overdosing people don't.</p>
+        </button>
+        <button class="sign-card" data-sign="breath">
+          <span class="check">✓</span>
+          <span class="sign-num">Sign 2</span>
+          <h3>Breathing is wrong</h3>
+          <p>Slow, shallow, irregular — or stopped. Gurgling, snoring, choking while unconscious = red flag.</p>
+        </button>
+        <button class="sign-card" data-sign="color">
+          <span class="check">✓</span>
+          <span class="sign-num">Sign 3</span>
+          <h3>Color change</h3>
+          <p>Blue, gray, or ashy lips, nails, or skin. On darker skin check lips, gums, and nail beds.</p>
+        </button>
+        <button class="sign-card" data-sign="limp">
+          <span class="check">✓</span>
+          <span class="sign-num">Sign 4</span>
+          <h3>Limp body</h3>
+          <p>Completely unresponsive, muscles slack. Tiny pinpoint pupils suggest opioids.</p>
+        </button>
+      </div>
+      <div class="signs-nudge" id="signs-nudge">
+        <strong><i class="fas fa-siren"></i> That's enough — call 911 now.</strong><br>
+        <span style="color:#e8e8f2">You don't need all four. Two signs is enough to act. <a href="tel:911" style="color:var(--red);font-weight:800">Tap to call 911</a></span>
       </div>
     </div>
 
     <div class="section">
-      <h2><i class="fas fa-temperature-high"></i> Stimulant overamping looks different</h2>
-      <p>Not every drug emergency is an opioid overdose. Too much stimulant ("overamping") looks like the opposite: overheating, extreme agitation or paranoia, racing heart, chest pain, seizures.</p>
-      <ul>
-        <li><strong>Cool them down</strong> — move to shade, cool water on neck and wrists, fan them. Overheating is the main killer here.</li>
-        <li><strong>Calm the environment</strong> — dim lights, fewer people, quiet voice. Don't crowd them.</li>
-        <li><strong>Call 911</strong> for chest pain, seizures, extreme overheating, or if they become unresponsive. Same Good Samaritan protections apply.</li>
-        <li>Naloxone won't help a pure stimulant emergency — but it won't hurt either. When in doubt about what was taken, the 911 call is still the move.</li>
-      </ul>
-      <p>Unsure what's happening? Our <a href="https://plurderapolis.org/symptoms.html">Symptom Detective</a> walks you through telling them apart.</p>
+      <h2><i class="fas fa-list-ol"></i> What to do, step by step</h2>
+      <p>Tap each step to open it. Hit <strong>Done</strong> when you've done it and the next one opens.</p>
+      <div class="a-progress"><span id="a-count">0 of 5 done</span><div class="a-progress-bar"><div id="a-bar"></div></div></div>
+      <div id="a-steps">
+        <div class="a-step open" data-step="1">
+          <button class="a-step-head"><span class="a-step-num">1</span><h3>Call 911 first — before anything else</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="a-step-body">
+            <p>Say <strong>"someone is unresponsive and not breathing normally"</strong> and give the address. You don't have to say what they took — describe symptoms. Stay on the line; dispatch will coach you.</p>
+            <p><a href="tel:911" style="display:inline-block;margin-top:.4rem;padding:.7rem 1.2rem;background:var(--red);color:#fff;border-radius:10px;text-decoration:none;font-weight:800"><i class="fas fa-phone"></i> Call 911 now</a></p>
+            <button class="a-done-btn">Done — I called <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="a-step" data-step="2">
+          <button class="a-step-head"><span class="a-step-num">2</span><h3>Rescue breathing if they're not breathing</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="a-step-body">
+            <p>Tilt head back, lift chin, pinch nose, breathe into mouth — <strong>one breath every 5 seconds</strong>. If you know CPR, do chest compressions hard and fast in the center of the chest. Don't know how? Dispatch talks you through it. Any breathing help beats none.</p>
+            <button class="a-done-btn">Done — next <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="a-step" data-step="3">
+          <button class="a-step-head"><span class="a-step-num">3</span><h3>Give naloxone (Narcan)</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="a-step-body">
+            <p>Nasal spray: <strong>peel</strong> the package, <strong>place</strong> tip in one nostril, <strong>press</strong> the plunger firmly. No improvement in 2–3 minutes? Give a second dose. It wears off in 30–90 minutes — they can overdose again after it fades.</p>
+            <button class="a-done-btn">Done — next <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="a-step" data-step="4">
+          <button class="a-step-head"><span class="a-step-num">4</span><h3>Recovery position if breathing but unconscious</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="a-step-body">
+            <p>Roll them onto their side, top knee bent to keep them stable, head tilted slightly back. Keeps the airway open if they vomit.</p>
+            <button class="a-done-btn">Done — next <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="a-step" data-step="5">
+          <button class="a-step-head"><span class="a-step-num">5</span><h3>Stay until help arrives</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="a-step-body">
+            <p>Talk to them even if they're out — hearing is the last sense to go. You did the right thing by staying.</p>
+            <button class="a-done-btn">Done — I stayed <i class="fas fa-check"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="narcan-demo" id="narcan-demo">
+        <h3><i class="fas fa-spray-can-sparkles"></i> Narcan in 3 taps</h3>
+        <div class="narcan-visual" id="narcan-emoji">📦</div>
+        <h3 id="narcan-title">1. Peel</h3>
+        <p id="narcan-text">Open the package and take out the nasal spray device.</p>
+        <div class="narcan-nav">
+          <button id="narcan-prev">← Back</button>
+          <button id="narcan-next">Next →</button>
+        </div>
+        <div class="narcan-dots" id="narcan-dots"><span class="on"></span><span></span><span></span></div>
+      </div>
+      <div class="pacer">
+        <h3 style="color:var(--cyan)"><i class="fas fa-lungs"></i> Breathing pacer — one breath every 5 seconds</h3>
+        <div class="pacer-circle" id="pacer-circle"><span id="pacer-label">Ready</span></div>
+        <button id="pacer-btn">Start pacer</button>
+        <small>Watch the circle: breathe in when it grows. Stop anytime.</small>
+      </div>
+      <p style="margin-top:1rem">Free Narcan and test strips all over Minnesota — see our <a href="https://plurderapolis.org/resources.html">resources page</a>. Narcan is sold over the counter now, no prescription needed. Carry it.</p>
     </div>
 
     <div class="section">
-      <h2><i class="fas fa-scale-balanced"></i> Minnesota's Good Samaritan law</h2>
-      <p>The fear that stops most people from calling 911 is "will I get in trouble?" In Minnesota, the answer is: the law is on your side. Minnesota's Good Samaritan law (sometimes called Steve's Law, MN Statute 604A.05) gives <strong>limited immunity from certain drug possession charges</strong> for both the person who calls 911 in good faith during an overdose <em>and</em> the person overdosing. You don't have to be the first person to call — give your name, stay until help arrives, and cooperate, and the protection applies.</p>
-      <p>It doesn't cover everything — dealing isn't protected, and it doesn't stop police from acting on warrants or investigating other crimes — but simple possession at the scene of a rescue is, and the incident can't be used to revoke probation or parole. Since August 2023, Minnesota doesn't criminalize possessing drug paraphernalia at all, even with residue, and test strips and syringes aren't legally paraphernalia in the first place. Don't let fear of a possession charge stop you from saving someone's life. When you call, simply describe the symptoms; dispatch cares about the medical emergency, not busting you. <em>(We're harm reduction volunteers, not lawyers — but the practical advice never changes: always call.)</em></p>
+      <h2><i class="fas fa-ban"></i> What NOT to do</h2>
+      <p>Myths that waste time or hurt people:</p>
+      <div class="dont-grid">
+        <div class="dont-card"><strong><span class="x">✕</span> Cold water / ice baths</strong><p>Doesn't reverse overdose. Causes shock, wastes time.</p></div>
+        <div class="dont-card"><strong><span class="x">✕</span> "Walk them off" / slapping awake</strong><p>They can't walk it off. Shaking doesn't fix breathing.</p></div>
+        <div class="dont-card"><strong><span class="x">✕</span> Leave them to "sleep it off"</strong><p>People die this way. Alone is the most dangerous place to overdose.</p></div>
+        <div class="dont-card"><strong><span class="x">✕</span> Make them vomit</strong><p>Choking risk, zero benefit.</p></div>
+        <div class="dont-card"><strong><span class="x">✕</span> Give more drugs to "balance out"</strong><p>Uppers don't cancel downers. This kills people.</p></div>
+        <div class="dont-card"><strong><span class="x">✕</span> Wait to be sure</strong><p>Narcan can't hurt someone who's not overdosing. When in doubt, act.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-temperature-high"></i> Opioid or stimulant? They look opposite</h2>
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="opioid" role="tab">Opioid overdose</button>
+        <button class="tab-btn" data-tab="stim" role="tab">Stimulant overamping</button>
+      </div>
+      <div class="tab-panel active" id="tab-opioid">
+        <ul>
+          <li>Can't wake up, slow or stopped breathing, blue lips, limp, tiny pupils</li>
+          <li><strong>Give naloxone</strong> — it reverses opioids</li>
+          <li>Rescue breathing + 911 + stay</li>
+        </ul>
+      </div>
+      <div class="tab-panel" id="tab-stim">
+        <ul>
+          <li>Overheating, extreme agitation or paranoia, racing heart, chest pain, seizures — the opposite picture</li>
+          <li><strong>Cool them down:</strong> shade, cool water on neck and wrists, fan them. Overheating is the main killer.</li>
+          <li><strong>Calm the environment:</strong> dim lights, fewer people, quiet voice</li>
+          <li><strong>Call 911</strong> for chest pain, seizures, extreme overheating, or unresponsiveness. Same Good Samaritan protections.</li>
+          <li>Naloxone won't help a pure stimulant emergency — but it won't hurt. When in doubt about what was taken, the 911 call is still the move.</li>
+        </ul>
+      </div>
+      <p style="margin-top:1rem">Unsure? Our <a href="https://plurderapolis.org/symptoms.html">Symptom Detective</a> walks you through telling them apart.</p>
+    </div>
+
+    <div class="section">
+      <h2><i class="fas fa-scale-balanced"></i> Minnesota's Good Samaritan law — are you protected?</h2>
+      <p>Tap through — most people are more protected than they think (MN Statute 604A.05, sometimes called Steve's Law).</p>
+      <div class="quiz-q" data-answer="yes">
+        <p>1. If I call 911 in good faith during an overdose, can I get limited immunity from certain drug possession charges?</p>
+        <div class="quiz-btns"><button data-pick="yes">Yes</button><button data-pick="no">No</button></div>
+        <div class="quiz-a">Yes — for both the caller and the person overdosing, when you give your name, stay until help arrives, and cooperate. You don't have to be the first caller.</div>
+      </div>
+      <div class="quiz-q" data-answer="yes">
+        <p>2. Does it also protect the person who overdosed?</p>
+        <div class="quiz-btns"><button data-pick="yes">Yes</button><button data-pick="no">No</button></div>
+        <div class="quiz-a">Yes — the same limited immunity covers them. The incident also can't be used to revoke probation or parole.</div>
+      </div>
+      <div class="quiz-q" data-answer="no">
+        <p>3. Does it protect dealing, warrants, or other crimes?</p>
+        <div class="quiz-btns"><button data-pick="yes">Yes</button><button data-pick="no">No</button></div>
+        <div class="quiz-a">No — dealing isn't protected, and it doesn't stop police acting on warrants or other crimes. Since Aug 2023, though, MN doesn't criminalize paraphernalia possession at all, even with residue.</div>
+      </div>
+      <p style="font-size:.9rem;color:var(--muted)"><em>We're harm reduction volunteers, not lawyers — but the practical advice never changes: always call.</em></p>
     </div>
 
     <div class="crisis-box">
@@ -277,6 +484,185 @@
         navigator.serviceWorker.register('/sw.js').catch(function(){});
       });
     }
+
+    // Triage walkthrough
+    (function(){
+      var steps = {
+        start: { label: 'Start', title: 'Someone might be overdosing?', text: 'I will walk you through it in about 30 seconds. Stay with them while you tap through.', btns: [{t:'Start check', n:'wake', p:true}] },
+        wake: { label: '1 of 5', title: 'Step 1: Can you wake them?', text: 'Shout their name, shake shoulders hard, rub your knuckles firmly on their breastbone.', btns: [{t:'They woke up', n:'woke'}, {t:'No response', n:'breathing', p:true}] },
+        woke: { label: 'Paused', title: 'They woke up — good.', text: 'Stay with them. If they fade again, restart. If you are worried at all, still call 911.', btns: [{t:'Call 911', n:'call911', call:true}, {t:'Restart check', n:'start'}] },
+        breathing: { label: '2 of 5', title: 'Step 2: Check breathing', text: 'Watch their chest for 10 seconds. Slow, shallow, stopped, gurgling or snoring while unconscious = red flag.', btns: [{t:'Breathing normally', n:'breathing-ok'}, {t:'Slow / stopped / gurgling', n:'call911', p:true}] },
+        'breathing-ok': { label: 'Paused', title: 'Breathing but unconscious?', text: 'Roll them into recovery position: on their side, top knee bent, head tilted back. Still call 911 if unsure.', btns: [{t:'Call 911', n:'call911', call:true}, {t:'Show recovery position', n:'recovery'}, {t:'Restart', n:'start'}] },
+        call911: { label: '3 of 5', title: 'Step 3: Call 911 NOW', text: 'Say "unresponsive, not breathing normally" + your address. Stay on the line. Then give Narcan.', btns: [{t:'I called 911 — next', n:'narcan', p:true}] },
+        narcan: { label: '4 of 5', title: 'Step 4: Give naloxone (Narcan)', text: 'Peel the package, place tip in one nostril, press the plunger firmly. No improvement in 2-3 min? Give a 2nd dose.', btns: [{t:'Done — next', n:'stay', p:true}] },
+        recovery: { label: 'Guide', title: 'Recovery position', text: 'On their side, top knee bent for stability, head tilted slightly back. Keeps the airway open if they vomit.', btns: [{t:'Back to start', n:'start', p:true}] },
+        stay: { label: '5 of 5', title: 'Step 5: Stay until help arrives', text: 'Narcan wears off in 30-90 minutes — they can overdose again after it fades. Talk to them. You did the right thing.', btns: [{t:'Restart walkthrough', n:'start'}] }
+      };
+      var order = ['start','wake','breathing','call911','narcan','stay'];
+      var card = document.getElementById('triage-card');
+      var dots = document.getElementById('triage-dots');
+      function render(id){
+        var s = steps[id];
+        var html = '<div class="triage-step-label">' + s.label + '</div><h3>' + s.title + '</h3><p>' + s.text + '</p><div class="triage-btns">';
+        s.btns.forEach(function(b){
+          var cls = 'tbtn' + (b.p ? ' primary' : '') + (b.call ? ' call' : '');
+          var label = b.call ? '<a href="tel:911" style="color:inherit;text-decoration:none;display:block">' + b.t + '</a>' : b.t;
+          if(b.call){
+            html += '<button class="' + cls + '" data-call="1">' + b.t + '</button>';
+          } else {
+            html += '<button class="' + cls + '" data-next="' + b.n + '">' + b.t + '</button>';
+          }
+        });
+        html += '</div>';
+        card.innerHTML = html;
+        var idx = order.indexOf(id);
+        dots.innerHTML = '';
+        order.forEach(function(_, i){
+          var d = document.createElement('span');
+          if(i <= idx && idx >= 0) d.className = 'on';
+          dots.appendChild(d);
+        });
+        card.querySelectorAll('[data-next]').forEach(function(btn){
+          btn.addEventListener('click', function(){ render(btn.getAttribute('data-next')); });
+        });
+        var callBtn = card.querySelector('[data-call]');
+        if(callBtn){ callBtn.addEventListener('click', function(){ window.location.href = 'tel:911'; }); }
+      }
+      if(card) render('start');
+    })();
+
+    // Signs checklist
+    (function(){
+      var cards = document.querySelectorAll('.sign-card');
+      var bar = document.getElementById('signs-bar');
+      var count = document.getElementById('signs-count');
+      var nudge = document.getElementById('signs-nudge');
+      function update(){
+        var checked = document.querySelectorAll('.sign-card.checked').length;
+        bar.style.width = (checked/4*100) + '%';
+        count.textContent = checked + ' of 4 checked';
+        if(checked >= 2){ nudge.classList.add('show'); } else { nudge.classList.remove('show'); }
+      }
+      cards.forEach(function(c){
+        c.addEventListener('click', function(){
+          c.classList.toggle('checked');
+          update();
+        });
+      });
+      update();
+    })();
+
+    // Action stepper
+    (function(){
+      var steps = document.querySelectorAll('.a-step');
+      var bar = document.getElementById('a-bar');
+      var count = document.getElementById('a-count');
+      function update(){
+        var done = document.querySelectorAll('.a-step.done').length;
+        bar.style.width = (done/steps.length*100) + '%';
+        count.textContent = done + ' of ' + steps.length + ' done';
+      }
+      steps.forEach(function(step){
+        var head = step.querySelector('.a-step-head');
+        head.addEventListener('click', function(){
+          var isOpen = step.classList.contains('open');
+          steps.forEach(function(s){ s.classList.remove('open'); });
+          if(!isOpen) step.classList.add('open');
+        });
+        var doneBtn = step.querySelector('.a-done-btn');
+        if(doneBtn){
+          doneBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            step.classList.add('done');
+            step.classList.remove('open');
+            var next = step.nextElementSibling;
+            if(next && next.classList.contains('a-step')){ next.classList.add('open'); next.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+            update();
+          });
+        }
+      });
+      update();
+    })();
+
+    // Narcan demo
+    (function(){
+      var data = [
+        {e:'📦', t:'1. Peel', x:'Open the package and take out the nasal spray device.'},
+        {e:'👃', t:'2. Place', x:'Place the tip gently in one nostril until your fingers touch their nose.'},
+        {e:'💪', t:'3. Press', x:'Press the plunger firmly. That is it. No improvement in 2-3 minutes? Give a 2nd dose.'}
+      ];
+      var i = 0;
+      var emoji = document.getElementById('narcan-emoji');
+      var title = document.getElementById('narcan-title');
+      var text = document.getElementById('narcan-text');
+      var dots = document.getElementById('narcan-dots').children;
+      function render(){
+        emoji.textContent = data[i].e;
+        title.textContent = data[i].t;
+        text.textContent = data[i].x;
+        for(var k=0;k<dots.length;k++){ dots[k].className = k===i ? 'on' : ''; }
+      }
+      document.getElementById('narcan-next').addEventListener('click', function(){ i=(i+1)%data.length; render(); });
+      document.getElementById('narcan-prev').addEventListener('click', function(){ i=(i-1+data.length)%data.length; render(); });
+      render();
+    })();
+
+    // Breathing pacer
+    (function(){
+      var btn = document.getElementById('pacer-btn');
+      var circle = document.getElementById('pacer-circle');
+      var label = document.getElementById('pacer-label');
+      var timer = null;
+      var big = false;
+      btn.addEventListener('click', function(){
+        if(timer){
+          clearInterval(timer); timer=null;
+          circle.classList.remove('big'); label.textContent='Ready'; btn.textContent='Start pacer';
+        } else {
+          btn.textContent='Stop';
+          label.textContent='Breathe in';
+          big=true; circle.classList.add('big');
+          timer=setInterval(function(){
+            big=!big;
+            if(big){ circle.classList.add('big'); label.textContent='Breathe in'; }
+            else { circle.classList.remove('big'); label.textContent='Breathe out'; }
+          }, 2500);
+        }
+      });
+    })();
+
+    // Tabs
+    (function(){
+      var btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(function(b){
+        b.addEventListener('click', function(){
+          btns.forEach(function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+          document.getElementById('tab-'+b.getAttribute('data-tab')).classList.add('active');
+        });
+      });
+    })();
+
+    // Quiz
+    (function(){
+      document.querySelectorAll('.quiz-q').forEach(function(q){
+        var answer = q.getAttribute('data-answer');
+        var box = q.querySelector('.quiz-a');
+        q.querySelectorAll('[data-pick]').forEach(function(btn){
+          btn.addEventListener('click', function(){
+            var pick = btn.getAttribute('data-pick');
+            box.classList.add('show');
+            box.classList.remove('yes','no');
+            box.classList.add(pick===answer ? 'yes' : 'no');
+            var prefix = pick===answer ? '✓ Correct. ' : '✕ Not quite. ';
+            if(box.textContent.indexOf('✓')!==0 && box.textContent.indexOf('✕')!==0){
+              box.textContent = prefix + box.textContent;
+            }
+          });
+        });
+      });
+    })();
   </script>
 </body>
 </html>
