@@ -1238,6 +1238,43 @@
 .ph-bar .ph-links a{font-family:'Montserrat','Roboto',sans-serif;font-size:.78rem;font-weight:600;color:#b8b8d0;text-decoration:none;padding:.45rem .65rem;border-radius:999px;white-space:nowrap}
 .ph-bar .ph-links a:hover{color:#fff;background:rgba(255,255,255,.08)}@media (max-width:480px){.ph-bar{padding:.5rem .6rem;gap:.45rem}.ph-bar .ph-brand{font-size:.92rem}.ph-bar .ph-links a{font-size:.72rem;padding:.4rem .55rem}}
 
+<style>
+/* Health guide upgrades: save, share, download, navigation */
+.accordion-button{scroll-margin-top:96px}
+.tip-save{background:none;border:none;color:#8a8aa3;font-size:1rem;cursor:pointer;margin-left:.45rem;padding:.1rem .3rem;border-radius:6px;vertical-align:baseline;transition:color .2s,transform .2s;line-height:1}
+.tip-save:hover{color:#ff69b4;transform:scale(1.25)}
+.tip-save.tip-saved{color:#ff69b4}
+body.show-saved-only .tip-hidden{display:none !important}
+body.show-saved-only .tip-section-empty{display:none !important}
+#savedEmpty{display:none;text-align:center;padding:1.6rem 1rem;color:#b8b8d0}
+body.show-saved-only #savedEmpty.is-empty{display:block}
+#savedEmpty .fas{font-size:1.6rem;color:#ff69b4;margin-bottom:.5rem}
+.share-menu-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem}
+.share-menu-list .modal-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%}
+#toast{position:fixed;left:50%;bottom:2rem;transform:translateX(-50%) translateY(16px);background:#1a0b3b;color:#fff;border:1px solid #ff69b4;padding:.7rem 1.3rem;border-radius:999px;font-weight:700;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:9999;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.jump-chips{display:none}
+.toggle-label{display:none}
+@media (max-width:768px){
+.jump-chips{display:flex;gap:.4rem;overflow-x:auto;padding:.5rem .8rem .6rem;scrollbar-width:none;flex:0 0 100%;order:4}
+.jump-chips::-webkit-scrollbar{display:none}
+.jump-chips a{flex:0 0 auto;font-size:.74rem;font-weight:700;color:#ffd7ef;background:rgba(255,105,180,.12);border:1px solid rgba(255,105,180,.35);padding:.42rem .72rem;border-radius:999px;text-decoration:none;white-space:nowrap}
+.jump-chips a.active-chip{background:#ff69b4;color:#1a0b3b;border-color:#ff69b4}
+.toggle-label{display:block;font-size:.58rem;font-weight:700;letter-spacing:.05em;margin-top:2px;color:var(--cyan)}
+.menu-toggle,.guide-menu-toggle{display:flex;flex-direction:column;align-items:center;line-height:1}
+}
+#pocketCard{display:none}
+@media print{
+body{background:#fff !important}
+body>*{display:none !important}
+body>#pocketCard{display:block !important;color:#000;background:#fff;padding:8px;font-family:Arial,Helvetica,sans-serif}
+#pocketCard h1{font-size:22px;margin:0 0 4px;color:#000}
+#pocketCard .pc-sub{font-size:12px;color:#333;margin:0 0 14px}
+#pocketCard h2{font-size:15px;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.06em;color:#000;border-bottom:2px solid #000;padding-bottom:4px}
+#pocketCard ul{margin:0 0 0 20px;padding:0}
+#pocketCard li{font-size:13px;margin:0 0 6px;color:#000}
+#pocketCard .pc-foot{margin-top:18px;font-size:11px;color:#444;border-top:1px solid #888;padding-top:10px}
+}
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
 <style>
@@ -1303,13 +1340,24 @@
             </ul>
             
             <!-- Hamburger Menu Toggles (visible on mobile) -->
-            <button class="guide-menu-toggle">
+            <button class="guide-menu-toggle" aria-label="Guide sections menu">
                 <i class="fas fa-book"></i>
+                <span class="toggle-label">Guide</span>
             </button>
-            <button class="menu-toggle">
+            <button class="menu-toggle" aria-label="Site menu">
                 <i class="fas fa-bars"></i>
+                <span class="toggle-label">Menu</span>
             </button>
         </div>
+        <nav class="jump-chips" aria-label="Jump to a guide section">
+            <a href="#prep" data-section="prep">Prep</a>
+            <a href="#hydration" data-section="hydration">Hydration</a>
+            <a href="#during" data-section="during">During</a>
+            <a href="#emergency" data-section="emergency">Emergency</a>
+            <a href="#after" data-section="after">After</a>
+            <a href="#longterm" data-section="longterm">Long-Term</a>
+            <a href="#bonus" data-section="bonus">Bonus</a>
+        </nav>
     </header>
 
     <div class="container">
@@ -1349,6 +1397,13 @@
                 <button class="save-btn" id="sendTipsBtn">
                     <i class="fas fa-paper-plane"></i> Send to Friends
                 </button>
+                <button class="save-btn" id="savedFilterBtn">
+                    <i class="fas fa-star"></i> My Saved Tips (<span id="savedCount">0</span>)
+                </button>
+            </div>
+            <div id="savedEmpty">
+                <i class="fas fa-star"></i>
+                <p>No saved tips yet. Tap the star on any tip to keep it here.</p>
             </div>
         </div>
 
@@ -1752,13 +1807,13 @@
 
         <!-- Share Section -->
         <div class="share-btns">
-            <a href="#" class="share-btn" onclick="sharePage()">
+            <a href="#" class="share-btn" onclick="return sharePage()">
                 <i class="fas fa-share-alt"></i>
             </a>
-            <a href="#" class="share-btn" onclick="printPage()">
+            <a href="#" class="share-btn" onclick="return printPage()">
                 <i class="fas fa-print"></i>
             </a>
-            <a href="#" class="share-btn" onclick="emailPage()">
+            <a href="#" class="share-btn" onclick="return emailPage()">
                 <i class="fas fa-envelope"></i>
             </a>
         </div>
@@ -1766,7 +1821,7 @@
         <!-- Legal Disclaimer -->
         <div class="disclaimer">
             <p><strong>Legal Disclaimer:</strong> This information is for harm reduction purposes only and does not constitute medical advice. Always seek professional medical help in emergencies. The authors and publishers are not liable for any actions taken based on this information. Please obey all applicable laws and regulations.</p>
-            <p>© 2023 Plurderapolis.org. All rights reserved.</p>
+            <p>© 2026 Plurderapolis.org. All rights reserved.</p>
         </div>
     </div>
 
@@ -1787,6 +1842,22 @@
             </div>
         </div>
     </div>
+
+    <!-- Share Menu Modal -->
+    <div class="modal" id="shareMenu" role="dialog" aria-label="Share this guide">
+        <div class="modal-content">
+            <h2 class="modal-title">Share the Guide</h2>
+            <p style="color:#b8b8d0;font-size:.9rem">Send it to your crew. It works offline once opened.</p>
+            <div class="share-menu-list">
+                <button class="modal-btn primary" id="copyLinkBtn"><i class="fas fa-link"></i> Copy Link</button>
+                <button class="modal-btn secondary" id="smsShareBtn"><i class="fas fa-sms"></i> Text Message (SMS)</button>
+                <button class="modal-btn secondary" id="waShareBtn"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="modal-btn secondary" id="emailShareBtn"><i class="fas fa-envelope"></i> Email</button>
+                <button class="modal-btn secondary" id="closeShareMenu">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
 
     <!-- Bottom Navigation -->
     <div class="nav-footer">
@@ -2042,24 +2113,24 @@
         function sharePage() {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Plurderapolis Health & Safety Guide',
-                    text: 'Check out this harm reduction guide for ravers and party-goers',
-                    url: window.location.href
-                })
-                .catch(error => {
-                    console.log('Error sharing:', error);
-                });
+                    title: 'Plurderapolis Raver Survival Guide',
+                    text: SHARE_TEXT,
+                    url: GUIDE_URL
+                }).catch(() => {});
             } else {
-                alert('Web Share API not supported in your browser. You can copy the URL to share.');
+                openShareMenu();
             }
+            return false;
         }
 
         function printPage() {
             window.print();
+            return false;
         }
 
         function emailPage() {
-            window.location.href = 'mailto:?subject=Plurderapolis Health Guide&body=Check out this harm reduction guide: ' + window.location.href;
+            window.location.href = 'mailto:?subject=' + encodeURIComponent('Plurderapolis Raver Survival Guide') + '&body=' + encodeURIComponent(SHARE_TEXT + ' ' + GUIDE_URL);
+            return false;
         }
 
         // Search functionality with predictions
@@ -2180,21 +2251,18 @@
         });
         
         sendTipsBtn.addEventListener('click', () => {
-            emailPage();
+            openShareMenu();
         });
         
         closeModal.addEventListener('click', () => {
             saveModal.style.display = 'none';
         });
         
-        saveAsImage.addEventListener('click', () => {
-            alert('This feature would generate an image summary of the tips. In a real implementation, this would use a library like html2canvas.');
-            saveModal.style.display = 'none';
-        });
-        
+        saveAsImage.addEventListener('click', downloadGuideImage);
+
         saveAsPDF.addEventListener('click', () => {
-            alert('This feature would generate a PDF summary of the tips. In a real implementation, this would use a library like jsPDF.');
             saveModal.style.display = 'none';
+            window.print();
         });
         
         // Close modal when clicking outside
@@ -2246,6 +2314,212 @@
             // Add glow animation to progress bar
             progressBar.classList.add('glow-animation');
         });
+
+        /* ---------- Health guide upgrades: share menu, bookmarks, image download ---------- */
+        const SHARE_TEXT = 'Plurderapolis Raver Survival Guide: prep, hydration, pacing, overdose basics, aftercare. Works offline once opened.';
+        const GUIDE_URL = window.location.href;
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(t._toastTimer);
+            t._toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+        }
+
+        const shareMenu = document.getElementById('shareMenu');
+        function openShareMenu() { shareMenu.style.display = 'flex'; }
+        function closeShareMenu() { shareMenu.style.display = 'none'; }
+        document.getElementById('closeShareMenu').addEventListener('click', closeShareMenu);
+        window.addEventListener('click', (e) => { if (e.target === shareMenu) closeShareMenu(); });
+
+        function copyGuideLink() {
+            const done = () => { closeShareMenu(); showToast('Link copied. Paste it anywhere.'); };
+            const fallback = () => {
+                const ta = document.createElement('textarea');
+                ta.value = GUIDE_URL;
+                ta.style.position = 'fixed'; ta.style.opacity = '0';
+                document.body.appendChild(ta); ta.select();
+                try { document.execCommand('copy'); done(); }
+                catch (err) { showToast('Copy this link: ' + GUIDE_URL); }
+                document.body.removeChild(ta);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(GUIDE_URL).then(done).catch(fallback);
+            } else { fallback(); }
+        }
+        document.getElementById('copyLinkBtn').addEventListener('click', copyGuideLink);
+        document.getElementById('smsShareBtn').addEventListener('click', () => {
+            window.location.href = 'sms:?&body=' + encodeURIComponent(SHARE_TEXT + ' ' + GUIDE_URL);
+            closeShareMenu();
+        });
+        document.getElementById('waShareBtn').addEventListener('click', () => {
+            window.open('https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT + ' ' + GUIDE_URL), '_blank', 'noopener');
+            closeShareMenu();
+        });
+        document.getElementById('emailShareBtn').addEventListener('click', () => {
+            window.location.href = 'mailto:?subject=' + encodeURIComponent('Plurderapolis Raver Survival Guide') + '&body=' + encodeURIComponent(SHARE_TEXT + ' ' + GUIDE_URL);
+            closeShareMenu();
+        });
+
+        /* ---------- Tip bookmarking ---------- */
+        const savedTips = new Set(JSON.parse(localStorage.getItem('healthSavedTips') || '[]'));
+        function refreshSavedCount() {
+            const el = document.getElementById('savedCount');
+            if (el) el.textContent = savedTips.size;
+        }
+        function cleanTipText(li) {
+            const clone = li.cloneNode(true);
+            clone.querySelectorAll('.tip-save').forEach(b => b.remove());
+            return clone.textContent.replace(/\s+/g, ' ').trim();
+        }
+        document.querySelectorAll('.accordion-button').forEach((btn) => {
+            const panel = btn.nextElementSibling;
+            if (!panel || !panel.classList.contains('accordion-content')) return;
+            const secId = btn.id || 'section';
+            let idx = 0;
+            panel.querySelectorAll('.pocket > li, .deep li').forEach((li) => {
+                const tipId = secId + '-tip-' + (idx++);
+                li.dataset.tipId = tipId;
+                const star = document.createElement('button');
+                const isSaved = savedTips.has(tipId);
+                star.type = 'button';
+                star.className = 'tip-save' + (isSaved ? ' tip-saved' : '');
+                star.textContent = isSaved ? '\u2605' : '\u2606';
+                star.setAttribute('aria-label', 'Save this tip');
+                star.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
+                if (isSaved) li.classList.add('tip-saved');
+                star.addEventListener('click', (ev) => {
+                    ev.stopPropagation();
+                    if (savedTips.has(tipId)) {
+                        savedTips.delete(tipId);
+                        li.classList.remove('tip-saved');
+                        star.classList.remove('tip-saved');
+                        star.textContent = '\u2606';
+                        star.setAttribute('aria-pressed', 'false');
+                    } else {
+                        savedTips.add(tipId);
+                        li.classList.add('tip-saved');
+                        star.classList.add('tip-saved');
+                        star.textContent = '\u2605';
+                        star.setAttribute('aria-pressed', 'true');
+                        showToast('Tip saved on this device.');
+                    }
+                    try { localStorage.setItem('healthSavedTips', JSON.stringify([...savedTips])); } catch (e) {}
+                    refreshSavedCount();
+                    if (document.body.classList.contains('show-saved-only')) applySavedFilter();
+                });
+                li.appendChild(star);
+            });
+        });
+        refreshSavedCount();
+
+        function applySavedFilter() {
+            const on = document.body.classList.contains('show-saved-only');
+            document.querySelectorAll('.accordion-button').forEach((btn) => {
+                const panel = btn.nextElementSibling;
+                if (!panel || !panel.classList.contains('accordion-content')) return;
+                let visible = 0;
+                panel.querySelectorAll('.pocket > li, .deep li').forEach((li) => {
+                    const show = !on || li.classList.contains('tip-saved');
+                    li.classList.toggle('tip-hidden', !show);
+                    if (show) visible++;
+                });
+                panel.querySelectorAll('.deep').forEach((d) => {
+                    const vis = d.querySelectorAll('li:not(.tip-hidden)').length;
+                    d.classList.toggle('tip-section-empty', on && vis === 0);
+                });
+                const empty = on && visible === 0;
+                btn.classList.toggle('tip-section-empty', empty);
+                panel.classList.toggle('tip-section-empty', empty);
+            });
+            document.getElementById('savedEmpty').classList.toggle('is-empty', on && savedTips.size === 0);
+        }
+        document.getElementById('savedFilterBtn').addEventListener('click', () => {
+            const btn = document.getElementById('savedFilterBtn');
+            const on = document.body.classList.toggle('show-saved-only');
+            applySavedFilter();
+            btn.innerHTML = on
+                ? '<i class="fas fa-star"></i> Show All Tips'
+                : '<i class="fas fa-star"></i> My Saved Tips (<span id="savedCount">' + savedTips.size + '</span>)';
+            if (on) document.getElementById('main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        /* ---------- Jump chips ---------- */
+        document.querySelectorAll('.jump-chips a').forEach((a) => {
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.jump-chips a').forEach(x => x.classList.remove('active-chip'));
+                a.classList.add('active-chip');
+                navigateToSection(a.getAttribute('data-section'));
+            });
+        });
+
+        /* ---------- Real Save as Image (canvas PNG, no dependencies) ---------- */
+        const DEFAULT_CARD_TIPS = [
+            'Eat carbs + protein 1 to 3 hours before. Bank some sleep.',
+            'Test everything: reagents + fentanyl test strips.',
+            'Sip water, do not chug. Rotate electrolytes with water.',
+            'Plan your exit and a dead-phone meet spot.',
+            'Pace yourself. Buddy up and check in.',
+            'Overdose signs? Call 911, give naloxone, stay.',
+            'MN Good Samaritan law 604A.05 protects people who call.'
+        ];
+        function wrapCardText(x, text, px, py, maxW, lh) {
+            const words = text.split(' ');
+            let line = '', y = py;
+            words.forEach((w) => {
+                const t = line ? line + ' ' + w : w;
+                if (x.measureText(t).width > maxW && line) { x.fillText(line, px, y); line = w; y += lh; }
+                else { line = t; }
+            });
+            x.fillText(line, px, y);
+            return y;
+        }
+        function downloadGuideImage() {
+            saveModal.style.display = 'none';
+            const saved = [...document.querySelectorAll('li.tip-saved')]
+                .map(cleanTipText).filter(Boolean).slice(0, 7)
+                .map(t => t.length > 150 ? t.slice(0, 147) + '...' : t);
+            const tips = saved.length ? saved : DEFAULT_CARD_TIPS;
+            const W = 1080, H = 1350;
+            const c = document.createElement('canvas');
+            c.width = W; c.height = H;
+            const x = c.getContext('2d');
+            const g = x.createLinearGradient(0, 0, W, H);
+            g.addColorStop(0, '#1a0b3b'); g.addColorStop(1, '#3b0f54');
+            x.fillStyle = g; x.fillRect(0, 0, W, H);
+            x.fillStyle = 'rgba(255,105,180,0.14)'; x.fillRect(0, 0, W, 300);
+            x.textAlign = 'center';
+            x.fillStyle = '#ff69b4'; x.font = '800 64px Arial, sans-serif';
+            x.fillText('PLURDERAPOLIS', W / 2, 120);
+            x.fillStyle = '#ffffff'; x.font = '700 44px Arial, sans-serif';
+            x.fillText(saved.length ? 'My Saved Tips' : 'Raver Survival Guide', W / 2, 188);
+            x.fillStyle = '#c9c9e0'; x.font = '400 30px Arial, sans-serif';
+            x.fillText('Harm reduction for Minnesota nightlife', W / 2, 238);
+            x.textAlign = 'left';
+            let y = 340;
+            tips.forEach((t, i) => {
+                x.fillStyle = '#ff69b4';
+                x.beginPath(); x.arc(92, y - 11, 27, 0, Math.PI * 2); x.fill();
+                x.fillStyle = '#1a0b3b'; x.font = '800 30px Arial, sans-serif'; x.textAlign = 'center';
+                x.fillText(String(i + 1), 92, y);
+                x.textAlign = 'left'; x.fillStyle = '#ffffff'; x.font = '400 32px Arial, sans-serif';
+                y = wrapCardText(x, t, 152, y, 876, 44) + 44;
+            });
+            x.textAlign = 'center'; x.fillStyle = '#9a9ab5'; x.font = '400 26px Arial, sans-serif';
+            x.fillText('plurderapolis.org/health.html', W / 2, H - 92);
+            x.fillText('Harm reduction info, not medical advice.', W / 2, H - 54);
+            c.toBlob((blob) => {
+                if (!blob) { showToast('Could not create the image.'); return; }
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'plurderapolis-guide.png';
+                document.body.appendChild(a); a.click();
+                setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+                showToast('Image saved to your downloads.');
+            }, 'image/png');
+        }
     </script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -2259,6 +2533,32 @@ if ('serviceWorker' in navigator) {
 <div class="cta-links">
 <a href="https://plurderapolis.org/aftercare.html"><i class="fas fa-moon"></i> Aftercare</a><a href="https://plurderapolis.org/snorting.html"><i class="fas fa-wind"></i> Snorting Safer</a><a href="https://plurderapolis.org/mentalhealth.html"><i class="fas fa-brain"></i> Mental Health</a><a href="https://plurderapolis.org/sober.html"><i class="fas fa-leaf"></i> Sober Ravers</a>
 </div>
+</div>
+<div id="pocketCard" aria-hidden="true">
+<h1>Plurderapolis: Raver Survival Pocket Card</h1>
+<p class="pc-sub">plurderapolis.org/health.html &middot; Harm reduction info, not medical advice. In an emergency, call 911.</p>
+<h2>Before the show</h2>
+<ul>
+<li>Eat carbs + protein 1 to 3 hours before. Bank some sleep.</li>
+<li>Test everything: reagents + fentanyl test strips, even "trusted" product.</li>
+<li>Label your stash. Separate look-alikes.</li>
+<li>Plan your exit and a dead-phone meet spot. Share your location with a friend.</li>
+<li>Pack: earplugs, electrolytes, charger, condoms, saline spray, gum, bandaids.</li>
+</ul>
+<h2>During</h2>
+<ul>
+<li>Sip water, do not chug. Rotate electrolytes. Cool down regularly.</li>
+<li>Pace yourself. Buddy up and check in.</li>
+<li>Overheating signs: hot dry skin, confusion, stopped sweating. Cool the person down and get help.</li>
+</ul>
+<h2>Emergency</h2>
+<ul>
+<li>Call 911. Minnesota Good Samaritan law (604A.05) protects people who call for help.</li>
+<li>Opioid overdose signs: slow or stopped breathing, blue lips, will not wake up. Give naloxone, call 911.</li>
+<li>If breathing but unconscious, put them in the recovery position. Stay until help arrives.</li>
+<li>Full walkthroughs: plurderapolis.org/overdose.html and plurderapolis.org/emergency.html</li>
+</ul>
+<p class="pc-foot">Plurderapolis &middot; Minnesota harm reduction, by ravers for ravers &middot; plurderapolis.org</p>
 </div>
 </body>
 </html>
