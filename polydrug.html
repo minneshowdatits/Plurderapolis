@@ -17,6 +17,20 @@
 <title>Polydrug Risks & Interaction Checker | PLURderapolis</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Installable checker: dedicated manifest + iOS home screen tags so this page installs as its own "Combo Checker" icon -->
+<link rel="manifest" href="/manifest-checker.json">
+<meta name="theme-color" content="#bf00bf">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Combo Checker">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="apple-touch-startup-image" href="/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <style>
   :root{
     --bg:#121212;
@@ -738,6 +752,17 @@
 <style>
 .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#a855f7;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
 .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
+/* "Add to home screen" install banner for the checker */
+.install-banner{margin:14px 0}
+.install-banner-inner{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1b0b1b,#2a0a2a);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.install-banner-icon{font-size:1.7em;flex-shrink:0}
+.install-banner-text{flex:1;font-size:.92em;min-width:0}
+.install-banner-text strong{display:block;color:var(--accent-2);margin-bottom:3px;font-family:'Montserrat',sans-serif;font-size:.95em}
+.install-banner-text span{color:var(--muted);line-height:1.45}
+.install-banner-text b{color:var(--ink)}
+.install-btn{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95em;flex-shrink:0}
+.install-btn:active{transform:scale(.97)}
+.install-dismiss{background:transparent;border:0;color:var(--muted);font-size:1.1em;cursor:pointer;padding:6px;flex-shrink:0}
 </style>
 
 <!-- Open Graph / Twitter share tags -->
@@ -843,6 +868,19 @@
     
     <h1 id="main-content">Polydrug Interaction Checker <span class="icons">⚡💊💀🌈</span></h1>
     <p class="lede">Mobile-first, harm-reduction focused tool to check drug combination risks. Pick up to three substances and see detailed safety information. Matrix is downloadable + shareable.</p>
+
+    <!-- Install this checker as a home screen icon -->
+    <div id="installBanner" class="install-banner" style="display:none" role="note" aria-label="Add checker to home screen">
+      <div class="install-banner-inner">
+        <span class="install-banner-icon" aria-hidden="true">📲</span>
+        <div class="install-banner-text">
+          <strong>Get this checker on your phone</strong>
+          <span id="installSteps"></span>
+        </div>
+        <button id="installBtn" class="install-btn" style="display:none" type="button">Install</button>
+        <button id="installDismiss" class="install-dismiss" type="button" aria-label="Dismiss">✕</button>
+      </div>
+    </div>
 
     <!-- ===== Interaction Checker (TOP) ===== -->
     <section class="tool" aria-label="Polydrug Interaction Checker" id="tool">
@@ -1546,6 +1584,57 @@ window.addEventListener('DOMContentLoaded', () => {
   // Create particles
   createParticles();
 });
+</script>
+<script>
+/* Home screen install banner: platform aware instructions, real install prompt on Android. */
+(function(){
+  var banner = document.getElementById('installBanner');
+  if (!banner) return;
+  var isStandalone = false;
+  try {
+    isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                   window.matchMedia('(display-mode: fullscreen)').matches ||
+                   window.navigator.standalone === true;
+  } catch (e) {}
+  if (isStandalone) return; /* already installed, nothing to show */
+  try {
+    if (localStorage.getItem('plurderapolis-install-dismissed') === '1') return;
+  } catch (e) {}
+  var ua = navigator.userAgent || '';
+  var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isAndroid = /Android/.test(ua);
+  var steps = document.getElementById('installSteps');
+  var installBtn = document.getElementById('installBtn');
+  var deferredPrompt = null;
+  if (isIOS) {
+    steps.innerHTML = 'On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>. It opens full screen like an app and works with no signal.';
+    installBtn.style.display = 'none';
+  } else if (isAndroid) {
+    steps.innerHTML = 'Tap <b>Install</b> below, or open your browser menu and choose <b>Add to Home Screen</b>.';
+    window.addEventListener('beforeinstallprompt', function(e){
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = '';
+    });
+    installBtn.addEventListener('click', function(){
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(){
+          deferredPrompt = null;
+          installBtn.style.display = 'none';
+        }).catch(function(){});
+      }
+    });
+  } else {
+    steps.innerHTML = 'On your phone, open this page in your mobile browser and choose <b>Add to Home Screen</b> from the browser menu.';
+    installBtn.style.display = 'none';
+  }
+  document.getElementById('installDismiss').addEventListener('click', function(){
+    banner.style.display = 'none';
+    try { localStorage.setItem('plurderapolis-install-dismissed', '1'); } catch (e) {}
+  });
+  banner.style.display = '';
+})();
 </script>
 <script>
 if ('serviceWorker' in navigator) {
