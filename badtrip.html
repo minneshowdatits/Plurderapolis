@@ -631,7 +631,9 @@
     border: 2px solid var(--mint);
   }
   
-  /* Mode toggle */
+  /* Sensory safe mode floating button (bottom-right). NOTE: the tripper/sitter
+     chooser in the page body uses its own .trip-mode class so it is NOT
+     pinned by this rule. Do not reuse .mode-toggle for in-flow content. */
   .mode-toggle {
     position: fixed;
     bottom: 80px;
@@ -983,12 +985,12 @@
       <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
       <!-- Quiet safety note: the old red banner is gone; one calm line keeps 911 findable -->
       <p class="safety-note">Not sure if this is medical? Trouble breathing, chest pain, overheating, seizure, or can't stay awake means don't wait it out: <a href="tel:911">call 911</a> · <a href="emergency.html">emergency guide</a></p>
-      <div class="mode-toggle" role="group" aria-label="Choose your view">
+      <div class="trip-mode" role="group" aria-label="Choose your view">
         <button type="button" class="mode-btn active" id="modeTripper">😰 I need help</button>
         <button type="button" class="mode-btn" id="modeSitter">🧍 I'm the sitter</button>
       </div>
       <style>
-        .mode-toggle{display:flex;gap:.7rem;justify-content:center;margin:0 auto 1.4rem;max-width:640px}
+        .trip-mode{position:static;display:flex;gap:.7rem;justify-content:center;margin:0 auto 1.4rem;max-width:640px}
         .mode-btn{flex:1;padding:.85rem 1rem;border-radius:999px;border:2px solid rgba(0,247,224,.35);background:rgba(255,255,255,.05);color:#eee;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .25s ease}
         .mode-btn.active{background:linear-gradient(135deg,rgba(0,247,224,.25),rgba(255,110,199,.25));border-color:#5eead4}
       </style>
@@ -2326,21 +2328,29 @@ function initEventListeners() {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bad Trip Guide Cheat Sheet</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bad Trip Guide Cheat Sheet — PLURderapolis</title>
 <style>
-  body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-  h1 { color: #1c0028; }
-  .section { margin-bottom: 30px; padding: 20px; background: #f5f5f5; border-radius: 10px; }
-  .emergency { background: #fff0f0; border-left: 4px solid red; }
+  body { font-family: Arial, Helvetica, sans-serif; padding: 24px; line-height: 1.65; color: #222; max-width: 700px; margin: 0 auto; }
+  h1 { color: #1c0028; font-size: 1.6rem; margin-bottom: 0.25rem; }
+  .dateline { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; }
+  h2 { font-size: 1.15rem; color: #1c0028; margin: 0 0 0.4rem; }
+  .section { margin-bottom: 1.25rem; padding: 1.1rem 1.25rem; background: #f5f5f5; border-radius: 10px; }
+  .section p { margin: 0; }
+  .emergency { background: #fff0f0; border-left: 4px solid #d33; }
+  .emergency h2 { color: #a00; }
+  .footer { margin-top: 1.5rem; font-size: 0.85rem; color: #666; border-top: 1px solid #ddd; padding-top: 1rem; }
+  @media print { body { padding: 0; } .section { break-inside: avoid; } }
 </style>
 </head>
 <body>
   <h1>Bad Trip Guide Cheat Sheet</h1>
-  <p>Generated from PLURderapolis.org on ${new Date().toLocaleDateString()}</p>
+  <p class="dateline">Generated from PLURderapolis.org on ${new Date().toLocaleDateString()}</p>
   
   <div class="section">
-    <h2>🌬️ Breathing (4-7-8 Method)</h2>
-    <p>Inhale 4 sec → Hold 7 sec → Exhale 8 sec</p>
+    <h2>🌬️ Breathing</h2>
+    <p>Follow the circle: inhale as it expands, exhale as it contracts. Slow, steady breaths regulate your nervous system.</p>
   </div>
   
   <div class="section">
@@ -2358,7 +2368,7 @@ function initEventListeners() {
     <p>TripSit: tripsit.me<br>Fireside: firesideproject.org<br>Never Use Alone: neverusealone.com<br>Medical: Call 911</p>
   </div>
   
-  <p>Full guide: https://plurderapolis.org</p>
+  <p class="footer">Full interactive guide: https://plurderapolis.org/badtrip.html<br>PLURderapolis — harm reduction for the Minnesota rave community.</p>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
