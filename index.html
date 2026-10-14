@@ -23,7 +23,7 @@
 <link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Rave Safety &amp; Harm Reduction Minnesota | PLURderapolis</title>
+<title>PREVIEW: Homepage Redesign Mix | PLURderapolis</title>
 <meta name="description" content="Minnesota's harm reduction hub for ravers: overdose prevention, drug interaction checker, hydration timers, and sober resources for Twin Cities EDM events.">
 <meta name="keywords" content="harm reduction,Minnesota,rave,electronic music,drug safety,overdose prevention,Narcan,PLUR,Minneapolis,St. Paul">
 <meta name="author" content="PLURderapolis">
@@ -324,6 +324,115 @@ footer ul li a:hover{color:var(--secondary);text-decoration:underline}
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PLURderapolis: Harm Reduction for Minnesota Ravers">
 <meta name="twitter:description" content="Minnesota&#x27;s premier harm reduction resource for the electronic music community.">
+
+<style>
+/* ---- MIX: v7 ideas layered on current homepage ---- */
+.orient-line{text-align:center;color:#c9c9dd;font-size:.95rem;margin:.4rem auto 0;max-width:640px;padding:0 1rem;position:relative;z-index:2}
+.finder{max-width:1200px;margin:0 auto;padding:.4rem 1.2rem 0;position:relative;z-index:2}
+.finder-row{margin-bottom:.9rem}
+.finder-row h3{font-family:'Montserrat',sans-serif;font-size:1rem;color:#fff;margin-bottom:.5rem}
+.finder-row + .finder-row h3{color:var(--primary)}
+.finder-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.finder-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem .95rem;border-radius:999px;background:rgba(58,0,82,.7);border:1px solid rgba(0,247,224,.4);color:#fff;text-decoration:none;font-size:.88rem;transition:all .2s}
+.finder-pill:hover{background:rgba(0,247,224,.15);transform:translateY(-1px)}
+.finder-pill.urgent{border-color:var(--secondary);background:rgba(255,105,180,.15)}
+.minis{max-width:1200px;margin:0 auto;padding:.4rem 1.2rem 0;position:relative;z-index:2}
+.minis h3{font-family:'Montserrat',sans-serif;font-size:1.05rem;color:var(--primary);margin-bottom:.6rem}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem}
+.mini{display:flex;flex-direction:column;gap:.25rem;background:rgba(58,0,82,.55);border:1px solid rgba(0,247,224,.3);border-radius:10px;padding:.9rem;text-decoration:none;color:#fff;transition:all .2s}
+.mini:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 4px 12px rgba(0,247,224,.15)}
+.mini-icon{font-size:1.5rem}
+.mini-title{font-weight:700;font-size:.95rem}
+.mini-desc{font-size:.82rem;color:var(--medium-text)}
+.mini-open{font-size:.82rem;color:var(--primary);font-weight:600;margin-top:.3rem}
+.mini-note{font-size:.75rem;color:var(--medium-text);margin-top:.6rem;opacity:.8}
+/* calm the competing animations: one-shot entrances stay, infinite loops go */
+.site-title h1{animation:none}
+.floating,.floating-delay-1,.floating-delay-2,.floating-delay-3{animation:none}
+.glow-section::before{animation:none;opacity:.12}
+.glow-card{animation:none}
+.pulse{animation:none}
+#scrollTopBtn{animation:none}
+.textured-section::before{animation:none}
+.building{animation:none}
+.building-3::after,.building-5::after,.building-9::after{animation:none;opacity:.35}
+.rave-alert-link{animation-duration:60s}
+/* quick action bar visible on desktop too, as a floating pill */
+@media (min-width:1024px){
+  .mobile-hud{display:flex;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:auto;max-width:660px;border-radius:999px;padding:6px 14px;border:1px solid var(--primary);box-shadow:0 6px 24px rgba(0,0,0,.55);background-color:rgba(58,0,82,.96)}
+  .mobile-hud .hud-btn{flex:0 1 auto;padding:6px 14px;font-size:.75rem}
+  #scrollTopBtn{bottom:90px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+<style>
+/* mix v2: nicer hydration timer cards */
+.timer-card{border-left:none;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:18px 16px;background:linear-gradient(150deg,rgba(64,8,96,.92),rgba(18,8,38,.94));box-shadow:0 6px 18px rgba(0,0,0,.4)}
+#water-timer{border-top:3px solid #00b7ff}
+#buddy-timer{border-top:3px solid #ff69b4}
+#eat-timer{border-top:3px solid #7dff9a}
+.timer-title{font-size:1.02rem;margin-bottom:12px}
+.timer-title span:last-child{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:.2rem .8rem;font-size:.85rem;min-width:3.2rem;text-align:center}
+.timer-card p{color:#cfcfe4;font-size:.88rem}
+.timer-controls{display:flex;gap:.5rem;flex-wrap:wrap}
+.timer-btn{border-radius:999px;padding:.6rem 1.15rem;font-weight:700;letter-spacing:.02em}
+/* mix v2: nicer sober ravers mocktail cards */
+.mocktail-card{border:none;border-radius:16px;padding:0;overflow:hidden;background:linear-gradient(165deg,rgba(64,8,96,.94),rgba(22,10,44,.96));box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .25s ease,box-shadow .25s ease}
+.mocktail-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,247,224,.18)}
+.mocktail-card h3{margin:0;padding:.85rem 1rem;font-size:1.05rem;border-bottom:none;color:#fff}
+.mocktail-card:nth-child(1) h3{background:linear-gradient(90deg,rgba(0,183,255,.45),rgba(0,247,224,.22))}
+.mocktail-card:nth-child(2) h3{background:linear-gradient(90deg,rgba(255,105,180,.45),rgba(224,81,255,.22))}
+.mocktail-card:nth-child(3) h3{background:linear-gradient(90deg,rgba(125,255,154,.32),rgba(0,183,255,.22))}
+.mocktail-ingredients{margin:0;padding:.9rem 1.1rem 1.1rem;list-style:none}
+.mocktail-ingredients li{margin-bottom:6px;font-size:.9rem;color:#dcdcef}
+</style>
+<style>
+/* mix v3: v7-style section cards */
+.section-card{background:rgba(22,22,31,.92);border:1px solid rgba(255,105,180,.22);border-radius:16px;overflow:hidden;padding:0;box-shadow:none}
+.sections-grid .section-card:nth-child(1){border-color:rgba(255,45,85,.5);box-shadow:0 0 24px rgba(255,45,85,.12)}
+.section-card .card-header{padding:1rem 1.2rem;margin:0;cursor:pointer}
+.section-card h2{font-size:1.08rem}
+.collapsible-toggle{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:50%;width:30px;height:30px;min-width:30px;color:var(--light-text);font-size:1.05rem;line-height:1;padding:0;flex-shrink:0}
+.section-summary{padding:0 1.2rem;font-size:.92rem;margin:0 0 1rem}
+.collapsible-content{padding:0 1.2rem 1.2rem}
+/* v7-style link rows: emoji, bold title, short description, arrow */
+.section-link{display:flex;align-items:center;gap:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.65rem .8rem;margin-bottom:.5rem;text-decoration:none}
+.section-link:hover{background:rgba(255,255,255,.07);transform:none}
+.section-link .icon{font-size:1.05rem;margin:0;width:auto;text-align:left;flex-shrink:0}
+.section-link b{font-size:.93rem}
+.section-link .v7desc{color:var(--medium-text);font-size:.88rem;flex:1;min-width:0}
+.section-link .arrow{margin-left:auto;flex-shrink:0}
+</style>
+<style>
+/* mix v3: collapsible eye-catching Try a tool */
+.minis{border:1px solid transparent;border-radius:18px;padding:0;margin:0 auto;max-width:1200px;position:relative;z-index:2;
+ background:linear-gradient(rgba(20,20,30,.95),rgba(20,20,30,.95)) padding-box,
+ linear-gradient(115deg,#ff69b4,#00f7e0,#e051ff) border-box;
+ box-shadow:0 0 26px rgba(255,105,180,.13)}
+.minis-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:1rem 1.2rem;cursor:pointer}
+.minis-head h3{margin:0;font-size:1.18rem;letter-spacing:.01em;
+ background:linear-gradient(90deg,#ff9ec6,#7df9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.minis-toggle{flex:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+ border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.1rem;line-height:1}
+.minis-body{max-height:700px;opacity:1;overflow:hidden;transition:max-height .45s ease,opacity .3s ease;padding:0 1.2rem 1.2rem}
+.minis:not(.open) .minis-body{max-height:0;opacity:0;padding-top:0;padding-bottom:0}
+/* mix v3: nicer mini tool widgets */
+.mini{border-radius:14px;padding:1rem;gap:.35rem;
+ background:linear-gradient(160deg,rgba(64,8,96,.9),rgba(24,10,46,.94));
+ border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.mini:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,247,224,.16);border-color:rgba(0,247,224,.45)}
+.mini-icon{font-size:1.6rem;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;
+ background:linear-gradient(135deg,rgba(255,105,180,.35),rgba(0,247,224,.3));margin-bottom:.15rem}
+.mini-title{font-size:1rem}
+.mini-desc{font-size:.85rem;color:#cfcfe4}
+.mini-open{font-size:.8rem;color:#7df9ff;font-weight:700;margin-top:.2rem}
+/* mix v3: navigation helpers */
+html{scroll-behavior:smooth}
+#what-we-do,#about-us{scroll-margin-top:92px}
+</style>
 </head>
 <body>
 <header class="ph-bar">
@@ -344,18 +453,67 @@ footer ul li a:hover{color:var(--secondary);text-decoration:underline}
 <button id="scrollTopBtn" title="Go to top">↑</button>
 <div class="mobile-nav-scrim" id="mobileNavScrim"></div><nav class="mobile-nav" id="mobileNav"><div class="mobile-nav-category active"><h3>Safety & Emergency <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="panic.html" class="mobile-nav-link"><span class="icon">🚨</span>Panic Button</a><a href="emergency.html" class="mobile-nav-link"><span class="icon">🆘</span>Emergency Guides</a><a href="overdose.html" class="mobile-nav-link"><span class="icon">⛑️</span>Overdose Response</a><a href="spiking.html" class="mobile-nav-link"><span class="icon">🚫</span>Drink Spiking</a><a href="badtrip.html" class="mobile-nav-link"><span class="icon">🌈</span>Bad Trip Mode</a><a href="mentalhealth.html" class="mobile-nav-link"><span class="icon">🧠</span>Mental Health</a><a href="ride-safety.html" class="mobile-nav-link"><span class="icon">🌃</span>Rideshare and Nightlife Travel Safety</a><a href="rights-safety.html" class="mobile-nav-link"><span class="icon">⚖️</span>Rights & Safety</a></div></div><div class="mobile-nav-category"><h3>Drug Information <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="polydrug.html" class="mobile-nav-link"><span class="icon">💊</span>Polydrug Tool</a><a href="rx-combos.html" class="mobile-nav-link"><span class="icon">💊</span>RX + Party Combos</a><a href="health.html" class="mobile-nav-link"><span class="icon">💚</span>Raver Health</a><a href="symptoms.html" class="mobile-nav-link"><span class="icon">🤒</span>Symptom Checker</a><a href="fake.html" class="mobile-nav-link"><span class="icon">⚠️</span>Fake Drugs & Alerts</a><a href="snorting.html" class="mobile-nav-link"><span class="icon">👃</span>Snorting Safer</a><a href="aftercare.html" class="mobile-nav-link"><span class="icon">🌅</span>Aftercare</a></div></div><div class="mobile-nav-category"><h3>Consent & Community <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="consent.html" class="mobile-nav-link"><span class="icon">✅</span>Consent Basics</a><a href="accountability.html" class="mobile-nav-link"><span class="icon">⚖️</span>Accountability</a><a href="rejection-based-violence.html" class="mobile-nav-link"><span class="icon">🛡️</span>Violence Prevention</a></div></div><div class="mobile-nav-category"><h3>Local Scene <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="venues-guide.html" class="mobile-nav-link"><span class="icon">🏢</span>Venues Guide</a><a href="booth.html" class="mobile-nav-link"><span class="icon">🎉</span>Our Booth</a></div></div><div class="mobile-nav-category"><h3>More Resources <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="seasonal-tips.html" class="mobile-nav-link"><span class="icon">🌞</span>Seasonal Tips</a><a href="sober.html" class="mobile-nav-link"><span class="icon">🚫</span>Sober Ravers</a><a href="resources.html" class="mobile-nav-link"><span class="icon">📚</span>MN Resources</a></div></div><div class="mobile-nav-category"><h3>Connect With Us <span class="toggle-icon">▼</span></h3><div class="mobile-nav-links"><a href="https://www.facebook.com/plurderapolis" class="mobile-nav-link" target="_blank"><span class="icon">📘</span>Facebook</a><a href="https://www.instagram.com/plurderapolis" class="mobile-nav-link" target="_blank"><span class="icon">📷</span>Instagram</a><a href="https://www.venmo.com/u/plurderapolis" class="donate-button" target="_blank"><span class="icon">💖</span>Donate</a></div></div></nav>
 <div class="rave-alert-wrapper"><a href="fake.html#alerts-section" class="rave-alert-link"><span>🚨 MN DRUG SUPPLY ALERT: OCT 2026: Orphines, synthetic opioids estimated near 10x fentanyl strength, detected in Minnesota • Rhino tranq (medetomidine) found in MN fentanyl: deep prolonged sedation that Narcan does not reverse • Test before you trust • Carry Narcan • Never use alone • Tap for full info 🖤 •&nbsp;</span><span aria-hidden="true">🚨 MN DRUG SUPPLY ALERT: OCT 2026: Orphines, synthetic opioids estimated near 10x fentanyl strength, detected in Minnesota • Rhino tranq (medetomidine) found in MN fentanyl: deep prolonged sedation that Narcan does not reverse • Test before you trust • Carry Narcan • Never use alone • Tap for full info 🖤 •&nbsp;</span></a></div>
-<div class="site-title"><h1 id="main-content">PLURderapolis</h1><div class="tagline">Harm Reduction for Minnesota Ravers</div></div>
+<div class="site-title"><h1 id="main-content">PLURderapolis</h1><div class="tagline">Harm Reduction for Minnesota Ravers</div><div class="orient-line">Plurderapolis is a Minnesota harm reduction crew, run by ravers for ravers.</div></div>
 <div class="search-container"><div class="search-bar"><input type="text" id="searchInput" placeholder="Search the entire site... (e.g. naloxone, test strips, bad trip)"><button onclick="performSearch()">🔍</button></div><div id="searchResults"></div></div>
+
+<div class="finder">
+  <div class="finder-row">
+    <h3>What do you need right now?</h3>
+    <div class="finder-pills">
+      <a href="panic.html" class="finder-pill urgent">🚨 I need help now</a>
+      <a href="polydrug.html" class="finder-pill">⚡ Check a combo</a>
+      <a href="overdose.html" class="finder-pill">💊 Find naloxone</a>
+      <a href="test-strips.html" class="finder-pill">🧪 Test my stuff</a>
+    </div>
+  </div>
+  <div class="finder-row">
+    <h3>Not sure where to start?</h3>
+    <div class="finder-pills">
+      <a href="health.html" class="finder-pill">🌙 New here? Start guide</a>
+      <a href="#what-we-do" class="finder-pill">💡 What we do</a>
+      <a href="#about-us" class="finder-pill">📖 About Project Peach</a>
+    </div>
+  </div>
+</div>
+<section class="minis open" aria-label="Try a tool">
+  <div class="minis-head" role="button" tabindex="0" aria-expanded="true">
+    <h3>✨ Try a tool</h3>
+    <span class="minis-toggle" aria-hidden="true">−</span>
+  </div>
+  <div class="minis-body">
+  <div class="mini-grid">
+    <a class="mini" href="polydrug.html">
+      <span class="mini-icon">⚡</span>
+      <span class="mini-title">Combo Checker</span>
+      <span class="mini-desc">Two substances, one quick read.</span>
+      <span class="mini-open">Open full tool →</span>
+    </a>
+    <a class="mini" href="symptoms.html">
+      <span class="mini-icon">🤒</span>
+      <span class="mini-title">Symptom Checker</span>
+      <span class="mini-desc">Tick what is happening, get a read.</span>
+      <span class="mini-open">Open full tool →</span>
+    </a>
+    <a class="mini" href="overdose.html">
+      <span class="mini-icon">🌬️</span>
+      <span class="mini-title">Breathing Pacer</span>
+      <span class="mini-desc">A 60 second reset for tough moments.</span>
+      <span class="mini-open">Open full tool →</span>
+    </a>
+  </div>
+  <p class="mini-note">Quick previews. Each one links to the full tool.</p>
+  </div>
+</section>
 <div class="mobile-hud"><a href="panic.html" class="hud-btn"><span>🚨</span>Panic</a><a href="polydrug.html" class="hud-btn"><span>💊</span>Tool</a><a href="resources.html" class="hud-btn"><span>📚</span>Resources</a><a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a><a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a></div>
 <div class="sections-grid">
-<div class="section-card floating collapsed glow-card slide-in-left"><div class="card-header"><h2>🚨 Emergency Tools</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Quick access to emergency resources when you need them most.</div><div class="collapsible-content"><div class="section-links"><a href="panic.html" class="section-link"><span class="icon">🚨</span><span class="text">Panic Button</span><span class="arrow">→</span></a><a href="emergency.html" class="section-link"><span class="icon">🆘</span><span class="text">Emergency Guides</span><span class="arrow">→</span></a><a href="badtrip.html" class="section-link"><span class="icon">🌈</span><span class="text">Bad Trip Mode</span><span class="arrow">→</span></a><a href="spiking.html" class="section-link"><span class="icon">🚫</span><span class="text">Drink Spiking Info</span><span class="arrow">→</span></a><a href="https://plurderapolis.org/rights-safety.html" class="section-link"><span class="icon">⚖️</span><span class="text">Rights & Safety</span><span class="arrow">→</span></a></div><a href="panic.html" class="cta-button pulse">Emergency Resources</a></div></div>
-<div class="section-card floating floating-delay-1 collapsed textured-section bounce-in"><div class="card-header"><h2>🔬 Drug Interactions</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Check how different substances interact with each other to stay safe.</div><div class="collapsible-content"><div class="section-links"><a href="polydrug.html" class="section-link"><span class="icon">⚡</span><span class="text">Polydrug Interaction Tool</span><span class="arrow">→</span></a><a href="rx-combos.html" class="section-link"><span class="icon">💊</span><span class="text">RX + Party Drug Combos</span><span class="arrow">→</span></a><a href="health.html" class="section-link"><span class="icon">💚</span><span class="text">Raver Health Guide</span><span class="arrow">→</span></a><a href="symptoms.html" class="section-link"><span class="icon">🤒</span><span class="text">Symptom Checker</span><span class="arrow">→</span></a><a href="fake.html" class="section-link"><span class="icon">⚠️</span><span class="text">Fake Drugs & Alerts</span><span class="arrow">→</span></a><a href="test-strips.html" class="section-link"><span class="icon">🧪</span><span class="text">Test Strip Guide + Timer</span><span class="arrow">→</span></a></div><a href="polydrug.html" class="cta-button pulse">Use Interaction Tool</a></div></div>
+<div class="section-card floating collapsed glow-card slide-in-left"><div class="card-header"><h2>🚨 Emergency Tools</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Quick access to emergency resources when you need them most.</div><div class="collapsible-content"><div class="section-links"><a href="panic.html" class="section-link"><span class="icon">🚨</span><b>Panic Button</b><span class="v7desc">, one tap help</span><span class="arrow">→</span></a><a href="emergency.html" class="section-link"><span class="icon">🆘</span><b>Emergency Guides</b><span class="v7desc">, what to do, step by step</span><span class="arrow">→</span></a><a href="overdose.html" class="section-link"><span class="icon">⛑️</span><b>Overdose Response</b><span class="v7desc">, recognize and respond</span><span class="arrow">→</span></a><a href="overdose-es.html" class="section-link"><span class="icon">🌎</span><b>Overdose Guide en español</b><span class="v7desc">, guía en español</span><span class="arrow">→</span></a><a href="badtrip.html" class="section-link"><span class="icon">🌈</span><b>Bad Trip Mode</b><span class="v7desc">, grounding tools that help</span><span class="arrow">→</span></a><a href="spiking.html" class="section-link"><span class="icon">🚫</span><b>Drink Spiking Info</b><span class="v7desc">, signs and what to do</span><span class="arrow">→</span></a><a href="https://plurderapolis.org/rights-safety.html" class="section-link"><span class="icon">⚖️</span><b>Rights & Safety</b><span class="v7desc">, know your rights</span><span class="arrow">→</span></a></div><a href="panic.html" class="cta-button pulse">Emergency Resources</a></div></div>
+<div class="section-card floating floating-delay-1 collapsed textured-section bounce-in"><div class="card-header"><h2>🔬 Drug Interactions</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Check how different substances interact with each other to stay safe.</div><div class="collapsible-content"><div class="section-links"><a href="polydrug.html" class="section-link"><span class="icon">⚡</span><b>Polydrug Interaction Tool</b><span class="v7desc">, check combos before you mix</span><span class="arrow">→</span></a><a href="rx-combos.html" class="section-link"><span class="icon">💊</span><b>RX + Party Drug Combos</b><span class="v7desc">, meds and party drugs</span><span class="arrow">→</span></a><a href="health.html" class="section-link"><span class="icon">💚</span><b>Raver Health Guide</b><span class="v7desc">, prep, pace, recover</span><span class="arrow">→</span></a><a href="symptoms.html" class="section-link"><span class="icon">🤒</span><b>Symptom Checker</b><span class="v7desc">, what is happening, what to do</span><span class="arrow">→</span></a><a href="fake.html" class="section-link"><span class="icon">⚠️</span><b>Fake Drugs & Alerts</b><span class="v7desc">, spot fakes, see alerts</span><span class="arrow">→</span></a><a href="test-strips.html" class="section-link"><span class="icon">🧪</span><b>Test Strip Guide + Timer</b><span class="v7desc">, test your stuff</span><span class="arrow">→</span></a><a href="snorting.html" class="section-link"><span class="icon">👃</span><b>Safer Snorting</b><span class="v7desc">, reduce the damage</span><span class="arrow">→</span></a><a href="aftercare.html" class="section-link"><span class="icon">🌅</span><b>Aftercare &amp; Recovery</b><span class="v7desc">, the 48 hours after</span><span class="arrow">→</span></a></div><a href="polydrug.html" class="cta-button pulse">Use Interaction Tool</a></div></div>
 <div class="section-card floating floating-delay-1 collapsed zoom-in"><div class="card-header"><h2>💧 Hydration & Check-in</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Set reminders to stay hydrated and check in with your buddies.</div><div class="collapsible-content"><div class="timer-widget"><div class="water-wave-container"><div class="water-wave"></div><div class="water-wave"></div><div class="water-wave"></div></div><div class="timer-card" id="water-timer"><div class="timer-title"><span>💧 Drink Water</span><span id="water-status">--:--</span></div><p>Time for a hydrating break. Your body will thank you!</p><div class="timer-controls"><button class="timer-btn btn-start" onclick="startTimer('water')">Start Timer</button><button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('water')">Snooze (10m)</button></div></div><div class="timer-card" id="buddy-timer"><div class="timer-title"><span>👥 Check in with Buddy</span><span id="buddy-status">--:--</span></div><p>Reach out to your buddy. A quick chat can make a big difference.</p><div class="timer-controls"><button class="timer-btn btn-start" onclick="startTimer('buddy')">Start Timer</button><button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('buddy')">Snooze (30m)</button></div></div><div class="timer-card" id="eat-timer"><div class="timer-title"><span>🍎 Eat Something</span><span id="eat-status">--:--</span></div><p>Fuel your body with a healthy snack or meal.</p><div class="timer-controls"><button class="timer-btn btn-start" onclick="startTimer('eat')">Start Timer</button><button class="timer-btn btn-snooze hidden" onclick="snoozeTimer('eat')">Snooze (20m)</button></div></div><button class="timer-btn btn-settings" onclick="toggleCustomization()">Customize Reminders</button><button class="timer-btn btn-send" onclick="showSendModal()">Send Timer to Friend</button><div class="customization-panel hidden" id="customization-panel"><h3>Customize Your Reminders</h3><form id="customization-form"><div class="form-group"><label for="water-interval">Water Reminder Interval (minutes)</label><input type="number" id="water-interval" min="15" max="180" value="60"></div><div class="form-group"><label for="buddy-interval">Buddy Check-in Interval (minutes)</label><input type="number" id="buddy-interval" min="30" max="480" value="120"></div><div class="form-group"><label for="eat-interval">Eat Something Interval (minutes)</label><input type="number" id="eat-interval" min="30" max="360" value="180"></div><div class="form-group"><label for="snooze-duration">Default Snooze Time (minutes)</label><input type="number" id="snooze-duration" min="5" max="60" value="10"></div></form><button type="button" class="btn-save" onclick="saveCustomizations()">Save Settings</button></div></div></div></div>
-<div class="section-card floating floating-delay-2 collapsed slide-in-right"><div class="card-header"><h2>💡 What We Do</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Harm reduction resources, education, and support for Minnesota's electronic music community.</div><div class="collapsible-content"><div class="section-links"><a href="resources.html" class="section-link"><span class="icon">💊</span><span class="text">Harm Reduction Resources</span><span class="arrow">→</span></a><a href="emergency.html" class="section-link"><span class="icon">🧠</span><span class="text">Mental Health & Crisis Support</span><span class="arrow">→</span></a><a href="consent.html" class="section-link"><span class="icon">🕊️</span><span class="text">Consent & Community Culture</span><span class="arrow">→</span></a><a href="booth.html" class="section-link"><span class="icon">🎉</span><span class="text">Visit Our Harm Reduction Booth</span><span class="arrow">→</span></a></div><a href="resources.html" class="cta-button pulse">Explore All Resources</a></div></div>
-<div class="section-card floating floating-delay-1 collapsed bounce-in"><div class="card-header"><h2>📚 Resources</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Comprehensive resources for harm reduction and mental health support.</div><div class="collapsible-content"><div class="section-links"><a href="resources.html" class="section-link"><span class="icon">📍</span><span class="text">MN Resources Directory</span><span class="arrow">→</span></a><a href="sober.html" class="section-link"><span class="icon">🚫</span><span class="text">Sober Ravers Support</span><span class="arrow">→</span></a><a href="seasonal-tips.html" class="section-link"><span class="icon">🌞</span><span class="text">Seasonal Safety Tips</span><span class="arrow">→</span></a><a href="venues-guide.html" class="section-link"><span class="icon">🏢</span><span class="text">Venue Safety Guides</span><span class="arrow">→</span></a></div><a href="resources.html" class="cta-button pulse">View All Resources</a></div></div>
+<div class="section-card floating floating-delay-2 collapsed slide-in-right" id="what-we-do"><div class="card-header"><h2>💡 What We Do</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Harm reduction resources, education, and support for Minnesota's electronic music community.</div><div class="collapsible-content"><div class="section-links"><a href="resources.html" class="section-link"><span class="icon">💊</span><b>Harm Reduction Resources</b><span class="v7desc">, the full library</span><span class="arrow">→</span></a><a href="mentalhealth.html" class="section-link"><span class="icon">🧠</span><b>Mental Health & Crisis Support</b><span class="v7desc">, support when it is rough</span><span class="arrow">→</span></a><a href="consent.html" class="section-link"><span class="icon">🕊️</span><b>Consent & Community Culture</b><span class="v7desc">, a culture of care</span><span class="arrow">→</span></a><a href="booth.html" class="section-link"><span class="icon">🎉</span><b>Visit Our Harm Reduction Booth</b><span class="v7desc">, find us in person</span><span class="arrow">→</span></a></div><a href="resources.html" class="cta-button pulse">Explore All Resources</a></div></div>
+<div class="section-card floating floating-delay-1 collapsed bounce-in"><div class="card-header"><h2>📚 Resources</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Comprehensive resources for harm reduction and mental health support.</div><div class="collapsible-content"><div class="section-links"><a href="resources.html" class="section-link"><span class="icon">📍</span><b>MN Resources Directory</b><span class="v7desc">, local help directory</span><span class="arrow">→</span></a><a href="sober.html" class="section-link"><span class="icon">🚫</span><b>Sober Ravers Support</b><span class="v7desc">, sober scene support</span><span class="arrow">→</span></a><a href="seasonal-tips.html" class="section-link"><span class="icon">🌞</span><b>Seasonal Safety Tips</b><span class="v7desc">, weather ready raving</span><span class="arrow">→</span></a><a href="venues-guide.html" class="section-link"><span class="icon">🏢</span><b>Venue Safety Guides</b><span class="v7desc">, know before you go</span><span class="arrow">→</span></a></div><a href="resources.html" class="cta-button pulse">View All Resources</a></div></div>
 <div class="section-card floating collapsed slide-in-left"><div class="card-header"><h2>🍹 Sober Ravers</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Enjoy the scene without substances with these refreshing mocktail recipes.</div><div class="collapsible-content"><div class="sober-blurb"><h3>🎉 Enjoy the Vibe, Your Way</h3><p>Whether you're sober-curious, in recovery, or just taking a break, you're welcome here. We believe great times don't require substances.</p><div class="mocktail-preview"><div class="mocktail-scroll-container"><div class="mocktail-grid"><div class="mocktail-card"><h3>🌙 Midnight Mule</h3><ul class="mocktail-ingredients"><li>• Ginger beer</li><li>• Fresh lime juice</li><li>• Mint leaves</li><li>• Cucumber slices</li></ul></div><div class="mocktail-card"><h3>🌈 PLUR Punch</h3><ul class="mocktail-ingredients"><li>• Cranberry juice</li><li>• Orange juice</li><li>• Club soda</li><li>• Fresh berries</li></ul></div><div class="mocktail-card"><h3>💫 Bassline Breeze</h3><ul class="mocktail-ingredients"><li>• Coconut water</li><li>• Pineapple juice</li><li>• Lime wedge</li><li>• Fresh basil</li></ul></div></div></div></div><p><strong>Remember:</strong> Hydration is key to staying energized and healthy throughout the night. 💧</p><a href="sober.html" class="cta-button" style="background:var(--accent5)">Explore Sober Resources</a></div></div></div>
-<div class="section-card glow-section floating floating-delay-2 collapsed zoom-in"><div class="card-header"><h2>🛡️ Violence Prevention</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Resources for preventing violence when someone says 'no' or sets boundaries.</div><div class="collapsible-content"><div class="section-links"><a href="rejection-based-violence.html" class="section-link"><span class="icon">🛡️</span><span class="text">Rejection Violence Prevention</span><span class="arrow">→</span></a><a href="consent.html" class="section-link"><span class="icon">✅</span><span class="text">Consent Basics</span><span class="arrow">→</span></a><a href="accountability.html" class="section-link"><span class="icon">⚖️</span><span class="text">Community Accountability</span><span class="arrow">→</span></a><a href="spiking.html" class="section-link"><span class="icon">🚫</span><span class="text">Drink Spiking Prevention</span><span class="arrow">→</span></a></div><a href="rejection-based-violence.html" class="cta-button pulse">Learn More</a></div></div>
-<div class="section-card floating floating-delay-3 collapsed slide-in-right"><div class="card-header"><h2>📖 About Us</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Learn about our grassroots harm reduction work in Minnesota's nightlife and festival community.</div><div class="collapsible-content"><p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p><p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p><p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p><div class="section-links"><a href="booth.html" class="section-link"><span class="icon">🎉</span><span class="text">Visit Our Harm Reduction Booth</span><span class="arrow">→</span></a></div><a href="booth.html" class="cta-button pulse">See Our Booth Schedule</a></div></div>
+<div class="section-card glow-section floating floating-delay-2 collapsed zoom-in"><div class="card-header"><h2>🛡️ Violence Prevention</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Resources for preventing violence when someone says 'no' or sets boundaries.</div><div class="collapsible-content"><div class="section-links"><a href="rejection-based-violence.html" class="section-link"><span class="icon">🛡️</span><b>Rejection Violence Prevention</b><span class="v7desc">, when no is not respected</span><span class="arrow">→</span></a><a href="consent.html" class="section-link"><span class="icon">✅</span><b>Consent Basics</b><span class="v7desc">, the essentials</span><span class="arrow">→</span></a><a href="accountability.html" class="section-link"><span class="icon">⚖️</span><b>Community Accountability</b><span class="v7desc">, repair and safety</span><span class="arrow">→</span></a><a href="spiking.html" class="section-link"><span class="icon">🚫</span><b>Drink Spiking Prevention</b><span class="v7desc">, protect your drink</span><span class="arrow">→</span></a></div><a href="rejection-based-violence.html" class="cta-button pulse">Learn More</a></div></div>
+<div class="section-card floating floating-delay-3 collapsed slide-in-right" id="about-us"><div class="card-header"><h2>📖 About Us</h2><button class="collapsible-toggle">+</button></div><div class="section-summary">Learn about our grassroots harm reduction work in Minnesota's nightlife and festival community.</div><div class="collapsible-content"><p><strong>PLURderapolis was built from years of grassroots harm reduction in Minnesota's nightlife and festival community.</strong> From Project Peach booths at warehouse shows, clubs, and events like Intellephunk's The Great Beyond, to collaborations with local collectives, this work has always been about showing up where the scene lives.</p><p>What began with direct care at the booth has grown into a broader mission: now creating an online hub of resources and tools designed for safer nightlife. The goal is simple; make harm reduction accessible anytime, anywhere, while keeping the culture strong and the community connected.</p><p><strong>PLURderapolis is here as your partners in shine, working to make Minnesota's nightlife safer, kinder, and, truly, Minnesota Nice again.</strong></p><div class="section-links"><a href="booth.html" class="section-link"><span class="icon">🎉</span><b>Visit Our Harm Reduction Booth</b><span class="v7desc">, find us in person</span><span class="arrow">→</span></a></div><a href="booth.html" class="cta-button pulse">See Our Booth Schedule</a></div></div>
 </div>
 
 <div style="text-align:center;margin:1.5rem"><a href="/anon-tip.html" style="color:var(--secondary);font-weight:bold;text-decoration:none;font-size:1rem">💬 Leave an Anonymous Tip</a></div>
@@ -379,7 +537,7 @@ footer ul li a:hover{color:var(--secondary);text-decoration:underline}
     <a href="https://plurderapolis.org/booth.html">🤝 Book Our Booth</a>
   </div>
 </div>
-<footer><hr/><p>&copy; 2025 PLURderapolis: Community Harm Reduction</p><p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:var(--primary)">plurderapolis@gmail.com</a></p><div class="social-links"><a href="https://www.facebook.com/plurderapolis" class="social-link" target="_blank"><span>📘</span> Facebook</a><a href="https://www.instagram.com/plurderapolis" class="social-link" target="_blank"><span>📷</span> Instagram</a><a href="https://www.venmo.com/u/plurderapolis" class="social-link" target="_blank" style="background:linear-gradient(135deg,var(--secondary),var(--accent1))"><span>💖</span> Donate</a></div><div class="sitemap"><div class="sitemap-category"><h3>Safety & Emergency</h3><div class="sitemap-links"><a href="panic.html" class="sitemap-link">Panic Button</a><a href="emergency.html" class="sitemap-link">Emergency Guides</a><a href="overdose.html" class="sitemap-link">Overdose Response</a><a href="spiking.html" class="sitemap-link">Drink Spiking</a><a href="badtrip.html" class="sitemap-link">Bad Trip Mode</a><a href="mentalhealth.html" class="sitemap-link">Mental Health</a><a href="ride-safety.html" class="sitemap-link">Rideshare Safety</a><a href="rights-safety.html" class="sitemap-link">Rights & Safety</a></div></div><div class="sitemap-category"><h3>Drug Information</h3><div class="sitemap-links"><a href="polydrug.html" class="sitemap-link">Polydrug Tool</a><a href="rx-combos.html" class="sitemap-link">RX + Party Combos</a><a href="health.html" class="sitemap-link">Raver Health</a><a href="symptoms.html" class="sitemap-link">Symptom Checker</a><a href="fake.html" class="sitemap-link">Fake Drugs & Alerts</a><a href="snorting.html" class="sitemap-link">Snorting Safer</a><a href="aftercare.html" class="sitemap-link">Aftercare</a><a href="test-strips.html" class="sitemap-link">Test Strips</a></div></div><div class="sitemap-category"><h3>Consent & Community</h3><div class="sitemap-links"><a href="consent.html" class="sitemap-link">Consent Basics</a><a href="accountability.html" class="sitemap-link">Accountability</a><a href="rejection-based-violence.html" class="sitemap-link">Violence Prevention</a></div></div><div class="sitemap-category"><h3>Local Scene</h3><div class="sitemap-links"><a href="venues-guide.html" class="sitemap-link">Venues Guide</a><a href="booth.html" class="sitemap-link">Our Booth</a></div></div><div class="sitemap-category"><h3>More Resources</h3><div class="sitemap-links"><a href="seasonal-tips.html" class="sitemap-link">Seasonal Tips</a><a href="sober.html" class="sitemap-link">Sober Ravers</a><a href="resources.html" class="sitemap-link">MN Resources</a><a href="legal-disclaimers-terms.html" class="sitemap-link">Legal Disclaimers</a></div></div></div><div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #444"><ul><li><a href="legal-disclaimers-terms.html" style="color:var(--medium-text);font-size:.8rem">Legal Disclaimers & Terms</a></li></ul></div><div class="anonymous-footer"><span>Anonymous usage data helps us improve resources.</span><button class="anonymous-toggle" onclick="toggleAnonymousStats()">Show stats</button><div class="anonymous-stats" id="anonymousStats"><div>Total visits: <span id="footerTotalVisits">0</span></div><div>Most used resource: <span id="footerPopularResource">--</span></div><div>Average time: <span id="footerAvgTime">0m</span></div><div style="font-size:.6rem;margin-top:5px">Data stored locally in your browser only</div></div></div><p style="font-size:.75rem;color:#ccc;margin-top:.8rem">Disclaimer: PLURderapolis provides harm reduction education. This is not medical or legal advice. Always consult professionals for health or legal concerns.</p></footer>
+<footer><hr/><p>&copy; 2026 PLURderapolis: Community Harm Reduction</p><p>Your partners in shine ✦ <a href="mailto:plurderapolis@gmail.com" style="color:var(--primary)">plurderapolis@gmail.com</a></p><div class="social-links"><a href="https://www.facebook.com/plurderapolis" class="social-link" target="_blank"><span>📘</span> Facebook</a><a href="https://www.instagram.com/plurderapolis" class="social-link" target="_blank"><span>📷</span> Instagram</a><a href="https://www.venmo.com/u/plurderapolis" class="social-link" target="_blank" style="background:linear-gradient(135deg,var(--secondary),var(--accent1))"><span>💖</span> Donate</a></div><div class="sitemap"><div class="sitemap-category"><h3>Safety & Emergency</h3><div class="sitemap-links"><a href="panic.html" class="sitemap-link">Panic Button</a><a href="emergency.html" class="sitemap-link">Emergency Guides</a><a href="overdose.html" class="sitemap-link">Overdose Response</a><a href="spiking.html" class="sitemap-link">Drink Spiking</a><a href="badtrip.html" class="sitemap-link">Bad Trip Mode</a><a href="mentalhealth.html" class="sitemap-link">Mental Health</a><a href="ride-safety.html" class="sitemap-link">Rideshare Safety</a><a href="rights-safety.html" class="sitemap-link">Rights & Safety</a></div></div><div class="sitemap-category"><h3>Drug Information</h3><div class="sitemap-links"><a href="polydrug.html" class="sitemap-link">Polydrug Tool</a><a href="rx-combos.html" class="sitemap-link">RX + Party Combos</a><a href="health.html" class="sitemap-link">Raver Health</a><a href="symptoms.html" class="sitemap-link">Symptom Checker</a><a href="fake.html" class="sitemap-link">Fake Drugs & Alerts</a><a href="snorting.html" class="sitemap-link">Snorting Safer</a><a href="aftercare.html" class="sitemap-link">Aftercare</a><a href="test-strips.html" class="sitemap-link">Test Strips</a></div></div><div class="sitemap-category"><h3>Consent & Community</h3><div class="sitemap-links"><a href="consent.html" class="sitemap-link">Consent Basics</a><a href="accountability.html" class="sitemap-link">Accountability</a><a href="rejection-based-violence.html" class="sitemap-link">Violence Prevention</a></div></div><div class="sitemap-category"><h3>Local Scene</h3><div class="sitemap-links"><a href="venues-guide.html" class="sitemap-link">Venues Guide</a><a href="booth.html" class="sitemap-link">Our Booth</a></div></div><div class="sitemap-category"><h3>More Resources</h3><div class="sitemap-links"><a href="seasonal-tips.html" class="sitemap-link">Seasonal Tips</a><a href="sober.html" class="sitemap-link">Sober Ravers</a><a href="resources.html" class="sitemap-link">MN Resources</a><a href="legal-disclaimers-terms.html" class="sitemap-link">Legal Disclaimers</a></div></div></div><div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #444"><ul><li><a href="legal-disclaimers-terms.html" style="color:var(--medium-text);font-size:.8rem">Legal Disclaimers & Terms</a></li></ul></div><div class="anonymous-footer"><span>Anonymous usage data helps us improve resources.</span><button class="anonymous-toggle" onclick="toggleAnonymousStats()">Show stats</button><div class="anonymous-stats" id="anonymousStats"><div>Total visits: <span id="footerTotalVisits">0</span></div><div>Most used resource: <span id="footerPopularResource">--</span></div><div>Average time: <span id="footerAvgTime">0m</span></div><div style="font-size:.6rem;margin-top:5px">Data stored locally in your browser only</div></div></div><p style="font-size:.75rem;color:#ccc;margin-top:.8rem">Disclaimer: PLURderapolis provides harm reduction education. This is not medical or legal advice. Always consult professionals for health or legal concerns.</p></footer>
 <script>
 document.addEventListener('DOMContentLoaded',function(){const t=document.querySelectorAll('.section-card');t.forEach(t=>{const e=t.querySelector('.collapsible-content'),c=t.querySelector('.collapsible-toggle'),n=t.querySelector('.section-summary');t.classList.remove('expanded'),t.classList.add('collapsed'),e.classList.remove('expanded'),c.textContent='+',n&&(n.style.display='block',n.style.opacity='1',n.style.maxHeight='none')});const e=document.querySelectorAll('.collapsible-toggle');e.forEach(t=>{t.addEventListener('click',function(t){t.stopPropagation();const e=this.closest('.section-card'),c=e.querySelector('.collapsible-content'),n=e.querySelector('.section-summary'),o=c.classList.contains('expanded');if(o)c.classList.remove('expanded'),this.textContent='+',e.classList.add('collapsed'),e.classList.remove('expanded'),n&&(n.style.display='block',setTimeout(()=>{n.style.opacity='1'},300));else{c.classList.add('expanded'),this.textContent='−',e.classList.remove('collapsed'),e.classList.add('expanded');n&&(n.style.opacity='0',setTimeout(()=>{n.style.display='none'},300))}})})});
 function showCountyResources(t){document.querySelectorAll('.county-resources').forEach(t=>{t.classList.remove('active')}),document.querySelectorAll('.county-tab').forEach(t=>{t.classList.remove('active')}),document.getElementById(t+'-resources').classList.add('active'),event.target.classList.add('active')}
@@ -593,6 +751,41 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(function(){});
   });
 }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.section-card .card-header').forEach(function(h){
+    h.addEventListener('click',function(e){
+      if(e.target.closest('.collapsible-toggle'))return;
+      var b=this.querySelector('.collapsible-toggle');if(b)b.click();
+    });
+  });
+});
+</script>
+<script>
+(function(){
+  var s=document.querySelector('.minis');
+  if(s){
+    var h=s.querySelector('.minis-head'),t=s.querySelector('.minis-toggle');
+    var flip=function(){
+      var open=s.classList.toggle('open');
+      h.setAttribute('aria-expanded',open?'true':'false');
+      t.textContent=open?'\u2212':'+';
+    };
+    h.addEventListener('click',flip);
+    h.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+  }
+  document.querySelectorAll('.finder-pill[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(){
+      var t=document.querySelector(a.getAttribute('href'));
+      if(!t)return;
+      if(t.classList.contains('collapsed')){
+        var b=t.querySelector('.collapsible-toggle');
+        if(b)b.click();
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
