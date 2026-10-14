@@ -260,6 +260,17 @@
     background: linear-gradient(135deg, var(--light-purple), var(--soft-purple));
   }
   
+  .section-header:focus-visible {
+    outline: 2px solid var(--mint);
+    outline-offset: 2px;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .breathing-shape { animation: none !important; }
+    .section { animation: none; opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+  
   .section-header h2 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
@@ -755,6 +766,8 @@
 .ph-bar .ph-links::-webkit-scrollbar{display:none}
 .ph-bar .ph-links a{font-family:'Montserrat','Roboto',sans-serif;font-size:.78rem;font-weight:600;color:#b8b8d0;text-decoration:none;padding:.45rem .65rem;border-radius:999px;white-space:nowrap}
 .ph-bar .ph-links a:hover{color:#fff;background:rgba(255,255,255,.08)}@media (max-width:480px){.ph-bar{padding:.5rem .6rem;gap:.45rem}.ph-bar .ph-brand{font-size:.92rem}.ph-bar .ph-links a{font-size:.72rem;padding:.4rem .55rem}}
+/* badtrip keeps its original fixed header: resolve the .ph-bar/.header conflict in favor of fixed */
+.ph-bar.header{position:fixed;top:0;left:0;right:0;z-index:1000}
 
 </style>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
@@ -880,6 +893,38 @@
         <p class="calm-line">You're safe. This will pass. 🌊</p>
         <p class="calm-sub">Start with your breathing below: everything else can wait.</p>
       </div>
+
+      <!-- Quick start: guided entry, one tap to the right tool -->
+      <div class="quickstart" id="quickstart">
+        <p class="quickstart-title">Where are you at right now?</p>
+        <div class="quickstart-grid">
+          <button class="qs-btn" data-goto="breathing">
+            <i class="fas fa-wind"></i>
+            <span>I need to calm down</span>
+          </button>
+          <button class="qs-btn" data-goto="grounding">
+            <i class="fas fa-mountain"></i>
+            <span>My thoughts are spiraling</span>
+          </button>
+          <button class="qs-btn" data-goto="sounds">
+            <i class="fas fa-music"></i>
+            <span>I need a sound to focus on</span>
+          </button>
+          <button class="qs-btn" data-goto="checkin">
+            <i class="fas fa-user-friends"></i>
+            <span>I need a person with me</span>
+          </button>
+        </div>
+      </div>
+      <style>
+        .quickstart{max-width:720px;margin:0 auto 1.6rem;padding:1.1rem 1.2rem;background:var(--card,#2a0040);border:1px solid rgba(0,247,224,.25);border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+        .quickstart-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.05rem;color:var(--mint,#5eead4);text-align:center;margin:0 0 .9rem}
+        .quickstart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.7rem}
+        .qs-btn{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1rem .6rem;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,.05);color:#eee;font-family:'Roboto',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;transition:all .25s ease}
+        .qs-btn i{font-size:1.5rem;color:var(--accent,#ff6ec7)}
+        .qs-btn:hover,.qs-btn:focus-visible{background:rgba(255,110,199,.12);border-color:var(--accent,#ff6ec7);transform:translateY(-2px);outline:none}
+        .qs-btn:active{transform:scale(.97)}
+      </style>
       <style>
         .calm-entry{text-align:center;margin:0 auto 1.4rem;max-width:640px}
         .calm-line{font-size:1.5rem;font-weight:800;color:var(--mint,#5eead4);margin:0 0 .3rem}
@@ -906,7 +951,7 @@
                 <i class="fas fa-play"></i> Resume
               </button>
               <button id="stopBreath" class="btn btn-outline">
-                <i class="fas fa-stop"></i> Stop
+                <i class="fas fa-redo"></i> Restart
               </button>
             </div>
           </div>
@@ -1348,35 +1393,71 @@ function initMenu() {
 
 // Section management
 function initSections() {
-  // Collapsible section functionality
+  // Shared: open one section (used by header taps, keyboard, sidebar, quick start)
+  window.goToSection = function(targetId, scrollBlock) {
+    const targetSection = document.getElementById(targetId);
+    if (!targetSection) return;
+    const isOpening = !targetSection.classList.contains('open');
+    if (window.innerWidth <= 1024 && isOpening) {
+      document.querySelectorAll('.section').forEach(s => {
+        if (s !== targetSection && s.classList.contains('open')) {
+          s.classList.remove('open');
+          updateSectionButton(s.id, false);
+          const h = s.querySelector('.section-header');
+          if (h) h.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+    targetSection.classList.add('open');
+    updateSectionButton(targetId, true);
+    const th = targetSection.querySelector('.section-header');
+    if (th) th.setAttribute('aria-expanded', 'true');
+    currentSection = targetId;
+    updateProgressIndicator();
+    setTimeout(() => {
+      targetSection.scrollIntoView({ behavior: 'smooth', block: scrollBlock || 'start' });
+    }, 100);
+  };
+
+  // Collapsible section functionality (mouse, touch, and keyboard)
   document.querySelectorAll('.section-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const section = header.parentElement;
+    const section = header.parentElement;
+    header.setAttribute('tabindex', '0');
+    header.setAttribute('role', 'button');
+    const syncAria = () => header.setAttribute('aria-expanded', section.classList.contains('open') ? 'true' : 'false');
+    syncAria();
+    const toggleSection = () => {
       const isOpening = !section.classList.contains('open');
-      
       // Close all other sections on mobile
       if (window.innerWidth <= 768 && isOpening) {
         document.querySelectorAll('.section').forEach(s => {
           if (s !== section && s.classList.contains('open')) {
             s.classList.remove('open');
             updateSectionButton(s.id, false);
+            const h = s.querySelector('.section-header');
+            if (h) h.setAttribute('aria-expanded', 'false');
           }
         });
       }
-      
       // Toggle current section
       section.classList.toggle('open');
       updateSectionButton(section.id, section.classList.contains('open'));
-      
+      syncAria();
       // Update current section and progress
       if (section.classList.contains('open')) {
         currentSection = section.id;
         updateProgressIndicator();
-        
         // Smooth scroll to section
         setTimeout(() => {
           section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 300);
+      }
+    };
+    header.addEventListener('click', toggleSection);
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSection();
       }
     });
   });
@@ -1391,26 +1472,24 @@ function initSections() {
         document.querySelectorAll('.section').forEach(section => {
           section.classList.remove('open');
           updateSectionButton(section.id, false);
+          const h = section.querySelector('.section-header');
+          if (h) h.setAttribute('aria-expanded', 'false');
         });
       }
       
-      // Open target section
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.classList.add('open');
-        updateSectionButton(targetId, true);
-        currentSection = targetId;
-        updateProgressIndicator();
-        
-        // Smooth scroll to section
-        setTimeout(() => {
-          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      }
-      
+      // Open target section via the shared opener
+      window.goToSection(targetId, 'start');
+
       // Update active button
       document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+    });
+  });
+
+  // Quick-start chooser buttons
+  document.querySelectorAll('.qs-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.goToSection(btn.dataset.goto, 'start');
     });
   });
   
@@ -1476,7 +1555,9 @@ function initBreathing() {
 
 // Grounding functionality
 function initGrounding() {
-  const groundingItems = document.querySelectorAll('.grounding-item');
+  const groundingItems = document.querySelectorAll('#grounding .grounding-item');
+  // NOTE: scoped to #grounding on purpose. The check-in section reuses
+  // .grounding-item styling but must NOT count toward grounding completion.
   const groundingComplete = document.getElementById('groundingComplete');
   let completedCount = 0;
   
@@ -2168,6 +2249,13 @@ document.addEventListener('click', () => {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
   }
 }, { once: true });
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>
