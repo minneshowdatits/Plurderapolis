@@ -54,21 +54,9 @@
   a:hover {color: var(--accent-2); text-shadow: 0 0 8px rgba(224, 81, 255, 0.5);}
   .wrap{max-width:1000px;margin:auto;padding:16px; width: 100%;}
   h1,h2,h3{font-family:'Montserrat',sans-serif;letter-spacing:.2px; margin-top: 0;}
-  h1{font-size:clamp(1.8rem,3vw,2.5rem);color:var(--accent);margin:8px 0 6px; text-align: center; text-shadow: 0 0 10px rgba(191, 0, 191, 0.4);}
+  h1{font-size:clamp(1.8rem,3vw,2.5rem);color:var(--accent);margin:8px 0 6px; text-align: center;}
   p.lede{color:#f0d1ff;margin:.25rem 0 1rem; font-size: 1.1rem; text-align: center; line-height: 1.5;}
   
-  /* Header branding */
-  .branding{display:flex;align-items:center;gap:10px;margin-bottom:10px; justify-content: center; flex-direction: column; text-align: center;}
-  .logo{font-size:2.2rem;font-weight:800;color:var(--accent);background:linear-gradient(45deg, var(--accent), var(--accent-2), #ff00ff, #bf00bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent; animation: logoPulse 4s infinite ease-in-out, logoColors 8s infinite linear; text-shadow: 0 0 15px rgba(191, 0, 191, 0.5); margin-bottom: 5px; cursor: pointer;}
-  @keyframes logoPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  @keyframes logoColors {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-  }
-  .tagline{color:var(--muted);font-size:1rem; max-width: 500px; line-height: 1.4;}
   
   /* Mobile Header with Menu */
   .mobile-header {
@@ -345,6 +333,12 @@
   
   /* Matrix */
   .controls{display:flex;align-items:center;gap:15px;margin:20px 0 15px;flex-wrap:wrap; justify-content: center;}
+  .controls a.download{color:#fff;text-decoration:none;}
+  .matrix-share-menu{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;}
+  .matrix-share-menu[hidden]{display:none !important;}
+  .matrix-share-menu .matrix-share-label{font-weight:700;opacity:.85;}
+  .matrix-share-menu button, .matrix-share-menu a{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.6rem 1.1rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:.95rem;text-decoration:none;font-family:inherit;}
+  .matrix-share-menu button:hover, .matrix-share-menu a:hover{background:#3d003d;}
   .download{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:.9rem 1.4rem;font-weight:800;cursor:pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-size: 1rem;}
   .download:hover {background: var(--accent-2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(191, 0, 191, 0.4);}
   .share{background:#2a002a;color:#fff;border:1px solid var(--line);border-radius:999px;padding:.9rem 1.4rem;font-weight:700;cursor:pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; font-size: 1rem;}
@@ -375,6 +369,8 @@
   details.info summary:hover {color: var(--accent-2);}
   details.info summary::marker, details.info summary::-webkit-details-marker{display:none}
   details.info summary .tag{margin-left:.5rem;opacity:.85; font-size: 0.8rem; background: var(--chip); padding: 2px 8px; border-radius: 10px;}
+  details.info summary::after{content:"\25BE";margin-left:auto;flex:none;font-size:.85em;opacity:.8;transition:transform .25s ease; padding-left:.6rem}
+  details.info[open] summary::after{transform:rotate(180deg)}
   details.info[open] {animation: accordionOpen 0.5s ease-out;}
   @keyframes accordionOpen {
     from { opacity: 0; max-height: 0; }
@@ -645,19 +641,10 @@
     background: var(--accent-2);
   }
   
-  /* Desktop-only elements */
-  .desktop-only {
-    display: none;
-  }
-  
   /* Mobile optimizations */
   @media (min-width: 768px) {
     .mobile-header {
       display: none;
-    }
-    
-    .desktop-only {
-      display: block;
     }
     
     .sel {
@@ -869,12 +856,6 @@
   </div>
   
   <div class="wrap">
-    <!-- Desktop Branding (hidden on mobile) -->
-    <div class="branding desktop-only">
-      <div class="logo" id="homeLink">PLURderapolis</div>
-      <div class="tagline">Harm Reduction & Community Safety - Empowering informed decisions through education and support</div>
-    </div>
-    
     <h1 id="main-content">Polydrug Interaction Checker <span class="icons">⚡💊💀🌈</span></h1>
     <p class="lede">Mobile-first, harm-reduction focused tool to check drug combination risks. Pick up to three substances and see detailed safety information. Matrix is downloadable + shareable.</p>
 
@@ -987,6 +968,15 @@
     <div class="controls">
       <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
       <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
+      <a class="download" href="/images/polysubstance-matrix.png" download="polysubstance-interaction-matrix.png"><i class="fas fa-image"></i> Download matrix</a>
+      <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
+    </div>
+    <div class="matrix-share-menu" id="matrixShareMenu" hidden>
+      <span class="matrix-share-label">Send the matrix graphic:</span>
+      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy link</button>
+      <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
+      <a id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
     </div>
 
     <div class="section-heading" id="matrix">
@@ -1145,11 +1135,6 @@ mobileNav.addEventListener('click', (e) => {
     mobileNav.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
-});
-
-// Home link functionality
-document.getElementById('homeLink').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // Substance list - comprehensive from your original matrix
@@ -1547,6 +1532,71 @@ saveModal.addEventListener('click', (e) => {
     saveModal.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
+});
+
+// Matrix graphic download + send
+const MATRIX_URL = new URL('/images/polysubstance-matrix.png', location.href).href;
+const MATRIX_TITLE = 'Polysubstance Interaction Matrix - plurderapolis.org';
+
+async function shareMatrixFile() {
+  try {
+    const res = await fetch(MATRIX_URL);
+    if (!res.ok) return false;
+    const blob = await res.blob();
+    const file = new File([blob], 'polysubstance-interaction-matrix.png', {type: blob.type || 'image/png'});
+    if (navigator.canShare && navigator.canShare({files: [file]})) {
+      await navigator.share({files: [file], title: MATRIX_TITLE, text: MATRIX_TITLE});
+      return true;
+    }
+  } catch (e) { /* fall through to the menu */ }
+  return false;
+}
+
+const sendMatrixBtn = document.getElementById('sendMatrixBtn');
+const matrixShareMenu = document.getElementById('matrixShareMenu');
+sendMatrixBtn.addEventListener('click', async (e) => {
+  e.stopPropagation();
+  if (await shareMatrixFile()) return;
+  const msg = MATRIX_TITLE + ' ' + MATRIX_URL;
+  document.getElementById('mxSms').href = 'sms:?&body=' + encodeURIComponent(msg);
+  document.getElementById('mxWa').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  document.getElementById('mxEmail').href = 'mailto:?subject=' + encodeURIComponent(MATRIX_TITLE) + '&body=' + encodeURIComponent(msg);
+  matrixShareMenu.hidden = !matrixShareMenu.hidden;
+});
+document.addEventListener('click', (e) => {
+  if (!matrixShareMenu.hidden && !matrixShareMenu.contains(e.target) && e.target !== sendMatrixBtn) {
+    matrixShareMenu.hidden = true;
+  }
+});
+document.getElementById('mxCopyLink').addEventListener('click', async () => {
+  const btn = document.getElementById('mxCopyLink');
+  const restore = () => { btn.innerHTML = '<i class="fas fa-link"></i> Copy link'; matrixShareMenu.hidden = true; };
+  let ok = false;
+  try { await navigator.clipboard.writeText(MATRIX_URL); ok = true; }
+  catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = MATRIX_URL;
+    document.body.appendChild(ta);
+    ta.select();
+    try { ok = document.execCommand('copy'); } catch (_) {}
+    ta.remove();
+  }
+  btn.innerHTML = ok ? '<i class="fas fa-check"></i> Copied' : '<i class="fas fa-link"></i> Copy link';
+  setTimeout(restore, 1400);
+});
+
+// Share Page button
+const shareBtn = document.getElementById('shareBtn');
+shareBtn.addEventListener('click', async () => {
+  const data = {title: document.title, text: 'Polydrug Interaction Checker - plurderapolis.org', url: location.href};
+  if (navigator.share) {
+    try { await navigator.share(data); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  try { await navigator.clipboard.writeText(location.href); } catch (e) {}
+  const orig = shareBtn.innerHTML;
+  shareBtn.innerHTML = '<i class="fas fa-check"></i> Link copied';
+  setTimeout(() => { shareBtn.innerHTML = orig; }, 1500);
 });
 
 // Back to top button functionality
