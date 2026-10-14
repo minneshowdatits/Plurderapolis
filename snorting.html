@@ -21,7 +21,7 @@
 <link rel="apple-touch-startup-image" href="/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,6 +49,8 @@
       --text: #ffffff;
       --muted: #b8b8d0;
       --border: #3a3a5c;
+      --green: #2ed573;
+      --red: #ff4757;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -77,13 +79,16 @@
     .hero h1 { font-size: 2.9rem; font-weight: 800; margin-bottom: .75rem; letter-spacing: -0.01em; text-shadow: 0 0 34px #ff9e5d80; }
     .hero h1 .accent { color: var(--accent); }
     .hero p { color: var(--muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+    .eyebrow { display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:.5rem; }
+
     .pocket {
       background: var(--card);
       border: 2px solid var(--accent);
       border-radius: 16px;
       padding: 1.5rem;
       margin: 1.5rem 0 2.5rem;
-      box-shadow: 0 0 25px rgba(94,234,212,.12);
+      box-shadow: 0 0 25px rgba(255,158,93,.14);
     }
     .pocket h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: .75rem; text-transform: uppercase; letter-spacing: .05em; }
     .pocket ul { list-style: none; }
@@ -102,14 +107,74 @@
     .section ul { margin: .5rem 0 .9rem 1.25rem; color: #e8e8f2; }
     .section li { margin-bottom: .45rem; }
     .section a { color: var(--accent); }
-    .warn-box {
-      background: rgba(168,85,247,.08);
-      border: 1px solid var(--pink);
-      border-radius: 12px;
-      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-      margin: 1rem 0;
+
+    /* Routine stepper */
+    .routine { background: linear-gradient(135deg, #241407, #1c1c28); border: 2px solid var(--accent); border-radius: 18px; padding: 1.75rem; margin: 1rem 0 2rem; }
+    .routine h2 { font-size: 1.3rem; margin-bottom: .4rem; }
+    .routine .r-sub { color: var(--muted); font-size: .95rem; margin-bottom: 1.25rem; }
+    .r-progress { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; font-size: .9rem; color: var(--muted); }
+    .r-progress-bar { flex: 1; height: 8px; background: #2a2a3a; border-radius: 999px; overflow: hidden; }
+    .r-progress-bar div { height: 100%; width: 0%; background: var(--accent); transition: width .25s ease; }
+    .r-step { border: 1px solid var(--border); border-radius: 14px; margin-bottom: .8rem; overflow: hidden; background: #252536; }
+    .r-step-head { width: 100%; display: flex; align-items: center; gap: .9rem; padding: 1.05rem 1.15rem; background: none; border: none; color: #fff; font-family: inherit; cursor: pointer; text-align: left; }
+    .r-step-num { width: 36px; height: 36px; border-radius: 50%; background: #3a3a5c; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
+    .r-step.done .r-step-num { background: var(--green); color: #0d0d0d; }
+    .r-step.open .r-step-num { background: var(--accent); color: #0d0d0d; }
+    .r-step-head h3 { font-size: 1.02rem; flex: 1; }
+    .r-step.open { border-color: var(--accent); }
+    .r-step-head .chev { color: var(--muted); transition: transform .2s ease; }
+    .r-step.open .chev { transform: rotate(180deg); }
+    .r-step-body { display: none; padding: 0 1.15rem 1.15rem 4.1rem; color: #e8e8f2; font-size: .96rem; }
+    .r-step.open .r-step-body { display: block; }
+    .r-step-body .r-done-btn { margin-top: .9rem; padding: .7rem 1.2rem; border-radius: 10px; border: none; background: var(--accent); color: #0d0d0d; font-weight: 800; cursor: pointer; font-family: inherit; }
+    .r-step-body .r-done-btn:hover { filter: brightness(1.08); }
+    .r-finish { display: none; background: rgba(46,213,115,.1); border: 1px solid var(--green); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
+    .r-finish.show { display: block; }
+    .r-finish strong { color: var(--green); }
+
+    /* Quiz */
+    .quiz-q { background: #252536; border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem; margin-bottom: .8rem; }
+    .quiz-q p { font-weight: 700; margin-bottom: .7rem; }
+    .quiz-btns { display: flex; gap: .6rem; }
+    .quiz-btns button { flex: 1; padding: .65rem; border-radius: 10px; border: 1px solid var(--border); background: #2f2f45; color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .quiz-btns button:hover { border-color: var(--accent); }
+    .quiz-btns button.picked { border-color: var(--accent); }
+    .quiz-a { display: none; margin-top: .8rem; padding: .8rem 1rem; border-radius: 10px; font-size: .92rem; }
+    .quiz-a.show { display: block; }
+    .quiz-a.right { background: rgba(46,213,115,.12); border: 1px solid var(--green); }
+    .quiz-a.wrong { background: rgba(255,71,87,.1); border: 1px solid var(--red); }
+    .quiz-score { font-weight: 800; color: var(--accent); margin-top: 1rem; display: none; }
+    .quiz-score.show { display: block; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: .5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .tab-btn { flex: 1 1 100px; padding: .8rem; border-radius: 12px; border: 1px solid var(--border); background: #252536; color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .tab-btn.active { border-color: var(--accent); background: rgba(255,158,93,.14); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .route-tag { display: inline-block; font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; border-radius: 999px; padding: .25rem .8rem; margin-bottom: .6rem; }
+    .route-tag.gentle { background: rgba(46,213,115,.15); color: var(--green); }
+    .route-tag.mid { background: rgba(255,158,93,.15); color: var(--accent); }
+    .route-tag.rough { background: rgba(255,71,87,.15); color: var(--red); }
+
+    /* Warning-sign checklist */
+    .warn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 1rem 0; }
+    @media(max-width:600px){ .warn-grid{grid-template-columns:1fr} }
+    .warn-card {
+      background: #252536; border: 2px solid var(--border); border-radius: 14px; padding: 1.1rem;
+      cursor: pointer; transition: border-color .15s ease, background .15s ease; text-align: left;
+      font-family: inherit; color: #fff; width: 100%;
     }
-    .warn-box h3 { color: var(--pink); margin-bottom: .5rem; }
+    .warn-card:hover { border-color: var(--accent); }
+    .warn-card.checked { border-color: var(--red); background: rgba(255,71,87,.12); }
+    .warn-card .check { float: right; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .85rem; }
+    .warn-card.checked .check { background: var(--red); border-color: var(--red); color: #fff; }
+    .warn-card h3 { font-size: 1rem; margin: .3rem 0 .4rem; }
+    .warn-card p { font-size: .9rem; color: var(--muted); margin: 0; }
+    .warn-nudge { display: none; background: rgba(255,71,87,.14); border: 1px solid var(--red); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
+    .warn-nudge.show { display: block; }
+    .warn-nudge strong { color: var(--red); }
+
     .crisis-box {
       background: linear-gradient(135deg, #2a0a12, #1c1c28);
       border: 2px solid var(--pink);
@@ -143,8 +208,8 @@
     footer .crisis-line { margin-bottom: 1rem; color: var(--text); }
     footer a { color: var(--accent); }
     footer .disclaimer { max-width: 640px; margin: 1rem auto 0; font-size: .8rem; }
-    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } }
-  
+    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .routine { padding: 1.15rem; } }
+
 /* ---- PLURderapolis unified header bar ---- */
 .ph-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #2a2a3a;padding:.6rem 1rem;margin:0}
 .ph-bar .ph-brand{font-family:'Montserrat','Roboto',-apple-system,sans-serif;font-weight:800;font-size:1.05rem;color:#fff;text-decoration:none;white-space:nowrap;line-height:1.2}
@@ -185,7 +250,55 @@
       </ul>
     </div>
 
+    <div class="routine" id="routine">
+      <h2><i class="fas fa-clipboard-check"></i> Your nose-care routine: 5 steps</h2>
+      <p class="r-sub">Tap each step to open it. Hit <strong>Done</strong> when you've done it and the next one opens. The whole thing takes two minutes.</p>
+      <div class="r-progress"><span id="r-count">0 of 5 done</span><div class="r-progress-bar"><div id="r-bar"></div></div></div>
+      <div id="r-steps">
+        <div class="r-step open" data-step="1">
+          <button class="r-step-head"><span class="r-step-num">1</span><h3>Grind it fine</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="r-step-body">
+            <p>Crush thoroughly on a clean, hard surface. Chunks and crystals have sharp edges, dragging them through your nose causes the micro-tears where burning, bleeding, and long-term damage start. A fine, even powder is dramatically easier on the tissue. Take the extra 30 seconds.</p>
+            <button class="r-done-btn">Done: ground it fine <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="r-step" data-step="2">
+          <button class="r-step-head"><span class="r-step-num">2</span><h3>Your own straw, every time</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="r-step-body">
+            <p>Cut one to pocket size, or grab a pack of short plastic straws. Hepatitis C lives in microscopic blood you can't see, it survives on surfaces for up to 3 weeks. One personal straw is all that stands between you and a very avoidable infection.</p>
+            <button class="r-done-btn">Done: got my own <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="r-step" data-step="3">
+          <button class="r-step-head"><span class="r-step-num">3</span><h3>Sniff gentle, alternate sides</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="r-step-body">
+            <p>A soft sniff deposits it where it absorbs; a hard rip just fires it into your throat and stomach. Alternate nostrils to spread the wear instead of destroying one side. Don't blow your nose hard right after, you'll expel what you took and irritate everything further.</p>
+            <button class="r-done-btn">Done: went gentle <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="r-step" data-step="4">
+          <button class="r-step-head"><span class="r-step-num">4</span><h3>Saline rinse after</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="r-step-body">
+            <p>Saline rinse or spray clears residue, soothes irritation, and keeps things moist. Drugstore saline spray costs a few bucks and lives in a pocket easily. Your nasal tissue is some of the most blood-rich, delicate tissue in your body, rinse it like you mean it.</p>
+            <button class="r-done-btn">Done: rinsed <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="r-step" data-step="5">
+          <button class="r-step-head"><span class="r-step-num">5</span><h3>Rest days</h3><i class="fas fa-chevron-down chev"></i></button>
+          <div class="r-step-body">
+            <p>Tissue needs time to recover, back-to-back nights are where chronic damage builds. If it's constantly raw, that's your nose asking for a break. Humidify dry air too: a Minnesota winter plus stimulants is brutal on sinuses.</p>
+            <button class="r-done-btn">Done: nose gets a day off <i class="fas fa-check"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="r-finish" id="r-finish">
+        <strong><i class="fas fa-check-circle"></i> All five. Your nose thanks you.</strong>
+        <p style="color:#e8e8f2;margin:.4rem 0 0">That's the whole routine, two minutes of care for the organ doing all the work tonight.</p>
+      </div>
+    </div>
+
     <div class="section">
+      <span class="eyebrow">1 · Protect</span>
       <h2><i class="fas fa-virus"></i> The sharing thing is the big one</h2>
       <p>Let's lead with the part most people don't know: <strong>hepatitis C spreads through shared straws, bills, and bumpers.</strong> It lives in microscopic blood: the kind you can't see on a rolled bill that just went through someone's irritated nasal tissue. It survives on surfaces for up to 3 weeks depending on conditions. "I've shared with them before" is not a test result.</p>
       <p>Hep C is now curable: modern treatment is pills taken for 8–12 weeks, with very few side effects and a cure rate over 95%, and plenty of people carry it for years without symptoms while it quietly damages their liver. All of that is avoidable with a 10-cent plastic straw of your own.</p>
@@ -197,6 +310,7 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">2 · Care</span>
       <h2><i class="fas fa-mortar-pestle"></i> Grind fine, go gentle</h2>
       <p>Chunks and crystals have sharp edges. Dragging them through your nasal passages causes micro-tears: that's where the burning, the bleeding, and the long-term damage start. A fine, even powder is dramatically easier on the tissue.</p>
       <ul>
@@ -208,6 +322,7 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">2 · Care</span>
       <h2><i class="fas fa-droplet"></i> Nose care (yes, really)</h2>
       <p>Your nasal tissue is some of the most blood-rich, delicate tissue in your body, and it does not bounce back fast. A little maintenance goes a long way:</p>
       <ul>
@@ -216,28 +331,92 @@
         <li><strong>Take rest days.</strong> Tissue needs time to recover. Back-to-back nights are where chronic damage builds.</li>
         <li><strong>Don't mix uppers nasally in one night</strong>: the combined vasoconstriction starves the tissue of blood flow, which is how necrosis starts. Check combos on our <a href="https://plurderapolis.org/polydrug.html">interaction checker</a> too.</li>
       </ul>
-      <div class="warn-box">
-        <h3><i class="fas fa-triangle-exclamation"></i> See a doctor if:</h3>
-        <ul>
-          <li>Frequent nosebleeds that are getting worse, not better</li>
-          <li>A whistling sound when you breathe (can mean septum damage)</li>
-          <li>Crusting or sores that won't heal after weeks off</li>
-          <li>Noticeable loss of smell</li>
-        </ul>
-        <p style="margin-bottom:0;">Be honest with the doctor about what you've been doing. They've heard it a thousand times, they can't help what they don't know, and they're not cops.</p>
+      <h3 style="margin:1.25rem 0 .5rem;color:var(--red)"><i class="fas fa-triangle-exclamation"></i> See a doctor if: tap what applies</h3>
+      <p style="font-size:.92rem;color:var(--muted)">Even one of these is worth a call to a clinic. Be honest with the doctor about what you've been doing, they've heard it a thousand times, they're not cops, and they can't help what they don't know.</p>
+      <div class="warn-grid" id="warn-grid">
+        <button class="warn-card" data-warn="bleed"><span class="check">✓</span><h3>Frequent nosebleeds</h3><p>Getting worse instead of better, even on days off.</p></button>
+        <button class="warn-card" data-warn="whistle"><span class="check">✓</span><h3>Whistling when you breathe</h3><p>A whistle through the nose can mean septum damage.</p></button>
+        <button class="warn-card" data-warn="sores"><span class="check">✓</span><h3>Sores that won't heal</h3><p>Crusting or open sores still there after weeks off.</p></button>
+        <button class="warn-card" data-warn="smell"><span class="check">✓</span><h3>Losing your sense of smell</h3><p>Noticeably duller than it used to be.</p></button>
+      </div>
+      <div class="warn-nudge" id="warn-nudge">
+        <strong><i class="fas fa-stethoscope"></i> That's your sign to call a doctor.</strong>
+        <p style="color:#e8e8f2;margin:.4rem 0 0">You don't need all four. One is enough to get it looked at, earlier is easier to fix.</p>
       </div>
     </div>
 
     <div class="section">
+      <span class="eyebrow">3 · Know the risks</span>
+      <h2><i class="fas fa-question-circle"></i> Myth or fact?</h2>
+      <p>Five quick ones, straight from this page. Tap Myth or Fact and see how you did.</p>
+      <div class="quiz-q" data-answer="fact" data-id="q1">
+        <p>1. Sharing a straw can spread hepatitis C, even if you trust the person.</p>
+        <div class="quiz-btns"><button data-pick="myth">Myth</button><button data-pick="fact">Fact</button></div>
+        <div class="quiz-a">Fact. Hep C lives in microscopic blood and survives on surfaces for up to 3 weeks. Trust isn't a test result.</div>
+      </div>
+      <div class="quiz-q" data-answer="myth" data-id="q2">
+        <p>2. Sniffing harder gets you higher, faster.</p>
+        <div class="quiz-btns"><button data-pick="myth">Myth</button><button data-pick="fact">Fact</button></div>
+        <div class="quiz-a">Myth. A hard rip just fires it into your throat and stomach. A soft sniff is what actually gets absorbed.</div>
+      </div>
+      <div class="quiz-q" data-answer="fact" data-id="q3">
+        <p>3. A saline rinse afterward actually helps your nose recover.</p>
+        <div class="quiz-btns"><button data-pick="myth">Myth</button><button data-pick="fact">Fact</button></div>
+        <div class="quiz-a">Fact. It clears residue, soothes irritation, and keeps the tissue moist, cheap and easy.</div>
+      </div>
+      <div class="quiz-q" data-answer="myth" data-id="q4">
+        <p>4. You'd know if you had hep C, the symptoms are obvious.</p>
+        <div class="quiz-btns"><button data-pick="myth">Myth</button><button data-pick="fact">Fact</button></div>
+        <div class="quiz-a">Myth. Plenty of people carry it for years with no symptoms while it quietly damages the liver. Get tested.</div>
+      </div>
+      <div class="quiz-q" data-answer="fact" data-id="q5">
+        <p>5. Injecting carries the highest risk of all the routes.</p>
+        <div class="quiz-btns"><button data-pick="myth">Myth</button><button data-pick="fact">Fact</button></div>
+        <div class="quiz-a">Fact: overdose, abscesses, blood-borne infections. If you inject, never share equipment; MN syringe service programs give out free sterile supplies, no judgment.</div>
+      </div>
+      <p class="quiz-score" id="quiz-score"></p>
+    </div>
+
+    <div class="section">
+      <span class="eyebrow">3 · Know your options</span>
       <h2><i class="fas fa-route"></i> Routes, compared honestly</h2>
       <p>No route is safe. They all carry risks. But they're not equal, and knowing the tradeoffs is harm reduction:</p>
-      <ul>
-        <li><strong>Oral</strong> is generally the gentlest on the body: slower onset, longer duration, no nasal damage. The tradeoff is it's easier to overdo because you get impatient waiting.</li>
-        <li><strong>Snorting</strong> hits faster and harder, which is exactly why it's easier to redose compulsively, and it wrecks nasal tissue over time.</li>
-        <li><strong>Smoking</strong> is harsh on lungs and tends to encourage compulsive redosing.</li>
-        <li><strong>Injecting</strong> carries the highest risk by far: overdose, abscesses, blood-borne infections. If you inject, never share equipment. Our <a href="https://plurderapolis.org/resources.html">resources page</a> lists Minnesota syringe service programs that provide free sterile supplies, no judgment.</li>
-      </ul>
-      <p>Whatever route you use: test your stuff (fentanyl test strips are free at many MN orgs), start small with any new batch, and don't use alone.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="oral" role="tab">Oral</button>
+        <button class="tab-btn" data-tab="snort" role="tab">Snorting</button>
+        <button class="tab-btn" data-tab="smoke" role="tab">Smoking</button>
+        <button class="tab-btn" data-tab="inject" role="tab">Injecting</button>
+      </div>
+      <div class="tab-panel active" id="tab-oral">
+        <span class="route-tag gentle">Gentlest on the body</span>
+        <ul>
+          <li>Slower onset, longer duration, no nasal damage</li>
+          <li>Watch out: easier to overdo because you get impatient waiting for it to kick in</li>
+        </ul>
+      </div>
+      <div class="tab-panel" id="tab-snort">
+        <span class="route-tag mid">Faster, harder, costlier</span>
+        <ul>
+          <li>Hits faster and harder, which is exactly why it's easier to redose compulsively</li>
+          <li>Wrecks nasal tissue over time (see the routine above)</li>
+          <li>Shares the hep C risk through shared straws and surfaces</li>
+        </ul>
+      </div>
+      <div class="tab-panel" id="tab-smoke">
+        <span class="route-tag mid">Hard on lungs</span>
+        <ul>
+          <li>Harsh on lungs and tends to encourage compulsive redosing</li>
+          <li>Sharing pipes and mouthpieces carries its own infection risks</li>
+        </ul>
+      </div>
+      <div class="tab-panel" id="tab-inject">
+        <span class="route-tag rough">Highest risk</span>
+        <ul>
+          <li>Overdose, abscesses, blood-borne infections, by far the most dangerous route</li>
+          <li>Never share equipment. MN syringe service programs provide free sterile supplies, no judgment, see our <a href="https://plurderapolis.org/resources.html">resources page</a></li>
+        </ul>
+      </div>
+      <p style="margin-top:1rem">Whatever route you use: test your stuff (fentanyl test strips are free at many MN orgs), start small with any new batch, and don't use alone.</p>
     </div>
 
     <div class="crisis-box">
@@ -275,6 +454,91 @@
         navigator.serviceWorker.register('/sw.js').catch(function(){});
       });
     }
+  </script>
+
+  <script>
+    /* Routine stepper */
+    (function(){
+      var steps = Array.prototype.slice.call(document.querySelectorAll('.r-step'));
+      var count = document.getElementById('r-count');
+      var bar = document.getElementById('r-bar');
+      var finish = document.getElementById('r-finish');
+      function update(){
+        var done = steps.filter(function(s){ return s.classList.contains('done'); }).length;
+        count.textContent = done + ' of ' + steps.length + ' done';
+        bar.style.width = (done / steps.length * 100) + '%';
+        finish.classList.toggle('show', done === steps.length);
+      }
+      steps.forEach(function(step){
+        var head = step.querySelector('.r-step-head');
+        head.addEventListener('click', function(){ step.classList.toggle('open'); });
+        var doneBtn = step.querySelector('.r-done-btn');
+        doneBtn.addEventListener('click', function(){
+          step.classList.add('done');
+          step.classList.remove('open');
+          var idx = steps.indexOf(step);
+          if (steps[idx + 1]) steps[idx + 1].classList.add('open');
+          update();
+          var next = steps[idx + 1];
+          if (next) next.scrollIntoView({behavior:'smooth', block:'nearest'});
+        });
+      });
+      update();
+    })();
+
+    /* Warning-sign checklist */
+    (function(){
+      var cards = Array.prototype.slice.call(document.querySelectorAll('#warn-grid .warn-card'));
+      var nudge = document.getElementById('warn-nudge');
+      cards.forEach(function(card){
+        card.addEventListener('click', function(){
+          card.classList.toggle('checked');
+          var any = cards.some(function(c){ return c.classList.contains('checked'); });
+          nudge.classList.toggle('show', any);
+        });
+      });
+    })();
+
+    /* Myth-or-fact quiz */
+    (function(){
+      var qs = Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+      var scoreEl = document.getElementById('quiz-score');
+      var score = 0, answered = 0;
+      qs.forEach(function(q){
+        var correct = q.getAttribute('data-answer');
+        var ans = q.querySelector('.quiz-a');
+        var btns = Array.prototype.slice.call(q.querySelectorAll('.quiz-btns button'));
+        btns.forEach(function(b){
+          b.addEventListener('click', function(){
+            if (q.classList.contains('answered')) return;
+            q.classList.add('answered');
+            answered++;
+            btns.forEach(function(x){ x.classList.remove('picked'); });
+            b.classList.add('picked');
+            var ok = b.getAttribute('data-pick') === correct;
+            if (ok) score++;
+            ans.classList.add('show', ok ? 'right' : 'wrong');
+            if (answered === qs.length) {
+              scoreEl.textContent = 'You got ' + score + ' of ' + qs.length + ' right.' + (score === qs.length ? ' Flawless, go teach your friends.' : ' Scroll up and re-read the bits you missed.');
+              scoreEl.classList.add('show');
+            }
+          });
+        });
+      });
+    })();
+
+    /* Routes tabs */
+    (function(){
+      var btns = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+      btns.forEach(function(b){
+        b.addEventListener('click', function(){
+          btns.forEach(function(x){ x.classList.remove('active'); });
+          b.classList.add('active');
+          document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+          document.getElementById('tab-' + b.getAttribute('data-tab')).classList.add('active');
+        });
+      });
+    })();
   </script>
 </body>
 </html>

@@ -21,8 +21,8 @@
 <link rel="apple-touch-startup-image" href="/splash-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1284x2778.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-<link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+<link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aftercare &amp; Recovery | Plurderapolis</title>
@@ -49,6 +49,8 @@
       --text: #ffffff;
       --muted: #b8b8d0;
       --border: #3a3a5c;
+      --green: #2ed573;
+      --red: #ff4757;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -77,6 +79,9 @@
     .hero h1 { font-size: 2.9rem; font-weight: 800; margin-bottom: .75rem; letter-spacing: -0.01em; text-shadow: 0 0 34px #ff69b480; }
     .hero h1 .accent { color: var(--accent); }
     .hero p { color: var(--muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+
+    .eyebrow { display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent2); margin-bottom:.5rem; }
+
     .pocket {
       background: var(--card);
       border: 2px solid var(--accent);
@@ -102,6 +107,26 @@
     .section ul { margin: .5rem 0 .9rem 1.25rem; color: #e8e8f2; }
     .section li { margin-bottom: .45rem; }
     .section a { color: var(--accent); }
+
+    /* Recovery checklist */
+    .recover { background: linear-gradient(135deg, #0e241a, #1c1c28); border: 2px solid var(--accent2); border-radius: 18px; padding: 1.75rem; margin: 1rem 0 2rem; }
+    .recover h2 { font-size: 1.3rem; margin-bottom: .4rem; }
+    .recover .rc-sub { color: var(--muted); font-size: .95rem; margin-bottom: 1.25rem; }
+    .rc-progress { display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; font-size: .9rem; color: var(--muted); }
+    .rc-progress-bar { flex: 1; height: 10px; background: #2a2a3a; border-radius: 999px; overflow: hidden; }
+    .rc-progress-bar div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .25s ease; }
+    .rc-item { display: flex; align-items: flex-start; gap: .9rem; background: #252536; border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.15rem; margin-bottom: .7rem; cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+    .rc-item:hover { border-color: var(--accent2); }
+    .rc-item .rc-box { width: 26px; height: 26px; border-radius: 8px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .9rem; color: #0d0d0d; margin-top: .15rem; }
+    .rc-item.checked { border-color: var(--accent2); background: rgba(111,207,151,.08); }
+    .rc-item.checked .rc-box { background: var(--accent2); border-color: var(--accent2); }
+    .rc-item h3 { font-size: 1rem; }
+    .rc-item p { font-size: .9rem; color: var(--muted); margin: .15rem 0 0; }
+    .rc-item.checked h3 { text-decoration: line-through; color: var(--muted); }
+    .rc-finish { display: none; background: rgba(111,207,151,.12); border: 1px solid var(--accent2); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
+    .rc-finish.show { display: block; }
+    .rc-finish strong { color: var(--accent2); }
+
     .rule-box {
       background: rgba(94,234,212,.07);
       border: 1px solid var(--accent);
@@ -110,6 +135,46 @@
       margin: 1rem 0;
     }
     .rule-box h3 { color: var(--accent); margin-bottom: .5rem; }
+    .clock-btn { display: inline-block; margin-top: .9rem; padding: .75rem 1.3rem; border-radius: 12px; border: 1px solid var(--accent); background: rgba(255,105,180,.1); color: #fff; font-weight: 800; cursor: pointer; font-family: inherit; font-size: .95rem; }
+    .clock-btn:hover { background: rgba(255,105,180,.2); }
+    .clock-status { display: none; margin-top: .9rem; padding: .9rem 1.1rem; border-radius: 10px; background: rgba(111,207,151,.1); border: 1px solid var(--accent2); font-size: .92rem; }
+    .clock-status.show { display: block; }
+    .clock-status strong { color: var(--accent2); }
+    .clock-reset { margin-left: .8rem; font-size: .8rem; color: var(--muted); background: none; border: none; text-decoration: underline; cursor: pointer; font-family: inherit; }
+
+    .copy-btn { display: inline-block; padding: .75rem 1.25rem; border-radius: 12px; border: 1px solid var(--accent2); background: rgba(111,207,151,.08); color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; font-size: .95rem; margin: .35rem .35rem 0 0; }
+    .copy-btn:hover { background: rgba(111,207,151,.16); }
+    .copy-btn.done { border-color: var(--green); color: var(--green); }
+    .copy-hint { font-size: .85rem; color: var(--muted); margin-top: .6rem; }
+
+    /* Integration capture */
+    .capture { background: #252536; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; margin: 1rem 0; }
+    .capture h3 { color: var(--accent2); margin-bottom: .4rem; }
+    .capture p { color: #e8e8f2; font-size: .95rem; }
+    .capture textarea { width: 100%; min-height: 120px; background: #1c1c28; border: 1px solid var(--border); border-radius: 10px; color: #fff; font-family: inherit; font-size: .95rem; padding: .9rem; margin: .8rem 0; resize: vertical; }
+    .capture textarea:focus { outline: none; border-color: var(--accent2); }
+    .capture-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .capture-btns button { padding: .7rem 1.2rem; border-radius: 10px; border: none; background: var(--accent2); color: #0d0d0d; font-weight: 800; cursor: pointer; font-family: inherit; }
+    .capture-btns button.ghost { background: transparent; border: 1px solid var(--accent2); color: #fff; }
+    .capture-note { font-size: .85rem; color: var(--muted); margin-top: .7rem; }
+
+    /* Warning signs */
+    .rs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 1rem 0; }
+    @media(max-width:600px){ .rs-grid{grid-template-columns:1fr} }
+    .rs-card { background: #252536; border: 2px solid var(--border); border-radius: 14px; padding: 1.1rem; cursor: pointer; transition: border-color .15s ease, background .15s ease; text-align: left; font-family: inherit; color: #fff; width: 100%; }
+    .rs-card:hover { border-color: var(--pink); }
+    .rs-card.checked { border-color: var(--red); background: rgba(255,71,87,.12); }
+    .rs-card .check { float: right; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .85rem; }
+    .rs-card.checked .check { background: var(--red); border-color: var(--red); color: #fff; }
+    .rs-card h3 { font-size: 1rem; margin: .3rem 0 .4rem; }
+    .rs-card p { font-size: .9rem; color: var(--muted); margin: 0; }
+    .rs-nudge { display: none; background: rgba(255,71,87,.14); border: 1px solid var(--red); border-radius: 12px; padding: 1rem 1.25rem; margin-top: 1rem; }
+    .rs-nudge.show { display: block; }
+    .rs-nudge strong { color: var(--red); }
+    .rs-nudge .rs-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+    .rs-nudge .rs-links a { display: inline-block; padding: .7rem 1.2rem; border-radius: 10px; font-weight: 800; text-decoration: none; background: var(--red); color: #fff; }
+    .rs-nudge .rs-links a.ghost { background: transparent; border: 1px solid var(--pink); color: #fff; }
+
     .crisis-box {
       background: linear-gradient(135deg, #2a0a12, #1c1c28);
       border: 2px solid var(--pink);
@@ -143,8 +208,8 @@
     footer .crisis-line { margin-bottom: 1rem; color: var(--text); }
     footer a { color: var(--accent); }
     footer .disclaimer { max-width: 640px; margin: 1rem auto 0; font-size: .8rem; }
-    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } }
-  
+    @media (max-width: 600px) { .hero h1 { font-size: 2rem; } .recover { padding: 1.15rem; } }
+
 /* ---- PLURderapolis unified header bar ---- */
 .ph-bar{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:rgba(13,13,13,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #2a2a3a;padding:.6rem 1rem;margin:0}
 .ph-bar .ph-brand{font-family:'Montserrat','Roboto',-apple-system,sans-serif;font-weight:800;font-size:1.05rem;color:#fff;text-decoration:none;white-space:nowrap;line-height:1.2}
@@ -185,7 +250,26 @@
       </ul>
     </div>
 
+    <div class="recover" id="recover">
+      <h2><i class="fas fa-heart-pulse"></i> Tonight's recovery checklist</h2>
+      <p class="rc-sub">Tap what you've done. This lives in your browser only, nobody sees it. Watch the bar fill.</p>
+      <div class="rc-progress"><span id="rc-count">0 of 6 done</span><div class="rc-progress-bar"><div id="rc-bar"></div></div></div>
+      <div id="rc-items">
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>Sleep for real</h3><p>Dark, cool room. Not "lie in bed scrolling", actual sleep.</p></div></div>
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>Eat real food</h3><p>Protein and carbs, not just snacks. Restock what you burned through.</p></div></div>
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>Water + electrolytes</h3><p>Both, not just one or the other. Sports drinks, coconut water, packets.</p></div></div>
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>Sunlight + a short walk</h3><p>Fresh air, daylight, easy pace. Does more than anything in a bottle.</p></div></div>
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>No hair of the dog</h3><p>Drinking to take the edge off just hands tomorrow's bill to you with interest.</p></div></div>
+        <div class="rc-item"><span class="rc-box">✓</span><div><h3>Text the group chat</h3><p>A ten-second "how's everyone feeling today?" can mean everything.</p></div></div>
+      </div>
+      <div class="rc-finish" id="rc-finish">
+        <strong><i class="fas fa-check-circle"></i> All six. You took care of business.</strong>
+        <p style="color:#e8e8f2;margin:.4rem 0 0">The ravers still going hard at 35 aren't tougher than you, they're just better at this part.</p>
+      </div>
+    </div>
+
     <div class="section">
+      <span class="eyebrow">1 · Body</span>
       <h2><i class="fas fa-bed"></i> The first 48 hours: body first</h2>
       <p>Your body just ran a marathon in a loud, hot room on no sleep. Treat recovery like an athlete would:</p>
       <ul>
@@ -198,13 +282,17 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">1 · Body</span>
       <div class="rule-box">
         <h3><i class="fas fa-hourglass-half"></i> The 48-hour rule</h3>
         <p style="margin-bottom:0;">For two full days after a big night: <strong>no major decisions, no doom-scrolling your ex, no quitting anything, no deciding you're a failure.</strong> Comedown feelings are weather, not climate. They pass. Judge your life with a rested brain or don't judge it at all.</p>
+        <button class="clock-btn" id="clock-btn"><i class="fas fa-stopwatch"></i> Start my 48-hour rest clock</button>
+        <div class="clock-status" id="clock-status"></div>
       </div>
     </div>
 
     <div class="section">
+      <span class="eyebrow">2 · Crew</span>
       <h2><i class="fas fa-comments"></i> Check-in culture</h2>
       <p>The group chat going quiet after a big weekend is normal: everyone's recovering. But a quick <em>"how's everyone feeling today?"</em> on Tuesday costs you ten seconds and can mean everything to the person who's been spiraling alone since Sunday.</p>
       <ul>
@@ -213,11 +301,28 @@
         <li>Let people check on <em>you</em> too. "I'm fine" when you're not helps nobody.</li>
         <li>Buddy system works after the show, not just during it.</li>
       </ul>
+      <p style="font-weight:700">Don't know what to say? Tap to copy:</p>
+      <div>
+        <button class="copy-btn" data-copy="how's everyone feeling today? 🍑">Copy a group-chat check-in</button>
+        <button class="copy-btn" data-copy="hey, thinking of you, how are you doing today?">Copy a one-on-one</button>
+      </div>
+      <p class="copy-hint" id="copy-hint">Tuesday texts save people.</p>
     </div>
 
     <div class="section">
+      <span class="eyebrow">2 · Crew</span>
       <h2><i class="fas fa-journal-whills"></i> Integration (for the psychonauts)</h2>
       <p>If your weekend involved psychedelics, the real work starts after. Insights fade fast: <strong>write them down within 24 hours</strong>, even if they're messy or half-formed. Voice notes count.</p>
+      <div class="capture">
+        <h3><i class="fas fa-pen"></i> Capture it now: before it fades</h3>
+        <p>Dump it here, messy and unedited. What came up: feelings, memories, realizations, weird imagery. This stays on your device, nothing is sent anywhere.</p>
+        <textarea id="journal" placeholder="It started with the lights and then..."></textarea>
+        <div class="capture-btns">
+          <button id="journal-save">Save on this device</button>
+          <button class="ghost" id="journal-download">Download as .txt</button>
+        </div>
+        <p class="capture-note" id="journal-note"></p>
+      </div>
       <ul>
         <li>Journal what came up: feelings, memories, realizations, weird imagery. Don't edit, just capture.</li>
         <li>Talk it through with someone you trust, ideally someone who's been there.</li>
@@ -227,18 +332,28 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">3 · Mind</span>
       <h2><i class="fas fa-heart"></i> When rest isn't enough</h2>
-      <p>Most comedowns lift within a few days. But pay attention if:</p>
-      <ul>
-        <li>Low mood, emptiness, or anxiety persist <strong>beyond two weeks</strong></li>
-        <li>You're using more often to feel normal, not to have fun</li>
-        <li>Weekday life feels unbearable and only weekends feel real</li>
-        <li>You're having thoughts of harming yourself</li>
-      </ul>
+      <p>Most comedowns lift within a few days. But pay attention: tap anything that's true for you:</p>
+      <div class="rs-grid" id="rs-grid">
+        <button class="rs-card" data-rs="mood"><span class="check">✓</span><h3>Low mood past two weeks</h3><p>Emptiness or anxiety that hasn't lifted with rest and time.</p></button>
+        <button class="rs-card" data-rs="using"><span class="check">✓</span><h3>Using more to feel normal</h3><p>Not to have fun anymore, to get through the week.</p></button>
+        <button class="rs-card" data-rs="weekday"><span class="check">✓</span><h3>Only weekends feel real</h3><p>Weekday life feels unbearable and the show is the only relief.</p></button>
+        <button class="rs-card" data-rs="harm"><span class="check">✓</span><h3>Thoughts of harming yourself</h3><p>You don't have to sit with this alone for one more night.</p></button>
+      </div>
+      <div class="rs-nudge" id="rs-nudge">
+        <strong><i class="fas fa-hand-holding-heart"></i> Rest was the right first move, and you deserve more support than rest.</strong>
+        <p style="color:#e8e8f2;margin:.4rem 0 0">None of this means you're broken. It means talking to someone who gets it. Start here:</p>
+        <div class="rs-links">
+          <a href="https://plurderapolis.org/mentalhealth.html"><i class="fas fa-brain"></i> Mental health &amp; the scene</a>
+          <a class="ghost" href="tel:988"><i class="fas fa-phone"></i> Call or text 988</a>
+        </div>
+      </div>
       <p>None of that means you're broken: it means you deserve support beyond rest and electrolytes. Our <a href="https://plurderapolis.org/mentalhealth.html">mental health page</a> covers the difference between comedown blues and depression, plus queer-friendly, low-cost help in Minnesota. And right now, if you need someone: <strong>call or text 988</strong>, or text <strong>HOME to 741741</strong>.</p>
     </div>
 
     <div class="section">
+      <span class="eyebrow">3 · Mind</span>
       <h2><i class="fas fa-seedling"></i> Making it sustainable</h2>
       <p>The best aftercare is needing less of it. The ravers who are still going hard at 35 aren't tougher than you: they're just better at recovery:</p>
       <ul>
@@ -285,6 +400,128 @@
         navigator.serviceWorker.register('/sw.js').catch(function(){});
       });
     }
+  </script>
+
+  <script>
+    /* Recovery checklist */
+    (function(){
+      var items = Array.prototype.slice.call(document.querySelectorAll('.rc-item'));
+      var count = document.getElementById('rc-count');
+      var bar = document.getElementById('rc-bar');
+      var finish = document.getElementById('rc-finish');
+      function update(){
+        var done = items.filter(function(i){ return i.classList.contains('checked'); }).length;
+        count.textContent = done + ' of ' + items.length + ' done';
+        bar.style.width = (done / items.length * 100) + '%';
+        finish.classList.toggle('show', done === items.length);
+      }
+      items.forEach(function(item){
+        item.addEventListener('click', function(){
+          item.classList.toggle('checked');
+          update();
+        });
+      });
+      update();
+    })();
+
+    /* 48-hour rest clock */
+    (function(){
+      var btn = document.getElementById('clock-btn');
+      var status = document.getElementById('clock-status');
+      var KEY = 'aftercare-rest-clock';
+      function fmt(t){
+        return new Date(t).toLocaleString('en-US', { weekday:'long', hour:'numeric', minute:'2-digit' });
+      }
+      function render(){
+        var raw = null;
+        try { raw = localStorage.getItem(KEY); } catch(e){}
+        if (!raw) { status.classList.remove('show'); return; }
+        var start = parseInt(raw, 10);
+        var end = start + 48 * 3600 * 1000;
+        var now = Date.now();
+        var left = Math.ceil((end - now) / 3600000);
+        var html;
+        if (left > 0) {
+          html = '<strong><i class="fas fa-stopwatch"></i> Clock is running.</strong> No big life conclusions until <strong>' + fmt(end) + '</strong>, about ' + left + ' hour' + (left === 1 ? '' : 's') + ' to go. Resting counts.<button class="clock-reset" id="clock-reset">reset</button>';
+        } else {
+          html = '<strong><i class="fas fa-check"></i> 48 hours are up.</strong> Rested brain online, revisit whatever felt huge this weekend with fresh eyes.';
+        }
+        status.innerHTML = html;
+        status.classList.add('show');
+        var reset = document.getElementById('clock-reset');
+        if (reset) reset.addEventListener('click', function(){
+          try { localStorage.removeItem(KEY); } catch(e){}
+          render();
+        });
+      }
+      btn.addEventListener('click', function(){
+        try { localStorage.setItem(KEY, String(Date.now())); } catch(e){}
+        render();
+      });
+      render();
+    })();
+
+    /* Copy-a-text buttons */
+    (function(){
+      var hint = document.getElementById('copy-hint');
+      document.querySelectorAll('.copy-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var txt = btn.getAttribute('data-copy');
+          function done(){
+            btn.classList.add('done');
+            var old = btn.textContent;
+            btn.textContent = 'Copied: paste it into your chat';
+            hint.textContent = 'Copied. Tuesday texts save people.';
+            setTimeout(function(){ btn.classList.remove('done'); btn.textContent = old; }, 2600);
+          }
+          function fallback(){
+            var ta = document.createElement('textarea');
+            ta.value = txt; document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); } catch(e){}
+            document.body.removeChild(ta); done();
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(txt).then(done, fallback);
+          } else { fallback(); }
+        });
+      });
+    })();
+
+    /* Integration journal: save on device + download */
+    (function(){
+      var ta = document.getElementById('journal');
+      var note = document.getElementById('journal-note');
+      var KEY = 'aftercare-journal';
+      try {
+        var saved = localStorage.getItem(KEY);
+        if (saved) { ta.value = saved; note.textContent = 'You have a saved entry on this device, keep going or start fresh.'; }
+      } catch(e){}
+      document.getElementById('journal-save').addEventListener('click', function(){
+        try { localStorage.setItem(KEY, ta.value); } catch(e){}
+        note.textContent = 'Saved on this device at ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}) + '. Nothing was sent anywhere.';
+      });
+      document.getElementById('journal-download').addEventListener('click', function(){
+        var blob = new Blob(['Aftercare notes: ' + new Date().toLocaleString('en-US') + '\n\n' + ta.value], {type:'text/plain'});
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'aftercare-notes.txt';
+        document.body.appendChild(a); a.click();
+        setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 500);
+      });
+    })();
+
+    /* When-rest-isnt-enough checklist */
+    (function(){
+      var cards = Array.prototype.slice.call(document.querySelectorAll('#rs-grid .rs-card'));
+      var nudge = document.getElementById('rs-nudge');
+      cards.forEach(function(card){
+        card.addEventListener('click', function(){
+          card.classList.toggle('checked');
+          var any = cards.some(function(c){ return c.classList.contains('checked'); });
+          nudge.classList.toggle('show', any);
+        });
+      });
+    })();
   </script>
 </body>
 </html>
