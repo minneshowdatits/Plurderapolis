@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
   '/mentalhealth.html',
   '/snorting.html',
   '/aftercare.html',
+  '/test-strips.html',
   '/polydrug.html',
   '/manifest-checker.json',
   '/offline.html'
