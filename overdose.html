@@ -62,7 +62,7 @@
     .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
     .container { max-width: 820px; margin: 0 auto; padding: 0 1.25rem; }
     .hero { text-align: center; padding: 3rem 1rem 1.5rem; }
-    .hero h1 { font-size: 2.9rem; font-weight: 800; margin-bottom: .75rem; letter-spacing: -0.01em; text-shadow: 0 0 34px #ff475780; }
+    .hero h1 { font-size: 2.9rem; font-weight: 800; margin-bottom: .75rem; letter-spacing: -0.01em; text-shadow: 0 2px 18px rgba(255,71,87,.35); }
     .hero h1 .accent { color: var(--red); }
     .hero p { color: var(--muted); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
 
@@ -73,11 +73,13 @@
       border-radius: 18px;
       padding: 1.75rem;
       margin: 1rem 0 2rem;
-      box-shadow: 0 0 32px #ff475733;
+      box-shadow: 0 6px 28px rgba(0,0,0,.4);
     }
-    .triage-top { display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; }
-    .triage-pulse { width:14px; height:14px; border-radius:50%; background:var(--red); animation: pulse 1.2s infinite; flex-shrink:0; }
-    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.35);opacity:.65} }
+    .triage-top { display:flex; align-items:center; gap:.75rem; margin-bottom:.4rem; }
+    .triage-dot { width:12px; height:12px; border-radius:50%; background:var(--red); flex-shrink:0; }
+    .triage-start { display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#0d0d0d; background:var(--pink); border-radius:999px; padding:.28rem .8rem; margin-bottom:.9rem; }
+    .triage-progress { height:6px; background:#2a2a3a; border-radius:999px; overflow:hidden; margin:0 0 1rem; }
+    .triage-progress div { height:100%; width:0%; background:var(--red); transition:width .3s ease; border-radius:999px; }
     .triage h2 { font-size:1.25rem; color:#fff; }
     .triage-sub { color:var(--muted); font-size:.95rem; margin-bottom:1.25rem; }
     .triage-card { background: rgba(255,255,255,.04); border:1px solid var(--border); border-radius:14px; padding:1.5rem; min-height:220px; }
@@ -92,12 +94,11 @@
     }
     .tbtn:hover { background:#2f2f45; }
     .tbtn:active { transform:scale(.98); }
-    .tbtn.primary { background:var(--red); border-color:var(--red); color:#fff; }
+    .tbtn.primary { background:var(--red); border-color:var(--red); color:#fff; font-size:1.06rem; padding:1.05rem 1.1rem; box-shadow:0 4px 18px rgba(255,71,87,.35); }
     .tbtn.primary:hover { background:#ff5f6e; }
-    .tbtn.call { background:var(--green); border-color:var(--green); color:#0d0d0d; font-size:1.05rem; }
-    .triage-dots { display:flex; gap:.4rem; margin-top:1rem; justify-content:center; }
-    .triage-dots span { width:8px; height:8px; border-radius:50%; background:#3a3a5c; }
-    .triage-dots span.on { background:var(--pink); }
+    .tbtn.call { background:var(--red); border-color:var(--red); color:#fff; font-size:1.06rem; padding:1.05rem 1.1rem; box-shadow:0 4px 18px rgba(255,71,87,.35); }
+    .tbtn.ghost { background:transparent; border-color:#4a4a6a; color:var(--muted); font-weight:600; }
+    .tbtn.ghost:hover { border-color:var(--pink); color:#fff; background:rgba(255,255,255,.03); }
 
     .pocket {
       background: var(--card);
@@ -121,6 +122,7 @@
     }
     .section h2 { font-size: 1.35rem; margin-bottom: .75rem; color: var(--pink); }
     .section h2 i { margin-right: .5rem; }
+    .eyebrow { display:inline-block; font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--cyan); margin-bottom:.5rem; }
     .section p { margin-bottom: .9rem; color: #e8e8f2; }
     .section ol, .section ul { margin: .5rem 0 .9rem 1.25rem; color: #e8e8f2; }
     .section li { margin-bottom: .5rem; }
@@ -155,6 +157,7 @@
     .a-step.done .a-step-num { background:var(--green); color:#0d0d0d; }
     .a-step.open .a-step-num { background:var(--pink); color:#0d0d0d; }
     .a-step-head h3 { font-size:1.02rem; flex:1; }
+    .a-step.open { border-color:var(--pink); }
     .a-step-head .chev { color:var(--muted); transition:transform .2s ease; }
     .a-step.open .chev { transform:rotate(180deg); }
     .a-step-body { display:none; padding:0 1.15rem 1.15rem 4.1rem; color:#e8e8f2; font-size:.96rem; }
@@ -275,10 +278,11 @@
     </div>
 
     <div class="triage" id="triage">
-      <div class="triage-top"><div class="triage-pulse" aria-hidden="true"></div><h2>Happening right now? Let me walk you through it</h2></div>
+      <div class="triage-top"><div class="triage-dot" aria-hidden="true"></div><h2>Happening right now? Let me walk you through it</h2></div>
+      <span class="triage-start">Start here</span>
       <p class="triage-sub">Tap through — 30 seconds, plain language, no judgment. Stay with them while you do this.</p>
+      <div class="triage-progress" aria-hidden="true"><div id="triage-bar"></div></div>
       <div class="triage-card" id="triage-card" role="region" aria-live="polite"></div>
-      <div class="triage-dots" id="triage-dots" aria-hidden="true"></div>
     </div>
 
     <div class="pocket">
@@ -292,6 +296,7 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">1 · Recognize</span>
       <h2><i class="fas fa-eye"></i> The 4 signs — tap what you see</h2>
       <p>You don't need a medical degree. Tap each sign you're seeing. If two or more light up red, treat it as an overdose and call 911.</p>
       <div class="signs-progress" aria-hidden="true"><div id="signs-bar"></div></div>
@@ -323,12 +328,14 @@
         </button>
       </div>
       <div class="signs-nudge" id="signs-nudge">
-        <strong><i class="fas fa-siren"></i> That's enough — call 911 now.</strong><br>
-        <span style="color:#e8e8f2">You don't need all four. Two signs is enough to act. <a href="tel:911" style="color:var(--red);font-weight:800">Tap to call 911</a></span>
+        <strong><i class="fas fa-siren"></i> That's enough — call 911 now.</strong>
+        <p style="color:#e8e8f2;margin:.4rem 0 .9rem">You don't need all four. Two signs is enough to act.</p>
+        <a href="tel:911" style="display:inline-block;padding:.85rem 1.5rem;background:var(--red);color:#fff;border-radius:12px;text-decoration:none;font-weight:800"><i class="fas fa-phone"></i> Call 911</a>
       </div>
     </div>
 
     <div class="section">
+      <span class="eyebrow">2 · Respond</span>
       <h2><i class="fas fa-list-ol"></i> What to do, step by step</h2>
       <p>Tap each step to open it. Hit <strong>Done</strong> when you've done it and the next one opens.</p>
       <div class="a-progress"><span id="a-count">0 of 5 done</span><div class="a-progress-bar"><div id="a-bar"></div></div></div>
@@ -404,6 +411,7 @@
     </div>
 
     <div class="section">
+      <span class="eyebrow">3 · Know the difference</span>
       <h2><i class="fas fa-temperature-high"></i> Opioid or stimulant? They look opposite</h2>
       <div class="tabs" role="tablist">
         <button class="tab-btn active" data-tab="opioid" role="tab">Opioid overdose</button>
@@ -500,15 +508,14 @@
       };
       var order = ['start','wake','breathing','call911','narcan','stay'];
       var card = document.getElementById('triage-card');
-      var dots = document.getElementById('triage-dots');
+      var bar = document.getElementById('triage-bar');
       function render(id){
         var s = steps[id];
         var html = '<div class="triage-step-label">' + s.label + '</div><h3>' + s.title + '</h3><p>' + s.text + '</p><div class="triage-btns">';
         s.btns.forEach(function(b){
-          var cls = 'tbtn' + (b.p ? ' primary' : '') + (b.call ? ' call' : '');
-          var label = b.call ? '<a href="tel:911" style="color:inherit;text-decoration:none;display:block">' + b.t + '</a>' : b.t;
+          var cls = 'tbtn' + (b.p ? ' primary' : b.call ? ' call' : ' ghost');
           if(b.call){
-            html += '<button class="' + cls + '" data-call="1">' + b.t + '</button>';
+            html += '<button class="' + cls + '" data-call="1">\u260E ' + b.t + '</button>';
           } else {
             html += '<button class="' + cls + '" data-next="' + b.n + '">' + b.t + '</button>';
           }
@@ -516,12 +523,7 @@
         html += '</div>';
         card.innerHTML = html;
         var idx = order.indexOf(id);
-        dots.innerHTML = '';
-        order.forEach(function(_, i){
-          var d = document.createElement('span');
-          if(i <= idx && idx >= 0) d.className = 'on';
-          dots.appendChild(d);
-        });
+        if(idx >= 0){ bar.style.width = Math.round(((idx+1)/order.length)*100) + '%'; }
         card.querySelectorAll('[data-next]').forEach(function(btn){
           btn.addEventListener('click', function(){ render(btn.getAttribute('data-next')); });
         });
@@ -541,7 +543,11 @@
         var checked = document.querySelectorAll('.sign-card.checked').length;
         bar.style.width = (checked/4*100) + '%';
         count.textContent = checked + ' of 4 checked';
-        if(checked >= 2){ nudge.classList.add('show'); } else { nudge.classList.remove('show'); }
+        var wasShown = nudge.classList.contains('show');
+        if(checked >= 2){
+          nudge.classList.add('show');
+          if(!wasShown){ nudge.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+        } else { nudge.classList.remove('show'); }
       }
       cards.forEach(function(c){
         c.addEventListener('click', function(){
