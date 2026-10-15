@@ -275,7 +275,19 @@
       margin-bottom: 0.5rem;
     }
     
-    /* Resources Section */
+
+    /* Accountability pathfinder */
+    .pathfinder{max-width:680px;margin:0 auto;background:var(--card-bg);border:1px solid var(--primary-purple);border-radius:12px;padding:2rem;text-align:center}
+    .pathfinder h3{color:var(--primary-teal);font-family:'Montserrat',sans-serif;margin:0 0 1.2rem;font-size:1.25rem}
+    .pf-options{display:flex;flex-direction:column;gap:.8rem}
+    .pf-btn{background:linear-gradient(135deg,var(--primary-purple),var(--accent-pink));color:#fff;border:none;border-radius:25px;padding:.9rem 1.4rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:transform .2s ease}
+    .pf-btn:hover{transform:scale(1.03)}
+    .pf-list{text-align:left;margin:0 0 1.5rem;padding-left:1.4rem;display:flex;flex-direction:column;gap:.75rem}
+    .pf-list li::marker{color:var(--primary-teal);font-weight:700}
+    .pf-restart{background:none;border:1px solid var(--primary-teal);color:var(--primary-teal);border-radius:25px;padding:.6rem 1.5rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer}
+    .pf-restart:hover{background:rgba(43,231,177,.12)}
+
+    /* Resources Section */    /* Resources Section */
     .resources-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -623,7 +635,56 @@
     </div>
   </section>
 
-  <!-- Resources Section -->
+
+  <!-- Pathfinder Section -->
+  <section class="container fade-in" id="pathfinder">
+    <h2 class="section-title fade-in">Accountability Pathfinder: Where Do I Start?</h2>
+    <p style="text-align:center;max-width:640px;margin:0 auto 1.5rem;">Answer one question, get a clear starting point. No judgment here, just a next step.</p>
+    <div class="pathfinder" id="pathfinderWidget">
+      <div class="pf-step" data-step="0">
+        <h3>What brings you here?</h3>
+        <div class="pf-options">
+          <button type="button" class="pf-btn" data-go="harm">I think I messed up and I want to make it right</button>
+          <button type="button" class="pf-btn" data-go="told">Someone told me they were harmed</button>
+          <button type="button" class="pf-btn" data-go="saw">I saw something happen</button>
+        </div>
+      </div>
+      <div class="pf-step" data-step="harm" hidden>
+        <h3>Starting point: own it and repair it</h3>
+        <ol class="pf-list">
+          <li><strong>Own the harm, no excuses.</strong> Not "sorry you feel that way." Name what you did.</li>
+          <li><strong>Listen to the person harmed.</strong> Do not center yourself or ask them to manage your feelings.</li>
+          <li><strong>Change the behavior</strong> that caused it. An apology without change is just words.</li>
+          <li><strong>Make amends</strong> if and when they want that, on their timeline, not yours.</li>
+          <li><strong>Do the inner work:</strong> therapy, education, reflection. Step back from events if you need to.</li>
+        </ol>
+        <button type="button" class="pf-restart">Start over</button>
+      </div>
+      <div class="pf-step" data-step="told" hidden>
+        <h3>Starting point: believe and support</h3>
+        <ol class="pf-list">
+          <li><strong>Believe them.</strong> You are not the judge or jury.</li>
+          <li><strong>Listen without interrogating.</strong> Do not ask for "proof."</li>
+          <li><strong>Do not center yourself.</strong> This is not about your opinion of the accused.</li>
+          <li><strong>Offer support, not pressure.</strong> "Do you want to talk to someone?" "Need help getting home?"</li>
+          <li><strong>Let them decide</strong> what happens next. Do not force them to confront, report, or forgive.</li>
+        </ol>
+        <button type="button" class="pf-restart">Start over</button>
+      </div>
+      <div class="pf-step" data-step="saw" hidden>
+        <h3>Starting point: check in and interrupt</h3>
+        <ol class="pf-list">
+          <li><strong>Check in with the person affected:</strong> "Hey, are you okay?" "Do you want help?" "Need to get out of here?"</li>
+          <li><strong>Interrupt if it feels safe:</strong> "That's not okay." "Back off." "Leave them alone."</li>
+          <li><strong>Use distraction if needed:</strong> "Come with me to the bathroom." "Let's go get water."</li>
+          <li><strong>Ask for backup:</strong> a friend, staff, medic, or sober buddy.</li>
+        </ol>
+        <button type="button" class="pf-restart">Start over</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->  <!-- Resources Section -->
   <section class="container" id="resources">
     <h2 class="section-title fade-in">Local & National Resources</h2>
     
@@ -715,7 +776,24 @@
       });
     });
     
-    // Fade-in animation on scroll
+
+    // Accountability pathfinder
+    (function(){
+      var root = document.getElementById('pathfinderWidget');
+      if(!root) return;
+      var steps = root.querySelectorAll('.pf-step');
+      function show(key){
+        steps.forEach(function(s){ s.hidden = (s.getAttribute('data-step') !== key); });
+      }
+      root.querySelectorAll('.pf-btn').forEach(function(b){
+        b.addEventListener('click', function(){ show(b.getAttribute('data-go')); });
+      });
+      root.querySelectorAll('.pf-restart').forEach(function(b){
+        b.addEventListener('click', function(){ show('0'); });
+      });
+    })();
+    
+    // Fade-in animation on scroll    // Fade-in animation on scroll
     const fadeElements = document.querySelectorAll('.fade-in');
     
     const fadeInOnScroll = () => {

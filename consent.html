@@ -846,6 +846,25 @@
 .verdict{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:800;padding:.3rem .9rem;border-radius:20px;margin-bottom:.6rem;font-size:.9rem}
 .verdict.no{background:rgba(255,20,147,.18);border:1px solid var(--hot-pink);color:#ff7ab8}
 .verdict.yes{background:rgba(0,255,136,.12);border:1px solid var(--plur-green);color:var(--plur-green)}
+    /* FRIES check-in simulator */
+    .fries-sim{max-width:660px;margin:0 auto}
+    .fries-progress{display:flex;gap:.6rem;justify-content:center;margin-bottom:1.2rem}
+    .fries-dot{width:2.6rem;height:2.6rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;border:2px solid var(--accent-purple);color:var(--text-muted);background:transparent;transition:all .25s ease}
+    .fries-dot.done{background:linear-gradient(135deg,var(--accent-purple),var(--hot-pink));color:#fff;border-color:transparent}
+    .fries-dot.current{border-color:var(--plur-cyan);color:var(--plur-cyan);box-shadow:0 0 12px rgba(0,229,255,.35)}
+    .fries-card{background:var(--card-bg);border:1px solid var(--accent-purple);border-radius:12px;padding:1.8rem;text-align:center}
+    .fries-card h3{font-family:'Montserrat',sans-serif;color:var(--plur-cyan);margin:0 0 .6rem;font-size:1.2rem}
+    .fries-card p{margin:0}
+    .fries-btns{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.3rem}
+    .fries-btn{border:none;border-radius:25px;padding:.75rem 1.7rem;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;color:#fff;transition:transform .2s ease}
+    .fries-btn:hover{transform:scale(1.05)}
+    .fries-btn.yes{background:linear-gradient(135deg,#00b34d,#00e676)}
+    .fries-btn.maybe{background:linear-gradient(135deg,#e68a00,#ffab40)}
+    .fries-btn.no{background:linear-gradient(135deg,var(--accent-purple),var(--hot-pink))}
+    .fries-back{background:none;border:none;color:var(--text-muted);margin-top:1.1rem;cursor:pointer;font-size:.9rem;text-decoration:underline}
+    .fries-result{background:var(--card-bg);border:1px solid var(--accent-purple);border-radius:12px;padding:1.8rem;text-align:center}
+    .fries-result p{margin:1rem 0 1.4rem}
+.verdict.yes{background:rgba(0,255,136,.12);border:1px solid var(--plur-green);color:var(--plur-green)}
 </style>
 </head>
 <body>
@@ -993,7 +1012,43 @@
       </div>
     </div>
 
-    <!-- Scenario Check Section -->
+
+    <!-- FRIES Check-In Simulator Section -->
+    <div class="content-section fade-in" id="fries-check">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-clipboard-check section-icon"></i> FRIES Check In: Try It Yourself</h2>
+        <i class="fas fa-chevron-down section-icon"></i>
+      </div>
+      <div class="section-content">
+        <p>Run any moment through the five FRIES questions. Answer honestly. There are no wrong answers here, only clearer ones.</p>
+        <div class="fries-sim" id="friesSim">
+          <div class="fries-progress" aria-hidden="true">
+            <span class="fries-dot" data-i="0">F</span>
+            <span class="fries-dot" data-i="1">R</span>
+            <span class="fries-dot" data-i="2">I</span>
+            <span class="fries-dot" data-i="3">E</span>
+            <span class="fries-dot" data-i="4">S</span>
+          </div>
+          <div class="fries-card">
+            <h3 id="friesQTitle"></h3>
+            <p id="friesQText"></p>
+            <div class="fries-btns">
+              <button type="button" class="fries-btn yes" data-a="yes">Yes</button>
+              <button type="button" class="fries-btn maybe" data-a="maybe">Not sure</button>
+              <button type="button" class="fries-btn no" data-a="no">No</button>
+            </div>
+            <button type="button" class="fries-back" id="friesBack">&larr; Back</button>
+          </div>
+          <div class="fries-result" id="friesResult" hidden>
+            <span class="verdict" id="friesVerdict"></span>
+            <p id="friesVerdictText"></p>
+            <button type="button" class="scenario-reveal-btn" id="friesRestart">Run it again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Check Section -->    <!-- Scenario Check Section -->
     <div class="content-section fade-in" id="scenarios">
       <div class="section-header">
         <h2 class="section-title"><i class="fas fa-clipboard-question section-icon"></i> Scenario Check: Is This Consent?</h2>
@@ -1302,7 +1357,71 @@
       });
     });
     
-    // Open the first section by default
+
+    // FRIES check-in simulator
+    (function(){
+      var sim = document.getElementById('friesSim');
+      if(!sim) return;
+      var questions = [
+        {t: "F \u00b7 Freely given", q: "Did everyone agree freely, with zero pressure, guilt-tripping, or coercion?"},
+        {t: "R \u00b7 Reversible", q: "Does everyone involved know they can stop or change their mind at any point, no questions asked?"},
+        {t: "I \u00b7 Informed", q: "Does everyone know exactly what is happening? Remember: someone who is very drunk or high cannot give informed consent."},
+        {t: "E \u00b7 Enthusiastic", q: "Is it a clear, enthusiastic yes from everyone? Not silence. Not \u201cI guess so.\u201d"},
+        {t: "S \u00b7 Specific", q: "Was this yes for this specific thing, right now? Yes to dancing earlier is not yes to this."}
+      ];
+      var answers = [], idx = 0;
+      var title = document.getElementById('friesQTitle'),
+          text = document.getElementById('friesQText'),
+          card = sim.querySelector('.fries-card'),
+          result = document.getElementById('friesResult'),
+          verdict = document.getElementById('friesVerdict'),
+          vtext = document.getElementById('friesVerdictText'),
+          back = document.getElementById('friesBack'),
+          dots = sim.querySelectorAll('.fries-dot');
+      function render(){
+        result.hidden = true;
+        card.style.display = '';
+        title.textContent = questions[idx].t;
+        text.textContent = questions[idx].q;
+        back.style.visibility = idx === 0 ? 'hidden' : 'visible';
+        dots.forEach(function(d, i){
+          d.classList.toggle('done', i < idx);
+          d.classList.toggle('current', i === idx);
+        });
+      }
+      function finish(){
+        card.style.display = 'none';
+        result.hidden = false;
+        dots.forEach(function(d){ d.classList.add('done'); d.classList.remove('current'); });
+        var hasNo = answers.indexOf('no') !== -1,
+            hasMaybe = answers.indexOf('maybe') !== -1;
+        verdict.className = 'verdict ' + ((hasNo || hasMaybe) ? 'no' : 'yes');
+        if(!hasNo && !hasMaybe){
+          verdict.textContent = "That's consent";
+          vtext.textContent = "Freely given, reversible, informed, enthusiastic, specific. Keep checking in as things change, because consent is ongoing, not one question.";
+        } else if(hasNo){
+          verdict.textContent = "That's not consent";
+          vtext.textContent = "Hit pause. Check in with words: \u201cHey, are you good with this? We can stop.\u201d Only continue with a clear, enthusiastic yes from everyone.";
+        } else {
+          verdict.textContent = "Pump the brakes";
+          vtext.textContent = "If any answer is \u201cnot sure,\u201d treat it as a no for now. Slow down and ask directly: \u201cAre you good with this?\u201d A real yes is unmistakable.";
+        }
+      }
+      sim.querySelectorAll('.fries-btn').forEach(function(b){
+        b.addEventListener('click', function(){
+          answers[idx] = b.getAttribute('data-a');
+          idx++;
+          if(idx < questions.length){ render(); } else { finish(); }
+        });
+      });
+      back.addEventListener('click', function(){ if(idx > 0){ idx--; render(); } });
+      document.getElementById('friesRestart').addEventListener('click', function(){
+        answers = []; idx = 0; render();
+      });
+      render();
+    })();
+    
+    // Open the first section by default    // Open the first section by default
     document.querySelector('.content-section').classList.add('active');
   </script>
 <script>
