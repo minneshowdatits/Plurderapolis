@@ -471,7 +471,7 @@
 .ph-bar .ph-links a:hover{color:#fff;background:rgba(255,255,255,.08)}@media (max-width:480px){.ph-bar{padding:.5rem .6rem;gap:.45rem}.ph-bar .ph-brand{font-size:.92rem}.ph-bar .ph-links a{font-size:.72rem;padding:.4rem .55rem}}
 
 </style>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
 <style>
 .skip-to-content{position:absolute;top:-60px;left:12px;z-index:9999;background:#a855f7;color:#fff;padding:.7rem 1.1rem;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none;transition:top .15s ease}
 .skip-to-content:focus{top:0;outline:2px solid #fff;outline-offset:2px}
@@ -559,6 +559,59 @@
           </a>
         </div>
       </section>
+
+      <!-- Med search: jump straight to your medication -->
+      <style>
+        .rx-search-wrap{display:flex;align-items:center;gap:.6rem;max-width:640px;margin:0 auto 1.4rem;padding:.35rem .35rem .35rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(0,247,224,.3);border-radius:999px}
+        .rx-search-wrap .fa-search{color:#5eead4;flex-shrink:0}
+        #rxSearch{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-size:16px;padding:.7rem 0;font-family:inherit}
+        #rxSearch::placeholder{color:rgba(255,255,255,.45)}
+        #rxSearchClear{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:1rem;cursor:pointer}
+        .rx-search-note{text-align:center;color:rgba(255,255,255,.7);font-size:.9rem;margin:-.8rem 0 1.2rem}
+        .rx-search-note button{background:none;border:none;color:#5eead4;text-decoration:underline;cursor:pointer;font-size:.9rem}
+      </style>
+      <div class="rx-search-wrap">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="search" id="rxSearch" placeholder="Search your med: sertraline, adderall…" aria-label="Search medications on this page" autocomplete="off">
+        <button type="button" id="rxSearchClear" aria-label="Clear search" hidden>✕</button>
+      </div>
+      <p class="rx-search-note" id="rxSearchNote" hidden></p>
+      <script>
+      (function(){
+        var input = document.getElementById('rxSearch');
+        var clear = document.getElementById('rxSearchClear');
+        var note = document.getElementById('rxSearchNote');
+        if (!input) return;
+        var sections = Array.prototype.slice.call(document.querySelectorAll('main section.section'));
+        function run(){
+          var q = input.value.trim().toLowerCase();
+          clear.hidden = !q;
+          if (!q) {
+            sections.forEach(function(s){ s.style.display = ''; });
+            note.hidden = true;
+            return;
+          }
+          var hits = 0;
+          sections.forEach(function(s){
+            var match = s.textContent.toLowerCase().indexOf(q) !== -1;
+            s.style.display = match ? '' : 'none';
+            if (match) hits++;
+          });
+          note.hidden = false;
+          if (hits) {
+            note.textContent = hits + (hits === 1 ? ' section matches "' : ' sections match "') + input.value.trim() + '"';
+          } else {
+            note.innerHTML = 'No matches for "' + input.value.trim().replace(/</g,'&lt;') + '". Try the generic name (sertraline instead of Zoloft). ';
+            var b = document.createElement('button');
+            b.type = 'button'; b.textContent = 'Show everything';
+            b.addEventListener('click', function(){ input.value = ''; run(); input.focus(); });
+            note.appendChild(b);
+          }
+        }
+        input.addEventListener('input', run);
+        clear.addEventListener('click', function(){ input.value = ''; run(); input.focus(); });
+      })();
+      </script>
 
       <section id="rx-party" class="section animate">
         <h2 class="section-title"><i class="fas fa-pills"></i> RX + Party Drug Combos</h2>
@@ -1006,6 +1059,23 @@
         </button>
       </div>
     </main>
+
+    <style>
+      .cta-section{text-align:center;padding:2rem 1rem;max-width:960px;margin:0 auto}
+      .cta-section h2{margin:0 0 1rem}
+      .cta-links{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+      .cta-links a{padding:.7rem 1.25rem;border-radius:12px;text-decoration:none;font-weight:700;border:1px solid #ff1493;color:#eee;display:inline-flex;align-items:center;gap:.5rem}
+      .cta-links a:hover{background:rgba(255,20,147,.15)}
+    </style>
+    <div class="cta-section">
+      <h2>Keep going</h2>
+      <div class="cta-links">
+        <a href="https://plurderapolis.org/polydrug.html"><i class="fas fa-pills"></i> Interaction Checker</a>
+        <a href="https://plurderapolis.org/emergency.html"><i class="fas fa-bolt"></i> Emergency Quick Reference</a>
+        <a href="https://plurderapolis.org/resources.html"><i class="fas fa-book"></i> MN Resources</a>
+        <a href="https://plurderapolis.org/mentalhealth.html"><i class="fas fa-brain"></i> Mental Health &amp; the Scene</a>
+      </div>
+    </div>
 
     <footer>
       <p><strong>Disclaimer:</strong> This information is for harm reduction purposes only and does not constitute medical advice. Combining substances always carries risks.</p>
