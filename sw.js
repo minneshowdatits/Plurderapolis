@@ -19,6 +19,8 @@ const PRECACHE_URLS = [
   '/polydrug.html',
   '/manifest-checker.json',
   '/offline.html',
+  '/checklist.html',
+  '/offline-bundle.html',
   '/js/section-nav.js'
 ];
 
@@ -65,4 +67,27 @@ self.addEventListener('fetch', (event) => {
       });
     })
   );
+});
+
+// One-tap full-site caching for offline-bundle.html: the page posts
+// {type:'CACHE_ALL', urls:[...]} and gets progress messages back.
+self.addEventListener('message', (event) => {
+  const msg = event.data || {};
+  if (msg.type !== 'CACHE_ALL' || !Array.isArray(msg.urls)) return;
+  const replyTo = event.source && event.source.id;
+  const reply = (m) => {
+    const send = (c) => c && c.postMessage(m);
+    if (replyTo) clients.get(replyTo).then(send);
+    else clients.matchAll().then((cs) => cs.forEach(send));
+  };
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    let done = 0; const ok = []; const failed = [];
+    for (const url of msg.urls) {
+      try { await cache.add(url); ok.push(url); }
+      catch (e) { failed.push(url); }
+      reply({ type: 'CACHE_PROGRESS', done: ++done, total: msg.urls.length });
+    }
+    reply({ type: 'CACHE_DONE', done: ok.length, total: msg.urls.length, ok, failed });
+  })());
 });

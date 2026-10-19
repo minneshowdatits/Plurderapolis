@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline Bundle | PLURderapolis</title>
+<meta name="description" content="Save the entire PLURderapolis site to your phone in one tap, or download it as a file. Works with zero signal.">
+<link rel="icon" type="image/png" href="/favicon-48x48.png">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0d0d16;color:#f2f2fa;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+.page-head{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.2rem;background:#14141f;border-bottom:1px solid rgba(255,105,180,.25)}
+.page-head img{height:30px;width:30px}
+.page-head a.brand{color:#fff;text-decoration:none;font-weight:800;font-size:1.15rem;letter-spacing:.02em}
+.page-head a.home{margin-left:auto;color:#7df9ff;text-decoration:none;font-size:.9rem;font-weight:600}
+main{max-width:860px;margin:0 auto;padding:1.6rem 1.2rem 3rem}
+.hero{text-align:center;padding:1.2rem 0 .6rem}
+.hero h1{margin:.6rem 0 .5rem;font-size:2rem;color:#ffd7ea}
+.lede{font-size:1.05rem;color:#cfcfe4;max-width:640px;margin:0 auto}
+.offline-badge{display:inline-block;font-size:.8rem;font-weight:700;color:#a7f3d0;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.4);border-radius:999px;padding:.3rem .8rem;margin-bottom:.4rem}
+.card{background:#16161f;border:1px solid rgba(255,255,255,.09);border-radius:16px;margin:1.1rem 0;padding:1.4rem 1.3rem;text-align:center}
+.card h2{margin:0 0 .4rem;font-size:1.25rem;color:#fff}
+.card p{color:#c6c6dc;font-size:.95rem;max-width:560px;margin:.4rem auto 1rem}
+.bigbtn{font-size:1.15rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#ff1493,#b026ff);border:none;border-radius:14px;padding:1.1rem 2.2rem;cursor:pointer;box-shadow:0 4px 20px rgba(255,20,147,.4);font-family:inherit;width:100%;max-width:460px}
+.bigbtn:active{transform:scale(.98)}
+.bigbtn:disabled{opacity:.55;cursor:wait}
+.bigbtn.secondary{background:rgba(125,249,255,.08);border:1px solid rgba(125,249,255,.4);color:#7df9ff;box-shadow:none}
+.progress{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin:1rem auto;max-width:460px;display:none}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,#ff1493,#b026ff);border-radius:999px;transition:width .2s}
+.status{font-size:.9rem;color:#a7f3d0;min-height:1.4em;margin-top:.6rem}
+.status.warn{color:#ffd166}
+.pagelist{text-align:left;columns:2;column-gap:1.5rem;font-size:.85rem;color:#bdbdd2;margin-top:1rem}
+.pagelist div{padding:.15rem 0;break-inside:avoid}
+.pagelist .ok{color:#a7f3d0}
+@media(max-width:560px){.pagelist{columns:1}}
+.note{font-size:.85rem;color:#8a8a9e;max-width:600px;margin:1rem auto 0}
+.steps{text-align:left;max-width:560px;margin:0 auto;color:#c6c6dc;font-size:.95rem}
+.steps li{margin:.5rem 0}
+footer{text-align:center;color:#8a8a9e;font-size:.8rem;padding:1.6rem 1rem;border-top:1px solid rgba(255,255,255,.08)}
+footer a{color:#7df9ff}
+</style>
+</head>
+<body>
+<header class="page-head">
+  <img src="/images/logo-dark.png" alt="">
+  <a class="brand" href="/">PLURderapolis</a>
+  <a class="home" href="/">← Home</a>
+</header>
+<main>
+  <div class="hero">
+    <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
+    <h1>📦 The Offline Bundle</h1>
+    <p class="lede">One tap saves the entire site to your phone. Zero bars in a basement, a field, or a dead zone parking lot, and every guide still opens.</p>
+  </div>
+
+  <div class="card">
+    <h2>📲 Save the full site, one tap</h2>
+    <p>Downloads all <strong id="page-count">33</strong> pages to your phone's offline storage. Do it on wifi before the night. Takes about 30 seconds.</p>
+    <button class="bigbtn" id="btn-cache">📲 Save full site for offline</button>
+    <div class="progress" id="cache-progress"><div></div></div>
+    <div class="status" id="cache-status"></div>
+    <div class="pagelist" id="page-list"></div>
+  </div>
+
+  <div class="card">
+    <h2>⬇️ Or download it as a file</h2>
+    <p>Builds a <strong>.zip of the whole site</strong> right in your browser. Share it by text, AirDrop it to friends, or keep it on a USB for the booth. Unzip it and open <strong>index.html</strong>, no signal needed.</p>
+    <button class="bigbtn secondary" id="btn-zip">⬇️ Download offline bundle (.zip)</button>
+    <div class="progress" id="zip-progress"><div></div></div>
+    <div class="status" id="zip-status"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤔 How does this work?</h2>
+    <ol class="steps">
+      <li><strong>One tap save</strong> stores every page in your browser's private offline storage using the same tech as the crisis pages.</li>
+      <li><strong>The .zip</strong> is a snapshot file you can share with anyone, even if they have never visited the site.</li>
+      <li>Already saved pages keep working when the venue kills your signal. Calls and texts still work with no data.</li>
+    </ol>
+    <p class="note">iPhone note: Safari may clear saved pages if your storage runs very low. Revisit this page on wifi to re save. If someone needs medical help, call 911, calls work even with no data.</p>
+  </div>
+</main>
+<footer>
+  Made with 💜 by <a href="/">PLURderapolis</a> · Harm reduction for Minnesota nightlife
+</footer>
+
+<script>
+/* Matches sw.js CACHE_NAME (v36). */
+const CACHE_NAME = 'plurderapolis-v36';
+const PAGES = [
+  "/","/index.html","/start.html","/emergency.html","/symptoms.html","/badtrip.html",
+  "/spiking.html","/panic.html","/overdose.html","/overdose-es.html","/mentalhealth.html",
+  "/snorting.html","/aftercare.html","/test-strips.html","/polydrug.html","/rx-combos.html",
+  "/health.html","/sober.html","/resources.html","/venues-guide.html","/ride-safety.html",
+  "/rights-safety.html","/consent.html","/seasonal-tips.html","/booth.html","/donate.html",
+  "/anon-tip.html","/accountability.html","/fake.html","/rejection-based-violence.html",
+  "/legal-disclaimers-terms.html","/offline.html","/checklist.html","/offline-bundle.html",
+  "/images/logo-dark.png"
+];
+document.getElementById('page-count').textContent = PAGES.filter(p=>p.endsWith('.html')||p==="/").length;
+document.getElementById('page-list').innerHTML = PAGES.filter(p=>p.endsWith('.html')).map(p=>`<div data-page="${p}">${p.replace('/','')||'home'}</div>`).join('');
+
+async function swReady(){
+  if(!('serviceWorker' in navigator)) return null;
+  try{
+    let reg = await navigator.serviceWorker.getRegistration();
+    if(!reg){ reg = await navigator.serviceWorker.register('/sw.js'); }
+    await navigator.serviceWorker.ready;
+    return reg;
+  }catch(e){ return null; }
+}
+
+/* ---------- one tap cache ---------- */
+const btnCache=document.getElementById('btn-cache');
+const cacheBar=document.getElementById('cache-progress');
+const cacheStatus=document.getElementById('cache-status');
+
+function markPages(cachedSet){
+  document.querySelectorAll('#page-list div').forEach(d=>{
+    if(cachedSet.has(d.dataset.page)){ d.classList.add('ok'); d.textContent='✓ '+d.textContent.replace(/^✓ /,''); }
+  });
+}
+async function refreshMarks(){
+  try{
+    const cache=await caches.open(CACHE_NAME);
+    const keys=await cache.keys();
+    markPages(new Set(keys.map(r=>new URL(r.url).pathname)));
+    const n=keys.filter(r=>PAGES.includes(new URL(r.url).pathname)).length;
+    if(n>0) cacheStatus.textContent=`${n} of ${PAGES.length} items already saved on this phone.`;
+  }catch(e){}
+}
+
+btnCache.onclick=async()=>{
+  btnCache.disabled=true; cacheBar.style.display='block';
+  const bar=cacheBar.firstElementChild;
+  const setProgress=(d,t)=>{ bar.style.width=Math.round(d/t*100)+'%'; cacheStatus.textContent=`Saving… ${d} of ${t}`; };
+  try{
+    const reg=await swReady();
+    const target=reg&&(navigator.serviceWorker.controller||reg.active);
+    if(target && navigator.serviceWorker.controller){
+      // Ask the service worker to do it, with progress messages back.
+      const done=await new Promise((resolve)=>{
+        const onmsg=(e)=>{
+          const m=e.data||{};
+          if(m.type==='CACHE_PROGRESS') setProgress(m.done,m.total);
+          if(m.type==='CACHE_DONE'){ navigator.serviceWorker.removeEventListener('message',onmsg); resolve(m); }
+        };
+        navigator.serviceWorker.addEventListener('message',onmsg);
+        target.postMessage({type:'CACHE_ALL',urls:PAGES});
+        setTimeout(()=>{ navigator.serviceWorker.removeEventListener('message',onmsg); resolve(null); },90000);
+      });
+      if(done){
+        setProgress(done.total,done.total);
+        cacheStatus.textContent=done.failed.length
+          ? `Saved ${done.ok.length} of ${done.total}. ${done.failed.length} failed, retry on wifi.`
+          : `🎉 All ${done.total} items saved. You are good with zero bars.`;
+        cacheStatus.classList.toggle('warn',done.failed.length>0);
+      } else {
+        cacheStatus.textContent='Timed out talking to the offline engine. Try again on wifi.';
+      }
+    } else {
+      // Fallback: cache directly from the page.
+      const cache=await caches.open(CACHE_NAME);
+      let ok=0; const failed=[];
+      for(let i=0;i<PAGES.length;i++){
+        try{ await cache.add(PAGES[i]); ok++; }catch(e){ failed.push(PAGES[i]); }
+        setProgress(i+1,PAGES.length);
+      }
+      cacheStatus.textContent=failed.length?`Saved ${ok} of ${PAGES.length}. ${failed.length} failed, retry on wifi.`:`🎉 All ${PAGES.length} items saved. You are good with zero bars.`;
+      cacheStatus.classList.toggle('warn',failed.length>0);
+    }
+  }catch(e){
+    cacheStatus.textContent='Something went wrong. Reconnect and try again.';
+    cacheStatus.classList.add('warn');
+  }
+  btnCache.disabled=false;
+  setTimeout(()=>{cacheBar.style.display='none';},1500);
+  refreshMarks();
+};
+
+/* ---------- zip download ---------- */
+function crc32(bytes){
+  let table=crc32.t;
+  if(!table){
+    table=crc32.t=new Uint32Array(256);
+    for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;table[n]=c;}
+  }
+  let crc=0xFFFFFFFF;
+  for(let i=0;i<bytes.length;i++)crc=table[(crc^bytes[i])&0xFF]^(crc>>>8);
+  return (crc^0xFFFFFFFF)>>>0;
+}
+function buildZip(files){ // files: [{name, data:Uint8Array}]
+  const enc=new TextEncoder();
+  const parts=[], central=[]; let offset=0;
+  for(const f of files){
+    const name=enc.encode(f.name), crc=crc32(f.data);
+    const lh=new DataView(new ArrayBuffer(30));
+    lh.setUint32(0,0x04034b50,true); lh.setUint16(4,20,true);
+    lh.setUint16(6,0x0800,true); lh.setUint16(8,0,true);
+    lh.setUint32(14,crc,true); lh.setUint32(18,f.data.length,true); lh.setUint32(22,f.data.length,true);
+    lh.setUint16(26,name.length,true);
+    parts.push(new Uint8Array(lh.buffer),name,f.data);
+    central.push({name,crc,size:f.data.length,offset});
+    offset+=30+name.length+f.data.length;
+  }
+  const cdStart=offset; let cdSize=0;
+  for(const c of central){
+    const h=new DataView(new ArrayBuffer(46));
+    h.setUint32(0,0x02014b50,true); h.setUint16(4,20,true); h.setUint16(6,20,true);
+    h.setUint16(8,0x0800,true); h.setUint16(10,0,true);
+    h.setUint32(16,c.crc,true); h.setUint32(20,c.size,true); h.setUint32(24,c.size,true);
+    h.setUint16(28,c.name.length,true); h.setUint32(42,c.offset,true);
+    parts.push(new Uint8Array(h.buffer),c.name);
+    cdSize+=46+c.name.length;
+  }
+  const end=new DataView(new ArrayBuffer(22));
+  end.setUint32(0,0x06054b50,true);
+  end.setUint16(8,central.length,true); end.setUint16(10,central.length,true);
+  end.setUint32(12,cdSize,true); end.setUint32(16,cdStart,true);
+  parts.push(new Uint8Array(end.buffer));
+  return new Blob(parts,{type:'application/zip'});
+}
+function forBundle(html){
+  return html
+    .replace(/((?:href|src|content)=")\/(?!\/)/g,'$1')       // /x -> x
+    .replace(/(href|src)=""/g,'$1="index.html"');              // home link fix
+}
+const btnZip=document.getElementById('btn-zip');
+const zipBar=document.getElementById('zip-progress');
+const zipStatus=document.getElementById('zip-status');
+btnZip.onclick=async()=>{
+  btnZip.disabled=true; zipBar.style.display='block';
+  const bar=zipBar.firstElementChild;
+  const enc=new TextEncoder();
+  try{
+    const htmlPages=PAGES.filter(p=>p.endsWith('.html')||p==='/');
+    const files=[]; let i=0;
+    for(const p of htmlPages){
+      zipStatus.textContent=`Packing… ${++i} of ${htmlPages.length}`;
+      bar.style.width=Math.round(i/htmlPages.length*90)+'%';
+      const res=await fetch(p); if(!res.ok) throw new Error('fetch failed: '+p);
+      const html=forBundle(await res.text());
+      const name=(p==='/'?'index':p.replace('/','').replace('.html',''))+'.html';
+      files.push({name,data:enc.encode(html)});
+    }
+    zipStatus.textContent='Adding images…';
+    try{
+      const img=await (await fetch('/images/logo-dark.png')).arrayBuffer();
+      files.push({name:'images/logo-dark.png',data:new Uint8Array(img)});
+    }catch(e){}
+    const readme=[
+      "PLURDERAPOLIS OFFLINE BUNDLE","============================","",
+      "Snapshot date: "+new Date().toISOString().slice(0,10),"",
+      "HOW TO USE","1. Unzip this file.","2. Open index.html in any browser.","3. No internet needed. Every guide works.","",
+      "SHARE IT","Text it, AirDrop it, put it on a USB for the booth.","",
+      "GET THE LATEST","plurderapolis.org always has the newest version.","",
+      "IF SOMEONE NEEDS MEDICAL HELP, CALL 911.","Calls work even with no data. Minnesota's Good Samaritan","law protects you when you call for help."
+    ].join("\n");
+    files.push({name:'README.txt',data:enc.encode(readme)});
+    zipStatus.textContent='Zipping…'; bar.style.width='96%';
+    const blob=buildZip(files);
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='plurderapolis-offline-bundle.zip';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),60000);
+    bar.style.width='100%';
+    zipStatus.textContent=`🎉 Bundle downloaded (${(blob.size/1048576).toFixed(1)} MB). Share it anywhere.`;
+  }catch(e){
+    zipStatus.textContent='Packing failed. Check your connection and try again on wifi.';
+    zipStatus.classList.add('warn');
+  }
+  btnZip.disabled=false;
+  setTimeout(()=>{zipBar.style.display='none';},2000);
+};
+
+refreshMarks();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

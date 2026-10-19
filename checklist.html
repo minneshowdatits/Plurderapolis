@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Out Checklist Builder | PLURderapolis</title>
+<meta name="description" content="Pick your night, substances, venue and weather. Get a custom packing and safety checklist that saves to your phone and works offline.">
+<link rel="icon" type="image/png" href="/favicon-48x48.png">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0d0d16;color:#f2f2fa;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+.page-head{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.2rem;background:#14141f;border-bottom:1px solid rgba(255,105,180,.25)}
+.page-head img{height:30px;width:30px}
+.page-head a.brand{color:#fff;text-decoration:none;font-weight:800;font-size:1.15rem;letter-spacing:.02em}
+.page-head a.home{margin-left:auto;color:#7df9ff;text-decoration:none;font-size:.9rem;font-weight:600}
+main{max-width:860px;margin:0 auto;padding:1.6rem 1.2rem 3rem}
+.hero{text-align:center;padding:1.2rem 0 .6rem}
+.hero h1{margin:.6rem 0 .5rem;font-size:2rem;color:#ffd7ea}
+.lede{font-size:1.05rem;color:#cfcfe4;max-width:640px;margin:0 auto}
+.offline-badge{display:inline-block;font-size:.8rem;font-weight:700;color:#a7f3d0;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.4);border-radius:999px;padding:.3rem .8rem;margin-bottom:.4rem}
+.privacy{font-size:.82rem;color:#9a9aae;max-width:620px;margin:.8rem auto 0}
+.step{background:#16161f;border:1px solid rgba(255,255,255,.09);border-radius:16px;margin:1.1rem 0;padding:1.1rem 1.2rem}
+.step h2{margin:0 0 .2rem;font-size:1.1rem;color:#fff}
+.step h2 .n{display:inline-flex;align-items:center;justify-content:center;width:1.7rem;height:1.7rem;border-radius:50%;background:rgba(255,105,180,.18);border:1px solid rgba(255,105,180,.5);color:#ffd7ea;font-size:.95rem;margin-right:.5rem}
+.step p.hint{margin:.1rem 0 .9rem;font-size:.88rem;color:#a9a9bf}
+.chips{display:flex;flex-wrap:wrap;gap:.55rem}
+.chip{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#e8e8f2;border-radius:999px;padding:.6rem 1rem;font-size:.92rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.chip:hover{border-color:rgba(255,105,180,.6)}
+.chip[aria-pressed="true"]{background:linear-gradient(135deg,#ff1493,#ff69b4);border-color:#ff69b4;color:#fff;box-shadow:0 2px 12px rgba(255,20,147,.35)}
+.chip .sub{display:block;font-size:.72rem;font-weight:400;opacity:.85}
+.generate-wrap{text-align:center;margin:1.6rem 0}
+button.generate{font-size:1.1rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#ff1493,#b026ff);border:none;border-radius:14px;padding:1rem 2.4rem;cursor:pointer;box-shadow:0 4px 20px rgba(255,20,147,.4);font-family:inherit}
+button.generate:active{transform:scale(.98)}
+#result{display:none}
+.list-card{background:#16161f;border:1px solid rgba(255,255,255,.09);border-radius:16px;margin:1.1rem 0;padding:1.1rem 1.2rem}
+.list-card h2{margin:0 0 .8rem;font-size:1.15rem;color:#ffd7ea}
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.55rem .2rem;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.check:last-child{border-bottom:none}
+.check input{width:1.25rem;height:1.25rem;margin-top:.2rem;flex:none;accent-color:#ff1493;cursor:pointer}
+.check span{flex:1}
+.check.done span{text-decoration:line-through;opacity:.55}
+.combo{border:1px solid rgba(255,80,80,.5);background:rgba(255,60,60,.08);border-radius:12px;padding:.8rem 1rem;margin:.6rem 0;font-size:.92rem}
+.combo strong{color:#ffb3b3}
+.combo a{color:#7df9ff}
+.tip{background:rgba(125,249,255,.05);border:1px solid rgba(125,249,255,.25);border-radius:12px;padding:.8rem 1rem;margin:.6rem 0;font-size:.92rem}
+.tip a{color:#7df9ff}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.actions button,.actions a.btn{border:1px solid rgba(255,105,180,.5);background:rgba(255,105,180,.1);color:#ffd7ea;border-radius:10px;padding:.6rem 1.1rem;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;font-family:inherit}
+.save-row{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+.save-row input{flex:1;min-width:180px;background:#0d0d16;border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;padding:.6rem .9rem;font-size:.95rem;font-family:inherit}
+.saved-item{display:flex;align-items:center;gap:.7rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.7rem .95rem;margin:.5rem 0}
+.saved-item .nm{flex:1;font-weight:700}
+.saved-item .dt{font-size:.78rem;color:#9a9aae}
+.saved-item button{background:none;border:1px solid rgba(255,255,255,.2);color:#cfcfe4;border-radius:8px;padding:.35rem .7rem;font-size:.82rem;cursor:pointer;font-family:inherit}
+.saved-item button.load{border-color:#7df9ff;color:#7df9ff}
+.saved-item button.del{border-color:rgba(255,80,80,.5);color:#ff9d9d}
+.empty{color:#8a8a9e;font-size:.9rem;text-align:center;padding:.8rem}
+footer{text-align:center;color:#8a8a9e;font-size:.8rem;padding:1.6rem 1rem;border-top:1px solid rgba(255,255,255,.08)}
+footer a{color:#7df9ff}
+.disclaimer{font-size:.8rem;color:#8a8a9e;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:.9rem 1rem;margin-top:1.4rem}
+@media print{.page-head,.generate-wrap,.actions,.save-row,#builder,#saved,.hero .offline-badge{display:none}#result{display:block!important}}
+</style>
+</head>
+<body>
+<header class="page-head">
+  <img src="/images/logo-dark.png" alt="">
+  <a class="brand" href="/">PLURderapolis</a>
+  <a class="home" href="/">← Home</a>
+</header>
+<main>
+  <div class="hero">
+    <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
+    <h1>🎒 Night Out Checklist Builder</h1>
+    <p class="lede">Pick your night, your substances, your venue and the weather. Get a custom packing and safety checklist built for exactly that night.</p>
+    <p class="privacy">🔒 Private by design: everything you pick stays in this browser on your phone. Nothing is sent anywhere, ever.</p>
+  </div>
+
+  <div id="builder">
+    <section class="step">
+      <h2><span class="n">1</span> What kind of night?</h2>
+      <p class="hint">Pick one.</p>
+      <div class="chips" id="chips-night" role="group" aria-label="Night type"></div>
+    </section>
+    <section class="step">
+      <h2><span class="n">2</span> What are you planning to take?</h2>
+      <p class="hint">Pick all that apply. Be honest, this never leaves your phone, and honest answers get you better safety tips.</p>
+      <div class="chips" id="chips-subs" role="group" aria-label="Substances"></div>
+    </section>
+    <section class="step">
+      <h2><span class="n">3</span> Where is it?</h2>
+      <p class="hint">Pick one.</p>
+      <div class="chips" id="chips-venue" role="group" aria-label="Venue type"></div>
+    </section>
+    <section class="step">
+      <h2><span class="n">4</span> What is the weather doing?</h2>
+      <p class="hint">Pick one. Minnesota weather counts double.</p>
+      <div class="chips" id="chips-weather" role="group" aria-label="Weather"></div>
+    </section>
+    <div class="generate-wrap">
+      <button class="generate" id="btn-generate">✨ Build my checklist</button>
+    </div>
+  </div>
+
+  <div id="result">
+    <div class="list-card">
+      <h2 id="result-title">🎒 Your packing list</h2>
+      <div id="pack-list"></div>
+    </div>
+    <div id="combos"></div>
+    <div class="list-card">
+      <h2>🛡️ Your safety checklist</h2>
+      <div id="safety-list"></div>
+    </div>
+    <div class="list-card" id="tips-card" style="display:none">
+      <h2>💡 Tips for what you picked</h2>
+      <div id="tips-list"></div>
+    </div>
+    <div class="actions">
+      <button id="btn-print">🖨️ Print</button>
+      <button id="btn-copy">📋 Copy as text</button>
+      <button id="btn-edit">✏️ Change my picks</button>
+    </div>
+    <div class="save-row">
+      <input id="save-name" type="text" maxlength="60" placeholder="Name this list, e.g. Bassmnt NYE">
+      <button class="generate" id="btn-save" style="font-size:.95rem;padding:.6rem 1.4rem">💾 Save this list</button>
+    </div>
+  </div>
+
+  <section class="step" id="saved">
+    <h2>💾 My saved checklists</h2>
+    <p class="hint">Saved on this device only.</p>
+    <div id="saved-list"></div>
+  </section>
+
+  <div class="disclaimer">
+    <strong>Educational, not medical advice.</strong> This builder gives general harm reduction suggestions. It does not encourage substance use and cannot account for your health, tolerance or medications. If anything feels wrong, call 911. In Minnesota, the Good Samaritan law protects you when you call for help.
+  </div>
+</main>
+<footer>
+  Made with 💜 by <a href="/">PLURderapolis</a> · Harm reduction for Minnesota nightlife
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const NIGHTS = {
+  festival:{label:"Festival",icon:"🎪",sub:"Multiday, camping or long days",
+    pack:["Refillable water bottle or hydration pack","Sunscreen (reapply every 2 hours)","Portable charger + cable","Earplugs","Extra socks in a ziplock bag","Light layers for after dark","Small backpack or fanny pack","Cash + ID in a safe pocket"],
+    safety:["Set a meeting point in case phones die","Screenshot the map and set times","Find the medical tent when you arrive"]},
+  warehouse:{label:"Warehouse / club night",icon:"🏭",sub:"Late, loud, dark",
+    pack:["Earplugs","ID + cash/card","Portable charger","A layer for the line outside","Gum or mints"],
+    safety:["Find the exits when you arrive","Ask staff where medical help is"]},
+  house:{label:"House party",icon:"🏠",sub:"Friends, smaller crowd",
+    pack:["Your own sealed drinks, or a cup with a lid","Phone charger","A layer for the ride home"],
+    safety:["Keep your drink with you or covered","Know who the most sober person there is"]},
+  outdoor:{label:"Outdoor gathering",icon:"🌲",sub:"Woods, fields, renegades",
+    pack:["Flashlight or headlamp","Blanket or warm layer","Bug spray","Water + snacks","Trash bag (leave no trace)"],
+    safety:["Tell someone where you are","Stay with your group after dark"]},
+  concert:{label:"Concert venue",icon:"🎤",sub:"Big room, assigned vibe",
+    pack:["Earplugs","Check the bag policy before you go","Portable charger","ID + ticket screenshot saved offline"],
+    safety:["Find the exits and medical on arrival"]},
+  bar:{label:"Bar night",icon:"🍸",sub:"Downtown, bar hopping",
+    pack:["ID","Cash/card","Phone charger"],
+    safety:["Ride home planned BEFORE you go","Watch your drink being poured","Keep your drink covered"]},
+  sober:{label:"Sober night out",icon:"✨",sub:"Full presence, full memory",
+    pack:["Your favorite NA drinks or a mocktail plan","Something comforting (gum, fidget, layers)","Your exit plan written down"],
+    safety:["Tell a friend you are staying sober tonight","It is always okay to leave early","Check the sober hub if the night gets hard"]}
+};
+const VENUES = {
+  club:{label:"Indoor club",icon:"🔊",pack:["Earplugs are non negotiable"],safety:["Find the exits and med tent on arrival"]},
+  warehouse:{label:"Warehouse",icon:"🏭",pack:["Warm layer for the line","Cash (card readers fail)"],safety:["Signal is often bad inside: set a meeting point","Find the exits on arrival"]},
+  festival:{label:"Festival grounds",icon:"🎪",pack:["Sunscreen","Refillable water"],safety:["Screenshot the festival map","Set a meeting point with your crew"]},
+  house:{label:"House / apartment",icon:"🏠",pack:[],safety:["Keep drinks covered","Know who can drive or call a ride"]},
+  outdoors:{label:"Outdoors / woods",icon:"🌲",pack:["Flashlight","Warm layers"],safety:["Tell someone your exact location","Buddy system after dark"]},
+  bar:{label:"Bar",icon:"🍸",pack:[],safety:["Watch your drink","Ride plan before you go, not at close"]}
+};
+const WEATHERS = {
+  hot:{label:"Hot",icon:"🥵",sub:"80°F and up",pack:["Electrolyte packets","Sunscreen","Hat or shade","Extra water"],safety:["Take cooling breaks on purpose","Alternate water and electrolytes, do not overdrink plain water"]},
+  warm:{label:"Warm",icon:"☀️",sub:"Comfortable",pack:["Light layers","Sunscreen"],safety:[]},
+  cool:{label:"Cool",icon:"🍂",sub:"Jacket weather",pack:["Light jacket or hoodie"],safety:[]},
+  cold:{label:"Cold",icon:"🥶",sub:"Below 40°F",pack:["Heavy coat","Gloves + warm hat","Hand warmers","Warm socks"],safety:["Plan for the line: you cool down fast standing still","Do not leave anyone waiting outside alone"]},
+  rain:{label:"Rain",icon:"🌧️",sub:"Wet night",pack:["Poncho or rain jacket","Ziplock bag for your phone","Dry socks"],safety:["Wet ground plus crowds: watch your step"]},
+  snow:{label:"Snow",icon:"❄️",sub:"Minnesota classic",pack:["Winter boots with grip","Heavy layers","Hand warmers"],safety:["Rides take longer: plan extra time","No long walks alone at night"]}
+};
+const SUBSTANCES = ["Cannabis","Ketamine","MDMA","Cocaine","Alcohol","Opioids","Benzos","SSRIs","SNRIs","ADHD Meds","Antipsychotics","Mood Stabilizers","Wellbutrin","Trazodone","Gabapentin","LSD","Shrooms","Nitrous","DMT","GHB"];
+const SUB_TIPS = {
+  "Cannabis":{t:"Edibles take a while to kick in. Wait it out instead of stacking more. Keep water handy.",link:null},
+  "Ketamine":{t:"Sit down if you get wobbly. Do not mix with downers like alcohol, GHB or benzos.",link:null},
+  "MDMA":{t:"Alternate water and electrolytes and take cooling breaks. Dancing for hours in heat is how people get in trouble.",link:null},
+  "Cocaine":{t:"Pace yourself and take breaks. Avoid mixing with alcohol. If snorting, rinse with water between and see the safer snorting guide.",link:"/snorting.html"},
+  "Alcohol":{t:"Eat before and during. Alternate with water. Keep count of your drinks.",link:null},
+  "Opioids":{t:"Never use alone. Carry naloxone and make sure someone with you knows where it is and how to use it.",link:"/overdose.html"},
+  "Benzos":{t:"Never mix with alcohol or opioids. Do not drive. Blackouts mean someone else should hold your stuff.",link:null},
+  "SSRIs":{t:"SSRIs can clash with MDMA and psychedelics (serotonin syndrome risk). Check with your prescriber or pharmacist.",link:"/rx-combos.html"},
+  "SNRIs":{t:"SNRIs can clash with MDMA and psychedelics (serotonin syndrome risk). Check with your prescriber or pharmacist.",link:"/rx-combos.html"},
+  "ADHD Meds":{t:"Stimulant meds plus party stimulants strain your heart. Talk to your prescriber about your plans.",link:"/rx-combos.html"},
+  "Antipsychotics":{t:"Some blunt or clash with psychedelics and stimulants. Check the Rx combos page and your prescriber.",link:"/rx-combos.html"},
+  "Mood Stabilizers":{t:"Some interact with psychedelics and stimulants. Check the Rx combos page and your prescriber.",link:"/rx-combos.html"},
+  "Wellbutrin":{t:"Wellbutrin lowers the seizure threshold, which matters with stimulants and heavy drinking. Talk to your prescriber.",link:"/rx-combos.html"},
+  "Trazodone":{t:"Sedation stacks with alcohol and downers. Do not drive.",link:null},
+  "Gabapentin":{t:"Sedation stacks with alcohol and downers. Do not drive.",link:null},
+  "LSD":{t:"Set and setting matter more than people admit. Have a sober sitter and test your tabs.",link:"/test-strips.html"},
+  "Shrooms":{t:"Set and setting matter. Have a sober sitter. Go easy if it is a new batch.",link:null},
+  "Nitrous":{t:"Never straight from the tank or canister. Take real breathing breaks between balloons. Heavy use depletes B12.",link:null},
+  "DMT":{t:"Short and intense. Sit down, have a sitter, and do not stand near edges or water.",link:null},
+  "GHB":{t:"Measure with a marked cap or oral syringe, never eyeball it. Never mix with alcohol. Small differences in amount matter a lot here.",link:null}
+};
+const BASE_PACK = ["ID","Phone + portable charger","Cash and/or card","A water plan (bottle, refill spot, or cash for water)","Earplugs","Fentanyl test strips","Naloxone (Narcan): learn how to use it before the night"];
+const BASE_SAFETY = ["Buddy system: nobody wanders off alone","Find the medical tent and the exits when you arrive","Keep your drink covered and with you","Share your live location with one trusted person","Ride home planned before you go, not at 2am","Know Minnesota's Good Samaritan law: you are protected when you call for help"];
+/* Compact combo matrix: emoji per pair, same data as the Polydrug Checker */
+const MATRIX_SUBS = SUBSTANCES;
+const MATRIX = {
+  "Cannabis":["-","🟡","🔴","🔴","🔴","🔴","🔴","🟡","🟡","🟢","🟡","🟡","🟢","🟢","🟢","🟡","🟡","🟢","🟡","🔴"],
+  "Ketamine":["🟡","-","❌","❌","❌","❌","❌","🟢","🟡","🔴","🟡","🟡","🟡","🟡","🟡","❌","❌","🟡","❌","❌"],
+  "MDMA":["🔴","❌","-","🔴","🔴","❌","🔴","🔴","🔴","❌","❌","❌","❌","🔴","🔴","🔴","🔴","🔴","❌","❌"],
+  "Cocaine":["🔴","❌","🔴","-","❌","❌","🔴","🔴","❌","❌","🔴","🔴","🔴","🔴","🔴","🔴","🔴","🔴","❌","☠️"],
+  "Alcohol":["🔴","❌","🔴","❌","-","☠️","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","❌","❌","❌","🔴","🔴","❌","❌","☠️"],
+  "Opioids":["🔴","❌","❌","❌","☠️","-","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","❌","❌","❌","⚠️","☠️","☠️"],
+  "Benzos":["🔴","❌","🔴","🔴","☠️","☠️","-","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","❌","⚠️","⚠️","⚠️","☠️","☠️"],
+  "SSRIs":["🟡","🟢","🔴","🔴","⚠️","⚠️","⚠️","-","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "SNRIs":["🟡","🟡","🔴","❌","⚠️","⚠️","⚠️","⚠️","-","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "ADHD Meds":["🟢","🔴","❌","❌","⚠️","⚠️","⚠️","⚠️","⚠️","-","🟡","🟡","🟡","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "Antipsychotics":["🟡","🟡","❌","🔴","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","-","🟡","🟡","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "Mood Stabilizers":["🟡","🟡","❌","🔴","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","🟡","-","🟡","🟡","🟡","🔴","🔴","⚠️","🔴","⚠️"],
+  "Wellbutrin":["🟢","🟡","❌","🔴","❌","⚠️","⚠️","⚠️","⚠️","🟡","🟡","🟡","-","🟡","🟡","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "Trazodone":["🟢","🟡","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","🟡","🟡","🟡","🟡","-","🟢","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "Gabapentin":["🟢","🟡","🔴","🔴","❌","❌","❌","⚠️","⚠️","🟡","🟡","🟡","🟡","🟢","-","⚠️","⚠️","⚠️","⚠️","⚠️"],
+  "LSD":["🟡","❌","🔴","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","🔴","⚠️","⚠️","⚠️","-","🟢","🟡","🔴","🔴"],
+  "Shrooms":["🟡","❌","🔴","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","🔴","⚠️","⚠️","⚠️","🟢","-","🟡","🔴","🔴"],
+  "Nitrous":["🟢","🟡","🔴","🔴","❌","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🟡","🟡","-","⚠️","⚠️"],
+  "DMT":["🟡","❌","❌","❌","❌","☠️","☠️","⚠️","⚠️","⚠️","⚠️","🔴","⚠️","⚠️","⚠️","🔴","🔴","⚠️","-","☠️"],
+  "GHB":["🔴","❌","❌","☠️","☠️","☠️","☠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","⚠️","🔴","🔴","⚠️","☠️","-"]
+};
+const COMBO_MSG = {
+  "☠️":"Dangerous combo. These two together can be life threatening.",
+  "❌":"Unsafe combo. Do not mix these.",
+  "🔴":"High risk combo. Serious known interaction.",
+  "🟡":"Caution. Mild to moderate interaction.",
+  "⚠️":"Needs caution. Check the full matrix before mixing."
+};
+
+/* ============ STATE ============ */
+const state = { night:null, subs:new Set(), venue:null, weather:null, sober:false };
+let currentItems = []; // {id, text, section}
+
+function chip(label, icon, sub, pressed){
+  return `<button class="chip" aria-pressed="${pressed}" data-label="${label}">${icon} ${label}${sub?`<span class="sub">${sub}</span>`:""}</button>`;
+}
+function renderChips(){
+  const n = document.getElementById('chips-night');
+  n.innerHTML = Object.entries(NIGHTS).map(([k,v])=>chip(v.label,v.icon,v.sub,state.night===k)).join('');
+  n.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{state.night=b.dataset.label===NIGHTS[state.night]?.label?null:Object.keys(NIGHTS).find(k=>NIGHTS[k].label===b.dataset.label); if(state.night==='sober'){state.sober=true;} renderChips();});
+  const s = document.getElementById('chips-subs');
+  const soberPressed = state.sober;
+  s.innerHTML = `<button class="chip" aria-pressed="${soberPressed}" data-sober="1">✨ Going sober</button>` +
+    SUBSTANCES.map(name=>chip(name,"",null,state.subs.has(name))).join('');
+  s.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{
+    if(b.dataset.sober){ state.sober=!state.sober; if(state.sober) state.subs.clear(); }
+    else { state.sober=false; const nm=b.textContent.trim(); state.subs.has(nm)?state.subs.delete(nm):state.subs.add(nm); }
+    renderChips();
+  });
+  const v = document.getElementById('chips-venue');
+  v.innerHTML = Object.entries(VENUES).map(([k,val])=>chip(val.label,val.icon,null,state.venue===k)).join('');
+  v.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{const key=Object.keys(VENUES).find(k=>VENUES[k].label===b.dataset.label); state.venue=state.venue===key?null:key; renderChips();});
+  const w = document.getElementById('chips-weather');
+  w.innerHTML = Object.entries(WEATHERS).map(([k,val])=>chip(val.label,val.icon,val.sub,state.weather===k)).join('');
+  w.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{const key=Object.keys(WEATHERS).find(k=>b.dataset.label===WEATHERS[k].label); state.weather=state.weather===key?null:key; renderChips();});
+}
+
+/* ============ BUILD ============ */
+function dedupe(arr){ const seen=new Set(); return arr.filter(x=>{ if(seen.has(x)) return false; seen.add(x); return true; }); }
+function pairRisk(a,b){ const row=MATRIX[a]; if(!row) return null; return row[MATRIX_SUBS.indexOf(b)]; }
+
+function build(){
+  if(!state.night){ alert("Pick what kind of night it is first 🙂"); return; }
+  const N=NIGHTS[state.night], V=VENUES[state.venue], W=WEATHERS[state.weather];
+  const pack = dedupe([...BASE_PACK, ...N.pack, ...(V?V.pack:[]), ...(W?W.pack:[])]);
+  const safe = dedupe([...BASE_SAFETY, ...N.safety, ...(V?V.safety:[]), ...(W?W.safety:[])]);
+  currentItems = [];
+  pack.forEach((t,i)=>currentItems.push({id:"p"+i,text:t,section:"pack"}));
+  safe.forEach((t,i)=>currentItems.push({id:"s"+i,text:t,section:"safety"}));
+
+  document.getElementById('result-title').textContent = `${N.icon} Your packing list: ${N.label}`;
+  const pl=document.getElementById('pack-list');
+  pl.innerHTML = currentItems.filter(x=>x.section==="pack").map(x=>checkRow(x)).join('');
+  const sl=document.getElementById('safety-list');
+  sl.innerHTML = currentItems.filter(x=>x.section==="safety").map(x=>checkRow(x)).join('');
+  bindChecks();
+
+  // combos
+  const subs=[...state.subs];
+  const comboBox=document.getElementById('combos');
+  const alerts=[];
+  for(let i=0;i<subs.length;i++) for(let j=i+1;j<subs.length;j++){
+    const r=pairRisk(subs[i],subs[j]);
+    if(r && COMBO_MSG[r]) alerts.push({a:subs[i],b:subs[j],r,msg:COMBO_MSG[r]});
+  }
+  const order={"☠️":0,"❌":1,"🔴":2,"🟡":3,"⚠️":4};
+  alerts.sort((x,y)=>order[x.r]-order[y.r]);
+  comboBox.innerHTML = alerts.length
+    ? `<div class="list-card"><h2>⚠️ Combo check</h2>` + alerts.map(a=>`<div class="combo"><strong>${a.r} ${a.a} + ${a.b}:</strong> ${a.msg} <a href="/polydrug.html">Open the full checker →</a></div>`).join('') + `</div>`
+    : "";
+
+  // tips
+  const tipsBox=document.getElementById('tips-list');
+  const tipsCard=document.getElementById('tips-card');
+  const tips = state.sober
+    ? [{t:"Sober nights hit different in the best way. If cravings show up, step outside, text your person, and remember why you chose this.",link:"/sober.html"}]
+    : subs.map(n=>({name:n,...SUB_TIPS[n]})).filter(x=>x.t);
+  if(tips.length){
+    tipsCard.style.display="block";
+    tipsBox.innerHTML = tips.map(x=>`<div class="tip">💡 <strong>${x.name?x.name+": ":""}</strong>${x.t}${x.link?` <a href="${x.link}">Read more →</a>`:""}</div>`).join('');
+  } else tipsCard.style.display="none";
+
+  document.getElementById('result').style.display='block';
+  document.getElementById('builder').style.display='none';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+function checkRow(x){
+  return `<label class="check" data-id="${x.id}"><input type="checkbox"><span>${x.text}</span></label>`;
+}
+function bindChecks(){
+  document.querySelectorAll('#result .check').forEach(l=>{
+    const box=l.querySelector('input');
+    box.onchange=()=>l.classList.toggle('done',box.checked);
+  });
+}
+function listText(){
+  const lines=["MY NIGHT OUT CHECKLIST",""];
+  lines.push("PACKING:");
+  currentItems.filter(x=>x.section==="pack").forEach(x=>lines.push(`[ ] ${x.text}`));
+  lines.push("","SAFETY:");
+  currentItems.filter(x=>x.section==="safety").forEach(x=>lines.push(`[ ] ${x.text}`));
+  lines.push("","Made with the PLURderapolis Night Out Checklist Builder · plurderapolis.org");
+  return lines.join("\n");
+}
+
+/* ============ SAVE ============ */
+const LS_KEY="plur_checklists_v1";
+function getSaved(){ try{return JSON.parse(localStorage.getItem(LS_KEY))||[]}catch(e){return[]} }
+function setSaved(a){ try{ localStorage.setItem(LS_KEY,JSON.stringify(a)); }catch(e){ alert("This preview frame blocks saving, but it works on the real site."); } }
+function renderSaved(){
+  const box=document.getElementById('saved-list');
+  const items=getSaved();
+  box.innerHTML = items.length ? items.map((it,idx)=>`<div class="saved-item"><div style="flex:1"><div class="nm">${it.name}</div><div class="dt">${new Date(it.created).toLocaleDateString()} · ${it.config.subs.length?it.config.subs.join(", "):"sober"} · ${NIGHTS[it.config.night]?.label||""}</div></div><button class="load" data-i="${idx}">Open</button><button class="del" data-i="${idx}">Delete</button></div>`).join('')
+    : `<div class="empty">No saved lists yet. Build one above and it will live here.</div>`;
+  box.querySelectorAll('button.load').forEach(b=>b.onclick=()=>loadSaved(+b.dataset.i));
+  box.querySelectorAll('button.del').forEach(b=>b.onclick=()=>{ if(confirm("Delete this saved list?")){ const a=getSaved(); a.splice(+b.dataset.i,1); setSaved(a); renderSaved(); }});
+}
+function loadSaved(i){
+  const it=getSaved()[i]; if(!it) return;
+  state.night=it.config.night; state.subs=new Set(it.config.subs); state.venue=it.config.venue; state.weather=it.config.weather; state.sober=it.config.sober;
+  renderChips(); build();
+  (it.checks||[]).forEach(id=>{ const l=document.querySelector(`#result .check[data-id="${id}"]`); if(l){ l.querySelector('input').checked=true; l.classList.add('done'); }});
+  document.getElementById('save-name').value=it.name;
+}
+
+/* ============ WIRE UP ============ */
+document.getElementById('btn-generate').onclick=build;
+document.getElementById('btn-edit').onclick=()=>{ document.getElementById('result').style.display='none'; document.getElementById('builder').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); };
+document.getElementById('btn-print').onclick=()=>window.print();
+document.getElementById('btn-copy').onclick=async()=>{ try{ await navigator.clipboard.writeText(listText()); alert("Copied! Paste it anywhere."); }catch(e){ alert("Copy did not work in this browser, but Print to PDF will."); } };
+document.getElementById('btn-save').onclick=()=>{
+  const name=document.getElementById('save-name').value.trim()||("My list · "+new Date().toLocaleDateString());
+  const checks=[...document.querySelectorAll('#result .check.done')].map(l=>l.dataset.id);
+  const a=getSaved();
+  a.unshift({name,created:Date.now(),checks,config:{night:state.night,subs:[...state.subs],venue:state.venue,weather:state.weather,sober:state.sober}});
+  setSaved(a); renderSaved();
+  document.getElementById('save-name').value="";
+  alert("Saved to this device 💾");
+};
+renderChips();
+renderSaved();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
