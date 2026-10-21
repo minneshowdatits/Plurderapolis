@@ -562,55 +562,255 @@
 
       <!-- Med search: jump straight to your medication -->
       <style>
-        .rx-search-wrap{display:flex;align-items:center;gap:.6rem;max-width:640px;margin:0 auto 1.4rem;padding:.35rem .35rem .35rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(0,247,224,.3);border-radius:999px}
+        .rx-search-wrap{display:flex;align-items:center;gap:.6rem;max-width:640px;margin:0 auto 1.4rem;padding:.35rem .35rem .35rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(0,247,224,.3);border-radius:999px;transition:border-color .2s, box-shadow .2s}
+        .rx-search-wrap:focus-within{border-color:#00f7e0;box-shadow:0 0 0 3px rgba(0,247,224,.18)}
         .rx-search-wrap .fa-search{color:#5eead4;flex-shrink:0}
         #rxSearch{flex:1;min-width:0;background:transparent;border:none;outline:none;color:#fff;font-size:16px;padding:.7rem 0;font-family:inherit}
         #rxSearch::placeholder{color:rgba(255,255,255,.45)}
         #rxSearchClear{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.12);color:#fff;font-size:1rem;cursor:pointer}
-        .rx-search-note{text-align:center;color:rgba(255,255,255,.7);font-size:.9rem;margin:-.8rem 0 1.2rem}
-        .rx-search-note button{background:none;border:none;color:#5eead4;text-decoration:underline;cursor:pointer;font-size:.9rem}
+        .rx-search-chips{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;align-items:center;max-width:640px;margin:-.7rem auto 1.1rem;padding:0 .5rem}
+        .rx-search-chips .rx-chip-label{color:rgba(255,255,255,.55);font-size:.82rem}
+        .rx-chip{border:1px solid rgba(0,247,224,.35);background:rgba(255,255,255,.05);color:#c9f7f0;font-size:.82rem;padding:.32rem .75rem;border-radius:999px;cursor:pointer;font-family:inherit}
+        .rx-chip:hover,.rx-chip:focus-visible{background:rgba(0,247,224,.16);color:#fff;outline:none}
+        .rx-search-note{text-align:center;color:rgba(255,255,255,.75);font-size:.9rem;margin:-.4rem 0 1.2rem}
+        .rx-search-note button{background:none;border:none;color:#5eead4;text-decoration:underline;cursor:pointer;font-size:.9rem;font-family:inherit}
+        mark.rx-hit{background:#ffcc00;color:#1a0930;border-radius:3px;padding:0 2px}
       </style>
       <div class="rx-search-wrap">
         <i class="fas fa-search" aria-hidden="true"></i>
-        <input type="search" id="rxSearch" placeholder="Search your med: sertraline, adderall…" aria-label="Search medications on this page" autocomplete="off">
+        <input type="search" id="rxSearch" placeholder="Search your med: Zoloft, Adderall, Xanax…" aria-label="Search medications on this page" autocomplete="off">
         <button type="button" id="rxSearchClear" aria-label="Clear search" hidden>✕</button>
       </div>
-      <p class="rx-search-note" id="rxSearchNote" hidden></p>
+      <div class="rx-search-chips" aria-label="Popular searches">
+        <span class="rx-chip-label">Popular:</span>
+        <button type="button" class="rx-chip" data-q="Zoloft">Zoloft</button>
+        <button type="button" class="rx-chip" data-q="Adderall">Adderall</button>
+        <button type="button" class="rx-chip" data-q="Xanax">Xanax</button>
+        <button type="button" class="rx-chip" data-q="Wellbutrin">Wellbutrin</button>
+        <button type="button" class="rx-chip" data-q="Seroquel">Seroquel</button>
+        <button type="button" class="rx-chip" data-q="MDMA">MDMA</button>
+        <button type="button" class="rx-chip" data-q="Lithium">Lithium</button>
+      </div>
+      <p class="rx-search-note" id="rxSearchNote" aria-live="polite" hidden></p>
       <script>
-      (function(){
+      document.addEventListener('DOMContentLoaded', function(){
         var input = document.getElementById('rxSearch');
         var clear = document.getElementById('rxSearchClear');
         var note = document.getElementById('rxSearchNote');
         if (!input) return;
         var sections = Array.prototype.slice.call(document.querySelectorAll('main section.section'));
+        var CARD_SEL = '.combo-card, .info-card, .tip-box, .warning-box';
+
+        /* Brand and generic names for the same med, plus common party drug slang.
+           Searching any one of them finds the others. */
+        var PAIRS = [
+          ['zoloft','sertraline'],['prozac','fluoxetine'],['lexapro','escitalopram'],
+          ['celexa','citalopram'],['paxil','paroxetine'],['effexor','venlafaxine'],
+          ['cymbalta','duloxetine'],['wellbutrin','bupropion'],['xanax','alprazolam'],
+          ['klonopin','clonazepam'],['ativan','lorazepam'],['valium','diazepam'],
+          ['adderall','amphetamine'],['vyvanse','lisdexamfetamine'],
+          ['ritalin','methylphenidate'],['concerta','methylphenidate'],
+          ['seroquel','quetiapine'],['abilify','aripiprazole'],['risperdal','risperidone'],
+          ['lamictal','lamotrigine'],['neurontin','gabapentin'],['lyrica','pregabalin'],
+          ['vistaril','hydroxyzine'],['atarax','hydroxyzine'],
+          ['molly','mdma'],['ecstasy','mdma'],['coke','cocaine'],['weed','cannabis'],
+          ['marijuana','cannabis'],['shrooms','mushrooms'],['shrooms','psilocybin'],
+          ['acid','lsd'],['ket','ketamine'],['speed','meth'],['percocet','oxycodone'],
+          ['opiates','opioids'],['antidepressants','ssri'],['antidepressant','ssri'],
+          ['stimulants','stimulant'],['benzos','benzodiazepines'],['downers','depressants'],
+          ['uppers','stimulants'],['sleeping pills','sleep aids'],['birth control','hormones']
+        ];
+        var ALIASES = {};
+        PAIRS.forEach(function(p){
+          [p[0],p[1]].forEach(function(t){
+            if (!ALIASES[t]) ALIASES[t] = [];
+            var other = (t === p[0]) ? p[1] : p[0];
+            if (ALIASES[t].indexOf(other) === -1) ALIASES[t].push(other);
+          });
+        });
+
+        function queryGroups(raw){
+          var q = String(raw || '').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+          if (!q) return [];
+          var seen = {}, groups = [];
+          q.split(' ').forEach(function(t){
+            if (t.length < 2 || seen[t]) return;
+            seen[t] = 1;
+            groups.push([t].concat(ALIASES[t] || []));
+          });
+          return groups;
+        }
+        function groupHits(group, text){
+          for (var i = 0; i < group.length; i++) { if (text.indexOf(group[i]) !== -1) return true; }
+          return false;
+        }
+        function allHit(groups, text){
+          for (var i = 0; i < groups.length; i++) { if (!groupHits(groups[i], text)) return false; }
+          return true;
+        }
+
+        function clearMarks(root){
+          Array.prototype.slice.call(root.querySelectorAll('mark.rx-hit')).forEach(function(m){
+            m.replaceWith(document.createTextNode(m.textContent));
+          });
+          root.normalize();
+        }
+        function highlightIn(el, flat){
+          var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(n){
+              if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+              var p = n.parentNode;
+              if (!p || /^(SCRIPT|STYLE|I|MARK)$/.test(p.tagName)) return NodeFilter.FILTER_REJECT;
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          });
+          var nodes = [], n;
+          while ((n = walker.nextNode())) nodes.push(n);
+          nodes.forEach(function(node){
+            var text = node.nodeValue, lower = text.toLowerCase(), pos = 0, frag = null;
+            while (pos < text.length) {
+              var bestIdx = -1, bestTerm = null;
+              flat.forEach(function(t){
+                var idx = lower.indexOf(t, pos);
+                if (idx !== -1 && (bestIdx === -1 || idx < bestIdx || (idx === bestIdx && t.length > bestTerm.length))) { bestIdx = idx; bestTerm = t; }
+              });
+              if (bestIdx === -1) break;
+              if (!frag) frag = document.createDocumentFragment();
+              if (bestIdx > pos) frag.appendChild(document.createTextNode(text.slice(pos, bestIdx)));
+              var mark = document.createElement('mark');
+              mark.className = 'rx-hit';
+              mark.textContent = text.slice(bestIdx, bestIdx + bestTerm.length);
+              frag.appendChild(mark);
+              pos = bestIdx + bestTerm.length;
+            }
+            if (frag) {
+              if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+              node.parentNode.replaceChild(frag, node);
+            }
+          });
+        }
+
+        var savedState = null;
+        function snapshot(){
+          savedState = sections.map(function(s){
+            var t = s.querySelector('.section-title'), c = s.querySelector('.section-content');
+            return { title: t ? t.classList.contains('active') : false, content: c ? c.classList.contains('active') : false };
+          });
+        }
+        function restore(){
+          if (!savedState) return;
+          sections.forEach(function(s, i){
+            var t = s.querySelector('.section-title'), c = s.querySelector('.section-content');
+            if (t) { t.classList.toggle('active', savedState[i].title); t.setAttribute('aria-expanded', savedState[i].title ? 'true' : 'false'); }
+            if (c) c.classList.toggle('active', savedState[i].content);
+          });
+          savedState = null;
+        }
+        function openSection(s){
+          var t = s.querySelector('.section-title'), c = s.querySelector('.section-content');
+          if (t) { t.classList.add('active'); t.setAttribute('aria-expanded','true'); }
+          if (c) c.classList.add('active');
+        }
+
         function run(){
-          var q = input.value.trim().toLowerCase();
-          clear.hidden = !q;
-          if (!q) {
-            sections.forEach(function(s){ s.style.display = ''; });
+          var groups = queryGroups(input.value);
+          clear.hidden = !input.value;
+          sections.forEach(clearMarks);
+          if (!groups.length) {
+            restore();
+            sections.forEach(function(s){
+              s.style.display = '';
+              Array.prototype.forEach.call(s.querySelectorAll(CARD_SEL), function(card){ card.style.display = ''; });
+            });
             note.hidden = true;
+            note.textContent = '';
             return;
           }
-          var hits = 0;
+          if (!savedState) snapshot();
+          var flat = [];
+          groups.forEach(function(g){ g.forEach(function(t){ if (flat.indexOf(t) === -1) flat.push(t); }); });
+          var matchCards = 0, matchSections = 0, firstMatch = null;
           sections.forEach(function(s){
-            var match = s.textContent.toLowerCase().indexOf(q) !== -1;
-            s.style.display = match ? '' : 'none';
-            if (match) hits++;
+            var titleEl = s.querySelector('.section-title');
+            var titleText = titleEl ? titleEl.textContent.toLowerCase() : '';
+            var titleHit = allHit(groups, titleText);
+            var cards = Array.prototype.slice.call(s.querySelectorAll(CARD_SEL));
+            var sectionHit = false;
+            if (!cards.length) {
+              sectionHit = titleHit || allHit(groups, s.textContent.toLowerCase());
+              if (sectionHit) { matchCards++; var c0 = s.querySelector('.section-content'); if (c0) highlightIn(c0, flat); }
+            } else {
+              cards.forEach(function(card){
+                var hit = titleHit || allHit(groups, (titleText + ' ' + card.textContent).toLowerCase());
+                card.style.display = hit ? '' : 'none';
+                if (hit) { sectionHit = true; matchCards++; highlightIn(card, flat); }
+              });
+              if (!sectionHit && allHit(groups, s.textContent.toLowerCase())) {
+                /* The match lives in the section intro text, like the brand name
+                   list under the SSRI title, so show the whole section. */
+                cards.forEach(function(card){ card.style.display = ''; });
+                sectionHit = true; matchCards++;
+                var content = s.querySelector('.section-content');
+                if (content) highlightIn(content, flat);
+              }
+            }
+            s.style.display = sectionHit ? '' : 'none';
+            if (sectionHit) {
+              matchSections++;
+              openSection(s);
+              if (titleEl && titleHit) highlightIn(titleEl, flat);
+              if (!firstMatch) firstMatch = s;
+            }
           });
           note.hidden = false;
-          if (hits) {
-            note.textContent = hits + (hits === 1 ? ' section matches "' : ' sections match "') + input.value.trim() + '"';
+          if (matchSections) {
+            note.textContent = matchCards + (matchCards === 1 ? ' match' : ' matches') + ' in ' + matchSections + (matchSections === 1 ? ' section' : ' sections') + ' for \u201C' + input.value.trim() + '\u201D. Press Enter to jump to the first one.';
           } else {
-            note.innerHTML = 'No matches for "' + input.value.trim().replace(/</g,'&lt;') + '". Try the generic name (sertraline instead of Zoloft). ';
+            note.innerHTML = '';
+            note.appendChild(document.createTextNode('No matches for \u201C' + input.value.trim() + '\u201D. Try the brand or generic name (Zoloft / sertraline, Xanax / alprazolam), or '));
             var b = document.createElement('button');
-            b.type = 'button'; b.textContent = 'Show everything';
+            b.type = 'button'; b.textContent = 'show everything';
             b.addEventListener('click', function(){ input.value = ''; run(); input.focus(); });
             note.appendChild(b);
+            note.appendChild(document.createTextNode('.'));
+          }
+          return firstMatch;
+        }
+
+        input.addEventListener('input', run);
+        input.addEventListener('keydown', function(e){
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var first = run();
+            if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else if (e.key === 'Escape') {
+            input.value = ''; run();
+          }
+        });
+        clear.addEventListener('click', function(){ input.value = ''; run(); input.focus(); });
+        Array.prototype.forEach.call(document.querySelectorAll('.rx-chip'), function(chip){
+          chip.addEventListener('click', function(){
+            input.value = chip.getAttribute('data-q') || chip.textContent.trim();
+            var first = run();
+            input.focus();
+            if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        });
+
+        /* Deep links: open the linked section on arrival, since sections start closed on mobile. */
+        if (location.hash && location.hash.length > 1) {
+          var target = null;
+          try { target = document.querySelector(location.hash); } catch (e) {}
+          if (target && target.classList && target.classList.contains('section')) {
+            /* Delay so this runs after the page script that closes every
+               section on mobile at load, which would undo the opening. */
+            setTimeout(function(){
+              openSection(target);
+              target.scrollIntoView({ block: 'start' });
+            }, 200);
           }
         }
-        input.addEventListener('input', run);
-        clear.addEventListener('click', function(){ input.value = ''; run(); input.focus(); });
-      })();
+      });
       </script>
 
       <section id="rx-party" class="section animate">
@@ -1094,14 +1294,23 @@
       const content = element.nextElementSibling;
       element.classList.toggle('active');
       content.classList.toggle('active');
+      element.setAttribute('aria-expanded', element.classList.contains('active') ? 'true' : 'false');
     }
     
     // Add click event listeners to all section titles
     document.addEventListener('DOMContentLoaded', function() {
       const sectionTitles = document.querySelectorAll('.section-title');
       sectionTitles.forEach(title => {
+        title.setAttribute('role', 'button');
+        title.setAttribute('tabindex', '0');
         title.addEventListener('click', function() {
           toggleSection(this);
+        });
+        title.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleSection(this);
+          }
         });
       });
       
@@ -1129,6 +1338,11 @@
           title.classList.add('active');
         });
       }
+      
+      // Sync aria-expanded with the initial open or closed state
+      document.querySelectorAll('.section-title').forEach(title => {
+        title.setAttribute('aria-expanded', title.classList.contains('active') ? 'true' : 'false');
+      });
       
       // Set up print buttons
       const printButtons = document.querySelectorAll('#print-btn, #print-btn-bottom');
@@ -1165,8 +1379,8 @@
     function sharePage() {
       if (navigator.share) {
         navigator.share({
-          title: 'PLURderapolis Polydrug Safety Guide',
-          text: 'Check out this harm reduction resource about drug combinations and interactions',
+          title: 'RX + Party Drug Combos | PLURderapolis',
+          text: 'Check out this harm reduction resource about prescription and party drug combinations',
           url: window.location.href
         })
         .catch(error => {
@@ -1174,7 +1388,7 @@
         });
       } else {
         // Fallback for browsers that don't support the Web Share API
-        const shareText = 'Check out this harm reduction resource about drug combinations and interactions';
+        const shareText = 'Check out this harm reduction resource about prescription and party drug combinations';
         const shareUrl = window.location.href;
         
         // Try to copy to clipboard
@@ -1229,6 +1443,7 @@
           
           if (sectionTitle && sectionContent) {
             sectionTitle.classList.add('active');
+            sectionTitle.setAttribute('aria-expanded', 'true');
             sectionContent.classList.add('active');
           }
           
