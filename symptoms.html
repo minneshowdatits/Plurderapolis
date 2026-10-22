@@ -25,16 +25,16 @@
 <link rel="apple-touch-startup-image" href="/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
 <link rel="apple-touch-startup-image" href="/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Symptom Detective | PLURderapolis</title>
-<meta name="description" content="Symptom Detective: answer a few quick questions to tell overdose, heat stroke, and alcohol poisoning apart, and get a 911 script.">
+<title>Symptom Checker | PLURderapolis</title>
+<meta name="description" content="Symptom Checker: answer a few quick questions to tell opioid overdose, stimulant toxicity, serotonin syndrome, heat stroke, alcohol poisoning, GHB overdose, and heavy sedation apart, and get a 911 script.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Symptom Detective | PLURderapolis">
-<meta property="og:description" content="Symptom Detective: answer a few quick questions to tell overdose, heat stroke, and alcohol poisoning apart, and get a 911 script.">
+<meta property="og:title" content="Symptom Checker | PLURderapolis">
+<meta property="og:description" content="Symptom Checker: answer a few quick questions to tell opioid overdose, stimulant toxicity, serotonin syndrome, heat stroke, alcohol poisoning, GHB overdose, and heavy sedation apart, and get a 911 script.">
 <meta property="og:image" content="https://plurderapolis.org/images/social-preview.jpg">
 <meta property="og:url" content="https://plurderapolis.org/symptoms.html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Symptom Detective | PLURderapolis">
-<meta name="twitter:description" content="Symptom Detective: answer a few quick questions to tell overdose, heat stroke, and alcohol poisoning apart, and get a 911 script.">
+<meta name="twitter:title" content="Symptom Checker | PLURderapolis">
+<meta name="twitter:description" content="Symptom Checker: answer a few quick questions to tell opioid overdose, stimulant toxicity, serotonin syndrome, heat stroke, alcohol poisoning, GHB overdose, and heavy sedation apart, and get a 911 script.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -332,6 +332,66 @@
 .fa-fallback .fa-users::before{content:"👥"}
 .fa-fallback .fa-vial::before{content:"🧪"}
 </style>
+
+<style>
+/* Symptom Checker v2 preview additions */
+.sc2-hero{text-align:center;padding:2rem 1rem 1.2rem}
+.sc2-hero h1{font-size:2.6rem;line-height:1.05;margin:.2rem 0 .6rem;background:linear-gradient(90deg,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sc2-hero .sc2-big{font-size:1.35rem;font-weight:700;color:#fff;margin:.3rem 0}
+.sc2-hero p{color:var(--muted);max-width:640px;margin:.4rem auto}
+.sc2-startbox{background:linear-gradient(160deg,#241028,#101828);border:2px solid var(--pink);border-radius:20px;padding:1.4rem 1.2rem;text-align:center;box-shadow:0 0 32px rgba(255,105,180,.28);margin:0 auto 1.4rem;max-width:680px}
+.sc2-startbtn{background:linear-gradient(90deg,var(--pink),#ff2d92);color:#fff;border:none;font-size:1.3rem;font-weight:800;padding:1rem 2.2rem;border-radius:999px;cursor:pointer;min-height:64px;width:100%;max-width:440px;animation:sc2pulse 2s infinite}
+@keyframes sc2pulse{0%{box-shadow:0 0 0 0 rgba(255,105,180,.55)}70%{box-shadow:0 0 0 18px rgba(255,105,180,0)}100%{box-shadow:0 0 0 0 rgba(255,105,180,0)}}
+@media (prefers-reduced-motion: reduce){.sc2-startbtn{animation:none}}
+.sc2-quickrow{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:1rem}
+.sc2-quickrow a{background:#1c1c28;border:1px solid var(--border);color:var(--cyan);border-radius:999px;padding:.45rem .9rem;text-decoration:none;font-weight:600;font-size:.92rem}
+.sc2-skip{background:#3a0d16;border:2px solid var(--red);color:#fff;border-radius:14px;padding:1rem;margin:0 auto 1.2rem;max-width:680px;text-align:center;font-size:1.05rem}
+.sc2-skip a{color:#fff;font-weight:800}
+.game-container{display:none}.game-container.active{display:block}
+.options-grid{display:grid;grid-template-columns:1fr;gap:.7rem;margin-top:1rem}
+@media(min-width:560px){.options-grid{grid-template-columns:1fr 1fr}}
+.option{display:flex;align-items:center;gap:.8rem;text-align:left;background:var(--card);border:2px solid var(--border);border-radius:16px;color:#fff;padding:1.05rem 1rem;font-size:1.08rem;font-weight:600;cursor:pointer;min-height:64px;width:100%}
+.option:hover,.option:focus-visible{border-color:var(--cyan);outline:none}
+.option .oicon{font-size:1.6rem}
+.option small{display:block;color:var(--muted);font-weight:400;font-size:.88rem}
+.chips-container{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1rem}
+.chip{background:var(--card);border:2px solid var(--border);color:#fff;border-radius:999px;padding:.7rem 1rem;font-size:1rem;cursor:pointer;min-height:52px}
+.chip.selected{border-color:var(--pink);background:#3a1230}
+.chip .chip-check{display:none}.chip.selected .chip-check{display:inline;color:var(--cyan);font-weight:800;margin-right:.3rem}
+.question{font-size:1.45rem;font-weight:800;display:flex;gap:.6rem;align-items:center}
+.q-note{color:var(--muted);margin-top:.9rem}
+.q-nav{display:flex;gap:.6rem;margin-top:1.1rem;flex-wrap:wrap}
+.btn{border-radius:999px;padding:.85rem 1.6rem;font-size:1.05rem;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--card);color:#fff;min-height:54px}
+.btn.primary{background:linear-gradient(90deg,var(--pink),#ff2d92);border-color:transparent}
+.btn.ghost{background:transparent;color:var(--cyan);border-color:var(--cyan)}
+.progress-container{background:#26263a;border-radius:999px;height:14px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--cyan),var(--pink));width:0;transition:width .3s}
+.sc2-alert{display:none;background:#3a0d16;border:2px solid var(--red);border-radius:14px;padding:1rem;margin-top:1rem;color:#fff}
+.sc2-alert.show{display:block}
+.sc2-counter{display:none;background:#101828;border:2px solid var(--cyan);border-radius:16px;padding:1.1rem;margin-top:1rem;text-align:center}
+.sc2-counter.show{display:block}
+.sc2-tapbtn{background:var(--cyan);color:#06231f;border:none;border-radius:50%;width:150px;height:150px;font-size:1.25rem;font-weight:800;cursor:pointer}
+.sc2-result{border-radius:20px;padding:1.3rem;margin-top:1rem;background:var(--card);border:2px solid var(--border)}
+.sc2-result.danger{border-color:var(--red);box-shadow:0 0 24px rgba(255,71,87,.25)}
+.sc2-result.caution{border-color:var(--amber)}
+.sc2-result h2{margin:.2rem 0 .6rem;font-size:1.7rem}
+.sc2-urgency{display:inline-block;border-radius:999px;padding:.3rem .9rem;font-weight:800;font-size:.92rem}
+.sc2-urgency.now{background:var(--red);color:#fff}
+.sc2-urgency.soon{background:var(--amber);color:#1a1000}
+.sc2-actions{font-size:1.08rem;line-height:1.55}
+.sc2-actions li{margin:.45rem 0}
+.sc2-call{display:block;text-align:center;background:var(--red);color:#fff;font-weight:800;font-size:1.3rem;border-radius:999px;padding:1rem;text-decoration:none;margin:1rem 0;min-height:60px}
+.sc2-toolbox{background:#101828;border:1px solid var(--border);border-radius:16px;padding:1rem;margin-top:1rem}
+.sc2-timer{font-size:2rem;font-weight:800;color:var(--cyan);text-align:center}
+.sc2-check{display:flex;gap:.6rem;align-items:flex-start;background:#1c1c28;border:1px solid var(--border);border-radius:12px;padding:.7rem .9rem;margin:.45rem 0;cursor:pointer;font-size:1.02rem}
+.sc2-check input{width:22px;height:22px;margin-top:.15rem}
+.sc2-reported{display:flex;flex-wrap:wrap;gap:.45rem}
+.sc2-reported span{background:#26263a;border-radius:999px;padding:.35rem .8rem;font-size:.92rem}
+.sc2-script{background:#0d0d0d;border:1px dashed var(--cyan);border-radius:14px;padding:1rem;font-size:1.05rem;line-height:1.5;white-space:pre-wrap}
+#gameContainer,#resultsContainer,#startSection{scroll-margin-top:96px}
+.sc2-sources{font-size:.92rem;color:var(--muted);line-height:1.55}
+.sc2-sources li{margin:.35rem 0}
+</style>
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
@@ -355,99 +415,80 @@
     <div class="help-text">HELP!</div>
   </div>
 
-  <div class="container">
-    <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
-<div class="hero">
-      <h1 id="main-content">Symptom <span class="accent">Detective</span></h1>
-      <p>Someone looks wrong and you are not sure what is happening. Answer a few quick questions and get clear action steps plus a 911 script.</p>
-    </div>
+  
+<div class="container">
+  <div class="offline-badge">Works offline: this page is saved to your phone</div>
 
-    <div class="explain">
-      <div class="explain-card">
-        <h3><i class="fas fa-search"></i> What it does</h3>
-        <p>Helps tell overdose, heat stroke, and alcohol poisoning apart from the signs you can actually see.</p>
-      </div>
-      <div class="explain-card">
-        <h3><i class="fas fa-bolt"></i> When to use it</h3>
-        <p>When someone at an event looks unwell. Run it before you call 911 so you have the details ready.</p>
-      </div>
-      <div class="explain-card">
-        <h3><i class="fas fa-phone-alt"></i> Why it helps</h3>
-        <p>You get action steps and a ready to read 911 script, so the call goes faster when seconds count.</p>
-      </div>
-    </div>
+  <div class="sc2-hero">
+    <h1 id="main-content">Symptom Checker</h1>
+    <p class="sc2-big">Someone looks wrong. Start here.</p>
+    <p>Tap what you can actually see. Get what it most likely is, what to do first, and a script for the 911 call. About a minute, 7 quick questions. Not a diagnosis, just guidance.</p>
+  </div>
 
-    <div class="start-section" id="startSection">
-      <button class="start-button" id="startButton"><i class="fas fa-play-circle"></i> Start symptom check</button>
-      <p class="start-hint">6 quick questions. Takes about a minute. Not a diagnosis, just guidance.</p>
-    </div>
+  <div class="sc2-skip">Unresponsive or barely breathing right now? Skip the questions. <a href="tel:911">Call 911</a>, give naloxone if you have it, and start rescue breaths, one every 5 seconds.</div>
 
-    <div class="game-container" id="gameContainer" aria-live="polite">
-      <div class="progress-top">
-        <span id="progressText">Question 1 of 6</span>
-        <span id="stepCounter">Step 1 of 6</span>
-      </div>
-      <div class="progress-container" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
-      <div id="questionContainer"></div>
-    </div>
-
-    <div class="results-container" id="resultsContainer" aria-live="polite"></div>
-
-    <div class="section">
-      <span class="eyebrow">Good to know</span>
-      <h2><i class="fas fa-lightbulb"></i> Before you start</h2>
-      <ul>
-        <li><strong>If they are unresponsive or barely breathing, skip the quiz and call 911 now.</strong> You can always come back.</li>
-        <li>Answer from what you can see, not what you assume they took.</li>
-        <li>When in doubt between two results, treat it as the more dangerous one.</li>
-        <li>Minnesota's Good Samaritan law (604A.05) gives limited immunity to people who call 911 during an overdose.</li>
-      </ul>
-    </div>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <h3><i class="fas fa-syringe"></i> Naloxone access in Minnesota</h3>
-        <p>Naloxone is available without a prescription at Minnesota pharmacies under the state's standing order. You can also get free naloxone from the Department of Health distribution programs.</p>
-        <a href="https://www.health.state.mn.us/communities/overdose/harmreduce/naloxone.html" target="_blank" rel="noopener">MN Dept of Health info</a>
-        <div class="citation">Source: Minnesota Department of Health</div>
-      </div>
-      <div class="info-card">
-        <h3><i class="fas fa-temperature-high"></i> Heat illness prevention</h3>
-        <p>Heat illness is common at summer events. Early signs: excessive sweating, weakness, nausea, headache. Move to shade, hydrate, cool with wet cloths.</p>
-        <a href="https://www.cdc.gov/disasters/extremeheat/warning.html" target="_blank" rel="noopener">CDC heat safety</a>
-        <div class="citation">Source: Centers for Disease Control</div>
-      </div>
-      <div class="info-card">
-        <h3><i class="fas fa-vial"></i> Substance testing resources</h3>
-        <p>Some harm reduction organizations provide substance checking. Always test before use and never use alone. Know what you are taking and start with a small amount.</p>
-        <a href="https://dancesafe.org/" target="_blank" rel="noopener">DanceSafe resources</a>
-        <div class="citation">Source: DanceSafe.org</div>
-      </div>
-      <div class="info-card">
-        <h3><i class="fas fa-users"></i> Harm reduction support</h3>
-        <p>Trained harm reduction volunteers work many events. Look for orgs providing water, cool spaces, and non-judgmental support. The Never Use Alone hotline offers confidential support.</p>
-        <a href="https://neverusealone.com/" target="_blank" rel="noopener">Never Use Alone</a>
-        <div class="citation">Source: NeverUseAlone.com</div>
-      </div>
-    </div>
-
-    <div class="crisis-box" id="emergency-info">
-      <h2><i class="fas fa-life-ring"></i> Minnesota emergency resources</h2>
-      <p><strong style="color:#fff">911</strong> for life-threatening emergencies &nbsp;•&nbsp; <strong style="color:#fff">MN Poison Control: 1-800-222-1222</strong> (24/7, free) &nbsp;•&nbsp; <strong style="color:#fff">Never Use Alone: 1-800-484-3731</strong></p>
-      <div class="crisis-btns">
-        <a href="tel:911"><i class="fas fa-phone"></i> Call 911</a>
-        <a href="tel:18002221222" class="alt"><i class="fas fa-flask"></i> Poison Control</a>
-        <a href="sms:741741?&body=HOME" class="alt"><i class="fas fa-comment"></i> Text HOME to 741741</a>
-      </div>
-      <p style="margin-top:1.25rem;margin-bottom:0;max-width:640px;margin-left:auto;margin-right:auto">More local help on our <a href="https://plurderapolis.org/resources.html" style="color:var(--cyan)">MN resources page</a>, including the naloxone finder and the MN Warmline (peer support).</p>
+  <div class="sc2-startbox" id="startSection">
+    <button type="button" class="sc2-startbtn" id="startButton">Start symptom check</button>
+    <p style="color:var(--muted);margin:.7rem 0 0">Answer from what you can see, not what you assume they took. When in doubt, treat it as the more dangerous result.</p>
+    <div class="sc2-quickrow">
+      <a href="#sources">Where this info comes from</a>
+      <a href="#emergency-info">Minnesota emergency numbers</a>
+      <a href="overdose.html">Overdose Response page</a>
     </div>
   </div>
 
+  <div class="game-container" id="gameContainer" aria-live="polite">
+    <div class="progress-top">
+      <span id="progressText">Question 1 of 7</span> <span id="stepCounter" style="float:right">Step 1 of 7</span>
+      <div class="progress-container" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <div id="questionContainer"></div>
+  </div>
+
+  <div class="results-container" id="resultsContainer" aria-live="polite" style="display:none"></div>
+
+  <div class="section">
+    <h2>Good to know</h2>
+    <div class="info-grid">
+      <div class="info-card"><h3>Before you start</h3><p>If they are unresponsive or barely breathing, skip the quiz and call 911 now. You can always come back. Minnesota Good Samaritan law 604A.05 gives limited immunity to people who call 911 during an overdose.</p></div>
+      <div class="info-card"><h3>Naloxone in Minnesota</h3><p>Naloxone is available without a prescription at Minnesota pharmacies under the state standing order, and free through Minnesota Department of Health distribution programs. It cannot hurt someone who is not on opioids.</p><p class="citation">Source: Minnesota Department of Health</p></div>
+      <div class="info-card"><h3>When naloxone is not enough</h3><p>Xylazine and medetomidine are sedatives turning up mixed into fentanyl. Naloxone does not reverse them, so a person may keep sleeping even after naloxone works on the opioid. Give naloxone anyway, keep giving rescue breaths, and stay with them.</p><p class="citation">Source: CDC xylazine guidance, and CDC Health Advisory on medetomidine, April 2, 2026</p></div>
+      <div class="info-card"><h3>Heat can kill on its own</h3><p>Heat stroke is not just being too warm. Confusion, hot dry skin, or passing out in the heat means call 911 and cool the person fast while you wait.</p><p class="citation">Source: CDC Heat Related Illness guidance</p></div>
+    </div>
+  </div>
+
+  <div class="crisis-box" id="emergency-info">
+    <h2>Minnesota emergency resources</h2>
+    <p>911 for life threatening emergencies &nbsp;•&nbsp; MN Poison Control: 1-800-222-1222 (24/7, free) &nbsp;•&nbsp; Never Use Alone: 1-800-484-3731 &nbsp;•&nbsp; Crisis Text Line: text HOME to 741741</p>
+    <div class="crisis-btns">
+      <a class="btn primary" href="tel:911">Call 911</a>
+      <a class="btn ghost" href="tel:18002221222">Poison Control</a>
+      <a class="btn ghost" href="resources.html">More local help</a>
+    </div>
+  </div>
+
+  <div class="section" id="sources">
+    <h2>Sources used for this update</h2>
+    <ul class="sc2-sources">
+      <li>CDC, What You Should Know About Xylazine: give naloxone anyway, rescue breaths are especially important, recovery position.</li>
+      <li>CDC Health Alert Network, April 2, 2026: medetomidine in the US illegal fentanyl supply, profound sedation and slow heart rate, naloxone still advised because fentanyl is usually involved.</li>
+      <li>CDC, Heat Related Illnesses: heat stroke signs include high body temperature, hot red dry or damp skin, fast strong pulse, confusion, and losing consciousness. Do not give the person anything to drink.</li>
+      <li>American Heart Association and American Red Cross first aid guidance, 2024: rapid active cooling for heat stroke, cold water immersion where it is available and safe.</li>
+      <li>National Harm Reduction Coalition, Responding to Stimulant Overamping: cool with ice packs, mist and fan, wet cloths under armpits and on forehead, water or electrolyte drinks for dehydration.</li>
+      <li>FDA naloxone labeling: repeat a new dose every 2 to 3 minutes if the person does not respond or breathing slows again.</li>
+      <li>Content is based on established harm reduction resources and clinical literature. Checked October 2026.</li>
+    </ul>
+  </div>
+
   <div class="cta-section">
-<h2>Keep going</h2>
-<div class="cta-links">
-<a href="https://plurderapolis.org/emergency.html"><i class="fas fa-bolt"></i> Emergency Guides</a><a href="https://plurderapolis.org/overdose.html"><i class="fas fa-kit-medical"></i> Overdose Response</a><a href="https://plurderapolis.org/polydrug.html"><i class="fas fa-pills"></i> Polydrug Tool</a><a href="https://plurderapolis.org/spiking.html"><i class="fas fa-martini-glass"></i> Drink Spiking</a>
-</div>
+    <h2>Keep going</h2>
+    <div class="cta-links">
+      <a href="emergency.html">Emergency Guides</a>
+      <a href="overdose.html">Overdose Response</a>
+      <a href="polydrug.html">Polydrug Tool</a>
+      <a href="spiking.html">Drink Spiking</a>
+    </div>
+  </div>
 </div>
 <footer>
     <p class="footer-logo" style="font-weight:800;color:#7B68EE;margin-bottom:.5rem;"><img src="data:image/png;base64,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" alt="" style="height:28px;width:28px;vertical-align:-7px"> PLURderapolis</p>
@@ -457,556 +498,6 @@
     <p style="margin-top:.75rem;">© 2026 PLURderapolis, Harm Reduction for Minnesota Ravers</p>
   </footer>
 
-<script>
-(function(){
-  'use strict';
-
-  var QUESTIONS = [
-    {
-      id: 'conscious',
-      title: 'Is the person awake and responsive?',
-      icon: '🧠',
-      options: [
-        { text: 'Awake and responsive', value: 'awake', icon: '✅' },
-        { text: 'Very drowsy, slow to respond', value: 'slow', icon: '😴' },
-        { text: 'Unresponsive, cannot wake them', value: 'unresponsive', icon: '🚫' }
-      ],
-      note: 'Try shouting their name and shaking their shoulders firmly first.'
-    },
-    {
-      id: 'substance',
-      title: 'Do you know what they took?',
-      icon: '💊',
-      options: [
-        { text: 'Opioids', sub: 'fentanyl, heroin, painkillers', value: 'opioids', icon: '💉' },
-        { text: 'Stimulants', sub: 'coke, meth, MDMA', value: 'stimulants', icon: '⚡' },
-        { text: 'Alcohol', sub: 'beer, liquor, mixed drinks', value: 'alcohol', icon: '🍺' },
-        { text: 'Benzos', sub: 'xanax, klonopin', value: 'benzos', icon: '💤' },
-        { text: 'Psychedelics', sub: 'LSD, shrooms', value: 'psychs', icon: '🌈' },
-        { text: "Don't know / not sure", value: 'unknown', icon: '❓' }
-      ],
-      note: 'Guess only if you have a real reason to. "Don\'t know" is a perfectly good answer.'
-    },
-    {
-      id: 'breathing',
-      title: 'How is their breathing?',
-      icon: '🌬️',
-      options: [
-        { text: 'Seems normal', value: 'normal', icon: '😊' },
-        { text: 'Slow or irregular', value: 'slow', icon: '😫' },
-        { text: 'Count it', sub: 'tap to enter breaths per minute', value: 'count', icon: '🔢', input: true }
-      ],
-      note: 'Under 8 breaths a minute or gasping is an emergency.'
-    },
-    {
-      id: 'pupils',
-      title: 'How do their pupils look?',
-      icon: '👁️',
-      options: [
-        { text: 'Pinpoint, very small', value: 'pinpoint', icon: '●' },
-        { text: 'Dilated, very wide', value: 'dilated', icon: '○' },
-        { text: 'Normal, or can\'t tell', value: 'normal', icon: '◎' }
-      ],
-      note: 'Pinpoint suggests opioids. Dilated suggests stimulants.'
-    },
-    {
-      id: 'temperature',
-      title: 'How does their skin feel?',
-      icon: '🌡️',
-      options: [
-        { text: 'Hot, very sweaty', value: 'hot', icon: '🔥' },
-        { text: 'Cold, pale, or bluish', value: 'cold', icon: '❄️' },
-        { text: 'Normal, or not sure', value: 'normal', icon: '😐' }
-      ],
-      note: 'Heat stroke often pairs high temperature with confusion.'
-    },
-    {
-      id: 'signs',
-      title: 'Which of these do you see? Tap all that apply.',
-      icon: '🔎',
-      multi: true,
-      options: [
-        { text: 'Blue lips or nails', value: 'blue_lips', icon: '💙' },
-        { text: 'Gurgling or snoring sounds', value: 'gurgle', icon: '💤' },
-        { text: 'Limp body', value: 'limp', icon: '🫠' },
-        { text: 'Clammy or sweaty skin', value: 'clammy', icon: '💦' },
-        { text: 'Overheating, hot skin', value: 'overheat', icon: '🌡️' },
-        { text: 'Agitated or confused', value: 'agitation', icon: '🤯' },
-        { text: 'Racing heartbeat', value: 'fast_hr', icon: '❤️‍🔥' },
-        { text: 'Chest pain', value: 'chest_pain', icon: '💔' },
-        { text: 'Seizure or collapse', value: 'seizure', icon: '⚡' },
-        { text: 'Vomiting while unconscious', value: 'vomit_uncon', icon: '🤮' }
-      ]
-    }
-  ];
-
-  var CHIP_LABELS = {
-    blue_lips: 'blue lips or nails', gurgle: 'gurgling or snoring sounds', limp: 'limp body',
-    clammy: 'clammy or sweaty skin', overheat: 'overheating', agitation: 'agitation or confusion',
-    fast_hr: 'racing heartbeat', chest_pain: 'chest pain', seizure: 'seizure or collapse',
-    vomit_uncon: 'vomiting while unconscious'
-  };
-
-  var RESULTS = {
-    opioid: {
-      name: 'opioid overdose',
-      title: 'Possible opioid overdose',
-      emoji: '🚨',
-      cls: 'danger',
-      actions: [
-        'Call 911 right now. Do not wait to be sure.',
-        'Give naloxone (Narcan) if you have it. Nasal spray or injection, it cannot hurt them.',
-        'If they are not breathing, give rescue breaths: one every 5 seconds.',
-        'If breathing but unconscious, roll them into recovery position (on their side).',
-        'Stay until help arrives. Naloxone wears off in 30 to 90 minutes.'
-      ]
-    },
-    stimulant: {
-      name: 'stimulant toxicity',
-      title: 'Possible stimulant toxicity',
-      emoji: '⚡',
-      cls: 'danger',
-      actions: [
-        'Call 911 for chest pain, seizures, extreme overheating, or unresponsiveness.',
-        'Cool them down: shade, cool water on neck and wrists, fan them.',
-        'Calm the environment: dim lights, fewer people, quiet voice.',
-        'Do not give more drugs to "balance it out". That kills people.'
-      ]
-    },
-    heat: {
-      name: 'heat stroke',
-      title: 'Possible heat stroke',
-      emoji: '🌡️',
-      cls: 'danger',
-      actions: [
-        'Call 911 right now. Heat stroke can kill fast.',
-        'Move them to shade or somewhere cool immediately.',
-        'Cool with wet towels or water on skin, fan them.',
-        'Small sips of water only if fully conscious. Never force fluids.'
-      ]
-    },
-    alcohol: {
-      name: 'alcohol poisoning',
-      title: 'Possible alcohol poisoning',
-      emoji: '🍺',
-      cls: 'danger',
-      actions: [
-        'Call 911 if they are unconscious or cannot be woken.',
-        'Roll them into recovery position so they do not choke if they vomit.',
-        'Do not leave them alone. Check breathing continuously.',
-        'Do not try to make them vomit, and no coffee or cold showers.'
-      ]
-    },
-    unclear: {
-      name: 'unclear picture',
-      title: 'Unclear picture',
-      emoji: '🤔',
-      cls: 'caution',
-      actions: [
-        'Stay with them and keep watching breathing closely.',
-        'Call Poison Control for guidance: 1-800-222-1222 (free, 24/7).',
-        'Call 911 if anything gets worse or you get scared.',
-        'Trust your gut. "Something is wrong" is enough reason to call.'
-      ]
-    }
-  };
-
-  var state = { step: 0, answers: {}, chips: {}, naloxone: 'unsure' };
-
-  var startBtn = document.getElementById('startButton');
-  var startSection = document.getElementById('startSection');
-  var gameBox = document.getElementById('gameContainer');
-  var qBox = document.getElementById('questionContainer');
-  var resBox = document.getElementById('resultsContainer');
-  var progressBar = document.getElementById('progressBar');
-  var progressText = document.getElementById('progressText');
-  var stepCounter = document.getElementById('stepCounter');
-
-  startBtn.addEventListener('click', function(){
-    startSection.style.display = 'none';
-    gameBox.classList.add('active');
-    renderQuestion(0);
-    gameBox.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  function renderQuestion(i){
-    state.step = i;
-    var q = QUESTIONS[i];
-    var pct = ((i + 1) / QUESTIONS.length) * 100;
-    progressBar.style.width = pct + '%';
-    progressText.textContent = 'Question ' + (i + 1) + ' of ' + QUESTIONS.length;
-    stepCounter.textContent = 'Step ' + (i + 1) + ' of ' + QUESTIONS.length;
-
-    var html = '<div class="question"><span class="question-icon">' + q.icon + '</span><span>' + q.title + '</span></div>';
-
-    if (q.multi) {
-      html += '<div class="chips-container" role="group" aria-label="Select all signs you see">';
-      q.options.forEach(function(o){
-        var sel = state.chips[o.value] ? ' selected' : '';
-        html += '<button type="button" class="chip' + sel + '" data-chip="' + o.value + '" aria-pressed="' + (state.chips[o.value] ? 'true' : 'false') + '">'
-          + '<span class="chip-check">✓</span><span>' + o.icon + '</span><span>' + o.text + '</span></button>';
-      });
-      html += '</div>';
-      html += '<div class="q-nav"><button type="button" class="btn primary" id="analyzeBtn"><i class="fas fa-search"></i> Analyze symptoms</button></div>';
-    } else {
-      html += '<div class="options-grid">';
-      q.options.forEach(function(o, idx){
-        html += '<button type="button" class="option" data-val="' + o.value + '" style="animation-delay:' + (idx * 0.07) + 's">'
-          + '<span class="option-icon">' + o.icon + '</span>'
-          + '<span>' + o.text + (o.sub ? '<small>' + o.sub + '</small>' : '') + '</span></button>';
-      });
-      html += '</div>';
-    }
-
-    if (q.note) html += '<p class="q-note"><i class="fas fa-info-circle"></i>' + q.note + '</p>';
-
-    if (i > 0) {
-      html += '<div class="q-nav"><button type="button" class="btn ghost" id="backBtn"><i class="fas fa-arrow-left"></i> Back</button></div>';
-    }
-
-    qBox.innerHTML = html;
-
-    if (q.multi) {
-      qBox.querySelectorAll('[data-chip]').forEach(function(chip){
-        chip.addEventListener('click', function(){
-          var v = chip.getAttribute('data-chip');
-          state.chips[v] = !state.chips[v];
-          chip.classList.toggle('selected', state.chips[v]);
-          chip.setAttribute('aria-pressed', state.chips[v] ? 'true' : 'false');
-        });
-      });
-      document.getElementById('analyzeBtn').addEventListener('click', showResults);
-    } else {
-      qBox.querySelectorAll('[data-val]').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          var v = btn.getAttribute('data-val');
-          var opt = q.options.filter(function(o){ return o.value === v; })[0];
-          if (opt && opt.input) { showBreathInput(); return; }
-          answerSingle(q.id, v);
-        });
-      });
-    }
-
-    var back = document.getElementById('backBtn');
-    if (back) back.addEventListener('click', function(){ renderQuestion(i - 1); });
-
-    setTimeout(function(){ qBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 250);
-  }
-
-  function answerSingle(id, value){
-    state.answers[id] = value;
-    if (id === 'conscious' && value === 'unresponsive') {
-      showEmergency('They are unresponsive and cannot be woken.');
-      return;
-    }
-    if (id === 'breathing' && value === 'slow') {
-      showEmergency('Their breathing is slow or irregular.');
-      return;
-    }
-    if (state.step < QUESTIONS.length - 1) {
-      renderQuestion(state.step + 1);
-    } else {
-      showResults();
-    }
-  }
-
-  function showBreathInput(){
-    progressText.textContent = 'Breath check';
-    qBox.innerHTML =
-      '<div class="question"><span class="question-icon">⏱️</span><span>Count breaths for 15 seconds, then multiply by 4</span></div>'
-      + '<input type="number" id="breathCount" class="breath-input" aria-label="Breaths per minute" placeholder="Breaths per minute (e.g. 12)" min="0" max="60">'
-      + '<div class="q-nav"><button type="button" class="btn primary" id="submitBreath"><i class="fas fa-check"></i> Submit</button>'
-      + '<button type="button" class="btn ghost" id="breathBack"><i class="fas fa-arrow-left"></i> Back</button></div>'
-      + '<p class="q-note"><i class="fas fa-exclamation-triangle"></i>Under 8 breaths a minute is an emergency. If you are unsure, go back and pick "Slow or irregular".</p>';
-    setTimeout(function(){ document.getElementById('breathCount').focus(); }, 250);
-    document.getElementById('submitBreath').addEventListener('click', function(){
-      var n = parseInt(document.getElementById('breathCount').value, 10);
-      if (isNaN(n) || n < 0 || n > 60) {
-        document.getElementById('breathCount').style.borderColor = 'var(--red)';
-        return;
-      }
-      if (n < 8) { showEmergency('Very slow breathing: ' + n + ' breaths a minute.'); return; }
-      state.answers.breathRate = n;
-      answerSingle('breathing', 'normal');
-    });
-    document.getElementById('breathBack').addEventListener('click', function(){ renderQuestion(2); });
-  }
-
-  function calcScores(){
-    var s = { opioid: 0, stimulant: 0, alcohol: 0, heat: 0 };
-    var a = state.answers, c = state.chips;
-    if (a.substance === 'opioids') s.opioid += 3;
-    if (a.substance === 'stimulants') s.stimulant += 3;
-    if (a.substance === 'alcohol') s.alcohol += 3;
-    if (a.substance === 'benzos') { s.alcohol += 2; s.opioid += 1; }
-    if (a.substance === 'psychs') s.stimulant += 1;
-    if (a.conscious === 'slow') { s.alcohol += 2; s.opioid += 1; }
-    if (a.pupils === 'pinpoint') s.opioid += 3;
-    if (a.pupils === 'dilated') s.stimulant += 2;
-    if (a.temperature === 'hot') s.heat += 3;
-    if (a.temperature === 'cold') { s.alcohol += 1; s.opioid += 1; }
-    if (c.gurgle) s.opioid += 2;
-    if (c.limp) s.opioid += 2;
-    if (c.blue_lips) s.opioid += 2;
-    if (c.clammy) s.opioid += 1;
-    if (c.overheat) s.heat += 2;
-    if (c.agitation) s.stimulant += 2;
-    if (c.fast_hr) s.stimulant += 2;
-    if (c.chest_pain) s.stimulant += 1;
-    if (c.seizure) { s.stimulant += 3; s.heat += 1; }
-    if (c.vomit_uncon) s.alcohol += 4;
-    return s;
-  }
-
-  function topTypes(scores){
-    var arr = Object.keys(scores).map(function(k){ return { type: k, score: scores[k] }; });
-    arr.sort(function(x, y){ return y.score - x.score; });
-    if (arr[0].score === 0) return [];
-    var out = [arr[0]];
-    if (arr[1].score > 0 && (arr[0].score - arr[1].score) <= 2) out.push(arr[1]);
-    return out;
-  }
-
-  var SINGLE_LABELS = {
-    conscious: { awake: 'awake and responsive', slow: 'very drowsy, slow to respond' },
-    substance: { opioids: 'took opioids', stimulants: 'took stimulants', alcohol: 'drank alcohol', benzos: 'took benzos', psychs: 'took psychedelics', cannabis: 'used cannabis' },
-    breathing: { normal: 'breathing seems normal', slow: 'breathing slow or irregular' },
-    pupils: { pinpoint: 'pinpoint pupils', dilated: 'dilated pupils' },
-    temperature: { hot: 'hot, sweaty skin', cold: 'cold, pale, or bluish skin' }
-  };
-
-  function reportedSigns(){
-    var out = [];
-    var a = state.answers;
-    ['conscious','substance','breathing','pupils','temperature'].forEach(function(id){
-      var v = a[id];
-      if (v && v !== 'unknown' && v !== 'normal' && v !== 'awake' && SINGLE_LABELS[id] && SINGLE_LABELS[id][v]) {
-        out.push(SINGLE_LABELS[id][v]);
-      }
-    });
-    if (a.breathRate) out.push(a.breathRate + ' breaths a minute');
-    Object.keys(state.chips).forEach(function(k){
-      if (state.chips[k] && CHIP_LABELS[k]) out.push(CHIP_LABELS[k]);
-    });
-    return out;
-  }
-
-  function naloxoneText(){
-    return state.naloxone === 'yes' ? 'yes, I have it with me'
-      : state.naloxone === 'no' ? 'no' : 'not sure';
-  }
-
-  function buildScript(top){
-    var a = state.answers;
-    var status = a.conscious === 'slow' ? 'very drowsy and slow to respond' : 'awake but unwell';
-    var breathing = a.breathRate ? a.breathRate + ' breaths a minute'
-      : (a.breathing === 'slow' ? 'slow or irregular' : 'seems normal');
-    var signs = reportedSigns();
-    var txt = 'I need an ambulance. The person is ' + status + '. Breathing: ' + breathing + '. ';
-    if (signs.length) txt += 'What I can see: ' + signs.join('; ') + '. ';
-    if (top.length) txt += 'I think it might be ' + top.map(function(t){ return RESULTS[t.type].name; }).join(' or ') + '. ';
-    txt += 'Naloxone on hand: ' + naloxoneText() + '. My location: [SAY YOUR LOCATION].';
-    return txt;
-  }
-
-  function showResults(){
-    var scores = calcScores();
-    var top = topTypes(scores);
-    var primary = top.length ? top[0].type : 'unclear';
-    var secondary = top.length > 1 ? top[1].type : null;
-    var r = RESULTS[primary];
-
-    gameBox.classList.remove('active');
-    resBox.classList.add('active');
-
-    var signs = reportedSigns();
-    var html = '<div class="result-hero ' + r.cls + '">'
-      + '<h2>' + r.emoji + ' ' + r.title + '</h2>'
-      + (secondary
-          ? '<p>Also possible: <strong>' + RESULTS[secondary].title.toLowerCase() + '</strong>. When in doubt, treat it as the more dangerous one.</p>'
-          : '<p>Based on what you reported. This is guidance, not a diagnosis.</p>')
-      + '<div class="result-actions">'
-      + '<a class="btn call911" href="tel:911"><i class="fas fa-phone"></i> Call 911</a>'
-      + '</div></div>';
-
-    html += '<div class="section"><span class="eyebrow">Do this now</span><h2><i class="fas fa-first-aid"></i> Immediate actions</h2><ul>';
-    r.actions.forEach(function(act){ html += '<li>' + act + '</li>'; });
-    html += '</ul></div>';
-
-    html += '<div class="section"><span class="eyebrow">Your report</span><h2><i class="fas fa-clipboard-check"></i> What you reported</h2>';
-    if (signs.length) {
-      html += '<div class="reported-chips">' + signs.map(function(s){ return '<span>' + s + '</span>'; }).join('') + '</div>';
-    } else {
-      html += '<p style="color:var(--muted)">No concerning signs selected. If something still feels wrong, trust your gut and call.</p>';
-    }
-    html += '</div>';
-
-    html += '<div class="section"><span class="eyebrow">For the call</span><h2><i class="fas fa-phone-alt"></i> Your 911 script</h2>'
-      + '<p>Read this to the operator. Do you have naloxone with you?</p>'
-      + '<div class="naloxone-toggle" role="group" aria-label="Naloxone availability">'
-      + '<button type="button" class="chip' + (state.naloxone === 'yes' ? ' selected' : '') + '" data-nal="yes"><span class="chip-check">✓</span> I have naloxone</button>'
-      + '<button type="button" class="chip' + (state.naloxone === 'no' ? ' selected' : '') + '" data-nal="no"><span class="chip-check">✓</span> I don\'t have any</button>'
-      + '<button type="button" class="chip' + (state.naloxone === 'unsure' ? ' selected' : '') + '" data-nal="unsure"><span class="chip-check">✓</span> Not sure</button>'
-      + '</div>'
-      + '<div class="script-box" id="scriptBox">' + buildScript(top) + '</div>'
-      + '<div class="q-nav"><button type="button" class="btn primary" id="copyScript"><i class="fas fa-copy"></i> Copy script</button></div>'
-      + '</div>';
-
-    html += '<div class="section"><h2><i class="fas fa-map-marker-alt"></i> Minnesota backup lines</h2><ul>'
-      + '<li><strong>MN Poison Control:</strong> 1-800-222-1222, free medical advice, 24/7</li>'
-      + '<li><strong>MN Good Samaritan law (604A.05):</strong> limited immunity when you call 911 for an overdose</li>'
-      + '</ul></div>';
-
-    html += '<div class="q-nav" style="justify-content:center;margin-bottom:2rem">'
-      + '<button type="button" class="btn" id="restartBtn"><i class="fas fa-redo"></i> Start a new check</button>'
-      + '<a class="btn ghost" href="#emergency-info"><i class="fas fa-life-ring"></i> Emergency resources</a>'
-      + '</div>';
-
-    resBox.innerHTML = html;
-
-    resBox.querySelectorAll('[data-nal]').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        state.naloxone = btn.getAttribute('data-nal');
-        resBox.querySelectorAll('[data-nal]').forEach(function(b){
-          b.classList.toggle('selected', b === btn);
-        });
-        document.getElementById('scriptBox').textContent = buildScript(top);
-      });
-    });
-
-    document.getElementById('copyScript').addEventListener('click', function(){
-      var txt = document.getElementById('scriptBox').textContent;
-      var btn = this;
-      function done(){
-        var old = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i> Copied';
-        setTimeout(function(){ btn.innerHTML = old; }, 2200);
-      }
-      function fallback(){
-        var ta = document.createElement('textarea');
-        ta.value = txt; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); } catch(e){}
-        document.body.removeChild(ta); done();
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(done, fallback);
-      } else { fallback(); }
-    });
-
-    document.getElementById('restartBtn').addEventListener('click', restart);
-
-    setTimeout(function(){ resBox.scrollIntoView({ behavior: 'smooth' }); }, 250);
-  }
-
-  function showEmergency(reason){
-    gameBox.classList.remove('active');
-    resBox.classList.add('active');
-    resBox.innerHTML =
-      '<div class="emergency-box">'
-      + '<h2><i class="fas fa-siren"></i> Call 911 now</h2>'
-      + '<p>' + reason + ' Do not wait to be sure.</p>'
-      + '<div class="result-actions"><a class="btn call911" href="tel:911"><i class="fas fa-phone"></i> Call 911</a></div>'
-      + '</div>'
-      + '<div class="section"><h2><i class="fas fa-first-aid"></i> While help is coming</h2><ul>'
-      + '<li>If they are not breathing or barely breathing and you are trained, start rescue breathing or CPR.</li>'
-      + '<li>If opioid overdose is possible, give naloxone right away. It cannot hurt them.</li>'
-      + '<li>If they vomit while unconscious, roll them onto their side (recovery position).</li>'
-      + '<li>Stay with them until EMS arrives. Tell responders what you saw.</li>'
-      + '</ul></div>'
-      + '<div class="section"><h2><i class="fas fa-scale-balanced"></i> You are protected</h2>'
-      + '<p>Minnesota Statute 604A.05 gives limited immunity from drug possession charges when you seek medical help for an overdose in good faith. Make the call.</p></div>'
-      + '<div class="q-nav" style="justify-content:center;margin-bottom:2rem">'
-      + '<button type="button" class="btn" id="restartBtn"><i class="fas fa-redo"></i> Start over</button>'
-      + '</div>';
-    document.getElementById('restartBtn').addEventListener('click', restart);
-    setTimeout(function(){ resBox.scrollIntoView({ behavior: 'smooth' }); }, 250);
-  }
-
-  function restart(){
-    state = { step: 0, answers: {}, chips: {}, naloxone: 'unsure' };
-    resBox.classList.remove('active');
-    resBox.innerHTML = '';
-    gameBox.classList.remove('active');
-    startSection.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  /* Peach dock: drag, swipe away, snap to edge (matches homepage) */
-  var peachWrap = document.getElementById('peachWrap');
-  var panicBtn = document.getElementById('panicButton');
-  var isDragging = false, startX, startY, initialX, initialY, swipeStartX, swipeStartY;
-  var swipeThreshold = 50;
-  peachWrap.addEventListener('touchstart', handleTouchStart, false);
-  peachWrap.addEventListener('touchmove', handleTouchMove, false);
-  peachWrap.addEventListener('touchend', handleTouchEnd, false);
-  peachWrap.addEventListener('mousedown', dragStart);
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', dragEnd);
-  function handleTouchStart(e){
-    peachWrap.style.transition = '';
-    var t = e.touches[0];
-    swipeStartX = t.clientX; swipeStartY = t.clientY;
-    initialX = t.clientX - peachWrap.offsetLeft;
-    initialY = t.clientY - peachWrap.offsetTop;
-  }
-  function handleTouchMove(e){
-    if (!swipeStartX || !swipeStartY) return;
-    var t = e.touches[0];
-    var dx = t.clientX - swipeStartX, dy = t.clientY - swipeStartY;
-    if (Math.abs(dx) > swipeThreshold && Math.abs(dx) > Math.abs(dy)) {
-      peachWrap.style.display = 'none';
-      return;
-    }
-    e.preventDefault();
-    var x = t.clientX - initialX, y = t.clientY - initialY;
-    x = Math.max(0, Math.min(x, window.innerWidth - peachWrap.offsetWidth));
-    y = Math.max(0, Math.min(y, window.innerHeight - peachWrap.offsetHeight));
-    peachWrap.style.left = x + 'px'; peachWrap.style.top = y + 'px';
-    peachWrap.style.right = 'auto'; peachWrap.style.bottom = 'auto';
-  }
-  function handleTouchEnd(){
-    swipeStartX = null; swipeStartY = null;
-    snapPeachToEdge();
-  }
-  function dragStart(e){
-    peachWrap.style.transition = '';
-    initialX = e.clientX - peachWrap.offsetLeft;
-    initialY = e.clientY - peachWrap.offsetTop;
-    if (e.target === panicBtn || e.target === peachWrap) isDragging = true;
-  }
-  function drag(e){
-    if (!isDragging) return;
-    e.preventDefault();
-    var x = e.clientX - initialX, y = e.clientY - initialY;
-    x = Math.max(0, Math.min(x, window.innerWidth - peachWrap.offsetWidth));
-    y = Math.max(0, Math.min(y, window.innerHeight - peachWrap.offsetHeight));
-    peachWrap.style.left = x + 'px'; peachWrap.style.top = y + 'px';
-    peachWrap.style.right = 'auto'; peachWrap.style.bottom = 'auto';
-  }
-  function dragEnd(){
-    isDragging = false;
-    snapPeachToEdge();
-  }
-  function snapPeachToEdge(){
-    if (peachWrap.style.display === 'none') return;
-    var w = peachWrap.offsetWidth;
-    var x = peachWrap.offsetLeft + w / 2;
-    peachWrap.style.transition = 'left .25s ease, right .25s ease';
-    if (x < window.innerWidth / 2) {
-      peachWrap.style.left = '8px'; peachWrap.style.right = 'auto';
-    } else {
-      peachWrap.style.left = 'auto'; peachWrap.style.right = '8px';
-    }
-    setTimeout(function(){ peachWrap.style.transition = ''; }, 300);
-  }
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').catch(function(){});
-    });
-  }
-})();
-</script>
     <script src="/js/section-nav.js" defer></script>
 <script>(function(){function faLoaded(){try{return document.fonts.check('900 16px "Font Awesome 6 Free"');}catch(e){return true;}}function apply(){if(!faLoaded())document.documentElement.classList.add('fa-fallback');}if(document.readyState==='complete'){setTimeout(apply,400);}else{window.addEventListener('load',function(){setTimeout(apply,400);});}})();</script>
 
@@ -1014,5 +505,377 @@
   <button type="button" aria-label="Go back to the previous page" onclick="if(window.history.length>1){window.history.back()}else{window.location.href='/'}" style="flex:1 1 140px;max-width:250px;min-height:42px;padding:7px 16px;font-size:0.92rem;font-weight:600;letter-spacing:.01em;color:#00f7e0;background:transparent;border:1px solid #00f7e0;border-radius:999px;cursor:pointer;box-sizing:border-box">&#8592;&nbsp; Back</button>
   <button type="button" aria-label="Go back to the top of this page" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="flex:1 1 140px;max-width:250px;min-height:42px;padding:7px 16px;font-size:0.92rem;font-weight:600;letter-spacing:.01em;color:#00f7e0;background:transparent;border:1px solid #00f7e0;border-radius:999px;cursor:pointer;box-sizing:border-box">&#8593;&nbsp; Back to top</button>
 </nav>
+<script>
+window.SC2 = (function(){
+  var QUESTIONS = [
+    { id:"conscious", title:"Is the person awake and responsive?", icon:"🧠",
+      options:[
+        {text:"Awake and responsive", value:"awake", icon:"✅"},
+        {text:"Very drowsy, slow to respond", value:"slow", icon:"😴"},
+        {text:"Unresponsive, cannot wake them", value:"unresponsive", icon:"🚫"}],
+      note:"Try shouting their name and shaking their shoulders firmly first."},
+    { id:"substance", title:"Do you know what they took?", icon:"💊",
+      options:[
+        {text:"Opioids", sub:"fentanyl, heroin, painkillers", value:"opioids", icon:"💉"},
+        {text:"Stimulants", sub:"coke, meth, MDMA", value:"stimulants", icon:"⚡"},
+        {text:"Alcohol", sub:"beer, liquor, mixed drinks", value:"alcohol", icon:"🍺"},
+        {text:"Benzos", sub:"Xanax, Klonopin, Valium", value:"benzos", icon:"💤"},
+        {text:"GHB or GBL", sub:"G, liquid ecstasy", value:"ghb", icon:"💧"},
+        {text:"Psychedelics", sub:"LSD, shrooms", value:"psychs", icon:"🌈"},
+        {text:"Ketamine", sub:"K, special K", value:"ketamine", icon:"🐴"},
+        {text:"Do not know / not sure", value:"unknown", icon:"❓"}],
+      note:"Guess only if you have a real reason to. Not knowing is a perfectly good answer. Street drugs are often mixed with things nobody chose."},
+    { id:"breathing", title:"How is their breathing?", icon:"🌬️",
+      options:[
+        {text:"Seems normal", value:"normal", icon:"😊"},
+        {text:"Slow, irregular, or long pauses", value:"slow", icon:"😫"},
+        {text:"Fast or racing", value:"fast", icon:"💨"},
+        {text:"Stopped, gasping, or only occasional breaths", value:"stopped", icon:"🛑"},
+        {text:"Count it for me", sub:"tap a button for each breath, 15 seconds", value:"count", icon:"🔢", input:true}],
+      note:"Under 8 breaths a minute, or gaps over 10 seconds, is an emergency."},
+    { id:"pupils", title:"How do their pupils look?", icon:"👁️",
+      options:[
+        {text:"Pinpoint, very small", value:"pinpoint", icon:"●"},
+        {text:"Dilated, very wide", value:"dilated", icon:"○"},
+        {text:"Normal, or cannot tell", value:"normal", icon:"◎"}],
+      note:"Pinpoint suggests opioids. Dilated suggests stimulants or serotonin problems."},
+    { id:"skin", title:"How does their skin feel?", icon:"🌡️",
+      options:[
+        {text:"Hot and very sweaty", value:"hot_sweaty", icon:"🔥"},
+        {text:"Hot and dry", value:"hot_dry", icon:"🏜️"},
+        {text:"Cold, pale, or bluish", value:"cold", icon:"❄️"},
+        {text:"Normal, or not sure", value:"normal", icon:"😐"}],
+      note:"Hot dry skin with confusion is a classic heat stroke warning. Heat stroke skin is not always sweaty."},
+    { id:"meds", title:"Did they mix anything, or take regular meds?", icon:"🧩",
+      options:[
+        {text:"Antidepressants or tramadol", sub:"SSRI or SNRI meds, tramadol, MAOIs", value:"serotonergic", icon:"💊"},
+        {text:"Alcohol or benzos with another downer", sub:"two or more things that slow breathing", value:"downer_mix", icon:"⚠️"},
+        {text:"Several different substances", value:"multi", icon:"🎲"},
+        {text:"No, or do not know", value:"none", icon:"❓"}],
+      note:"Mixing MDMA with antidepressants or tramadol is the classic setup for serotonin syndrome. Mixing downers is the classic setup for breathing that stops."},
+    { id:"signs", title:"Which of these do you see? Tap all that apply.", icon:"🔎", multi:true,
+      options:[
+        {text:"Blue lips or nails", value:"blue_lips", icon:"💙"},
+        {text:"Gurgling or snoring sounds", value:"gurgle", icon:"💤"},
+        {text:"Limp body", value:"limp", icon:"🫠"},
+        {text:"Clammy or sweaty skin", value:"clammy", icon:"💦"},
+        {text:"Overheating, hot skin", value:"overheat", icon:"🌡️"},
+        {text:"Agitated or confused", value:"agitation", icon:"🤯"},
+        {text:"Racing heartbeat", value:"fast_hr", icon:"❤️‍🔥"},
+        {text:"Chest pain", value:"chest_pain", icon:"💔"},
+        {text:"Seizure or collapse", value:"seizure", icon:"⚡"},
+        {text:"Vomiting while unconscious", value:"vomit_uncon", icon:"🤮"},
+        {text:"Muscle twitching or stiff legs", value:"twitch_rigid", icon:"🦵"},
+        {text:"Slow heartbeat, hard to find a pulse", value:"slow_hr", icon:"🐌"},
+        {text:"Repeated vomiting", value:"repeat_vomit", icon:"🤢"},
+        {text:"Unusual skin wounds or sores", value:"wounds", icon:"🩹"}]}
+  ];
+
+  var RESULTS = {
+    opioid:{ name:"opioid overdose", title:"Possible opioid overdose", emoji:"🚨", cls:"danger", urgency:"now", urgencyText:"Call 911 now",
+      actions:["Call 911 right now. Do not wait to be sure.","Give naloxone (Narcan) if you have it. It cannot hurt them.","If breathing does not improve in 2 to 3 minutes, give another dose. Potent synthetic opioids like fentanyl and nitazenes can need more than one dose.","If they are not breathing normally, give rescue breaths, one every 5 seconds.","If breathing but unconscious, roll them into the recovery position, on their side.","Stay until help arrives. Naloxone wears off in 30 to 90 minutes and breathing can slow again."]},
+    tranq:{ name:"heavy sedation, xylazine or medetomidine may be involved", title:"Possible heavy sedation that naloxone alone may not fix", emoji:"😶‍🌫️", cls:"danger", urgency:"now", urgencyText:"Call 911 now",
+      actions:["Call 911, especially if breathing is slow, their heart rate seems slow, or you cannot wake them.","Give naloxone anyway. These sedatives are usually mixed with fentanyl, and naloxone still reverses the opioid part.","Do not expect them to fully wake up. Xylazine and medetomidine are not opioids, so naloxone does not reverse them.","Keep giving rescue breaths, one every 5 seconds, if breathing is slow or stopping. Breathing support matters most here.","Roll them into the recovery position and stay with them. This kind of sedation can last a long time.","Unusual skin wounds or sores can go with xylazine. They need medical care even if the person wakes up."]},
+    stimulant:{ name:"stimulant toxicity, also called overamping", title:"Possible stimulant toxicity (overamping)", emoji:"⚡", cls:"danger", urgency:"now", urgencyText:"Call 911 for the danger signs below",
+      actions:["Call 911 for chest pain, a seizure, extreme overheating, severe agitation, or unresponsiveness.","Move them somewhere cooler and quieter. Fewer people, lower lights, one calm voice.","Cool them down: wet cloths or ice packs under the armpits, on the neck and forehead, and fan them.","Small sips of water or an electrolyte drink only if they are fully awake and can swallow.","Do not hold them down, and do not give alcohol, benzos, or more drugs to try to bring them down."]},
+    serotonin:{ name:"serotonin syndrome", title:"Possible serotonin syndrome", emoji:"🌡️", cls:"danger", urgency:"now", urgencyText:"Call 911 now",
+      actions:["Call 911 right now. Serotonin syndrome can get dangerous fast and needs hospital care.","Stop the activity. Get them out of the heat and into a cool, quiet place.","Cool them down: remove extra clothing, wet their skin, and fan them.","Muscle twitching, stiff legs, agitation, heavy sweating, and a racing heart together are the pattern to take seriously.","Do not restrain them, and do not give more of any drug, including anything meant to calm them down."]},
+    heatstroke:{ name:"heat stroke", title:"Possible heat stroke", emoji:"🥵", cls:"danger", urgency:"now", urgencyText:"Call 911 now, cool first",
+      actions:["Call 911 right now. Heat stroke can kill fast.","Cool them as fast as you can while you wait. Cold water immersion is best if it is available and safe.","No tub? Wet as much of their body as you can, fan them hard, and put ice packs on the neck, armpits, and groin.","Remove extra clothing and move them to shade or air conditioning.","Do not give them anything to drink if they are confused, vomiting, or unconscious, and do not use fever medicine like acetaminophen. This is not a fever."]},
+    heatexhaustion:{ name:"heat exhaustion", title:"Possible heat exhaustion", emoji:"💦", cls:"caution", urgency:"soon", urgencyText:"Act now, call 911 if it gets worse",
+      actions:["Stop the activity and move them to shade or somewhere cool and restful.","Loosen or remove extra clothing, wet their skin with cool cloths, and fan them.","Small sips of water or an electrolyte drink if they are awake and can swallow.","Call 911 or get urgent care if they vomit repeatedly, feel worse, get confused, or do not improve within about an hour.","Watch them closely. Heat exhaustion can tip into heat stroke."]},
+    alcohol:{ name:"alcohol poisoning", title:"Possible alcohol poisoning", emoji:"🍺", cls:"danger", urgency:"now", urgencyText:"Call 911 now",
+      actions:["Call 911 if they are unconscious, cannot be woken, breathing slowly, or having a seizure.","Roll them into the recovery position so they do not choke if they vomit.","Do not leave them to sleep it off. Alcohol levels can keep rising for 30 to 40 minutes after the last drink, so someone can get worse after they stop drinking.","Keep them warm with a coat or blanket, and keep checking their breathing.","Do not try to make them vomit, and no coffee, food, or cold showers."]},
+    ghb:{ name:"GHB or GBL overdose", title:"Possible GHB or GBL overdose", emoji:"💧", cls:"danger", urgency:"now", urgencyText:"Call 911 now",
+      actions:["Call 911. GHB can take someone from awake to unresponsive very fast, and breathing can stop.","Roll them into the recovery position, on their side, so vomit cannot block their airway.","Stay and keep watching their breathing the whole time. If breathing stops, start rescue breaths and follow the 911 dispatcher.","They may wake up suddenly. That does not mean the danger is over, so still let responders check them.","Alcohol, benzos, ketamine, and opioids mixed with GHB make this much more dangerous. Tell responders everything that was taken."]},
+    unclear:{ name:"an unclear picture", title:"Unclear picture, treat it seriously", emoji:"🤔", cls:"caution", urgency:"soon", urgencyText:"Stay with them, get advice now",
+      actions:["Stay with them and keep watching their breathing closely.","Call Poison Control for guidance: 1-800-222-1222, free and open 24/7.","Call 911 if anything gets worse, breathing changes, or you get scared.","Trust your gut. Something is wrong is enough reason to call."]}
+  };
+
+  function score(answers, chips){
+    var s = {opioid:0, tranq:0, stimulant:0, serotonin:0, heatstroke:0, heatexhaustion:0, alcohol:0, ghb:0};
+    function add(k,v){ s[k]+=v; }
+    var c = answers.conscious, sub = answers.substance, br = answers.breathing, pu = answers.pupils, sk = answers.skin, md = answers.meds;
+    if(c==="unresponsive"){ add("opioid",3); add("ghb",3); add("tranq",2); add("alcohol",2); }
+    if(c==="slow"){ add("opioid",2); add("ghb",2); add("tranq",2); add("alcohol",2); }
+    if(sub==="opioids"){ add("opioid",4); add("tranq",2); }
+    if(sub==="stimulants"){ add("stimulant",4); add("serotonin",2); add("heatstroke",1); }
+    if(sub==="alcohol"){ add("alcohol",4); add("ghb",1); }
+    if(sub==="benzos"){ add("ghb",2); add("alcohol",1); add("opioid",1); add("tranq",1); }
+    if(sub==="ghb"){ add("ghb",5); }
+    if(sub==="psychs"){ add("serotonin",1); add("stimulant",1); }
+    if(sub==="ketamine"){ add("ghb",1); add("tranq",1); }
+    if(br==="slow"){ add("opioid",3); add("ghb",3); add("tranq",3); add("alcohol",2); }
+    if(br==="stopped"){ add("opioid",4); add("ghb",3); add("tranq",2); add("alcohol",1); }
+    if(br==="fast"){ add("stimulant",2); add("serotonin",2); add("heatstroke",2); add("heatexhaustion",1); }
+    if(pu==="pinpoint"){ add("opioid",3); add("tranq",1); }
+    if(pu==="dilated"){ add("stimulant",2); add("serotonin",2); }
+    if(sk==="hot_sweaty"){ add("heatstroke",2); add("heatexhaustion",2); add("stimulant",2); add("serotonin",2); }
+    if(sk==="hot_dry"){ add("heatstroke",4); add("serotonin",1); add("stimulant",1); }
+    if(sk==="cold"){ add("opioid",2); add("alcohol",2); add("ghb",1); add("tranq",1); }
+    if(md==="serotonergic"){ add("serotonin",4); }
+    if(md==="downer_mix"){ add("opioid",2); add("ghb",2); add("alcohol",2); }
+    if(md==="multi"){ add("opioid",1); add("stimulant",1); add("ghb",1); }
+    var chipMap = {
+      blue_lips:[["opioid",3],["tranq",1],["ghb",1]],
+      gurgle:[["opioid",3],["ghb",2],["alcohol",1]],
+      limp:[["opioid",2],["ghb",2],["tranq",2]],
+      clammy:[["alcohol",2],["heatexhaustion",2],["opioid",1]],
+      overheat:[["heatstroke",3],["stimulant",2],["serotonin",2]],
+      agitation:[["stimulant",3],["serotonin",3]],
+      fast_hr:[["stimulant",3],["serotonin",2],["heatstroke",1]],
+      chest_pain:[["stimulant",4],["serotonin",1]],
+      seizure:[["stimulant",2],["serotonin",2],["alcohol",1]],
+      vomit_uncon:[["alcohol",3],["ghb",2],["opioid",1]],
+      twitch_rigid:[["serotonin",4],["stimulant",1]],
+      slow_hr:[["tranq",4],["ghb",2],["opioid",1]],
+      repeat_vomit:[["alcohol",2],["heatexhaustion",1],["ghb",1]],
+      wounds:[["tranq",4]]
+    };
+    Object.keys(chips).forEach(function(k){ if(chips[k] && chipMap[k]){ chipMap[k].forEach(function(p){ add(p[0],p[1]); }); } });
+    // Heat exhaustion should not outrank a clear heat stroke picture.
+    if(sk==="hot_dry" || chips.overheat && c!=="awake"){ add("heatstroke",1); }
+    var ranked = Object.keys(s).map(function(k){ return {key:k, score:s[k]}; }).sort(function(a,b){ return b.score-a.score; });
+    var top = ranked[0];
+    var key = top.score < 3 ? "unclear" : top.key;
+    // If the person is breathing and the top score is a tie between sedation causes, tranq only wins with its specific flags.
+    if(key==="tranq" && !(chips.slow_hr || chips.wounds || sub==="opioids" && br==="slow" && c!=="awake")){ key = ranked[1] && ranked[1].score>0 ? ranked[1].key : "opioid"; }
+    var notes = [];
+    if(chips.seizure){ notes.push("Seizure first aid: time it, protect their head, put nothing in their mouth, and roll them onto their side after. Call 911 if it lasts over 5 minutes, repeats, or breathing does not come back normally."); }
+    if(chips.wounds){ notes.push("The skin wounds you tapped can go with xylazine in the drug supply. They need medical care, cleaning, and watching for infection, even if everything else improves."); }
+    if(md==="serotonergic" && (sub==="stimulants" || chips.twitch_rigid)){ notes.push("The mix you described, a stimulant plus an antidepressant, tramadol, or a similar med, is the classic setup for serotonin syndrome."); }
+    if(md==="downer_mix"){ notes.push("Two or more downers together slow breathing much more than either one alone. That is why watching breathing and calling early matters so much here."); }
+    return { key:key, ranked:ranked, scores:s, notes:notes };
+  }
+
+  var LABELS = {
+    conscious:{awake:"awake and responsive", slow:"very drowsy", unresponsive:"unresponsive"},
+    substance:{opioids:"opioids", stimulants:"stimulants", alcohol:"alcohol", benzos:"benzos", ghb:"GHB or GBL", psychs:"psychedelics", ketamine:"ketamine", unknown:"an unknown substance"},
+    breathing:{normal:"breathing seems normal", slow:"breathing is slow or irregular", fast:"breathing is fast", stopped:"breathing has stopped or is gasping"},
+    pupils:{pinpoint:"pinpoint pupils", dilated:"dilated pupils", normal:"pupils look normal"},
+    skin:{hot_sweaty:"skin is hot and very sweaty", hot_dry:"skin is hot and dry", cold:"skin is cold, pale, or bluish", normal:"skin seems normal"},
+    meds:{serotonergic:"they take antidepressants or tramadol", downer_mix:"alcohol or benzos were mixed with another downer", multi:"several substances were mixed", none:"no known mixing"}
+  };
+  var CHIP_LABELS = {blue_lips:"blue lips or nails", gurgle:"gurgling or snoring sounds", limp:"limp body", clammy:"clammy or sweaty skin", overheat:"overheating", agitation:"agitation or confusion", fast_hr:"racing heartbeat", chest_pain:"chest pain", seizure:"seizure or collapse", vomit_uncon:"vomiting while unconscious", twitch_rigid:"muscle twitching or stiff legs", slow_hr:"slow heartbeat", repeat_vomit:"repeated vomiting", wounds:"unusual skin wounds"};
+
+  return { QUESTIONS:QUESTIONS, RESULTS:RESULTS, score:score, LABELS:LABELS, CHIP_LABELS:CHIP_LABELS };
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  var Q = window.SC2.QUESTIONS, R = window.SC2.RESULTS;
+  var state = { step:0, answers:{}, chips:{}, naloxone:"unsure", lastResult:null };
+  var startBtn = document.getElementById("startButton");
+  var startSection = document.getElementById("startSection");
+  var gameBox = document.getElementById("gameContainer");
+  var qBox = document.getElementById("questionContainer");
+  var resBox = document.getElementById("resultsContainer");
+  var progressBar = document.getElementById("progressBar");
+  var progressText = document.getElementById("progressText");
+  var stepCounter = document.getElementById("stepCounter");
+  var timerInt = null, naloInt = null;
+
+  startBtn.addEventListener("click", function(){
+    startSection.style.display = "none";
+    resBox.style.display = "none";
+    gameBox.classList.add("active");
+    renderQuestion(0);
+    gameBox.scrollIntoView({behavior:"smooth"});
+  });
+
+  function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+  function renderQuestion(i){
+    state.step = i;
+    var q = Q[i];
+    var pct = ((i+1)/Q.length)*100;
+    progressBar.style.width = pct + "%";
+    progressText.textContent = "Question " + (i+1) + " of " + Q.length;
+    stepCounter.textContent = "Step " + (i+1) + " of " + Q.length;
+    var html = '<div class="question"><span>' + q.icon + '</span><span>' + esc(q.title) + '</span></div>';
+    if(state.answers.conscious === "unresponsive" && i > 0){
+      html += '<div class="sc2-alert show"><strong>They are unresponsive.</strong> You can stop here and get help steps now. <button type="button" class="btn primary" id="skipBtn" style="margin-left:.5rem">Skip to help steps</button></div>';
+    }
+    if(q.multi){
+      html += '<div class="chips-container" role="group" aria-label="Select all signs you see">';
+      q.options.forEach(function(o){
+        var sel = state.chips[o.value] ? " selected" : "";
+        html += '<button type="button" class="chip' + sel + '" data-chip="' + o.value + '" aria-pressed="' + (state.chips[o.value] ? "true" : "false") + '"><span class="chip-check">✓</span><span>' + o.icon + '</span> <span>' + esc(o.text) + '</span></button>';
+      });
+      html += '</div><div class="q-nav"><button type="button" class="btn primary" id="analyzeBtn">Analyze symptoms</button></div>';
+    } else {
+      html += '<div class="options-grid">';
+      q.options.forEach(function(o){
+        html += '<button type="button" class="option" data-val="' + o.value + '"><span class="oicon">' + o.icon + '</span><span>' + esc(o.text) + (o.sub ? '<small>' + esc(o.sub) + '</small>' : '') + '</span></button>';
+      });
+      html += '</div><div id="counterSlot"></div>';
+    }
+    if(q.note){ html += '<p class="q-note">' + esc(q.note) + '</p>'; }
+    if(i > 0){ html += '<div class="q-nav"><button type="button" class="btn ghost" id="backBtn">Back</button></div>'; }
+    qBox.innerHTML = html;
+
+    var skip = document.getElementById("skipBtn");
+    if(skip){ skip.addEventListener("click", showResults); }
+    var back = document.getElementById("backBtn");
+    if(back){ back.addEventListener("click", function(){ renderQuestion(i-1); }); }
+
+    if(q.multi){
+      qBox.querySelectorAll("[data-chip]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var v = btn.getAttribute("data-chip");
+          state.chips[v] = !state.chips[v];
+          btn.classList.toggle("selected", state.chips[v]);
+          btn.setAttribute("aria-pressed", state.chips[v] ? "true" : "false");
+        });
+      });
+      document.getElementById("analyzeBtn").addEventListener("click", showResults);
+    } else {
+      qBox.querySelectorAll("[data-val]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var v = btn.getAttribute("data-val");
+          if(q.id === "breathing" && v === "count"){ openCounter(q, i); return; }
+          state.answers[q.id] = v;
+          if(i + 1 < Q.length){ renderQuestion(i+1); } else { showResults(); }
+        });
+      });
+    }
+  }
+
+  function openCounter(q, i){
+    var slot = document.getElementById("counterSlot");
+    var taps = 0, left = 15, running = false;
+    slot.innerHTML = '<div class="sc2-counter show"><p style="margin:.2rem 0"><strong>Tap the big button for every breath you see, chest rising.</strong></p>'
+      + '<button type="button" class="sc2-tapbtn" id="tapBtn">TAP<br><span id="tapCount" style="font-size:2rem">0</span></button>'
+      + '<p id="countStatus" style="font-size:1.1rem;margin:.7rem 0">Press Start, then tap for 15 seconds.</p>'
+      + '<div class="q-nav" style="justify-content:center"><button type="button" class="btn primary" id="countStart">Start 15 seconds</button>'
+      + '<button type="button" class="btn ghost" id="countCancel">Cancel</button></div></div>';
+    slot.scrollIntoView({behavior:"smooth"});
+    document.getElementById("tapBtn").addEventListener("click", function(){ if(running){ taps++; document.getElementById("tapCount").textContent = taps; } });
+    document.getElementById("countCancel").addEventListener("click", function(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } slot.innerHTML = ""; });
+    document.getElementById("countStart").addEventListener("click", function(){
+      if(running) return; running = true; taps = 0; left = 15;
+      document.getElementById("tapCount").textContent = "0";
+      timerInt = setInterval(function(){
+        left--;
+        document.getElementById("countStatus").textContent = left > 0 ? ("Counting... " + left + " seconds left") : "Done";
+        if(left <= 0){
+          clearInterval(timerInt); timerInt = null; running = false;
+          var bpm = taps * 4, cls = bpm < 8 ? "stopped" : (bpm < 12 ? "slow" : (bpm <= 20 ? "normal" : "fast"));
+          state.answers.breathing = cls;
+          document.getElementById("countStatus").innerHTML = "<strong>About " + bpm + " breaths a minute.</strong> " + (cls === "normal" ? "That is in the normal range." : (cls === "fast" ? "That is fast." : "That is dangerously slow."));
+          setTimeout(function(){ if(i + 1 < Q.length){ renderQuestion(i+1); } }, 1400);
+        }
+      }, 1000);
+    });
+  }
+
+  function reportedList(){
+    var out = [];
+    ["conscious","substance","breathing","pupils","skin","meds"].forEach(function(k){
+      if(state.answers[k] && window.SC2.LABELS[k][state.answers[k]]){ out.push(window.SC2.LABELS[k][state.answers[k]]); }
+    });
+    Object.keys(state.chips).forEach(function(k){ if(state.chips[k] && window.SC2.CHIP_LABELS[k]){ out.push(window.SC2.CHIP_LABELS[k]); } });
+    return out;
+  }
+
+  function scriptText(r){
+    var rep = reportedList();
+    var naloLine = state.naloxone === "have" ? "I have naloxone and can give it." : (state.naloxone === "none" ? "I do not have naloxone." : "I am not sure if naloxone is available.");
+    return "Hi, I need an ambulance. Someone is not okay. It looks like " + r.name + ". "
+      + (rep.length ? "What I can see: " + rep.join(", ") + ". " : "")
+      + naloLine + " Please tell me what to do until you get here. I will stay on the line.";
+  }
+
+  function resultCard(r, label){
+    var html = '<div class="sc2-result ' + r.cls + '">'
+      + (label ? '<p style="margin:0;color:var(--muted);font-weight:700">' + label + '</p>' : '')
+      + '<h2>' + r.emoji + ' ' + esc(r.title) + '</h2>'
+      + '<span class="sc2-urgency ' + r.urgency + '">' + esc(r.urgencyText) + '</span>'
+      + '<a class="sc2-call" href="tel:911">Call 911</a>'
+      + '<h3>Immediate actions</h3><ul class="sc2-actions">'
+      + r.actions.map(function(a){ return "<li>" + esc(a) + "</li>"; }).join("")
+      + '</ul></div>';
+    return html;
+  }
+
+  function toolboxFor(key){
+    if(key === "opioid" || key === "tranq"){
+      return '<div class="sc2-toolbox"><h3 style="margin-top:0">Naloxone repeat timer</h3>'
+        + '<p>Give one dose. If breathing does not improve, give another dose when this timer ends, every 2 to 3 minutes.</p>'
+        + '<div class="sc2-timer" id="naloTimer">2:30</div>'
+        + '<p id="naloMsg" style="text-align:center"></p>'
+        + '<div class="q-nav" style="justify-content:center"><button type="button" class="btn primary" id="naloStart">Start timer</button></div></div>';
+    }
+    if(key === "heatstroke" || key === "heatexhaustion"){
+      var items = ["Move them to shade or air conditioning","Remove extra clothing","Wet as much of their skin as you can","Fan them the whole time","Ice packs on neck, armpits, and groin if you have them"];
+      if(key === "heatexhaustion"){ items = ["Move them to shade or somewhere cool","Loosen or remove extra clothing","Cool wet cloths on their skin","Fan them","Small sips of water or an electrolyte drink if fully awake"]; }
+      return '<div class="sc2-toolbox"><h3 style="margin-top:0">Cooling checklist, tick as you go</h3>'
+        + items.map(function(t){ return '<label class="sc2-check"><input type="checkbox"><span>' + esc(t) + '</span></label>'; }).join("") + '</div>';
+    }
+    return "";
+  }
+
+  function showResults(){
+    if(timerInt){ clearInterval(timerInt); timerInt = null; }
+    var out = window.SC2.score(state.answers, state.chips);
+    state.lastResult = out;
+    var primary = R[out.key];
+    var html = resultCard(primary, "");
+    var second = out.ranked.filter(function(x){ return x.key !== out.key && x.score > 0; })[0];
+    if(second && out.key !== "unclear" && second.score >= (out.scores[out.key] - 2) && R[second.key]){
+      html += resultCard(R[second.key], "Also possible, close second");
+    }
+    html += toolboxFor(out.key);
+    if(out.notes.length){
+      html += '<div class="sc2-toolbox"><h3 style="margin-top:0">Worth knowing for this picture</h3>' + out.notes.map(function(n){ return "<p>" + esc(n) + "</p>"; }).join("") + '</div>';
+    }
+    var rep = reportedList();
+    html += '<div class="sc2-toolbox"><h3 style="margin-top:0">What you reported</h3><div class="sc2-reported">'
+      + (rep.length ? rep.map(function(t){ return "<span>" + esc(t) + "</span>"; }).join("") : "<span>Not much was selected, which is why the picture is unclear.</span>")
+      + '</div></div>';
+    html += '<div class="sc2-toolbox"><h3 style="margin-top:0">Do you have naloxone?</h3><div class="q-nav">'
+      + '<button type="button" class="btn" data-nalo="have">I have it</button>'
+      + '<button type="button" class="btn" data-nalo="none">I do not have it</button>'
+      + '<button type="button" class="btn" data-nalo="unsure">Not sure</button></div>'
+      + '<h3>Your 911 script, read it word for word</h3><div class="sc2-script" id="scriptBox">' + esc(scriptText(primary)) + '</div></div>';
+    html += '<div class="sc2-toolbox"><h3 style="margin-top:0">Minnesota backup lines</h3><p>MN Poison Control: 1-800-222-1222 &nbsp;•&nbsp; Never Use Alone: 1-800-484-3731 &nbsp;•&nbsp; Crisis Text Line: text HOME to 741741</p>'
+      + '<p>Minnesota Good Samaritan law 604A.05 gives limited immunity to people who call 911 during an overdose.</p>'
+      + '<div class="q-nav"><button type="button" class="btn ghost" id="restartBtn">Start over</button></div></div>';
+    gameBox.classList.remove("active");
+    resBox.innerHTML = html;
+    resBox.style.display = "block";
+    resBox.scrollIntoView({behavior:"smooth"});
+
+    resBox.querySelectorAll("[data-nalo]").forEach(function(b){
+      b.addEventListener("click", function(){
+        state.naloxone = b.getAttribute("data-nalo");
+        document.getElementById("scriptBox").textContent = scriptText(primary);
+      });
+    });
+    var restart = document.getElementById("restartBtn");
+    if(restart){ restart.addEventListener("click", function(){
+      state.answers = {}; state.chips = {}; state.naloxone = "unsure";
+      if(naloInt){ clearInterval(naloInt); naloInt = null; }
+      resBox.style.display = "none"; startSection.style.display = "block";
+      startSection.scrollIntoView({behavior:"smooth"});
+    }); }
+    var naloStart = document.getElementById("naloStart");
+    if(naloStart){ naloStart.addEventListener("click", function(){
+      if(naloInt){ clearInterval(naloInt); }
+      var left = 150;
+      var disp = document.getElementById("naloTimer"), msg = document.getElementById("naloMsg");
+      msg.textContent = "Keep giving rescue breaths while you wait.";
+      naloInt = setInterval(function(){
+        left--;
+        disp.textContent = Math.floor(left/60) + ":" + String(left%60).padStart(2,"0");
+        if(left <= 0){ clearInterval(naloInt); naloInt = null; disp.textContent = "0:00"; msg.innerHTML = "<strong>Time. Give another dose if they are still not breathing normally, then restart the timer.</strong>"; }
+      }, 1000);
+    }); }
+  }
+})();
+</script>
+
 </body>
 </html>
