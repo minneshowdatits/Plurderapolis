@@ -1,6 +1,6 @@
 /* PLURderapolis offline support: keeps the crisis pages usable with zero bars.
    Version the cache name when the precached pages change so updates propagate. */
-const CACHE_NAME = 'plurderapolis-v57';
+const CACHE_NAME = 'plurderapolis-v58';
 
 // The pages someone might need at a festival with no signal.
 const PRECACHE_URLS = [
@@ -73,6 +73,9 @@ self.addEventListener('fetch', (event) => {
 // {type:'CACHE_ALL', urls:[...]} and gets progress messages back.
 self.addEventListener('message', (event) => {
   const msg = event.data || {};
+  // Update toast on the homepage posts {type:'SKIP_WAITING'} when a new
+  // version is waiting; activate it so the page can reload onto it.
+  if (msg.type === 'SKIP_WAITING') { self.skipWaiting(); return; }
   if (msg.type !== 'CACHE_ALL' || !Array.isArray(msg.urls)) return;
   const replyTo = event.source && event.source.id;
   const reply = (m) => {
