@@ -837,7 +837,7 @@ html.aurora-on .aurora-layer{opacity:.95;animation:auroraSway 9s ease-in-out inf
   </div>
 </section>
 <div class="aurora-note" id="auroraNote" hidden></div>
-<div class="search-container"><div class="search-bar"><input type="text" id="searchInput" placeholder="Search the entire site... (e.g. naloxone, test strips, bad trip)"><button onclick="performSearch()">🔍</button></div><div id="searchResults"></div></div>
+<div class="search-container"><div class="search-bar"><input type="text" id="searchInput" placeholder="Search in your own words... try &quot;my friend wont wake up&quot; or &quot;feeling paranoid&quot;" aria-label="Search the whole site"><button id="voiceBtn" type="button" title="Search by voice" aria-label="Search by voice" style="background:transparent;color:#fff;padding:12px 6px">🎤</button><button onclick="performSearch()">🔍</button></div><div id="searchResults" role="listbox" aria-live="polite"></div><div id="searchChips" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px"></div></div>
 
 
 <div class="mobile-hud"><a href="panic.html" class="hud-btn"><span>🚨</span>Panic</a><a href="polydrug.html" class="hud-btn"><span>💊</span>Tool</a><a href="resources.html" class="hud-btn"><span>📚</span>Resources</a><a href="booth.html" class="hud-btn"><span>🎉</span>Booth</a><a href="badtrip.html" class="hud-btn"><span>🌈</span>Bad Trip</a></div><a class="offline-strip" href="offline-bundle.html"><span style="font-size:1.3rem">📦</span><span><strong>Zero bars? No problem.</strong><small>Take the whole site with you: guides, overdose help, drug interaction checker, everything.</small></span><span class="go">Save offline</span></a>
@@ -945,36 +945,65 @@ const siteContent=[
 {title:"Aftercare & Recovery",url:"aftercare.html",category:"Resources",content:"The 48 hours after the show: sleep, food, rest, and check-in culture.",keys:"aftercare recovery 48 hours sleep food rest comedown integration check in friends"},
 {title:"Safer Snorting",url:"snorting.html",category:"Resources",content:"Reduce the damage: grind fine, never share straws, nose care.",keys:"snorting nose straw straws bump share nasal saline rinse nosebleed coke ketamine damage"},
 {title:"Anonymous Tip Line",url:"anon-tip.html",category:"Safety",content:"Report safety concerns, harassment, or sketchy situations anonymously.",keys:"anonymous tip report harassment safety concern sketchy tip line"},
-{title:"Disclaimers & Terms",url:"legal-disclaimers-terms.html",category:"Main",content:"Educational purposes, liability, and terms of use.",keys:"disclaimer terms legal liability educational"},{title:"Test Strips: Check Before You Use",url:"test-strips.html",category:"Drug Info",content:"Fentanyl and xylazine test strips: how to mix, dip, time 5 minutes, and read the lines.",keys:"test strips fentanyl xylazine testing how to use timer 5 minutes one line two lines positive negative dip mix dilute reagent ehrlich fake acid nbome blotter"}
+{title:"Disclaimers & Terms",url:"legal-disclaimers-terms.html",category:"Main",content:"Educational purposes, liability, and terms of use.",keys:"disclaimer terms legal liability educational"},{title:"Overdose Guide en español",url:"overdose-es.html",category:"Safety",content:"Guía de sobredosis en español: signos, respuesta paso a paso y naloxona.",keys:"espanol spanish sobredosis naloxona narcan guia overdose en espanol ayuda emergencia"},
+{title:"Test Strips: Check Before You Use",url:"test-strips.html",category:"Drug Info",content:"Fentanyl and xylazine test strips: how to mix, dip, time 5 minutes, and read the lines.",keys:"test strips fentanyl xylazine testing how to use timer 5 minutes one line two lines positive negative dip mix dilute reagent ehrlich fake acid nbome blotter"}
 ];
+
 const SEARCH_SYNONYMS={
 narcan:["naloxone"],naloxone:["narcan"],
-molly:["mdma","ecstasy"],mdma:["molly","ecstasy"],ecstasy:["molly","mdma"],
-weed:["cannabis","marijuana","thc"],cannabis:["weed","marijuana","thc"],marijuana:["weed","cannabis","thc"],thc:["weed","cannabis"],
-coke:["cocaine"],cocaine:["coke"],
+molly:["mdma","ecstasy"],mdma:["molly","ecstasy"],ecstasy:["molly","mdma"],rolls:["mdma","molly"],beans:["mdma","molly"],e:["mdma"],
+weed:["cannabis","marijuana","thc"],cannabis:["weed","marijuana","thc"],marijuana:["weed","cannabis","thc"],thc:["weed","cannabis"],pot:["weed","cannabis"],edibles:["cannabis","thc"],
+coke:["cocaine"],cocaine:["coke"],blow:["cocaine"],
 ket:["ketamine"],ketamine:["ket"],
-acid:["lsd"],lsd:["acid"],
+acid:["lsd"],lsd:["acid"],lucy:["lsd","acid"],tabs:["lsd","acid"],blotter:["lsd"],
 shrooms:["psilocybin","mushrooms"],psilocybin:["shrooms","mushrooms"],mushrooms:["shrooms","psilocybin"],
-spiked:["spiking"],spiking:["spiked"],roofied:["spiking","roofie"],roofie:["spiking"],
-od:["overdose"],overdose:["od"],overamping:["overdose"],
-"911":["emergency"],emergency:["911"],
-uber:["rideshare","lyft"],lyft:["rideshare","uber"],rideshare:["uber","lyft","taxi"],taxi:["rideshare"],
+spiked:["spiking"],spiking:["spiked"],roofied:["spiking","roofie"],roofie:["spiking"],drugged:["spiking"],
+od:["overdose"],overdose:["od"],overamping:["overdose","overamp"],overamp:["overdose"],
+"911":["emergency"],emergency:["911"],ambulance:["emergency","911"],
+uber:["rideshare","lyft"],lyft:["rideshare","uber"],rideshare:["uber","lyft","taxi"],taxi:["rideshare"],ride:["rideshare"],
 cops:["police"],police:["cops"],
 sti:["std"],std:["sti"],
-xanax:["benzos"],benzos:["xanax","benzodiazepines"],benzodiazepines:["xanax","benzos"],
+xanax:["benzos","bars"],bars:["xanax","benzos"],benzos:["xanax","benzodiazepines"],benzodiazepines:["xanax","benzos"],
 adderall:["adhd"],vyvanse:["adhd"],adhd:["adderall","vyvanse"],
 tranq:["xylazine","medetomidine"],xylazine:["tranq","medetomidine"],medetomidine:["tranq","xylazine"],
-fent:["fentanyl"],fentanyl:["fent"],
-opioids:["opioid"],opioid:["opioids"],
-depressed:["depression"],depression:["depressed"],
-anxious:["anxiety"],anxiety:["anxious"],
-water:["hydration"],hydration:["water","electrolytes"],
-sobriety:["sober"],sober:["sobriety"],
-boundaries:["consent"],consent:["boundaries"],
-sharing:["share"],mixing:["mix"],testing:["test"],drinking:["drink"],smoking:["smoke"],using:["use"],overdosing:["overdose"],snorting:["snort"]
+fent:["fentanyl"],fetty:["fentanyl"],fentanyl:["fent"],blues:["fentanyl","pills"],percs:["pills","opioids"],pills:["fake","counterfeit"],
+meth:["stimulant"],crystal:["meth","stimulant"],stimulant:["meth","cocaine","upper"],upper:["stimulant"],downer:["depressant","opioid"],
+tranqdope:["xylazine"],
+ghb:["spiking"],ketamine2:["ketamine"],
+sharing:["share"],mixing:["mix","combos"],testing:["test","strips"],drinking:["drink"],smoking:["smoke"],using:["use"],overdosing:["overdose"],snorting:["snort"],tripping:["trip","psychedelics"],rolling:["mdma","molly"],
+depressed:["depression","mental"],depression:["depressed","mental"],sad:["mental","depression","comedown"],
+anxious:["anxiety","panic"],anxiety:["anxious","panic"],scared:["panic","help","anxiety"],afraid:["panic","help"],freaking:["panic","bad","trip"],paranoid:["bad","trip","panic"],panic:["anxiety","emergency","bad"],
+hot:["heat","overheating"],overheating:["heat","stroke","emergency"],sweating:["heat"],shaking:["seizure","symptoms"],vomiting:["alcohol","poisoning","symptoms"],puking:["alcohol","poisoning"],drunk:["alcohol"],wasted:["alcohol"],
+unconscious:["unresponsive","overdose","emergency"],unresponsive:["overdose","emergency"],awake:["unresponsive","overdose"],breathing:["overdose","emergency"],lips:["overdose","blue"],
+water:["hydration"],hydration:["water","electrolytes"],thirsty:["hydration","water"],
+sobriety:["sober"],sober:["sobriety"],wheelchair:["accessibility","venues"],accessible:["accessibility","venues"],
+boundaries:["consent"],consent:["boundaries"],harassment:["accountability","rejection"],stalking:["rejection","violence"],unsafe:["safety","help"],unsafe2:["safety"],
+ayuda:["help","emergency"],sobredosis:["overdose"],agua:["water","hydration"],emergencia:["emergency"],
+help:["emergency"],hurting:["help","mental"],suicidal:["988","crisis","mental"],crisis:["988","mental"]
 };
+var STOPWORDS={my:1,a:1,an:1,the:1,is:1,are:1,was:1,were:1,to:1,of:1,in:1,on:1,at:1,for:1,with:1,and:1,or:1,i:1,me:1,we:1,he:1,she:1,they:1,them:1,him:1,her:1,his:1,hers:1,their:1,our:1,your:1,what:1,do:1,does:1,can:1,cant:1,wont:1,will:1,should:1,how:1,when:1,where:1,why:1,got:1,get:1,getting:1,feel:1,feeling:1,feels:1,felt:1,too:1,so:1,very:1,really:1,just:1,now:1,not:1,no:1,after:1,before:1,from:1,about:1,if:1,it:1,its:1,this:1,that:1,there:1,here:1,am:1,be:1,been:1,have:1,has:1,had:1,im:1,ive:1,dont:1,didnt:1,like:1,up:1,out:1,over:1};
+var INTENTS=[
+{rx:/(wont|will not|can not|cant|not) (wake|waking)|wake (him|her|them) up|unresponsive|passed out|not breathing|stopped breathing|blue lips|turning blue|not moving/,urls:["overdose.html","emergency.html","symptoms.html"],label:"Someone who will not wake up"},
+{rx:/overdos|overamp|took too much|too much (of )?.{0,12}(drug|pill|coke|meth)/,urls:["overdose.html","emergency.html","symptoms.html"],label:"Possible overdose"},
+{rx:/seiz|shaking (bad|hard|all over)|convuls/,urls:["emergency.html","symptoms.html"],label:"Seizure help"},
+{rx:/(too hot|overheat|heat ?stroke|burning up|skin is (hot|dry)|heart (racing|pounding|beating fast))|chest (hurt|pain|tight)/,urls:["emergency.html","symptoms.html","health.html"],label:"Overheating and heart warning signs"},
+{rx:/(throwing up|threw up|vomit|puking|alcohol poisoning|too drunk|blacked out|blackout)/,urls:["symptoms.html","emergency.html","health.html"],label:"Alcohol poisoning signs"},
+{rx:/(spik|roofi|someone (put|slipped)|drink (taste|tastes|tasted|feel|feels) (weird|off|wrong|funny)|feel weird after (my |a )?drink|drugged)/,urls:["spiking.html","test-strips.html"],label:"Drink spiking help"},
+{rx:/(bad trip|freaking out|freak out|paranoid|bad high|too high|scared.*(trip|high|acid|shroom)|tripping (bad|hard|too))|panic attack/,urls:["badtrip.html","emergency.html"],label:"Bad trip and panic help"},
+{rx:/(test strip|test my|is (this|it) real|fake pill|pressed pill|counterfeit|check my (drugs|pills|stuff))/,urls:["test-strips.html","fake.html"],label:"Testing and fake pills"},
+{rx:/(mix|combin|take .* with|safe to take .* and|together)/,urls:["polydrug.html","rx-combos.html","testpoly.html"],label:"Mixing and combos"},
+{rx:/(get home|ride home|stranded|unsafe ride|driver is|left alone|walk home)/,urls:["ride-safety.html","panic.html"],label:"Getting home safe"},
+{rx:/(feel unsafe|feeling unsafe|someone is following|following me|creepy|wont leave me alone|will not take no|rejected (him|her|them)|harass)/,urls:["rejection-based-violence.html","panic.html","accountability.html"],label:"Feeling unsafe with someone"},
+{rx:/(said no|touched me|no consent|without (my )?consent|assault|crossed a (line|boundary))/,urls:["consent.html","accountability.html"],label:"Consent and accountability"},
+{rx:/(kill myself|suicid|want to die|hurt myself|self harm|crisis line|988)/,urls:["mentalhealth.html"],label:"Crisis and mental health support"},
+{rx:/(comedown|come down|day after|next day|feel (sad|low|empty|awful) after|tuesday blues|aftercare|can not sleep after)/,urls:["aftercare.html","mentalhealth.html"],label:"Comedown and aftercare"},
+{rx:/(where.*(narcan|naloxone|test strips)|free (narcan|test|strips)|get narcan|near me|nearby|minnesota resources)/,urls:["resources.html","test-strips.html"],label:"Free supplies in Minnesota"},
+{rx:/(wheelchair|accessib|mobility|sensory|too loud|quiet (room|space)|sober (space|bar|area|rave|raving)|alcohol free)/,urls:["venues-guide.html","sober.html"],label:"Accessibility and sober spaces"},
+{rx:/(plan b|contracept|pregnan|morning after)/,urls:["resources.html"],label:"Emergency contraception info"}
+];
 function escRx(s){return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}
 function escHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function lev(a,b){if(a===b)return 0;var m=a.length,n=b.length;if(Math.abs(m-n)>2)return 99;var row=[];for(var j=0;j<=n;j++)row[j]=j;for(var i=1;i<=m;i++){var prev=row[0];row[0]=i;for(var j2=1;j2<=n;j2++){var tmp=row[j2];row[j2]=Math.min(row[j2]+1,row[j2-1]+1,prev+(a[i-1]===b[j2-1]?0:1));prev=tmp}}return row[n]}
 function tokenHits(token,text){
   if(token.length<=3){try{return new RegExp("\\b"+escRx(token)).test(text)}catch(e){return text.indexOf(token)>-1}}
   return text.indexOf(token)>-1;
@@ -982,17 +1011,29 @@ function tokenHits(token,text){
 siteContent.forEach(function(e){
   e._t=e.title.toLowerCase();e._k=(e.keys||"").toLowerCase();
   e._d=e.content.toLowerCase();e._c=e.category.toLowerCase();
+  e._all=e._t+" "+e._k+" "+e._d;
 });
+var VOCAB={};
+siteContent.forEach(function(e){e._all.split(/[^a-z0-9]+/).forEach(function(w){if(w.length>=5)VOCAB[w]=1})});
+Object.keys(SEARCH_SYNONYMS).forEach(function(w){if(w.length>=5)VOCAB[w]=1});
+function fuzzyWord(w){
+  if(w.length<5||VOCAB[w])return null;
+  var best=null,bd=99;
+  Object.keys(VOCAB).forEach(function(v){var d=lev(w,v);if(d<bd){bd=d;best=v}});
+  var limit=w.length>=8?2:1;
+  return bd<=limit?best:null;
+}
 function expandQuery(raw){
   var q=String(raw||"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
   if(!q)return[];
   var groups=[];
-  if(q.indexOf("plan b")>-1)groups.push(["emergency","contraception"]);
-  if(q.indexOf("test strip")>-1)groups.push(["testing"]);
+  if(q.indexOf("test strip")>-1)groups.push(["testing","strips"]);
   q.split(" ").forEach(function(t){
-    if(t.length<2)return;
+    if(t.length<2||STOPWORDS[t])return;
     var alts=[t];
     (SEARCH_SYNONYMS[t]||[]).forEach(function(a){if(alts.indexOf(a)<0)alts.push(a)});
+    var fz=fuzzyWord(t);
+    if(fz&&alts.indexOf(fz)<0)alts.push(fz);
     var dup=false;
     groups.forEach(function(g){if(g[0]===t)dup=true});
     if(!dup)groups.push(alts);
@@ -1000,7 +1041,7 @@ function expandQuery(raw){
   return groups;
 }
 function scoreEntry(e,groups){
-  var score=0;
+  var score=0,matched=0;
   for(var i=0;i<groups.length;i++){
     var alts=groups[i],best=0;
     for(var j=0;j<alts.length;j++){
@@ -1010,9 +1051,11 @@ function scoreEntry(e,groups){
       else if(tokenHits(t,e._d))best=Math.max(best,2);
       else if(tokenHits(t,e._c))best=Math.max(best,1);
     }
-    if(!best)return -1;
-    score+=best;
+    if(best){matched++;score+=best}
   }
+  if(!matched)return -1;
+  if(groups.length>1&&matched<Math.ceil(groups.length/2))return -1;
+  score+=matched*2;
   return score;
 }
 function highlightTerms(text,flat){
@@ -1027,47 +1070,88 @@ function highlightTerms(text,flat){
 var searchInput=document.getElementById('searchInput'),searchResults=document.getElementById('searchResults');
 searchInput.addEventListener('input',performSearch);
 searchInput.addEventListener('focus',performSearch);
+function renderHits(list,flat){
+  var ul=document.createElement('ul');
+  list.forEach(function(e){
+    var li=document.createElement('li');
+    li.setAttribute('role','option');
+    var desc=e.content.length>70?e.content.substring(0,70)+"...":e.content;
+    li.innerHTML='<span class="icon">'+getIconForCategory(e.category)+'</span><div><strong>'+highlightTerms(e.title,flat)+'</strong><br><small>'+highlightTerms(desc,flat)+'</small></div><span class="category">'+e.category+'</span>';
+    li.onclick=(function(url){return function(){window.location.href=url}})(e.url);
+    ul.appendChild(li);
+  });
+  searchResults.appendChild(ul);
+}
+function doorBtn(label,url){
+  var b=document.createElement('button');
+  b.textContent=label;
+  b.style.cssText="background:rgba(0,247,224,.12);border:1px solid var(--primary);color:#fff;border-radius:20px;padding:6px 12px;font-size:.85rem;cursor:pointer";
+  b.onclick=function(ev){ev.stopPropagation();window.location.href=url};
+  return b;
+}
+function chipBtn(label,fn){
+  var b=document.createElement('button');
+  b.textContent=label;
+  b.style.cssText="background:rgba(0,247,224,.12);border:1px solid var(--primary);color:#fff;border-radius:20px;padding:4px 10px;font-size:.8rem;cursor:pointer";
+  b.onclick=function(ev){ev.stopPropagation();fn()};
+  return b;
+}
 function performSearch(){
   var raw=searchInput.value;
   searchResults.innerHTML="";
+  var clean=String(raw||"").toLowerCase();
   var groups=expandQuery(raw);
-  if(!groups.length){searchResults.style.display='none';return}
+  if(!groups.length&&!clean.trim()){searchResults.style.display='none';return}
   var flat=[];groups.forEach(function(g){g.forEach(function(t){if(flat.indexOf(t)<0)flat.push(t)})});
+  var byUrl={};siteContent.forEach(function(e){byUrl[e.url]=e});
+  var intentHits=[];
+  INTENTS.forEach(function(it){if(it.rx.test(clean)){it.urls.forEach(function(u){if(byUrl[u]&&intentHits.indexOf(byUrl[u])<0)intentHits.push(byUrl[u])})}});
   var scored=[];
   siteContent.forEach(function(e){
     var s=scoreEntry(e,groups);
     if(s>=0)scored.push({e:e,s:s});
   });
   scored.sort(function(a,b){return b.s-a.s||(a.e.title<b.e.title?-1:1)});
-  var hits=scored.slice(0,12);
+  var hits=[];
+  intentHits.forEach(function(e){if(hits.indexOf(e)<0)hits.push(e)});
+  scored.forEach(function(h){if(hits.indexOf(h.e)<0)hits.push(h.e)});
+  hits=hits.slice(0,12);
+  if(intentHits.length){
+    var lab=document.createElement('div');
+    lab.style.cssText="padding:10px 12px 0;font-size:.85rem;opacity:.9";
+    lab.textContent="Sounds like you need this first:";
+    searchResults.appendChild(lab);
+  }
   if(hits.length){
-    var ul=document.createElement('ul');
-    hits.forEach(function(h){
-      var e=h.e,li=document.createElement('li');
-      var desc=e.content.length>70?e.content.substring(0,70)+"...":e.content;
-      li.innerHTML='<span class="icon">'+getIconForCategory(e.category)+'</span><div><strong>'+highlightTerms(e.title,flat)+'</strong><br><small>'+highlightTerms(desc,flat)+'</small></div><span class="category">'+e.category+'</span>';
-      li.onclick=(function(url){return function(){window.location.href=url}})(e.url);
-      ul.appendChild(li);
-    });
-    searchResults.appendChild(ul);
+    renderHits(hits,flat);
   }else{
-    var sug=["naloxone","test strips","bad trip","consent","plan b","988"];
     var box=document.createElement('div');
     box.style.padding="12px";
-    box.innerHTML='<div style="margin-bottom:8px">No results for &quot;'+escHtml(String(raw).trim())+'&quot;</div><div style="font-size:.85rem;opacity:.8">Try:</div>';
+    box.innerHTML='<div style="margin-bottom:8px">No exact match for &quot;'+escHtml(String(raw).trim())+'&quot;. You are not stuck though. Try a popular search, or jump by situation:</div>';
     var row=document.createElement('div');
     row.style.cssText="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px";
-    sug.forEach(function(s){
-      var b=document.createElement('button');
-      b.textContent=s;
-      b.style.cssText="background:rgba(0,247,224,.12);border:1px solid var(--primary);color:#fff;border-radius:20px;padding:4px 10px;font-size:.8rem;cursor:pointer";
-      b.onclick=function(ev){ev.stopPropagation();searchInput.value=s;performSearch();searchInput.focus()};
-      row.appendChild(b);
+    ["naloxone","test strips","bad trip","spiked drink","someone will not wake up","feeling unsafe","988"].forEach(function(s){
+      row.appendChild(chipBtn(s,function(){searchInput.value=s;performSearch();searchInput.focus()}));
     });
     box.appendChild(row);
+    var row2=document.createElement('div');
+    row2.style.cssText="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px";
+    row2.appendChild(doorBtn("🚨 Emergency now","emergency.html"));
+    row2.appendChild(doorBtn("🍑 Panic button","panic.html"));
+    row2.appendChild(doorBtn("🧭 Browse everything","#topics"));
+    box.appendChild(row2);
     searchResults.appendChild(box);
   }
   searchResults.style.display='block';
+}
+var chipData=[["🚨 Overdose","overdose"],["🍹 Spiked drink","spiked drink"],["🌀 Bad trip","bad trip"],["🧪 Test strips","test strips"],["😰 Feeling unsafe","feeling unsafe"],["🚗 Need a ride","ride home"],["💧 Water","water"],["🤝 Consent","consent"]];
+var chipsEl=document.getElementById('searchChips');
+if(chipsEl){chipData.forEach(function(c){chipsEl.appendChild(chipBtn(c[0],function(){searchInput.value=c[1];performSearch();searchInput.focus()}))})}
+var voiceBtn=document.getElementById('voiceBtn');
+if(voiceBtn){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){voiceBtn.style.display='none'}
+  else{voiceBtn.onclick=function(){try{var r=new SR();r.lang='en-US';r.onresult=function(ev){searchInput.value=ev.results[0][0].transcript;performSearch()};r.start()}catch(e){}}}
 }
 function getIconForCategory(t){switch(t){case'Safety':return'🚨';case'Drug Info':return'💊';case'Consent':return'✅';case'Local':return'📍';case'Resources':return'📚';case'Main':return'🏠';default:return'📄'}}
 document.addEventListener('click',function(t){t.target.closest('.search-container')||(searchResults.style.display='none')});
