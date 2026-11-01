@@ -94,3 +94,4 @@ self.addEventListener('message', (event) => {
     reply({ type: 'CACHE_DONE', done: ok.length, total: msg.urls.length, ok, failed });
   })());
 });
+/* Deploy retrigger 2026-11-01: favicon repairs for health.html and venues-guide.html are on main; earlier Pages deploys were rejected over a stuck in progress deployment. */
