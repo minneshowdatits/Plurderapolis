@@ -1105,38 +1105,38 @@
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="section-content">
-          <p style="margin-bottom: 1.5rem;">Calm auditory environments to help soothe anxiety. Only one sound plays at a time.</p>
+          <p style="margin-bottom: 1.5rem;">Calm sounds to focus on. Your phone makes all of these live out of simple tones and hisses, so none of them are recordings of the real thing. Only one sound plays at a time.</p>
           
           <div class="audio-grid">
             <button class="audio-btn" data-sound="whiteNoise" aria-pressed="false">
               <i class="fas fa-volume-up"></i>
               <span class="audio-label">White Noise</span>
-              <span class="audio-desc">Steady hiss that masks background noise</span>
+              <span class="audio-desc">Plain steady hiss, like a fan or radio static</span>
             </button>
             <button class="audio-btn" data-sound="ocean" aria-pressed="false">
               <i class="fas fa-water"></i>
               <span class="audio-label">Ocean Waves</span>
-              <span class="audio-desc">Slow rolling waves to breathe along with</span>
+              <span class="audio-desc">Low hum that swells up and down, with soft shushes on top</span>
             </button>
             <button class="audio-btn" data-sound="forest" aria-pressed="false">
               <i class="fas fa-tree"></i>
               <span class="audio-label">Forest & Birds</span>
-              <span class="audio-desc">Soft wind with distant birdsong</span>
+              <span class="audio-desc">Very faint airy hiss with little chirping tones now and then</span>
             </button>
             <button class="audio-btn" data-sound="rain" aria-pressed="false">
               <i class="fas fa-cloud-rain"></i>
               <span class="audio-label">Gentle Rain</span>
-              <span class="audio-desc">Light rainfall, easy to tune out</span>
+              <span class="audio-desc">Soft muffled hiss with tiny quiet pings mixed in</span>
             </button>
             <button class="audio-btn" data-sound="heartbeat" aria-pressed="false">
               <i class="fas fa-heartbeat"></i>
               <span class="audio-label">Calm Heartbeat</span>
-              <span class="audio-desc">Slow steady pulse to anchor to</span>
+              <span class="audio-desc">Slow deep thumps in a repeating pattern</span>
             </button>
             <button class="audio-btn" data-sound="brownNoise" aria-pressed="false">
               <i class="fas fa-sliders-h"></i>
               <span class="audio-label">Brown Noise</span>
-              <span class="audio-desc">Deep rumble, softer than white noise</span>
+              <span class="audio-desc">Deep soft rumble, darker than the white noise hiss</span>
             </button>
           </div>
           
@@ -1727,8 +1727,6 @@ function initGrounding() {
 
 // Audio functionality with improved sounds
 function initAudio() {
-  // Initialize audio context on first user interaction
-  document.addEventListener('click', initAudioContext, { once: true });
   
   // Audio button functionality
   document.querySelectorAll('.audio-btn').forEach(btn => {
@@ -1744,10 +1742,24 @@ function initAudio() {
       // Stop any currently playing sound
       stopCurrentSound();
       
-      // Play new sound
+      // Play new sound (this creates and unlocks the audio context inside
+      // this tap, which is what iOS Safari requires)
       playSound(soundType);
-      this.classList.add('active');
-      this.setAttribute('aria-pressed', 'true');
+      // Light the button only once sound is actually running, so the button
+      // never claims a sound is playing when the phone kept it silent. If
+      // the context is still starting, light it when the resume lands.
+      const btn = this;
+      if (audioContext && audioContext.state === 'running') {
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      } else if (audioContext) {
+        audioContext.resume().then(function() {
+          if (currentSound) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
+          }
+        }).catch(function(){});
+      }
     });
   });
   
@@ -1766,22 +1778,40 @@ function initAudio() {
 }
 
 function initAudioContext() {
+  // Ask iOS for playback audio where supported (Safari 17+). Without this,
+  // Web Audio follows the phone's silent switch, so a phone on silent —
+  // the usual setting at a show — plays nothing at all.
+  try {
+    if (navigator.audioSession) navigator.audioSession.type = 'playback';
+  } catch (e) {}
   if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    audioContext = new AC();
     masterGainNode = audioContext.createGain();
     masterGainNode.gain.value = 0.8;
     masterGainNode.connect(audioContext.destination);
     const slider = document.getElementById('volumeSlider');
     if (slider) masterGainNode.gain.value = slider.value / 100;
+    // Silent buffer unlock: the standard iOS step that fully unlocks Web
+    // Audio when it plays inside a user tap.
+    try {
+      const unlockBuffer = audioContext.createBuffer(1, 1, audioContext.sampleRate);
+      const unlockSource = audioContext.createBufferSource();
+      unlockSource.buffer = unlockBuffer;
+      unlockSource.connect(audioContext.destination);
+      unlockSource.start(0);
+    } catch (e) {}
   }
-  // iOS may start the context suspended even inside a tap; resume so sound actually plays
-  if (audioContext.state === 'suspended') {
+  // iOS may start (or park) the context suspended or interrupted even
+  // inside a tap; resume so sound actually plays
+  if (audioContext.state === 'suspended' || audioContext.state === 'interrupted') {
     audioContext.resume().catch(function(){});
   }
 }
 
 function playSound(type) {
-  if (!audioContext) initAudioContext();
+  initAudioContext();
   
   stopCurrentSound();
   
@@ -2362,10 +2392,17 @@ if ('serviceWorker' in navigator) {
     const a = document.createElement('a');
     a.href = url;
     a.download = 'Bad_Trip_Guide_Cheat_Sheet.html';
+    // iPhones ignore the download attribute, and inside an installed app a
+    // blob download silently does nothing. Targeting a new tab as well
+    // keeps desktop browsers downloading as before, while an iPhone opens
+    // the sheet so it can be read, shared, or saved from there.
+    a.target = '_blank';
+    a.rel = 'noopener';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // Delay revoking: revoking immediately can cancel the open on iOS.
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
   });
 }
 
@@ -2399,16 +2436,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Prevent overlapping on resize
 window.addEventListener('resize', () => {
-  // Close sidebar on mobile when opening sections
+  // Close sidebar on mobile when opening sections (this page no longer has
+  // a navLinks/menuToggle pair, so bail out cleanly instead of throwing)
   const navLinks = document.getElementById('navLinks');
+  if (!navLinks) return;
   if (window.innerWidth <= 768 && navLinks.classList.contains('show')) {
     navLinks.classList.remove('show');
-    document.getElementById('menuToggle').innerHTML = '<i class="fas fa-bars"></i>';
+    const menuToggle = document.getElementById('menuToggle');
+    if (menuToggle) menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
   }
 });
 
-// Initialize audio context on any click (for iOS)
-document.addEventListener('click', initAudioContext, { once: true });
 </script>
 
 <script>
@@ -2528,16 +2566,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.section').forEach(function (s) { s.classList.add('revealed'); });
   }
 
-  // Stop sounds when the sounds card leaves the screen
-  var soundsCard = document.getElementById('sounds');
-  var stopBtn = document.getElementById('stopAllAudio');
-  if (soundsCard && stopBtn && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting && document.querySelector('.audio-btn.active, .audio-btn[aria-pressed="true"]')) { stopBtn.click(); }
-      });
-    }, { threshold: 0 }).observe(soundsCard);
-  }
+  // Sounds keep playing when the sounds card scrolls off screen: someone
+  // who picks a sound to focus on usually moves on to breathing or
+  // grounding next, and the old auto-stop cut the sound off there, which
+  // read as the sounds not working. Stop All Sounds (or tapping the sound
+  // again) is what ends a sound now.
 
   // Footer sitemap toggles, all starting closed
   document.querySelectorAll('footer .sitemap-toggle').forEach(function (t) {
