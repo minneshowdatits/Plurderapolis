@@ -1429,8 +1429,126 @@
 .mb-line strong{color:#00f7e0}
 .mb-note2{font-size:.9rem;color:#ffb300;margin:.4rem 0 0}
 </style>
+
+<style id="sober-preview-css">
+html{scroll-behavior:smooth}
+.scrollable-section{max-height:none!important;overflow:visible!important}
+.card-content{transition:max-height .55s cubic-bezier(.4,0,.2,1)!important}
+.card-content-inner{font-size:1.02rem;line-height:1.65}
+.card{animation:none!important;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.card.sb-in{opacity:1;transform:none}
+.sb-tiles-wrap{max-width:860px;margin:1.2rem auto 0;padding:0 .2rem}
+.sb-tiles-title{color:#00f7e0;font-family:Montserrat,Roboto,sans-serif;font-size:1.35rem;text-align:center;margin:.4rem 0 .8rem}
+.sb-tiles{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.sb-tile{display:flex;flex-direction:column;align-items:flex-start;gap:.15rem;text-align:left;background:linear-gradient(135deg,#3b1470,#5b21b6);border:1.5px solid rgba(168,85,247,.55);border-radius:16px;padding:.8rem .9rem;min-height:86px;cursor:pointer;color:#fff;font-family:Roboto,sans-serif;transition:transform .18s ease,border-color .18s ease}
+.sb-tile:active{transform:scale(.98)}
+.sb-tile .t-ico{font-size:1.45rem;line-height:1}
+.sb-tile .t-name{font-family:Montserrat,Roboto,sans-serif;font-weight:800;font-size:1.02rem;color:#a5f3ff}
+.sb-tile .t-sub{font-size:.8rem;color:#d9d3ee}
+.sb-tile.opened{border-color:#00f7e0}
+.sb-tile.opened .t-name::after{content:" ✓";color:#00f7e0}
+.sb-progress{text-align:center;color:#d9d3ee;font-size:.92rem;margin:.9rem 0 1rem;position:relative;z-index:2;line-height:1.45}
+.sb-progress span{color:#00f7e0;font-weight:700}
+.sb-tonight-btn{min-height:52px;padding:.7rem 1.3rem;border-radius:999px;font-family:Montserrat,Roboto,sans-serif;font-weight:800;font-size:1rem;cursor:pointer;background:linear-gradient(120deg,#ff69b4,#a855f7);color:#fff;border:none}
+.sb-tonight-panel{display:none;max-width:860px;margin:1.2rem auto 0;background:linear-gradient(160deg,#170b33,#0d1b2e);border:1.5px solid #ff69b4;border-radius:20px;padding:1.1rem 1rem 1.2rem;text-align:left}
+.sb-tonight-panel h2{color:#ffd7ef;font-family:Montserrat,Roboto,sans-serif;font-size:1.4rem;margin:.1rem 0 .6rem}
+.sb-tonight-panel h3{color:#00f7e0;font-family:Montserrat,Roboto,sans-serif;margin:1.1rem 0 .4rem}
+.sb-tonight-panel p{line-height:1.55}
+body.tonight-on .sb-tonight-panel{display:block}
+body.tonight-on .sb-tiles-wrap,body.tonight-on .cards-container,body.tonight-on .cta-section{display:none!important}
+.sb-tonight-exit{width:100%;min-height:54px;margin-top:1.2rem;border-radius:999px;border:1.5px solid #ff69b4;background:transparent;color:#ffd7ef;font-family:Montserrat,sans-serif;font-weight:800;font-size:1rem;cursor:pointer}
+.sb-tn-list{margin:.2rem 0 .6rem 1.1rem;line-height:1.6}
+.sb-btn-main{font-family:Montserrat,sans-serif;font-weight:800;font-size:.98rem;color:#1c002a;background:#00f7e0;border:none;border-radius:10px;padding:.75rem 1.1rem;cursor:pointer;min-height:50px;transition:transform .15s ease,opacity .2s ease}
+.sb-btn-main:active{transform:scale(.98)}
+.sb-btn-ghost{font-family:Montserrat,sans-serif;font-weight:700;font-size:.92rem;color:#00f7e0;background:transparent;border:1.5px solid rgba(0,247,224,.6);border-radius:10px;padding:.65rem 1rem;cursor:pointer;min-height:48px;transition:transform .15s ease}
+.sb-btn-ghost:active{transform:scale(.98)}
+.sb-wave{background:rgba(255,255,255,.045);border:1px solid rgba(0,247,224,.35);border-radius:14px;padding:1rem;margin:0 0 1.25rem;text-align:left}
+.sb-wave-title{font-family:Montserrat,sans-serif;color:#fff;font-size:1.12rem;margin:0 0 .3rem}
+.sb-wave-sub{opacity:.88;font-size:.92rem;margin:0 0 .8rem;line-height:1.45}
+.sb-wavebar{height:10px;background:rgba(0,0,0,.35);border-radius:999px;overflow:hidden}
+.sb-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#00f7e0,#ff6ec7);border-radius:999px;transition:width .4s ease}
+.sb-wave-count{font-family:Montserrat,sans-serif;color:#00f7e0;font-weight:700;font-size:.9rem;margin:.7rem 0 .3rem;text-align:left}
+.sb-wave-step{background:rgba(0,0,0,.28);border-left:3px solid #ff6ec7;border-radius:10px;padding:.85rem .95rem;transition:opacity .35s ease}
+.sb-wave-step h4{font-family:Montserrat,sans-serif;color:#fff;font-size:1.05rem;margin:0 0 .3rem}
+.sb-wave-step p{margin:0;line-height:1.55}
+.sb-wave-step.breathe{animation:sbBreathe 8s ease-in-out infinite}
+@keyframes sbBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.sb-wave-clock{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:800;color:#fff;text-align:center;margin:.7rem 0}
+.sb-wave-btns{display:flex;gap:.6rem;flex-wrap:wrap}
+.sb-wave-end{margin-top:1rem;background:rgba(0,0,0,.28);border-radius:10px;padding:.9rem}
+.sb-wave-msg{margin:.7rem 0 0;line-height:1.5}
+.sb-buddy-label{display:block;font-family:Montserrat,sans-serif;color:#ff6ec7;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin:.6rem 0 .35rem}
+.sb-buddy{width:100%;box-sizing:border-box;background:rgba(0,0,0,.3);border:1px solid rgba(0,247,224,.55);border-radius:10px;color:#fff;font-size:1rem;padding:.65rem .8rem;font-family:Roboto,sans-serif}
+.sb-checks{display:flex;flex-direction:column;gap:.55rem;margin-top:1rem}
+.sb-check{display:flex;gap:.7rem;align-items:flex-start;background:rgba(255,255,255,.045);border:1px solid rgba(255,110,199,.25);border-radius:12px;padding:.75rem .85rem;cursor:pointer;line-height:1.5;transition:border-color .2s ease,background .2s ease}
+.sb-check input{width:22px;height:22px;margin-top:.15rem;accent-color:#00f7e0;flex:none}
+.sb-check.done{border-color:#00f7e0;background:rgba(0,247,224,.07)}
+.sb-plan-count{font-family:Montserrat,sans-serif;color:#00f7e0;font-weight:700;margin:1rem 0 .6rem}
+.sb-copy-msg{color:#a5f3ff;font-size:.92rem;margin:.6rem 0 0;min-height:1.2em}
+.sb-say{margin:0 0 1.1rem}
+.sb-say h3{font-family:Montserrat,sans-serif;color:#fff;font-size:1rem;margin:0 0 .5rem}
+.sb-replies{display:flex;flex-wrap:wrap;gap:.5rem}
+.sb-reply{font-family:Roboto,sans-serif;font-size:.95rem;color:#e9e4f5;background:rgba(0,0,0,.3);border:1px solid rgba(0,247,224,.55);border-radius:999px;padding:.55rem .9rem;cursor:pointer;text-align:left;transition:transform .15s ease,background .2s ease}
+.sb-reply:active{transform:scale(.97)}
+.sb-reply.copied{background:#00f7e0;color:#1c002a;font-weight:700}
+.sb-filters{margin-bottom:1rem}
+.sb-places{display:flex;flex-direction:column;gap:.7rem}
+.sb-place{background:rgba(0,0,0,.28);border-left:3px solid #ff6ec7;border-radius:10px;padding:.85rem .95rem;transition:opacity .3s ease}
+.sb-place h4{font-family:Montserrat,sans-serif;color:#fff;font-size:1.02rem;margin:0 0 .2rem}
+.sb-place-where{color:#00f7e0;font-weight:700;font-size:.9rem;margin:0 0 .3rem}
+.sb-place-desc{margin:0;line-height:1.55;font-size:.95rem}
+.sb-place-note{margin:.5rem 0 0;color:#ffb300;font-size:.9rem;line-height:1.5}
+.sb-place-link{display:inline-block;margin-top:.55rem;font-family:Montserrat,sans-serif;font-size:.85rem;font-weight:700;color:#1c002a;background:#00f7e0;border-radius:8px;padding:.45rem .75rem;text-decoration:none}
+.sb-crisis{background:linear-gradient(160deg,#3d0a2e,#1c002a);border:1.5px solid #ff6ec7;border-radius:14px;padding:1rem;margin:0 0 1.25rem;text-align:left}
+.sb-crisis h3{font-family:Montserrat,sans-serif;color:#ffd7ef;margin:0 0 .35rem;font-size:1.1rem}
+.sb-crisis p{margin:0 0 .7rem;line-height:1.5}
+.sb-crisis-links{display:flex;flex-direction:column;gap:.5rem}
+.sb-crisis-links a{font-family:Montserrat,sans-serif;font-weight:700;color:#00f7e0;text-decoration:none;background:rgba(0,0,0,.3);border:1px solid rgba(0,247,224,.5);border-radius:10px;padding:.65rem .85rem}
+.mm-chip{transition:background .2s ease,color .2s ease,transform .15s ease}
+.mm-chip:active{transform:scale(.96)}
+.mb-card{animation:sbFade .4s ease}
+@keyframes sbFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* slim top: header bar, menu button, hero, share row */
+.ph-bar{padding:.32rem .7rem!important}
+.ph-bar .ph-brand{font-size:.95rem!important}
+.ph-bar .ph-brand img{height:22px!important;width:22px!important}
+.nav-toggle{width:38px!important;height:38px!important;font-size:1.25rem!important;flex:none}
+.hero{padding:1.35rem 1rem 1.15rem!important;margin-bottom:1.1rem!important;border-radius:0 0 1.4rem 1.4rem!important}
+.hero h1{font-size:1.55rem!important;line-height:1.22!important;margin:0 0 .5rem!important}
+.hero p{font-size:.97rem!important;line-height:1.5!important;margin:.35rem 0!important}
+.hero .update-note{padding:.55rem .8rem!important;font-size:.85rem!important;margin-top:.65rem!important;line-height:1.45!important}
+header.ph-bar{height:auto!important;min-height:0!important}
+@media (max-width:820px){:root{--nav-height:49px!important}}
+.share-section{margin:.9rem 0 1rem!important;gap:.6rem!important;flex-wrap:nowrap!important;flex-direction:row!important;align-items:stretch!important}
+.share-btn{flex:1 1 0!important;width:auto!important;max-width:none!important;padding:.6rem .5rem!important;font-size:.92rem!important;justify-content:center;min-height:46px}
+.sb-tonight-btn{min-height:46px;padding:.55rem 1.1rem}
+.sb-tiles-wrap{margin-top:.65rem!important}
+.sb-tiles-title{font-size:1.2rem!important;margin:.15rem 0 .55rem!important}
+/* subtle texture and motion */
+.hero{background-image:radial-gradient(ellipse 70% 55% at 15% 0%,rgba(255,110,199,.16),transparent 60%),radial-gradient(ellipse 65% 55% at 88% 12%,rgba(0,247,224,.12),transparent 60%),linear-gradient(135deg,rgba(28,0,42,.95) 0%,rgba(44,0,66,.9) 100%)!important;background-size:130% 130%,130% 130%,100% 100%;animation:sbGlow 13s ease-in-out infinite alternate}
+@keyframes sbGlow{from{background-position:0% 0%,100% 0%,0 0}to{background-position:28% 12%,72% 8%,0 0}}
+.sb-tile{position:relative;overflow:hidden;opacity:0;transform:translateY(10px);animation:sbTileIn .55s ease forwards}
+.sb-tile:nth-child(2){animation-delay:.06s}.sb-tile:nth-child(3){animation-delay:.12s}.sb-tile:nth-child(4){animation-delay:.18s}.sb-tile:nth-child(5){animation-delay:.24s}.sb-tile:nth-child(6){animation-delay:.3s}.sb-tile:nth-child(7){animation-delay:.36s}.sb-tile:nth-child(8){animation-delay:.42s}
+@keyframes sbTileIn{to{opacity:1;transform:none}}
+.sb-tile::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1.5px);background-size:15px 15px;pointer-events:none}
+.sb-tile .t-ico{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45))}
+.card-header{background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1.5px);background-size:16px 16px}
+.cards-container .card:nth-child(2){transition-delay:.04s}.cards-container .card:nth-child(3){transition-delay:.08s}.cards-container .card:nth-child(4){transition-delay:.12s}.cards-container .card:nth-child(5){transition-delay:.16s}.cards-container .card:nth-child(6){transition-delay:.2s}.cards-container .card:nth-child(7){transition-delay:.24s}.cards-container .card:nth-child(8){transition-delay:.28s}
+.sb-tonight-btn{animation:sbPulse 3.4s ease-in-out infinite}
+@keyframes sbPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,105,180,.35)}50%{box-shadow:0 0 22px 2px rgba(255,105,180,.28)}}
+.sb-wave-step{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)}
+.sb-place,.sb-check{transition:border-color .25s ease,background .25s ease,transform .15s ease}
+.sb-check:active{transform:scale(.99)}
+@media (prefers-reduced-motion: reduce){
+  .sb-tile{opacity:1!important;transform:none!important}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .card{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
+
   <!-- Skip to Content Link for Accessibility -->
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
   
@@ -1445,12 +1563,13 @@
       
       <nav id="mainNav">
         <ul>
-          <li><a href="#edm-hub" class="active">EDM Hub</a></li>
-          <li><a href="#nashops">NA Shops & Bars</a></li>
-          <li><a href="#trending-mocktails">Mocktail Venues</a></li>
-          <li><a href="#support">Support</a></li>
-          <li><a href="#show-tips">Show Tips</a></li>
+          <li><a href="#cravings-sos" class="active">Cravings SOS</a></li>
+          <li><a href="#say-it">What To Say</a></li>
+          <li><a href="#meeting-finder">Find a Meeting</a></li>
+          <li><a href="#places">Places To Go</a></li>
           <li><a href="#mocktails">Mocktails</a></li>
+          <li><a href="#support">Support</a></li>
+          <li><a href="#plan-show">Plan My Show</a></li>
           <li><a href="#contact">Connect</a></li>
         </ul>
       </nav>
@@ -1465,11 +1584,11 @@
     <!-- Hero Section -->
     <section class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title">🕊️ Sober Ravers & Community</h1>
-      <p><strong>Why go sober?</strong> Enjoy the music, dance, and vibes fully aware. Plus, it's safer and helps your body and mind recover. Connect with the Twin Cities sober EDM community.</p>
-      <p>PLURderapolis is your guide to alcohol-free nightlife in Minneapolis and St. Paul. We verify and share information about sober-friendly venues, events, and resources.</p>
+      <p><strong>Why go sober?</strong> Enjoy the music, dance, and vibes fully aware. Plus, it is safer and helps your body and mind recover. This is your guide to alcohol free nightlife in Minneapolis and St. Paul, and to the Twin Cities sober EDM community.</p>
+      
       
       <div class="update-note">
-        <strong>Information Status:</strong> Last reviewed October 2026. Venue hours and events change frequently. Always check directly with venues for current information.
+        <strong>Information Status:</strong> Last reviewed October 2026. Hours and events change, so check with venues before you go.
       </div>
     </section>
 
@@ -1482,263 +1601,172 @@
         <i class="fas fa-bookmark"></i> Save for Later
       </button>
     </div>
+    <div style="text-align:center;margin:0.4rem 0 0.2rem;">
+      <button type="button" class="sb-tonight-btn" id="sbTonightToggle">🌙 Tonight Mode</button>
+    </div>
+    <section class="sb-tonight-panel" id="sbTonightPanel" aria-label="Tonight mode">
+      <h2>Tonight, kept simple</h2>
+      <h3>A craving hits</h3>
+      <p>Ride the Wave walks you through five steps, about five minutes.</p>
+      <button type="button" class="sb-btn-main" id="sbTnWave">Start Ride the Wave</button>
+      <h3>Your show plan</h3>
+      <ul class="sb-tn-list" id="sbTnPlan"><li>No plan ticked off yet. Open Plan My Show in the full page.</li></ul>
+      <h3>A meeting tonight</h3>
+      <p id="sbTnMeeting">Checking the day…</p>
+      <button type="button" class="sb-btn-ghost" id="sbTnMeetingBtn">Open the meeting finder</button>
+      <h3>Support lines</h3>
+      <div class="sb-crisis-links">
+        <a href="tel:988">988 Suicide &amp; Crisis Lifeline</a>
+        <a href="tel:6512667900">Ramsey County Crisis: 651-266-7900</a>
+        <a href="tel:18006624357">SAMHSA Helpline: 1-800-662-HELP</a>
+      </div>
+      <button type="button" class="sb-tonight-exit" id="sbTonightExit">Show the full page</button>
+    </section>
+    <div class="sb-tiles-wrap">
+      <h2 class="sb-tiles-title">The sober night, step by step</h2>
+      <div class="sb-tiles">
+        <button type="button" class="sb-tile" data-open="cravings-sos"><span class="t-ico">🌊</span><span class="t-name">Ride a Craving</span><span class="t-sub">Five steps, five minutes</span></button>
+        <button type="button" class="sb-tile" data-open="say-it"><span class="t-ico">💬</span><span class="t-name">What To Say</span><span class="t-sub">Replies for pressure moments</span></button>
+        <button type="button" class="sb-tile" data-open="meeting-finder"><span class="t-ico">📅</span><span class="t-name">Find a Meeting</span><span class="t-sub">Listings checked Oct 31, 2026</span></button>
+        <button type="button" class="sb-tile" data-open="places"><span class="t-ico">📍</span><span class="t-name">Places To Go</span><span class="t-sub">Shops, taprooms, NA menus</span></button>
+        <button type="button" class="sb-tile" data-open="mocktails"><span class="t-ico">🍹</span><span class="t-name">Mocktails</span><span class="t-sub">Built from your kitchen</span></button>
+        <button type="button" class="sb-tile" data-open="support"><span class="t-ico">🤝</span><span class="t-name">Support</span><span class="t-sub">Groups plus crisis lines</span></button>
+        <button type="button" class="sb-tile" data-open="plan-show"><span class="t-ico">🗒️</span><span class="t-name">Plan My Show</span><span class="t-sub">Boundary, buddy, exit plan</span></button>
+        <button type="button" class="sb-tile" data-open="contact"><span class="t-ico">✉️</span><span class="t-name">Connect</span><span class="t-sub">Say hi, send a spot</span></button>
+      </div>
+      <p class="sb-progress">Tap a tile or a bar below to open that part. <span id="sbCount">0 of 8 opened</span></p>
+    </div>
 
     <!-- Cards Container -->
-    <div class="cards-container">
-      <!-- Sober EDM Hub Card -->
-      <article class="card" id="edm-hub">
+    <div class="cards-container"><article class="card" id="cravings-sos">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-compact-disc"></i>
-            <h2>Sober EDM Hub</h2>
+            <i class="fas fa-life-ring"></i>
+            <h2>Cravings SOS</h2>
           </div>
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
           <div class="card-content-inner scrollable-section">
-            <p class="resource-desc" style="margin-bottom: 1.5rem;">Local venues, clubs & projects where the music is front and center, even if they're not 100% "sober bars." These are spaces for sober ravers to connect directly with the scene.</p>
-            
-            <div class="action-buttons">
-              <button class="action-btn share-section-btn" data-section="edm-hub">
-                <i class="fas fa-share"></i> Share This Section
-              </button>
-            </div>
-            
-            <button class="collapsible">Būch Fermentary & Taproom</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Buch+Fermentary+Taproom+Northeast+Minneapolis" target="_blank">Northeast Minneapolis</a>
+            <div class="sb-wave" id="sbWave">
+              <h3 class="sb-wave-title">Ride the Wave</h3>
+              <p class="sb-wave-sub">Five steps, about a minute each. Start it and just follow along.</p>
+              <div class="sb-wavebar"><div class="sb-progress-fill" id="sbWaveFill"></div></div>
+              <p class="sb-wave-count" id="sbWaveCount">Step 1 of 5</p>
+              <div class="sb-wave-step" id="sbWaveStep">
+                <h4 id="sbWaveName">Name it</h4>
+                <p id="sbWaveText">Say it in your head: &ldquo;This is a craving, not a command.&rdquo; Naming it puts you back in charge.</p>
+              </div>
+              <p class="sb-wave-clock" id="sbWaveClock">1:00</p>
+              <div class="sb-wave-btns">
+                <button type="button" class="sb-btn-main" id="sbWaveStart">Start the wave</button>
+                <button type="button" class="sb-btn-ghost" id="sbWaveReset">Restart</button>
+              </div>
+              <div class="sb-wave-end" id="sbWaveEnd" hidden>
+                <p><strong>You rode the whole wave.</strong> How is the craving now?</p>
+                <div class="sb-wave-btns">
+                  <button type="button" class="sb-btn-main" id="sbWaveOk">Feeling steadier</button>
+                  <button type="button" class="sb-btn-ghost" id="sbWaveStrong">Still strong</button>
                 </div>
-                <p class="venue-description">Space known for kombucha and occasionally hosts low-key sober events.</p>
-                <div class="sound-tags">
-                  <span class="sound-tag">Deep House</span>
-                  <span class="sound-tag">Downtempo</span>
-                </div>
+                <p class="sb-wave-msg" id="sbWaveMsg" aria-live="polite"></p>
               </div>
             </div>
-            
-            <button class="collapsible">Earl Giles</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Earl+Giles+Northeast+Minneapolis" target="_blank">Northeast Minneapolis</a>
-                </div>
-                <p class="venue-description">Non-alcoholic elixir apothecary, event venue, botanical lounge. Hosts occasional DJ nights.</p>
-                <div class="sound-tags">
-                  <span class="sound-tag">Ambient</span>
-                  <span class="sound-tag">Experimental</span>
-                </div>
-              </div>
+            <p class="resource-desc" style="margin-bottom: 1.25rem;">A craving is a wave. It peaks, then it fades, usually within 20 minutes. You just have to ride this one out. Here is five minutes:</p>
+            <ol class="tips-list">
+              <li><strong>Name it.</strong> Say it in your head: "This is a craving, not a command." Naming it puts you back in charge.</li>
+              <li><strong>Breathe for one minute.</strong> Hit start below and follow the circle. Slow breathing tells your nervous system the emergency is over.</li>
+              <li><strong>Move your state.</strong> Cold water on your face, step outside for air, find your buddy. Cravings hate a change of scenery.</li>
+              <li><strong>Play it forward.</strong> Picture tomorrow morning: waking up clear, no shame spiral, no mystery charges. That version of you is five minutes away.</li>
+              <li><strong>Tell someone.</strong> Text your buddy, find the sober meetup, or just say it out loud. Cravings get quieter when they are not a secret.</li>
+            </ol>
+            <style>
+              .sos-pacer{display:flex;flex-direction:column;align-items:center;gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(0,0,0,.25);border-radius:12px}
+              .sos-circle{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(0,240,224,.25),rgba(0,240,224,.05));border:2px solid #00f0e0;transition:transform 4s ease-in-out;font-weight:700;text-align:center;padding:1rem}
+              .sos-circle.in{transform:scale(1.25)}
+              .sos-circle.out{transform:scale(1)}
+              #sosPhase{font-size:1.05rem}
+              #sosStart{padding:.85rem 1.6rem;border-radius:999px;border:none;background:linear-gradient(135deg,#00f0e0,#7b2cbf);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;min-height:48px}
+              #sosStart:disabled{opacity:.55;cursor:default}
+            </style>
+            <div class="sos-pacer">
+              <div class="sos-circle" id="sosCircle"><span id="sosPhase">Ready</span></div>
+              <button id="sosStart" type="button">Start 1 minute of breathing</button>
             </div>
-            
+            <script>
+            (function(){
+              var btn = document.getElementById('sosStart');
+              var circle = document.getElementById('sosCircle');
+              var phase = document.getElementById('sosPhase');
+              if (!btn) return;
+              btn.addEventListener('click', function(){
+                btn.disabled = true;
+                var cycles = 0, maxCycles = 7, inhale = true;
+                function tick(){
+                  if (cycles >= maxCycles) {
+                    phase.textContent = 'Done. You rode it out.';
+                    circle.classList.remove('in'); circle.classList.add('out');
+                    btn.disabled = false; btn.textContent = 'Go again';
+                    return;
+                  }
+                  if (inhale) { phase.textContent = 'Breathe in…'; circle.classList.remove('out'); circle.classList.add('in'); }
+                  else { phase.textContent = 'Breathe out…'; circle.classList.remove('in'); circle.classList.add('out'); cycles++; }
+                  inhale = !inhale;
+                  setTimeout(tick, 4000);
+                }
+                tick();
+              });
+            })();
+            </script>
+            <p class="resource-desc" style="margin-top:1rem;">If the craving will not quit, that is data, not failure. <a href="/resources.html" class="resource-link">Reach out here</a> — support groups, crisis lines, and people who get it.</p>
           </div>
         </div>
       </article>
-
-      <!-- Verified NA Shops & Bars Card -->
-      <article class="card" id="nashops">
+      <article class="card" id="say-it">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-store"></i>
-            <h2>Verified NA Shops & Bars</h2>
+            <i class="fas fa-comments"></i>
+            <h2>What To Say</h2>
           </div>
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner scrollable-section">
-            <div class="action-buttons">
-              <button class="action-btn share-section-btn" data-section="nashops">
-                <i class="fas fa-share"></i> Share This Section
-              </button>
-            </div>
-            
-            <button class="collapsible">Marigold</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Marigold+Minneapolis+3506+Nicollet+Ave" target="_blank">Minneapolis (3506 Nicollet Ave)</a>
-                </div>
-                <p class="venue-description">Dedicated to non-alcoholic beer, spirits, wine, cocktail mixers, THC drinks, and NA merch.</p>
-                <div class="update-note">
-                  <strong>Hours:</strong> Typically Sun–Wed 12–6 PM, Thu–Sat 12–8 PM, but verify current hours before visiting.
-                </div>
+          <div class="card-content-inner">
+            <p class="resource-desc" style="margin-bottom: 1rem;">Pressure is easier when the words are already loaded. Tap any reply to copy it, or just read a few now so they are there when you need them.</p>
+            <div class="sb-say">
+              <h3>A friend offers you a drink</h3>
+              <div class="sb-replies">
+                <button type="button" class="sb-reply">I&rsquo;m good, thanks.</button>
+                <button type="button" class="sb-reply">Just a soda for me.</button>
+                <button type="button" class="sb-reply">I&rsquo;m not drinking tonight, but I&rsquo;m not going anywhere.</button>
               </div>
             </div>
-            
-            <button class="collapsible">Out & Sober Minnesota</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://outsobermn.org/" target="_blank">Twin Cities Area</a>
-                </div>
-                <p class="venue-description">501c3 serving LGBTQ+ people in recovery. Hosts sober meet-ups and social events throughout the Twin Cities. Check their events calendar before you go.</p>
-                <div class="update-note">
-                  <strong>Last checked:</strong> October 2026 — active. <a href="https://outsobermn.org/" target="_blank">outsobermn.org</a>
-                </div>
+            <div class="sb-say">
+              <h3>Someone passes you something</h3>
+              <div class="sb-replies">
+                <button type="button" class="sb-reply">No thanks, I&rsquo;m good.</button>
+                <button type="button" class="sb-reply">I&rsquo;m all set.</button>
+                <button type="button" class="sb-reply">Pass it past me, thanks.</button>
               </div>
             </div>
-            
-            <button class="collapsible">Zero Proof</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  Northeast Minneapolis (2516 Central Ave NE)
-                </div>
-                <p class="venue-description">NA bottle shop carrying beer, wine, spirits, ready-to-drink mocktails, and functional beverages (THC, CBD, adaptogens).</p>
-                <div class="update-note">
-                  <strong>Heads up (Oct 2026):</strong> map listings for the old Zero Proof locations show as closed, and the shop may have rebranded to N/A Beverage House at the same Central Ave address. Confirm before heading out. The shop website no longer loads.
-                </div>
+            <div class="sb-say">
+              <h3>They push back: &ldquo;Why not?&rdquo;</h3>
+              <div class="sb-replies">
+                <button type="button" class="sb-reply">I feel better when I don&rsquo;t.</button>
+                <button type="button" class="sb-reply">I&rsquo;m driving tonight.</button>
+                <button type="button" class="sb-reply">Long story, great night though. What&rsquo;s been your favorite set?</button>
               </div>
             </div>
-            
-            <button class="collapsible">Northern Soda Company</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Northern+Soda+Company+New+Brighton" target="_blank">New Brighton</a>
-                </div>
-                <p class="venue-description">MN's only craft soda taproom. Unique flavors and tasting flights, a chill hangout with no booze. Hours: Thu–Fri 4–8pm, Sat 11am–8pm, Sun 12–6pm.</p>
-                <div class="update-note">
-                  <strong>Last checked:</strong> October 2026 — active. <a href="https://northernsoda.com/" target="_blank">northernsoda.com</a> · 601 Campus Dr #10b, New Brighton · (651) 484-7632
-                </div>
+            <div class="sb-say">
+              <h3>Your turn in the round</h3>
+              <div class="sb-replies">
+                <button type="button" class="sb-reply">Grab me a water or a soda, thanks.</button>
+                <button type="button" class="sb-reply">I&rsquo;m on the NA menu tonight.</button>
               </div>
             </div>
+            <p class="sb-copy-msg" id="sbSayMsg" aria-live="polite"></p>
           </div>
         </div>
-      </article>
-
-      <!-- Trending Mocktail Venues Card -->
-      <article class="card" id="trending-mocktails">
-        <div class="card-header">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-glass-cheers"></i>
-            <h2>Trending Mocktail Venues</h2>
-          </div>
-          <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="card-content">
-          <div class="card-content-inner scrollable-section">
-            <div class="action-buttons">
-              <button class="action-btn share-section-btn" data-section="trending-mocktails">
-                <i class="fas fa-share"></i> Share This Section
-              </button>
-            </div>
-            
-            <button class="collapsible">Khâluna & Chip's Clubhouse</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Khaluna+Chips+Clubhouse+Minneapolis+St+Paul" target="_blank">Minneapolis & St. Paul</a>
-                </div>
-                <p class="venue-description">Known for strong mocktail programs in the Twin Cities.</p>
-              </div>
-            </div>
-            
-            <button class="collapsible">Brewing Companies with NA Options</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <div class="venue-location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <a href="https://www.google.com/maps/search/?api=1&query=Brewing+Companies+NA+Options+Twin+Cities" target="_blank">Twin Cities Area</a>
-                </div>
-                <p class="venue-description">Indeed Brewing, Būch Fermentary, Modist Brewing, Fulton Brewing – some offer THC seltzers and hop water.</p>
-                <div class="update-note">
-                  <strong>Check:</strong> Brewery offerings change frequently. Verify current NA options before visiting.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Support Card -->
-      <article class="card" id="support">
-        <div class="card-header">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-hands-helping"></i>
-            <h2>Sober Raver Support Groups</h2>
-          </div>
-          <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="card-content">
-          <div class="card-content-inner scrollable-section">
-            <div class="action-buttons">
-              <button class="action-btn share-section-btn" data-section="support">
-                <i class="fas fa-share"></i> Share This Section
-              </button>
-              <button class="action-btn download-btn" id="downloadSupportBtn">
-                <i class="fas fa-download"></i> Save Resources
-              </button>
-            </div>
-            
-            <button class="collapsible">Minnesota Recovery Connection</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <p class="venue-description">Peer-led support organization hosting sober social events and recovery resources.</p>
-                <a href="https://www.minnesotarecovery.org/" target="_blank" class="resource-link">
-                  <i class="fas fa-external-link-alt"></i> Visit website
-                </a>
-              </div>
-            </div>
-            
-            <button class="collapsible">SMART Recovery Minnesota</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <p class="venue-description">Evidence-based, self-empowerment focused addiction recovery meetings.</p>
-                <a href="https://meetings.smartrecovery.org/" target="_blank" class="resource-link">
-                  <i class="fas fa-external-link-alt"></i> Learn more
-                </a>
-              </div>
-            </div>
-            
-            <button class="collapsible">Alano Club of Minneapolis</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <p class="venue-description">Sober social club downtown hosting daily meetings plus communal activities.</p>
-                <a href="https://2218alano.org" target="_blank" class="resource-link">
-                  <i class="fas fa-external-link-alt"></i> Visit website
-                </a>
-              </div>
-            </div>
-            
-            <button class="collapsible">Recovery Dharma Minneapolis</button>
-            <div class="collapsible-content">
-              <div class="collapsible-content-inner">
-                <p class="venue-description">Mindfulness-based recovery meetings and meditation practice. The active Buddhist-inspired fellowship in the Twin Cities.</p>
-                <a href="https://recoverydharma.org/locations/" target="_blank" class="resource-link">
-                  <i class="fas fa-external-link-alt"></i> Find Meetings
-                </a>
-              </div>
-            </div>
-            
-            <div class="update-note" style="margin-top: 1.5rem;">
-              <strong>Need immediate help?</strong> These resources are available 24/7:
-              <div style="margin-top: 0.5rem;">
-                <a href="tel:988" class="resource-link" style="display: block; margin-bottom: 0.5rem; text-align: center;">
-                  <i class="fas fa-phone"></i> 988 Suicide & Crisis Lifeline
-                </a>
-                <a href="tel:6512667900" class="resource-link" style="display: block; margin-bottom: 0.5rem; text-align: center;">
-                  <i class="fas fa-phone"></i> Ramsey County Crisis Line: 651-266-7900
-                </a>
-                <a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" class="resource-link" style="display: block; text-align: center;">
-                  <i class="fas fa-life-ring"></i> SAMHSA National Helpline: 1-800-662-HELP
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Meeting Finder Card -->
-      <article class="card" id="meeting-finder">
+      </article><article class="card" id="meeting-finder">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
             <i class="fas fa-calendar-check"></i>
@@ -1869,103 +1897,78 @@
           </div>
         </div>
       </article>
-
-      <!-- Staying Sober at Shows Card -->
-      <article class="card" id="show-tips">
+      <article class="card" id="places">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-shield-alt"></i>
-            <h2>Staying Sober at Shows</h2>
+            <i class="fas fa-map-marker-alt"></i>
+            <h2>Places To Go</h2>
           </div>
           <i class="fas fa-chevron-down toggle-icon"></i>
         </div>
         <div class="card-content">
-          <div class="card-content-inner scrollable-section">
-            <p class="resource-desc" style="margin-bottom: 1.5rem;">You do not need substances to have the night of your life. A little planning goes a long way.</p>
-            <ul class="tips-list">
-              <li><strong>Decide your boundary before you go.</strong> The "just one" trap is easiest to beat when you already made the call sober.</li>
-              <li><strong>Bring a sober buddy</strong> or tell someone your plan for the night.</li>
-              <li><strong>Keep an NA drink in hand.</strong> It takes the pressure out of "can I get you something?"</li>
-              <li><strong>Have an exit plan.</strong> Rideshare app ready, know where you parked, and give yourself full permission to leave early.</li>
-              <li><strong>Eat and hydrate</strong> before and during the show. Tired, hungry, and dehydrated is when willpower dips.</li>
-              <li><strong>"I'm good, thanks" is a full sentence.</strong> You do not owe anyone an explanation.</li>
-            </ul>
-            <div class="update-note" style="margin-top: 1.5rem;">
-              <strong>Related guides on this site:</strong>
-              <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                <a href="/spiking.html" class="resource-link">Drink spiking: know the signs and what to do</a>
-                <a href="/aftercare.html" class="resource-link">Aftercare: recovering after a night out</a>
-                <a href="/mentalhealth.html" class="resource-link">Mental health resources for ravers</a>
+          <div class="card-content-inner">
+            <p class="resource-desc" style="margin-bottom: 1rem;">Shops, taprooms, and venues from the old Sober EDM Hub, NA Shops, and Mocktail Venues sections, merged into one list with each place listed once. Spaces where the music is front and center, even if they are not 100% sober bars. Verify hours before you go.</p>
+            <div class="mm-chips sb-filters" id="sbFilters">
+              <button type="button" class="mm-chip on" data-f="all">All places</button>
+              <button type="button" class="mm-chip" data-f="shop">Bottle shops</button>
+              <button type="button" class="mm-chip" data-f="taproom">Taprooms and lounges</button>
+              <button type="button" class="mm-chip" data-f="menu">NA menus</button>
+              <button type="button" class="mm-chip" data-f="community">Community</button>
+            </div>
+            <div class="sb-places" id="sbPlaces">
+              <div class="sb-place" data-ptype="shop">
+                <h4>Marigold</h4>
+                <p class="sb-place-where">Minneapolis · 3506 Nicollet Ave</p>
+                <p class="sb-place-desc">Dedicated to non-alcoholic beer, spirits, wine, cocktail mixers, THC drinks, and NA merch. Hours: typically Sun–Wed 12–6 PM, Thu–Sat 12–8 PM, but verify current hours before visiting.</p>
+                <a class="sb-place-link" href="https://www.google.com/maps/search/?api=1&query=Marigold+Minneapolis+3506+Nicollet+Ave" target="_blank" rel="noopener">Map and directions</a>
+              </div>
+              <div class="sb-place" data-ptype="shop">
+                <h4>Zero Proof</h4>
+                <p class="sb-place-where">Northeast Minneapolis · 2516 Central Ave NE</p>
+                <p class="sb-place-desc">NA bottle shop carrying beer, wine, spirits, ready-to-drink mocktails, and functional beverages (THC, CBD, adaptogens).</p>
+              <p class="sb-place-note">Heads up (Oct 2026): map listings for the old Zero Proof locations show as closed, and the shop may have rebranded to N/A Beverage House at the same Central Ave address. Confirm before heading out. The shop website no longer loads.</p>
+              </div>
+              <div class="sb-place" data-ptype="taproom">
+                <h4>Northern Soda Company</h4>
+                <p class="sb-place-where">New Brighton · 601 Campus Dr #10b</p>
+                <p class="sb-place-desc">Minnesota&rsquo;s only craft soda taproom. Unique flavors and tasting flights, a chill hangout with no booze. Hours: Thu–Fri 4–8 PM, Sat 11 AM–8 PM, Sun 12–6 PM. Last checked: October 2026, active.</p>
+                <a class="sb-place-link" href="https://northernsoda.com/" target="_blank" rel="noopener">northernsoda.com</a>
+              </div>
+              <div class="sb-place" data-ptype="taproom">
+                <h4>Būch Fermentary &amp; Taproom</h4>
+                <p class="sb-place-where">Northeast Minneapolis</p>
+                <p class="sb-place-desc">Space known for kombucha, and it occasionally hosts low-key sober events. Music styles noted on the old hub listing: deep house, downtempo.</p>
+                <a class="sb-place-link" href="https://www.google.com/maps/search/?api=1&query=Buch+Fermentary+Taproom+Northeast+Minneapolis" target="_blank" rel="noopener">Map and directions</a>
+              </div>
+              <div class="sb-place" data-ptype="taproom">
+                <h4>Earl Giles</h4>
+                <p class="sb-place-where">Northeast Minneapolis</p>
+                <p class="sb-place-desc">Non-alcoholic elixir apothecary, event venue, and botanical lounge. Hosts occasional DJ nights. Music styles noted on the old hub listing: ambient, experimental.</p>
+                <a class="sb-place-link" href="https://www.google.com/maps/search/?api=1&query=Earl+Giles+Northeast+Minneapolis" target="_blank" rel="noopener">Map and directions</a>
+              </div>
+              <div class="sb-place" data-ptype="menu">
+                <h4>Khâluna &amp; Chip&rsquo;s Clubhouse</h4>
+                <p class="sb-place-where">Minneapolis &amp; St. Paul</p>
+                <p class="sb-place-desc">Known for strong mocktail programs in the Twin Cities.</p>
+                <a class="sb-place-link" href="https://www.google.com/maps/search/?api=1&query=Khaluna+Chips+Clubhouse+Minneapolis+St+Paul" target="_blank" rel="noopener">Map and directions</a>
+              </div>
+              <div class="sb-place" data-ptype="menu">
+                <h4>Brewing Companies with NA Options</h4>
+                <p class="sb-place-where">Twin Cities area</p>
+                <p class="sb-place-desc">Indeed Brewing, Būch Fermentary, Modist Brewing, and Fulton Brewing. Some offer THC seltzers and hop water. Brewery offerings change frequently, so verify current NA options before visiting.</p>
+                <a class="sb-place-link" href="https://www.google.com/maps/search/?api=1&query=Brewing+Companies+NA+Options+Twin+Cities" target="_blank" rel="noopener">Map and directions</a>
+              </div>
+              <div class="sb-place" data-ptype="community">
+                <h4>Out &amp; Sober Minnesota</h4>
+                <p class="sb-place-where">Twin Cities area</p>
+                <p class="sb-place-desc">501c3 serving LGBTQ+ people in recovery. Hosts sober meet-ups and social events throughout the Twin Cities. Check their events calendar before you go. Last checked: October 2026, active.</p>
+                <a class="sb-place-link" href="https://outsobermn.org/" target="_blank" rel="noopener">outsobermn.org</a>
               </div>
             </div>
+            <p class="sb-copy-msg" id="sbPlacesMsg" aria-live="polite"></p>
           </div>
         </div>
-      </article>
-
-      <!-- Cravings SOS Card -->
-      <article class="card" id="cravings-sos">
-        <div class="card-header">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <i class="fas fa-life-ring"></i>
-            <h2>Cravings SOS</h2>
-          </div>
-          <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
-        <div class="card-content">
-          <div class="card-content-inner scrollable-section">
-            <p class="resource-desc" style="margin-bottom: 1.25rem;">A craving is a wave. It peaks, then it fades, usually within 20 minutes. You just have to ride this one out. Here is five minutes:</p>
-            <ol class="tips-list">
-              <li><strong>Name it.</strong> Say it in your head: "This is a craving, not a command." Naming it puts you back in charge.</li>
-              <li><strong>Breathe for one minute.</strong> Hit start below and follow the circle. Slow breathing tells your nervous system the emergency is over.</li>
-              <li><strong>Move your state.</strong> Cold water on your face, step outside for air, find your buddy. Cravings hate a change of scenery.</li>
-              <li><strong>Play it forward.</strong> Picture tomorrow morning: waking up clear, no shame spiral, no mystery charges. That version of you is five minutes away.</li>
-              <li><strong>Tell someone.</strong> Text your buddy, find the sober meetup, or just say it out loud. Cravings get quieter when they are not a secret.</li>
-            </ol>
-            <style>
-              .sos-pacer{display:flex;flex-direction:column;align-items:center;gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(0,0,0,.25);border-radius:12px}
-              .sos-circle{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(0,240,224,.25),rgba(0,240,224,.05));border:2px solid #00f0e0;transition:transform 4s ease-in-out;font-weight:700;text-align:center;padding:1rem}
-              .sos-circle.in{transform:scale(1.25)}
-              .sos-circle.out{transform:scale(1)}
-              #sosPhase{font-size:1.05rem}
-              #sosStart{padding:.85rem 1.6rem;border-radius:999px;border:none;background:linear-gradient(135deg,#00f0e0,#7b2cbf);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;min-height:48px}
-              #sosStart:disabled{opacity:.55;cursor:default}
-            </style>
-            <div class="sos-pacer">
-              <div class="sos-circle" id="sosCircle"><span id="sosPhase">Ready</span></div>
-              <button id="sosStart" type="button">Start 1 minute of breathing</button>
-            </div>
-            <script>
-            (function(){
-              var btn = document.getElementById('sosStart');
-              var circle = document.getElementById('sosCircle');
-              var phase = document.getElementById('sosPhase');
-              if (!btn) return;
-              btn.addEventListener('click', function(){
-                btn.disabled = true;
-                var cycles = 0, maxCycles = 7, inhale = true;
-                function tick(){
-                  if (cycles >= maxCycles) {
-                    phase.textContent = 'Done. You rode it out.';
-                    circle.classList.remove('in'); circle.classList.add('out');
-                    btn.disabled = false; btn.textContent = 'Go again';
-                    return;
-                  }
-                  if (inhale) { phase.textContent = 'Breathe in…'; circle.classList.remove('out'); circle.classList.add('in'); }
-                  else { phase.textContent = 'Breathe out…'; circle.classList.remove('in'); circle.classList.add('out'); cycles++; }
-                  inhale = !inhale;
-                  setTimeout(tick, 4000);
-                }
-                tick();
-              });
-            })();
-            </script>
-            <p class="resource-desc" style="margin-top:1rem;">If the craving will not quit, that is data, not failure. <a href="/resources.html" class="resource-link">Reach out here</a> — support groups, crisis lines, and people who get it.</p>
-          </div>
-        </div>
-      </article>
-
-      <!-- Mocktails Card -->
-      <article class="card" id="mocktails">
+      </article><article class="card" id="mocktails">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
             <i class="fas fa-glass-cheers"></i>
@@ -1976,9 +1979,7 @@
         <div class="card-content">
           <div class="card-content-inner scrollable-section">
             <div class="action-buttons">
-              <button class="action-btn share-section-btn" data-section="mocktails">
-                <i class="fas fa-share"></i> Share Recipes
-              </button>
+              
               <button class="action-btn download-btn" id="downloadRecipesBtn">
                 <i class="fas fa-download"></i> Save Recipes
               </button>
@@ -2010,6 +2011,8 @@
               </div>
               <button type="button" class="mb-btn" id="mbGo">Build my mocktail</button>
               <div id="mbOut" aria-live="polite"></div>
+              <button type="button" class="sb-btn-ghost" id="mbCopy" hidden>Copy my recipe</button>
+              <p class="sb-copy-msg" id="mbCopyMsg" aria-live="polite"></p>
             </div>
 <button class="collapsible">Electric Lemonade</button>
             <div class="collapsible-content">
@@ -2091,10 +2094,124 @@
             </div>
           </div>
         </div>
+      </article><article class="card" id="support">
+        <div class="card-header">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-hands-helping"></i>
+            <h2>Sober Raver Support Groups</h2>
+          </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-content-inner scrollable-section">
+            <div class="sb-crisis">
+              <h3>Need help right now?</h3>
+              <p>These lines are answered around the clock. If a number does not answer, call 911.</p>
+              <div class="sb-crisis-links">
+                <a href="tel:988">988 Suicide &amp; Crisis Lifeline</a>
+                <a href="tel:6512667900">Ramsey County Crisis: 651-266-7900</a>
+                <a href="tel:18006624357">SAMHSA Helpline: 1-800-662-HELP</a>
+              </div>
+            </div>
+            <div class="action-buttons">
+              
+              <button class="action-btn download-btn" id="downloadSupportBtn">
+                <i class="fas fa-download"></i> Save Resources
+              </button>
+            </div>
+            
+            <button class="collapsible">Minnesota Recovery Connection</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Peer-led support organization hosting sober social events and recovery resources.</p>
+                <a href="https://www.minnesotarecovery.org/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit website
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">SMART Recovery Minnesota</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Evidence-based, self-empowerment focused addiction recovery meetings.</p>
+                <a href="https://meetings.smartrecovery.org/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Learn more
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">Alano Club of Minneapolis</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Sober social club downtown hosting daily meetings plus communal activities.</p>
+                <a href="https://2218alano.org" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Visit website
+                </a>
+              </div>
+            </div>
+            
+            <button class="collapsible">Recovery Dharma Minneapolis</button>
+            <div class="collapsible-content">
+              <div class="collapsible-content-inner">
+                <p class="venue-description">Mindfulness-based recovery meetings and meditation practice. The active Buddhist-inspired fellowship in the Twin Cities.</p>
+                <a href="https://recoverydharma.org/locations/" target="_blank" class="resource-link">
+                  <i class="fas fa-external-link-alt"></i> Find Meetings
+                </a>
+              </div>
+            </div>
+            
+            <div class="update-note" style="margin-top: 1.5rem;">
+              <strong>Need immediate help?</strong> These resources are available 24/7:
+              <div style="margin-top: 0.5rem;">
+                <a href="tel:988" class="resource-link" style="display: block; margin-bottom: 0.5rem; text-align: center;">
+                  <i class="fas fa-phone"></i> 988 Suicide & Crisis Lifeline
+                </a>
+                <a href="tel:6512667900" class="resource-link" style="display: block; margin-bottom: 0.5rem; text-align: center;">
+                  <i class="fas fa-phone"></i> Ramsey County Crisis Line: 651-266-7900
+                </a>
+                <a href="https://www.samhsa.gov/find-help/national-helpline" target="_blank" class="resource-link" style="display: block; text-align: center;">
+                  <i class="fas fa-life-ring"></i> SAMHSA National Helpline: 1-800-662-HELP
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </article>
-
-      <!-- Contact Section -->
-      <section class="card" id="contact">
+      <article class="card" id="plan-show">
+        <div class="card-header">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-clipboard-check"></i>
+            <h2>Plan My Show</h2>
+          </div>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <p class="resource-desc" style="margin-bottom: 1rem;">The Staying Sober at Shows list, turned into a plan you can tick off before you head out. It saves on this device only. Nothing leaves your phone unless you copy it and send it yourself.</p>
+            <label class="sb-buddy-label" for="sbBuddy">Your buddy for the night (optional)</label>
+            <input class="sb-buddy" id="sbBuddy" type="text" placeholder="Name" autocomplete="off">
+            <div class="sb-checks" id="sbChecks">
+              <label class="sb-check"><input type="checkbox" data-plan="Decide your boundary before you go"> <span><strong>Decide your boundary before you go.</strong> The &ldquo;just one&rdquo; trap is easiest to beat when you already made the call sober.</span></label>
+              <label class="sb-check"><input type="checkbox" data-plan="Tell a buddy the plan"> <span><strong>Bring a sober buddy, or tell someone your plan</strong> for the night.</span></label>
+              <label class="sb-check"><input type="checkbox" data-plan="Keep an NA drink in hand"> <span><strong>Keep an NA drink in hand.</strong> It takes the pressure out of &ldquo;can I get you something?&rdquo;</span></label>
+              <label class="sb-check"><input type="checkbox" data-plan="Eat and hydrate before and during"> <span><strong>Eat and hydrate</strong> before and during the show. Tired, hungry, and dehydrated is when willpower dips.</span></label>
+              <label class="sb-check"><input type="checkbox" data-plan="Exit plan and ride lined up, permission to leave early"> <span><strong>Have an exit plan.</strong> Rideshare app ready, know where you parked, and give yourself full permission to leave early.</span></label>
+              <label class="sb-check"><input type="checkbox" data-plan="Practiced a reply: I am good, thanks"> <span><strong>Have your reply ready.</strong> &ldquo;I&rsquo;m good, thanks&rdquo; is a full sentence. You do not owe anyone an explanation. The What To Say section below has more.</span></label>
+            </div>
+            <p class="sb-plan-count" id="sbPlanCount">0 of 6 ready</p>
+            <button type="button" class="sb-btn-main" id="sbCopyPlan">Copy my plan</button>
+            <p class="sb-copy-msg" id="sbPlanMsg" aria-live="polite"></p>
+            <div class="update-note" style="margin-top: 1.25rem;">
+              <strong>Related guides on this site:</strong>
+              <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="/spiking.html" class="resource-link">Drink spiking: know the signs and what to do</a>
+                <a href="/aftercare.html" class="resource-link">Aftercare: recovering after a night out</a>
+                <a href="/mentalhealth.html" class="resource-link">Mental health resources for ravers</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article><section class="card" id="contact">
         <div class="card-header">
           <div style="display: flex; align-items: center; gap: 0.75rem;">
             <i class="fas fa-envelope"></i>
@@ -2721,5 +2838,324 @@ if ('serviceWorker' in navigator) {
   });
 })();
 </script>
+
+<script id="sober-preview-js">
+(function(){
+  "use strict";
+  function refreshOpen(){
+    document.querySelectorAll('.card-content').forEach(function(c){
+      if (c.style.maxHeight) c.style.maxHeight = c.scrollHeight + 'px';
+    });
+  }
+  function openCard(id){
+    var card = document.getElementById(id);
+    if (!card) return;
+    var header = card.querySelector('.card-header');
+    var content = card.querySelector('.card-content');
+    if (header && content && !content.style.maxHeight) header.click();
+    markOpened(id);
+    setTimeout(function(){ card.scrollIntoView({behavior:'smooth', block:'start'}); }, 60);
+  }
+  window.__sbOpenCard = openCard;
+  window.__sbRefresh = refreshOpen;
+
+  /* tiles */
+  var opened = {};
+  function markOpened(id){
+    var tile = document.querySelector('.sb-tile[data-open="' + id + '"]');
+    if (tile && !opened[id]){ opened[id] = true; tile.classList.add('opened'); }
+    var n = Object.keys(opened).length;
+    var el = document.getElementById('sbCount');
+    if (el) el.textContent = n + ' of 8 opened';
+  }
+  document.querySelectorAll('.sb-tile').forEach(function(t){
+    t.addEventListener('click', function(){ openCard(t.getAttribute('data-open')); });
+  });
+  document.querySelectorAll('.card').forEach(function(card){
+    var header = card.querySelector('.card-header');
+    var content = card.querySelector('.card-content');
+    if (!header || !content) return;
+    header.addEventListener('click', function(){
+      setTimeout(function(){ if (content.style.maxHeight) markOpened(card.id); }, 30);
+    });
+  });
+
+  /* header menu links open their section too */
+  document.querySelectorAll('#mainNav a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var id = a.getAttribute('href').slice(1);
+      var toggle = document.getElementById('navToggle');
+      var nav = document.getElementById('mainNav');
+      setTimeout(function(){
+        if (nav && nav.classList.contains('active') && toggle) toggle.click();
+        openCard(id);
+      }, 80);
+    });
+  });
+
+  /* reveal on scroll */
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('sb-in'); io.unobserve(e.target); } });
+    }, {threshold: 0.05});
+    document.querySelectorAll('.card').forEach(function(c){ io.observe(c); });
+  }
+  setTimeout(function(){ document.querySelectorAll('.card').forEach(function(c){ c.classList.add('sb-in'); }); }, 1500);
+
+  /* ---------- Plan My Show ---------- */
+  var PLAN_KEY = 'sbPlanV1';
+  var checks = Array.prototype.slice.call(document.querySelectorAll('#sbChecks input[type="checkbox"]'));
+  var buddy = document.getElementById('sbBuddy');
+  function planState(){
+    try { return JSON.parse(localStorage.getItem(PLAN_KEY) || '{}'); } catch(e){ return {}; }
+  }
+  function savePlan(){
+    var st = { checks: checks.map(function(c){ return c.checked; }), buddy: buddy ? buddy.value : '' };
+    try { localStorage.setItem(PLAN_KEY, JSON.stringify(st)); } catch(e){}
+    renderPlan();
+  }
+  function renderPlan(){
+    var done = 0;
+    checks.forEach(function(c){ var lab = c.closest('.sb-check'); if (lab) lab.classList.toggle('done', c.checked); if (c.checked) done++; });
+    var pc = document.getElementById('sbPlanCount');
+    if (pc) pc.textContent = done + ' of ' + checks.length + ' ready';
+    var tn = document.getElementById('sbTnPlan');
+    if (tn){
+      var items = checks.filter(function(c){ return c.checked; }).map(function(c){ return '<li>' + c.getAttribute('data-plan') + '</li>'; });
+      if (buddy && buddy.value) items.unshift('<li>Buddy: ' + buddy.value.replace(/</g,'') + '</li>');
+      tn.innerHTML = items.length ? items.join('') : '<li>No plan ticked off yet. Open Plan My Show in the full page.</li>';
+    }
+  }
+  (function initPlan(){
+    var st = planState();
+    if (Array.isArray(st.checks)) checks.forEach(function(c, i){ c.checked = !!st.checks[i]; });
+    if (buddy && st.buddy) buddy.value = st.buddy;
+    checks.forEach(function(c){ c.addEventListener('change', savePlan); });
+    if (buddy) buddy.addEventListener('input', savePlan);
+    renderPlan();
+  })();
+  function copyText(text, msgEl, okMsg){
+    function done(){ if (msgEl) msgEl.textContent = okMsg; }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallback(); });
+    } else fallback();
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch(e){ if (msgEl) msgEl.textContent = 'Copy did not work here. Long press the text to copy it instead.'; }
+      document.body.removeChild(ta);
+    }
+  }
+  var copyPlanBtn = document.getElementById('sbCopyPlan');
+  if (copyPlanBtn) copyPlanBtn.addEventListener('click', function(){
+    var lines = ['My sober show plan:'];
+    checks.filter(function(c){ return c.checked; }).forEach(function(c){ lines.push('• ' + c.getAttribute('data-plan')); });
+    if (lines.length === 1) lines.push('• Still deciding. Plan My Show on PLURderapolis has the list.');
+    if (buddy && buddy.value) lines.push('Buddy: ' + buddy.value);
+    copyText(lines.join('\n'), document.getElementById('sbPlanMsg'), 'Plan copied. Send it to your buddy.');
+  });
+
+  /* ---------- What To Say ---------- */
+  document.querySelectorAll('.sb-reply').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.sb-reply').forEach(function(b){ b.classList.remove('copied'); });
+      btn.classList.add('copied');
+      copyText(btn.textContent.trim(), document.getElementById('sbSayMsg'), 'Copied: ' + btn.textContent.trim());
+    });
+  });
+
+  /* ---------- Places filter ---------- */
+  var filterChips = document.querySelectorAll('#sbFilters .mm-chip');
+  filterChips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      filterChips.forEach(function(c){ c.classList.remove('on'); });
+      chip.classList.add('on');
+      var f = chip.getAttribute('data-f');
+      var shown = 0;
+      document.querySelectorAll('.sb-place').forEach(function(p){
+        var show = (f === 'all' || p.getAttribute('data-ptype') === f);
+        p.style.display = show ? '' : 'none';
+        if (show) shown++;
+      });
+      var msg = document.getElementById('sbPlacesMsg');
+      if (msg) msg.textContent = shown + (shown === 1 ? ' place' : ' places') + ' shown';
+      setTimeout(refreshOpen, 60);
+    });
+  });
+
+  /* ---------- Ride the Wave ---------- */
+  var STEPS = [
+    {name:'Name it', text:'Say it in your head: \u201cThis is a craving, not a command.\u201d Naming it puts you back in charge.'},
+    {name:'Breathe', text:'Follow the slow pulse of this box. Breathe in as it grows, out as it settles. Slow breathing tells your nervous system the emergency is over.'},
+    {name:'Move your state', text:'Cold water on your face, step outside for air, find your buddy. Cravings hate a change of scenery.'},
+    {name:'Play it forward', text:'Picture tomorrow morning: waking up clear, no shame spiral, no mystery charges. That version of you is a few minutes away.'},
+    {name:'Tell someone', text:'Text your buddy, find the sober meetup, or just say it out loud. Cravings get quieter when they are not a secret.'}
+  ];
+  var STEP_MS = 60 * 1000;
+  var wave = { running:false, step:0, stepEnd:0, timer:null, pausedLeft:0 };
+  var fill = document.getElementById('sbWaveFill'), count = document.getElementById('sbWaveCount'),
+      stepBox = document.getElementById('sbWaveStep'), wName = document.getElementById('sbWaveName'),
+      wText = document.getElementById('sbWaveText'), clock = document.getElementById('sbWaveClock'),
+      startBtn = document.getElementById('sbWaveStart'), endBox = document.getElementById('sbWaveEnd');
+  function fmt(ms){ var s = Math.max(0, Math.ceil(ms/1000)); return Math.floor(s/60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function showStep(){
+    var st = STEPS[wave.step];
+    if (wName) wName.textContent = st.name;
+    if (wText) wText.textContent = st.text;
+    if (count) count.textContent = 'Step ' + (wave.step + 1) + ' of 5';
+    if (stepBox) stepBox.classList.toggle('breathe', wave.step === 1);
+    if (fill) fill.style.width = (wave.step / 5 * 100) + '%';
+    setTimeout(refreshOpen, 60);
+  }
+  function finishWave(){
+    stopTimer();
+    wave.running = false;
+    if (startBtn) startBtn.textContent = 'Start the wave';
+    if (clock) clock.textContent = '0:00';
+    if (fill) fill.style.width = '100%';
+    if (count) count.textContent = 'Wave complete';
+    if (stepBox) stepBox.classList.remove('breathe');
+    if (endBox){ endBox.hidden = false; }
+    setTimeout(refreshOpen, 60);
+  }
+  function stopTimer(){ if (wave.timer){ clearInterval(wave.timer); wave.timer = null; } }
+  function tick(){
+    var left = wave.stepEnd - Date.now();
+    if (left <= 0){
+      wave.step++;
+      if (wave.step >= 5){ finishWave(); return; }
+      wave.stepEnd = Date.now() + STEP_MS;
+      showStep();
+      left = STEP_MS;
+    }
+    if (clock) clock.textContent = fmt(left);
+    var doneSteps = wave.step + (1 - left / STEP_MS);
+    if (fill) fill.style.width = (doneSteps / 5 * 100) + '%';
+  }
+  function resetWave(){
+    stopTimer(); wave.running = false; wave.step = 0; wave.pausedLeft = 0;
+    if (startBtn) startBtn.textContent = 'Start the wave';
+    if (clock) clock.textContent = '1:00';
+    if (endBox) endBox.hidden = true;
+    var msg = document.getElementById('sbWaveMsg'); if (msg) msg.textContent = '';
+    showStep();
+  }
+  window.__sbResetWave = resetWave;
+  window.__sbStartWave = function(){
+    if (wave.running) return;
+    if (endBox) endBox.hidden = true;
+    wave.running = true;
+    if (startBtn) startBtn.textContent = 'Pause';
+    wave.stepEnd = Date.now() + (wave.pausedLeft || STEP_MS);
+    wave.pausedLeft = 0;
+    wave.timer = setInterval(tick, 250);
+    tick();
+  };
+  if (startBtn) startBtn.addEventListener('click', function(){
+    if (!wave.running){ window.__sbStartWave(); return; }
+    wave.pausedLeft = Math.max(0, wave.stepEnd - Date.now());
+    stopTimer(); wave.running = false;
+    startBtn.textContent = 'Keep going';
+  });
+  var resetBtn = document.getElementById('sbWaveReset');
+  if (resetBtn) resetBtn.addEventListener('click', resetWave);
+  var okBtn = document.getElementById('sbWaveOk');
+  if (okBtn) okBtn.addEventListener('click', function(){
+    var msg = document.getElementById('sbWaveMsg');
+    if (msg) msg.textContent = 'Good. That one is behind you. Drink some water and get back to the music.';
+    setTimeout(refreshOpen, 60);
+  });
+  var strongBtn = document.getElementById('sbWaveStrong');
+  if (strongBtn) strongBtn.addEventListener('click', function(){
+    var msg = document.getElementById('sbWaveMsg');
+    if (msg) msg.textContent = 'That is data, not failure. Opening Support for you now.';
+    setTimeout(function(){ openCard('support'); }, 500);
+  });
+  showStep();
+
+  /* ---------- Meeting matcher: Tonight ---------- */
+  var DAYMAP = {0:null, 1:'mon', 2:null, 3:null, 4:null, 5:'fri', 6:'sat'};
+  var DAYNAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var TONIGHT_MEETINGS = {
+    mon: 'AA · The Way Out, Mondays 6:30 PM at Hennepin Avenue United Methodist Church. Confirm before you go.',
+    fri: 'NA · Young in Recovery, Fridays 9:00 PM at Grace Trinity Community Church. Confirm before you go.',
+    sat: 'Four listings fit Saturdays, including SMART Recovery at 7:00 PM and AA Saturday Night Speaker at 7:30 PM. Confirm before you go.'
+  };
+  function tonightText(){
+    var d = new Date(), key = DAYMAP[d.getDay()];
+    if (key && TONIGHT_MEETINGS[key]) return TONIGHT_MEETINGS[key];
+    return 'No meeting from this page is listed for ' + DAYNAMES[d.getDay()] + 's. The finder shows the closest days, and the Alano Society runs daily meetings. Confirm before you go.';
+  }
+  var tnMeeting = document.getElementById('sbTnMeeting');
+  if (tnMeeting) tnMeeting.textContent = tonightText();
+  var mmWrap = document.getElementById('meetingMatcher');
+  if (mmWrap){
+    var tnBtn = document.createElement('button');
+    tnBtn.type = 'button'; tnBtn.className = 'sb-btn-ghost'; tnBtn.id = 'mmTonight';
+    tnBtn.textContent = '🌙 What fits tonight?';
+    tnBtn.style.margin = '0.4rem 0 0.2rem';
+    var results = document.getElementById('mmResults');
+    mmWrap.insertBefore(tnBtn, results);
+    tnBtn.addEventListener('click', function(){
+      var key = DAYMAP[new Date().getDay()];
+      var dayGroup = document.querySelector('[data-mgroup="day"]');
+      if (!dayGroup) return;
+      var target = key ? dayGroup.querySelector('[data-v="' + key + '"]') : dayGroup.querySelector('[data-v="any"]');
+      if (target) target.click();
+      setTimeout(function(){
+        var note = document.createElement('p');
+        note.className = 'mm-note';
+        note.textContent = tonightText();
+        if (results) results.insertBefore(note, results.firstChild);
+        refreshOpen();
+      }, 30);
+    });
+  }
+
+  /* ---------- Mocktail builder: copy recipe ---------- */
+  var mbGo = document.getElementById('mbGo');
+  if (mbGo) mbGo.addEventListener('click', function(){
+    setTimeout(function(){
+      var out = document.getElementById('mbOut');
+      var btn = document.getElementById('mbCopy');
+      if (out && out.textContent.trim() && btn){ btn.hidden = false; }
+      refreshOpen();
+    }, 30);
+  });
+  var mbCopy = document.getElementById('mbCopy');
+  if (mbCopy) mbCopy.addEventListener('click', function(){
+    var out = document.getElementById('mbOut');
+    if (out) copyText(out.innerText || out.textContent, document.getElementById('mbCopyMsg'), 'Recipe copied.');
+  });
+
+  /* ---------- Tonight Mode ---------- */
+  function setTonight(on){
+    document.body.classList.toggle('tonight-on', on);
+    renderPlan();
+    var t = document.getElementById('sbTonightToggle');
+    if (t) t.textContent = on ? '📖 Show the full page' : '🌙 Tonight Mode';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  var tt = document.getElementById('sbTonightToggle');
+  if (tt) tt.addEventListener('click', function(){ setTonight(!document.body.classList.contains('tonight-on')); });
+  var te = document.getElementById('sbTonightExit');
+  if (te) te.addEventListener('click', function(){ setTonight(false); });
+  var tnWave = document.getElementById('sbTnWave');
+  if (tnWave) tnWave.addEventListener('click', function(){
+    setTonight(false);
+    setTimeout(function(){ openCard('cravings-sos'); window.__sbResetWave(); window.__sbStartWave(); }, 150);
+  });
+  var tnMeetBtn = document.getElementById('sbTnMeetingBtn');
+  if (tnMeetBtn) tnMeetBtn.addEventListener('click', function(){
+    setTonight(false);
+    setTimeout(function(){
+      openCard('meeting-finder');
+      var b = document.getElementById('mmTonight');
+      if (b) setTimeout(function(){ b.click(); }, 350);
+    }, 150);
+  });
+})();
+</script>
+
 </body>
 </html>
