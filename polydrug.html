@@ -824,6 +824,34 @@
 .fa-fallback .fa-whatsapp::before{content:"💬"}
 .fa-fallback .fa-wind::before{content:"💨"}
 </style>
+
+<style id="rev3-style">
+/* Revision 3: checker card no longer sticks under the mobile header */
+.tool{position:static!important;top:auto!important}
+/* Revision 3: freeze the matrix row names while the grid scrolls sideways */
+#matrixTable tbody th{position:sticky;left:0;background:#2a002a;color:#fff;z-index:4;box-shadow:2px 0 5px rgba(0,0,0,.4)}
+#matrixTable thead th{z-index:3}
+#matrixTable thead th:first-child{position:sticky;left:0;top:0;z-index:5;box-shadow:2px 0 5px rgba(0,0,0,.4)}
+.update-line{font-size:.92rem;color:var(--accent-2);font-weight:600;margin:.2rem 0 0}
+.jump-pills{display:flex;flex-wrap:wrap;gap:8px;padding:4px 0}
+.jump-pill{display:inline-block;padding:.35rem .8rem;border-radius:999px;background:var(--chip,#2a0a2a);border:1px solid var(--line,#5D3A7D);color:#fff;text-decoration:none;font-size:.85rem;font-weight:700}
+.page-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:14px 0 6px}
+.offline-note{text-align:center;color:var(--muted);font-size:.85rem;margin:2px 0 8px}
+.matrix-thumb{text-align:center;margin:18px auto 4px}
+.matrix-thumb img{width:180px;max-width:60vw;border-radius:12px;border:1px solid var(--line,#5D3A7D)}
+.matrix-thumb figcaption{color:var(--muted);font-size:.85rem;margin-top:6px}
+.matrix-getline{text-align:center;margin:0 0 8px;font-size:.9rem}
+.danger-strip{margin-top:1rem;padding:.8rem 1rem;border-radius:12px;background:#4a0510;border:1px solid #ff5470;color:#ffe9ec;line-height:1.5;font-size:.95rem}
+.install-banner{margin:10px 0}
+.install-banner-inner{padding:9px 12px}
+.install-banner-text{font-size:.85rem}
+.install-banner-icon{font-size:1.3em}
+@media print{
+  .ph-bar,.mobile-header,.mobile-nav,.tool,.page-actions,.matrix-share-menu,.swipe-indicator,.install-banner,.offline-badge,.offline-note,.update-line,.matrix-thumb,.matrix-getline,.cta-section,footer,.particles,.save-modal,.back-to-top,#backToTop,.plur-sources,.jump-pills{display:none!important}
+  body{background:#fff!important}
+  .matrix{overflow:visible!important;box-shadow:none!important;border:none!important;max-height:none!important}
+}
+</style>
 </head>
 <body>
 <header class="ph-bar">
@@ -856,64 +884,24 @@
     </div>
     
     <div class="mobile-nav-section">
-      <div class="mobile-nav-section-title">Page Sections</div>
-      <div class="mobile-nav-links">
-        <a href="#tool" class="mobile-nav-link">
-          <i class="fas fa-search-plus"></i>
-          <span>Interaction Checker</span>
-        </a>
-        <a href="#matrix-key" class="mobile-nav-link">
-          <i class="fas fa-key"></i>
-          <span>Matrix Key</span>
-        </a>
-        <a href="#matrix" class="mobile-nav-link">
-          <i class="fas fa-table"></i>
-          <span>Risk Matrix</span>
-        </a>
-        <a href="#tips" class="mobile-nav-link">
-          <i class="fas fa-lightbulb"></i>
-          <span>Harm Reduction Tips</span>
-        </a>
-        <a href="#categories" class="mobile-nav-link">
-          <i class="fas fa-layer-group"></i>
-          <span>Combo Categories</span>
-        </a>
-      </div>
-    </div>
-    
-    <div class="mobile-nav-section">
-      <div class="mobile-nav-section-title">Site Pages</div>
-      <div class="mobile-nav-links">
-        <a href="rx-combos.html" class="mobile-nav-link highlight">
-          <i class="fas fa-prescription-bottle"></i>
-          <span>Rx Combos</span>
-        </a>
-        <a href="resources.html" class="mobile-nav-link">
-          <i class="fas fa-book"></i>
-          <span>Resources</span>
-        </a>
-        <a href="emergency.html" class="mobile-nav-link">
-          <i class="fas fa-exclamation-triangle"></i>
-          <span>Emergency</span>
-        </a>
-        <a href="spiking.html" class="mobile-nav-link">
-          <i class="fas fa-skull-crossbones"></i>
-          <span>Spiking</span>
-        </a>
-        <a href="fake.html" class="mobile-nav-link">
-          <i class="fas fa-search"></i>
-          <span>Fake Drugs</span>
-        </a>
+      <div class="mobile-nav-section-title">On this page</div>
+      <div class="jump-pills">
+        <a href="#tool" class="jump-pill">Interaction Checker</a>
+        <a href="#matrix" class="jump-pill">Risk Matrix</a>
+        <a href="#matrix-key" class="jump-pill">Matrix Key</a>
+        <a href="#graphic" class="jump-pill">Get the graphic</a>
+        <a href="#tips" class="jump-pill">Harm Reduction Tips</a>
+        <a href="#categories" class="jump-pill">Combo Categories</a>
       </div>
     </div>
   </div>
   
   <div class="wrap">
     <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
-<h1 id="main-content">Polydrug Interaction Checker <span class="icons">⚡💊💀🌈</span></h1>
+<h1 id="main-content">Polydrug Interaction Checker</h1>
     <p class="lede">Mobile-first, harm-reduction focused tool to check drug combination risks. Pick up to three substances and see detailed safety information. Matrix is downloadable + shareable. Want the full picture on what psychedelics and hallucinogens do, plus risky combos and fake acid warnings? See our <a href="https://plurderapolis.org/psychedelics.html">Psychedelics &amp; Hallucinogens guide</a>.</p>
-
-    <!-- Install this checker as a home screen icon -->
+    <p class="update-line">Updated November 2026: now covers Meth, MAOIs, Tramadol, and Lithium.</p>
+<!-- Install this checker as a home screen icon -->
     <div id="installBanner" class="install-banner" style="display:none" role="note" aria-label="Add checker to home screen">
       <div class="install-banner-inner">
         <span class="install-banner-icon" aria-hidden="true">📲</span>
@@ -921,7 +909,7 @@
           <strong>Get this checker on your phone</strong>
           <span id="installSteps"></span>
         </div>
-        <button id="installBtn" class="install-btn" style="display:none" type="button">Install</button>
+        <button id="installBtn" class="install-btn" style="display:none" type="button">Add to home screen</button>
         <button id="installDismiss" class="install-dismiss" type="button" aria-label="Dismiss">✕</button>
       </div>
     </div>
@@ -957,42 +945,27 @@
       <div class="result" id="resultBox" aria-live="polite">
         <h3><i class="fas fa-clipboard-list"></i> Results will appear here</h3>
         <p>We'll show A+B, A+C, B+C and a combined A+B+C overview with detailed harm-reduction pointers.</p>
-        <div class="share-results" id="shareResults" style="display: none;">
-          <button class="share-btn" id="copyResults"><i class="fas fa-copy"></i> Copy Results</button>
-          <button class="share-btn" id="saveResults"><i class="fas fa-save"></i> Save Results</button>
-          <button class="share-btn" data-online id="shareTwitter"><i class="fab fa-twitter"></i> Tweet</button>
-          <button class="share-btn" data-online id="shareReddit"><i class="fab fa-reddit"></i> Reddit</button>
-        </div>
         <style>.rx-bridge{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.65rem 1.1rem;border-radius:999px;border:1px solid rgba(0,247,224,.4);color:#eee;text-decoration:none;font-weight:600;font-size:.92rem}.rx-bridge:hover{background:rgba(0,247,224,.12)}</style>
         <a href="rx-combos.html" class="rx-bridge">💊 Also on prescription meds? Check the interaction</a>
       </div>
+      <div class="share-results" id="shareResults" style="display: none;">
+          <button class="share-btn" id="shareResultBtn"><i class="fas fa-share-alt"></i> Share result</button>
+          <button class="share-btn" id="copyResults"><i class="fas fa-copy"></i> Copy result</button>
+          <button class="share-btn" id="saveResultPicBtn"><i class="fas fa-image"></i> Save result as picture</button>
+        </div>
     </section>
 
-    <!-- ===== Controls + Matrix ===== -->
+
     <div class="swipe-indicator">
       <i class="fas fa-arrows-left-right"></i> Swipe left/right to explore the full matrix
     </div>
-    
-    <div class="controls">
-      <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
-      <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share Page</button>
-      <button class="download" id="dlMatrixBtn" type="button"><i class="fas fa-image"></i> Download matrix</button>
-      <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
-    </div>
-    <div class="matrix-share-menu" id="matrixShareMenu" hidden>
-      <span class="matrix-share-label">Send the matrix graphic:</span>
-      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy page link</button>
-      <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
-      <a data-online id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
-    </div><p id="offline-share-note" style="display:none">📶 You are offline: sharing needs signal, but the checker itself works fine.</p>
-<script>function updateOnlineUI(){var online=navigator.onLine;document.querySelectorAll('[data-online]').forEach(function(el){el.style.display=online?'':'none';});var note=document.getElementById('offline-share-note');if(note)note.style.display=online?'none':'block';}window.addEventListener('online',updateOnlineUI);window.addEventListener('offline',updateOnlineUI);updateOnlineUI();</script>
 
 
     <div class="section-heading" id="matrix">
       <i class="fas fa-table"></i> Interaction Matrix
     </div>
 
+    <p class="matrix-getline"><a href="#pageActions">Get the matrix as a picture</a></p>
     <div class="matrix" role="region" aria-label="Combo Risk Matrix">
       <table id="matrixTable"></table>
     </div>
@@ -1044,6 +1017,34 @@
         </div>
       </div>
     </details>
+
+    <!-- Revision 4: graph block (thumbnail + actions) now sits below the matrix and key -->
+    <!-- Revision 3: matrix thumbnail + one consolidated actions row -->
+    <figure class="matrix-thumb" id="graphic">
+      <a id="matrixThumbLink" target="_blank" rel="noopener"><img id="matrixThumbImg" alt="Polysubstance Interaction Matrix, small preview"></a>
+      <figcaption>The full matrix as a picture. Tap the picture to see it full size.</figcaption>
+    </figure>
+    <script>
+    // Live: the thumbnail shows the same graphic the Send control uses, shipped as a data URI in /images/matrix-graphic.js
+    (function(){var s=document.createElement('script');s.src='/images/matrix-graphic.js';s.onload=function(){if(window.MATRIX_DATA_URL){document.getElementById('matrixThumbImg').src=window.MATRIX_DATA_URL;document.getElementById('matrixThumbLink').href=window.MATRIX_DATA_URL;}};document.head.appendChild(s);})();
+    </script>
+    <div class="controls page-actions" id="pageActions">
+      <button class="download" id="dlMatrixBtn" type="button"><i class="fas fa-image"></i> Save matrix photo</button>
+      <button class="share" id="sendMatrixBtn" type="button"><i class="fas fa-paper-plane"></i> Send matrix</button>
+      <button class="share" id="shareBtn"><i class="fas fa-share-alt"></i> Share this page</button>
+      <button class="download" id="printMatrixBtn" type="button"><i class="fas fa-print"></i> Print matrix</button>
+      <button class="download" id="savePageBtn"><i class="fas fa-download"></i> Save Page</button>
+    </div>
+    <div class="matrix-share-menu" id="matrixShareMenu" hidden>
+      <span class="matrix-share-label">Send the matrix graphic:</span>
+      <button type="button" id="mxCopyLink"><i class="fas fa-link"></i> Copy page link</button>
+      <a id="mxSms" href="#"><i class="fas fa-comment-sms"></i> Text it</a>
+      <a data-online id="mxWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a id="mxEmail" href="#"><i class="fas fa-envelope"></i> Email</a>
+    </div>
+    <p id="offline-share-note" style="display:none">📶 You are offline: sharing needs signal, but the checker itself works fine.</p>
+    <p class="offline-note">Works offline once it has loaded once.</p>
+<script>function updateOnlineUI(){var online=navigator.onLine;document.querySelectorAll('[data-online]').forEach(function(el){el.style.display=online?'':'none';});var note=document.getElementById('offline-share-note');if(note)note.style.display=online?'none':'block';}window.addEventListener('online',updateOnlineUI);window.addEventListener('offline',updateOnlineUI);updateOnlineUI();</script>
 
     <!-- ===== Tips (quick) ===== -->
     <details class="info" open id="tips">
@@ -1108,10 +1109,10 @@
 <a href="https://plurderapolis.org/rx-combos.html"><i class="fas fa-capsules"></i> RX + Party Combos</a><a href="https://plurderapolis.org/snorting.html"><i class="fas fa-wind"></i> Snorting Safer</a><a href="https://plurderapolis.org/overdose.html"><i class="fas fa-kit-medical"></i> Overdose Response</a><a href="https://plurderapolis.org/health.html"><i class="fas fa-heart-pulse"></i> Raver Health</a><a href="https://plurderapolis.org/psychedelics.html"><i class="fas fa-eye"></i> Psychedelics Guide</a>
 </div>
 </div>
-<style>.plur-sources summary::-webkit-details-marker{display:none}.plur-sources summary{list-style:none}.plur-sources a{color:#00CED1}.plur-sources .plur-chev{display:inline-block;color:#E040FB;font-size:1.15rem;transition:transform .2s}.plur-sources[open] .plur-chev{transform:rotate(180deg)}</style><details class="plur-sources" style="max-width:800px;margin:2rem auto;border:1px solid #5D3A7D;border-radius:14px;background:linear-gradient(120deg,#2a1844,#3b2260);overflow:hidden;font-size:.95rem;line-height:1.55;"><summary style="cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-weight:700;"><span>Sources and review<span style="display:block;font-weight:400;font-size:.8rem;color:#bdbdc9;margin-top:2px;">Last reviewed: October 2026.</span></span><span class="plur-chev">&#9662;</span></summary><div style="padding:2px 18px 15px;"><p style="margin:0 0 .5rem;">Last updated: October 2026.</p><p style="margin:0 0 .5rem;">Based on established harm reduction resources and clinical literature.</p>
+<style>.plur-sources summary::-webkit-details-marker{display:none}.plur-sources summary{list-style:none}.plur-sources a{color:#00CED1}.plur-sources .plur-chev{display:inline-block;color:#E040FB;font-size:1.15rem;transition:transform .2s}.plur-sources[open] .plur-chev{transform:rotate(180deg)}</style><details class="plur-sources" style="max-width:800px;margin:2rem auto;border:1px solid #5D3A7D;border-radius:14px;background:linear-gradient(120deg,#2a1844,#3b2260);overflow:hidden;font-size:.95rem;line-height:1.55;"><summary style="cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-weight:700;"><span>Sources and review<span style="display:block;font-weight:400;font-size:.8rem;color:#bdbdc9;margin-top:2px;">Last reviewed: November 2026.</span></span><span class="plur-chev">&#9662;</span></summary><div style="padding:2px 18px 15px;"><p style="margin:0 0 .5rem;">Last updated: November 2026.</p><p style="margin:0 0 .5rem;">Based on established harm reduction resources and clinical literature.</p>
 <p style="margin:0 0 .5rem;">This checker is a general harm reduction reference. Its risk ratings are consistent with the established combination references below, which are the sources to check a specific combination against:</p>
-<p style="margin:0 0 .5rem;">Note: pairs without specific data in this checker show general guidance by risk level, not a pair-specific finding.</p>
-<ul style="margin:0;padding-left:1.2rem;"><li><a href="https://combo.tripsit.me/" target="_blank" rel="noopener">TripSit Combination Chart</a></li><li><a href="https://dancesafe.org" target="_blank" rel="noopener">DanceSafe</a></li><li><a href="https://www.cdc.gov/overdose-prevention/index.html" target="_blank" rel="noopener">CDC: Overdose Prevention</a></li></ul>
+<p style="margin:0 0 .5rem;">Note: every pair in this checker now carries its own rating and a pair specific note, drawn from the sources below.</p>
+<ul style="margin:0;padding-left:1.2rem;"><li><a href="https://combo.tripsit.me/" target="_blank" rel="noopener">TripSit Combination Chart</a></li><li><a href="https://dancesafe.org" target="_blank" rel="noopener">DanceSafe</a></li><li><a href="https://www.cdc.gov/overdose-prevention/index.html" target="_blank" rel="noopener">CDC: Overdose Prevention</a></li></ul><p style="margin:.5rem 0 .5rem;">For the prescription classes in this checker (MAOIs, tramadol, SSRIs and SNRIs, Wellbutrin, sleep aids, hormones and birth control), ratings also rest on:</p><ul style="margin:0;padding-left:1.2rem;"><li><a href="https://www.fda.gov/drugs" target="_blank" rel="noopener">FDA drug labelling</a> for the prescription classes named above</li><li><a href="https://www.ncbi.nlm.nih.gov/books/NBK482377/" target="_blank" rel="noopener">StatPearls: Serotonin Syndrome</a></li></ul>
 </div><p style="margin:.7rem 0 0;">Privacy: what you pick in this checker stays on this device. Nothing you tap is sent or stored.</p><p style="margin:.7rem 0 0;">Something out of date or wrong on this page? <a href="anon-tip.html">Report outdated or incorrect info</a> through the anonymous tip form.</p></details>
 <footer>
       <p><strong>Legal & Medical Disclaimer:</strong> The information provided on PLURderapolis.org is for educational and harm reduction purposes only. It is not intended as medical advice, diagnosis, or treatment. Always seek the advice of qualified healthcare providers with any questions regarding medical conditions or substance use.</p>
@@ -1202,34 +1203,42 @@ mobileNav.addEventListener('click', (e) => {
 
 // Substance list - comprehensive from your original matrix
 const substances = [
-  "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol", 
-  "Opioids", "Benzos", "SSRIs", "SNRIs", "ADHD Meds", 
-  "Antipsychotics", "Mood Stabilizers", "Wellbutrin", "Trazodone", 
-  "Gabapentin", "LSD", "Shrooms", "Nitrous", "DMT", "GHB"
+  "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol",
+  "Opioids", "Benzos", "SSRIs", "SNRIs", "ADHD Meds",
+  "Antipsychotics", "Mood Stabilizers", "Wellbutrin", "Trazodone", "Gabapentin",
+  "LSD", "Shrooms", "Nitrous", "DMT", "GHB",
+  "Meth", "MAOIs", "Tramadol", "Sleep Aids", "Hormones + BC",
+  "Lithium"
 ];
 
 // Risk matrix data based on your original table
 const riskMatrix = {
-  "Cannabis": ["-", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "🟡", "🟡", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟡", "🔴"],
-  "Ketamine": ["🟡", "-", "❌", "❌", "❌", "❌", "❌", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "❌", "🟡", "❌", "❌"],
-  "MDMA": ["🔴", "❌", "-", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌"],
-  "Cocaine": ["🔴", "❌", "🔴", "-", "❌", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "☠️"],
-  "Alcohol": ["🔴", "❌", "🔴", "❌", "-", "☠️", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "☠️"],
-  "Opioids": ["🔴", "❌", "❌", "❌", "☠️", "-", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "❌", "❌", "⚠️", "☠️", "☠️"],
-  "Benzos": ["🔴", "❌", "🔴", "🔴", "☠️", "☠️", "-", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "❌", "⚠️", "⚠️", "⚠️", "☠️", "☠️"],
-  "SSRIs": ["🟡", "🟢", "🔴", "🔴", "⚠️", "⚠️", "⚠️", "-", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "SNRIs": ["🟡", "🟡", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "-", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "ADHD Meds": ["🟢", "🔴", "❌", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "-", "🟡", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Antipsychotics": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "-", "🟡", "🟡", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Mood Stabilizers": ["🟡", "🟡", "❌", "🔴", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "-", "🟡", "🟡", "🟡", "🔴", "🔴", "⚠️", "🔴", "⚠️"],
-  "Wellbutrin": ["🟢", "🟡", "❌", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "-", "🟡", "🟡", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Trazodone": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "-", "🟢", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "Gabapentin": ["🟢", "🟡", "🔴", "🔴", "❌", "❌", "❌", "⚠️", "⚠️", "🟡", "🟡", "🟡", "🟡", "🟢", "-", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️"],
-  "LSD": ["🟡", "❌", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "⚠️", "⚠️", "⚠️", "-", "🟢", "🟡", "🔴", "🔴"],
-  "Shrooms": ["🟡", "❌", "🔴", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "⚠️", "⚠️", "⚠️", "🟢", "-", "🟡", "🔴", "🔴"],
-  "Nitrous": ["🟢", "🟡", "🔴", "🔴", "❌", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🟡", "🟡", "-", "⚠️", "⚠️"],
-  "DMT": ["🟡", "❌", "❌", "❌", "❌", "☠️", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "-", "☠️"],
-  "GHB": ["🔴", "❌", "❌", "☠️", "☠️", "☠️", "☠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "⚠️", "🔴", "🔴", "⚠️", "☠️", "-"]
+  "Cannabis": ["-", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "🟡", "🟡", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟢", "🟡"],
+  "Ketamine": ["🟡", "-", "🟢", "❌", "❌", "❌", "❌", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "❌", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡"],
+  "MDMA": ["🔴", "🟢", "-", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "❌", "🔴", "🟡", "❌"],
+  "Cocaine": ["🔴", "❌", "🔴", "-", "❌", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "☠️", "❌", "❌", "❌", "🔴", "🟡", "🔴"],
+  "Alcohol": ["🔴", "❌", "🔴", "❌", "-", "☠️", "☠️", "🟡", "🟡", "🔴", "🔴", "🔴", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "☠️", "🔴", "🔴", "☠️", "❌", "🟡", "🔴"],
+  "Opioids": ["🔴", "❌", "❌", "❌", "☠️", "-", "☠️", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "❌", "❌", "🟡", "☠️", "☠️", "❌", "❌", "☠️", "❌", "🟢", "🟡"],
+  "Benzos": ["🔴", "❌", "🔴", "🔴", "☠️", "☠️", "-", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🔴", "❌", "🟡", "🟡", "🟡", "☠️", "☠️", "🟡", "🟡", "☠️", "❌", "🟢", "🟡"],
+  "SSRIs": ["🟡", "🟢", "🔴", "🔴", "🟡", "🟡", "🟡", "-", "🔴", "🔴", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡", "🟡", "🟢", "🔴", "🟡", "🔴", "❌", "❌", "🟡", "🟡", "🔴"],
+  "SNRIs": ["🟡", "🟡", "🔴", "❌", "🟡", "🟡", "🟡", "🔴", "-", "🔴", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡", "🟡", "🟢", "🔴", "🟡", "🔴", "❌", "❌", "🟡", "🟡", "🔴"],
+  "ADHD Meds": ["🟢", "🔴", "❌", "❌", "🔴", "🔴", "🟡", "🔴", "🔴", "-", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟢", "🟡", "🔴", "❌", "❌", "❌", "🟡", "🟡", "🔴"],
+  "Antipsychotics": ["🟡", "🟡", "❌", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "-", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡"],
+  "Mood Stabilizers": ["🟡", "🟡", "❌", "🔴", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "-", "🟡", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡"],
+  "Wellbutrin": ["🟢", "🟡", "❌", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "-", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡", "❌", "❌", "❌", "🟡", "🟢", "🔴"],
+  "Trazodone": ["🟢", "🟡", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "🟡", "-", "🟢", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "❌", "❌", "🔴", "🟢", "🟡"],
+  "Gabapentin": ["🟢", "🟡", "🔴", "🔴", "❌", "❌", "❌", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟢", "-", "🟡", "🟡", "🟡", "🟡", "❌", "🟡", "🟡", "🔴", "🔴", "🟢", "🟡"],
+  "LSD": ["🟡", "🟡", "🔴", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "-", "🟢", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🟡", "❌"],
+  "Shrooms": ["🟡", "🟡", "🔴", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "-", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🟡", "❌"],
+  "Nitrous": ["🟢", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "🟢", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "-", "🟡", "🔴", "🟢", "🟢", "🟡", "🔴", "🟢", "🟢"],
+  "DMT": ["🟡", "❌", "❌", "❌", "❌", "☠️", "☠️", "🔴", "🔴", "🟡", "🔴", "🔴", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "-", "☠️", "🟡", "❌", "🔴", "🟡", "🟡", "❌"],
+  "GHB": ["🔴", "❌", "❌", "☠️", "☠️", "☠️", "☠️", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "🔴", "🔴", "🔴", "☠️", "-", "❌", "🔴", "☠️", "❌", "🟢", "🟡"],
+  "Meth": ["🟡", "🟡", "❌", "❌", "🔴", "❌", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "❌", "🔴", "🟡", "🟡", "🟡", "🟢", "🟡", "❌", "-", "❌", "❌", "🔴", "🟡", "🔴"],
+  "MAOIs": ["🟡", "🔴", "❌", "❌", "🔴", "❌", "🟡", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "🟡", "🔴", "🔴", "🟢", "❌", "🔴", "❌", "-", "❌", "🟡", "🟢", "🔴"],
+  "Tramadol": ["🟡", "🟡", "❌", "❌", "☠️", "☠️", "☠️", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🟡", "🔴", "☠️", "❌", "❌", "-", "❌", "🟢", "❌"],
+  "Sleep Aids": ["🟡", "🔴", "🔴", "🔴", "❌", "❌", "❌", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "🟡", "❌", "🔴", "🟡", "❌", "-", "🟢", "🟡"],
+  "Hormones + BC": ["🟢", "🟢", "🟡", "🟡", "🟡", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🔴", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟡", "🟢", "🟡", "🟢", "🟢", "🟢", "-", "🟡"],
+  "Lithium": ["🟡", "🟡", "❌", "🔴", "🔴", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "🔴", "🟡", "🟡", "❌", "❌", "🟢", "❌", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "-"]
 };
 
 // Detailed interaction descriptions
@@ -1238,7 +1247,7 @@ const interactionDetails = {
   "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
   "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
   "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
-  "Cannabis|GHB / Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
+  "Cannabis|Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
   "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
   "Cannabis|SSRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
   "Cannabis|SNRIs": { risk: "🟡", desc: "Mild interaction; usually safe." },
@@ -1248,18 +1257,23 @@ const interactionDetails = {
   "Cannabis|Wellbutrin": { risk: "🟢", desc: "Generally safe." },
   "Cannabis|Trazodone": { risk: "🟢", desc: "Generally safe." },
   "Cannabis|Gabapentin": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|LSD": { risk: "🔴", desc: "May intensify effects and anxiety." },
-  "Cannabis|Shrooms": { risk: "🔴", desc: "May intensify effects and anxiety." },
+  "Cannabis|LSD": { risk: "🟡", desc: "May intensify effects and anxiety." },
+  "Cannabis|Shrooms": { risk: "🟡", desc: "May intensify effects and anxiety." },
   "Cannabis|Nitrous": { risk: "🟢", desc: "Generally safe." },
-  "Cannabis|DMT": { risk: "🔴", desc: "May increase anxiety and cardiovascular strain." },
+  "Cannabis|DMT": { risk: "🟡", desc: "May increase anxiety and cardiovascular strain." },
   "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
-
-  "Ketamine|MDMA": { risk: "❌", desc: "Dangerous combo: high risk of respiratory failure." },
+  "Cannabis|Meth": { risk: "🟡", desc: "Meth plus cannabis: cannabis can take the edge off for some people, but the mix raises anxiety, paranoia, and psychosis risk, especially after missed sleep. TripSit rates stimulant plus psychedelic class mixes Caution for similar reasons." },
+  "Cannabis|MAOIs": { risk: "🟡", desc: "MAOIs plus cannabis: no strong direct clash is documented, but MAOIs can raise blood pressure and cannabis can swing heart rate and anxiety, so the mix is unpredictable. Caution." },
+  "Cannabis|Tramadol": { risk: "🟡", desc: "Tramadol plus cannabis: added sedation and dizziness, and cannabis does nothing to lower tramadol seizure risk. Caution." },
+  "Cannabis|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus cannabis: sedation, dizziness, and poor coordination add up. Hydroxyzine and zolpidem type aids both make cannabis feel heavier. Caution." },
+  "Cannabis|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus cannabis: no meaningful interaction is documented. Research here is thin and mostly absent, so this low rating means no known clash, not proven safety." },
+  "Cannabis|Lithium": { risk: "🟡", desc: "Lithium plus cannabis: no major direct clash is documented, but cannabis can worsen mood instability and anxiety for people taking lithium for bipolar conditions, and dehydration from a heavy session can nudge lithium levels up. Caution." },
+  "Ketamine|MDMA": { risk: "🟢", desc: "Per TripSit, this pair is Low Risk and Synergy: no unexpected interactions, though it is likely to increase blood pressure, so go slowly and watch heart strain at high amounts." },
   "Ketamine|Cocaine": { risk: "❌", desc: "Dangerous combo: high risk of heart issues." },
   "Ketamine|Alcohol": { risk: "❌", desc: "Dangerous combo: respiratory depression risk." },
-  "Ketamine|GHB / Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
-  "Ketamine|Benzos": { risk: "🟡", desc: "Increased sedation." },
-  "Ketamine|SSRIs": { risk: "🟡", desc: "Mild interaction." },
+  "Ketamine|Opioids": { risk: "❌", desc: "Dangerous combo: high overdose risk." },
+  "Ketamine|Benzos": { risk: "❌", desc: "Increased sedation." },
+  "Ketamine|SSRIs": { risk: "🟢", desc: "Mild interaction." },
   "Ketamine|SNRIs": { risk: "🟡", desc: "Mild interaction." },
   "Ketamine|ADHD Meds": { risk: "🔴", desc: "Possible heart strain." },
   "Ketamine|Antipsychotics": { risk: "🟡", desc: "Mild interaction." },
@@ -1267,18 +1281,23 @@ const interactionDetails = {
   "Ketamine|Wellbutrin": { risk: "🟡", desc: "Mild interaction." },
   "Ketamine|Trazodone": { risk: "🟡", desc: "Mild interaction." },
   "Ketamine|Gabapentin": { risk: "🟡", desc: "Mild interaction." },
-  "Ketamine|LSD": { risk: "❌", desc: "High risk of confusion, panic." },
-  "Ketamine|Shrooms": { risk: "❌", desc: "High risk of confusion, panic." },
+  "Ketamine|LSD": { risk: "🟡", desc: "Ketamine and psychedelics potentiate each other. TripSit rates ketamine plus psychedelics low risk with synergy and advises going slowly; confusion and panic are still possible, especially at high amounts." },
+  "Ketamine|Shrooms": { risk: "🟡", desc: "Ketamine and psychedelics potentiate each other. TripSit rates ketamine plus psychedelics low risk with synergy and advises going slowly; confusion and panic are still possible, especially at high amounts." },
   "Ketamine|Nitrous": { risk: "🟡", desc: "Mild sedation increase." },
   "Ketamine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
   "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
-
+  "Ketamine|Meth": { risk: "🟡", desc: "Meth plus ketamine: both push blood pressure and heart rate up. TripSit rates amphetamines plus ketamine Caution. Moving around is risky, because ketamine impairs coordination while meth masks how impaired you are." },
+  "Ketamine|MAOIs": { risk: "🔴", desc: "MAOIs plus ketamine: poorly explored, and both can raise blood pressure. Treat as high risk and avoid outside a medical setting." },
+  "Ketamine|Tramadol": { risk: "🟡", desc: "Tramadol plus ketamine: TripSit reports no unexpected interactions for this pair, but both add sedation and tramadol keeps its seizure risk. Caution." },
+  "Ketamine|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus ketamine: the RX page groups sleep aids with ketamine as a blackout risk. Sedation stacks, reflexes slow, and vomit and fall risk climb. Strong caution." },
+  "Ketamine|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus ketamine: no direct interaction is documented. Evidence is thin; treat this as no known clash rather than proven safe." },
+  "Ketamine|Lithium": { risk: "🟡", desc: "Lithium plus ketamine: ketamine is used in mood treatment settings alongside lithium for some people, but outside care the mix is unpredictable, and ketamine can raise blood pressure and destabilise mood. Caution." },
   "MDMA|Cocaine": { risk: "🔴", desc: "High heart strain risk." },
   "MDMA|Alcohol": { risk: "🔴", desc: "Dehydration, liver strain." },
-  "MDMA|Opioids": { risk: "❌", desc: "Very dangerous: respiratory failure risk." },
+  "MDMA|Opioids": { risk: "❌", desc: "Very dangerous, and the mechanism is masking: the stimulant hides how sedated the opioid is making you, so more opioid gets taken than the body can handle. When the stimulant wears off first, breathing can slow or stop." },
   "MDMA|Benzos": { risk: "🔴", desc: "Mixed effects; sedation and stimulation." },
   "MDMA|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
-  "MDMA|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
+  "MDMA|SNRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
   "MDMA|ADHD Meds": { risk: "❌", desc: "Heart strain and serotonin syndrome risk." },
   "MDMA|Antipsychotics": { risk: "❌", desc: "Potentially dangerous interaction." },
   "MDMA|Mood Stabilizers": { risk: "❌", desc: "Potentially dangerous interaction." },
@@ -1288,10 +1307,16 @@ const interactionDetails = {
   "MDMA|LSD": { risk: "🔴", desc: "Sensory overload, panic." },
   "MDMA|Shrooms": { risk: "🔴", desc: "Sensory overload, panic." },
   "MDMA|Nitrous": { risk: "🔴", desc: "Oxygen deprivation risk." },
-  "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo." },
+  "MDMA|DMT": { risk: "❌", desc: "High risk, avoid combo. Oral DMT as ayahuasca is a different, higher risk case, because ayahuasca adds an MAOI, and MAOI combinations with this drug are a known serotonin syndrome risk." },
   "MDMA|GHB": { risk: "❌", desc: "High overdose risk." },
-
-  "Cocaine|Alcohol": { risk: "🔴", desc: "Creates cocaethylene: very toxic to heart and liver." },
+  "MDMA|Meth": { risk: "❌", desc: "Meth plus MDMA: two strong stimulants. Amphetamines increase the neurotoxic effects of MDMA per TripSit, and the pair adds overheating, heart strain, and serotonin syndrome risk. Avoid." },
+  "MDMA|MAOIs": { risk: "❌", desc: "MAOIs plus MDMA: extremely dangerous. This is one of the classic fatal serotonin combinations, with serotonin syndrome and hypertensive crisis both reported, and FDA labelling contraindicates combining MAOIs with serotonergic stimulants. Never combine." },
+  "MDMA|Tramadol": { risk: "❌", desc: "Tramadol plus MDMA: both are serotonergic and both raise seizure risk. Serotonin syndrome and seizures are both documented concerns for this mix. Avoid." },
+  "MDMA|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus MDMA: people use these to land after rolling, but hydroxyzine adds heart rhythm effects while MDMA is still stressing the heart, and sedation can mask how unwell someone is. Strong caution." },
+  "MDMA|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus MDMA: the RX page notes some research suggests higher estrogen levels may intensify stimulant effects, with greater sensitivity and higher risk of overheating and water retention, though the exact mechanisms are not fully worked out. Caution, and pace yourself." },
+  "MDMA|Lithium": { risk: "❌", desc: "Lithium plus MDMA: seizures have been reported for lithium with serotonergic stimulants, and MDMA adds a heavy serotonin load plus dehydration and overheating, which can push lithium levels up. Avoid." },
+  "Cocaine|Alcohol": { risk: "❌", desc: "Creates cocaethylene: very toxic to heart and liver." },
+  "Cocaine|Opioids": { risk: "❌", desc: "Cocaine plus opioids (a speedball): cocaine hides how sedated you are, so people use more opioid than the body can handle, per the RX page. Cardiac arrest risk is high, and the overdose can feel like it comes out of nowhere when the cocaine fades first." },
   "Cocaine|Benzos": { risk: "🔴", desc: "Risk of heart issues and sedation conflict." },
   "Cocaine|SSRIs": { risk: "🔴", desc: "Serotonin syndrome risk." },
   "Cocaine|SNRIs": { risk: "❌", desc: "Serotonin syndrome risk." },
@@ -1306,14 +1331,243 @@ const interactionDetails = {
   "Cocaine|Nitrous": { risk: "🔴", desc: "Possible heart strain." },
   "Cocaine|DMT": { risk: "❌", desc: "High risk; avoid combo." },
   "Cocaine|GHB": { risk: "☠️", desc: "Extremely dangerous combo; fatal overdose risk." },
-
-  "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+  "Cocaine|Meth": { risk: "❌", desc: "Meth plus cocaine: stacking two stimulants multiplies heart strain, blood pressure, anxiety, and overheating risk, and meth keeps going long after cocaine fades. Avoid." },
+  "Cocaine|MAOIs": { risk: "❌", desc: "MAOIs plus cocaine: dangerous. Cocaine on top of an MAOI can trigger a hypertensive crisis, a sudden blood pressure spike that can cause a stroke, plus serotonin toxicity. Never combine." },
+  "Cocaine|Tramadol": { risk: "❌", desc: "Tramadol plus cocaine: both raise seizure risk and serotonin, and cocaine adds heart strain. Serotonin syndrome and seizures are both possible. Avoid." },
+  "Cocaine|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus cocaine: using a sedative to force sleep after cocaine masks how much stimulant is still on board, and hydroxyzine adds heart rhythm risk on a stressed heart. Strong caution." },
+  "Cocaine|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus cocaine: direct studies are lacking. Estrogen can affect blood clotting and blood pressure, and cocaine stresses both, so caution is warranted even though the interaction itself is unstudied." },
+  "Cocaine|Lithium": { risk: "🔴", desc: "Lithium plus cocaine: cocaine driven sweating, poor fluid intake, and sleeplessness can push lithium levels toward toxicity, and the stimulant works against mood stability. Strong caution." },
   "Alcohol|Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-  "Benzos|Opioids": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
-
-  "SSRIs|SNRIs": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SSRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." },
-  "SNRIs|Trazodone": { risk: "⚠️", desc: "Risk of serotonin syndrome." }
+  "Alcohol|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+  "Alcohol|SSRIs": { risk: "🟡", desc: "Alcohol plus SSRIs: alcohol adds sedation and impaired judgment on top of the SSRI, and drinking works against what the medicine is treating. FDA labelling for SSRIs advises against alcohol for these reasons. Caution." },
+  "Alcohol|SNRIs": { risk: "🟡", desc: "Alcohol plus SNRIs: additive sedation and dizziness, plus blood pressure swings from the SNRI side. Alcohol also undercuts the condition being treated. Caution." },
+  "Alcohol|ADHD Meds": { risk: "🔴", desc: "Alcohol plus ADHD meds: the stimulant masks how drunk you are, so people drink more than planned, with blackouts and impaired judgment, the same pattern the RX page describes for ADHD meds and alcohol. Strong caution." },
+  "Alcohol|Antipsychotics": { risk: "🔴", desc: "Alcohol plus antipsychotics: heavy additive sedation. Both slow you down, balance and breathing can suffer at higher amounts, and falls and blackouts are common. Strong caution." },
+  "Alcohol|Mood Stabilizers": { risk: "🔴", desc: "Alcohol plus mood stabilizers: alcohol destabilises the conditions these medicines treat, adds sedation with lamotrigine and valproate, and with lithium the dehydration and fluid shifts from drinking can push lithium levels toward toxicity. Strong caution." },
+  "Alcohol|Wellbutrin": { risk: "❌", desc: "Alcohol plus Wellbutrin: the RX page flags blackouts, impulsivity, and seizures for this pair. Wellbutrin lowers the seizure threshold and alcohol withdrawal raises it further. Avoid." },
+  "Alcohol|Trazodone": { risk: "❌", desc: "Alcohol plus trazodone: the RX page sleep section describes this pattern as respiratory suppression, blackout, and disorientation. Two heavy sedatives stack fast. Avoid." },
+  "Alcohol|Gabapentin": { risk: "❌", desc: "Alcohol plus gabapentin: the RX page describes stacked sedation and euphoria with high overdose risk, especially with low tolerance, and motor control and memory going fast. Avoid." },
+  "Alcohol|LSD": { risk: "🔴", desc: "Alcohol plus LSD: alcohol dulls and muddies a trip, adds dehydration and nausea, and blackouts on top of psychedelic confusion make risky behaviour and accidents more likely." },
+  "Alcohol|Shrooms": { risk: "🔴", desc: "Alcohol plus shrooms: alcohol adds heavy sedation, nausea, and unpredictability to a trip, and being drunk makes it harder to judge how strong the mushrooms are." },
+  "Alcohol|Nitrous": { risk: "❌", desc: "Alcohol plus nitrous: both impair coordination and judgment, and the mix raises vomiting risk while too drunk to protect your own airway, on top of nitrous cutting oxygen. Avoid." },
+  "Alcohol|DMT": { risk: "❌", desc: "Alcohol plus DMT: alcohol sedation under a very intense, fast experience raises vomiting and aspiration risk and makes the experience harder to ride out. Avoid." },
+  "Alcohol|GHB": { risk: "☠️", desc: "Deadly stack: even small amounts together can rapidly lead to memory loss, unconsciousness, and vomit aspiration, and both suppress breathing. TripSit flags this pair as causing unconsciousness even at low combined amounts." },
+  "Alcohol|Meth": { risk: "🔴", desc: "Meth plus alcohol: meth masks how drunk you are, so people drink far more than planned, with dehydration and liver strain. The crash is hard when the meth fades and the alcohol is still there." },
+  "Alcohol|MAOIs": { risk: "🔴", desc: "MAOIs plus alcohol: some alcoholic drinks contain tyramine, which with an MAOI can push blood pressure dangerously high, and alcohol adds sedation and poor judgment on top. High caution." },
+  "Alcohol|Tramadol": { risk: "☠️", desc: "Tramadol plus alcohol: two depressants that potentiate each other's sedation and loss of coordination, on top of tramadol seizure risk. Unexpected loss of consciousness and breathing problems make this one of the deadly stacks." },
+  "Alcohol|Sleep Aids": { risk: "❌", desc: "Sleep aids plus alcohol: the RX page is blunt about this common mix: respiratory suppression, blackout, and disorientation. Zolpidem plus alcohol is a classic blackout combination. Avoid." },
+  "Alcohol|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus alcohol: no major interaction is documented, though both are processed by the liver and small studies suggest alcohol can hit harder for some hormonal contraceptive users. Caution." },
+  "Alcohol|Lithium": { risk: "🔴", desc: "Lithium plus alcohol: alcohol dehydrates and shifts fluids, which can raise lithium levels toward toxicity, and it destabilises the conditions lithium treats. Strong caution." },
+  "Opioids|Benzos": { risk: "☠️", desc: "Deadly combo: respiratory arrest risk." },
+  "Opioids|SSRIs": { risk: "🟡", desc: "Opioids plus SSRIs: mainly additive sedation. Most opioids add little serotonin, but tramadol is the exception and has its own entry in this checker. Caution, and watch breathing like any opioid mix." },
+  "Opioids|SNRIs": { risk: "🟡", desc: "Opioids plus SNRIs: additive sedation, and SNRIs can change how some opioids are processed. Tramadol is the serotonergic exception and has its own entry. Caution." },
+  "Opioids|ADHD Meds": { risk: "🔴", desc: "Opioids plus ADHD meds: a prescribed speedball pattern. The stimulant masks opioid sedation, so it is easy to take more opioid than your body can handle, and the sedation lands when the stimulant fades. Strong caution." },
+  "Opioids|Antipsychotics": { risk: "🔴", desc: "Opioids plus antipsychotics: additive sedation and breathing suppression. Sedating antipsychotics like quetiapine stack with opioids and raise overdose risk. Strong caution." },
+  "Opioids|Mood Stabilizers": { risk: "🟡", desc: "Opioids plus mood stabilizers: additive sedation and dizziness. With lithium, vomiting or dehydration from an opioid heavy night can move lithium levels, so hydration matters. Caution." },
+  "Opioids|Wellbutrin": { risk: "🟡", desc: "Opioids plus Wellbutrin: Wellbutrin lowers the seizure threshold, which matters most with tramadol (see its own entry). With other opioids the main issue is additive impairment. Caution." },
+  "Opioids|Trazodone": { risk: "🔴", desc: "Opioids plus trazodone: trazodone is heavily sedating, and stacked on an opioid it adds to breathing suppression and blackout risk, the same concern the RX page raises for sedating sleep medicines with opiates. Strong caution." },
+  "Opioids|Gabapentin": { risk: "❌", desc: "Opioids plus gabapentin: the RX page describes gabapentin being used to boost the opioid high, stacking sedation and euphoria with high overdose risk, especially with low tolerance. Avoid." },
+  "Opioids|LSD": { risk: "❌", desc: "Opioids plus LSD: opioid sedation fights the trip and then outlasts it, and being sedated while tripping raises falls and vomiting risk. Avoid." },
+  "Opioids|Shrooms": { risk: "❌", desc: "Opioids plus shrooms: heavy sedation under a trip makes people less able to respond to problems, and the opioid is still working after the mushrooms fade. Avoid." },
+  "Opioids|Nitrous": { risk: "🟡", desc: "Opioids plus nitrous: nitrous briefly cuts oxygen and adds dizziness on top of opioid sedation, raising fall and vomiting risk. Caution, and never use nitrous alone or without normal air breaks." },
+  "Opioids|DMT": { risk: "☠️", desc: "The grid rates this deadly and there is little pair specific research: an opioid level of sedation underneath an intense, incapacitating DMT experience leaves someone unable to protect their airway, and opioid breathing suppression continues after the short DMT peak." },
+  "Opioids|GHB": { risk: "☠️", desc: "Opioids plus GHB: the two potentiate each other strongly and unpredictably, rapidly leading to unconsciousness, with vomit aspiration and breathing suppression on top. One of the most dangerous pairs in this grid." },
+  "Opioids|Meth": { risk: "❌", desc: "Meth plus opioids: the stimulant masks how sedated the opioid is making you, so it is easy to take more opioid than your body can handle. When the meth wears off first, breathing can slow or stop." },
+  "Opioids|MAOIs": { risk: "❌", desc: "MAOIs plus opioids: several opioids, especially tramadol, meperidine, methadone, and dextromethorphan containing products, can trigger serotonin syndrome or a dangerous blood pressure reaction with MAOIs, and FDA labelling warns against these combinations." },
+  "Opioids|Tramadol": { risk: "☠️", desc: "Tramadol plus other opioids: tramadol is itself an opioid, so this stacks opioid effects directly: stronger sedation and breathing suppression, plus tramadol adds serotonin and seizure risks the other opioid does not." },
+  "Opioids|Sleep Aids": { risk: "❌", desc: "Sleep aids plus opioids: hydroxyzine and other sedating aids add their sedation on top of opioid sedation, and the RX page notes this stack can increase overdose risk. Avoid." },
+  "Opioids|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus opioids: no meaningful direct interaction is documented. Evidence is thin." },
+  "Opioids|Lithium": { risk: "🟡", desc: "Lithium plus opioids: additive sedation and dizziness. Vomiting or dehydration from a heavy opioid session can move lithium levels, so fluids matter. Caution." },
+  "Benzos|SSRIs": { risk: "🟡", desc: "Benzos plus SSRIs: additive sedation and slower reactions. The pair is sometimes prescribed together, but mixing with extra benzos beyond a prescription raises fall and blackout risk. Caution." },
+  "Benzos|SNRIs": { risk: "🟡", desc: "Benzos plus SNRIs: additive sedation and dizziness. Caution, especially when amounts climb or alcohol joins in." },
+  "Benzos|ADHD Meds": { risk: "🟡", desc: "Benzos plus ADHD meds: the two pull in opposite directions. The stimulant can mask benzo sedation, leading to taking more benzo than intended, and the sedation lands when the stimulant fades. Caution." },
+  "Benzos|Antipsychotics": { risk: "🔴", desc: "Benzos plus antipsychotics: deep additive sedation. Both drug classes slow breathing and blood pressure at higher amounts, and blackouts and falls are likely. Strong caution." },
+  "Benzos|Mood Stabilizers": { risk: "🟡", desc: "Benzos plus mood stabilizers: additive sedation. Some benzos are themselves used alongside these medicines in care, but extra amounts stack dizziness and memory problems. Caution." },
+  "Benzos|Wellbutrin": { risk: "🟡", desc: "Benzos plus Wellbutrin: Wellbutrin lowers the seizure threshold, and stopping benzos suddenly while on it raises seizure risk further. Sedation is also masked and unmasked unpredictably. Caution, and never stop benzos abruptly." },
+  "Benzos|Trazodone": { risk: "🔴", desc: "Benzos plus trazodone: two strongly sedating medicines. Heavy sleepiness, blackouts, and breathing problems at higher amounts. Strong caution." },
+  "Benzos|Gabapentin": { risk: "❌", desc: "Benzos plus gabapentin: two nervous system depressants that stack sedation and breathing suppression, the pattern behind the FDA warning for gabapentin type medicines combined with depressants. Avoid." },
+  "Benzos|LSD": { risk: "🟡", desc: "Benzos plus LSD: benzos blunt and can end a trip, which is why they are used to land a bad one. Taken at the start they mostly add sedation and unpredictability to the experience. Caution." },
+  "Benzos|Shrooms": { risk: "🟡", desc: "Benzos plus shrooms: benzos blunt the trip and add sedation. People use them to soften a hard trip; mixing early makes the whole experience less predictable. Caution." },
+  "Benzos|Nitrous": { risk: "🟡", desc: "Benzos plus nitrous: additive sedation and dizziness, with falls and vomiting the main risks. Caution, and keep normal air breaks with nitrous." },
+  "Benzos|DMT": { risk: "☠️", desc: "The grid rates this deadly: heavy benzo sedation under an incapacitating DMT experience risks unconsciousness and airway loss. There is little pair specific research, so treat the grid rating itself as the warning." },
+  "Benzos|GHB": { risk: "☠️", desc: "Benzos plus GHB: the two potentiate each other strongly and unpredictably, rapidly leading to unconsciousness, with vomit aspiration and breathing suppression on top. One of the most dangerous pairs in this grid." },
+  "Benzos|Meth": { risk: "🟡", desc: "Meth plus benzos: benzos can take the edge off a meth comedown, and TripSit treats amphetamines plus benzos as a lower risk decrease effect, but benzo sedation is masked while meth is active. If more benzo is taken than intended, breathing and memory problems can hit once the meth fades." },
+  "Benzos|MAOIs": { risk: "🟡", desc: "MAOIs plus benzos: benzos are among the less risky things to combine with an MAOI and are even used to treat agitation in MAOI reactions, but sedation and blood pressure drops on standing can add up. Caution." },
+  "Benzos|Tramadol": { risk: "☠️", desc: "Tramadol plus benzos: heavy nervous system depression. The two potentiate each other's sedation and can lead to unexpected loss of consciousness, with tramadol seizure risk on top. One of the deadly stacks." },
+  "Benzos|Sleep Aids": { risk: "❌", desc: "Sleep aids plus benzos: this stacks two kinds of sedative. Blackouts, falls, and unexpected loss of consciousness are common outcomes. Avoid." },
+  "Benzos|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus benzos: hormonal contraceptives can modestly change how fast some benzos are cleared, but no major interaction is documented. Low concern on current evidence." },
+  "Benzos|Lithium": { risk: "🟡", desc: "Lithium plus benzos: benzos are sometimes used alongside lithium in care. Additive sedation and unsteadiness are the watch points. Caution." },
+  "SSRIs|SNRIs": { risk: "🔴", desc: "SSRIs plus SNRIs: two serotonergic antidepressants stack serotonin directly. Serotonin syndrome is a real risk when amounts overlap, which is why switches between these medicines are normally tapered by a prescriber. Strong caution." },
+  "SSRIs|ADHD Meds": { risk: "🔴", desc: "SSRIs plus ADHD meds: the RX page flags this pattern for anxiety spikes and heart risk. Stimulants like Adderall also add a little serotonin, so serotonin syndrome is possible at higher amounts. Strong caution." },
+  "SSRIs|Antipsychotics": { risk: "🟡", desc: "SSRIs plus antipsychotics: often prescribed together on purpose. Watch for added restlessness, heart rhythm effects with some antipsychotics, and extra serotonin load. Caution outside prescriber guidance." },
+  "SSRIs|Mood Stabilizers": { risk: "🔴", desc: "SSRIs plus mood stabilizers: lithium is the concern in this class. Lithium plus an SSRI has case reports of serotonin syndrome, so that pairing drives this rating. Lamotrigine pairings are usually calmer; lithium has its own entry in this checker." },
+  "SSRIs|Wellbutrin": { risk: "🟡", desc: "SSRIs plus Wellbutrin: a very common prescribed pairing. Wellbutrin can raise levels of some SSRIs and add activation, anxiety, and insomnia. Caution, mainly about side effects stacking." },
+  "SSRIs|Trazodone": { risk: "🔴", desc: "SSRIs plus trazodone: both raise serotonin, and serotonin syndrome has been reported for this pairing, with risk climbing as amounts rise. Low amounts of trazodone are often prescribed for sleep alongside an SSRI, but extra amounts change the picture. Strong caution." },
+  "SSRIs|Gabapentin": { risk: "🟢", desc: "SSRIs plus gabapentin: no significant interaction is documented for this pair. Mild added tiredness is possible. Low concern." },
+  "SSRIs|LSD": { risk: "🟡", desc: "SSRIs plus LSD: the RX page describes flat visuals or erratic tripping. SSRIs blunt LSD for many people, which can lead to taking more, and the result is unpredictable either way. Caution." },
+  "SSRIs|Shrooms": { risk: "🟡", desc: "SSRIs plus shrooms: like LSD, effects are often blunted or erratic on an SSRI, and taking more to compensate makes the trip unpredictable. Caution." },
+  "SSRIs|Nitrous": { risk: "🟢", desc: "SSRIs plus nitrous: no known interaction between SSRIs and nitrous. Nitrous still cuts oxygen while inhaled, so normal air breaks apply. Low concern." },
+  "SSRIs|DMT": { risk: "🔴", desc: "SSRIs plus DMT: little direct research exists for SSRIs with smoked DMT, but DMT is strongly serotonergic, so strong caution is the honest rating. Oral DMT as ayahuasca is a different, higher risk case, because ayahuasca adds an MAOI, and MAOI combinations with this drug are a known serotonin syndrome risk." },
+  "SSRIs|GHB": { risk: "🟡", desc: "SSRIs plus GHB: no major direct clash is documented, and an SSRI does not protect against GHB overdose. Sedation may add slightly, and GHB risks stand on their own. Caution, and evidence here is limited." },
+  "SSRIs|Meth": { risk: "🔴", desc: "Meth plus SSRIs: meth releases serotonin, and combined with an SSRI there is a real serotonin syndrome risk, plus raised blood pressure. SSRIs can also blunt some meth effects, which leads people to take more." },
+  "SSRIs|MAOIs": { risk: "❌", desc: "MAOIs plus SSRIs: a textbook contraindicated combination. Serotonin syndrome from this mix can be fatal, and prescribers leave a gap of weeks between these medicines for this reason. Never combine." },
+  "SSRIs|Tramadol": { risk: "❌", desc: "Tramadol plus SSRIs: a well documented bad mix. Both raise serotonin, so serotonin syndrome risk is high, and both lower the seizure threshold. FDA labelling warns about this combination. Avoid." },
+  "SSRIs|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus SSRIs: mostly added sedation and next day grogginess. Hydroxyzine is sometimes prescribed alongside SSRIs for anxiety, so this pairing is common in medicine, but larger recreational amounts change the picture. Caution." },
+  "SSRIs|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus SSRIs: hormonal contraceptives can modestly change levels of some SSRIs, and the reverse, through shared liver enzymes. Effects are usually small, but mood changes when starting or stopping either are worth watching. Caution." },
+  "SSRIs|Lithium": { risk: "🔴", desc: "Lithium plus SSRIs: serotonin syndrome has been reported in case reports for lithium combined with SSRIs, on top of lithium levels being sensitive to fluid changes. Strong caution, and know the signs of serotonin syndrome." },
+  "SNRIs|ADHD Meds": { risk: "🔴", desc: "SNRIs plus ADHD meds: both raise norepinephrine, so blood pressure and heart rate climb together, with anxiety and a smaller serotonin load on top. Strong caution." },
+  "SNRIs|Antipsychotics": { risk: "🟡", desc: "SNRIs plus antipsychotics: watch heart rhythm effects with some antipsychotics and added serotonin load. Often prescriber managed. Caution." },
+  "SNRIs|Mood Stabilizers": { risk: "🔴", desc: "SNRIs plus mood stabilizers: lithium drives this rating, as lithium plus serotonergic antidepressants has serotonin syndrome case reports. Lithium has its own entry in this checker. Lamotrigine pairings are usually calmer." },
+  "SNRIs|Wellbutrin": { risk: "🟡", desc: "SNRIs plus Wellbutrin: both are activating and raise blood pressure for some people. Anxiety, insomnia, and jitteriness stack. Caution." },
+  "SNRIs|Trazodone": { risk: "🔴", desc: "SNRIs plus trazodone: both raise serotonin, and serotonin syndrome has been reported for serotonergic pairs like this, with risk climbing as amounts rise. Strong caution." },
+  "SNRIs|Gabapentin": { risk: "🟢", desc: "SNRIs plus gabapentin: a common prescribed pairing for pain, with no significant direct interaction documented. Mild added tiredness is possible. Low concern." },
+  "SNRIs|LSD": { risk: "🟡", desc: "SNRIs plus LSD: trips are often blunted or erratic on an SNRI, and taking more to compensate makes things unpredictable, the same pattern the RX page describes for SSRI class medicines. Caution." },
+  "SNRIs|Shrooms": { risk: "🟡", desc: "SNRIs plus shrooms: blunted or erratic trips are the usual report, and redosing to compensate is where people get caught out. Caution." },
+  "SNRIs|Nitrous": { risk: "🟢", desc: "SNRIs plus nitrous: no known interaction. Nitrous still cuts oxygen while inhaled, so normal air breaks apply. Low concern." },
+  "SNRIs|DMT": { risk: "🔴", desc: "SNRIs plus DMT: little direct research exists for SNRIs with smoked DMT, but DMT is strongly serotonergic, so strong caution is the honest rating. Oral DMT as ayahuasca is a different, higher risk case, because ayahuasca adds an MAOI, and MAOI combinations with this drug are a known serotonin syndrome risk." },
+  "SNRIs|GHB": { risk: "🟡", desc: "SNRIs plus GHB: no major direct clash is documented, and GHB overdose risk is unchanged by the SNRI. Caution, and evidence here is limited." },
+  "SNRIs|Meth": { risk: "🔴", desc: "Meth plus SNRIs: SNRIs raise norepinephrine, so with meth the blood pressure, heart rate, and serotonin syndrome risks all climb together." },
+  "SNRIs|MAOIs": { risk: "❌", desc: "MAOIs plus SNRIs: contraindicated for the same reason as SSRIs. Serotonin syndrome and blood pressure crises are both documented risks. Never combine." },
+  "SNRIs|Tramadol": { risk: "❌", desc: "Tramadol plus SNRIs: the same problem as SSRIs, raised serotonin plus a lowered seizure threshold. Avoid." },
+  "SNRIs|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus SNRIs: similar to SSRIs, mostly additive sedation and dizziness. Caution." },
+  "SNRIs|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus SNRIs: similar to SSRIs, small liver enzyme effects are possible and direct evidence is thin. Caution." },
+  "SNRIs|Lithium": { risk: "🔴", desc: "Lithium plus SNRIs: like SSRIs, serotonin syndrome has been reported for lithium with serotonergic antidepressants, and SNRIs add blood pressure effects. Strong caution." },
+  "ADHD Meds|Antipsychotics": { risk: "🟡", desc: "ADHD meds plus antipsychotics: the two pull in opposite directions and are sometimes prescribed together deliberately. Outside that, stimulant effects can be blunted and side effects stack. Caution." },
+  "ADHD Meds|Mood Stabilizers": { risk: "🟡", desc: "ADHD meds plus mood stabilizers: stimulants can destabilise mood conditions if amounts are off, which is what the stabilizer is treating. Usually prescriber managed. Caution." },
+  "ADHD Meds|Wellbutrin": { risk: "🟡", desc: "ADHD meds plus Wellbutrin: two activating medicines stack blood pressure, heart rate, anxiety, and insomnia, and Wellbutrin lowers the seizure threshold. Caution." },
+  "ADHD Meds|Trazodone": { risk: "🟡", desc: "ADHD meds plus trazodone: trazodone sedation is masked while the stimulant is active, then lands on the comedown. Caution." },
+  "ADHD Meds|Gabapentin": { risk: "🟡", desc: "ADHD meds plus gabapentin: gabapentin sedation is masked while the stimulant is active, so dizziness and balance problems can arrive suddenly later. Caution." },
+  "ADHD Meds|LSD": { risk: "🟡", desc: "ADHD meds plus LSD: the RX page flags heightened confusion for ADHD meds with psychedelics. Stimulant focus and anxiety are magnified on a trip, with thought loops more likely. Caution." },
+  "ADHD Meds|Shrooms": { risk: "🟡", desc: "ADHD meds plus shrooms: heightened confusion and anxiety are the main reports, with added heart and blood pressure strain from the stimulant side. Caution." },
+  "ADHD Meds|Nitrous": { risk: "🟢", desc: "ADHD meds plus nitrous: no major direct interaction is documented. Nitrous still cuts oxygen while inhaled. Low concern." },
+  "ADHD Meds|DMT": { risk: "🟡", desc: "ADHD meds plus DMT: the stimulant magnifies DMT anxiety and adds heart and blood pressure strain to a very intense, fast experience. Caution." },
+  "ADHD Meds|GHB": { risk: "🔴", desc: "ADHD meds plus GHB: the stimulant masks how sedated GHB is making you, so it is easy to take too much GHB, and the sedation lands as the stimulant fades. Strong caution." },
+  "ADHD Meds|Meth": { risk: "❌", desc: "Meth plus ADHD meds: Adderall, Vyvanse, and Ritalin are themselves amphetamine or stimulant medicines, so this stacks the same kind of stimulation: severe heart strain, overheating, and psychosis risk. Avoid." },
+  "ADHD Meds|MAOIs": { risk: "❌", desc: "MAOIs plus ADHD meds: stimulant ADHD medicines can trigger a hypertensive crisis with MAOIs, a sudden blood pressure spike that can cause bleeding in the brain. FDA labelling contraindicates this combination." },
+  "ADHD Meds|Tramadol": { risk: "❌", desc: "Tramadol plus ADHD meds: stimulants and tramadol both increase seizure risk, and tramadol adds serotonin that a stimulant can amplify. Avoid." },
+  "ADHD Meds|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus ADHD meds: opposing effects. A sleep aid may not overcome stimulant insomnia until the stimulant fades, and then the sedation lands late and heavy. Caution." },
+  "ADHD Meds|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus ADHD meds: no direct clash is documented. Blood pressure is the thing both estrogen and stimulants can nudge up, so that is the number to watch. Caution." },
+  "ADHD Meds|Lithium": { risk: "🔴", desc: "Lithium plus ADHD meds: stimulant driven appetite loss, sweating, and low fluid intake can push lithium levels toward toxicity, and stimulants can destabilise mood conditions. Strong caution." },
+  "Antipsychotics|Mood Stabilizers": { risk: "🟡", desc: "Antipsychotics plus mood stabilizers: a common prescribed combination in psychiatry. Additive sedation, dizziness, and metabolic side effects are the watch points. Caution outside prescriber guidance." },
+  "Antipsychotics|Wellbutrin": { risk: "🟡", desc: "Antipsychotics plus Wellbutrin: Wellbutrin can raise blood levels of some antipsychotics and lowers the seizure threshold, which some antipsychotics also do. Caution." },
+  "Antipsychotics|Trazodone": { risk: "🟡", desc: "Antipsychotics plus trazodone: additive sedation and blood pressure drops on standing are the main issues, with heart rhythm watch points for some pairs. Caution." },
+  "Antipsychotics|Gabapentin": { risk: "🟡", desc: "Antipsychotics plus gabapentin: additive sedation and dizziness. Caution, especially with sedating antipsychotics." },
+  "Antipsychotics|LSD": { risk: "🔴", desc: "Antipsychotics plus LSD: the RX page describes antipsychotics muting or blocking a trip, with rebound confusion or panic and a higher risk of an unstable or psychotic episode afterwards. Strong caution." },
+  "Antipsychotics|Shrooms": { risk: "🔴", desc: "Antipsychotics plus shrooms: trips can be muted or blocked, with rebound confusion or panic as the antipsychotic and the psychedelic wear off at different speeds. Strong caution." },
+  "Antipsychotics|Nitrous": { risk: "🟡", desc: "Antipsychotics plus nitrous: additive sedation and dizziness are the main concerns. Direct evidence is limited. Caution." },
+  "Antipsychotics|DMT": { risk: "🔴", desc: "Antipsychotics plus DMT: antipsychotics can blunt DMT unpredictably, and the mismatch in timing can leave confusion or panic as each wears off. Strong caution." },
+  "Antipsychotics|GHB": { risk: "🔴", desc: "Antipsychotics plus GHB: deep additive sedation. Sedating antipsychotics stack with GHB toward unconsciousness and breathing problems. Strong caution." },
+  "Antipsychotics|Meth": { risk: "🟡", desc: "Meth plus antipsychotics: antipsychotics are used in hospitals to calm meth agitation, but outside that setting the mix is unpredictable. Blunted meth effects can lead to taking more, and sedating antipsychotics add their own heart and blood pressure effects." },
+  "Antipsychotics|MAOIs": { risk: "🔴", desc: "MAOIs plus antipsychotics: some antipsychotics add serotonin and blood pressure effects, and the combination can produce dangerous agitation, rigidity, and overheating that overlaps with serotonin syndrome and neuroleptic malignant syndrome. High risk." },
+  "Antipsychotics|Tramadol": { risk: "🔴", desc: "Tramadol plus antipsychotics: many antipsychotics also lower the seizure threshold and add sedation and heart rhythm effects, which stacks with tramadol on all three fronts. Strong caution." },
+  "Antipsychotics|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus antipsychotics: heavy additive sedation, and hydroxyzine plus several antipsychotics both prolong the heart QT interval, which can be dangerous for people with heart conditions. Strong caution." },
+  "Antipsychotics|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus antipsychotics: estrogen can raise levels of some antipsychotics, and several antipsychotics raise prolactin, which interacts with hormonal cycles. Direct pair studies are limited. Caution." },
+  "Antipsychotics|Lithium": { risk: "🟡", desc: "Lithium plus antipsychotics: a common prescribed pairing, but there are reports of severe neurotoxic reactions resembling neuroleptic malignant syndrome for lithium with some antipsychotics, plus additive side effects. Caution, and treat new confusion, stiffness, or fever as an emergency." },
+  "Mood Stabilizers|Wellbutrin": { risk: "🟡", desc: "Mood stabilizers plus Wellbutrin: sometimes prescribed together. Wellbutrin activation and its lowered seizure threshold are the watch points. Caution." },
+  "Mood Stabilizers|Trazodone": { risk: "🟡", desc: "Mood stabilizers plus trazodone: additive sedation. With lithium, trazodone adds a small serotonin load; lithium has its own entry in this checker. Caution." },
+  "Mood Stabilizers|Gabapentin": { risk: "🟡", desc: "Mood stabilizers plus gabapentin: gabapentin is itself used as a mood stabilizer adjunct, so this pairing is common in care. Additive sedation and dizziness. Caution." },
+  "Mood Stabilizers|LSD": { risk: "🔴", desc: "Mood stabilizers plus LSD: with lithium split into its own entry, this rating is about the rest of the class. Lamotrigine (Lamictal) can make trips feel emotionally numb or panicky, per the RX page, and valproate and carbamazepine add sedation and unpredictability. Strong caution. Anyone taking lithium should use the Lithium entry instead." },
+  "Mood Stabilizers|Shrooms": { risk: "🔴", desc: "Mood stabilizers plus shrooms: with lithium split into its own entry, this rating is about the rest of the class. Lamotrigine (Lamictal) can make trips feel emotionally numb or panicky, per the RX page, and the other members add sedation and unpredictability. Strong caution. Anyone taking lithium should use the Lithium entry instead." },
+  "Mood Stabilizers|Nitrous": { risk: "🟡", desc: "Mood stabilizers plus nitrous: no major direct interaction is documented. Mild added dizziness is possible, and evidence is limited. Caution." },
+  "Mood Stabilizers|DMT": { risk: "🔴", desc: "Mood stabilizers plus DMT: lamotrigine (Lamictal) can blunt or change a trip and make it feel emotionally numb or panicky, per the RX page. Lithium was the dangerous member of this class with psychedelics and now has its own entry in this checker; anyone taking lithium should use that entry instead." },
+  "Mood Stabilizers|GHB": { risk: "🟡", desc: "Mood stabilizers plus GHB: additive sedation is the main issue. With lithium specifically, GHB is a sodium salt, and big swings in salt and fluid intake can move lithium levels; lithium has its own entry in this checker. Caution." },
+  "Mood Stabilizers|Meth": { risk: "🟡", desc: "Meth plus mood stabilizers: no well documented direct clash for lithium or lamotrigine, but meth driven sleeplessness can destabilise bipolar conditions fast, and dehydration on meth is risky for people on lithium because lithium levels can rise when fluid is low." },
+  "Mood Stabilizers|MAOIs": { risk: "🔴", desc: "MAOIs plus mood stabilizers: lithium adds serotonin activity and has case reports of serotonin toxicity with MAOIs, and carbamazepine is itself contraindicated with MAOIs in FDA labelling. High risk." },
+  "Mood Stabilizers|Tramadol": { risk: "🔴", desc: "Tramadol plus mood stabilizers: carbamazepine speeds up tramadol breakdown and can bring on withdrawal in people who take tramadol regularly, while other stabilizers add sedation, and seizure threshold effects cut both ways in this class. Strong caution." },
+  "Mood Stabilizers|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus mood stabilizers: additive sedation and dizziness, especially with lithium or valproate on board. No major direct clash is documented. Caution." },
+  "Mood Stabilizers|Hormones + BC": { risk: "🔴", desc: "Hormones and birth control plus mood stabilizers: this is the one well documented clash in this row. Estrogen containing birth control can cut lamotrigine levels roughly in half, and carbamazepine can make birth control fail. Anyone on either needs a prescriber plan. Strong caution." },
+  "Mood Stabilizers|Lithium": { risk: "🟡", desc: "Lithium plus other mood stabilizers: lithium with lamotrigine or valproate is a standard prescriber managed combination in bipolar care. Side effects add up, and levels need monitoring, but there is no direct clash. Caution." },
+  "Wellbutrin|Trazodone": { risk: "🟡", desc: "Wellbutrin plus trazodone: activation from one and sedation from the other, with a mild serotonin load from trazodone. Caution." },
+  "Wellbutrin|Gabapentin": { risk: "🟡", desc: "Wellbutrin plus gabapentin: gabapentin sedation can mask Wellbutrin activation, and Wellbutrin keeps its lowered seizure threshold. Caution." },
+  "Wellbutrin|LSD": { risk: "🔴", desc: "Wellbutrin plus LSD: Wellbutrin lowers the seizure threshold and is activating, which stacks badly with a psychedelic for anxiety and overstimulation. Strong caution." },
+  "Wellbutrin|Shrooms": { risk: "🔴", desc: "Wellbutrin plus shrooms: lowered seizure threshold plus an activating medicine under a trip raises anxiety and seizure concern. Strong caution." },
+  "Wellbutrin|Nitrous": { risk: "🟡", desc: "Wellbutrin plus nitrous: no major direct clash is documented. Nitrous still cuts oxygen while inhaled. Caution." },
+  "Wellbutrin|DMT": { risk: "🔴", desc: "Wellbutrin plus DMT: an activating medicine with a lowered seizure threshold under a very intense serotonergic experience. Oral DMT as ayahuasca is worse again, because MAOIs and Wellbutrin are a contraindicated pair. Strong caution." },
+  "Wellbutrin|GHB": { risk: "🟡", desc: "Wellbutrin plus GHB: GHB sedation is the dominant effect, and Wellbutrin does nothing to protect against GHB overdose. Its lowered seizure threshold also matters if GHB amounts climb. Caution." },
+  "Wellbutrin|Meth": { risk: "❌", desc: "Meth plus Wellbutrin: Wellbutrin lowers the seizure threshold and blocks an enzyme that clears many stimulants, so meth can hit harder and last longer, with seizure, anxiety, and heart risk up. Avoid." },
+  "Wellbutrin|MAOIs": { risk: "❌", desc: "MAOIs plus Wellbutrin: FDA labelling contraindicates this combination because of hypertensive reactions, and both sides raise seizure risk. Never combine." },
+  "Wellbutrin|Tramadol": { risk: "❌", desc: "Tramadol plus Wellbutrin: both lower the seizure threshold, and Wellbutrin blocks the enzyme tramadol needs to work properly, raising serotonin. Seizure and serotonin syndrome risk are both high. Avoid." },
+  "Wellbutrin|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus Wellbutrin: Wellbutrin is activating and is sometimes the reason a sleep aid was prescribed at all. No major direct clash is documented, but a sleep aid does not lower Wellbutrin seizure risk. Caution." },
+  "Wellbutrin|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus Wellbutrin: no meaningful interaction is documented." },
+  "Wellbutrin|Lithium": { risk: "🔴", desc: "Lithium plus Wellbutrin: Wellbutrin lowers the seizure threshold, and lithium toxicity itself can cause seizures, so the risks point the same way. Strong caution." },
+  "Trazodone|Gabapentin": { risk: "🟢", desc: "Trazodone plus gabapentin: mild additive sedation is the main effect. No major direct interaction is documented. Low concern at prescribed amounts." },
+  "Trazodone|LSD": { risk: "🟡", desc: "Trazodone plus LSD: trazodone can blunt or flatten a trip and adds heavy sedation, which is why it is sometimes used to land one. Serotonin load is a background concern. Caution." },
+  "Trazodone|Shrooms": { risk: "🟡", desc: "Trazodone plus shrooms: trazodone tends to blunt the trip and add strong sleepiness, making the experience unpredictable in length and depth. Caution." },
+  "Trazodone|Nitrous": { risk: "🟡", desc: "Trazodone plus nitrous: additive sedation and dizziness, with falls the main risk. Caution." },
+  "Trazodone|DMT": { risk: "🔴", desc: "Trazodone plus DMT: trazodone adds serotonin activity and heavy sedation to a very intense serotonergic drug. Oral DMT as ayahuasca raises the risk again through the MAOI. Strong caution." },
+  "Trazodone|GHB": { risk: "🔴", desc: "Trazodone plus GHB: heavy additive sedation. Blackouts and breathing problems are realistic at higher amounts. Strong caution." },
+  "Trazodone|Meth": { risk: "🔴", desc: "Meth plus trazodone: trazodone adds serotonin and heavy sedation that meth masks. Serotonin syndrome risk is real, and the sedation lands all at once when the meth fades." },
+  "Trazodone|MAOIs": { risk: "❌", desc: "MAOIs plus trazodone: trazodone is serotonergic, so serotonin syndrome is a real risk with an MAOI, on top of heavy sedation. Avoid." },
+  "Trazodone|Tramadol": { risk: "❌", desc: "Tramadol plus trazodone: both are serotonergic, so serotonin syndrome is a real risk, plus heavy sedation. Avoid." },
+  "Trazodone|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus trazodone: note the overlap, trazodone is itself used as a sleep aid and has its own entry in this checker. Combining it with hydroxyzine or zolpidem type aids stacks sedation and blood pressure drops on standing. Strong caution." },
+  "Trazodone|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus trazodone: no meaningful interaction is documented." },
+  "Trazodone|Lithium": { risk: "🟡", desc: "Lithium plus trazodone: trazodone adds sedation and a modest serotonin load alongside lithium. Caution." },
+  "Gabapentin|LSD": { risk: "🟡", desc: "Gabapentin plus LSD: gabapentin can blunt a trip and adds sedation and dizziness, making the experience flatter but less predictable. Direct evidence is limited. Caution." },
+  "Gabapentin|Shrooms": { risk: "🟡", desc: "Gabapentin plus shrooms: added sedation and dizziness, and the trip may feel blunted or uneven. Direct evidence is limited. Caution." },
+  "Gabapentin|Nitrous": { risk: "🟡", desc: "Gabapentin plus nitrous: additive sedation and dizziness, with falls the main risk. Caution." },
+  "Gabapentin|DMT": { risk: "🟡", desc: "Gabapentin plus DMT: no major direct clash is documented, but gabapentin sedation under a very intense experience can leave someone unable to reposition or ask for help. Caution, evidence limited." },
+  "Gabapentin|GHB": { risk: "❌", desc: "Gabapentin plus GHB: two sedating drugs that stack toward unconsciousness and breathing suppression, the same pattern as gabapentin with alcohol, benzos, and opioids in this grid. Avoid." },
+  "Gabapentin|Meth": { risk: "🟡", desc: "Meth plus gabapentin: gabapentin sedation is masked while meth is active, so balance, memory, and judgment problems can arrive suddenly on the comedown. No major direct clash is documented." },
+  "Gabapentin|MAOIs": { risk: "🟡", desc: "MAOIs plus gabapentin: no major direct interaction is well documented. Sedation can add up, but data here is thin, so caution." },
+  "Gabapentin|Tramadol": { risk: "🔴", desc: "Tramadol plus gabapentin: additive sedation and dizziness, and gabapentin type medicines combined with opioids are linked to worse breathing outcomes in overdose data. Strong caution." },
+  "Gabapentin|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus gabapentin: two sedating medicines together mean deeper sedation, worse balance, and higher fall risk. Strong caution." },
+  "Gabapentin|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus gabapentin: no meaningful interaction is documented, unlike some older seizure medicines." },
+  "Gabapentin|Lithium": { risk: "🟡", desc: "Lithium plus gabapentin: gabapentin is sometimes prescribed alongside lithium. Additive sedation and dizziness, and gabapentin is cleared by the kidneys like lithium, so kidney strain matters. Caution." },
+  "LSD|Shrooms": { risk: "🟢", desc: "LSD plus shrooms: two classic psychedelics add together, and cross tolerance means the second one often hits weaker or stranger than expected. The combined peak can still overwhelm. Low concern rating is about direct interaction, not intensity." },
+  "LSD|Nitrous": { risk: "🟡", desc: "LSD plus nitrous: nitrous briefly and strongly intensifies a trip, with falls and oxygen dips the practical risks. Caution, with normal air breaks." },
+  "LSD|DMT": { risk: "🔴", desc: "LSD plus DMT: DMT on top of an LSD trip is overwhelming for most people, with panic and loss of control the main risks. Strong caution." },
+  "LSD|GHB": { risk: "🔴", desc: "LSD plus GHB: GHB sedation under a trip can tip into unconsciousness and vomiting while someone is not able to protect their airway. Strong caution." },
+  "LSD|Meth": { risk: "🟡", desc: "Meth plus LSD: TripSit rates amphetamines plus LSD Caution. Stimulants increase anxiety levels and the risk of thought loops on psychedelics, and meth adds heart and blood pressure strain for the whole trip." },
+  "LSD|MAOIs": { risk: "🔴", desc: "MAOIs plus LSD: MAOIs can strengthen and lengthen psychedelic effects unpredictably, and serotonin toxicity has been reported when serotonergic drugs are combined with MAOIs. High risk." },
+  "LSD|Tramadol": { risk: "🔴", desc: "Tramadol plus LSD: TripSit rates this Unsafe. Tramadol is well known to lower the seizure threshold, and psychedelics also cause occasional seizures." },
+  "LSD|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus LSD: sedating antihistamine type aids like hydroxyzine are sometimes used to soften a difficult trip, while zolpidem on a trip can cause bizarre half asleep behaviour. Caution, and never drive." },
+  "LSD|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus LSD: the RX page notes hormonal shifts are reported to change how psychedelics feel, with stronger visuals or more emotional depth reported at some cycle points, but this is report level evidence only. Caution." },
+  "LSD|Lithium": { risk: "❌", desc: "Lithium plus LSD: seizures and hospital level harm have been reported for lithium with LSD, including people ending up in hospital or psychiatric holds (survey and case literature, including Nayak et al. 2021). Treat as a hard no. Avoid." },
+  "Shrooms|Nitrous": { risk: "🟡", desc: "Shrooms plus nitrous: nitrous briefly and strongly intensifies the trip, with falls and oxygen dips the practical risks. Caution, with normal air breaks." },
+  "Shrooms|DMT": { risk: "🔴", desc: "Shrooms plus DMT: two tryptamine psychedelics stack intensity fast, with panic and overwhelm the main risks. Strong caution." },
+  "Shrooms|GHB": { risk: "🔴", desc: "Shrooms plus GHB: GHB sedation under a trip can tip into unconsciousness and vomiting while someone cannot protect their airway. Strong caution." },
+  "Shrooms|Meth": { risk: "🟡", desc: "Meth plus shrooms: TripSit rates amphetamines plus mushrooms Caution, for the same reasons as LSD: more anxiety and thought loops, plus cardiovascular strain." },
+  "Shrooms|MAOIs": { risk: "🔴", desc: "MAOIs plus shrooms: MAOIs have deliberately been combined with mushrooms to strengthen them, which is exactly the risk: effects become stronger, longer, and far less predictable, with serotonin toxicity reported for similar mixes. High risk." },
+  "Shrooms|Tramadol": { risk: "🔴", desc: "Tramadol plus shrooms: TripSit rates this Unsafe, for the same seizure reason as LSD." },
+  "Shrooms|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus shrooms: the same picture as LSD. Sedation can blunt or muddy a trip, and zolpidem type aids can produce strange half asleep behaviour. Caution." },
+  "Shrooms|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus shrooms: the same report level evidence as LSD. Hormonal shifts may change intensity, and nothing here is well measured. Caution." },
+  "Shrooms|Lithium": { risk: "❌", desc: "Lithium plus shrooms: seizures and hospital level harm have been reported for lithium with psilocybin mushrooms, the same pattern as LSD (Nayak et al. 2021 and case reports). Treat as a hard no. Avoid." },
+  "Nitrous|DMT": { risk: "🟡", desc: "Nitrous plus DMT: nitrous briefly and intensely amplifies DMT, with falls and oxygen dips the practical risks. Caution, and only with normal air and someone sober nearby." },
+  "Nitrous|GHB": { risk: "🔴", desc: "Nitrous plus GHB: GHB sedation plus nitrous can tip someone into unconsciousness fast, and passing out while inhaling risks oxygen deprivation. Strong caution." },
+  "Nitrous|Meth": { risk: "🟢", desc: "Meth plus nitrous: no major direct interaction is documented. Nitrous still cuts oxygen while it is being inhaled, and meth raises how much oxygen your heart needs, so take normal air breaks." },
+  "Nitrous|MAOIs": { risk: "🟢", desc: "MAOIs plus nitrous: no direct interaction is documented. Nitrous still cuts oxygen while inhaled, so normal nitrous cautions apply." },
+  "Nitrous|Tramadol": { risk: "🟡", desc: "Tramadol plus nitrous: no major direct clash is documented, but nitrous on top of opioid level sedation raises fall and vomiting risk. Caution." },
+  "Nitrous|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus nitrous: sedation plus nitrous oxygen displacement means faster loss of consciousness and higher fall risk. Strong caution." },
+  "Nitrous|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus nitrous: no interaction is documented." },
+  "Nitrous|Lithium": { risk: "🟢", desc: "Lithium plus nitrous: no interaction between lithium and nitrous is documented, and direct evidence either way is thin. Nitrous still cuts oxygen while inhaled, so normal air breaks apply. Low concern on current evidence." },
+  "DMT|GHB": { risk: "☠️", desc: "The grid rates this deadly: GHB can push someone to unconsciousness on a steep curve while DMT removes any ability to respond or protect their airway. Little pair specific research exists." },
+  "DMT|Meth": { risk: "🟡", desc: "Meth plus DMT: stimulant focus and anxiety are magnified by DMT, with added heart and blood pressure strain. Oral DMT as ayahuasca is a different, higher risk case, because ayahuasca adds an MAOI; see the MAOIs entry." },
+  "DMT|MAOIs": { risk: "❌", desc: "MAOIs plus DMT: this pairing is how ayahuasca works, an MAOI making DMT active by mouth, which also makes its effects much stronger and longer. A prescription MAOI plus DMT is far less predictable than a traditional brew, and with any other serotonergic drug on board, serotonin syndrome risk is severe. Avoid." },
+  "DMT|Tramadol": { risk: "🔴", desc: "Tramadol plus DMT: TripSit rates tramadol plus DMT Unsafe because of the seizure threshold, and tramadol serotonin adds risk with a strong tryptamine." },
+  "DMT|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus DMT: little direct research. Sedation may blunt the experience or leave someone less able to sit safely through it. Caution." },
+  "DMT|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus DMT: no direct studies exist. Hormone cycle reports for other psychedelics are the only guide, so this is caution with honest uncertainty." },
+  "DMT|Lithium": { risk: "❌", desc: "Lithium plus DMT: DMT is a strong serotonergic psychedelic in the same family as LSD and mushrooms, where lithium has seizure and hospital level harm reports. Oral DMT as ayahuasca adds an MAOI and is worse again. Avoid." },
+  "GHB|Meth": { risk: "❌", desc: "Meth plus GHB: meth masks how close to unconsciousness GHB is pushing you, so it is easy to take too much GHB. When the meth wears off first, breathing can slow or stop." },
+  "GHB|MAOIs": { risk: "🔴", desc: "MAOIs plus GHB: little direct research exists, and both can swing blood pressure and consciousness in unpredictable ways. Treat as high risk." },
+  "GHB|Tramadol": { risk: "☠️", desc: "Tramadol plus GHB: two sedating drugs that can rapidly lead to unconsciousness, with vomit aspiration and breathing suppression on top of tramadol seizure risk. One of the deadly stacks." },
+  "GHB|Sleep Aids": { risk: "❌", desc: "Sleep aids plus GHB: the RX page groups sleep aids with GHB for slowed reflexes and full blackouts. Two sedatives against the steep GHB curve is an avoid." },
+  "GHB|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus GHB: no interaction is documented. Evidence is absent rather than reassuring." },
+  "GHB|Lithium": { risk: "🟡", desc: "Lithium plus GHB: additive sedation, and GHB is a sodium salt, so big swings in salt and fluid intake from GHB use can move lithium levels. Caution." },
+  "Meth|MAOIs": { risk: "❌", desc: "Meth plus MAOIs: hypertensive emergencies and deaths have been reported for this combination in clinical reviews of MAOI and substance interactions, and MAOIs can unpredictably increase the potency and duration of amphetamines. Never combine." },
+  "Meth|Tramadol": { risk: "❌", desc: "Meth plus tramadol: both raise serotonin and seizure risk, and tramadol adds opioid sedation that meth masks. Seizures and serotonin syndrome are both real risks. Avoid." },
+  "Meth|Sleep Aids": { risk: "🔴", desc: "Meth plus sleep aids: sleep aids used to force a landing are masked while meth is active, then land all at once. Hydroxyzine also adds heart rhythm risk on a stimulant stressed heart. Strong caution." },
+  "Meth|Hormones + BC": { risk: "🟡", desc: "Meth plus hormones and birth control: the RX page estrogen and stimulant note applies here too, some research suggests estrogen may intensify stimulant effects. Direct studies of this pair are lacking. Caution." },
+  "Meth|Lithium": { risk: "🔴", desc: "Lithium plus meth: meth driven sweating, sleeplessness, and low fluid intake can push lithium levels toward toxicity, and meth can trigger mood episodes lithium is prescribed to prevent. Strong caution." },
+  "MAOIs|Tramadol": { risk: "❌", desc: "MAOIs plus tramadol: FDA labelling contraindicates tramadol with MAOIs. Serotonin syndrome, seizures, and hypertensive reactions are all documented risks. Never combine." },
+  "MAOIs|Sleep Aids": { risk: "🟡", desc: "MAOIs plus sleep aids: hydroxyzine is sometimes used cautiously in medicine alongside MAOIs, but zolpidem type aids with an MAOI are unstudied, and sedation can mask the early warning signs of a reaction. Caution." },
+  "MAOIs|Hormones + BC": { risk: "🟢", desc: "MAOIs plus hormones and birth control: no direct interaction is documented. Evidence is thin, and MAOIs interact with so much else that prescriber guidance matters more than this low rating." },
+  "MAOIs|Lithium": { risk: "🔴", desc: "Lithium plus MAOIs: an older, rarely prescribed combination with reports of serotonin toxicity and neurotoxic reactions. Strong caution, prescriber territory only." },
+  "Tramadol|Sleep Aids": { risk: "❌", desc: "Tramadol plus sleep aids: sedation stacks on an opioid base, raising blackout and breathing risk, and hydroxyzine adds its own nervous system depression. Avoid." },
+  "Tramadol|Hormones + BC": { risk: "🟢", desc: "Tramadol plus hormones and birth control: no meaningful interaction is documented." },
+  "Tramadol|Lithium": { risk: "❌", desc: "Lithium plus tramadol: tramadol raises serotonin and lowers the seizure threshold, and lithium adds its own serotonin syndrome and seizure risk at toxic levels. Avoid." },
+  "Sleep Aids|Hormones + BC": { risk: "🟢", desc: "Sleep aids plus hormones and birth control: no meaningful interaction is documented." },
+  "Sleep Aids|Lithium": { risk: "🟡", desc: "Lithium plus sleep aids: additive sedation. Hydroxyzine also adds heart rhythm watch points. Caution." },
+  "Hormones + BC|Lithium": { risk: "🟡", desc: "Lithium plus hormones and birth control: hormone shifts across a cycle, and starting or stopping hormonal birth control, can change fluid balance enough to move lithium levels for some people. This is a monitoring issue more than a direct clash. Caution." }
 };
 
 // Map risk icons to simplified versions for the current UI
@@ -1405,7 +1659,7 @@ function showMatrixDetail(substanceA, substanceB) {
   if (substanceA === substanceB) {
     content = `
       <div class="pair-detail ${getRiskClass(simpleRisk)}">
-        <p><strong>Same Substance Combination:</strong> Using ${substanceA} with itself typically doesn't present additional interaction risks beyond the normal effects of the substance itself.</p>
+        <p><strong>Same Substance Combination:</strong> Picking ${substanceA} twice is really about total amount, not a new interaction. Taking more raises the amount in your body, and with it the side effects and overdose risk.</p>
         <p><strong>Harm Reduction Tips:</strong></p>
         <ul>
           <li>Be mindful of cumulative dosing and tolerance</li>
@@ -1479,6 +1733,7 @@ function checkInteractions() {
   
   let content = `<h3><i class="fas fa-clipboard-check"></i> Interaction Analysis</h3>`;
   let highestRisk = "🌈";
+  const rev3Pairs = [];
   
   // Check each pair
   for (let i = 0; i < selectedSubstances.length; i++) {
@@ -1487,7 +1742,8 @@ function checkInteractions() {
       const substanceB = selectedSubstances[j];
       
       let risk = "-";
-      if (substanceA !== substanceB) {
+      if (substanceA === substanceB) { risk = "🟡"; }
+      else if (substanceA !== substanceB) {
         risk = riskMatrix[substanceA][substances.indexOf(substanceB)];
       }
       const simpleRisk = riskIconMap[risk] || risk;
@@ -1505,7 +1761,8 @@ function checkInteractions() {
       const interaction = interactionDetails[key1] || interactionDetails[key2];
       
       let description = "No specific interaction data available. Exercise caution.";
-      if (interaction) {
+      if (substanceA === substanceB) { description = "Same substance picked twice: there is no second drug interaction to rate, but the risk is real on its own. Taking more raises the total amount in your body, and the effects, side effects, and overdose risk all climb with it. Wait, hydrate, and do not keep topping up."; }
+      else if (interaction) {
         description = interaction.desc;
       }
       
@@ -1516,6 +1773,7 @@ function checkInteractions() {
           <p>${description}</p>
         </div>
       `;
+      rev3Pairs.push({ a: substanceA, b: substanceB, icon: simpleRisk, raw: risk, desc: description });
     }
   }
   
@@ -1555,6 +1813,14 @@ function checkInteractions() {
   
   content += `<p style="margin-top:1rem;color:var(--muted);font-size:0.9rem;">Remember: individual responses vary based on dosage, tolerance, metabolism, and underlying health conditions. This information is for harm reduction purposes only.</p>`;
   
+  if (highestRisk === "💀") {
+    content += `<div class="danger-strip"><strong>Someone in trouble now? Call 911, and give naloxone if opioids could be involved.</strong><br>Minnesota statute 604A.05 can protect help seekers from charge or prosecution for personal possession. It does not stop an arrest.</div>`;
+  }
+  const rev3Words = { "🌈": "Low concern", "⚡": "Caution", "💊": "Strong caution", "💀": "Dangerous" };
+  window._rev3Check = {
+    pairs: rev3Pairs,
+    text: "Polydrug Interaction Check — plurderapolis.org\n" + rev3Pairs.map(function(p){ return p.a + " + " + p.b + ": " + (p.raw === "☠️" ? "Deadly" : (rev3Words[p.icon] || p.icon)) + " — " + p.desc; }).join("\n")
+  };
   resultBox.innerHTML = content;
   document.getElementById('shareResults').style.display = 'flex';
   resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1599,15 +1865,15 @@ saveModal.addEventListener('click', (e) => {
 
 // Matrix graphic download + send (graphic ships as a data URI in /images/matrix-graphic.js;
 // binary uploads are not supported by the push tooling, so it lazy-loads on first use)
-const MATRIX_FILENAME = 'polysubstance-interaction-matrix.webp';
+const MATRIX_FILENAME = 'polysubstance-interaction-matrix.png';
 const MATRIX_TITLE = 'Polysubstance Interaction Matrix - plurderapolis.org';
 
 function loadMatrixGraphic() {
   return new Promise((resolve, reject) => {
-    if (window.MATRIX_DATA_URL) { resolve(window.MATRIX_DATA_URL); return; }
+    if (window.MATRIX_PNG_DATA_URL) { resolve(window.MATRIX_PNG_DATA_URL); return; }
     const s = document.createElement('script');
-    s.src = '/images/matrix-graphic.js';
-    s.onload = () => resolve(window.MATRIX_DATA_URL);
+    s.src = '/images/matrix-graphic-png.js';
+    s.onload = () => resolve(window.MATRIX_PNG_DATA_URL);
     s.onerror = reject;
     document.head.appendChild(s);
   });
@@ -1617,7 +1883,7 @@ function matrixFile(dataUrl) {
   const bin = atob(dataUrl.split(',')[1]);
   const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return new File([bytes], MATRIX_FILENAME, {type: 'image/webp'});
+  return new File([bytes], MATRIX_FILENAME, {type: 'image/png'});
 }
 
 document.getElementById('dlMatrixBtn').addEventListener('click', async () => {
@@ -1816,5 +2082,80 @@ if ('serviceWorker' in navigator) {
   <button type="button" aria-label="Go back to the previous page" onclick="if(window.history.length>1){window.history.back()}else{window.location.href='/'}" style="flex:1 1 140px;max-width:250px;min-height:42px;padding:7px 16px;font-size:0.92rem;font-weight:600;letter-spacing:.01em;color:#00f7e0;background:transparent;border:1px solid #00f7e0;border-radius:999px;cursor:pointer;box-sizing:border-box">&#8592;&nbsp; Back</button>
   <button type="button" aria-label="Go back to the top of this page" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="flex:1 1 140px;max-width:250px;min-height:42px;padding:7px 16px;font-size:0.92rem;font-weight:600;letter-spacing:.01em;color:#00f7e0;background:transparent;border:1px solid #00f7e0;border-radius:999px;cursor:pointer;box-sizing:border-box">&#8593;&nbsp; Back to top</button>
 </nav>
+
+<script id="rev3-actions">
+(function(){
+  function flash(btn, label){
+    var orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> ' + label;
+    setTimeout(function(){ btn.innerHTML = orig; }, 1600);
+  }
+  var printBtn = document.getElementById('printMatrixBtn');
+  if (printBtn) printBtn.addEventListener('click', function(){
+    var mk = document.getElementById('matrix-key'); if (mk) mk.open = true;
+    window.print();
+  });
+  window.addEventListener('beforeprint', function(){
+    var mk = document.getElementById('matrix-key'); if (mk) mk.open = true;
+  });
+  function checkText(){
+    if (window._rev3Check && window._rev3Check.text) return window._rev3Check.text;
+    var rb = document.getElementById('resultBox'); return rb ? rb.innerText : '';
+  }
+  var copyBtn = document.getElementById('copyResults');
+  if (copyBtn) copyBtn.addEventListener('click', async function(){
+    try { await navigator.clipboard.writeText(checkText()); flash(copyBtn, 'Copied'); }
+    catch(e) { flash(copyBtn, 'Copy failed'); }
+  });
+  var shareBtn2 = document.getElementById('shareResultBtn');
+  if (shareBtn2) shareBtn2.addEventListener('click', async function(){
+    var t = checkText();
+    if (navigator.share) { try { await navigator.share({ title: 'Polydrug Interaction Check', text: t }); } catch(e) {} }
+    else { try { await navigator.clipboard.writeText(t); flash(shareBtn2, 'Copied'); } catch(e) {} }
+  });
+  var picBtn = document.getElementById('saveResultPicBtn');
+  if (picBtn) picBtn.addEventListener('click', function(){
+    var data = window._rev3Check; if (!data || !data.pairs || !data.pairs.length) { flash(picBtn, 'Run a check first'); return; }
+    var words = { "🌈": "Low concern", "⚡": "Caution", "💊": "Strong caution", "💀": "Dangerous" };
+    var colors = { "🌈": "#7ee787", "⚡": "#ffd166", "💊": "#ff9f68", "💀": "#ff6b81" };
+    var W = 1080, PAD = 64, ctx0 = document.createElement('canvas').getContext('2d');
+    function wrap(ctx, text, maxW){
+      var out = [], line = '';
+      text.split(' ').forEach(function(w){
+        var t = line ? line + ' ' + w : w;
+        if (ctx.measureText(t).width > maxW && line) { out.push(line); line = w; } else line = t;
+      });
+      if (line) out.push(line); return out;
+    }
+    ctx0.font = '30px system-ui, sans-serif';
+    var blocks = data.pairs.map(function(p){
+      return { head: p.icon + '  ' + p.a + ' + ' + p.b, word: (p.raw === "☠️" ? "Deadly" : (words[p.icon] || p.icon)), color: colors[p.icon] || '#fff', lines: wrap(ctx0, p.desc, W - PAD * 2) };
+    });
+    var H = 210 + blocks.reduce(function(s, b){ return s + 66 + 44 + b.lines.length * 42 + 30; }, 0) + 110;
+    var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d');
+    var grad = ctx.createLinearGradient(0, 0, W, H); grad.addColorStop(0, '#2a0a2a'); grad.addColorStop(1, '#14040f');
+    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+    var wg = ctx.createLinearGradient(PAD, 0, W - PAD, 0); wg.addColorStop(0, '#ff5da2'); wg.addColorStop(1, '#a855f7');
+    ctx.fillStyle = wg; ctx.font = '800 64px Montserrat, system-ui, sans-serif'; ctx.fillText('PLURDERAPOLIS', PAD, 116);
+    ctx.fillStyle = '#eee'; ctx.font = '700 34px system-ui, sans-serif'; ctx.fillText('Polydrug Interaction Check', PAD, 172);
+    var y = 236;
+    blocks.forEach(function(b){
+      ctx.font = '700 40px system-ui, sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText(b.head, PAD, y); y += 46;
+      ctx.font = '700 32px system-ui, sans-serif'; ctx.fillStyle = b.color; ctx.fillText(b.word, PAD, y); y += 48;
+      ctx.font = '30px system-ui, sans-serif'; ctx.fillStyle = '#ddd';
+      b.lines.forEach(function(ln){ ctx.fillText(ln, PAD, y); y += 42; });
+      y += 30;
+    });
+    ctx.fillStyle = '#bdbdc9'; ctx.font = '28px system-ui, sans-serif';
+    ctx.fillText('plurderapolis.org — harm reduction reference, not medical advice', PAD, H - 48);
+    cv.toBlob(function(blob){
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'polydrug-check-result.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
+    }, 'image/png');
+  });
+})();
+</script>
 </body>
 </html>
