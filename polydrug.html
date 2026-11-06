@@ -1821,7 +1821,7 @@ function checkInteractions() {
   const rev3Words = { "🌈": "Lower concern", "⚡": "Caution", "💊": "Strong caution", "💀": "Dangerous" };
   window._rev3Check = {
     pairs: rev3Pairs,
-    text: "Polydrug Interaction Check — plurderapolis.org\n" + rev3Pairs.map(function(p){ return p.a + " + " + p.b + ": " + (p.raw === "☠️" ? "Deadly" : (rev3Words[p.icon] || p.icon)) + " — " + p.desc; }).join("\n")
+    text: "Polysubstance Interaction Check — plurderapolis.org\n" + rev3Pairs.map(function(p){ return p.a + " + " + p.b + ": " + (p.raw === "☠️" ? "Dangerous" : (rev3Words[p.icon] || p.icon)) + " — " + p.desc; }).join("\n")
   };
   resultBox.innerHTML = content;
   document.getElementById('shareResults').style.display = 'flex';
@@ -2112,7 +2112,7 @@ if ('serviceWorker' in navigator) {
   var shareBtn2 = document.getElementById('shareResultBtn');
   if (shareBtn2) shareBtn2.addEventListener('click', async function(){
     var t = checkText();
-    if (navigator.share) { try { await navigator.share({ title: 'Polydrug Interaction Check', text: t }); } catch(e) {} }
+    if (navigator.share) { try { await navigator.share({ title: 'Polysubstance Interaction Check', text: t }); } catch(e) {} }
     else { try { await navigator.clipboard.writeText(t); flash(shareBtn2, 'Copied'); } catch(e) {} }
   });
   var picBtn = document.getElementById('saveResultPicBtn');
@@ -2131,7 +2131,7 @@ if ('serviceWorker' in navigator) {
     }
     ctx0.font = '30px system-ui, sans-serif';
     var blocks = data.pairs.map(function(p){
-      return { head: p.icon + '  ' + p.a + ' + ' + p.b, word: (p.raw === "☠️" ? "Deadly" : (words[p.icon] || p.icon)), color: colors[p.icon] || '#fff', lines: wrap(ctx0, p.desc, W - PAD * 2) };
+      return { head: p.icon + '  ' + p.a + ' + ' + p.b, word: (p.raw === "☠️" ? "Dangerous" : (words[p.icon] || p.icon)), color: colors[p.icon] || '#fff', lines: wrap(ctx0, p.desc, W - PAD * 2) };
     });
     var H = 210 + blocks.reduce(function(s, b){ return s + 66 + 44 + b.lines.length * 42 + 30; }, 0) + 110;
     var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -2140,7 +2140,7 @@ if ('serviceWorker' in navigator) {
     ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
     var wg = ctx.createLinearGradient(PAD, 0, W - PAD, 0); wg.addColorStop(0, '#ff5da2'); wg.addColorStop(1, '#a855f7');
     ctx.fillStyle = wg; ctx.font = '800 64px Montserrat, system-ui, sans-serif'; ctx.fillText('PLURDERAPOLIS', PAD, 116);
-    ctx.fillStyle = '#eee'; ctx.font = '700 34px system-ui, sans-serif'; ctx.fillText('Polydrug Interaction Check', PAD, 172);
+    ctx.fillStyle = '#eee'; ctx.font = '700 34px system-ui, sans-serif'; ctx.fillText('Polysubstance Interaction Check', PAD, 172);
     var y = 236;
     blocks.forEach(function(b){
       ctx.font = '700 40px system-ui, sans-serif'; ctx.fillStyle = '#fff'; ctx.fillText(b.head, PAD, y); y += 46;
