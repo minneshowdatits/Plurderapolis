@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Offline Bundle | PLURderapolis</title>
-<meta name="description" content="Save the entire PLURderapolis site to your phone in one tap, or download it as a file. Works with zero signal.">
+<meta name="description" content="Save all 35 PLURderapolis pages to your phone in one tap, or download them as a file. The crisis pages and main safety guides are also saved automatically on your first visit.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍑</text></svg>">
 <style>
 *{box-sizing:border-box}
@@ -52,13 +52,13 @@ footer a{color:#7df9ff}
 <link rel="canonical" href="https://plurderapolis.org/offline-bundle.html">
 <link rel="manifest" href="/manifest.json">
 <meta property="og:title" content="Offline Bundle | PLURderapolis">
-<meta property="og:description" content="Save the entire PLURderapolis site to your phone in one tap, or download it as a file. Works with zero signal.">
+<meta property="og:description" content="Save all 35 PLURderapolis pages to your phone in one tap, or download them as a file. The crisis pages and main safety guides are also saved automatically on your first visit.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://plurderapolis.org/offline-bundle.html">
 <meta property="og:image" content="https://plurderapolis.org/images/social-preview.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Offline Bundle | PLURderapolis">
-<meta name="twitter:description" content="Save the entire PLURderapolis site to your phone in one tap, or download it as a file. Works with zero signal.">
+<meta name="twitter:description" content="Save all 35 PLURderapolis pages to your phone in one tap, or download them as a file. The crisis pages and main safety guides are also saved automatically on your first visit.">
 <meta name="twitter:image" content="https://plurderapolis.org/images/social-preview.jpg">
 </head>
 <body>
@@ -72,12 +72,12 @@ footer a{color:#7df9ff}
   <div class="hero">
     <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
     <h1>📦 The Offline Bundle</h1>
-    <p class="lede">One tap saves the entire site to your phone. Zero bars in a basement, a field, or a dead zone parking lot, and every guide still opens.</p>
+    <p class="lede">One tap saves all 35 pages of this site to your phone. Zero bars in a basement, a field, or a dead zone parking lot, and the pages you saved still open. The crisis pages and main safety guides are saved automatically on your first visit, even before you tap.</p>
   </div>
 
   <div class="card">
     <h2>📲 Save the full site, one tap</h2>
-    <p>Downloads all <strong id="page-count">33</strong> pages to your phone's offline storage. Do it on wifi before the night. Takes about 30 seconds.</p>
+    <p>Downloads all <strong id="page-count">35</strong> pages to your phone's offline storage: every page in the site list below. Do it on wifi before the night. Takes about 30 seconds. A first visit already saves 27 of these pages automatically, including the crisis pages and main safety guides; this button saves the rest, so you have all 35.</p>
     <button class="bigbtn" id="btn-cache">📲 Save full site for offline</button>
     <div class="progress" id="cache-progress"><div></div></div>
     <div class="status" id="cache-status"></div>
@@ -86,7 +86,7 @@ footer a{color:#7df9ff}
 
   <div class="card">
     <h2>⬇️ Or download it as a file</h2>
-    <p>Builds a <strong>.zip of the whole site</strong> right in your browser. Share it by text, AirDrop it to friends, or keep it on a USB for the booth. Unzip it and open <strong>index.html</strong>, no signal needed.</p>
+    <p>Builds a <strong>.zip of all 35 pages</strong>, plus the checker data file and the shared script the pages use, right in your browser. Share it by text, AirDrop it to friends, or keep it on a USB for the booth. Unzip it and open <strong>index.html</strong>, no signal needed.</p>
     <button class="bigbtn secondary" id="btn-zip">⬇️ Download offline bundle (.zip)</button>
     <div class="progress" id="zip-progress"><div></div></div>
     <div class="status" id="zip-status"></div>
@@ -95,7 +95,8 @@ footer a{color:#7df9ff}
   <div class="card">
     <h2>🤔 How does this work?</h2>
     <ol class="steps">
-      <li><strong>One tap save</strong> stores every page in your browser's private offline storage using the same tech as the crisis pages.</li>
+      <li><strong>One tap save</strong> stores all 35 pages in your browser's private offline storage using the same tech as the crisis pages.</li>
+      <li><strong>Automatic save</strong> happens on your first visit, before any tap: the crisis pages and main safety guides, 27 of the 35 pages in all, are saved by the site itself. The one tap save and the .zip are how you get the remaining pages too.</li>
       <li><strong>The .zip</strong> is a snapshot file you can share with anyone, even if they have never visited the site.</li>
       <li>Already saved pages keep working when the venue kills your signal. Calls and texts still work with no data.</li>
     </ol>
@@ -107,16 +108,38 @@ footer a{color:#7df9ff}
 </footer>
 
 <script>
-/* Matches sw.js CACHE_NAME (v37). */
-const CACHE_NAME = 'plurderapolis-v37';
+/* No hardcoded cache name here: the service worker owns the cache name and
+   bumps it over time, so this page discovers the active PLURderapolis cache
+   from caches.keys() and always reads and writes the same cache the service
+   worker is using. */
+async function findActiveCacheName(){
+  if(!('caches' in window)) return null;
+  try{
+    const keys=await caches.keys();
+    const ours=keys.filter(k=>k.indexOf('plurderapolis-')===0);
+    if(ours.length) return ours[ours.length-1];
+  }catch(e){}
+  return null;
+}
+async function openActiveCache(){
+  let name=await findActiveCacheName();
+  if(!name){
+    // No cache yet: give the service worker a chance to install, then look again.
+    await swReady();
+    name=await findActiveCacheName();
+  }
+  if(!name) return null;
+  return caches.open(name);
+}
 const PAGES = [
-  "/","/index.html","/start.html","/emergency.html","/symptoms.html","/badtrip.html",
+  "/","/start.html","/emergency.html","/symptoms.html","/badtrip.html",
   "/spiking.html","/panic.html","/overdose.html","/overdose-es.html","/mentalhealth.html",
   "/snorting.html","/aftercare.html","/test-strips.html","/polydrug.html","/rx-combos.html",
   "/health.html","/sober.html","/resources.html","/venues-guide.html","/ride-safety.html",
   "/rights-safety.html","/consent.html","/seasonal-tips.html","/booth.html",
   "/anon-tip.html","/accountability.html","/fake.html","/rejection-based-violence.html",
-  "/legal-disclaimers-terms.html","/offline.html","/checklist.html","/offline-bundle.html"
+  "/legal-disclaimers-terms.html","/offline.html","/checklist.html","/offline-bundle.html",
+  "/psychedelics.html","/sources.html","/ride-safety-es.html"
 ];
 document.getElementById('page-count').textContent = PAGES.filter(p=>p.endsWith('.html')||p==="/").length;
 document.getElementById('page-list').innerHTML = PAGES.filter(p=>p.endsWith('.html')).map(p=>`<div data-page="${p}">${p.replace('/','')||'home'}</div>`).join('');
@@ -143,7 +166,9 @@ function markPages(cachedSet){
 }
 async function refreshMarks(){
   try{
-    const cache=await caches.open(CACHE_NAME);
+    const cacheName=await findActiveCacheName();
+    if(!cacheName) return;
+    const cache=await caches.open(cacheName);
     const keys=await cache.keys();
     markPages(new Set(keys.map(r=>new URL(r.url).pathname)));
     const n=keys.filter(r=>PAGES.includes(new URL(r.url).pathname)).length;
@@ -180,8 +205,10 @@ btnCache.onclick=async()=>{
         cacheStatus.textContent='Timed out talking to the offline engine. Try again on wifi.';
       }
     } else {
-      // Fallback: cache directly from the page.
-      const cache=await caches.open(CACHE_NAME);
+      // Fallback: cache directly from the page, into the active cache the
+      // service worker owns (never a hardcoded name).
+      const cache=await openActiveCache();
+      if(!cache) throw new Error('No active offline cache yet.');
       let ok=0; const failed=[];
       for(let i=0;i<PAGES.length;i++){
         try{ await cache.add(PAGES[i]); ok++; }catch(e){ failed.push(PAGES[i]); }
@@ -264,11 +291,22 @@ btnZip.onclick=async()=>{
       const name=(p==='/'?'index':p.replace('/','').replace('.html',''))+'.html';
       files.push({name,data:enc.encode(html)});
     }
-    zipStatus.textContent='Adding images…';
+    zipStatus.textContent='Adding checker data and shared script…';
+    bar.style.width='94%';
+    const extraAssets=[
+      {url:'/manifest-checker.json',name:'manifest-checker.json'},
+      {url:'/js/section-nav.js',name:'js/section-nav.js'}
+    ];
+    for(const asset of extraAssets){
+      const res=await fetch(asset.url); if(!res.ok) throw new Error('fetch failed: '+asset.url);
+      files.push({name:asset.name,data:enc.encode(await res.text())});
+    }
+    zipStatus.textContent='Adding README…';
     const readme=[
       "PLURDERAPOLIS OFFLINE BUNDLE","============================","",
       "Snapshot date: "+new Date().toISOString().slice(0,10),"",
-      "HOW TO USE","1. Unzip this file.","2. Open index.html in any browser.","3. No internet needed. Every guide works.","",
+      "HOW TO USE","1. Unzip this file.","2. Open index.html in any browser.","3. No internet needed. Every page in this bundle opens from these files.","",
+      "WHAT IS INSIDE","All 35 pages of the site, the checker data file","(manifest-checker.json), and the shared script","(js/section-nav.js).","",
       "SHARE IT","Text it, AirDrop it, put it on a USB for the booth.","",
       "GET THE LATEST","plurderapolis.org always has the newest version.","",
       "IF SOMEONE NEEDS MEDICAL HELP, CALL 911.","Calls work even with no data. Minnesota's Good Samaritan","law gives limited immunity from prosecution for personal","possession when you call for help during an overdose","(Minn. Stat. 604A.05). It does not stop an arrest."

@@ -1,6 +1,6 @@
 /* PLURderapolis offline support: keeps the crisis pages usable with zero bars.
    Version the cache name when the precached pages change so updates propagate. */
-const CACHE_NAME = 'plurderapolis-v91';
+const CACHE_NAME = 'plurderapolis-v92';
 
 // The pages someone might need at a festival with no signal.
 const PRECACHE_URLS = [
@@ -21,7 +21,18 @@ const PRECACHE_URLS = [
   '/offline.html',
   '/checklist.html',
   '/offline-bundle.html',
-  '/js/section-nav.js'
+  '/js/section-nav.js',
+  '/resources.html',
+  '/rights-safety.html',
+  '/ride-safety.html',
+  '/ride-safety-es.html',
+  '/consent.html',
+  '/fake.html',
+  '/health.html',
+  '/rx-combos.html',
+  '/psychedelics.html',
+  '/start.html',
+  '/sober.html'
 ];
 
 self.addEventListener('install', (event) => {
