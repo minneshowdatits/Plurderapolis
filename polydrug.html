@@ -855,6 +855,18 @@
 </style>
 <link rel="canonical" href="https://plurderapolis.org/polydrug.html">
 <meta name="twitter:image" content="https://plurderapolis.org/images/social-preview.jpg">
+
+<style id="grouped-style">
+/* Grouped matrix: small group name under each substance, thin group colour line, stronger divider between groups */
+#matrixTable .gsub{display:block;font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:2px;line-height:1.25}
+#matrixTable thead th{border-bottom:3px solid var(--gc,#5D3A7D)}
+#matrixTable tbody th{border-left:4px solid var(--gc,#5D3A7D)}
+#matrixTable td.gcol-start,#matrixTable thead th.gcol-start{border-left:3px solid rgba(191,0,191,.55)}
+#matrixTable tr.grow-start th,#matrixTable tr.grow-start td{border-top:3px solid rgba(191,0,191,.55)}
+.gkey{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 0;font-size:.9rem;color:var(--muted);justify-content:center}
+.gkey span{display:inline-flex;gap:7px;align-items:center;background:#200120;border:1px solid var(--line);border-radius:999px;padding:.4rem .8rem}
+.gkey i{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+</style>
 </head>
 <body>
 <header class="ph-bar">
@@ -903,7 +915,7 @@
     <div class="offline-badge">📶 Works offline: this page is saved to your phone</div>
 <h1 id="main-content">Polydrug Interaction Checker</h1>
     <p class="lede">Mobile-first, harm-reduction focused tool to check substance combination risks. Pick up to three substances and see detailed safety information. Matrix is downloadable + shareable. Want the full picture on what psychedelics and hallucinogens do, plus risky combos and fake acid warnings? See our <a href="https://plurderapolis.org/psychedelics.html">Psychedelics &amp; Hallucinogens guide</a>.</p>
-    <p class="update-line">Updated November 2026: now covers Meth, MAOIs, Tramadol, and Lithium.</p>
+    <p class="update-line">Updated November 2026: now covers Meth, MAOIs, Tramadol, and Lithium, grouped by substance type.</p>
 <!-- Install this checker as a home screen icon -->
     <div id="installBanner" class="install-banner" style="display:none" role="note" aria-label="Add checker to home screen">
       <div class="install-banner-inner">
@@ -944,6 +956,7 @@
         <span><b>💊</b> Strong caution</span>
         <span><b>💀</b> Dangerous</span>
       </div>
+      <div class="gkey" aria-label="Substance groups"><span><i style="background:#e08bd0"></i>Psychedelics</span><span><i style="background:#a55eea"></i>Dissociatives</span><span><i style="background:#f5a623"></i>Stimulants</span><span><i style="background:#ee5a6f"></i>Depressants</span><span><i style="background:#2bcbba"></i>Antidepressants & Psychiatric Meds</span><span><i style="background:#b8b8d0"></i>Other Meds</span></div>
 
       <div class="result" id="resultBox" aria-live="polite">
         <h3><i class="fas fa-clipboard-list"></i> Results will appear here</h3>
@@ -1206,42 +1219,56 @@ mobileNav.addEventListener('click', (e) => {
 
 // Substance list - comprehensive from your original matrix
 const substances = [
-  "Cannabis", "Ketamine", "MDMA", "Cocaine", "Alcohol",
-  "Opioids", "Benzos", "SSRIs", "SNRIs", "ADHD Meds",
-  "Antipsychotics", "Mood Stabilizers", "Wellbutrin", "Trazodone", "Gabapentin",
-  "LSD", "Shrooms", "Nitrous", "DMT", "GHB",
-  "Meth", "MAOIs", "Tramadol", "Sleep Aids", "Hormones + BC",
-  "Lithium"
+  "Cannabis", "LSD", "Shrooms", "DMT",
+  "Ketamine", "Nitrous",
+  "MDMA", "Cocaine", "Meth", "ADHD Meds",
+  "Alcohol", "Opioids", "Benzos", "GHB", "Gabapentin", "Trazodone", "Tramadol", "Sleep Aids",
+  "SSRIs", "SNRIs", "MAOIs", "Wellbutrin", "Antipsychotics", "Mood Stabilizers", "Lithium",
+  "Hormones + BC"
 ];
+// Substance groups (display only: order, dropdown sections, matrix captions)
+const substanceGroups = [
+  { name: "Psychedelics", color: "#e08bd0", members: ["Cannabis", "LSD", "Shrooms", "DMT"] },
+  { name: "Dissociatives", color: "#a55eea", members: ["Ketamine", "Nitrous"] },
+  { name: "Stimulants", color: "#f5a623", members: ["MDMA", "Cocaine", "Meth", "ADHD Meds"] },
+  { name: "Depressants", color: "#ee5a6f", members: ["Alcohol", "Opioids", "Benzos", "GHB", "Gabapentin", "Trazodone", "Tramadol", "Sleep Aids"] },
+  { name: "Antidepressants & Psychiatric Meds", color: "#2bcbba", members: ["SSRIs", "SNRIs", "MAOIs", "Wellbutrin", "Antipsychotics", "Mood Stabilizers", "Lithium"] },
+  { name: "Other Meds", color: "#b8b8d0", members: ["Hormones + BC"] }
+];
+const groupOf = {};
+substanceGroups.forEach(g => g.members.forEach(s => { groupOf[s] = g; }));
+const groupStartIndex = {};
+substanceGroups.forEach(g => { groupStartIndex[g.name] = substances.indexOf(g.members[0]); });
+
 
 // Risk matrix data based on your original table
 const riskMatrix = {
-  "Cannabis": ["-", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "🟡", "🟡", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟢", "🟡"],
-  "Ketamine": ["🟡", "-", "🟢", "❌", "❌", "❌", "❌", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "❌", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡"],
-  "MDMA": ["🔴", "🟢", "-", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "❌", "🔴", "🟡", "❌"],
-  "Cocaine": ["🔴", "❌", "🔴", "-", "❌", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "🔴", "❌", "☠️", "❌", "❌", "❌", "🔴", "🟡", "🔴"],
-  "Alcohol": ["🔴", "❌", "🔴", "❌", "-", "☠️", "☠️", "🟡", "🟡", "🔴", "🔴", "🔴", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "☠️", "🔴", "🔴", "☠️", "❌", "🟡", "🔴"],
-  "Opioids": ["🔴", "❌", "❌", "❌", "☠️", "-", "☠️", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "❌", "❌", "🟡", "☠️", "☠️", "❌", "❌", "☠️", "❌", "🟢", "🟡"],
-  "Benzos": ["🔴", "❌", "🔴", "🔴", "☠️", "☠️", "-", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🔴", "❌", "🟡", "🟡", "🟡", "☠️", "☠️", "🟡", "🟡", "☠️", "❌", "🟢", "🟡"],
-  "SSRIs": ["🟡", "🟢", "🔴", "🔴", "🟡", "🟡", "🟡", "-", "🔴", "🔴", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡", "🟡", "🟢", "🔴", "🟡", "🔴", "❌", "❌", "🟡", "🟡", "🔴"],
-  "SNRIs": ["🟡", "🟡", "🔴", "❌", "🟡", "🟡", "🟡", "🔴", "-", "🔴", "🟡", "🔴", "🟡", "🔴", "🟢", "🟡", "🟡", "🟢", "🔴", "🟡", "🔴", "❌", "❌", "🟡", "🟡", "🔴"],
-  "ADHD Meds": ["🟢", "🔴", "❌", "❌", "🔴", "🔴", "🟡", "🔴", "🔴", "-", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟢", "🟡", "🔴", "❌", "❌", "❌", "🟡", "🟡", "🔴"],
-  "Antipsychotics": ["🟡", "🟡", "❌", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "-", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡"],
-  "Mood Stabilizers": ["🟡", "🟡", "❌", "🔴", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "-", "🟡", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡"],
-  "Wellbutrin": ["🟢", "🟡", "❌", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "-", "🟡", "🟡", "🔴", "🔴", "🟡", "🔴", "🟡", "❌", "❌", "❌", "🟡", "🟢", "🔴"],
-  "Trazodone": ["🟢", "🟡", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "🟡", "-", "🟢", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "❌", "❌", "🔴", "🟢", "🟡"],
-  "Gabapentin": ["🟢", "🟡", "🔴", "🔴", "❌", "❌", "❌", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟢", "-", "🟡", "🟡", "🟡", "🟡", "❌", "🟡", "🟡", "🔴", "🔴", "🟢", "🟡"],
-  "LSD": ["🟡", "🟡", "🔴", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "-", "🟢", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🟡", "❌"],
-  "Shrooms": ["🟡", "🟡", "🔴", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "🟢", "-", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "🟡", "❌"],
-  "Nitrous": ["🟢", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "🟢", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "🟡", "-", "🟡", "🔴", "🟢", "🟢", "🟡", "🔴", "🟢", "🟢"],
-  "DMT": ["🟡", "❌", "❌", "❌", "❌", "☠️", "☠️", "🔴", "🔴", "🟡", "🔴", "🔴", "🔴", "🔴", "🟡", "🔴", "🔴", "🟡", "-", "☠️", "🟡", "❌", "🔴", "🟡", "🟡", "❌"],
-  "GHB": ["🔴", "❌", "❌", "☠️", "☠️", "☠️", "☠️", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "🔴", "🔴", "🔴", "☠️", "-", "❌", "🔴", "☠️", "❌", "🟢", "🟡"],
-  "Meth": ["🟡", "🟡", "❌", "❌", "🔴", "❌", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "❌", "🔴", "🟡", "🟡", "🟡", "🟢", "🟡", "❌", "-", "❌", "❌", "🔴", "🟡", "🔴"],
-  "MAOIs": ["🟡", "🔴", "❌", "❌", "🔴", "❌", "🟡", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "🟡", "🔴", "🔴", "🟢", "❌", "🔴", "❌", "-", "❌", "🟡", "🟢", "🔴"],
-  "Tramadol": ["🟡", "🟡", "❌", "❌", "☠️", "☠️", "☠️", "❌", "❌", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🟡", "🔴", "☠️", "❌", "❌", "-", "❌", "🟢", "❌"],
-  "Sleep Aids": ["🟡", "🔴", "🔴", "🔴", "❌", "❌", "❌", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "🟡", "❌", "🔴", "🟡", "❌", "-", "🟢", "🟡"],
-  "Hormones + BC": ["🟢", "🟢", "🟡", "🟡", "🟡", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🔴", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟡", "🟢", "🟡", "🟢", "🟢", "🟢", "-", "🟡"],
-  "Lithium": ["🟡", "🟡", "❌", "🔴", "🔴", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "🔴", "🟡", "🟡", "❌", "❌", "🟢", "❌", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "-"]
+  "Cannabis": ["-", "🟡", "🟡", "🟡", "🟡", "🟢", "🔴", "🔴", "🟡", "🟢", "🔴", "🔴", "🔴", "🔴", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🟢", "🟡", "🟡", "🟡", "🟢"],
+  "LSD": ["🟡", "-", "🟢", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "🟡", "🔴", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🔴", "❌", "🟡"],
+  "Shrooms": ["🟡", "🟢", "-", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "❌", "🟡", "🔴", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🔴", "❌", "🟡"],
+  "DMT": ["🟡", "🔴", "🔴", "-", "❌", "🟡", "❌", "❌", "🟡", "🟡", "❌", "☠️", "☠️", "☠️", "🟡", "🔴", "🔴", "🟡", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "🟡"],
+  "Ketamine": ["🟡", "🟡", "🟡", "❌", "-", "🟡", "🟢", "❌", "🟡", "🔴", "❌", "❌", "❌", "❌", "🟡", "🟡", "🟡", "🔴", "🟢", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟢"],
+  "Nitrous": ["🟢", "🟡", "🟡", "🟡", "🟡", "-", "🔴", "🔴", "🟢", "🟢", "❌", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🔴", "🟢", "🟢", "🟢", "🟡", "🟡", "🟡", "🟢", "🟢"],
+  "MDMA": ["🔴", "🔴", "🔴", "❌", "🟢", "🔴", "-", "🔴", "❌", "❌", "🔴", "❌", "🔴", "❌", "🔴", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "❌", "❌", "❌", "❌", "🟡"],
+  "Cocaine": ["🔴", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "-", "❌", "❌", "❌", "❌", "🔴", "☠️", "🔴", "🔴", "❌", "🔴", "🔴", "❌", "❌", "🔴", "🔴", "🔴", "🔴", "🟡"],
+  "Meth": ["🟡", "🟡", "🟡", "🟡", "🟡", "🟢", "❌", "❌", "-", "❌", "🔴", "❌", "🟡", "❌", "🟡", "🔴", "❌", "🔴", "🔴", "🔴", "❌", "❌", "🟡", "🟡", "🔴", "🟡"],
+  "ADHD Meds": ["🟢", "🟡", "🟡", "🟡", "🔴", "🟢", "❌", "❌", "❌", "-", "🔴", "🔴", "🟡", "🔴", "🟡", "🟡", "❌", "🟡", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🔴", "🟡"],
+  "Alcohol": ["🔴", "🔴", "🔴", "❌", "❌", "❌", "🔴", "❌", "🔴", "🔴", "-", "☠️", "☠️", "☠️", "❌", "❌", "☠️", "❌", "🟡", "🟡", "🔴", "❌", "🔴", "🔴", "🔴", "🟡"],
+  "Opioids": ["🔴", "❌", "❌", "☠️", "❌", "🟡", "❌", "❌", "❌", "🔴", "☠️", "-", "☠️", "☠️", "❌", "🔴", "☠️", "❌", "🟡", "🟡", "❌", "🟡", "🔴", "🟡", "🟡", "🟢"],
+  "Benzos": ["🔴", "🟡", "🟡", "☠️", "❌", "🟡", "🔴", "🔴", "🟡", "🟡", "☠️", "☠️", "-", "☠️", "❌", "🔴", "☠️", "❌", "🟡", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🟢"],
+  "GHB": ["🔴", "🔴", "🔴", "☠️", "❌", "🔴", "❌", "☠️", "❌", "🔴", "☠️", "☠️", "☠️", "-", "❌", "🔴", "☠️", "❌", "🟡", "🟡", "🔴", "🟡", "🔴", "🟡", "🟡", "🟢"],
+  "Gabapentin": ["🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "❌", "❌", "❌", "❌", "-", "🟢", "🔴", "🔴", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🟢"],
+  "Trazodone": ["🟢", "🟡", "🟡", "🔴", "🟡", "🟡", "🔴", "🔴", "🔴", "🟡", "❌", "🔴", "🔴", "🔴", "🟢", "-", "❌", "🔴", "🔴", "🔴", "❌", "🟡", "🟡", "🟡", "🟡", "🟢"],
+  "Tramadol": ["🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "❌", "❌", "❌", "❌", "☠️", "☠️", "☠️", "☠️", "🔴", "❌", "-", "❌", "❌", "❌", "❌", "❌", "🔴", "🔴", "❌", "🟢"],
+  "Sleep Aids": ["🟡", "🟡", "🟡", "🟡", "🔴", "🔴", "🔴", "🔴", "🔴", "🟡", "❌", "❌", "❌", "❌", "🔴", "🔴", "❌", "-", "🟡", "🟡", "🟡", "🟡", "🔴", "🟡", "🟡", "🟢"],
+  "SSRIs": ["🟡", "🟡", "🟡", "🔴", "🟢", "🟢", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "🟡", "🟢", "🔴", "❌", "🟡", "-", "🔴", "❌", "🟡", "🟡", "🔴", "🔴", "🟡"],
+  "SNRIs": ["🟡", "🟡", "🟡", "🔴", "🟡", "🟢", "🔴", "❌", "🔴", "🔴", "🟡", "🟡", "🟡", "🟡", "🟢", "🔴", "❌", "🟡", "🔴", "-", "❌", "🟡", "🟡", "🔴", "🔴", "🟡"],
+  "MAOIs": ["🟡", "🔴", "🔴", "❌", "🔴", "🟢", "❌", "❌", "❌", "❌", "🔴", "❌", "🟡", "🔴", "🟡", "❌", "❌", "🟡", "❌", "❌", "-", "❌", "🔴", "🔴", "🔴", "🟢"],
+  "Wellbutrin": ["🟢", "🔴", "🔴", "🔴", "🟡", "🟡", "❌", "🔴", "❌", "🟡", "❌", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "🟡", "🟡", "🟡", "❌", "-", "🟡", "🟡", "🔴", "🟢"],
+  "Antipsychotics": ["🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "❌", "🔴", "🟡", "🟡", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🔴", "🔴", "🟡", "🟡", "🔴", "🟡", "-", "🟡", "🟡", "🟡"],
+  "Mood Stabilizers": ["🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "❌", "🔴", "🟡", "🟡", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "🔴", "🟡", "🔴", "🔴", "🔴", "🟡", "🟡", "-", "🟡", "🔴"],
+  "Lithium": ["🟡", "❌", "❌", "❌", "🟡", "🟢", "❌", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "🟡", "🟡", "🟡", "❌", "🟡", "🔴", "🔴", "🔴", "🔴", "🟡", "🟡", "-", "🟡"],
+  "Hormones + BC": ["🟢", "🟡", "🟡", "🟡", "🟢", "🟢", "🟡", "🟡", "🟡", "🟡", "🟡", "🟢", "🟢", "🟢", "🟢", "🟢", "🟢", "🟢", "🟡", "🟡", "🟢", "🟢", "🟡", "🔴", "🟡", "-"]
 };
 
 // Detailed interaction descriptions
@@ -1250,7 +1277,7 @@ const interactionDetails = {
   "Cannabis|MDMA": { risk: "🔴", desc: "Increased heart strain and anxiety risk." },
   "Cannabis|Cocaine": { risk: "🔴", desc: "Increased cardiovascular strain." },
   "Cannabis|Alcohol": { risk: "🔴", desc: "Increased sedation and nausea." },
-  "Cannabis|Opioids": { risk: "🔴", desc: "Heightened sedation; risk of breathing suppression." },
+  "Cannabis|Opioids": { risk: "🔴", desc: "Heightened sedation. The breathing suppression risk comes from the opioid itself; cannabis adds sedation on top." },
   "Cannabis|Benzos": { risk: "🔴", desc: "Increased sedation, cognitive impairment." },
   "Cannabis|SSRIs": { risk: "🟡", desc: "Lower concern on current evidence: no major interaction documented. Not proven safe, standard harm reduction still applies." },
   "Cannabis|SNRIs": { risk: "🟡", desc: "Lower concern on current evidence: no major interaction documented. Not proven safe, standard harm reduction still applies." },
@@ -1264,8 +1291,8 @@ const interactionDetails = {
   "Cannabis|Shrooms": { risk: "🟡", desc: "May intensify effects and anxiety." },
   "Cannabis|Nitrous": { risk: "🟢", desc: "Lower concern on current evidence: no major interaction documented. Not proven safe, standard harm reduction still applies." },
   "Cannabis|DMT": { risk: "🟡", desc: "May increase anxiety and cardiovascular strain." },
-  "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation; risk of breathing suppression." },
-  "Cannabis|Meth": { risk: "🟡", desc: "Meth plus cannabis: cannabis can take the edge off for some people, but the mix raises anxiety, paranoia, and psychosis risk, especially after missed sleep. TripSit rates stimulant plus psychedelic class mixes Caution for similar reasons." },
+  "Cannabis|GHB": { risk: "🔴", desc: "Increased sedation. The breathing suppression risk comes from the GHB itself; cannabis adds sedation on top." },
+  "Cannabis|Meth": { risk: "🟡", desc: "Meth plus cannabis: cannabis can take the edge off for some people, but the mix raises anxiety, paranoia, and psychosis risk, especially after missed sleep. TripSit rates amphetamines plus cannabis Caution." },
   "Cannabis|MAOIs": { risk: "🟡", desc: "MAOIs plus cannabis: no strong direct clash is documented, but MAOIs can raise blood pressure and cannabis can swing heart rate and anxiety, so the mix is unpredictable. Caution." },
   "Cannabis|Tramadol": { risk: "🟡", desc: "Tramadol plus cannabis: added sedation and dizziness, and cannabis does nothing to lower tramadol seizure risk. Caution." },
   "Cannabis|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus cannabis: sedation, dizziness, and poor coordination add up. Hydroxyzine and zolpidem type aids both make cannabis feel heavier. Caution." },
@@ -1291,7 +1318,7 @@ const interactionDetails = {
   "Ketamine|GHB": { risk: "❌", desc: "High overdose risk." },
   "Ketamine|Meth": { risk: "🟡", desc: "Meth plus ketamine: both push blood pressure and heart rate up. TripSit rates amphetamines plus ketamine Caution. Moving around is risky, because ketamine impairs coordination while meth masks how impaired you are." },
   "Ketamine|MAOIs": { risk: "🔴", desc: "MAOIs plus ketamine: poorly explored, and both can raise blood pressure. Treat as high risk and avoid outside a medical setting." },
-  "Ketamine|Tramadol": { risk: "🟡", desc: "Tramadol plus ketamine: TripSit reports no unexpected interactions for this pair, but both add sedation and tramadol keeps its seizure risk. Caution." },
+  "Ketamine|Tramadol": { risk: "🟡", desc: "Tramadol plus ketamine: no major interaction is documented for this pair, but both add sedation and tramadol keeps its seizure risk. Caution." },
   "Ketamine|Sleep Aids": { risk: "🔴", desc: "Sleep aids plus ketamine: the RX page groups sleep aids with ketamine as a blackout risk. Sedation stacks, reflexes slow, and vomit and fall risk climb. Strong caution." },
   "Ketamine|Hormones + BC": { risk: "🟢", desc: "Hormones and birth control plus ketamine: no direct interaction is documented. Evidence is thin; treat this as no known clash rather than proven safe." },
   "Ketamine|Lithium": { risk: "🟡", desc: "Lithium plus ketamine: ketamine is used in mood treatment settings alongside lithium for some people, but outside care the mix is unpredictable, and ketamine can raise blood pressure and destabilise mood. Caution." },
@@ -1347,7 +1374,7 @@ const interactionDetails = {
   "Alcohol|ADHD Meds": { risk: "🔴", desc: "Alcohol plus ADHD meds: the stimulant masks how drunk you are, so people drink more than planned, with blackouts and impaired judgment, the same pattern the RX page describes for ADHD meds and alcohol. Strong caution." },
   "Alcohol|Antipsychotics": { risk: "🔴", desc: "Alcohol plus antipsychotics: heavy additive sedation. Both slow you down, balance and breathing can suffer at higher amounts, and falls and blackouts are common. Strong caution." },
   "Alcohol|Mood Stabilizers": { risk: "🔴", desc: "Alcohol plus mood stabilizers: alcohol destabilises the conditions these medicines treat, adds sedation with lamotrigine and valproate, and with lithium the dehydration and fluid shifts from drinking can push lithium levels toward toxicity. Strong caution." },
-  "Alcohol|Wellbutrin": { risk: "❌", desc: "Alcohol plus Wellbutrin: the RX page flags blackouts, impulsivity, and seizures for this pair. Wellbutrin lowers the seizure threshold and alcohol withdrawal raises it further. Avoid." },
+  "Alcohol|Wellbutrin": { risk: "❌", desc: "Alcohol plus Wellbutrin: the RX page flags blackouts, impulsivity, and seizures for this pair. Wellbutrin lowers the seizure threshold, and alcohol and alcohol withdrawal lower it further. Avoid." },
   "Alcohol|Trazodone": { risk: "❌", desc: "Alcohol plus trazodone: the RX page sleep section describes this pattern as respiratory suppression, blackout, and disorientation. Two heavy sedatives stack fast. Avoid." },
   "Alcohol|Gabapentin": { risk: "❌", desc: "Alcohol plus gabapentin: the RX page describes stacked sedation and euphoria with high overdose risk, especially with low tolerance, and motor control and memory going fast. Avoid." },
   "Alcohol|LSD": { risk: "🔴", desc: "Alcohol plus LSD: alcohol dulls and muddies a trip, adds dehydration and nausea, and blackouts on top of psychedelic confusion make risky behaviour and accidents more likely." },
@@ -1534,7 +1561,7 @@ const interactionDetails = {
   "Shrooms|Tramadol": { risk: "🔴", desc: "Tramadol plus shrooms: TripSit rates this Unsafe, for the same seizure reason as LSD." },
   "Shrooms|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus shrooms: the same picture as LSD. Sedation can blunt or muddy a trip, and zolpidem type aids can produce strange half asleep behaviour. Caution." },
   "Shrooms|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus shrooms: the same report level evidence as LSD. Hormonal shifts may change intensity, and nothing here is well measured. Caution." },
-  "Shrooms|Lithium": { risk: "❌", desc: "Lithium plus shrooms: seizures and hospital level harm have been reported for lithium with psilocybin mushrooms, the same pattern as LSD (Nayak et al. 2021 and case reports). Treat as a hard no. Avoid." },
+  "Shrooms|Lithium": { risk: "❌", desc: "Lithium plus shrooms: seizures and hospital level harm have been reported for lithium with psilocybin mushrooms, the same pattern as LSD (Nayak et al. 2021 and case reports; experience reports, not clinical studies). Treat as a hard no. Avoid." },
   "Nitrous|DMT": { risk: "🟡", desc: "Nitrous plus DMT: nitrous briefly and intensely amplifies DMT, with falls and oxygen dips the practical risks. Caution, and only with normal air and someone sober nearby." },
   "Nitrous|GHB": { risk: "🔴", desc: "Nitrous plus GHB: GHB sedation plus nitrous can tip someone into unconsciousness fast, and passing out while inhaling risks oxygen deprivation. Strong caution." },
   "Nitrous|Meth": { risk: "🟢", desc: "Meth plus nitrous: no major direct interaction is documented. Nitrous still cuts oxygen while it is being inhaled, and meth raises how much oxygen your heart needs, so take normal air breaks." },
@@ -1549,7 +1576,7 @@ const interactionDetails = {
   "DMT|Tramadol": { risk: "🔴", desc: "Tramadol plus DMT: TripSit rates tramadol plus DMT Unsafe because of the seizure threshold, and tramadol serotonin adds risk with a strong tryptamine." },
   "DMT|Sleep Aids": { risk: "🟡", desc: "Sleep aids plus DMT: little direct research. Sedation may blunt the experience or leave someone less able to sit safely through it. Caution." },
   "DMT|Hormones + BC": { risk: "🟡", desc: "Hormones and birth control plus DMT: no direct studies exist. Hormone cycle reports for other psychedelics are the only guide, so this is caution with honest uncertainty." },
-  "DMT|Lithium": { risk: "❌", desc: "Lithium plus DMT: DMT is a strong serotonergic psychedelic in the same family as LSD and mushrooms, where lithium has seizure and hospital level harm reports. Oral DMT as ayahuasca adds an MAOI and is worse again. Avoid." },
+  "DMT|Lithium": { risk: "❌", desc: "Lithium plus DMT: DMT is a strong serotonergic psychedelic in the same family as LSD and mushrooms, where lithium has seizure and hospital level harm reports, based on experience reports rather than clinical studies. Oral DMT as ayahuasca adds an MAOI and is worse again. Avoid." },
   "GHB|Meth": { risk: "❌", desc: "Meth plus GHB: meth masks how close to unconsciousness GHB is pushing you, so it is easy to take too much GHB. When the meth wears off first, breathing can slow or stop." },
   "GHB|MAOIs": { risk: "🔴", desc: "MAOIs plus GHB: little direct research exists, and both can swing blood pressure and consciousness in unpredictable ways. Treat as high risk." },
   "GHB|Tramadol": { risk: "☠️", desc: "Tramadol plus GHB: two sedating drugs that can rapidly lead to unconsciousness, with vomit aspiration and breathing suppression on top of tramadol seizure risk. One of the deadly stacks." },
@@ -1597,39 +1624,47 @@ function getRiskClass(risk) {
 // Fill select dropdowns
 function fillSelect(id) {
   const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">Select</option>' + 
-    substances.map(s => `<option value="${s}">${s}</option>`).join('');
+  sel.innerHTML = '<option value="">Select</option>' +
+    substanceGroups.map(g =>
+      `<optgroup label="${g.name}">` +
+      g.members.map(s => `<option value="${s}">${s}</option>`).join('') +
+      `</optgroup>`).join('');
 }
 
 // Initialize the matrix table
 function initializeMatrix() {
   const table = document.getElementById('matrixTable');
   let html = '<thead><tr><th>↓ / →</th>';
-  
-  // Create header row
-  substances.forEach(substance => {
-    html += `<th>${substance}</th>`;
+
+  // Create header row (small group name under each substance)
+  substances.forEach((substance, i) => {
+    const g = groupOf[substance];
+    const start = i === groupStartIndex[g.name] ? ' class="gcol-start"' : '';
+    html += `<th${start} style="--gc:${g.color}">${substance}<span class="gsub" style="color:${g.color}">${g.name}</span></th>`;
   });
   html += '</tr></thead><tbody>';
-  
+
   // Create data rows
-  substances.forEach(rowSubstance => {
-    html += `<tr><th>${rowSubstance}</th>`;
-    substances.forEach(colSubstance => {
+  substances.forEach((rowSubstance, ri) => {
+    const g = groupOf[rowSubstance];
+    const rowStart = ri > 0 && ri === groupStartIndex[g.name];
+    html += `<tr${rowStart ? ' class="grow-start"' : ''}><th style="--gc:${g.color}">${rowSubstance}<span class="gsub" style="color:${g.color}">${g.name}</span></th>`;
+    substances.forEach((colSubstance, ci) => {
       let risk = "-";
       if (rowSubstance !== colSubstance) {
-        risk = riskMatrix[rowSubstance][substances.indexOf(colSubstance)];
+        risk = riskMatrix[rowSubstance][ci];
       }
       const simpleRisk = riskIconMap[risk] || risk;
       const riskClass = getRiskClass(simpleRisk);
-      html += `<td class="${riskClass}" data-row="${rowSubstance}" data-col="${colSubstance}">${simpleRisk}</td>`;
+      const cs = ci === groupStartIndex[groupOf[colSubstance].name] ? ' gcol-start' : '';
+      html += `<td class="${riskClass}${cs}" data-row="${rowSubstance}" data-col="${colSubstance}">${simpleRisk}</td>`;
     });
     html += '</tr>';
   });
-  
+
   html += '</tbody>';
   table.innerHTML = html;
-  
+
   // Add click events to cells
   table.querySelectorAll('td').forEach(cell => {
     if (cell.textContent !== "-") {
